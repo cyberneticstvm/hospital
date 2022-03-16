@@ -403,6 +403,7 @@
             <div class="container">
                 @yield("permission")
                 @yield("dash")
+                @yield("consultation")
             </div>
         </div>
 

@@ -22,3 +22,6 @@ Route::get('/dash', function () {
 Route::get('/permission', function () {
     return view('permission');
 });
+Route::get('/consultation', function () {
+    return view('consultation');
+});
