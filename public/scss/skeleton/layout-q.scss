@@ -1,0 +1,457 @@
+// Admin Layout (ALUI)
+// @author: WrapTheme ( https://themeforest.net/user/wrraptheme )
+// @design by: ThemeMakker Infotech LLP.
+// @event-namespace: ALUI
+// Copyright 2021 WrapTheme
+
+@import "../global/variables";
+@import "../global/mixins";
+
+[data-theme="high-contrast"] {
+    // main layout scss
+    #layout-q{
+
+        .top-header{
+            background: $white;
+            .logo,
+            .nav-link{
+                color: $dark;
+                svg path{
+                    fill: $dark;
+                }
+            }
+        }
+    }
+    .main-search .form-control{
+        padding: .375rem .75rem;
+        border-color: $dark;
+        color: $dark;
+        &::placeholder{
+            color: $dark;
+        }
+    }
+    .bg-primary{
+        color: $dark;
+    }
+    .nav-tabs .nav-link{
+        color: $white !important;
+    }
+}
+
+body{
+	@include c_overflow(scroll);
+    &.rtl_mode{
+        .menu-toggle{
+            padding-left: 0 !important;
+            padding-right: 1rem !important;
+        }
+        @media only screen and (min-width: $break-large) {
+            .sidebar{
+                .menu-list{
+                    >li{
+                        border-right: 1px solid rgba($dark, 0.08);
+    
+                        &:last-child{
+                            border-left: 1px solid rgba($dark, 0.08);
+                        }
+                        
+                        > .m-link{
+                            > i{
+                                margin-left: 10px;
+                                margin-right: 0 !important;
+                            }
+                        }
+                        &:hover{
+                            > .sub-menu{
+                                li:hover{
+                                    > .sub-menu{
+                                        right: 100%;
+                                        left: auto;
+                                        top: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        @media only screen and (max-width: $break-large) {
+            .sidebar{
+                position: fixed;
+                right: -400px;
+                left: auto;
+
+                .menu-list {
+                    .sub-menu{
+                        padding-right: 30px;
+                        padding-left: 0;
+                        &::before{
+                            right: 8px;
+                            left: auto;
+                        }
+                    }
+                    .ms-link::before{
+                        right: -24px;
+                        left: auto;
+                    }
+                }
+                &.open{
+                    right: 0;
+                    left: auto;
+                }
+            }
+        }
+    }
+}
+
+// main layout scss
+#layout-q{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    /* -webkit-box-orient: vertical; */
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+
+    .top-header{
+        background: var(--primary-gradient);
+        position: relative;
+        z-index: 1021;
+        padding: 2rem 0;
+        .logo,
+        .nav-link{
+            color: $white;
+            svg path{
+                fill: $white;
+            }
+        }
+        @media only screen and (max-width: $break-large) {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            padding: 1rem 0;
+        }
+    }
+
+    .card-chat-body.card{
+        background-color: var(--card-color) !important;
+    }
+
+    @media only screen and (min-width: $break-large) {
+        .sidebar{
+            background: var(--card-color);
+            .menu-list{
+                list-style: none;
+                position: relative;
+                display: flex;
+                padding: 0;
+                margin: 0;
+
+                >li{
+                    flex-grow: 1;
+                    border-left: 1px solid rgba($dark, 0.08);
+
+                    &:last-child{
+                        border-right: 1px solid rgba($dark, 0.08);
+                    }
+                    
+                    > .m-link{
+                        color: var(--color-500);
+                        display: flex;
+                        align-items: center;
+                        padding: 1rem !important;
+                        > i{
+                            font-size: 1rem;
+                            margin-right: 10px;
+                        }
+                        &.active,
+                        &:hover{
+                            background: rgba(var(--primary-rgb),.1);
+                            color: var(--primary-color);
+                        }
+                        @media only screen and (max-width: $break-xlarge) {
+                            padding: 1rem .5rem !important;
+                        }
+                    }
+                    .sub-menu{
+                        background: var(--card-color);
+                        border-top: 5px solid var(--primary-color);
+                        box-shadow: 0 6px 1rem rgba($dark,.1),0 .5rem 1rem -.75rem rgba($dark,.1);
+                        display: none;
+                        position: absolute;
+                        list-style: none;
+                        top: 100%;
+                        padding: 1rem 0;
+                        min-width: 200px;
+
+                        -webkit-animation-name: dropdownAnimation;
+                        animation-name: dropdownAnimation;
+                        -webkit-animation-duration: 0.25s;
+                        animation-duration: 0.25s;
+                        -webkit-animation-fill-mode: both;
+                        animation-fill-mode: both;
+
+                        /* dropdown Animation Mixins */
+                        @-webkit-keyframes dropdownAnimation {
+                            from {opacity: 0;-webkit-transform: translate3d(0, -30px, 0);transform: translate3d(0, -30px, 0); }
+                            to {opacity: 1;-webkit-transform: none;transform: none;-webkit-transform: translate3d(0, 0px, 0);transform: translate3d(0, 0px, 0); }
+                        }
+                        @keyframes dropdownAnimation {
+                            from {opacity: 0;-webkit-transform: translate3d(0, -30px, 0);transform: translate3d(0, -30px, 0); }
+                            to {opacity: 1;-webkit-transform: none;transform: none;-webkit-transform: translate3d(0, 0px, 0);transform: translate3d(0, 0px, 0); }
+                        }
+
+                        .m-link,
+                        .ms-link{
+                            color: var(--color-500);
+                            display: flex;
+                            align-items: center;
+                            padding: 6px 20px;
+
+                            &.active,
+                            &:hover{
+                                color: var(--primary-color);
+                            }
+                        }
+                    }
+                    #menu-megamenu{
+                        //display: flex;
+                        flex-wrap: wrap;
+                        width: 100%;
+                        left: 0;
+                        right: 0;
+
+                        >li{
+                            width: 20%;    
+                        }
+                    }
+                    &:hover{
+                        > .sub-menu{
+                            display: block;
+                            li:hover{
+                                > .sub-menu{
+                                    display: block;
+                                    position: absolute;
+                                    left: 100%;
+                                    top: 0;
+                                }
+                            }
+                        }
+                        #menu-megamenu{
+                            display: flex;
+                        }
+                    }
+                }
+
+                .divider,
+                .arrow{
+                    display: none;
+                }
+            }
+        }
+        .card-chat, .card-chat-body{
+            height: calc(100vh - 205px);
+        }
+    }
+    @media only screen and (max-width: $break-large) {
+        .sidebar{
+            @include transition(ease .1s);
+            @include c_overflow(scroll);
+            background: var(--dark-color);
+            box-shadow: 0 6px 1rem rgba($dark,.1),0 .5rem 1rem -.75rem rgba($dark,.1);
+            position: fixed;
+            left: -400px;
+            z-index: 1021;
+            height: 100vh;
+            width: 260px;
+            padding: 1rem;
+            -webkit-box-flex: 0;
+            -ms-flex-positive: 0;
+            flex-grow: 0;
+        
+            -webkit-box-ordinal-group: 2;
+            -ms-flex-order: 1;
+            order: 1;
+
+            .menu-list{
+                list-style: none;
+                padding: 0;
+        
+                a[aria-expanded="true"]{
+                    &.m-link{
+                        color: var(--secondary-color);
+                    }
+                    .arrow:before{
+                        content: "\f068";
+                    }
+                }
+        
+                .m-link,
+                .ms-link{
+                    display: flex;
+                    &:hover,
+                    &.active{
+                        color: var(--secondary-color);
+        
+                        &::before{
+                            display: block;
+                        }
+                    }
+                }
+                .m-link{
+                    color: var(--white-color);
+                    align-items: center;
+                    padding: 10px 0;
+                }
+                .ms-link{
+                    color: var(--white-color);
+                    position: relative;
+                    padding: 5px 0;
+        
+                    &::before{
+                        background-color: var(--secondary-color);
+                        content: "";
+                        display: none;
+                        position: absolute;
+                        height: 5px;
+                        width: 5px;
+                        left: -24px;
+                        top: 13px;
+                    }
+                }
+        
+                .fa {
+                    width: 30px;
+                }
+                .arrow{
+                    color: var(--white-color);
+                    opacity: 0.3;
+                    font-size: 10px;
+                }
+                .divider{
+                    color: var(--white-color);
+                    border-color: rgba($white, 0.3) !important;
+                    opacity: 0.5;
+                }
+        
+                .sub-menu{
+                    list-style: none;
+                    position: relative;
+                    padding-left: 30px;
+        
+                    &::before{
+                        background-color: var(--white-color);
+                        content: "";
+                        position: absolute;
+                        height: 100%;
+                        width: 1px;
+                        left: 8px;
+                        top: 0;
+                    }
+                }
+            }
+            
+            &.open{
+                left: 0;
+            }
+        }
+        .card-chat, .card-chat-body{
+            height: calc(100vh - 125px);
+        }
+    }
+    @media only screen and (max-width: $break-1024) {
+        .card-chat.open{
+            height: 100vh;
+            z-index: 99;
+        }
+    }
+    
+    // main header search bar
+    .main-search {
+        position: relative;
+        border-color: rgba($white, 0.1) !important;
+    
+        .form-control{
+            border-color: transparent;
+            background-color: transparent;
+            padding-left: 0;
+            border-radius: 0;
+    
+            &:focus,
+            &:active{
+                box-shadow: none;
+                color: var(--primary-color);
+                border-bottom: 1px solid rgba($white, 0.3);
+                &::placeholder{
+                    color: rgba($white, 0.7);
+                }
+            }
+            &::placeholder{
+                color: rgba($white, 0.4);
+            }
+        }
+    
+        .search-result{
+            position: absolute;
+            width: 100%;
+            top: 40px;
+    
+            .dropdown-item{
+                color: var(--color-600);
+    
+                &:hover{
+                    color: var(--primary-color);
+                    background-color: rgba(var(--primary-rgb),.1);
+                }
+            }
+    
+            @media only screen and (max-width: $break-991) {
+                position: fixed;
+                width: calc(100% - 32px);
+                margin: 0 1rem;
+                top: 68px;
+                left: 0;
+            }
+        }
+    }
+    
+    // project main body part
+    .main {
+        background-color: var(--body-color);
+        -webkit-box-ordinal-group: 4;
+        -ms-flex-order: 3;
+        order: 0;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+    
+        @media only screen and (max-width: $break-large) {
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+        }
+    
+        .body{
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-flow: column;
+            flex-flow: column;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+            min-width: 0;
+            min-height: calc(100vh - 290px);
+        }
+    }
+}
+
+// theme setting
+.setting-img,
+.gradient-switch{
+    display: none;
+}
