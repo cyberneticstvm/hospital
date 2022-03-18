@@ -254,8 +254,8 @@
                                         <img class="avatar rounded-circle" src="/images/profile_av.png" alt="">
                                         <div class="flex-fill ms-3">
                                             <p class="mb-0"><span class="fw-bold">Chris Morise</span></p>
-                                            <small class="text-muted">chris.fox@gamil.com</small>
-                                            <a href="#" class="d-block">Sign out</a>
+                                            <small class="text-muted">{{ Auth::user()->email }}</small>
+                                            <a href="/logout" class="d-block">Logout</a>
                                         </div>
                                     </div>
                                 </div>
@@ -401,9 +401,7 @@
         <!-- Body: Body -->
         <div class="body d-flex py-lg-4 py-3">
             <div class="container">
-                @yield("permission")
-                @yield("dash")
-                @yield("consultation")
+                @yield("userregistration")
             </div>
         </div>
 

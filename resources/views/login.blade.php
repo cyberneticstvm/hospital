@@ -30,19 +30,20 @@
                 <div class="row g-0 justify-content-center">
                     <div class="col-xl-5 col-lg-7 col-md-8 col-sm-8">
                        <!-- Form -->
-                       <form class="row g-0">
+                       <form class="row g-0" method="post">
+                           @csrf
                             <div class="col-12 text-center mb-5 text-light">
                                 <h1 class="fw-bold">Sign in</h1>
-                                <span class="fs-5">Free access to our dashboard.</span>
+                                <span class="fs-5">Devi Eye Hospitals.</span>
                             </div>
                             <div class="col-12">
                                 <div class="input-group justify-content-center">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control rounded-start rounded-0" placeholder="Email address">
-                                        <label>Email address</label>
+                                        <input type="text" class="form-control rounded-start rounded-0" name="username" placeholder="Username">
+                                        <label>Username</label>
                                     </div>
                                     <div class="form-floating">
-                                        <input type="password" class="form-control rounded-0" placeholder="Password">
+                                        <input type="password" class="form-control rounded-0" name="password" placeholder="Password">
                                         <label>Password</label>
                                     </div>
                                     <button type="submit" class="btn btn-lg btn-primary text-uppercase rounded-end rounded-0">SIGN IN</button>
