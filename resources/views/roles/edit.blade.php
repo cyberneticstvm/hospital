@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="/roles/{{ $role->id }}/edit/" method="post">
+                        <form action="{{ route('roles.update', $role->id) }}" method="post">
                             @csrf
                             @method("PUT")
                             <input type="hidden" name="" value="web">
