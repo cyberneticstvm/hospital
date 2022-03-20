@@ -22,7 +22,7 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" action="/roles/create/">
+                        <form method="post" action="/dash/">
                             @csrf
                             <input type="hidden" name="" value="web">
                             <div class="row g-4">
