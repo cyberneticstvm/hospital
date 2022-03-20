@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('/login');
 })->name('login');
 Route::post('/', 'App\Http\Controllers\AuthController@userlogin')->name('login');
-Route::post('/roles/create/', 'App\Http\Controllers\RoleController@store');
+Route::post('/public/roles/create/', 'App\Http\Controllers\RoleController@store');
 
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/dash/', function () {
