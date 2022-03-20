@@ -14,7 +14,7 @@
                     <td>{{ $role->name }}</td>
                     <td><a class='btn btn-link' href="/roles/{{ $role->id }}/edit/">Edit</a></td>
                     <td>
-                        <form method="post" action="/roles/{{ $role->id }}/delete/">
+                        <form method="post" action="{{ route('roles.delete', $role->id) }}">
                             @csrf 
                             @method("DELETE")
                             <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Role?');">Remove</button>
