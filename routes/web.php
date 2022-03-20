@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('/login');
 })->name('login');
 Route::post('/', 'App\Http\Controllers\AuthController@userlogin')->name('login');
+Route::post('/roles/create/', 'App\Http\Controllers\RoleController@store');
 
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/dash/', function () {
@@ -42,7 +43,7 @@ Route::group(['middleware' => ['auth']], function(){
     // Role Route //
     Route::get('/roles/', 'App\Http\Controllers\RoleController@index')->name('roles.index');
     Route::get('/roles/create/', 'App\Http\Controllers\RoleController@show');
-    Route::post('/roles/create/', 'App\Http\Controllers\RoleController@store');
+    //Route::post('/roles/create/', 'App\Http\Controllers\RoleController@store');
     Route::get('/roles/{id}/edit/', 'App\Http\Controllers\RoleController@edit');
     Route::put('/roles/{id}/edit/', 'App\Http\Controllers\RoleController@update');
     Route::delete('/roles/{id}/delete/', 'App\Http\Controllers\RoleController@destroy');
