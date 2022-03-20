@@ -23,7 +23,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form method="post" action="/dash/">
-                            @csrf
+                            {{ csrf_field() }}
                             <input type="hidden" name="" value="web">
                             <div class="row g-4">
                                 <div class="col-sm-4">
