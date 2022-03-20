@@ -43,9 +43,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        echo "reached here";
-        die;
-        /*$this->validate($request, [
+        $this->validate($request, [
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
         ]);
@@ -54,7 +52,7 @@ class RoleController extends Controller
         $role->syncPermissions($request->input('permission'));
     
         return redirect()->route('roles.index')
-                        ->with('success','Role created successfully');*/
+                        ->with('success','Role created successfully');
     }
 
     /**

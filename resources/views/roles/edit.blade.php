@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" action="/roles/{{ $role->id }}/edit/">
+                        <form action="/roles/{{ $role->id }}/edit/" method="post">
                             @csrf
                             @method("PUT")
                             <input type="hidden" name="" value="web">
