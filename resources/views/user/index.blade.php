@@ -21,7 +21,7 @@
                     </td>
                     <td><a class='btn btn-link' href="/user/{{ $user->id }}/edit/">Edit</a></td>
                     <td>
-                        <form method="post" action="/user/{{ $user->id }}/delete/">
+                        <form method="post" action="{{ route('user.delete', $user->id) }}">
                             @csrf 
                             @method("DELETE")
                             <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Role?');">Remove</button>
