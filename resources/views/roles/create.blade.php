@@ -23,6 +23,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form method="post" action="/roles/create/">
+                            @csrf
                             <input type="hidden" name="" value="web">
                             <div class="row g-4">
                                 <div class="col-sm-4">
