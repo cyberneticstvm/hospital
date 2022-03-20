@@ -32,7 +32,7 @@ Route::group(['middleware' => ['auth']], function(){
 
     // User Route //
     Route::get('/user/', 'App\Http\Controllers\AuthController@index')->name('user.index');
-    Route::post('/user/create/', 'App\Http\Controllers\AuthController@store');
+    Route::post('/user/create/', 'App\Http\Controllers\AuthController@store')->name('user.create');
     Route::get('/user/create/', 'App\Http\Controllers\AuthController@show');
     Route::get('/user/{id}/edit/', 'App\Http\Controllers\AuthController@edit')->name('user.edit');
     Route::put('/user/{id}/edit/', 'App\Http\Controllers\AuthController@update')->name('user.update');

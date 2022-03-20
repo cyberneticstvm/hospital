@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" action="/user/{{ $user->id }}/edit/">
+                        <form action="{{ route('user.update', $user->id) }}" method="post">
                             @csrf
                             @method("PUT")
                             <div class="row g-4">

@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" action="/user/create/">
+                        <form action="{{ route('user.create') }}" method="post">
                             @csrf
                             <div class="row g-4">
                                 <div class="col-sm-4">
