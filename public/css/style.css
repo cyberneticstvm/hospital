@@ -1,0 +1,6 @@
+.form-control-md, .btn{
+    border-radius: 0 !important;
+}
+.text-right{
+    text-align: right;
+}

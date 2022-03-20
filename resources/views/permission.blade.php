@@ -1,5 +1,5 @@
 @extends("templates.base")
 
 @section("permission")
-    <h1>This is permission page</h1>
+    <h5 class="text-info">User dont have permission to access this page / perform this action.</h5>
 @endsection

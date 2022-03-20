@@ -20,14 +20,32 @@ Route::get('/', function () {
 Route::post('/', 'App\Http\Controllers\AuthController@userlogin')->name('login');
 
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('/dash', function () {
+    Route::get('/dash/', function () {
         return view('dash');
-    });
-    Route::get('/registration', function () {
-        return view('user.registration');
-    });
-    
-    Route::get('/logout', 'App\Http\Controllers\AuthController@userlogout');
-    Route::post('/registration', 'App\Http\Controllers\AuthController@userregistration');
+    })->name('dash');
+
+    Route::get('/permission/not-authorized/', function () {
+        return view('permission');
+    })->name('notauth');
+
+    Route::get('/logout/', 'App\Http\Controllers\AuthController@userlogout');
+
+    // User Route //
+    Route::get('/user/', 'App\Http\Controllers\AuthController@index')->name('user.index');
+    Route::post('/user/create/', 'App\Http\Controllers\AuthController@store');
+    Route::get('/user/create/', 'App\Http\Controllers\AuthController@show');
+    Route::get('/user/{id}/edit/', 'App\Http\Controllers\AuthController@edit')->name('user.edit');
+    Route::put('/user/{id}/edit/', 'App\Http\Controllers\AuthController@update')->name('user.update');
+    Route::delete('/user/{id}/delete/', 'App\Http\Controllers\AuthController@destroy')->name('user.delete');
+    // End User Route //
+
+    // Role Route //
+    Route::get('/roles/', 'App\Http\Controllers\RoleController@index')->name('roles.index');
+    Route::get('/roles/create/', 'App\Http\Controllers\RoleController@show');
+    Route::post('/roles/create/', 'App\Http\Controllers\RoleController@store');
+    Route::get('/roles/{id}/edit/', 'App\Http\Controllers\RoleController@edit');
+    Route::put('/roles/{id}/edit/', 'App\Http\Controllers\RoleController@update');
+    Route::delete('/roles/{id}/delete/', 'App\Http\Controllers\RoleController@destroy');
+    // End Role Route //
 });
 
