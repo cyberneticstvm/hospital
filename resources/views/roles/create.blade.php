@@ -22,7 +22,7 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" action="/dash/">
+                        <form method="post" action="/roles/create/">
                             {{ csrf_field() }}
                             <input type="hidden" name="" value="web">
                             <div class="row g-4">
