@@ -22,8 +22,8 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route(roles.create) }}" method="post">
-                            {{ csrf_field() }}
+                        <form action="{{ route('roles.create') }}" method="post">
+                            @csrf
                             <input type="hidden" name="" value="web">
                             <div class="row g-4">
                                 <div class="col-sm-4">
