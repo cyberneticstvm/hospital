@@ -94,8 +94,7 @@ class AuthController extends Controller
    
         $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dash')
-                        ->withSuccess('Signed in');
+            return redirect()->intended('dash')->withSuccess('Signed in');
         }  
         return redirect("/")->withErrors('Login details are not valid');
     }

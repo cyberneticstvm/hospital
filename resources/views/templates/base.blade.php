@@ -193,7 +193,7 @@
                                     <div class="d-flex">
                                         <img class="avatar rounded-circle" src="/images/profile_av.png" alt="">
                                         <div class="flex-fill ms-3">
-                                            <p class="mb-0"><span class="fw-bold">Chris Morise</span></p>
+                                            <p class="mb-0"><span class="fw-bold">{{ Auth::user()->name }} ({{ Auth::user()->roles->first()->name }})</span></p>
                                             <small class="text-muted">{{ Auth::user()->email }}</small>
                                             <a href="/logout" class="d-block">Logout</a>
                                         </div>

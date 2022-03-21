@@ -2,12 +2,12 @@
 <html class="no-js " lang="en">
 
 <head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Responsive Bootstrap 5 admin template and web Application ui kit.">
-    <meta name="keyword" content="ALUI, Bootstrap 5, ReactJs, Angular, Laravel, VueJs, ASP .Net, Admin Dashboard, Admin Theme">
-    <title>:: ALUI ::</title>
+    <meta name="description" content="Devi eye hospital and opticians.">
+    <meta name="keyword" content="Devi eye hospitals, eye clinic, eye care, optician">
+    <title>Devi Eye Hospitals</title>
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> <!-- Favicon-->
 
     <!-- project css file  -->
@@ -36,14 +36,21 @@
                                 <h1 class="fw-bold">Sign in</h1>
                                 <span class="fs-5">Devi Eye Hospitals.</span>
                             </div>
+                            @if (count($errors) > 0)
+                            <div role="alert" class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }}
+                                @endforeach
+                            </div>
+                            @endif
                             <div class="col-12">
                                 <div class="input-group justify-content-center">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control rounded-start rounded-0" name="username" placeholder="Username">
+                                        <input type="text" value="{{ old('username') }}" class="form-control rounded-start rounded-0" name="username" placeholder="Username">
                                         <label>Username</label>
                                     </div>
                                     <div class="form-floating">
-                                        <input type="password" class="form-control rounded-0" name="password" placeholder="Password">
+                                        <input type="password" value="{{ old('password') }}" class="form-control rounded-0" name="password" placeholder="Password">
                                         <label>Password</label>
                                     </div>
                                     <button type="submit" class="btn btn-lg btn-primary text-uppercase rounded-end rounded-0">SIGN IN</button>
@@ -185,6 +192,14 @@
 
 <!-- Jquery Page Js -->
 <script src="/js/template.js"></script>
-
+<script>
+    $(function(){
+        "use strict";
+        $('form').submit(function(){
+            $(".btn").attr("disabled", true);
+            $(".btn").html("<span class='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'></span>&nbsp;Loading...");
+        });
+    })
+</script>
 </body>
 </html>

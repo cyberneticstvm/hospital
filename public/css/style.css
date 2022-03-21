@@ -4,3 +4,15 @@
 .text-right{
     text-align: right;
 }
+.table.dataTable.table-striped>tbody>tr.odd{
+    background-color: #e0ffef !important;
+}
+/*.table.dataTable.table-striped>tbody>tr.odd>td{
+    color: #fff !important;
+}*/
+.table tr td{
+    padding: 2px 5px !important;
+}
+.badge{
+    border-radius: 0 !important;
+}

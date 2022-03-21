@@ -55,10 +55,10 @@
                                     <small class="text-danger">{{ $errors->first('roles') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-12">
+                                <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-primary btn-submit">Save</button>
                                 </div>
                             </div>
                         </form>

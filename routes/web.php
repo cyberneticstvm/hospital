@@ -43,7 +43,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/roles/', 'App\Http\Controllers\RoleController@index')->name('roles.index');
     Route::get('/roles/create/', 'App\Http\Controllers\RoleController@show');
     Route::post('/roles/create/', 'App\Http\Controllers\RoleController@store')->name('roles.create');
-    Route::get('/roles/{id}/edit/', 'App\Http\Controllers\RoleController@edit');
+    Route::get('/roles/{id}/edit/', 'App\Http\Controllers\RoleController@edit')->name('roles.edit');
     Route::put('/roles/{id}/edit/', 'App\Http\Controllers\RoleController@update')->name('roles.update');
     Route::delete('/roles/{id}/delete/', 'App\Http\Controllers\RoleController@destroy')->name('roles.delete');
     // End Role Route //

@@ -3,7 +3,7 @@
 <div class="card mb-4 border-0">
     <div class="card-body">
         <p class= "text-right my-3"><a href="/user/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
-        <table id="dataTbl" class="table display dataTable table-hover align-middle" style="width:100%">
+        <table id="dataTbl" class="table display dataTable table-striped table-hover align-middle" style="width:100%">
             <thead><tr><th>SL No.</th><th>Name</th><th>Username</th><th>Email</th><th>Roles</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($users as $user)
@@ -15,16 +15,16 @@
                     <td>
                     @if(!empty($user->getRoleNames()))
                         @foreach($user->getRoleNames() as $v)
-                        <span class="badge bg-primary">{{ $v }}</span>
+                        <span class="badge bg-success">{{ $v }}</span>
                         @endforeach
                     @endif
                     </td>
-                    <td><a class='btn btn-link' href="/user/{{ $user->id }}/edit/">Edit</a></td>
+                    <td><a class='btn btn-link' href="{{ route('user.edit', $user->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
                         <form method="post" action="{{ route('user.delete', $user->id) }}">
                             @csrf 
                             @method("DELETE")
-                            <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Role?');">Remove</button>
+                            <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Role?');"><i class="fa fa-trash text-danger"></i></button>
                         </form>
                     </td>
                 </tr>
