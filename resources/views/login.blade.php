@@ -5,9 +5,9 @@
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Devi eye hospital and opticians.">
+    <meta name="description" content="Devi Hospitals and Opticians.">
     <meta name="keyword" content="Devi eye hospitals, eye clinic, eye care, optician">
-    <title>Devi Eye Hospitals</title>
+    <title>Devi Hospitals</title>
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> <!-- Favicon-->
 
     <!-- project css file  -->
@@ -34,7 +34,7 @@
                            @csrf
                             <div class="col-12 text-center mb-5 text-light">
                                 <h1 class="fw-bold">Sign in</h1>
-                                <span class="fs-5">Devi Eye Hospitals.</span>
+                                <span class="fs-5">Devi Hospitals.</span>
                             </div>
                             @if (count($errors) > 0)
                             <div role="alert" class="alert alert-danger">

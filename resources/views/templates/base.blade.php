@@ -5,15 +5,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Devi eye hospital and opticians.">
-    <meta name="keyword" content="Devi eye hospitals, eye clinic, eye care, optician">
-    <title>Devi Eye Hospitals</title>
+    <meta name="description" content="Devi Hospitals and Opticians.">
+    <meta name="keyword" content="Devi hospitals, eye clinic, eye care, optician">
+    <title>Devi Hospitals</title>
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> <!-- Favicon-->
 
     <!-- project css file  -->
-    <link rel="stylesheet" href="/css/al.style.min.css">
+    
     <link rel="stylesheet" href="/css/dataTables.min.css">
     <link rel="stylesheet" href="/css/select2.min.css">
+    <link rel="stylesheet" href="/css/al.style.min.css">
+    <link rel="stylesheet" href="/datepicker/pickadate.css">
+    <link rel="stylesheet" href="/datepicker/daterangepicker.css">
     
     <!-- project layout css file -->
     <link rel="stylesheet" href="/css/layout.q.min.css">
@@ -219,13 +222,14 @@
     <div class="sidebar shadow-sm sticky-xl-top">
         <div class="container">
             <ul class="menu-list">
-                <li><a class="m-link active" href="/dash/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                <li><a class="m-link" href="/dash/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                 <li class="collapsed">
                     <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-user-o"></i> <span>Patient</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>
 
                     <!-- Menu: Sub menu ul -->
                     <ul class="sub-menu collapse" id="menu-Pages">
-                        <li><a class="ms-link" href="/dash/">Patient Registration</a></li>
+                        <li><a class="ms-link" href="/patient/">Patient Register</a></li>
+                        <li><a class="ms-link" href="/dash/">Medical History</a></li>
                         <li><a class="ms-link" href="/dash/">Appointment Scheduler</a></li>
                         <li><a class="ms-link" href="/dash/">Patient Questionaire</a></li>
                         <li><a class="ms-link" href="/dash/">Inpatient Management</a></li>
@@ -241,7 +245,7 @@
                     </ul>
                 </li>
                 <li class="collapsed">
-                    <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-flask"></i> <span>Lab</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>
+                    <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-flask"></i> <span>Department</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>
 
                     <!-- Menu: Sub menu ul -->
                     <ul class="sub-menu collapse" id="menu-Pages">
@@ -328,6 +332,7 @@
                 @yield("create-roles")
                 @yield("edit-roles")
                 @yield("permission")
+                @yield("content")
             </div>
         </div>
 
@@ -498,8 +503,12 @@
 
 <!-- Jquery Core Js -->
 <script src="/bundles/libscripts.bundle.js"></script>
-<script src="/bundles/dataTables.bundle.js"></script>
 <script src="/bundles/select2.bundle.js"></script>
+<script src="/bundles/dataTables.bundle.js"></script>
+<script src="/datepicker/picker.js"></script>
+<script src="/datepicker/picker.date.js"></script>
+<script src="/datepicker/picker.time.js"></script>
+
 
 <!-- Jquery Page Js -->
 <script src="/js/template.js"></script>

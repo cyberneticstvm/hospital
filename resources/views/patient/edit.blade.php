@@ -6,18 +6,19 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">Patient Registration</h5>
+                        <h5 class="mb-0">Update Patient Registration</h5>
                         <span class="text-muted"></span>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('patient.create') }}" method="post">
+                        <form action="{{ route('patient.update', $patient->id) }}" method="post">
                             @csrf
+                            @method("PUT")
                             <div class="row g-4">
                                 <div class="col-sm-4">
                                     <label class="form-label">Patient Name<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ old('patient_name') }}" name="patient_name" class="form-control form-control-md" placeholder="Patient Name">
+                                    <input type="text" value="{{ $patient->patient_name }}" name="patient_name" class="form-control form-control-md" placeholder="Patient Name">
                                     @error('patient_name')
                                     <small class="text-danger">{{ $errors->first('patient_name') }}</small>
                                     @enderror
@@ -26,9 +27,9 @@
                                     <label class="form-label">Gender<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" data-placeholder="Select" name="gender">
                                         <option value="">Select</option>
-                                        <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
-                                        <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
-                                        <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
+                                        <option value="male" {{ $patient->gender == 'male' ? 'selected' : '' }}>Male</option>
+                                        <option value="female" {{ $patient->gender == 'female' ? 'selected' : '' }}>Female</option>
+                                        <option value="other" {{ $patient->gender == 'other' ? 'selected' : '' }}>Other</option>
                                     </select>
                                     @error('gender')
                                     <small class="text-danger">{{ $errors->first('gender') }}</small>
@@ -37,7 +38,7 @@
                                 <div class="col-sm-3">
                                     <label class="form-label">Date of Birth<sup class="text-danger">*</sup></label>
                                     <fieldset class="form-icon-group left-icon position-relative">
-                                        <input type="text" value="{{ old('dob') }}" name="dob" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy">
+                                        <input type="text" value="{{ date('d/M/Y', strtotime($patient->dob)) }}" name="dob" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy">
                                         <div class="form-icon position-absolute">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
                                                 <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
@@ -51,28 +52,28 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Mobile Number<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ old('mobile_number') }}" name="mobile_number" class="form-control form-control-md" placeholder="Mobile Number">
+                                    <input type="text" value="{{ $patient->mobile_number }}" name="mobile_number" class="form-control form-control-md" placeholder="Mobile Number">
                                     @error('mobile_number')
                                     <small class="text-danger">{{ $errors->first('mobile_number') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Email</label>
-                                    <input type="email" value="{{ old('email') }}" name="email" class="form-control form-control-md" placeholder="Email">
+                                    <input type="email" value="{{ $patient->email }}" name="email" class="form-control form-control-md" placeholder="Email">
                                     @error('email')
                                     <small class="text-danger">{{ $errors->first('email') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Contact Person Name</label>
-                                    <input type="text" value="{{ old('contact_person_name') }}" name="contact_person_name" class="form-control form-control-md" placeholder="Contact Person Name">
+                                    <input type="text" value="{{ $patient->contact_person_name }}" name="contact_person_name" class="form-control form-control-md" placeholder="Contact Person Name">
                                     @error('contact_person_name')
                                     <small class="text-danger">{{ $errors->first('contact_person_name') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">Address<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ old('address') }}" name="address" class="form-control form-control-md" placeholder="Address">
+                                    <input type="text" value="{{ $patient->address }}" name="address" class="form-control form-control-md" placeholder="Address">
                                     @error('address')
                                     <small class="text-danger">{{ $errors->first('address') }}</small>
                                     @enderror
@@ -82,7 +83,7 @@
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="city">
                                     <option value="">Select</option>
                                     @foreach($cities as $city)
-                                        <option value="{{ $city->id }}" {{ old('city') == $city->id ? 'selected' : '' }}>{{ $city->city_name }}</option>
+                                        <option value="{{ $city->id }}" {{ $patient->city == $city->id ? 'selected' : '' }}>{{ $city->city_name }}</option>
                                     @endforeach
                                     </select>
                                     @error('city')
@@ -94,7 +95,7 @@
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="state">
                                     <option value="">Select</option>
                                     @foreach($states as $state)
-                                        <option value="{{ $state->id }}" {{ old('state') == $state->id ? 'selected' : '' }}>{{ $state->state_name }}</option>
+                                        <option value="{{ $state->id }}" {{ $patient->state == $state->id ? 'selected' : '' }}>{{ $state->state_name }}</option>
                                     @endforeach
                                     </select>
                                     @error('state')
@@ -106,7 +107,7 @@
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="country">
                                     <option value="">Select</option>
                                     @foreach($countries as $country)
-                                        <option value="{{ $country->id }}" {{ old('country') == $country->id ? 'selected' : '' }}>{{ $country->country_name }}</option>
+                                        <option value="{{ $country->id }}" {{ $patient->country == $country->id ? 'selected' : '' }}>{{ $country->country_name }}</option>
                                     @endforeach
                                     </select>
                                     @error('country')
@@ -116,7 +117,7 @@
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
-                                    <button type="submit" class="btn btn-primary btn-submit">Save</button>
+                                    <button type="submit" class="btn btn-primary btn-submit">Update</button>
                                 </div>
                             </div>
                         </form>

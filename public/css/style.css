@@ -16,3 +16,6 @@
 .badge{
     border-radius: 0 !important;
 }
+.form-control:disabled, .form-control[readonly]{
+    background-color: transparent !important;
+}
