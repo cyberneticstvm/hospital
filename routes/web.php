@@ -56,5 +56,14 @@ Route::group(['middleware' => ['auth']], function(){
     Route::put('/patient/{id}/edit/', 'App\Http\Controllers\PatientRegistrationController@update')->name('patient.update');
     Route::delete('/patient/{id}/delete/', 'App\Http\Controllers\PatientRegistrationController@destroy')->name('patient.delete');
     // End Patient Registration //
+
+    // Doctor Registration//
+    Route::get('/doctor/', 'App\Http\Controllers\DoctorRegistrationController@index')->name('doctor.index');
+    Route::get('/doctor/create/', 'App\Http\Controllers\DoctorRegistrationController@create');
+    Route::post('/doctor/create/', 'App\Http\Controllers\DoctorRegistrationController@store')->name('doctor.create');
+    Route::get('/doctor/{id}/edit/', 'App\Http\Controllers\DoctorRegistrationController@edit')->name('doctor.edit');
+    Route::put('/doctor/{id}/edit/', 'App\Http\Controllers\DoctorRegistrationController@update')->name('doctor.update');
+    Route::delete('/doctor/{id}/delete/', 'App\Http\Controllers\DoctorRegistrationController@destroy')->name('doctor.delete');
+    // End Doctor Registration//
 });
 

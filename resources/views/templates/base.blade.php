@@ -241,7 +241,7 @@
 
                     <!-- Menu: Sub menu ul -->
                     <ul class="sub-menu collapse" id="menu-Authentication">
-                        <li><a class="ms-link" href="/dash/">Register</a></li>
+                        <li><a class="ms-link" href="/doctor/">Doctor Register</a></li>
                     </ul>
                 </li>
                 <li class="collapsed">
