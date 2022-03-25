@@ -1,5 +1,5 @@
 @extends("templates.base")
-@section("create-roles")
+@section("content")
 <div class="body d-flex">
     <div class="container">        
         <div class="row g-4">

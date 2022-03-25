@@ -13,6 +13,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
+    public function getUserBranches(){
+        return $this->hasMany(UserBranch::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +27,7 @@ class User extends Authenticatable
         'email',
         'username',
         'password',
+        'doctor_id',
     ];
 
     /**

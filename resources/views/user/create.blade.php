@@ -1,12 +1,12 @@
 @extends("templates.base")
-@section("create-user")
+@section("content")
 <div class="body d-flex">
     <div class="container">        
         <div class="row g-4">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">User Registration</h5>
+                        <h5 class="mb-0">Add New User</h5>
                         <span class="text-muted"></span>
                     </div>
                 </div>
@@ -53,6 +53,30 @@
                                     </select>
                                     @error('roles')
                                     <small class="text-danger">{{ $errors->first('roles') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Doctor<small class="text-info">(Select if Role is Doctor)</small></label>
+                                    <select class="form-control form-control-md" data-placeholder="Select" name="doctor_id">
+                                    <option value="0">Select</option>
+                                    @foreach($doctors as $doctor)
+                                        <option value="{{ $doctor->id }}" {{ old('doctor_id') == $doctor->id ? 'selected' : '' }}>{{ $doctor->doctor_name }}</option>
+                                    @endforeach
+                                    </select>
+                                    @error('doctor_id')
+                                    <small class="text-danger">{{ $errors->first('doctor_id') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label">Branch<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="branch_id[]">
+                                    <option value="">Select</option>
+                                    @foreach($branches as $br)
+                                        <option value="{{ $br->id }}" {{ old('branch_id') == $br->id ? 'selected' : '' }}>{{ $br->branch_name }}</option>
+                                    @endforeach
+                                    </select>
+                                    @error('branch_id')
+                                    <small class="text-danger">{{ $errors->first('branch_id') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 text-right">

@@ -6,7 +6,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">Doctor Registration</h5>
+                        <h5 class="mb-0">Add New Doctor</h5>
                         <span class="text-muted"></span>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                                     <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="department_id[]">
                                     <option value="">Select</option>
                                     @foreach($departments as $dept)
-                                        <option value="{{ $dept->id }}" {{ old('departments') == $dept->id ? 'selected' : '' }}>{{ $dept->department_name }}</option>
+                                        <option value="{{ $dept->id }}" {{ old('department_id') == $dept->id ? 'selected' : '' }}>{{ $dept->department_name }}</option>
                                     @endforeach
                                     </select>
                                     @error('department_id')

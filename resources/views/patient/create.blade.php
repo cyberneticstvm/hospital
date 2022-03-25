@@ -6,7 +6,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">Patient Registration</h5>
+                        <h5 class="mb-0">Add New Patient</h5>
                         <span class="text-muted"></span>
                     </div>
                 </div>

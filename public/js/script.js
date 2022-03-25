@@ -1,5 +1,10 @@
 $(function() {
     "use strict";
+    var branch = $("#branch_selector").val();
+    if(!branch){
+        $(".branchSelector").modal({backdrop: 'static'});
+        $(".branchSelector").modal("show");
+    }
     $('#dataTbl').dataTable({
         responsive: true
     });

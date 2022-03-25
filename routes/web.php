@@ -24,6 +24,8 @@ Route::group(['middleware' => ['auth']], function(){
         return view('dash');
     })->name('dash');
 
+    Route::post('store_branch_session', 'App\Http\Controllers\AuthController@store_branch_session')->name('store_branch_session');
+
     Route::get('/permission/not-authorized/', function () {
         return view('permission');
     })->name('notauth');
@@ -65,5 +67,11 @@ Route::group(['middleware' => ['auth']], function(){
     Route::put('/doctor/{id}/edit/', 'App\Http\Controllers\DoctorRegistrationController@update')->name('doctor.update');
     Route::delete('/doctor/{id}/delete/', 'App\Http\Controllers\DoctorRegistrationController@destroy')->name('doctor.delete');
     // End Doctor Registration//
+
+    // Patient Reference //
+    Route::get('/consultation/refer_to_department/', 'App\Http\Controllers\PatientReferenceController@index')->name('consultation.patient-reference');
+    Route::get('/consultation/create-patient-reference/{id}/', 'App\Http\Controllers\PatientReferenceController@create');
+    Route::post('/consultation/create-patient-reference/', 'App\Http\Controllers\PatientReferenceController@store')->name('patient_reference.create');
+    // End Patient Reference //
 });
 

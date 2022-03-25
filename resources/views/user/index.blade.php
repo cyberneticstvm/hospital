@@ -1,9 +1,15 @@
 @extends("templates.base")
-@section("user-list")
+@section("content")
+<div class="d-flex flex-wrap justify-content-between align-items-end">
+    <div class="mb-3">
+        <h5 class="mb-0">User Register</h5>
+        <span class="text-muted"></span>
+    </div>
+</div>
 <div class="card mb-4 border-0">
     <div class="card-body">
         <p class= "text-right my-3"><a href="/user/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
-        <table id="dataTbl" class="table display dataTable table-striped table-hover align-middle" style="width:100%">
+        <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
             <thead><tr><th>SL No.</th><th>Name</th><th>Username</th><th>Email</th><th>Roles</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($users as $user)

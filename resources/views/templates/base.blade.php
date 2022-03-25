@@ -198,7 +198,7 @@
                                         <div class="flex-fill ms-3">
                                             <p class="mb-0"><span class="fw-bold">{{ Auth::user()->name }} ({{ Auth::user()->roles->first()->name }})</span></p>
                                             <small class="text-muted">{{ Auth::user()->email }}</small>
-                                            <a href="/logout" class="d-block">Logout</a>
+                                            <a href="/logout/" class="d-block">Logout</a>
                                         </div>
                                     </div>
                                 </div>
@@ -229,11 +229,11 @@
                     <!-- Menu: Sub menu ul -->
                     <ul class="sub-menu collapse" id="menu-Pages">
                         <li><a class="ms-link" href="/patient/">Patient Register</a></li>
-                        <li><a class="ms-link" href="/dash/">Medical History</a></li>
+                        <!--<li><a class="ms-link" href="/dash/">Medical History</a></li>
                         <li><a class="ms-link" href="/dash/">Appointment Scheduler</a></li>
                         <li><a class="ms-link" href="/dash/">Patient Questionaire</a></li>
                         <li><a class="ms-link" href="/dash/">Inpatient Management</a></li>
-                        <li><a class="ms-link" href="/patient/feedback/">Patient Feedback</a></li>
+                        <li><a class="ms-link" href="/patient/feedback/">Patient Feedback</a></li>-->
                     </ul>
                 </li>
                 <li class="collapsed">
@@ -242,17 +242,18 @@
                     <!-- Menu: Sub menu ul -->
                     <ul class="sub-menu collapse" id="menu-Authentication">
                         <li><a class="ms-link" href="/doctor/">Doctor Register</a></li>
+                        <li><a class="ms-link" href="/consultation/refer_to_department/">Reference Register</a></li>
                     </ul>
                 </li>
                 <li class="collapsed">
                     <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-flask"></i> <span>Department</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>
 
                     <!-- Menu: Sub menu ul -->
-                    <ul class="sub-menu collapse" id="menu-Pages">
+                    <!--<ul class="sub-menu collapse" id="menu-Pages">
                         <li><a class="ms-link" href="/dash/">Clinical</a></li>
                         <li><a class="ms-link" href="/dash/">Radiology</a></li>
                         <li><a class="ms-link" href="/dash/">Pharmacy</a></li>
-                    </ul>
+                    </ul>-->
                 </li>
                 <li class="collapsed">
                     <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-user-plus"></i> <span>User</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>
@@ -268,39 +269,39 @@
                     <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-newspaper-o"></i> <span>HR & Payroll</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>
 
                     <!-- Menu: Sub menu ul -->
-                    <ul class="sub-menu collapse" id="menu-Pages">
+                    <!--<ul class="sub-menu collapse" id="menu-Pages">
                         <li><a class="ms-link" href="/dash/">Registration</a></li>
-                    </ul>
+                    </ul>-->
                 </li>
                 <li class="collapsed">
                     <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-server"></i> <span>Administration</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>
 
                     <!-- Menu: Sub menu ul -->
-                    <ul class="sub-menu collapse" id="menu-Pages">
+                    <!--<ul class="sub-menu collapse" id="menu-Pages">
                         <li><a class="ms-link" href="/dash/">Consent Forms</a></li>
                         <li><a class="ms-link" href="/dash/">Room Allotment</a></li>
                         <li><a class="ms-link" href="/dash/">OT Scheduler</a></li>
                         <li><a class="ms-link" href="/dash/">IP Billings</a></li>
                         <li><a class="ms-link" href="/dash/">SMS Configuration</a></li>
                         <li><a class="ms-link" href="/dash/">Email Configuration</a></li>
-                    </ul>
+                    </ul>-->
                 </li>
                 <li class="collapsed">
                     <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-file-o"></i> <span>Reports</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>
 
                     <!-- Menu: Sub menu ul -->
-                    <ul class="sub-menu collapse" id="menu-Pages">
+                    <!--<ul class="sub-menu collapse" id="menu-Pages">
                         <li><a class="ms-link" href="/dash/">Patient</a></li>
                         <li><a class="ms-link" href="/dash/">Consultation</a></li>
-                    </ul>
+                    </ul>-->
                 </li>
                 <li class="collapsed">
                     <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-wrench"></i> <span>Settings</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>
 
                     <!-- Menu: Sub menu ul -->
-                    <ul class="sub-menu collapse" id="menu-Pages">
+                    <!--<ul class="sub-menu collapse" id="menu-Pages">
                         <li><a class="ms-link" href="/dash/">User</a></li>
-                    </ul>
+                    </ul>-->
                 </li>
             </ul>
         </div>
@@ -308,30 +309,9 @@
 
     <!-- main body area -->
     <div class="main px-lg-5 px-md-2">
-
-        <!-- Body: Header -->
-        <div class="body-header d-flex py-3">
-            <div class="container">
-                <div class="row">
-                    <div class="col text-center">
-                        <h5 class="text-primary">{{ isset($title) ? $title : '' }}</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Body: Body -->
         <div class="body d-flex py-lg-4 py-3">
             <div class="container">
-                @yield("user-list")
-                @yield("create-user")
-                @yield("edit-user")
-                @yield("dash")
-                @yield("patient-feedback")
-                @yield("roles")
-                @yield("create-roles")
-                @yield("edit-roles")
-                @yield("permission")
                 @yield("content")
             </div>
         </div>

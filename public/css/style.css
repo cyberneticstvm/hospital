@@ -10,9 +10,9 @@
 /*.table.dataTable.table-striped>tbody>tr.odd>td{
     color: #fff !important;
 }*/
-.table tr td{
-    padding: 2px 5px !important;
-}
+/*.table tr td{
+    padding: 2px 8px !important;
+}*/
 .badge{
     border-radius: 0 !important;
 }
