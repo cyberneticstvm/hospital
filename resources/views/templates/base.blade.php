@@ -277,14 +277,14 @@
                     <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-server"></i> <span>Administration</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>
 
                     <!-- Menu: Sub menu ul -->
-                    <!--<ul class="sub-menu collapse" id="menu-Pages">
-                        <li><a class="ms-link" href="/dash/">Consent Forms</a></li>
-                        <li><a class="ms-link" href="/dash/">Room Allotment</a></li>
-                        <li><a class="ms-link" href="/dash/">OT Scheduler</a></li>
+                    <ul class="sub-menu collapse" id="menu-Pages">
+                        <li><a class="ms-link" href="/branch/">Branch Management</a></li>
+                        <li><a class="ms-link" href="/department/">Department Management</a></li>
+                    <!--    <li><a class="ms-link" href="/dash/">OT Scheduler</a></li>
                         <li><a class="ms-link" href="/dash/">IP Billings</a></li>
                         <li><a class="ms-link" href="/dash/">SMS Configuration</a></li>
-                        <li><a class="ms-link" href="/dash/">Email Configuration</a></li>
-                    </ul>-->
+                        <li><a class="ms-link" href="/dash/">Email Configuration</a></li>-->
+                    </ul>
                 </li>
                 <li class="collapsed">
                     <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-file-o"></i> <span>Reports</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>

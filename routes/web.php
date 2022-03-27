@@ -73,5 +73,27 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/consultation/create-patient-reference/{id}/', 'App\Http\Controllers\PatientReferenceController@create');
     Route::post('/consultation/create-patient-reference/', 'App\Http\Controllers\PatientReferenceController@store')->name('patient_reference.create');
     // End Patient Reference //
+
+    // Branch Registration //
+    Route::get('/branch/', 'App\Http\Controllers\BranchController@index')->name('branch.index');
+    Route::get('/branch/create/', function () {
+        return view('branch.create');
+    })->name('branch.create');
+    Route::post('/branch/create/', 'App\Http\Controllers\BranchController@store')->name('branch.create');
+    Route::get('/branch/{id}/edit/', 'App\Http\Controllers\BranchController@edit')->name('branch.edit');
+    Route::put('/branch/{id}/edit/', 'App\Http\Controllers\BranchController@update')->name('branch.update');
+    Route::delete('/branch/{id}/delete/', 'App\Http\Controllers\BranchController@destroy')->name('branch.delete');
+    // End Branch Registration //
+
+    // Department Registration //
+    Route::get('/department/', 'App\Http\Controllers\DepartmentController@index')->name('department.index');
+    Route::get('/department/create/', function () {
+        return view('department.create');
+    })->name('department.create');
+    Route::post('/department/create/', 'App\Http\Controllers\DepartmentController@store')->name('department.create');
+    Route::get('/department/{id}/edit/', 'App\Http\Controllers\DepartmentController@edit')->name('department.edit');
+    Route::put('/department/{id}/edit/', 'App\Http\Controllers\DepartmentController@update')->name('department.update');
+    Route::delete('/department/{id}/delete/', 'App\Http\Controllers\DepartmentController@destroy')->name('department.delete');
+    // End Department Registration //
 });
 

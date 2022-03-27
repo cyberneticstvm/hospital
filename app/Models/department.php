@@ -10,4 +10,7 @@ class department extends Model
 {
     use HasFactory, HasRoles;
 
+    protected $fillable = [
+        'department_name',
+    ];
 }
