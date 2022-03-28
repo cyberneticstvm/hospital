@@ -4,8 +4,8 @@
     <h1>This is dash page</h1>
     <!-- Modal -->
     <input type="hidden" id="branch_selector" value="{{ Session::get('branch') }}">
-    <div class="modal fade branchSelector" id="staticBackdropLive" data-backdrop="static" data-keyboard="false" tabindex="-1" data-keyboard="false">
-        <div class="modal-dialog">
+    <div class="modal fade branchSelector" id="staticBackdropLive" data-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form method="post" action="{{ route('store_branch_session') }}">
                     @csrf

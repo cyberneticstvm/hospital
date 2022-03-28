@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Devi Hospitals and Opticians.">
     <meta name="keyword" content="Devi hospitals, eye clinic, eye care, optician">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Devi Hospitals</title>
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> <!-- Favicon-->
 
@@ -243,10 +244,11 @@
                     <ul class="sub-menu collapse" id="menu-Authentication">
                         <li><a class="ms-link" href="/doctor/">Doctor Register</a></li>
                         <li><a class="ms-link" href="/consultation/refer_to_department/">Reference Register</a></li>
+                        <li><a class="ms-link" href="/consultation/medical-records/">Medical Records Register</a></li>
                     </ul>
                 </li>
                 <li class="collapsed">
-                    <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-flask"></i> <span>Department</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>
+                    <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Pages" href="#"><i class="fa fa-flask"></i> <span>Lab</span> <span class="arrow fa fa-plus ms-auto text-end"></span></a>
 
                     <!-- Menu: Sub menu ul -->
                     <!--<ul class="sub-menu collapse" id="menu-Pages">
@@ -483,6 +485,7 @@
 
 <!-- Jquery Core Js -->
 <script src="/bundles/libscripts.bundle.js"></script>
+<script src="/js/template.js"></script>
 <script src="/bundles/select2.bundle.js"></script>
 <script src="/bundles/dataTables.bundle.js"></script>
 <script src="/datepicker/picker.js"></script>
@@ -491,9 +494,7 @@
 
 
 <!-- Jquery Page Js -->
-<script src="/js/template.js"></script>
 <script src="/js/script.js"></script>
-<!--<script src="/js/page/index.js"></script>-->
-
+</script>
 </body>
 </html>

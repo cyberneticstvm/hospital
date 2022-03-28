@@ -14,8 +14,8 @@
             @foreach($patients as $patient)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{ $patient->pname }}</td>
-                    <td>{{ $patient->pno }}</td>
+                    <td><a href="/consultation/medical/{{ $patient->reference_id }}">{{ $patient->pname }}</a></td>
+                    <td><a href="/consultation/medical/{{ $patient->reference_id }}">{{ $patient->pno }}</a></td>
                     <td>{{ $patient->doctor_name }}</td>
                     <td><a href=''><i class="fa fa-file text-info"></i></a></td>
                     <td><a href=''><i class="fa fa-file text-primary"></i></a></td>

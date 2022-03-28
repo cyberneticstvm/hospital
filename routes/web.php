@@ -95,5 +95,18 @@ Route::group(['middleware' => ['auth']], function(){
     Route::put('/department/{id}/edit/', 'App\Http\Controllers\DepartmentController@update')->name('department.update');
     Route::delete('/department/{id}/delete/', 'App\Http\Controllers\DepartmentController@destroy')->name('department.delete');
     // End Department Registration //
+
+    // Consultation & Medical Records //
+    Route::get('/consultation/medical/{id}', 'App\Http\Controllers\PatientReferenceController@show')->name('consultation.medical-records');
+    Route::get('/consultation/medical-records/', 'App\Http\Controllers\PatientMedicalRecordController@index')->name('consultation.index');
+    Route::post('/consultation/medical-records/create/', 'App\Http\Controllers\PatientMedicalRecordController@store')->name('medical-records.create');
+    Route::get('/consultation/medical-records/edit/{id}', 'App\Http\Controllers\PatientMedicalRecordController@store')->name('medical-records.edit');
+    Route::delete('/consultation/medical-records/delete/{id}', 'App\Http\Controllers\PatientMedicalRecordController@destroy')->name('medical-records.delete');
+    // End Consultation & Medical Records //
+
+    // Symptoms //
+    Route::get('/symptom/index/{type}', 'App\Http\Controllers\SymptomController@index');
+    Route::post('/symptom/create/{type}', 'App\Http\Controllers\SymptomController@store');
+    // End Symptoms //
 });
 

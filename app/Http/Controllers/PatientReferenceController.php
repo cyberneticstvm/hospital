@@ -27,7 +27,7 @@ class PatientReferenceController extends Controller
      */
     public function index()
     {
-        $patients = DB::table('patient_registrations')->rightJoin('patient_references', 'patient_references.patient_id', '=', 'patient_registrations.id')->leftJoin('doctors', 'patient_references.doctor_id', '=', 'doctors.id')->select('patient_registrations.patient_id as pno', 'patient_registrations.patient_name as pname', 'patient_references.doctor_fee', 'doctors.doctor_name')->get();
+        $patients = DB::table('patient_registrations')->rightJoin('patient_references', 'patient_references.patient_id', '=', 'patient_registrations.id')->leftJoin('doctors', 'patient_references.doctor_id', '=', 'doctors.id')->select('patient_references.id as reference_id', 'patient_registrations.patient_id as pno', 'patient_registrations.patient_name as pname', 'patient_references.doctor_fee', 'doctors.doctor_name')->get();
         //dd($patients);
         return view('consultation.patient-reference', compact('patients'));
     }
@@ -76,7 +76,14 @@ class PatientReferenceController extends Controller
      */
     public function show($id)
     {
-        //
+        $reference = PRef::find($id);
+        $patient = PReg::find($reference->patient_id);
+        $symptoms = DB::table('symptoms')->get();
+        $diagnosis = DB::table('diagnosis')->get();
+        $medicines = DB::table('medicine')->get();
+        $dosages = DB::table('dosages')->get();
+        $doctor = doctor::find($reference->doctor_id);
+        return view('consultation.medical-records', compact('reference', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages'));
     }
 
     /**
