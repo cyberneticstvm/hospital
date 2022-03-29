@@ -24,7 +24,7 @@ class PDFController extends Controller
         $reference = PRef::find($id);
         $patient = DB::table('patient_registrations')->find($reference->patient_id);     
         $doctor = DB::table('doctors')->find($reference->doctor_id);
-        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('string'));     
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));     
         //view()->share('patient', $reference);     
         $pdf = PDF::loadView('/pdf/prescription', compact('reference', 'patient', 'doctor', 'qrcode'));    
         //return $pdf->download('token.pdf');
