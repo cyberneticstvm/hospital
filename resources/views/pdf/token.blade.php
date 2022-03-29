@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Devi Eye Clinic & Opticians</title>
+    <style>
+        .text-center{
+            text-aling: center;
+        }
+        .bordered{
+            border: 1px solid #000;
+        }
+        .title{
+            font-size: 1.5rem;
+        }
+        table>tbody>tr>td{
+            padding-left: 25px;
+        }
+        thead{
+            border-bottom: 1px solid #000;
+        }
+        td{
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <table width="100%" cellpadding='0' cellspacing='0' class='bordered' >
+        <thead>
+            <tr rowspan='2'><th colspan='4' class='text-center title'>Devi Eye Clinic & Opticians</th></tr>
+            <tr><th colspan='4' class='text-center'>Near Police Station, Maithanam, Varkala, Thiruvananthapuram, Phone: +91 470 2611622</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Token No:</td><td></td>
+                <td>MRN</td><td>{{ $reference->id }}</td>
+            </tr>
+            <tr>
+                <td>Patient Name</td><td>{{ $patient->patient_name }}</td>
+                <td>Address</td><td>{{ $patient->address }}</td>
+            </tr>
+            <tr>
+                <td>Gender:</td><td>{{ $patient->gender }}</td>
+                <td>DOB</td><td>{{ $patient->dob }}</td>
+            </tr>
+            <tr>
+                <td>Doctor</td><td>{{ $doctor->doctor_name }}</td>
+                <td>Date</td><td>{{ $reference->created_at }}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

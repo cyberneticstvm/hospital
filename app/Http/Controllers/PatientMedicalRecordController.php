@@ -25,7 +25,7 @@ class PatientMedicalRecordController extends Controller
      */
     public function index()
     {
-        $medical_records = PMRecord::get();
+        $medical_records = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('doctors as doc', 'pmr.doctor_id', '=', 'doc.id')->leftJoin('patient_references as pref', 'pref.id', '=', 'pmr.mrn')->select('pmr.id', 'pmr.mrn', 'pr.patient_name', 'pr.patient_id', 'doc.doctor_name', "pmr.review_date as rdate")->get();
         return view('consultation.index', compact('medical_records'));
     }
 
@@ -65,15 +65,17 @@ class PatientMedicalRecordController extends Controller
         $input['dosage'] = $request->dosage;
         $input['dosage1'] = $request->dosage1;
 
-        /*for($i=0; $i<=count($input['medicine']); $i++):
-            DB::table('patient_medicine_records')->insert([
-                'medical_record_id' => $record->id,
-                'mrn' => $request->mrn,
-                'medicine' => $input['medicine'][$i],
-                'dosage' => $input['dosage'][$i],
-                'dosage1' => $input['dosage1'][$i],
-            ]);
-        endfor;*/
+        for($i=0; $i<count($input['medicine']); $i++):
+            if($input['medicine'][$i] > 0):
+                DB::table('patient_medicine_records')->insert([
+                    'medical_record_id' => $record->id,
+                    'mrn' => $request->mrn,
+                    'medicine' => $input['medicine'][$i],
+                    'dosage' => $input['dosage'][$i],
+                    'dosage1' => $input['dosage1'][$i],
+                ]);
+            endif;
+        endfor;
         
         return redirect()->route('consultation.index')->with('success','Medical Record created successfully');
     }
@@ -120,6 +122,8 @@ class PatientMedicalRecordController extends Controller
      */
     public function destroy($id)
     {
-        //
+        PMRecord::find($id)->delete();
+        return redirect()->route('consultation.index')
+                        ->with('success','Medical Record deleted successfully');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,7 +101,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/consultation/medical/{id}', 'App\Http\Controllers\PatientReferenceController@show')->name('consultation.medical-records');
     Route::get('/consultation/medical-records/', 'App\Http\Controllers\PatientMedicalRecordController@index')->name('consultation.index');
     Route::post('/consultation/medical-records/create/', 'App\Http\Controllers\PatientMedicalRecordController@store')->name('medical-records.create');
-    Route::get('/consultation/medical-records/edit/{id}', 'App\Http\Controllers\PatientMedicalRecordController@store')->name('medical-records.edit');
+    Route::get('/consultation/medical-records/edit/{id}/', 'App\Http\Controllers\PatientMedicalRecordController@edit')->name('medical-records.edit');
+    Route::put('/consultation/medical-records/edit/{id}/', 'App\Http\Controllers\PatientMedicalRecordController@update')->name('medical-records.update');
     Route::delete('/consultation/medical-records/delete/{id}', 'App\Http\Controllers\PatientMedicalRecordController@destroy')->name('medical-records.delete');
     // End Consultation & Medical Records //
 
@@ -108,5 +110,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/symptom/index/{type}', 'App\Http\Controllers\SymptomController@index');
     Route::post('/symptom/create/{type}', 'App\Http\Controllers\SymptomController@store');
     // End Symptoms //
+
+    // PDFs //
+    Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
+    // End PDFs //
 });
 
