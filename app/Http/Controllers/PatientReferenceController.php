@@ -80,7 +80,7 @@ class PatientReferenceController extends Controller
         $patient = PReg::find($reference->patient_id);
         $symptoms = DB::table('symptoms')->get();
         $diagnosis = DB::table('diagnosis')->get();
-        $medicines = DB::table('medicine')->get();
+        $medicines = DB::table('products')->get();
         $dosages = DB::table('dosages')->get();
         $doctor = doctor::find($reference->doctor_id);
         return view('consultation.medical-records', compact('reference', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages'));

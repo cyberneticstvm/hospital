@@ -81,7 +81,7 @@
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_id[]">
                                     <option value="">Select</option>
                                     @foreach($medicines as $med)
-                                        <option value="{{ $med->id }}" {{ old('medicine_id') == $dia->id ? 'selected' : '' }}>{{ $med->medicine_name }}</option>
+                                        <option value="{{ $med->id }}" {{ old('medicine_id') == $dia->id ? 'selected' : '' }}>{{ $med->product_name }}</option>
                                     @endforeach
                                     </select>
                                     @error('medicine_id')

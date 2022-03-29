@@ -24,7 +24,7 @@ class SymptomController extends Controller
             $data = DB::table('diagnosis')->select('id', 'diagnosis_name as name')->get();
         }
         if($type == 'medicine'){
-            $data = DB::table('medicine')->select('id', 'medicine_name as name')->get();
+            $data = DB::table('products')->select('id', 'product_name as name')->get();
         }
         if($type == 'dosage'){
             $data = DB::table('dosages')->select('id', 'dosage as name')->get();

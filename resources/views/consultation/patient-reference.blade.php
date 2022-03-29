@@ -19,7 +19,7 @@
                     <td><a href="/consultation/medical/{{ $patient->reference_id }}">{{ $patient->pno }}</a></td>
                     <td>{{ $patient->doctor_name }}</td>
                     <td><a href='/generate-token/{{ $patient->reference_id }}/' target='_blank'><i class="fa fa-file text-info"></i></a></td>
-                    <td><a href=''><i class="fa fa-file text-primary"></i></a></td>
+                    <td><a href='/generate-prescription/{{ $patient->reference_id }}/' target='_blank'><i class="fa fa-file text-primary"></i></a></td>
                     <td><a href=''><i class="fa fa-file text-success"></i></a></td>
                     <td><a href=""><i class="fa fa-pencil text-warning"></i></a></td>
                     <td><a href=""><i class="fa fa-trash text-danger"></i></a></td>

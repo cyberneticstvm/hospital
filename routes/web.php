@@ -111,8 +111,18 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/symptom/create/{type}', 'App\Http\Controllers\SymptomController@store');
     // End Symptoms //
 
+    // Product //
+    Route::get('/product/', 'App\Http\Controllers\ProductController@index')->name('product.index');
+    Route::get('/product/create/', 'App\Http\Controllers\ProductController@create')->name('product.create');
+    Route::post('/product/create/', 'App\Http\Controllers\ProductController@store')->name('product.create');
+    Route::get('/product/edit/{id}/', 'App\Http\Controllers\ProductController@edit')->name('product.edit');
+    Route::put('/product/edit/{id}/', 'App\Http\Controllers\ProductController@update')->name('product.update');
+    Route::delete('/product/delete/{id}/', 'App\Http\Controllers\ProductController@destroy')->name('product.delete');
+    // End Product //
+
     // PDFs //
     Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
+    Route::get('/generate-prescription/{id}/', [PDFController::class, 'prescription']);
     // End PDFs //
 });
 
