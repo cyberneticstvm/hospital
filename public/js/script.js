@@ -74,6 +74,12 @@ $(function() {
         $('.selMedicine, .selDosage').select2();
         bindDDL('medicine', 'selMedicine'); bindDDL('dosage', 'selDosage');
     });
+
+    $(".medicineRow").click(function(){
+        $(".tblMedicine tbody").append("<tr><td><select class='form-control form-control-md select2 selMedicine' data-placeholder='Select' name='product_id[]' required='required'></select></td><td><input type='number' class='form-control form-control-md text-right' placeholder='0' name='qty[]' required='required' /></td><td><input type='number' class='form-control form-control-md text-right' placeholder='0' name='price[]' required='required' /></td><td><input type='number' class='form-control form-control-md text-right' placeholder='0' name='total[]' required='required' /></td><td><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></a></td></tr>");
+        $('.selMedicine').select2();
+        bindDDL('medicine', 'selMedicine');
+    });
 });
 
 function bindDDL(type, ddl){

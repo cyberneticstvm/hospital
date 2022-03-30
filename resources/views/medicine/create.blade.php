@@ -14,13 +14,41 @@
                     <div class="card-body">
                         <form action="{{ route('medicine.create', $medical_record->id) }}" method="post">
                             @csrf
-                            <input type="hidden" name="pid" value="{{ $patient->id }}"/>
+                            <input type="hidden" name="mid" value="{{ $medical_record->id }}"/>
+                            <input type="hidden" name="mrn" value="{{ $medical_record->mrn }}"/>
                             <div class="row g-4">
                                 <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $medical_record->mrn }}</h5></div>
                                 <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
                                 <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5></div>
-                                
+                                <div class="col-sm-12">
+                                    <p class= "text-right my-3"><a href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success medicineRow"></i></a></p>
+                                    <table class="tblMedicine table table-bordered">
+                                        <thead><tr><th width='50%'>Product</th><th>Qty</th><th>Price</th><th>Total</th><th></th></tr></thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                <select class="form-control form-control-md select2" data-placeholder="Select" name="product_id[]" required='required'>
+                                                <option value="">Select</option>
+                                                @foreach($products as $prod)
+                                                    <option value="{{ $prod->id }}" {{ old('product_id') == $prod->id ? 'selected' : '' }}>{{ $prod->product_name }}</option>
+                                                @endforeach
+                                                </select>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="qty[]" required='required' />
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="price[]" required='required' />
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="total[]" required='required' />
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>

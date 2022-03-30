@@ -40,8 +40,9 @@ class MedicineController extends Controller
         $medical_record = DB::table('patient_medical_records')->find($id);
         $patient = DB::table('patient_registrations')->find($medical_record->patient_id);
         $doctor = DB::table('doctors')->find($medical_record->doctor_id);
+        $products = DB::table('products')->get();
 
-        return view('medicine.create', compact('medical_record', 'patient', 'doctor'));
+        return view('medicine.create', compact('medical_record', 'patient', 'doctor', 'products'));
     }
 
     /**
@@ -52,7 +53,22 @@ class MedicineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        for($i=0; $i<count($input['product_id']); $i++):
+            if($input['product_id'][$i] > 0):
+                DB::table('medicines')->insert([
+                    'medical_record_id' => $request->mid,
+                    'mrn' => $request->mrn,
+                    'product_id' => $input['product_id'][$i],
+                    'qty' => $input['qty'][$i],
+                    'price' => $input['price'][$i],
+                    'total' => $input['total'][$i],
+                ]);
+            endif;
+        endfor;
+
+        return redirect()->route('medicine.index')->with('success','Medicine Record created successfully');
     }
 
     /**
