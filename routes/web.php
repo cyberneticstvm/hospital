@@ -124,5 +124,14 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
     Route::get('/generate-prescription/{id}/', [PDFController::class, 'prescription']);
     // End PDFs //
+
+    // Patient Medicine Records //
+    Route::get('/consultation/medicine-records/', 'App\Http\Controllers\MedicineController@index')->name('medicine.index');
+    Route::get('/consultation/medicine/create/{id}/', 'App\Http\Controllers\MedicineController@create')->name('medicine.create');
+    Route::post('/consultation/medicine/create/{id}/', 'App\Http\Controllers\MedicineController@store')->name('medicine.create');
+    Route::get('/consultation/medicine/edit/{id}/', 'App\Http\Controllers\ProductController@edit')->name('medicine.edit');
+    Route::put('/consultation/medicine/edit/{id}/', 'App\Http\Controllers\ProductController@update')->name('product.update');
+    Route::delete('/consultation/medicine/delete/{id}/', 'App\Http\Controllers\MedicineController@destroy')->name('medicine.delete');
+    // End Patient Medicine Records //
 });
 

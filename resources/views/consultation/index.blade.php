@@ -9,7 +9,7 @@
 <div class="card mb-4 border-0">
     <div class="card-body">
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>MRN</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Medical Record</th><th>Review Date</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>MRN</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Medical Record</th><th>Review Date</th><th>Medicine</th><th>Lab</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($medical_records as $record)
                 <tr>
@@ -20,6 +20,8 @@
                     <td>{{ $record->doctor_name }}</td>
                     <td class="text-center"><a href=""><i class="fa fa-eye text-primary"></i></a></td>
                     <td>{{ $record->rdate }}</td>
+                    <td class="text-center"><a href="{{ route('medicine.create', $record->id) }}"><i class="fa fa-plus text-info"></i></a></td>
+                    <td class="text-center"><a href="/"><i class="fa fa-plus text-info"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('medical-records.edit', $record->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
                         <form method="post" action="{{ route('medical-records.delete', $record->id) }}">
