@@ -2,7 +2,7 @@
 @section("content")
 <div class="d-flex flex-wrap justify-content-between align-items-end">
     <div class="mb-3">
-        <h5 class="mb-0">Patient Reference Register</h5>
+        <h5 class="mb-0">Patient Consultation Register</h5>
         <span class="text-muted"></span>
     </div>
 </div>

@@ -243,7 +243,7 @@
                     <!-- Menu: Sub menu ul -->
                     <ul class="sub-menu collapse" id="menu-Authentication">
                         <li><a class="ms-link" href="/doctor/">Doctor Register</a></li>
-                        <li><a class="ms-link" href="/consultation/refer_to_department/">Reference Register</a></li>
+                        <li><a class="ms-link" href="/consultation/refer_to_department/">Consultation Register</a></li>
                         <li><a class="ms-link" href="/consultation/medical-records/">Medical Records Register</a></li>
                         <li><a class="ms-link" href="/consultation/medicine-records/">Medicine Records Register</a></li>
                         <li><a class="ms-link" href="/consultation/lab-records/">Lab Records Register</a></li>

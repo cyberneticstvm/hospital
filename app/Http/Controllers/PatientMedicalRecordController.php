@@ -55,7 +55,7 @@ class PatientMedicalRecordController extends Controller
             'doctor_recommondations' => 'required',
         ]);
         $input = $request->all();
-        $input['review_date'] = Carbon::createFromFormat('d/M/Y', $request['review_date'])->format('Y-m-d');
+        $input['review_date'] = ($input['review_date']) ? Carbon::createFromFormat('d/M/Y', $request['review_date'])->format('Y-m-d') : NULL;
         $input['symptoms'] = implode(',', $request->symptom_id);
         $input['diagnosis'] = implode(',', $request->diagnosis_id);
         $input['created_by'] = $request->user()->id;
@@ -73,6 +73,7 @@ class PatientMedicalRecordController extends Controller
                     'medicine' => $input['medicine'][$i],
                     'dosage' => $input['dosage'][$i],
                     'dosage1' => $input['dosage1'][$i],
+                    'qty' => $input['qty'][$i],
                 ]);
             endif;
         endfor;
@@ -99,7 +100,15 @@ class PatientMedicalRecordController extends Controller
      */
     public function edit($id)
     {
-        //
+        $record = PMRecord::find($id);
+        $patient = DB::table('patient_registrations')->find($record->patient_id);
+        $symptoms = DB::table('symptoms')->get();
+        $diagnosis = DB::table('diagnosis')->get();
+        $medicines = DB::table('products')->get();
+        $dosages = DB::table('dosages')->get();
+        $doctor = DB::table('doctors')->find($record->doctor_id);
+        $medicine_record = DB::table('patient_medicine_records')->get()->where('mrn', '=', $record->mrn);
+        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record'));
     }
 
     /**
@@ -111,7 +120,42 @@ class PatientMedicalRecordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'symptom_id' => 'required',
+            'patient_complaints' => 'required',
+            'diagnosis_id' => 'required',
+            'doctor_findings' => 'required',
+            'doctor_recommondations' => 'required',
+        ]);
+        $input = $request->all();
+        $input['review_date'] = ($input['review_date']) ? Carbon::createFromFormat('d/M/Y', $request['review_date'])->format('Y-m-d') : NULL;
+        $input['symptoms'] = implode(',', $request->symptom_id);
+        $input['diagnosis'] = implode(',', $request->diagnosis_id);
+        
+        $input['medicine'] = $request->medicine_id;
+        $input['dosage'] = $request->dosage;
+        $input['dosage1'] = $request->dosage1;
+        
+        $input['created_by'] = $request->user()->id;
+        $record = PMRecord::find($id);
+        $input['created_by'] = $record->getOriginal('created_by');
+        $record->update($input);
+        DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
+
+        for($i=0; $i<count($input['medicine']); $i++):
+            if($input['medicine'][$i] > 0):
+                DB::table('patient_medicine_records')->insert([
+                    'medical_record_id' => $record->id,
+                    'mrn' => $request->mrn,
+                    'medicine' => $input['medicine'][$i],
+                    'dosage' => $input['dosage'][$i],
+                    'dosage1' => $input['dosage1'][$i],
+                    'qty' => $input['qty'][$i],
+                ]);
+            endif;
+        endfor;
+        
+        return redirect()->route('consultation.index')->with('success','Medical Record created successfully');
     }
 
     /**

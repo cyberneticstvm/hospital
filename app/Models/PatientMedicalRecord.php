@@ -22,5 +22,7 @@ class PatientMedicalRecord extends Model
         'medicine_list',
         'review_date',
         'created_by',
+        'is_admission',
+        'is_surgery',
     ];
 }

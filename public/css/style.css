@@ -24,3 +24,7 @@
     border-radius: 0;
     border: 1px solid #00bdaa;
 }
+.form-label{
+    font-weight: 600;
+    color: #4c7d93;
+}
