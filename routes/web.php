@@ -133,5 +133,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::put('/consultation/medicine/edit/{id}/', 'App\Http\Controllers\ProductController@update')->name('product.update');
     Route::delete('/consultation/medicine/delete/{id}/', 'App\Http\Controllers\MedicineController@destroy')->name('medicine.delete');
     // End Patient Medicine Records //
+
+    
 });
 
