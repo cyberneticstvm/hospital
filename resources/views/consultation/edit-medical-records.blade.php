@@ -90,51 +90,91 @@
                                     @enderror
                                 </div>
                             </div>
-                                @php $c = 0; @endphp
-                                @foreach($medicine_record as $pmr)
-                                    @php $c++; @endphp
-                                <div class="row mb-3">
-                                    <div class="col-sm-4">
-                                    @if($c == 1)<label class="form-label">Medicine Advise</label>@endif
-                                        <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_id[]">
-                                        <option value="">Select</option>
-                                        @foreach($medicines as $med)
-                                        <option value="{{ $med->id }}" {{ $pmr->medicine == $med->id ? 'selected' : '' }}>{{ $med->product_name }}</option>
-                                        @endforeach
-                                        </select>
-                                        @error('medicine_id')
-                                        <small class="text-danger">{{ $errors->first('medicine_id') }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-sm-3">
-                                    @if($c == 1)<label class="form-label">Dosage</label>@endif
-                                        <input type="text" name="dosage[]" class="form-control form-control-md" value="{{ $pmr->dosage }}" placeholder="Eg: Daily 3 Drops"/>
-                                    </div>
-                                    <div class="col-sm-2">
-                                    @if($c == 1)<label class="form-label">Dosage</label>@endif
-                                        <select class="form-control form-control-md select2" data-placeholder="Select" name="dosage1[]">
-                                        <option value="">Select</option>
-                                        @foreach($dosages as $dos)
-                                            <option value="{{ $dos->id }}" {{ $pmr->dosage1 == $dos->id ? 'selected' : '' }}>{{ $dos->dosage }}</option>
-                                        @endforeach
-                                        </select>
-                                        @error('dosage_id')
-                                        <small class="text-danger">{{ $errors->first('dosage_id') }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="col-sm-2">
-                                    @if($c == 1)<label class="form-label">Qty / NOs.</label>@endif
-                                        <input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' value="{{ $pmr->qty }}" />
-                                    </div>
-                                    @if($c == 1)
+                                @if($medicine_record->isEmpty())
+                                    <div class="row mb-3">
+                                        <div class="col-sm-4">
+                                            <label class="form-label">Medicine Advise</label>
+                                            <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_id[]">
+                                            <option value="">Select</option>
+                                            @foreach($medicines as $med)
+                                                <option value="{{ $med->id }}" {{ old('medicine_id') == $dia->id ? 'selected' : '' }}>{{ $med->product_name }}</option>
+                                            @endforeach
+                                            </select>
+                                            @error('medicine_id')
+                                            <small class="text-danger">{{ $errors->first('medicine_id') }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="form-label">Dosage</label>
+                                            <input type="text" name="dosage[]" class="form-control form-control-md" placeholder="Eg: Daily 3 Drops"/>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label class="form-label">Dosage</label>
+                                            <select class="form-control form-control-md select2" data-placeholder="Select" name="dosage1[]">
+                                            <option value="">Select</option>
+                                            @foreach($dosages as $dos)
+                                                <option value="{{ $dos->id }}" {{ old('dosage_id') == $dia->id ? 'selected' : '' }}>{{ $dos->dosage }}</option>
+                                            @endforeach
+                                            </select>
+                                            @error('dosage_id')
+                                            <small class="text-danger">{{ $errors->first('dosage_id') }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label class="form-label">Qty / NOs.</label>
+                                            <input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' />
+                                        </div>
                                         <div class="col-sm-1">
                                             <a class="medicineAdvise" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i><a>                                    
                                         </div>
-                                    @else
-                                        <div class="col-sm-1"><i class="fa fa-trash text-danger" style="cursor:pointer" onClick="$(this).parent().parent().remove();"></i></div>  
-                                    @endif
-                                </div>  
-                                @endforeach
+                                    </div>
+                                @else
+                                    @php $c = 0; @endphp
+                                    @foreach($medicine_record as $pmr)
+                                        @php $c++; @endphp
+                                    <div class="row mb-3">
+                                        <div class="col-sm-4">
+                                        @if($c == 1)<label class="form-label">Medicine Advise</label>@endif
+                                            <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_id[]">
+                                            <option value="">Select</option>
+                                            @foreach($medicines as $med)
+                                            <option value="{{ $med->id }}" {{ $pmr->medicine == $med->id ? 'selected' : '' }}>{{ $med->product_name }}</option>
+                                            @endforeach
+                                            </select>
+                                            @error('medicine_id')
+                                            <small class="text-danger">{{ $errors->first('medicine_id') }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-3">
+                                        @if($c == 1)<label class="form-label">Dosage</label>@endif
+                                            <input type="text" name="dosage[]" class="form-control form-control-md" value="{{ $pmr->dosage }}" placeholder="Eg: Daily 3 Drops"/>
+                                        </div>
+                                        <div class="col-sm-2">
+                                        @if($c == 1)<label class="form-label">Dosage</label>@endif
+                                            <select class="form-control form-control-md select2" data-placeholder="Select" name="dosage1[]">
+                                            <option value="">Select</option>
+                                            @foreach($dosages as $dos)
+                                                <option value="{{ $dos->id }}" {{ $pmr->dosage1 == $dos->id ? 'selected' : '' }}>{{ $dos->dosage }}</option>
+                                            @endforeach
+                                            </select>
+                                            @error('dosage_id')
+                                            <small class="text-danger">{{ $errors->first('dosage_id') }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-2">
+                                        @if($c == 1)<label class="form-label">Qty / NOs.</label>@endif
+                                            <input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' value="{{ $pmr->qty }}" />
+                                        </div>
+                                        @if($c == 1)
+                                            <div class="col-sm-1">
+                                                <a class="medicineAdvise" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i><a>                                    
+                                            </div>
+                                        @else
+                                            <div class="col-sm-1"><i class="fa fa-trash text-danger" style="cursor:pointer" onClick="$(this).parent().parent().remove();"></i></div>  
+                                        @endif
+                                    </div>  
+                                    @endforeach
+                                @endif
                                 <div class="medicineAdviseContainer"></div>
                             <div class="row">
                                 <div class="col-sm-12">

@@ -65,18 +65,20 @@ class PatientMedicalRecordController extends Controller
         $input['dosage'] = $request->dosage;
         $input['dosage1'] = $request->dosage1;
 
-        for($i=0; $i<count($input['medicine']); $i++):
-            if($input['medicine'][$i] > 0):
-                DB::table('patient_medicine_records')->insert([
-                    'medical_record_id' => $record->id,
-                    'mrn' => $request->mrn,
-                    'medicine' => $input['medicine'][$i],
-                    'dosage' => $input['dosage'][$i],
-                    'dosage1' => $input['dosage1'][$i],
-                    'qty' => $input['qty'][$i],
-                ]);
-            endif;
-        endfor;
+        if($input['medicine']):
+            for($i=0; $i<count($input['medicine']); $i++):
+                if($input['medicine'][$i] > 0):
+                    DB::table('patient_medicine_records')->insert([
+                        'medical_record_id' => $record->id,
+                        'mrn' => $request->mrn,
+                        'medicine' => $input['medicine'][$i],
+                        'dosage' => $input['dosage'][$i],
+                        'dosage1' => $input['dosage1'][$i],
+                        'qty' => $input['qty'][$i],
+                    ]);
+                endif;
+            endfor;
+        endif;
         
         return redirect()->route('consultation.index')->with('success','Medical Record created successfully');
     }
@@ -135,25 +137,27 @@ class PatientMedicalRecordController extends Controller
         $input['medicine'] = $request->medicine_id;
         $input['dosage'] = $request->dosage;
         $input['dosage1'] = $request->dosage1;
-        
+
         $input['created_by'] = $request->user()->id;
         $record = PMRecord::find($id);
         $input['created_by'] = $record->getOriginal('created_by');
         $record->update($input);
         DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
 
-        for($i=0; $i<count($input['medicine']); $i++):
-            if($input['medicine'][$i] > 0):
-                DB::table('patient_medicine_records')->insert([
-                    'medical_record_id' => $record->id,
-                    'mrn' => $request->mrn,
-                    'medicine' => $input['medicine'][$i],
-                    'dosage' => $input['dosage'][$i],
-                    'dosage1' => $input['dosage1'][$i],
-                    'qty' => $input['qty'][$i],
-                ]);
-            endif;
-        endfor;
+        if($input['medicine']):
+            for($i=0; $i<count($input['medicine']); $i++):
+                if($input['medicine'][$i] > 0):
+                    DB::table('patient_medicine_records')->insert([
+                        'medical_record_id' => $record->id,
+                        'mrn' => $request->mrn,
+                        'medicine' => $input['medicine'][$i],
+                        'dosage' => $input['dosage'][$i],
+                        'dosage1' => $input['dosage1'][$i],
+                        'qty' => $input['qty'][$i],
+                    ]);
+                endif;
+            endfor;
+        endif;
         
         return redirect()->route('consultation.index')->with('success','Medical Record created successfully');
     }
