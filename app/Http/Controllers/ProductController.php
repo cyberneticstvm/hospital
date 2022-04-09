@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = DB::table('products as p')->leftJoin('product_categories as c', 'p.category_id', '=', 'c.id')->select('p.id', 'p.product_name', 'p.product_price', 'c.category_name')->get();
+        $products = DB::table('products as p')->leftJoin('product_categories as c', 'p.category_id', '=', 'c.id')->select('p.id', 'p.product_name', 'p.hsn', 'c.category_name')->get();
         return view('product.index', compact('products'));
     }
 
@@ -51,9 +51,9 @@ class ProductController extends Controller
         $this->validate($request, [
             'product_name' => 'required',
             'category_id' => 'required',
-            'product_price' => 'required',
         ]);
         $input = $request->all();
+        $input['available_for_consultation'] = ($request->has('available_for_consultation')) ? 1 : 0;
         $product = Product::create($input);
         return redirect()->route('product.index')->with('success','Product created successfully');
     }
@@ -94,9 +94,9 @@ class ProductController extends Controller
         $this->validate($request, [
             'product_name' => 'required',
             'category_id' => 'required',
-            'product_price' => 'required',
         ]);
         $input = $request->all();
+        $input['available_for_consultation'] = ($request->has('available_for_consultation')) ? 1 : 0;
         $product = Product::find($id);
         $product->update($input);
         

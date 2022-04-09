@@ -120,19 +120,37 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/product/delete/{id}/', 'App\Http\Controllers\ProductController@destroy')->name('product.delete');
     // End Product //
 
-    // PDFs //
-    Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
-    Route::get('/generate-prescription/{id}/', [PDFController::class, 'prescription']);
-    // End PDFs //
-
     // Patient Medicine Records //
     Route::get('/consultation/medicine-records/', 'App\Http\Controllers\MedicineController@index')->name('medicine.index');
     Route::get('/consultation/medicine/create/{id}/', 'App\Http\Controllers\MedicineController@create')->name('medicine.create');
     Route::post('/consultation/medicine/create/{id}/', 'App\Http\Controllers\MedicineController@store')->name('medicine.create');
-    Route::get('/consultation/medicine/edit/{id}/', 'App\Http\Controllers\ProductController@edit')->name('medicine.edit');
-    Route::put('/consultation/medicine/edit/{id}/', 'App\Http\Controllers\ProductController@update')->name('product.update');
+    Route::get('/consultation/medicine/edit/{id}/', 'App\Http\Controllers\MedicineController@edit')->name('medicine.edit');
+    Route::put('/consultation/medicine/edit/{id}/', 'App\Http\Controllers\MedicineController@update')->name('medicine.update');
     Route::delete('/consultation/medicine/delete/{id}/', 'App\Http\Controllers\MedicineController@destroy')->name('medicine.delete');
     // End Patient Medicine Records //
+
+    // supplier //
+    Route::get('/supplier/', 'App\Http\Controllers\SupplierController@index')->name('supplier.index');
+    Route::get('/supplier/create/', 'App\Http\Controllers\SupplierController@create')->name('supplier.create');
+    Route::post('/supplier/create/', 'App\Http\Controllers\SupplierController@store')->name('supplier.save');
+    Route::get('/supplier/edit/{id}/', 'App\Http\Controllers\SupplierController@edit')->name('supplier.edit');
+    Route::put('/supplier/edit/{id}/', 'App\Http\Controllers\SupplierController@update')->name('supplier.update');
+    Route::delete('/supplier/delete/{id}/', 'App\Http\Controllers\SupplierController@destroy')->name('supplier.delete');
+    // End supplier //
+
+    // purchase //
+    Route::get('/purchase/', 'App\Http\Controllers\PurchaseController@index')->name('purchase.index');
+    Route::get('/purchase/create/', 'App\Http\Controllers\PurchaseController@create')->name('purchase.create');
+    Route::post('/purchase/create/', 'App\Http\Controllers\PurchaseController@store')->name('purchase.save');
+    Route::get('/purchase/edit/{id}/', 'App\Http\Controllers\PurchaseController@edit')->name('purchase.edit');
+    Route::put('/purchase/edit/{id}/', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update');
+    Route::delete('/purchase/delete/{id}/', 'App\Http\Controllers\PurchaseController@destroy')->name('purchase.delete');
+    // End purchase //
+
+    // PDFs //
+    Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
+    Route::get('/generate-prescription/{id}/', [PDFController::class, 'prescription']);
+    // End PDFs //
 
     
 });

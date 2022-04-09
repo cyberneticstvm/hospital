@@ -159,7 +159,7 @@ class PatientMedicalRecordController extends Controller
             endfor;
         endif;
         
-        return redirect()->route('consultation.index')->with('success','Medical Record created successfully');
+        return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
 
     /**

@@ -23,8 +23,8 @@ return new class extends Migration
             $table->text('doctor_findings')->nullable()->change();
             $table->text('doctor_recommondations')->nullable()->change();
 
-            $table->boolean('is_admission')->default('0');
-            $table->boolean('is_surgery')->default('0');
+            //$table->boolean('is_admission')->default('0');
+            //$table->boolean('is_surgery')->default('0');
         });
     }
 

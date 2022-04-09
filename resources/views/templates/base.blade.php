@@ -284,7 +284,9 @@
                     <ul class="sub-menu collapse" id="menu-Pages">
                         <li><a class="ms-link" href="/branch/">Branch Management</a></li>
                         <li><a class="ms-link" href="/department/">Department Management</a></li>
+                        <li><a class="ms-link" href="/supplier/">Supplier Management</a></li>
                         <li><a class="ms-link" href="/product/">Product Management</a></li>
+                        <li><a class="ms-link" href="/purchase/">Purchases</a></li>
                     <!--    <li><a class="ms-link" href="/dash/">OT Scheduler</a></li>
                         <li><a class="ms-link" href="/dash/">IP Billings</a></li>
                         <li><a class="ms-link" href="/dash/">SMS Configuration</a></li>

@@ -16,7 +16,7 @@
                             @csrf
                             @method("PUT")
                             <div class="row g-4">
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <label class="form-label">Product Name<sup class="text-danger">*</sup></label>
                                     <input type="text" value="{{ $product->product_name }}" name="product_name" class="form-control form-control-md" placeholder="Product Name">
                                     @error('product_name')
@@ -35,12 +35,16 @@
                                     <small class="text-danger">{{ $errors->first('category_id') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-4">
-                                    <label class="form-label">Product Price<sup class="text-danger">*</sup></label>
-                                    <input type="number" value="{{ $product->product_price }}" name="product_price" class="form-control form-control-md" placeholder="0.00">
-                                    @error('product_price')
-                                    <small class="text-danger">{{ $errors->first('product_price') }}</small>
+                                <div class="col-sm-2">
+                                    <label class="form-label">HSN<sup class="text-danger">*</sup></label>
+                                    <input type="text" value="{{ $product->hsn }}" name="hsn" class="form-control form-control-md" placeholder="0.00">
+                                    @error('hsn')
+                                    <small class="text-danger">{{ $errors->first('hsn') }}</small>
                                     @enderror
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Available for Consultation</label></br>
+                                    <input type="checkbox" value="1" name="available_for_consultation" class="form-check-input" {{ ($product->available_for_consultation == 1) ? "checked='checked'" : ""}}>
                                 </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>

@@ -26,26 +26,28 @@
                                     <table class="tblMedicine table table-bordered">
                                         <thead><tr><th width='50%'>Product</th><th>Qty</th><th>Price</th><th>Total</th><th></th></tr></thead>
                                         <tbody>
+                                            @foreach($medicines as $medicine)
                                             <tr>
                                                 <td>
                                                 <select class="form-control form-control-md select2" data-placeholder="Select" name="product_id[]" required='required'>
                                                 <option value="">Select</option>
                                                 @foreach($products as $prod)
-                                                    <option value="{{ $prod->id }}" {{ old('product_id') == $prod->id ? 'selected' : '' }}>{{ $prod->product_name }}</option>
+                                                    <option value="{{ $prod->id }}" {{ $medicine->medicine == $prod->id ? 'selected' : '' }}>{{ $prod->product_name }}</option>
                                                 @endforeach
                                                 </select>
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="qty[]" required='required' />
+                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="qty[]" value="{{ $medicine->qty }}" required='required' />
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="price[]" required='required' />
+                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="price[]" value="{{ $medicine->price }}" required='required' />
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="total[]" required='required' />
+                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="total[]" value="{{ $medicine->total }}" required='required' />
                                                 </td>
                                                 <td></td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

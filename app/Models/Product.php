@@ -13,6 +13,7 @@ class Product extends Model
     protected $fillable = [
         'category_id',
         'product_name',
-        'product_price',
+        'hsn',
+        'available_for_consultation',
     ];
 }
