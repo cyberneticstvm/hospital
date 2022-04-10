@@ -24,7 +24,7 @@
                             <div class="row g-4">
                                 <div class="col-sm-6">
                                     <label class="form-label">Product Name<sup class="text-danger">*</sup></label>
-                                    <select class="form-control form-control-md" data-placeholder="Select" name="product" required='required'>
+                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="product" required='required'>
                                     <option value="">Select</option>
                                     @foreach($products as $product)
                                         <option value="{{ $product->id }}" {{ old('product') == $product->id ? 'selected' : '' }}>{{ $product->product_name }}</option>
