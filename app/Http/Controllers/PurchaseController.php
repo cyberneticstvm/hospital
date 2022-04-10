@@ -3,12 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\Models\Purchase;
 use Carbon\Carbon;
 use DB;
 
 class PurchaseController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:purchase-list|purchase-create|purchase-edit|purchase-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:purchase-create', ['only' => ['create','store']]);
+         $this->middleware('permission:purchase-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:purchase-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
