@@ -26,7 +26,7 @@ class ProductTransferController extends Controller
      */
     public function index()
     {
-        $transfers = DB::table('product_transfers as t')->leftJoin('products as p', 't.product', '=', 'p.id')->leftJoin('branches as b', 't.from_branch', '=', 'b.id')->leftJoin('branches as b1', 't.to_branch', '=', 'b1.id')->select('p.product_name', 't.id', 't.qty', 't.batch_number', 't.transfer_note as tnote', 'b.branch_name as from_branch', 'b1.branch_name as to_branch', 'transfer_date as tdate')->orderBy('t.transfer_date','DESC')->get();
+        $transfers = DB::table('product_transfers AS t')->leftJoin('branches AS b', 't.from_branch', '=', 'b.id')->leftJoin('branches AS b1', 't.to_branch', '=', 'b1.id')->select('t.id', 't.transfer_note AS tnote', DB::raw("IFNULL('Main Stock', b.branch_name) AS from_branch"), 'b1.branch_name AS to_branch', 't.transfer_date AS tdate')->orderBy('t.transfer_date','DESC')->get();
         return view('product-transfer.index', compact('transfers'));
     }
 
@@ -51,23 +51,34 @@ class ProductTransferController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'product' => 'required',
             'from_branch' => 'required',
             'to_branch' => 'required',
-            'qty' => 'required',
             'transfer_date' => 'required',
         ]);
         $input = $request->all();
         $input['transfer_date'] = (!empty($request->transfer_date)) ? Carbon::createFromFormat('d/M/Y', $request['transfer_date'])->format('Y-m-d') : NULL;        
         $input['created_by'] = $request->user()->id;
-
-        $available_qty = Helper::getAvailableStock($request->product, $request->batch_number, $request->from_branch);
+        $transfer = ProductTransfer::create($input);
+        if($input['product']):
+            for($i=0; $i<count($input['product']); $i++):
+                if($input['product'][$i] > 0):
+                    DB::table('product_transfer_details')->insert([
+                        'transfer_id' => $transfer->id,
+                        'product' => $input['product'][$i],
+                        'batch_number' => $input['batch_number'][$i],
+                        'qty' => $input['qty'][$i],
+                    ]);
+                endif;
+            endfor;
+        endif;
+        return redirect()->route('product-transfer.index')->with('success','Product Transferred successfully');
+        /*$available_qty = Helper::getAvailableStock($request->product, $request->batch_number, $request->from_branch);
         if($available_qty >= $request->qty):
             $transfer = ProductTransfer::create($input);
             return redirect()->route('product-transfer.index')->with('success','Product Transferred successfully');
         else:
             return redirect("/product-transfer/create/")->withErrors('Insufficient Quantity');
-        endif;
+        endif;*/
     }
 
     /**
@@ -92,7 +103,8 @@ class ProductTransferController extends Controller
         $transfer = ProductTransfer::find($id);
         $branches = DB::table('branches')->get();
         $products = DB::table('products')->get();
-        return view('product-transfer.edit', compact('transfer','branches', 'products'));
+        $transfer_details = DB::table('product_transfer_details')->get();
+        return view('product-transfer.edit', compact('transfer','branches', 'products', 'transfer_details'));
     }
 
     /**
@@ -105,10 +117,8 @@ class ProductTransferController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'product' => 'required',
             'from_branch' => 'required',
             'to_branch' => 'required',
-            'qty' => 'required',
             'transfer_date' => 'required',
         ]);
         $input = $request->all();
@@ -118,13 +128,28 @@ class ProductTransferController extends Controller
         $input['created_by'] = $transfer->getOriginal('created_by');
         $transfer->update($input);
 
-        $available_qty = Helper::getAvailableStock($request->product, $request->batch_number, $request->from_branch);
+        DB::table("product_transfer_details")->where('transfer_id', $id)->delete();
+
+        if($input['product']):
+            for($i=0; $i<count($input['product']); $i++):
+                if($input['product'][$i] > 0):
+                    DB::table('product_transfer_details')->insert([
+                        'transfer_id' => $transfer->id,
+                        'product' => $input['product'][$i],
+                        'batch_number' => $input['batch_number'][$i],
+                        'qty' => $input['qty'][$i],
+                    ]);
+                endif;
+            endfor;
+        endif;
+        return redirect()->route('product-transfer.index')->with('success','Product Transfer Updated successfully');
+        /*$available_qty = Helper::getAvailableStock($request->product, $request->batch_number, $request->from_branch);
         if($available_qty >= $request->qty):
             $transfer = ProductTransfer::create($input);
             return redirect()->route('product-transfer.index')->with('success','Product Transfer Updated successfully');
         else:
             return redirect("/product-transfer/edit/".$id)->withErrors('Insufficient Quantity');
-        endif;
+        endif;*/
     }
 
     /**

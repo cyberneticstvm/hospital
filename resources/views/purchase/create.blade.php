@@ -16,18 +16,6 @@
                             @csrf
                             <div class="row g-4">
                                 <div class="col-sm-6">
-                                    <label class="form-label">Product<sup class="text-danger">*</sup></label>
-                                    <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="product">
-                                    <option value="">Select</option>
-                                    @foreach($products as $product)
-                                        <option value="{{ $product->id }}" {{ old('product') == $product->id ? 'selected' : '' }}>{{ $product->product_name }}</option>
-                                    @endforeach
-                                    </select>
-                                    @error('product')
-                                    <small class="text-danger">{{ $errors->first('product') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-6">
                                     <label class="form-label">Supplier<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="supplier">
                                     <option value="">Select</option>
@@ -76,27 +64,35 @@
                                     <small class="text-danger">{{ $errors->first('invoice_number') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-9 text-right">
+                                    <p class= "text-right my-3"><a href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success addPurchaseRow"></i></a></p>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-5">
+                                    <label class="form-label">Product<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md show-tick ms select2 selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
+                                    <option value="">Select</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}" {{ old('product') == $product->id ? 'selected' : '' }}>{{ $product->product_name }}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Batch Number<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ old('batch_number') }}" name="batch_number" class="form-control form-control-md" placeholder="Batch Number">
-                                    @error('batch_number')
-                                    <small class="text-danger">{{ $errors->first('batch_number') }}</small>
-                                    @enderror
+                                    <input type="text" name="batch_number[]" class="form-control form-control-md" placeholder="Batch Number" required='required'>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-1">
                                     <label class="form-label">Qty<sup class="text-danger">*</sup></label>
-                                    <input type="number" value="{{ old('qty') }}" name="qty" class="form-control form-control-md" placeholder="0">
-                                    @error('qty')
-                                    <small class="text-danger">{{ $errors->first('qty') }}</small>
-                                    @enderror
+                                    <input type="number" name="qty[]" class="form-control form-control-md" placeholder="0" required='required'>
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">Price/Qty<sup class="text-danger">*</sup></label>
-                                    <input type="number" value="{{ old('price') }}" name="price" class="form-control form-control-md" placeholder="0.00">
-                                    @error('price')
-                                    <small class="text-danger">{{ $errors->first('price') }}</small>
-                                    @enderror
+                                    <input type="number" name="price[]" class="form-control form-control-md" placeholder="0.00" required='required'>
                                 </div>
+                            </div>
+                            <div class="purchaseRow"></div>
+                            <div class="row mt-3">
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>

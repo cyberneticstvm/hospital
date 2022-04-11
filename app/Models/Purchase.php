@@ -11,15 +11,10 @@ class Purchase extends Model
     use HasFactory, HasRoles;
 
     protected $fillable = [
-        'product',
         'supplier',
         'order_date',
         'delivery_date',
         'invoice_number',
-        'qty',
-        'price',
-        'total',
-        'batch_number',
         'created_by',
     ];
 }

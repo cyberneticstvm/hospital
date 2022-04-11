@@ -11,11 +11,8 @@ class ProductTransfer extends Model
     use HasFactory, HasRoles;
 
     protected $fillable = [
-        'product',
         'from_branch',
         'to_branch',
-        'qty',
-        'batch_number',
         'transfer_date',
         'transfer_note',
         'created_by',

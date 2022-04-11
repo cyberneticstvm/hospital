@@ -25,7 +25,7 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        $purchases = DB::table('purchases as p')->leftJoin('products as pr', 'p.product', '=', 'pr.id')->leftJoin('suppliers as s', 'p.supplier', '=', 's.id')->select('p.*', 'pr.product_name', 's.name as supplier_name')->orderBy('p.created_at','DESC')->get();
+        $purchases = Purchase::leftJoin('suppliers as s', 'purchases.supplier', '=', 's.id')->select('purchases.id', 'purchases.invoice_number', 'purchases.order_date', 'purchases.delivery_date', 's.name')->orderBy('purchases.created_at','DESC')->get();
         return view('purchase.index', compact('purchases'));
     }
 
@@ -59,8 +59,21 @@ class PurchaseController extends Controller
         $input['order_date'] = (!empty($request->order_date)) ? Carbon::createFromFormat('d/M/Y', $request['order_date'])->format('Y-m-d') : NULL;
         $input['delivery_date'] = (!empty($request->delivery_date)) ? Carbon::createFromFormat('d/M/Y', $request['delivery_date'])->format('Y-m-d') : NULL;
         $input['created_by'] = $request->user()->id;
-        $input['total'] = $input['qty']*$input['price'];
         $purchase = Purchase::create($input);
+        if($input['product']):
+            for($i=0; $i<count($input['product']); $i++):
+                if($input['product'][$i] > 0):
+                    DB::table('purchase_details')->insert([
+                        'purchase_id' => $purchase->id,
+                        'product' => $input['product'][$i],
+                        'batch_number' => $input['batch_number'][$i],
+                        'qty' => $input['qty'][$i],
+                        'price' => $input['price'][$i],
+                        'total' => $input['qty'][$i]*$input['price'][$i],
+                    ]);
+                endif;
+            endfor;
+        endif;
         return redirect()->route('purchase.index')->with('success','Purchase recorded successfully');
     }
 
@@ -86,7 +99,8 @@ class PurchaseController extends Controller
         $products = DB::table('products')->get();
         $suppliers = DB::table('suppliers')->get();
         $purchase = Purchase::find($id);
-        return view('purchase.edit', compact('products', 'suppliers', 'purchase'));
+        $purchase_details = DB::table('purchase_details')->where('purchase_id', '=', $id)->get();
+        return view('purchase.edit', compact('products', 'suppliers', 'purchase', 'purchase_details'));
     }
 
     /**
@@ -109,8 +123,22 @@ class PurchaseController extends Controller
         $input['delivery_date'] = (!empty($request->delivery_date)) ? Carbon::createFromFormat('d/M/Y', $request['delivery_date'])->format('Y-m-d') : NULL;
         $purchase = Purchase::find($id);
         $input['created_by'] = $purchase->getOriginal('created_by');
-        $input['total'] = $input['qty']*$input['price'];
         $purchase->update($input);
+        DB::table("purchase_details")->where('purchase_id', $purchase->id)->delete();
+        if($input['product']):
+            for($i=0; $i<count($input['product']); $i++):
+                if($input['product'][$i] > 0):
+                    DB::table('purchase_details')->insert([
+                        'purchase_id' => $purchase->id,
+                        'product' => $input['product'][$i],
+                        'batch_number' => $input['batch_number'][$i],
+                        'qty' => $input['qty'][$i],
+                        'price' => $input['price'][$i],
+                        'total' => $input['qty'][$i]*$input['price'][$i],
+                    ]);
+                endif;
+            endfor;
+        endif;
         return redirect()->route('purchase.index')->with('success','Purchase record updated successfully');
     }
 

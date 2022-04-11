@@ -10,19 +10,16 @@
     <div class="card-body">
         <p class= "text-right my-3"><a href="/purchase/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         <table id="dataTbl" class="table display dataTable table-striped table-sm table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>Product</th><th>Supplier</th><th>Batch Number</th><th>Order On</th><th>Delivery On</th><th>Qty</th><th>Price</th><th>Total</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>Supplier</th><th>Invoice Number</th><th>Order On</th><th>Delivery On</th><th>View</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($purchases as $purchase)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{ $purchase->product_name }}</td>
-                    <td>{{ $purchase->supplier_name }}</td>
-                    <td>{{ $purchase->batch_number }}</td>
+                    <td>{{ $purchase->name }}</td>
                     <td>{{ ($purchase->order_date) ? date('d/M/Y', strtotime($purchase->order_date)) : '' }}</td>
                     <td>{{ ($purchase->delivery_date) ? date('d/M/Y', strtotime($purchase->delivery_date)) : '' }}</td>
-                    <td>{{ $purchase->qty }}</td>
-                    <td>{{ $purchase->price }}</td>
-                    <td>{{ $purchase->total }}</td>
+                    <td>{{ $purchase->invoice_number }}</td>
+                    <td><a class='btn btn-link' href="/"><i class="fa fa-eye text-warning"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('purchase.edit', $purchase->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
                         <form method="post" action="{{ route('purchase.delete', $purchase->id) }}">

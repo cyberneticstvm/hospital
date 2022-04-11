@@ -22,18 +22,6 @@
                         <form action="{{ route('product-transfer.save') }}" method="post">
                             @csrf
                             <div class="row g-4">
-                                <div class="col-sm-6">
-                                    <label class="form-label">Product Name<sup class="text-danger">*</sup></label>
-                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="product" required='required'>
-                                    <option value="">Select</option>
-                                    @foreach($products as $product)
-                                        <option value="{{ $product->id }}" {{ old('product') == $product->id ? 'selected' : '' }}>{{ $product->product_name }}</option>
-                                    @endforeach
-                                    </select>
-                                    @error('product')
-                                    <small class="text-danger">{{ $errors->first('product') }}</small>
-                                    @enderror
-                                </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">From Branch<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" data-placeholder="Select" name="from_branch" required='required'>
@@ -58,20 +46,6 @@
                                     <small class="text-danger">{{ $errors->first('to_branch') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-2">
-                                    <label class="form-label">Qty<sup class="text-danger">*</sup></label>
-                                    <input type="number" value="{{ old('qty') }}" name="qty" class="form-control form-control-md" placeholder="0" required='required'>
-                                    @error('qty')
-                                    <small class="text-danger">{{ $errors->first('qty') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-3">
-                                    <label class="form-label">Batch Number<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ old('batch_number') }}" name="batch_number" class="form-control form-control-md" placeholder="Batch Number" required='required'>
-                                    @error('batch_number')
-                                    <small class="text-danger">{{ $errors->first('batch_number') }}</small>
-                                    @enderror
-                                </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Transfer Date<sup class="text-danger">*</sup></label>
                                     <fieldset class="form-icon-group left-icon position-relative">
@@ -87,13 +61,38 @@
                                     <small class="text-danger">{{ $errors->first('transfer_date') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <label class="form-label">Transfer Note</label>
                                     <input type="text" value="{{ old('transfer_note') }}" name="transfer_note" class="form-control form-control-md" placeholder="Transfer Note">
                                     @error('transfer_note')
                                     <small class="text-danger">{{ $errors->first('transfer_note') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-6 text-right">
+                                    <p class= "text-right my-3"><a href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success addStockTransferRow"></i></a></p>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-5">
+                                    <label class="form-label">Product<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md show-tick ms select2 selProductForTransfer" data-placeholder="Select" name="product[]" required='required'>
+                                    <option value="">Select</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}" {{ old('product') == $product->id ? 'selected' : '' }}>{{ $product->product_name }}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Batch Number<sup class="text-danger">*</sup></label>
+                                    <input type="text" name="batch_number[]" class="form-control form-control-md" placeholder="Batch Number" required='required'>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="form-label">Qty<sup class="text-danger">*</sup></label>
+                                    <input type="number" name="qty[]" class="form-control form-control-md" placeholder="0" required='required'>
+                                </div>
+                            </div>
+                            <div class="stockTransferRow"></div>
+                            <div class="row mt-3">
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
