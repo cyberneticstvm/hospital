@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\Models\Medicine;
 use Carbon\Carbon;
 use DB;
 
@@ -25,7 +24,7 @@ class MedicineController extends Controller
      */
     public function index()
     {
-        $medicines = DB::table('medicines as m')->leftJoin('patient_medical_records as pmr', 'm.medical_record_id', '=', 'pmr.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr.patient_id')->leftJoin('doctors as doc', 'pmr.doctor_id', '=', 'doc.id')->select('m.id', 'm.mrn', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->get()->unique('m.mrn');
+        $medicines = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->select('pmr.id', 'pmr.mrn', 'pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->get()->unique('pmr.medical_record_id');
 
         return view('medicine.index', compact('medicines'));
     }
@@ -37,13 +36,7 @@ class MedicineController extends Controller
      */
     public function create(Request $request, $id)
     {
-        $medical_record = DB::table('patient_medical_records')->find($id);
-        $patient = DB::table('patient_registrations')->find($medical_record->patient_id);
-        $doctor = DB::table('doctors')->find($medical_record->doctor_id);
-        $products = DB::table('products')->get();
-        $medicines = DB::table('patient_medicine_records')->where('medical_record_id', '=', $id)->get();
-
-        return view('medicine.create', compact('medical_record', 'patient', 'doctor', 'products', 'medicines'));
+        //
     }
 
     /**
@@ -54,22 +47,7 @@ class MedicineController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-
-        for($i=0; $i<count($input['product_id']); $i++):
-            if($input['product_id'][$i] > 0):
-                DB::table('medicines')->insert([
-                    'medical_record_id' => $request->mid,
-                    'mrn' => $request->mrn,
-                    'product_id' => $input['product_id'][$i],
-                    'qty' => $input['qty'][$i],
-                    'price' => $input['price'][$i],
-                    'total' => $input['total'][$i],
-                ]);
-            endif;
-        endfor;
-
-        return redirect()->route('medicine.index')->with('success','Medicine Record created successfully');
+        //
     }
 
     /**
@@ -91,7 +69,13 @@ class MedicineController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $medical_record = DB::table('patient_medical_records')->find($id);
+        $medicines = DB::table('patient_medicine_records')->where('medical_record_id', $id)->get();
+        $patient = DB::table('patient_registrations')->find($medical_record->patient_id);
+        $doctor = DB::table('doctors')->find($medical_record->doctor_id);
+        $products = DB::table('products')->get();
+        return view('medicine.edit', compact('medicines', 'medical_record', 'patient', 'doctor', 'products'));
     }
 
     /**
@@ -103,7 +87,30 @@ class MedicineController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+        $mrn = $input['mrn'];
+        DB::table("patient_medicine_records")->where('medical_record_id', $id)->delete();
+        if($input['medicine']):
+            for($i=0; $i<count($input['medicine']); $i++):
+                if($input['medicine'][$i] > 0):
+                    DB::table('patient_medicine_records')->insert([
+                        'medical_record_id' => $id,
+                        'mrn' => $mrn,
+                        'medicine' => $input['medicine'][$i],
+                        'batch_number' => $input['batch_number'][$i],
+                        'dosage' => $input['dosage'][$i],
+                        'dosage1' => $input['dosage1'][$i],
+                        'notes' => $input['notes'][$i],
+                        'qty' => $input['qty'][$i],
+                        'price' => $input['price'][$i],
+                        'total' => $input['total'][$i],
+                        'status' => '1', //1-Billed, 0-Not Billed
+                    ]);
+                endif;
+            endfor;
+        endif;
+        return redirect()->route('medicine.index')
+                        ->with('success','Record updated successfully');
     }
 
     /**
@@ -114,6 +121,8 @@ class MedicineController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('patient_medicine_records')->where('medical_record_id', $id)->delete();
+        return redirect()->route('medicine.index')
+                        ->with('success','Record deleted successfully');
     }
 }
