@@ -28,7 +28,7 @@
                                         <thead><tr><th width='30%'>Product</th><th>Batch No.</th><th>Dosage</th><th>Qty</th><th>Price</th><th>Total</th><th></th></tr></thead>
                                         <tbody>
                                             @foreach($medicines as $medicine)
-                                            <input type='hidden' name='dosage1[]' value="{{ $medicine->dosage }}"/>
+                                            <input type='hidden' name='dosage1[]' value="{{ $medicine->dosage1 }}"/>
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}"/>
                                             <tr>
                                                 <td>
