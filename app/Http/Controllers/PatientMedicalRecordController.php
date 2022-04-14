@@ -75,6 +75,7 @@ class PatientMedicalRecordController extends Controller
                         'dosage' => $input['dosage'][$i],
                         'dosage1' => $input['dosage1'][$i],
                         'qty' => $input['qty'][$i],
+                        'notes' => $input['notes'][$i],
                     ]);
                 endif;
             endfor;
@@ -154,6 +155,7 @@ class PatientMedicalRecordController extends Controller
                         'dosage' => $input['dosage'][$i],
                         'dosage1' => $input['dosage1'][$i],
                         'qty' => $input['qty'][$i],
+                        'notes' => $input['notes'][$i],
                     ]);
                 endif;
             endfor;

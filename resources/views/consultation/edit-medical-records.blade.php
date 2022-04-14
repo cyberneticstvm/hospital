@@ -133,7 +133,7 @@
                                     @foreach($medicine_record as $pmr)
                                         @php $c++; @endphp
                                     <div class="row mb-3">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                         @if($c == 1)<label class="form-label">Medicine Advise</label>@endif
                                             <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_id[]">
                                             <option value="">Select</option>
@@ -145,7 +145,7 @@
                                             <small class="text-danger">{{ $errors->first('medicine_id') }}</small>
                                             @enderror
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-2">
                                         @if($c == 1)<label class="form-label">Dosage</label>@endif
                                             <input type="text" name="dosage[]" class="form-control form-control-md" value="{{ $pmr->dosage }}" placeholder="Eg: Daily 3 Drops"/>
                                         </div>
@@ -164,6 +164,10 @@
                                         <div class="col-sm-2">
                                         @if($c == 1)<label class="form-label">Qty / NOs.</label>@endif
                                             <input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' value="{{ $pmr->qty }}" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                        @if($c == 1)<label class="form-label">Notes.</label>@endif
+                                            <input type='notes' class='form-control form-control-md' name='notes[]' value="{{ $pmr->notes }}" placeholder='Notes' />
                                         </div>
                                         @if($c == 1)
                                             <div class="col-sm-1">

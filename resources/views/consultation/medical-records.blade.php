@@ -76,7 +76,7 @@
                                     <small class="text-danger">{{ $errors->first('doctor_recommondations') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Medicine Advise</label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_id[]">
                                     <option value="">Select</option>
@@ -88,7 +88,7 @@
                                     <small class="text-danger">{{ $errors->first('medicine_id') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label class="form-label">Dosage</label>
                                     <input type="text" name="dosage[]" class="form-control form-control-md" placeholder="Eg: Daily 3 Drops"/>
                                 </div>
@@ -107,6 +107,10 @@
                                 <div class="col-sm-2">
                                     <label class="form-label">Qty / NOs.</label>
                                     <input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' />
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Notes.</label>
+                                    <input type='notes' class='form-control form-control-md' name='notes[]' placeholder='Notes' />
                                 </div>
                                 <div class="col-sm-1">
                                     <a class="medicineAdvise" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i><a>                                    

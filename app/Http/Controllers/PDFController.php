@@ -30,4 +30,13 @@ class PDFController extends Controller
         //return $pdf->download('token.pdf');
         return $pdf->stream('prescription', array("Attachment"=>0));
     }
+
+    public function receipt($id){
+        $reference = PRef::find($id);
+        $patient = DB::table('patient_registrations')->find($reference->patient_id);     
+        $doctor = DB::table('doctors')->find($reference->doctor_id);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));         
+        $pdf = PDF::loadView('/pdf/receipt', compact('reference', 'patient', 'doctor', 'qrcode'));    
+        return $pdf->stream('receipt', array("Attachment"=>0));
+    }
 }

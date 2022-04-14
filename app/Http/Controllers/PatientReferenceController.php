@@ -65,7 +65,7 @@ class PatientReferenceController extends Controller
         $input['created_by'] = $request->user()->id;
         $reference = PRef::create($input);
         PReg::where(['id' => $request->pid])->update(['is_doctor_assigned' => 1]);
-        return redirect()->route('patient.index')->with('success','Doctor created successfully');
+        return redirect()->route('consultation.patient-reference')->with('success','Doctor Assigned successfully');
     }
 
     /**
@@ -94,7 +94,11 @@ class PatientReferenceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $doctors = DB::table('doctors')->get();
+        $departments = DB::table('departments')->get();
+        $reference = PRef::find($id);
+        $patient = PReg::find($reference->patient_id);
+        return view('consultation.edit-patient-reference', compact('doctors', 'departments', 'reference', 'patient'));
     }
 
     /**
@@ -106,7 +110,19 @@ class PatientReferenceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'doctor_id' => 'required',
+            'department_id' => 'required',
+            'symptoms' => 'required',
+        ]);
+        $input = $request->all();
+        $doctor = doctor::find($request->doctor_id);
+        $input['patient_id'] = $request->get('pid');
+        $input['doctor_fee'] = $doctor->doctor_fee;
+        $reference = PRef::find($id);
+        $input['created_by'] = $reference->getOriginal('created_by');
+        $reference->update($input);
+        return redirect()->route('consultation.patient-reference')->with('success','Doctor Updated successfully');
     }
 
     /**
@@ -117,6 +133,10 @@ class PatientReferenceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $reference = PRef::find($id);
+        PReg::where(['id' => $reference->patient_id])->update(['is_doctor_assigned' => 0]);
+        PRef::find($id)->delete();
+        return redirect()->route('consultation.patient-reference')
+                        ->with('success','Record deleted successfully');
     }
 }

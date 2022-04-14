@@ -16,5 +16,6 @@ class PatientMedicineRecord extends Model
         'medicine',
         'dosage',
         'dosage1',
+        'notes',
     ];
 }

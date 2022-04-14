@@ -73,6 +73,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/consultation/refer_to_department/', 'App\Http\Controllers\PatientReferenceController@index')->name('consultation.patient-reference');
     Route::get('/consultation/create-patient-reference/{id}/', 'App\Http\Controllers\PatientReferenceController@create');
     Route::post('/consultation/create-patient-reference/', 'App\Http\Controllers\PatientReferenceController@store')->name('patient_reference.create');
+    Route::get('/consultation/edit-patient-reference/{id}/', 'App\Http\Controllers\PatientReferenceController@edit')->name('patient_reference.edit');
+    Route::put('/consultation/edit-patient-reference/{id}/', 'App\Http\Controllers\PatientReferenceController@update')->name('patient_reference.update');
+    Route::delete('/consultation/edit-patient-reference/{id}/', 'App\Http\Controllers\PatientReferenceController@destroy')->name('patient_reference.delete');
     // End Patient Reference //
 
     // Branch Registration //
@@ -159,6 +162,7 @@ Route::group(['middleware' => ['auth']], function(){
     // PDFs //
     Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
     Route::get('/generate-prescription/{id}/', [PDFController::class, 'prescription']);
+    Route::get('/generate-receipt/{id}/', [PDFController::class, 'receipt']);
     // End PDFs //
 
     

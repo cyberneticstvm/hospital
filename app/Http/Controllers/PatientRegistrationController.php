@@ -53,7 +53,6 @@ class PatientRegistrationController extends Controller
         $this->validate($request, [
             'patient_name' => 'required',
             'gender' => 'required',
-            'dob' => 'required',
             'mobile_number' => 'required|min:10|max:10',
             'address' => 'required',
             'city' => 'required',
@@ -61,7 +60,7 @@ class PatientRegistrationController extends Controller
             'country' => 'required',
         ]);
         $input = $request->all();
-        $input['dob'] = Carbon::createFromFormat('d/M/Y', $request['dob'])->format('Y-m-d');
+        $input['dob'] = (!empty($request->dob)) ? Carbon::createFromFormat('d/M/Y', $request['dob'])->format('Y-m-d') : NULL;
 
         $next = DB::table('patient_registrations')->selectRaw("CONCAT_WS('-', 'P', LPAD(IFNULL(max(id)+1, 1), 6, '0')) AS id")->first();
         $input['patient_id'] = $next->id;
@@ -111,7 +110,6 @@ class PatientRegistrationController extends Controller
         $this->validate($request, [
             'patient_name' => 'required',
             'gender' => 'required',
-            'dob' => 'required',
             'mobile_number' => 'required|min:10|max:10',
             'address' => 'required',
             'city' => 'required',
@@ -119,7 +117,7 @@ class PatientRegistrationController extends Controller
             'country' => 'required',
         ]);
         $input = $request->all();
-        $input['dob'] = Carbon::createFromFormat('d/M/Y', $request['dob'])->format('Y-m-d');
+        $input['dob'] = (!empty($request->dob)) ? Carbon::createFromFormat('d/M/Y', $request['dob'])->format('Y-m-d') : NULL;
 
         $patient = PatientRegistrations::find($id);
         $input['patient_id'] = $patient->getOriginal('patient_id');

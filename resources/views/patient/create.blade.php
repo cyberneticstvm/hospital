@@ -22,7 +22,7 @@
                                     <small class="text-danger">{{ $errors->first('patient_name') }}</small>
                                     @enderror
                                 </div>                                
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <label class="form-label">Gender<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" data-placeholder="Select" name="gender">
                                         <option value="">Select</option>
@@ -34,8 +34,15 @@
                                     <small class="text-danger">{{ $errors->first('gender') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Age<sup class="text-danger">*</sup></label>
+                                    <input type="number" value="{{ old('age') }}" name="age" class="form-control form-control-md" placeholder="0">
+                                    @error('age')
+                                    <small class="text-danger">{{ $errors->first('age') }}</small>
+                                    @enderror
+                                </div> 
                                 <div class="col-sm-3">
-                                    <label class="form-label">Date of Birth<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Date of Birth</label>
                                     <fieldset class="form-icon-group left-icon position-relative">
                                         <input type="text" value="{{ old('dob') }}" name="dob" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy">
                                         <div class="form-icon position-absolute">
