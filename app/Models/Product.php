@@ -15,5 +15,6 @@ class Product extends Model
         'product_name',
         'hsn',
         'available_for_consultation',
+        'tax_percentage',
     ];
 }

@@ -68,6 +68,7 @@ class PatientMedicalRecordController extends Controller
         if($input['medicine']):
             for($i=0; $i<count($input['medicine']); $i++):
                 if($input['medicine'][$i] > 0):
+                    $product = DB::table('products')->find($input['medicine'][$i]);
                     DB::table('patient_medicine_records')->insert([
                         'medical_record_id' => $record->id,
                         'mrn' => $request->mrn,
@@ -75,6 +76,7 @@ class PatientMedicalRecordController extends Controller
                         'dosage' => $input['dosage'][$i],
                         'dosage1' => $input['dosage1'][$i],
                         'qty' => $input['qty'][$i],
+                        'tax_percentage' => $product->tax_percentage,
                         'notes' => $input['notes'][$i],
                     ]);
                 endif;

@@ -63,10 +63,12 @@ class PurchaseController extends Controller
         if($input['product']):
             for($i=0; $i<count($input['product']); $i++):
                 if($input['product'][$i] > 0):
+                    $edate = (!empty($input['expiry_date'][$i])) ? Carbon::createFromFormat('d/M/Y', $input['expiry_date'][$i])->format('Y-m-d') : NULL;
                     DB::table('purchase_details')->insert([
                         'purchase_id' => $purchase->id,
                         'product' => $input['product'][$i],
                         'batch_number' => $input['batch_number'][$i],
+                        'expiry_date' => $edate,
                         'qty' => $input['qty'][$i],
                         'price' => $input['price'][$i],
                         'total' => $input['qty'][$i]*$input['price'][$i],
@@ -128,10 +130,12 @@ class PurchaseController extends Controller
         if($input['product']):
             for($i=0; $i<count($input['product']); $i++):
                 if($input['product'][$i] > 0):
+                    $edate = (!empty($input['expiry_date'][$i])) ? Carbon::createFromFormat('d/M/Y', $input['expiry_date'][$i])->format('Y-m-d') : NULL;
                     DB::table('purchase_details')->insert([
                         'purchase_id' => $purchase->id,
                         'product' => $input['product'][$i],
                         'batch_number' => $input['batch_number'][$i],
+                        'expiry_date' => $edate,
                         'qty' => $input['qty'][$i],
                         'price' => $input['price'][$i],
                         'total' => $input['qty'][$i]*$input['price'][$i],

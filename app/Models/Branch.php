@@ -12,6 +12,9 @@ class Branch extends Model
 
     protected $fillable = [
         'branch_name',
+        'contact_number',
+        'address',
+        'registration_fee',
     ];
 
     public function getUserBranches(){

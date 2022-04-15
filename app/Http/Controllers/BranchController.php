@@ -48,6 +48,9 @@ class BranchController extends Controller
     {
         $this->validate($request, [
             'branch_name' => 'required|unique:branches,branch_name',
+            'contact_number' => 'required',
+            'address' => 'required',
+            'registration_fee' => 'required',
         ]);
         $input = $request->all();
         $branch = Branch::create($input);
@@ -89,6 +92,9 @@ class BranchController extends Controller
     {
         $this->validate($request, [
             'branch_name' => 'required|unique:branches,branch_name,'.$id,
+            'contact_number' => 'required',
+            'address' => 'required',
+            'registration_fee' => 'required',
         ]);
         $input = $request->all();
         $branch = Branch::find($id);

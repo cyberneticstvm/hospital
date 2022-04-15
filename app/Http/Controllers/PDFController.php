@@ -35,8 +35,9 @@ class PDFController extends Controller
         $reference = PRef::find($id);
         $patient = DB::table('patient_registrations')->find($reference->patient_id);     
         $doctor = DB::table('doctors')->find($reference->doctor_id);
+        $branch = DB::table('branches')->find($patient->branch);
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));         
-        $pdf = PDF::loadView('/pdf/receipt', compact('reference', 'patient', 'doctor', 'qrcode'));    
+        $pdf = PDF::loadView('/pdf/receipt', compact('reference', 'patient', 'doctor', 'qrcode', 'branch'));    
         return $pdf->stream('receipt', array("Attachment"=>0));
     }
 }

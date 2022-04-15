@@ -98,7 +98,7 @@
                                 @foreach($purchase_details as $purchase)
                                 @php $c++; @endphp
                                 <div class="row mt-3">
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-4">
                                         @if($c == 1)<label class="form-label">Product<sup class="text-danger">*</sup></label>@endif
                                         <select class="form-control form-control-md show-tick ms select2 selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
                                         <option value="">Select</option>
@@ -107,9 +107,13 @@
                                         @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         @if($c == 1)<label class="form-label">Batch Number<sup class="text-danger">*</sup></label>@endif
                                         <input type="text" name="batch_number[]" class="form-control form-control-md" placeholder="Batch Number" value="{{ $purchase->batch_number }}" required='required'>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @if($c == 1)<label class="form-label">Expiry Date<sup class="text-danger">*</sup></label>@endif
+                                        <input type="text" name="expiry_date[]" value="{{ ($purchase->expiry_date) ? date('d/M/Y', strtotime($purchase->expiry_date)) : '' }}" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy" required='required'>
                                     </div>
                                     <div class="col-sm-1">
                                         @if($c == 1)<label class="form-label">Qty<sup class="text-danger">*</sup></label>@endif

@@ -16,12 +16,19 @@ $(function() {
         allowClear: true
     });
 
-    $(".dtpicker").pickadate({
+    /*$(".dtpicker").pickadate({
         format: "dd/mmm/yyyy",
         selectYears: 100,
         selectMonths: true,
         //max: true
-    });
+    });*/
+    $("body").delegate('.dtpicker', "focusin", function(){
+		$(this).pickadate({
+            format: "dd/mmm/yyyy",
+            selectYears: 100,
+            selectMonths: true,
+        });
+	});
 
     $('form').submit(function(){
         $(".btn-submit").attr("disabled", true);
@@ -82,7 +89,7 @@ $(function() {
     });
 
     $(".addPurchaseRow").click(function(){
-        $(".purchaseRow").append("<div class='row mt-3'><div class='col-sm-5'><select class='form-control form-control-md show-tick ms select2 selProductForPurchase' data-placeholder='Select' name='product[]' required='required'></select></div><div class='col-sm-3'><input type='text' name='batch_number[]' class='form-control form-control-md' placeholder='Batch Number' required='required'></div><div class='col-sm-1'><input type='number' name='qty[]' class='form-control form-control-md' placeholder='0' required='required'></div><div class='col-sm-2'><input type='number' name='price[]' class='form-control form-control-md' placeholder='0.00' required='required'></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");
+        $(".purchaseRow").append("<div class='row mt-3'><div class='col-sm-4'><select class='form-control form-control-md show-tick ms select2 selProductForPurchase' data-placeholder='Select' name='product[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-2'><input type='text' name='batch_number[]' class='form-control form-control-md' placeholder='Batch Number' required='required'></div><div class='col-sm-2'><input type='text' name='expiry_date[]' class='form-control form-control-md dtpicker' placeholder='dd/mm/yyyy' required='required'></div><div class='col-sm-1'><input type='number' name='qty[]' class='form-control form-control-md' placeholder='0' required='required'></div><div class='col-sm-2'><input type='number' name='price[]' class='form-control form-control-md' placeholder='0.00' required='required'></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");
         $('.selProductForPurchase').select2();
         bindDDL('medicine', 'selProductForPurchase');
     });

@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     <label class="form-label">Product<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2 selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
                                     <option value="">Select</option>
@@ -78,9 +78,13 @@
                                     @endforeach
                                     </select>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label class="form-label">Batch Number<sup class="text-danger">*</sup></label>
                                     <input type="text" name="batch_number[]" class="form-control form-control-md" placeholder="Batch Number" required='required'>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Expiry Date<sup class="text-danger">*</sup></label>
+                                    <input type="text" name="expiry_date[]" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy" required='required'>
                                 </div>
                                 <div class="col-sm-1">
                                     <label class="form-label">Qty<sup class="text-danger">*</sup></label>

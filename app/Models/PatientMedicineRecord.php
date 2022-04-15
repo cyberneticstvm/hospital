@@ -17,5 +17,7 @@ class PatientMedicineRecord extends Model
         'dosage',
         'dosage1',
         'notes',
+        'batch_number',
+        'tax_percentage',
     ];
 }

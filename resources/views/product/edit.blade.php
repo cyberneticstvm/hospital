@@ -42,6 +42,18 @@
                                     <small class="text-danger">{{ $errors->first('hsn') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Tax %<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md" data-placeholder="Select" name="tax_percentage">
+                                    <option value="">Select</option>
+                                    @foreach($taxes as $tax)
+                                        <option value="{{ $tax->tax_percentage }}" {{ $product->tax_percentage == $tax->tax_percentage ? 'selected' : '' }}>{{ $tax->tax_percentage }}</option>
+                                    @endforeach
+                                    </select>
+                                    @error('tax_percentage')
+                                    <small class="text-danger">{{ $errors->first('tax_percentage') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Available for Consultation</label></br>
                                     <input type="checkbox" value="1" name="available_for_consultation" class="form-check-input" {{ ($product->available_for_consultation == 1) ? "checked='checked'" : ""}}>

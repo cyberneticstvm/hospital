@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = DB::table('products as p')->leftJoin('product_categories as c', 'p.category_id', '=', 'c.id')->select('p.id', 'p.product_name', 'p.hsn', 'c.category_name')->get();
+        $products = DB::table('products as p')->leftJoin('product_categories as c', 'p.category_id', '=', 'c.id')->select('p.id', 'p.product_name', 'p.hsn', 'p.tax_percentage', 'c.category_name')->get();
         return view('product.index', compact('products'));
     }
 
@@ -37,7 +37,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = DB::table('product_categories')->get();
-        return view('product.create', compact('categories'));
+        $taxes = DB::table('tax')->get();
+        return view('product.create', compact('categories', 'taxes'));
     }
 
     /**
@@ -51,6 +52,7 @@ class ProductController extends Controller
         $this->validate($request, [
             'product_name' => 'required',
             'category_id' => 'required',
+            'tax_percentage' => 'required'
         ]);
         $input = $request->all();
         $input['available_for_consultation'] = ($request->has('available_for_consultation')) ? 1 : 0;
@@ -79,7 +81,8 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $categories = DB::table('product_categories')->get();
-        return view('product.edit', compact('product','categories'));
+        $taxes = DB::table('tax')->get();
+        return view('product.edit', compact('product','categories', 'taxes'));
     }
 
     /**
@@ -94,6 +97,7 @@ class ProductController extends Controller
         $this->validate($request, [
             'product_name' => 'required',
             'category_id' => 'required',
+            'tax_percentage' => 'required'
         ]);
         $input = $request->all();
         $input['available_for_consultation'] = ($request->has('available_for_consultation')) ? 1 : 0;
