@@ -10,7 +10,7 @@
     <div class="card-body">
         <p class= "text-right my-3"><a href="/patient/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         <table id="dataTbl" class="table display dataTable table-striped table-sm table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>Phone Number</th><th>Address</th><th>Assign Doctor</th><th>Re-open</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>Phone Number</th><th>Address</th><th>History</th><th>Assign Doctor</th><th>Re-open</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($patients as $patient)
                 <tr>
@@ -19,6 +19,7 @@
                     <td>{{ $patient->patient_id }}</td>
                     <td>{{ $patient->mobile_number }}</td>
                     <td>{{ $patient->address }}</td>
+                    <td><a href="/generate-medical-record-history/{{ $patient->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                     <td>@if(!$patient->is_doctor_assigned)<a href='/consultation/create-patient-reference/{{ $patient->id }}/'>Assign</a>@endif</td>
                     <td><a href='/consultation/create-patient-reference/{{ $patient->id }}/'>Re-open</a></td>
                     <td><a class='btn btn-link' href="{{ route('patient.edit', $patient->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
