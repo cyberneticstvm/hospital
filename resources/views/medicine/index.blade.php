@@ -21,7 +21,7 @@
                     <td class="text-center"><a href="/"><i class="fa fa-eye text-primary"></i></a></td>
                     <td class="text-center">
                         @if($med->status == 1) 
-                            <a href='/' target='_blank'><i class="fa fa-file text-info"></i></a>
+                            <a href='/generate-pharmacy-bill/{{ $med->medical_record_id }}/' target='_blank'><i class="fa fa-file text-info"></i></a>
                         @endif
                     </td>
                     <td><a class='btn btn-link' href="{{ route('medicine.edit', $med->medical_record_id) }}"><i class="fa fa-pencil text-warning"></i></a></td>

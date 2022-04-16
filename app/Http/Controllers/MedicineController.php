@@ -24,8 +24,7 @@ class MedicineController extends Controller
      */
     public function index()
     {
-        $medicines = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->select('pmr.id', 'pmr.mrn', 'pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->get()->unique('pmr.medical_record_id');
-
+        $medicines = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->select('pmr.mrn', 'pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->groupBy('pmr.mrn', 'pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->get();
         return view('medicine.index', compact('medicines'));
     }
 

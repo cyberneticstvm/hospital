@@ -18,5 +18,6 @@ class PatientReference extends Model
         'symptoms',
         'notes',
         'created_by',
+        'branch',
     ];
 }

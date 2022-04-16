@@ -63,6 +63,7 @@ class PatientReferenceController extends Controller
         $input['patient_id'] = $request->get('pid');
         $input['doctor_fee'] = $doctor->doctor_fee;
         $input['created_by'] = $request->user()->id;
+        $input['branch'] = $request->session()->get('branch');
         $reference = PRef::create($input);
         PReg::where(['id' => $request->pid])->update(['is_doctor_assigned' => 1]);
         return redirect()->route('consultation.patient-reference')->with('success','Doctor Assigned successfully');
@@ -121,6 +122,7 @@ class PatientReferenceController extends Controller
         $input['doctor_fee'] = $doctor->doctor_fee;
         $reference = PRef::find($id);
         $input['created_by'] = $reference->getOriginal('created_by');
+        $input['branch'] = $request->session()->get('branch');
         $reference->update($input);
         return redirect()->route('consultation.patient-reference')->with('success','Doctor Updated successfully');
     }
