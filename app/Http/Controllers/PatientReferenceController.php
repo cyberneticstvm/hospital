@@ -64,6 +64,8 @@ class PatientReferenceController extends Controller
         $input['doctor_fee'] = $doctor->doctor_fee;
         $input['created_by'] = $request->user()->id;
         $input['branch'] = $request->session()->get('branch');
+        $token = PRef::where('department_id', $request->department_id)->where('branch', $request->session()->get('branch'))->whereDate('created_at', Carbon::today())->max('token');
+        $input['token'] = ($token > 0) ? $token+1 : 1;
         $reference = PRef::create($input);
         PReg::where(['id' => $request->pid])->update(['is_doctor_assigned' => 1]);
         return redirect()->route('consultation.patient-reference')->with('success','Doctor Assigned successfully');
@@ -123,6 +125,8 @@ class PatientReferenceController extends Controller
         $reference = PRef::find($id);
         $input['created_by'] = $reference->getOriginal('created_by');
         $input['branch'] = $request->session()->get('branch');
+        $token = PRef::where('department_id', $request->department_id)->where('branch', $request->session()->get('branch'))->whereDate('created_at', Carbon::today())->max('token');
+        $input['token'] = ($token > 0) ? $token+1 : 1;
         $reference->update($input);
         return redirect()->route('consultation.patient-reference')->with('success','Doctor Updated successfully');
     }

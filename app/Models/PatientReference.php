@@ -19,5 +19,6 @@ class PatientReference extends Model
         'notes',
         'created_by',
         'branch',
+        'token',
     ];
 }

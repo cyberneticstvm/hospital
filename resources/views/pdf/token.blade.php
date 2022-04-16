@@ -31,7 +31,7 @@
         </thead>
         <tbody>
             <tr>
-                <td>Token No:</td><td></td>
+                <td>Token No:</td><td>{{ $reference->token }}</td>
                 <td>MRN</td><td>{{ $reference->id }}</td>
             </tr>
             <tr>
