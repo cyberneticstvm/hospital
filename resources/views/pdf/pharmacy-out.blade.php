@@ -29,7 +29,7 @@
     </center>
     <br/>
     <table width="100%">
-        <thead><tr><th text-align="center" colspan="4">PRESCRIPTION</th></tr></thead>
+        <thead><tr><th text-align="center" colspan="4">MEDICINE PRESCRIPTION</th></tr></thead>
         <tbody>
             <tr>
                 <td>PATIENT NAME</td>
@@ -46,7 +46,7 @@
             <tr>
                 <td>DOCTOR NAME</td>
                 <td>{{ $doctor->doctor_name }}</td>
-                <td>RECEIPT DATE</td>
+                <td>DATE</td>
                 <td>{{ ($medical_record->created_at) ? date('d/M/Y h:i:A', strtotime($medical_record->created_at)) : '' }}</td>
             </tr>
         </tbody>
@@ -55,14 +55,18 @@
     <table class="bordered" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <th>SLNo.</th>
-                <th width="80%">ITEM NAME</th>
+                <td width="10%">SLNo.</td>
+                <td width="50%">MEDICINE</td>
+                <td width="30%">DOSAGE</td>
+                <td width="10%">QTY</td>                
             </tr>
             @php $c =1 @endphp
             @foreach($medicines as $medicine)
                 <tr>
                     <td>{{ $c++ }}</td>
                     <td>{{ $medicine->product_name }}</td>
+                    <td>{{ $medicine->dosage }}</td>
+                    <td class="text-right">{{ $medicine->qty }}</td>
                 </tr>
             @endforeach
         </tbody>
