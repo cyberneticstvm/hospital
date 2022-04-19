@@ -32,7 +32,7 @@
         <tbody>
             <tr>
                 <td>Token No:</td><td>{{ $reference->token }}</td>
-                <td>MRN</td><td>{{ $reference->id }}</td>
+                <td>Medical Record No.</td><td>{{ $reference->id }}</td>
             </tr>
             <tr>
                 <td>Patient Name</td><td>{{ $patient->patient_name }}</td>
@@ -40,11 +40,11 @@
             </tr>
             <tr>
                 <td>Gender:</td><td>{{ $patient->gender }}</td>
-                <td>DOB</td><td>{{ $patient->dob }}</td>
+                <td>Age</td><td>{{ $patient->age }}</td>
             </tr>
             <tr>
                 <td>Doctor</td><td>{{ $doctor->doctor_name }}</td>
-                <td>Date</td><td>{{ $reference->created_at }}</td>
+                <td>Date</td><td>{{ date('d/M/Y H:i:A', strtotime($reference->created_at)) }}</td>
             </tr>
         </tbody>
     </table>

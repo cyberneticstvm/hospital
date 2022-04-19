@@ -19,7 +19,7 @@
                             <input type="hidden" name="patient_id" value="{{ $patient->id }}"/>
                             <input type="hidden" name="doctor_id" value="{{ $doctor->id }}"/>
                             <div class="row g-4">
-                                <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $reference->id }}</h5></div>
+                                <div class="col-sm-3">Medical Record No: <h5 class="text-primary">{{ $reference->id }}</h5></div>
                                 <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
                                 <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5></div>
@@ -40,13 +40,6 @@
                                 <div class="col-sm-1">
                                     <a data-bs-toggle="modal" href="#symptomModal"><i class="fa fa-plus fa-lg text-success"></i></a>
                                 </div>
-                                <div class="col-sm-12">
-                                    <label class="form-label">Patient Complaints / Symptoms<sup class="text-danger">*</sup></label>
-                                    <textarea class="form-control form-control-md" name="patient_complaints" rows="5" placeholder="Patient Complaints / Symptoms">{{ old('patient_complaints') }}</textarea>
-                                    @error('patient_complaints')
-                                    <small class="text-danger">{{ $errors->first('patient_complaints') }}</small>
-                                    @enderror
-                                </div>
                                 <div class="col-sm-11">
                                     <label class="form-label">Dignosis<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
                                     <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="diagnosis_id[]" id="diagnosisSelect">
@@ -61,17 +54,10 @@
                                 </div>
                                 <div class="col-sm-1">
                                     <a data-bs-toggle="modal" href="#diagnosisModal"><i class="fa fa-plus fa-lg text-success"></i></a>
-                                </div>
-                                <div class="col-sm-12">
-                                    <label class="form-label">Doctor Findings / Diagnosis<sup class="text-danger">*</sup></label>
-                                    <textarea class="form-control form-control-md" name="doctor_findings" rows="5" placeholder="Doctor Findings / Diagnosis">{{ old('doctor_findings') }}</textarea>
-                                    @error('doctor_findings')
-                                    <small class="text-danger">{{ $errors->first('doctor_findings') }}</small>
-                                    @enderror
-                                </div>  
+                                </div> 
                                 <div class="col-sm-12">
                                     <label class="form-label">Doctor Recommondations / Advise<sup class="text-danger">*</sup></label>
-                                    <textarea class="form-control form-control-md" name="doctor_recommondations" rows="5" placeholder="Doctor Recommondations / Advise">{{ old('doctor_recommondations') }}</textarea>
+                                    <textarea class="form-control form-control-md" name="doctor_recommondations" rows="5" placeholder="Doctor Recommondations / Advise" required="required">{{ old('doctor_recommondations') }}</textarea>
                                     @error('doctor_recommondations')
                                     <small class="text-danger">{{ $errors->first('doctor_recommondations') }}</small>
                                     @enderror
@@ -110,20 +96,13 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">Notes.</label>
-                                    <input type='notes' class='form-control form-control-md' name='notes[]' placeholder='Notes' />
+                                    <input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes' />
                                 </div>
                                 <div class="col-sm-1">
                                     <a class="medicineAdvise" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i><a>                                    
                                 </div>
                                 <div class="medicineAdviseContainer">
 
-                                </div>
-                                <div class="col-sm-12">
-                                    <label class="form-label">Medicine List</label>
-                                    <textarea class="form-control form-control-md" name="medicine_list" rows="5" placeholder="Medicine List">{{ old('medicine_list') }}</textarea>
-                                    @error('medicine_list')
-                                    <small class="text-danger">{{ $errors->first('medicine_list') }}</small>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="row">

@@ -19,7 +19,7 @@
                     <td>{{ $record->patient_id }}</td>
                     <td>{{ $record->doctor_name }}</td>
                     <td class="text-center"><a href="/generate-medical-record/{{ $record->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>
-                    <td>{{ date('d/M/Y', strtotime($record->rdate)) }}</td>
+                    <td>{{ ($record->rdate) ? date('d/M/Y', strtotime($record->rdate)) : '' }}</td>
                     <!--<td class="text-center"><a href="{{ route('medicine.create', $record->id) }}"><i class="fa fa-plus text-info"></i></a></td>
                     <td class="text-center"><a href="/"><i class="fa fa-plus text-info"></i></a></td>-->
                     <td><a class='btn btn-link' href="{{ route('medical-records.edit', $record->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>

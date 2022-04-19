@@ -164,6 +164,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/generate-prescription/{id}/', [PDFController::class, 'prescription']);
     Route::get('/generate-receipt/{id}/', [PDFController::class, 'receipt']);
     Route::get('/generate-pharmacy-bill/{id}/', [PDFController::class, 'pharmacybill']);
+    Route::get('/generate-pharmacy-out/{id}/', [PDFController::class, 'pharmacyout']);
     Route::get('/generate-medical-record/{id}/', [PDFController::class, 'medicalrecord']);
     Route::get('/generate-medical-record-history/{id}/', [PDFController::class, 'medicalrecordhistory']);
     // End PDFs //

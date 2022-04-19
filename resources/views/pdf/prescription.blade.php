@@ -23,7 +23,7 @@
 <body>
     <table width="100%" cellpadding='0' cellspacing='0' class="text-large">
         <tr>
-            <td width='15%'>MRN</td><td width='60%'>{{ $reference->id }}</td>
+            <td width='20%'>Medical Record No.</td><td width='60%'>{{ $reference->id }}</td>
             <td rowspan='3'>
                 <img src="./images/assets/Devi-Logo-Transparent.jpg" height='75' width='115'/>
             </td>
@@ -35,13 +35,13 @@
             <td>Patient ID</td><td>{{ $patient->patient_id }}</td>
         </tr>
         <tr>
-            <td width='15%'>DOB</td><td>{{ $patient->dob }} / {{ $patient->gender }}</td><td class='text-blue'>{{ strtoupper($doctor->doctor_name) }}</td>
+            <td width='20%'>Age</td><td>{{ $patient->age }} / {{ $patient->gender }}</td><td class='text-blue'>{{ strtoupper($doctor->doctor_name) }}</td>
         </tr>
         <tr>
             <td>Address</td><td>{{ strtoupper($patient->address) }}</td><td class='text-blue'>{{ strtoupper($doctor->designation) }}</td>
         </tr>
     </table>
-    <p class='text-right'>Date: </p>
+    <p class='text-right'>Date: {{ date('d/M/Y H:i:A') }}</p>
     <pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre />
     <pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre />
     <img src="data:image/png;base64, {!! $qrcode !!}">

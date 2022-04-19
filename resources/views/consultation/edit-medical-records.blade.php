@@ -20,7 +20,7 @@
                             <input type="hidden" name="patient_id" value="{{ $record->patient_id }}"/>
                             <input type="hidden" name="doctor_id" value="{{ $record->doctor_id }}"/>
                             <div class="row g-4 mb-3">
-                                <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $record->mrn }}</h5></div>
+                                <div class="col-sm-3">Medical Record No: <h5 class="text-primary">{{ $record->mrn }}</h5></div>
                                 <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
                                 <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5></div>
@@ -46,13 +46,6 @@
                                 <div class="col-sm-1">
                                     <a data-bs-toggle="modal" href="#symptomModal"><i class="fa fa-plus fa-lg text-success"></i></a>
                                 </div>
-                                <div class="col-sm-12">
-                                    <label class="form-label">Patient Complaints / Symptoms<sup class="text-danger">*</sup></label>
-                                    <textarea class="form-control form-control-md" name="patient_complaints" rows="5" placeholder="Patient Complaints / Symptoms">{{ $record->patient_complaints }}</textarea>
-                                    @error('patient_complaints')
-                                    <small class="text-danger">{{ $errors->first('patient_complaints') }}</small>
-                                    @enderror
-                                </div>
                                 <div class="col-sm-11">
                                     @php $olds = explode(',', $record->diagnosis); @endphp
                                     <label class="form-label">Dignosis<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
@@ -74,17 +67,10 @@
                                 </div>
                                 <div class="col-sm-1">
                                     <a data-bs-toggle="modal" href="#diagnosisModal"><i class="fa fa-plus fa-lg text-success"></i></a>
-                                </div>
-                                <div class="col-sm-12">
-                                    <label class="form-label">Doctor Findings / Diagnosis<sup class="text-danger">*</sup></label>
-                                    <textarea class="form-control form-control-md" name="doctor_findings" rows="5" placeholder="Doctor Findings / Diagnosis">{{ $record->doctor_findings }}</textarea>
-                                    @error('doctor_findings')
-                                    <small class="text-danger">{{ $errors->first('doctor_findings') }}</small>
-                                    @enderror
-                                </div>  
+                                </div> 
                                 <div class="col-sm-12">
                                     <label class="form-label">Doctor Recommondations / Advise<sup class="text-danger">*</sup></label>
-                                    <textarea class="form-control form-control-md" name="doctor_recommondations" rows="5" placeholder="Doctor Recommondations / Advise">{{ $record->doctor_recommondations }}</textarea>
+                                    <textarea class="form-control form-control-md" name="doctor_recommondations" rows="5" placeholder="Doctor Recommondations / Advise" required="required">{{ $record->doctor_recommondations }}</textarea>
                                     @error('doctor_recommondations')
                                     <small class="text-danger">{{ $errors->first('doctor_recommondations') }}</small>
                                     @enderror
@@ -92,7 +78,7 @@
                             </div>
                                 @if($medicine_record->isEmpty())
                                     <div class="row mb-3">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <label class="form-label">Medicine Advise</label>
                                             <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_id[]">
                                             <option value="">Select</option>
@@ -104,7 +90,7 @@
                                             <small class="text-danger">{{ $errors->first('medicine_id') }}</small>
                                             @enderror
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-2">
                                             <label class="form-label">Dosage</label>
                                             <input type="text" name="dosage[]" class="form-control form-control-md" placeholder="Eg: Daily 3 Drops"/>
                                         </div>
@@ -123,6 +109,10 @@
                                         <div class="col-sm-2">
                                             <label class="form-label">Qty / NOs.</label>
                                             <input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label class="form-label">Notes.</label>
+                                            <input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes' />
                                         </div>
                                         <div class="col-sm-1">
                                             <a class="medicineAdvise" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i><a>                                    
@@ -167,7 +157,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                         @if($c == 1)<label class="form-label">Notes.</label>@endif
-                                            <input type='notes' class='form-control form-control-md' name='notes[]' value="{{ $pmr->notes }}" placeholder='Notes' />
+                                            <input type='text' class='form-control form-control-md' name='notes[]' value="{{ $pmr->notes }}" placeholder='Notes' />
                                         </div>
                                         @if($c == 1)
                                             <div class="col-sm-1">
@@ -179,16 +169,7 @@
                                     </div>  
                                     @endforeach
                                 @endif
-                                <div class="medicineAdviseContainer"></div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label class="form-label">Medicine List</label>
-                                    <textarea class="form-control form-control-md" name="medicine_list" rows="5" placeholder="Medicine List">{{ $record->medicine_list }}</textarea>
-                                    @error('medicine_list')
-                                    <small class="text-danger">{{ $errors->first('medicine_list') }}</small>
-                                    @enderror
-                                </div>
-                            </div>
+                            <div class="medicineAdviseContainer"></div>
                             <div class="row">
                                 <div class="col-sm-2 mt-3">
                                     <label class="form-label">Admission Advised?</label>
@@ -207,7 +188,7 @@
                                 <div class="col-sm-3 mt-3">
                                     <label class="form-label">Review Date</label>
                                     <fieldset class="form-icon-group left-icon position-relative">
-                                        <input type="text" value="{{ date('d/M/Y', strtotime($record->review_date)) }}" name="review_date" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy">
+                                        <input type="text" value="{{ ($record->review_date) ? date('d/M/Y', strtotime($record->review_date)) : '' }}" name="review_date" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy">
                                         <div class="form-icon position-absolute">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
                                                 <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>

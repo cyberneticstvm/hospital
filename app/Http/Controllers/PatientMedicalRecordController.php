@@ -49,9 +49,7 @@ class PatientMedicalRecordController extends Controller
     {
         $this->validate($request, [
             'symptom_id' => 'required',
-            'patient_complaints' => 'required',
             'diagnosis_id' => 'required',
-            'doctor_findings' => 'required',
             'doctor_recommondations' => 'required',
         ]);
         $input = $request->all();
@@ -127,9 +125,7 @@ class PatientMedicalRecordController extends Controller
     {
         $this->validate($request, [
             'symptom_id' => 'required',
-            'patient_complaints' => 'required',
             'diagnosis_id' => 'required',
-            'doctor_findings' => 'required',
             'doctor_recommondations' => 'required',
         ]);
         $input = $request->all();

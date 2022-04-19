@@ -56,7 +56,6 @@ class PatientReferenceController extends Controller
         $this->validate($request, [
             'doctor_id' => 'required',
             'department_id' => 'required',
-            'symptoms' => 'required',
         ]);
         $input = $request->all();
         $doctor = doctor::find($request->doctor_id);
@@ -116,7 +115,6 @@ class PatientReferenceController extends Controller
         $this->validate($request, [
             'doctor_id' => 'required',
             'department_id' => 'required',
-            'symptoms' => 'required',
         ]);
         $input = $request->all();
         $doctor = doctor::find($request->doctor_id);

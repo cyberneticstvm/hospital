@@ -41,7 +41,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-6">
-                                    <label class="form-label">Symptoms<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Symptoms</label>
                                     <textarea class='form-control' name="symptoms" placeholder="Symptoms">{{ $reference->symptoms }}</textarea>
                                 </div>
                                 <div class="col-sm-6">
