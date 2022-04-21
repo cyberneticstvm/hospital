@@ -18,7 +18,7 @@
                             <div class="row g-4">
                                 <div class="col-sm-6">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
                                 <div class="col-sm-6">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <label class="form-label">Department<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="department_id">
                                     <option value="">Select</option>
@@ -30,7 +30,7 @@
                                     <small class="text-danger">{{ $errors->first('department_id') }}</small>
                                     @enderror
                                 </div>                               
-                                <div class="col-sm-3">
+                                <div class="col-sm-6">
                                     <label class="form-label">Doctor<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="doctor_id">
                                     <option value="">Select</option>
@@ -40,13 +40,6 @@
                                     </select>
                                     @error('doctor')
                                     <small class="text-danger">{{ $errors->first('doctor') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-6">
-                                    <label class="form-label">Symptoms</label>
-                                    <textarea class='form-control' name="symptoms" placeholder="Symptoms"></textarea>
-                                    @error('symptoms')
-                                    <small class="text-danger">{{ $errors->first('symptoms') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-6">

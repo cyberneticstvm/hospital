@@ -9,12 +9,12 @@
 <div class="card mb-4 border-0">
     <div class="card-body">
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>MRN</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Medical Record</th><th>Review Date</th><!--<th>Medicine</th><th>Lab</th>--><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Medical Record</th><th>Review Date</th><!--<th>Medicine</th><th>Lab</th>--><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($medical_records as $record)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{ $record->mrn }}</td>
+                    <td>{{ $record->id }}</td>
                     <td>{{ $record->patient_name }}</td>
                     <td>{{ $record->patient_id }}</td>
                     <td>{{ $record->doctor_name }}</td>

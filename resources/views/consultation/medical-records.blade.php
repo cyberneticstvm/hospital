@@ -40,6 +40,50 @@
                                 <div class="col-sm-1">
                                     <a data-bs-toggle="modal" href="#symptomModal"><i class="fa fa-plus fa-lg text-success"></i></a>
                                 </div>
+                                <div class="col-sm-12">
+                                    <label class="form-label">Symptoms</label>
+                                    <textarea class="form-control form-control-md" name="symptoms_other" rows="5" placeholder="Symptoms">{{ old('symptoms_other') }}</textarea>
+                                    @error('symptoms_other')
+                                    <small class="text-danger">{{ $errors->first('symptoms_other') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-12">
+                                    <label class="form-label">Patient History</label>
+                                    <textarea class="form-control form-control-md" name="history" rows="5" placeholder="Patient History">{{ old('history') }}</textarea>
+                                    @error('history')
+                                    <small class="text-danger">{{ $errors->first('history') }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-12 table-responsive">
+                                    <label class="form-label">Vision</label>
+                                    <table class="table table-bordered" style="width:50%; margin:0 auto;">
+                                        <thead class="text-center"><tr><th></th><th>VB</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>VA</th></tr></thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center fw-bold">RE/OS</td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center fw-bold">LE/OS</td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
+                                            </tr>
+                                            <tr><td colspan="3" class="fw-bold text-center">IOP/RE</td><td colspan="3" class="fw-bold text-center">IOP/LE</td></tr>
+                                            <tr><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" placeholder="0"/></td><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" placeholder="0"/></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-3">
                                 <div class="col-sm-11">
                                     <label class="form-label">Dignosis<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
                                     <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="diagnosis_id[]" id="diagnosisSelect">

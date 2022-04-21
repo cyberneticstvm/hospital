@@ -46,6 +46,20 @@
                                 <div class="col-sm-1">
                                     <a data-bs-toggle="modal" href="#symptomModal"><i class="fa fa-plus fa-lg text-success"></i></a>
                                 </div>
+                                <div class="col-sm-12">
+                                    <label class="form-label">Symptoms</label>
+                                    <textarea class="form-control form-control-md" name="symptoms_other" rows="5" value="{{ $record->symptoms_other }}" placeholder="Symptoms">{{ old('symptoms_other') }}</textarea>
+                                    @error('symptoms_other')
+                                    <small class="text-danger">{{ $errors->first('symptoms_other') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-12">
+                                    <label class="form-label">Patient History</label>
+                                    <textarea class="form-control form-control-md" name="history" rows="5" value="{{ $record->history }}" placeholder="Patient History">{{ old('history') }}</textarea>
+                                    @error('history')
+                                    <small class="text-danger">{{ $errors->first('history') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-11">
                                     @php $olds = explode(',', $record->diagnosis); @endphp
                                     <label class="form-label">Dignosis<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>

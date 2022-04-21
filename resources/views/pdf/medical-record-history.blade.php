@@ -51,11 +51,11 @@
         $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->select('p.product_name', 'm.dosage', 'm.notes', 'm.qty')->where('m.medical_record_id', $record->id)->get();
         @endphp
         <table width="100%" class="fw-bold">
-            <tr><td>Date: {{ ($record->created_at) ? date('d/M/Y', strtotime($record->created_at)) : '' }}</td><td class="text-right">Medical Record Number: {{ $record->mrn }}</td></tr>
+            <tr><td>Date: {{ ($record->created_at) ? date('d/M/Y', strtotime($record->created_at)) : '' }}</td><td class="text-right">Medical Record Number: {{ $record->id }}</td></tr>
             <tr><td>Doctor Name: {{ $doctor->doctor_name }} ({{ $department->department_name }})</td><td class="text-right">Branch: {{ $branch->branch_name }}</td></tr>
         </table>
-        <p class="bold">1) Symptoms / Notes (Front Desk)</p>
-        {{ $reference->symptoms }} / {{ $reference->notes }}
+        <p class="bold">1) Notes</p>
+        {{ $reference->notes }}
         <br />
         <p class="bold">2) Symptoms (Consultation)</p>
         @foreach($symptoms as $sympt)

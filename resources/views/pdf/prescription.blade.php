@@ -23,7 +23,7 @@
 <body>
     <table width="100%" cellpadding='0' cellspacing='0' class="text-large">
         <tr>
-            <td width='20%'>Medical Record No.</td><td width='60%'>{{ $reference->id }}</td>
+            <td width='20%'>MRN</td><td width='60%'>{{ $reference->id }}</td>
             <td rowspan='3'>
                 <img src="./images/assets/Devi-Logo-Transparent.jpg" height='75' width='115'/>
             </td>

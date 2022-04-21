@@ -159,6 +159,17 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/product-transfer/delete/{id}/', 'App\Http\Controllers\ProductTransferController@destroy')->name('product-transfer.delete');
     // End purchase //
 
+    // spectacles //
+    Route::get('/spectacle/', 'App\Http\Controllers\SpectacleController@index')->name('spectacle.index');
+    Route::get('/spectacle/fetch/', 'App\Http\Controllers\SpectacleController@fetch');
+    Route::post('/spectacle/show/', 'App\Http\Controllers\SpectacleController@show')->name('spectacle.show');
+    Route::get('/spectacle/create/', 'App\Http\Controllers\SpectacleController@create')->name('spectacle.create');
+    Route::post('/spectacle/create/', 'App\Http\Controllers\SpectacleController@store')->name('spectacle.save');
+    Route::get('/spectacle/edit/{id}/', 'App\Http\Controllers\SpectacleController@edit')->name('spectacle.edit');
+    Route::put('/spectacle/edit/{id}/', 'App\Http\Controllers\SpectacleController@update')->name('spectacle.update');
+    Route::delete('/spectacle/delete/{id}/', 'App\Http\Controllers\SpectacleController@destroy')->name('spectacle.delete');
+    // end spectacles //
+
     // PDFs //
     Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
     Route::get('/generate-prescription/{id}/', [PDFController::class, 'prescription']);
@@ -167,6 +178,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/generate-pharmacy-out/{id}/', [PDFController::class, 'pharmacyout']);
     Route::get('/generate-medical-record/{id}/', [PDFController::class, 'medicalrecord']);
     Route::get('/generate-medical-record-history/{id}/', [PDFController::class, 'medicalrecordhistory']);
+    Route::get('/generate-spectacle-prescription/{id}/', [PDFController::class, 'spectacleprescription']);
     // End PDFs //
 
     

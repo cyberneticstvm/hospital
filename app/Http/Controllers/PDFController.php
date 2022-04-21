@@ -88,4 +88,16 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/medical-record-history', compact('patient', 'qrcode', 'references'));    
         return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
     }
+
+    public function spectacleprescription($id){
+        $spectacle = DB::table('spectacles')->find($id);
+        $mrecord = DB::table('patient_medical_records')->find($spectacle->medical_record_id);
+        $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
+        $doctor = DB::table('doctors')->find($mrecord->doctor_id);
+        $reference = DB::table('patient_references')->find($mrecord->mrn);
+        $branch = DB::table('branches')->find($reference->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));         
+        $pdf = PDF::loadView('/pdf/spectacle-prescription', compact('patient', 'qrcode', 'reference', 'spectacle', 'mrecord', 'doctor', 'branch'));    
+        return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
+    }
 }

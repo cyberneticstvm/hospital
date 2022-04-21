@@ -126,7 +126,7 @@ class PatientRegistrationController extends Controller
         
         $patient->update($input);
         
-        return redirect()->route('patient.index')->with('success','Patient created successfully');
+        return redirect()->route('patient.index')->with('success','Patient updated successfully');
     }
 
     /**

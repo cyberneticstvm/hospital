@@ -51,8 +51,8 @@
             </tr>
         </tbody>
     </table>
-    <p class="bold">1) Symptoms / Notes (Front Desk)</p>
-    {{ $reference->symptoms }} / {{ $reference->notes }}
+    <p class="bold">1) Notes</p>
+    {{ $reference->notes }}
     <br />
     <p class="bold">2) Symptoms (Consultation)</p>
     @foreach($symptoms as $sympt)

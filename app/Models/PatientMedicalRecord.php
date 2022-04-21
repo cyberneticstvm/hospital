@@ -15,6 +15,8 @@ class PatientMedicalRecord extends Model
         'patient_id',
         'doctor_id',
         'symptoms',
+        'symptoms_other',
+        'history',
         'diagnosis',
         'doctor_recommondations',
         'review_date',
