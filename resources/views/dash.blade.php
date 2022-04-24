@@ -2,6 +2,7 @@
 
 @section("content")
     <h1>This is dash page</h1>
+    <p>contents</p>
     <!-- Modal -->
     <input type="hidden" id="branch_selector" value="{{ Session::get('branch') }}">
     <div class="modal fade branchSelector" id="staticBackdropLive" data-backdrop="static" tabindex="-1">
