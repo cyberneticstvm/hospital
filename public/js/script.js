@@ -81,6 +81,38 @@ $(function() {
         $(".npd").val(ipd-4);
         $(".rpd, .lpd").val(ipd/2);
     });
+    $(".spectacle .re_dist_add").change(function(){
+        var re_dist_add = $(this).val();
+        var re_dist_va =$(".re_dist_va").val()
+        if(re_dist_add){
+            $(".re_near_va").focus();
+            $(".re_near_va").val(parseFloat(re_dist_add)+parseFloat(re_dist_va));
+        }else{
+            $(".le_dist_sph").focus();
+        }
+    });
+    $(".spectacle .le_dist_add").change(function(){
+        var le_dist_add = $(this).val();
+        var le_dist_va =$(".le_dist_va").val()
+        if(le_dist_add){
+            $(".le_near_va").focus();
+            $(".le_near_va").val(parseFloat(le_dist_add)+parseFloat(le_dist_va));
+        }
+    });
+    $(".spectacle .re_dist_add").change(function(){
+        var re_dist_cyl = $(".re_dist_cyl").val();
+        var re_dist_add = $(this).val();
+        if(re_dist_add){
+            $(".re_int_cyl, .re_near_cyl").val(re_dist_cyl);
+        }
+    });
+    $(".spectacle .le_dist_add").change(function(){
+        var le_dist_cyl = $(".le_dist_cyl").val();
+        var le_dist_add = $(this).val();
+        if(le_dist_add){
+            $(".le_int_cyl, .le_near_cyl").val(le_dist_cyl);
+        }
+    });
 
     $(".medicineAdvise").click(function(){    
         $(".medicineAdviseContainer").append("<div class='row mb-3'><div class='col-sm-3'><select class='form-control form-control-md select2 selMedicine' data-placeholder='Select' name='medicine_id[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-2'><input type='text' name='dosage[]' class='form-control form-control-md' placeholder='Eg: Daily 3 Drops'/></div><div class='col-sm-2'><select class='form-control form-control-md select2 selDosage' data-placeholder='Select' name='dosage1[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' /></div><div class='col-sm-2'><input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes'/></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");        
