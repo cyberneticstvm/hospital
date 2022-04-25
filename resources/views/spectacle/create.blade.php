@@ -25,7 +25,7 @@
                                 <p class="fw-bold">EYE GLASS</p>
                                 <div class="col-sm-6 table-responsive">
                                     <table class="table">
-                                        <thead><tr><th>RE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>VA</th><th>PRISM</th></tr></thead>
+                                        <thead><tr><th>RE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>VA</th><th>PRISM</th><th>ADD</th></tr></thead>
                                         <tbody>
                                             <tr>
                                                 <td>DIST.</td>
@@ -34,6 +34,7 @@
                                                 <td><input type="text" class="form-control form-control-md" name="re_dist_axis" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="re_dist_va" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="re_dist_prism" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="re_dist_add" placeholder="0"/></td>
                                             </tr>
                                             <tr>
                                                 <td>INT.</td>
@@ -42,6 +43,7 @@
                                                 <td><input type="text" class="form-control form-control-md" name="re_int_axis" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="re_int_va" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="re_int_prism" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="re_int_add" placeholder="0"/></td>
                                             </tr>
                                             <tr>
                                                 <td>NEAR.</td>
@@ -50,13 +52,14 @@
                                                 <td><input type="text" class="form-control form-control-md" name="re_near_axis" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="re_near_va" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="re_near_prism" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="re_near_add" placeholder="0"/></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="col-sm-6 table-responsive">
                                     <table class="table">
-                                        <thead><tr><th>LE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>VA</th><th>PRISM</th></tr></thead>
+                                        <thead><tr><th>LE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>VA</th><th>PRISM</th><th>ADD</th></tr></thead>
                                         <tbody>
                                             <tr>
                                                 <td>DIST.</td>
@@ -65,6 +68,7 @@
                                                 <td><input type="text" class="form-control form-control-md" name="le_dist_axis" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="le_dist_va" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="le_dist_prism" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="le_dist_add" placeholder="0"/></td>
                                             </tr>
                                             <tr>
                                                 <td>INT.</td>
@@ -73,6 +77,7 @@
                                                 <td><input type="text" class="form-control form-control-md" name="le_int_axis" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="le_int_va" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="le_int_prism" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="le_int_add" placeholder="0"/></td>
                                             </tr>
                                             <tr>
                                                 <td>NEAR.</td>
@@ -81,20 +86,21 @@
                                                 <td><input type="text" class="form-control form-control-md" name="le_near_axis" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="le_near_va" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="le_near_prism" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="le_near_add" placeholder="0"/></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="col-sm-12 table-responsive">
-                                    <table class="table">
-                                        <thead><tr><th>VD</th><th>IPD</th><th>NPD</th><th>RPD</th><th>LPD</th><th>VBR</th><th>VBL</th></tr></thead>
+                                    <table class="table spectacle">
+                                        <thead><tr><th>VD</th><th>IPD</th><th>NPD</th><th>RPD</th><th>LPD</th><th>R-BC</th><th>L-BC</th></tr></thead>
                                         <tbody>
                                             <tr>
                                                 <td><input type="text" class="form-control form-control-md" name="vd" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="ipd" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="npd" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="rpd" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="lpd" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md ipd" name="ipd" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md npd" name="npd" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md rpd" name="rpd" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md lpd" name="lpd" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="vbr" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="vbl" placeholder="0"/></td>
                                             </tr>
@@ -144,15 +150,9 @@
                                     <input type="text" value="{{ old('remarks') }}" name="remarks" class="form-control form-control-md" placeholder="Remarks">
                                 </div>
                                 <div class="col-sm-4">
-                                    <label class="form-label">Diagnosis</label>
-                                    <input type="text" value="{{ old('diagnosis') }}" name="diagnosis" class="form-control form-control-md" placeholder="Diagnosis">
-                                </div>
-                                <div class="col-sm-4">
                                     <label class="form-label">Advice</label>
                                     <input type="text" value="{{ old('advice') }}" name="advice" class="form-control form-control-md" placeholder="Advice">
                                 </div>
-                            </div>
-                            <div class="row g-4 mt-1">
                                 <div class="col-sm-3">
                                     <label class="form-label">Advised a further examination not later</label>
                                     <fieldset class="form-icon-group left-icon position-relative">
