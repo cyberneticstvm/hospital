@@ -60,6 +60,71 @@
                                     <small class="text-danger">{{ $errors->first('history') }}</small>
                                     @enderror
                                 </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-6 table-responsive">
+                                    <label class="form-label">Vision</label>
+                                    <table class="table table-bordered">
+                                        <thead class="text-center"><tr><th></th><th>VB</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>VA</th></tr></thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center fw-bold">RE/OS</td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->re_dist_va : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_sph : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_cyl : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_axis : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" vvalue="{{ ($spectacle) ? $spectacle->re_dist_va : '' }}" placeholder="0" readonly="true" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center fw-bold">LE/OS</td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->le_dist_va : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_sph : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_cyl : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_axis : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_va : '' }}" placeholder="0" readonly="true" /></td>
+                                            </tr>
+                                            <tr><td colspan="3" class="fw-bold text-center">IOP/RE</td><td colspan="3" class="fw-bold text-center">IOP/LE</td></tr>
+                                            <tr><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" value="{{ ($spectacle) ? $spectacle->re_iop : '' }}" placeholder="0" readonly="true" /></td><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->le_iop : '' }}" maxlength="7" placeholder="0" readonly="true" /></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm-6 table-responsive">
+                                    <label class="form-label">Biometry</label>
+                                    <table class="table table-bordered" style="">
+                                        <thead class="text-center">
+                                            <tr><th></th><th>K1 (Auto)</th><th>K2 (Auto)</th><th>K1 (Manual)</th><th>K2 (Manual)</th></tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                                <td class="text-center fw-bold">OD</td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k1_od_auto }}" name="k1_od_auto" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k2_od_auto }}" name="k2_od_auto" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k1_od_manual }}" name="k1_od_manual" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k2_od_manual }}" name="k2_od_manual" maxlength="6" placeholder="0"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center fw-bold">OS</td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k1_os_auto }}" name="k1_os_auto" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k2_os_auto }}" name="k2_os_auto" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k1_os_manual }}" name="k1_os_manual" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k2_os_manual }}" name="k2_os_manual" maxlength="6" placeholder="0"/></td>
+                                            </tr>
+                                            <tr><td colspan="5" class="fw-bold text-center">AL</td></tr>
+                                            <tr><td colspan="5" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" name="al" value="{{ $record->al }}" placeholder="0"/></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-sm-11">
+                                    <label class="form-label">Signs</label>
+                                    <textarea class="form-control form-control-md" name="signs" rows="5" placeholder="Signs">{{ $record->signs }}</textarea>
+                                    @error('signs')
+                                    <small class="text-danger">{{ $errors->first('signs') }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row g-4 mb-3 mt-3">
                                 <div class="col-sm-11">
                                     @php $olds = explode(',', $record->diagnosis); @endphp
                                     <label class="form-label">Dignosis<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>

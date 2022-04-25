@@ -110,8 +110,9 @@ class PatientMedicalRecordController extends Controller
         $medicines = DB::table('products')->get();
         $dosages = DB::table('dosages')->get();
         $doctor = DB::table('doctors')->find($record->doctor_id);
-        $medicine_record = DB::table('patient_medicine_records')->get()->where('mrn', '=', $record->mrn);
-        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record'));
+        $spectacle = DB::table('spectacles')->where('medical_record_id', $id)->first();
+        $medicine_record = DB::table('patient_medicine_records')->where('medical_record_id', $id)->get();
+        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle'));
     }
 
     /**

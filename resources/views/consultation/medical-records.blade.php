@@ -56,34 +56,69 @@
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-sm-12 table-responsive">
+                                <div class="col-sm-6 table-responsive">
                                     <label class="form-label">Vision</label>
-                                    <table class="table table-bordered" style="width:50%; margin:0 auto;">
+                                    <table class="table table-bordered">
                                         <thead class="text-center"><tr><th></th><th>VB</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>VA</th></tr></thead>
                                         <tbody>
                                             <tr>
                                                 <td class="text-center fw-bold">RE/OS</td>
-                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0"readonly="true" /></td>
                                             </tr>
                                             <tr>
                                                 <td class="text-center fw-bold">LE/OS</td>
-                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0"readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
                                             </tr>
                                             <tr><td colspan="3" class="fw-bold text-center">IOP/RE</td><td colspan="3" class="fw-bold text-center">IOP/LE</td></tr>
-                                            <tr><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" placeholder="0"/></td><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" placeholder="0"/></td></tr>
+                                            <tr><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" placeholder="0" readonly="true" /></td><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" placeholder="0" readonly="true" /></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm-6 table-responsive">
+                                    <label class="form-label">Biometry</label>
+                                    <table class="table table-bordered" style="">
+                                        <thead class="text-center">
+                                            <tr><th></th><th>K1 (Auto)</th><th>K2 (Auto)</th><th>K1 (Manual)</th><th>K2 (Manual)</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center fw-bold">OD</td>
+                                                <td><input class="form-control form-control-md" type="text" name="k1_od_auto" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" name="k2_od_auto" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" name="k1_od_manual" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" name="k2_od_manual" maxlength="6" placeholder="0"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center fw-bold">OS</td>
+                                                <td><input class="form-control form-control-md" type="text" name="k1_os_auto" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" name="k2_os_auto" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" name="k1_os_manual" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" name="k2_os_manual" maxlength="6" placeholder="0"/></td>
+                                            </tr>
+                                            <tr><td colspan="5" class="fw-bold text-center">AL</td></tr>
+                                            <tr><td colspan="5" class="fw-bold text-center"><input class="form-control form-control-md" type="text" name="al" maxlength="7" placeholder="0"/></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <div class="row g-4 mt-3">
+                            <div class="row g-4">
+                                <div class="col-sm-11">
+                                    <label class="form-label">Signs</label>
+                                    <textarea class="form-control form-control-md" name="signs" rows="5" placeholder="Signs">{{ old('signs') }}</textarea>
+                                    @error('signs')
+                                    <small class="text-danger">{{ $errors->first('signs') }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-1">
                                 <div class="col-sm-11">
                                     <label class="form-label">Dignosis<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
                                     <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="diagnosis_id[]" id="diagnosisSelect">

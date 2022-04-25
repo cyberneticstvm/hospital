@@ -41,7 +41,7 @@ class PatientReferenceController extends Controller
     {
         $patient = Preg::find($id);
         $doctors = DB::table('doctors')->get();   
-        $departments = DB::table('departments')->get(); 
+        $departments = DB::table('departments')->get();
         return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments'));
     }
 
