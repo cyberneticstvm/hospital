@@ -76,7 +76,8 @@ class SpectacleController extends Controller
         if($mrecord):
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
-            return view('spectacle.create', compact('mrecord', 'patient', 'doctor'));
+            $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
+            return view('spectacle.create', compact('mrecord', 'patient', 'doctor', 'age'));
         else:
             return redirect("/spectacle/fetch/")->withErrors('No records found.');
         endif;
@@ -94,7 +95,8 @@ class SpectacleController extends Controller
         $mrecord = DB::table('patient_medical_records')->find($spectacle->medical_record_id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
-        return view('spectacle.edit', compact('mrecord', 'patient', 'doctor', 'spectacle'));
+        $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
+        return view('spectacle.edit', compact('mrecord', 'patient', 'doctor', 'spectacle', 'age'));
     }
 
     /**

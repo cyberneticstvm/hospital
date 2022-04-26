@@ -81,37 +81,45 @@ $(function() {
         $(".npd").val(ipd-4);
         $(".rpd, .lpd").val(ipd/2);
     });
-    $(".spectacle .re_dist_add").change(function(){
+    $(".spectacle .re_dist_va").focusout(function(){
+        $(".re_dist_add").focus();
+    });
+    $(".spectacle .re_dist_add").focusout(function(){
+        var age = $("#age").val();
         var re_dist_add = $(this).val();
-        var re_dist_va =$(".re_dist_va").val()
-        if(re_dist_add){
-            $(".re_near_va").focus();
-            $(".re_near_va").val(parseFloat(re_dist_add)+parseFloat(re_dist_va));
-        }else{
-            $(".le_dist_sph").focus();
-        }
-    });
-    $(".spectacle .le_dist_add").change(function(){
-        var le_dist_add = $(this).val();
-        var le_dist_va =$(".le_dist_va").val()
-        if(le_dist_add){
-            $(".le_near_va").focus();
-            $(".le_near_va").val(parseFloat(le_dist_add)+parseFloat(le_dist_va));
-        }
-    });
-    $(".spectacle .re_dist_add").change(function(){
+        var re_dist_sph = $(".re_dist_sph").val();
         var re_dist_cyl = $(".re_dist_cyl").val();
-        var re_dist_add = $(this).val();
-        if(re_dist_add){
-            $(".re_int_cyl, .re_near_cyl").val(re_dist_cyl);
+        var re_dist_axis = $(".re_dist_axis").val();
+        $(".re_near_sph").val(parseFloat(re_dist_sph)+parseFloat(re_dist_add));
+        if(re_dist_cyl) $(".re_int_cyl, .re_near_cyl").val(re_dist_cyl);
+        if(re_dist_axis) $(".re_int_axis, .re_near_axis").val(re_dist_axis);
+        if(age < 52){
+            $(".re_int_sph").val(parseFloat(re_dist_sph)+0.75);
+        }else{
+            $(".re_int_sph").val(parseFloat(re_dist_sph)+1.25);
+        }
+        $(".le_dist_add").val(re_dist_add);
+    });
+    $(".spectacle .le_dist_va").focusout(function(){
+        $(".le_dist_add").focus();
+    });
+    $(".spectacle .le_dist_add").focusout(function(){
+        var age = $("#age").val();
+        var le_dist_add = $(this).val();
+        var le_dist_sph = $(".le_dist_sph").val();
+        var le_dist_cyl = $(".le_dist_cyl").val();
+        var le_dist_axis = $(".le_dist_axis").val();
+        $(".le_near_sph").val(parseFloat(le_dist_sph)+parseFloat(le_dist_add));
+        if(le_dist_cyl) $(".le_int_cyl, .le_near_cyl").val(le_dist_cyl);
+        if(le_dist_axis) $(".le_int_axis, .le_near_axis").val(le_dist_axis);
+        if(age < 52){
+            $(".le_int_sph").val(parseFloat(le_dist_sph)+0.75);
+        }else{
+            $(".le_int_sph").val(parseFloat(le_dist_sph)+1.25);
         }
     });
-    $(".spectacle .le_dist_add").change(function(){
-        var le_dist_cyl = $(".le_dist_cyl").val();
-        var le_dist_add = $(this).val();
-        if(le_dist_add){
-            $(".le_int_cyl, .le_near_cyl").val(le_dist_cyl);
-        }
+    $(".spectacle .re_int_add").change(function(){
+        $(".le_int_add").val($(this).val());
     });
 
     $(".medicineAdvise").click(function(){    

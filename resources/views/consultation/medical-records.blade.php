@@ -62,7 +62,7 @@
                                         <thead class="text-center"><tr><th></th><th>VB</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>VA</th></tr></thead>
                                         <tbody>
                                             <tr>
-                                                <td class="text-center fw-bold">RE/OS</td>
+                                                <td class="text-center fw-bold">RE/OD</td>
                                                 <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
@@ -103,7 +103,7 @@
                                                 <td><input class="form-control form-control-md" type="text" name="k1_os_manual" maxlength="6" placeholder="0"/></td>
                                                 <td><input class="form-control form-control-md" type="text" name="k2_os_manual" maxlength="6" placeholder="0"/></td>
                                             </tr>
-                                            <tr><td colspan="5" class="fw-bold text-center">AL</td></tr>
+                                            <tr><td colspan="5" class="fw-bold text-center">AXL</td></tr>
                                             <tr><td colspan="5" class="fw-bold text-center"><input class="form-control form-control-md" type="text" name="al" maxlength="7" placeholder="0"/></td></tr>
                                         </tbody>
                                     </table>

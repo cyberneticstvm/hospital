@@ -16,9 +16,10 @@
                             @csrf
                             @method("PUT")
                             <input type="hidden" name="medical_record_id" value="{{ $spectacle->medical_record_id }}" />
+                            <input type="hidden" id="age" value="{{ $age }}" />
                             <div class="row g-4">
                                 <div class="col-sm-3">Medical Record No: <h5 class="text-primary">{{ $mrecord->id }}</h5></div>
-                                <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
+                                <div class="col-sm-3">Patient Name / Age: <h5 class="text-primary">{{ $patient->patient_name }} / {{ $age }}</h5></div>
                                 <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5></div>
                             </div>
@@ -30,30 +31,33 @@
                                         <tbody>
                                             <tr>
                                                 <td>DIST.</td>
-                                                <td><input type="text" class="form-control form-control-md" name="re_dist_sph" value="{{ $spectacle->re_dist_sph }}" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md re_dist_sph" name="re_dist_sph" value="{{ $spectacle->re_dist_sph }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md re_dist_cyl" name="re_dist_cyl" value="{{ $spectacle->re_dist_cyl }}" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="re_dist_axis" value="{{ $spectacle->re_dist_axis }}" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md re_dist_axis" name="re_dist_axis" value="{{ $spectacle->re_dist_axis }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md re_dist_va" name="re_dist_va" value="{{ $spectacle->re_dist_va }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="re_dist_prism" value="{{ $spectacle->re_dist_prism }}" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md re_dist_add" name="re_dist_add" value="{{ $spectacle->re_dist_add }}" placeholder="0"/></td>
+                                                <td><!--<input type="text" class="form-control form-control-md re_dist_add" name="re_dist_add" value="{{ $spectacle->re_dist_add }}" placeholder="0"/>--></td>
                                             </tr>
                                             <tr>
                                                 <td>INT.</td>
-                                                <td><input type="text" class="form-control form-control-md" name="re_int_sph" value="{{ $spectacle->re_int_sph }}" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md re_int_sph" name="re_int_sph" value="{{ $spectacle->re_int_sph }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md re_int_cyl" name="re_int_cyl" value="{{ $spectacle->re_int_cyl }}" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->re_int_axis }}" name="re_int_axis" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md re_int_axis" value="{{ $spectacle->re_int_axis }}" name="re_int_axis" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="re_int_va" value="{{ $spectacle->re_int_va }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->re_int_prism }}" name="re_int_prism" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->re_int_add }}" name="re_int_add" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md re_int_add" value="{{ $spectacle->re_int_add }}" name="re_int_add" placeholder="0"/></td>
                                             </tr>
                                             <tr>
                                                 <td>NEAR.</td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->re_near_sph }}" name="re_near_sph" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md re_near_sph" value="{{ $spectacle->re_near_sph }}" name="re_near_sph" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md re_near_cyl" value="{{ $spectacle->re_near_cyl }}" name="re_near_cyl" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->re_near_axis }}" name="re_near_axis" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md re_near_axis" value="{{ $spectacle->re_near_axis }}" name="re_near_axis" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="re_near_va" value="{{ $spectacle->re_near_va }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->re_near_prism }}" name="re_near_prism" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->re_near_add }}" name="re_near_add" placeholder="0"/></td>
+                                                <td><!--<input type="text" class="form-control form-control-md" value="{{ $spectacle->re_near_add }}" name="re_near_add" placeholder="0"/>--></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">ADD</td><td><input type="text" class="form-control form-control-md re_dist_add" name="re_dist_add" value="{{ $spectacle->re_dist_add }}" placeholder="0"/></td><td colspan="5"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -66,28 +70,31 @@
                                                 <td>DIST.</td>
                                                 <td><input type="text" class="form-control form-control-md le_dist_sph" name="le_dist_sph" value="{{ $spectacle->le_dist_sph }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md le_dist_cyl" name="le_dist_cyl" value="{{ $spectacle->le_dist_cyl }}" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="le_dist_axis" value="{{ $spectacle->le_dist_axis }}" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md le_dist_axis" name="le_dist_axis" value="{{ $spectacle->le_dist_axis }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md le_dist_va" name="le_dist_va" value="{{ $spectacle->le_dist_va }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="le_dist_prism" value="{{ $spectacle->le_dist_prism }}" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md le_dist_add" value="{{ $spectacle->le_dist_add }}" name="le_dist_add" placeholder="0"/></td>
+                                                <td><!--<input type="text" class="form-control form-control-md le_dist_add" value="{{ $spectacle->le_dist_add }}" name="le_dist_add" placeholder="0"/>--></td>
                                             </tr>
                                             <tr>
                                                 <td>INT.</td>
                                                 <td><input type="text" class="form-control form-control-md" name="le_int_sph" value="{{ $spectacle->le_int_sph }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md le_int_cyl" name="le_int_cyl" value="{{ $spectacle->le_int_cyl }}" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="le_int_axis" value="{{ $spectacle->le_int_axis }}" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="le_int_va" value="{{ $spectacle->le_int_va }}" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md le_int_axis" name="le_int_axis" value="{{ $spectacle->le_int_axis }}" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md le_int_va" name="le_int_va" value="{{ $spectacle->le_int_va }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="le_int_prism" value="{{ $spectacle->le_int_prism }}" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->le_int_add }}" name="le_int_add" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md le_int_add" value="{{ $spectacle->le_int_add }}" name="le_int_add" placeholder="0"/></td>
                                             </tr>
                                             <tr>
                                                 <td>NEAR.</td>
-                                                <td><input type="text" class="form-control form-control-md" name="le_near_sph" value="{{ $spectacle->le_near_sph }}" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md le_near_sph" name="le_near_sph" value="{{ $spectacle->le_near_sph }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md le_near_cyl" name="le_near_cyl" value="{{ $spectacle->le_near_cyl }}" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="le_near_axis" value="{{ $spectacle->le_near_axis }}" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md le_near_axis" name="le_near_axis" value="{{ $spectacle->le_near_axis }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md le_near_va" name="le_near_va" value="{{ $spectacle->le_near_va }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="le_near_prism" value="{{ $spectacle->le_near_prism }}" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->le_near_add }}" name="le_near_add" placeholder="0"/></td>
+                                                <td><!--<input type="text" class="form-control form-control-md" value="{{ $spectacle->le_near_add }}" name="le_near_add" placeholder="0"/>--></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">ADD</td><td><input type="text" class="form-control form-control-md le_dist_add" name="le_dist_add" value="{{ $spectacle->le_dist_add }}" placeholder="0"/></td><td colspan="5"></td>
                                             </tr>
                                         </tbody>
                                     </table>
