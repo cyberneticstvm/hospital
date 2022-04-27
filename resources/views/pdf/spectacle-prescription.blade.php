@@ -66,7 +66,7 @@
                 <tr><td>DIST.</td><td>{{ $spectacle->re_dist_sph }}</td><td>{{ $spectacle->re_dist_cyl }}</td><td>{{ $spectacle->re_dist_axis }}</td><td>{{ $spectacle->re_dist_va }}</td><td>{{ $spectacle->re_dist_prism }}</td></tr>
                 <tr><td>INT.</td><td>{{ $spectacle->re_int_sph }}</td><td>{{ $spectacle->re_int_cyl }}</td><td>{{ $spectacle->re_int_axis }}</td><td>{{ $spectacle->re_int_va }}</td><td>{{ $spectacle->re_int_prism }}</td></tr>
                 <tr><td>NEAR.</td><td>{{ $spectacle->re_near_sph }}</td><td>{{ $spectacle->re_near_cyl }}</td><td>{{ $spectacle->re_near_axis }}</td><td>{{ $spectacle->re_near_va }}</td><td>{{ $spectacle->re_near_prism }}</td></tr>
-                <tr><td><b>ADD</b></td><td>{{ $spectacle->re_dist_add }}</td><td><b>INT ADD<b></td><td>{{ $spectacle->re_int_add }}</td></tr>
+                <tr><td><b>ADD</b></td><td>{{ $spectacle->re_dist_add }}</td><td><b>INT ADD<b></td><td>{{ $spectacle->re_int_add }}</td><td colspan="3"></td></tr>
             </table>
         </div>
         <div class="col">
@@ -75,7 +75,7 @@
                 <tr><td>DIST.</td><td>{{ $spectacle->le_dist_sph }}</td><td>{{ $spectacle->le_dist_cyl }}</td><td>{{ $spectacle->le_dist_axis }}</td><td>{{ $spectacle->le_dist_va }}</td><td>{{ $spectacle->le_dist_prism }}</td></tr>
                 <tr><td>INT.</td><td>{{ $spectacle->le_int_sph }}</td><td>{{ $spectacle->le_int_cyl }}</td><td>{{ $spectacle->le_int_axis }}</td><td>{{ $spectacle->le_int_va }}</td><td>{{ $spectacle->le_int_prism }}</td></tr>
                 <tr><td>NEAR.</td><td>{{ $spectacle->le_near_sph }}</td><td>{{ $spectacle->le_near_cyl }}</td><td>{{ $spectacle->le_near_axis }}</td><td>{{ $spectacle->le_near_va }}</td><td>{{ $spectacle->le_near_prism }}</td></tr>
-                <tr><td><b>ADD</b></td><td>{{ $spectacle->le_dist_add }}</td><td><b>INT ADD<b></td><td>{{ $spectacle->le_int_add }}</td></tr>
+                <tr><td><b>ADD</b></td><td>{{ $spectacle->le_dist_add }}</td><td><b>INT ADD<b></td><td>{{ $spectacle->le_int_add }}</td><td colspan="3"></td></tr>
             </table>
         </div>
     </div>
