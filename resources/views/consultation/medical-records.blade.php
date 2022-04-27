@@ -59,10 +59,11 @@
                                 <div class="col-sm-6 table-responsive">
                                     <label class="form-label">Vision</label>
                                     <table class="table table-bordered">
-                                        <thead class="text-center"><tr><th></th><th>VB</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>VA</th></tr></thead>
+                                        <thead class="text-center"><tr><th></th><th><!--VB--></th><th><!--SPH--></th><th><!--CYL--></th><th><!--AXIS--></th><th><!--ADD--></th><th><!--VA--></th></tr></thead>
                                         <tbody>
                                             <tr>
                                                 <td class="text-center fw-bold">RE/OD</td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
@@ -76,9 +77,10 @@
                                                 <td><input class="form-control form-control-md" type="text" placeholder="0"readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" placeholder="0" readonly="true" /></td>
                                             </tr>
-                                            <tr><td colspan="3" class="fw-bold text-center">IOP/RE</td><td colspan="3" class="fw-bold text-center">IOP/LE</td></tr>
-                                            <tr><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" placeholder="0" readonly="true" /></td><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" placeholder="0" readonly="true" /></td></tr>
+                                            <tr><td colspan="4" class="fw-bold text-center">IOP-OD</td><td colspan="3" class="fw-bold text-center">IOP-OS</td></tr>
+                                            <tr><td colspan="4" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" placeholder="0" readonly="true" /></td><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" placeholder="0" readonly="true" /></td></tr>
                                         </tbody>
                                     </table>
                                 </div>

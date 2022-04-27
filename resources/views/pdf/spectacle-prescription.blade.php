@@ -58,35 +58,37 @@
             </tr>
         </tbody>
     </table>
-    <center><p>EYE GLASS</p></center>
+    <center><p>EYE GLASS PRESCRIPTION</p></center>
     <div class="row">
         <div class="col">
             <table width="99%" class="bordered" cellspacing="0" cellpadding="0">
-                <tr><td>RIGHT</td><td>SPH</td><td>CYL</td><td>AXIS</td><td>VA</td><td>PRISM</td><td>ADD</td></tr>
+                <tr><td>RIGHT</td><td>SPH</td><td>CYL</td><td>AXIS</td><td>VA</td><td>PRISM</td></tr>
                 <tr><td>DIST.</td><td>{{ $spectacle->re_dist_sph }}</td><td>{{ $spectacle->re_dist_cyl }}</td><td>{{ $spectacle->re_dist_axis }}</td><td>{{ $spectacle->re_dist_va }}</td><td>{{ $spectacle->re_dist_prism }}</td><td>{{ $spectacle->re_dist_add }}</td></tr>
-                <tr><td>INT.</td><td>{{ $spectacle->re_int_sph }}</td><td>{{ $spectacle->re_int_cyl }}</td><td>{{ $spectacle->re_int_axis }}</td><td>{{ $spectacle->re_int_va }}</td><td>{{ $spectacle->re_int_prism }}</td><td>{{ $spectacle->re_int_add }}</td></tr>
-                <tr><td>NEAR.</td><td>{{ $spectacle->re_near_sph }}</td><td>{{ $spectacle->re_near_cyl }}</td><td>{{ $spectacle->re_near_axis }}</td><td>{{ $spectacle->re_near_va }}</td><td>{{ $spectacle->re_near_prism }}</td><td>{{ $spectacle->re_near_add }}</td></tr>
+                <tr><td>INT.</td><td>{{ $spectacle->re_int_sph }}</td><td>{{ $spectacle->re_int_cyl }}</td><td>{{ $spectacle->re_int_axis }}</td><td>{{ $spectacle->re_int_va }}</td><td>{{ $spectacle->re_int_prism }}</td></tr>
+                <tr><td>NEAR.</td><td>{{ $spectacle->re_near_sph }}</td><td>{{ $spectacle->re_near_cyl }}</td><td>{{ $spectacle->re_near_axis }}</td><td>{{ $spectacle->re_near_va }}</td><td>{{ $spectacle->re_near_prism }}</td></tr>
+                <tr><td><b>ADD</b></td><td>{{ $spectacle->re_dist_add }}</td><td><b>INT ADD<b></td><td>{{ $spectacle->re_int_add }}</td></tr>
             </table>
         </div>
         <div class="col">
             <table width="99%" class="bordered" cellspacing="0" cellpadding="0">
                 <tr><td>LEFT</td><td>SPH</td><td>CYL</td><td>AXIS</td><td>VA</td><td>PRISM</td></tr>
-                <tr><td>DIST.</td><td>{{ $spectacle->le_dist_sph }}</td><td>{{ $spectacle->le_dist_cyl }}</td><td>{{ $spectacle->le_dist_axis }}</td><td>{{ $spectacle->le_dist_va }}</td><td>{{ $spectacle->le_dist_prism }}</td><td>{{ $spectacle->le_dist_add }}</td></tr>
-                <tr><td>INT.</td><td>{{ $spectacle->le_int_sph }}</td><td>{{ $spectacle->le_int_cyl }}</td><td>{{ $spectacle->le_int_axis }}</td><td>{{ $spectacle->le_int_va }}</td><td>{{ $spectacle->le_int_prism }}</td><td>{{ $spectacle->le_int_add }}</td></tr>
-                <tr><td>NEAR.</td><td>{{ $spectacle->le_near_sph }}</td><td>{{ $spectacle->le_near_cyl }}</td><td>{{ $spectacle->le_near_axis }}</td><td>{{ $spectacle->le_near_va }}</td><td>{{ $spectacle->le_near_prism }}</td><td>{{ $spectacle->le_near_add }}</td></tr>
+                <tr><td>DIST.</td><td>{{ $spectacle->le_dist_sph }}</td><td>{{ $spectacle->le_dist_cyl }}</td><td>{{ $spectacle->le_dist_axis }}</td><td>{{ $spectacle->le_dist_va }}</td><td>{{ $spectacle->le_dist_prism }}</td></tr>
+                <tr><td>INT.</td><td>{{ $spectacle->le_int_sph }}</td><td>{{ $spectacle->le_int_cyl }}</td><td>{{ $spectacle->le_int_axis }}</td><td>{{ $spectacle->le_int_va }}</td><td>{{ $spectacle->le_int_prism }}</td></tr>
+                <tr><td>NEAR.</td><td>{{ $spectacle->le_near_sph }}</td><td>{{ $spectacle->le_near_cyl }}</td><td>{{ $spectacle->le_near_axis }}</td><td>{{ $spectacle->le_near_va }}</td><td>{{ $spectacle->le_near_prism }}</td></tr>
+                <tr><td><b>ADD</b></td><td>{{ $spectacle->le_dist_add }}</td><td><b>INT ADD<b></td><td>{{ $spectacle->le_int_add }}</td></tr>
             </table>
         </div>
     </div>
     <pre /><pre /><pre /><pre /><pre /><pre />
     <div class="row">
         <table width="100%" class="bordered text-center" cellspacing="0" cellpadding="0">
-            <tr><td>VD</td><td>IPD</td><td>NPD</td><td>RPD</td><td>LPD</td><td>R-BC</td><td>L-BC</td></tr>
+            <tr><td>VD</td><td>IPD</td><td>NPD</td><td>RPD</td><td>LPD</td><td>OD-BC</td><td>OS-BC</td></tr>
             <tr><td>{{ $spectacle->vd }}</td><td>{{ $spectacle->ipd }}</td><td>{{ $spectacle->npd }}</td><td>{{ $spectacle->rpd }}</td><td>{{ $spectacle->lpd }}</td><td>{{ $spectacle->vbr }}</td><td>{{ $spectacle->vbl }}</td></tr>
         </table>
     </div>
     <br />
     <p>IOP/R: {{ $spectacle->re_iop }} &nbsp;&nbsp; IOP/L: {{ $spectacle->le_iop }}</p>
-    <center><p>CONTACT LENS</p></center>
+    <center><p>CONTACT LENS PRESCRIPTION</p></center>
     <div class="row">
         <table width="60%" class="bordered" cellspacing="0" cellpadding="0">
             <tr><td></td><td>BASE CURVE</td><td>DIAMETER</td><td>SPH</td><td>CYL</td><td>AXIS</td></tr>
