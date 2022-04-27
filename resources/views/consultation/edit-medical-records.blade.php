@@ -65,7 +65,7 @@
                                 <div class="col-sm-6 table-responsive">
                                     <label class="form-label">Vision</label>
                                     <table class="table table-bordered">
-                                        <thead class="text-center"><tr><th></th><th><!--VB--></th><th><!--SPH--></th><th><!--CYL--></th><th><!--AXIS--></th><th><!--ADD--></th><th><!--VA--></th></tr></thead>
+                                        <thead class="text-center"><tr><th>&nbsp;</th><th><!--VB--></th><th><!--SPH--></th><th><!--CYL--></th><th><!--AXIS--></th><th><!--ADD--></th><th><!--VA--></th></tr></thead>
                                         <tbody>
                                             <tr>
                                                 <td class="text-center fw-bold">RE/OD</td>
