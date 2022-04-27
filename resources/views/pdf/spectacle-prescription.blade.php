@@ -63,7 +63,7 @@
         <div class="col">
             <table width="99%" class="bordered" cellspacing="0" cellpadding="0">
                 <tr><td>RIGHT</td><td>SPH</td><td>CYL</td><td>AXIS</td><td>VA</td><td>PRISM</td></tr>
-                <tr><td>DIST.</td><td>{{ $spectacle->re_dist_sph }}</td><td>{{ $spectacle->re_dist_cyl }}</td><td>{{ $spectacle->re_dist_axis }}</td><td>{{ $spectacle->re_dist_va }}</td><td>{{ $spectacle->re_dist_prism }}</td><td>{{ $spectacle->re_dist_add }}</td></tr>
+                <tr><td>DIST.</td><td>{{ $spectacle->re_dist_sph }}</td><td>{{ $spectacle->re_dist_cyl }}</td><td>{{ $spectacle->re_dist_axis }}</td><td>{{ $spectacle->re_dist_va }}</td><td>{{ $spectacle->re_dist_prism }}</td></tr>
                 <tr><td>INT.</td><td>{{ $spectacle->re_int_sph }}</td><td>{{ $spectacle->re_int_cyl }}</td><td>{{ $spectacle->re_int_axis }}</td><td>{{ $spectacle->re_int_va }}</td><td>{{ $spectacle->re_int_prism }}</td></tr>
                 <tr><td>NEAR.</td><td>{{ $spectacle->re_near_sph }}</td><td>{{ $spectacle->re_near_cyl }}</td><td>{{ $spectacle->re_near_axis }}</td><td>{{ $spectacle->re_near_va }}</td><td>{{ $spectacle->re_near_prism }}</td></tr>
                 <tr><td><b>ADD</b></td><td>{{ $spectacle->re_dist_add }}</td><td><b>INT ADD<b></td><td>{{ $spectacle->re_int_add }}</td></tr>
@@ -79,7 +79,7 @@
             </table>
         </div>
     </div>
-    <pre /><pre /><pre /><pre /><pre /><pre />
+    <pre /><pre /><pre /><pre /><pre /><pre /><pre />
     <div class="row">
         <table width="100%" class="bordered text-center" cellspacing="0" cellpadding="0">
             <tr><td>VD</td><td>IPD</td><td>NPD</td><td>RPD</td><td>LPD</td><td>OD-BC</td><td>OS-BC</td></tr>
