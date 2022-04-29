@@ -100,6 +100,7 @@ $(function() {
             $(".re_int_sph").val((parseFloat(re_dist_sph)) ? parseFloat(re_dist_sph)+1.25 : 1.25);
         }
         $(".le_dist_add").val(re_dist_add);
+        $(".re_near_va").focus();
     });
     $(".spectacle .le_dist_va").focusout(function(){
         $(".le_dist_add").focus();
