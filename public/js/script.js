@@ -84,8 +84,23 @@ $(function() {
     $(".spectacle .re_dist_va").focusout(function(){
         $(".re_dist_add").focus();
     });
+    $(".spectacle .re_int_add").focusout(function(){
+        var int_add = $(this).val();
+        if(parseInt(int_add) > 0){
+            var age = $("#age").val();
+            var re_dist_sph = $(".re_dist_sph").val();
+            if(age < 52){
+                var int_sph = (parseFloat(re_dist_sph)) ? parseFloat(re_dist_sph)+0.75 : 0.75;
+                $(".re_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '');
+            }else{
+                var int_sph = (parseFloat(re_dist_sph)) ? parseFloat(re_dist_sph)+1.25 : 1.25;
+                $(".re_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '');
+            }
+        }else{
+            $(".re_int_sph").val('');
+        }
+    });
     $(".spectacle .re_dist_add").focusout(function(){
-        var age = $("#age").val();
         var re_dist_add = $(this).val();
         var re_dist_sph = $(".re_dist_sph").val();
         var re_dist_cyl = $(".re_dist_cyl").val();
@@ -94,19 +109,32 @@ $(function() {
         $(".re_near_sph").val((re_near > 0) ? '+' + re_near.toFixed(2) : (re_near) ? re_near.toFixed(2) : '');
         if(re_dist_cyl) $(".re_int_cyl, .re_near_cyl").val(re_dist_cyl);
         if(re_dist_axis) $(".re_int_axis, .re_near_axis").val(re_dist_axis);
-        if(age < 52){
-            $(".re_int_sph").val((parseFloat(re_dist_sph)) ? parseFloat(re_dist_sph)+0.75 : 0.75);
-        }else{
-            $(".re_int_sph").val((parseFloat(re_dist_sph)) ? parseFloat(re_dist_sph)+1.25 : 1.25);
-        }
         $(".le_dist_add").val(re_dist_add);
         $(".re_near_va").focus();
     });
+
     $(".spectacle .le_dist_va").focusout(function(){
         $(".le_dist_add").focus();
     });
+
+    $(".spectacle .le_int_add").focusout(function(){
+        var int_add = $(this).val();
+        if(parseInt(int_add) > 0){
+            var age = $("#age").val();
+            var le_dist_sph = $(".le_dist_sph").val();
+            if(age < 52){
+                var int_sph = (parseFloat(le_dist_sph)) ? parseFloat(le_dist_sph)+0.75 : 0.75;
+                $(".le_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '');
+            }else{
+                var int_sph = (parseFloat(le_dist_sph)) ? parseFloat(le_dist_sph)+1.25 : 1.25;
+                $(".le_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '');
+            }
+        }else{
+            $(".le_int_sph").val('');
+        }
+    });
+
     $(".spectacle .le_dist_add").focusout(function(){
-        var age = $("#age").val();
         var le_dist_add = $(this).val();
         var le_dist_sph = $(".le_dist_sph").val();
         var le_dist_cyl = $(".le_dist_cyl").val();
@@ -115,11 +143,7 @@ $(function() {
         $(".le_near_sph").val((le_near > 0) ? '+' + le_near.toFixed(2) : (le_near) ? le_near.toFixed(2) : '');
         if(le_dist_cyl) $(".le_int_cyl, .le_near_cyl").val(le_dist_cyl);
         if(le_dist_axis) $(".le_int_axis, .le_near_axis").val(le_dist_axis);
-        if(age < 52){
-            $(".le_int_sph").val((parseFloat(le_dist_sph)) ? parseFloat(le_dist_sph)+0.75 : 0.75);
-        }else{
-            $(".le_int_sph").val((parseFloat(le_dist_sph)) ? parseFloat(le_dist_sph)+1.25 : 1.25);
-        }
+        $(".le_near_va").focus();
     });
     $(".spectacle .re_int_add").change(function(){
         $(".le_int_add").val($(this).val());
