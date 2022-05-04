@@ -108,7 +108,7 @@ $(function() {
         var re_dist_axis = $(".re_dist_axis").val();
         var age = $("#age").val();
         var re_near = (parseFloat(re_dist_sph)+parseFloat(re_dist_add) > 0) ? parseFloat(re_dist_sph)+parseFloat(re_dist_add) : parseFloat(re_dist_sph)+parseFloat(re_dist_add);
-        $(".re_near_sph").val((re_near > 0) ? '+' + re_near.toFixed(2) : (re_near) ? re_near.toFixed(2) : '');
+        $(".re_near_sph").val((re_near > 0) ? '+' + re_near.toFixed(2) : (re_near) ? re_near.toFixed(2) : '0.00');
 
         if(age < 52){
             var int_sph = (parseFloat(re_dist_sph)) ? parseFloat(re_dist_sph)+0.75 : 0.75;
@@ -161,7 +161,7 @@ $(function() {
         var le_dist_axis = $(".le_dist_axis").val();
         var age = $("#age").val();
         var le_near = (parseFloat(le_dist_sph)+parseFloat(le_dist_add) > 0) ? parseFloat(le_dist_sph)+parseFloat(le_dist_add) : parseFloat(le_dist_sph)+parseFloat(le_dist_add);
-        $(".le_near_sph").val((le_near > 0) ? '+' + le_near.toFixed(2) : (le_near) ? le_near.toFixed(2) : '');
+        $(".le_near_sph").val((le_near > 0) ? '+' + le_near.toFixed(2) : (le_near) ? le_near.toFixed(2) : '0.00');
 
         if(age < 52){
             var int_sph = (parseFloat(le_dist_sph)) ? parseFloat(le_dist_sph)+0.75 : 0.75;
