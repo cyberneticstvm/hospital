@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tagging Photo</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/default.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css">
+	<link rel="stylesheet" href="tagging-photo.min.css">
+</head>
+<body>
+<img src="eye-le.jpg"
+class="tagging-photo"
+data-points-color="red"
+data-allow-add-tags="true"
+data-show-all-on-hover="true"
+data-show-tags-buttons="true"
+data-points='[]'
+alt=""> 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="tagging-photo.min.js"></script>
+
+<script>
+$(window).on('load', function () {
+    taggingPhoto.init($('img.tagging-photo'), {
+        onAddTag: function (points) {
+            console.log(points); // Event function to return array of tags after add or edit and delete tag
+        }
+    });
+});
+</script>
+</body>
+</html>

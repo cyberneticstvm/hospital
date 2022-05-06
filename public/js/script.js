@@ -232,6 +232,14 @@ $(function() {
     });
 });
 
+$(window).on('load', function () {
+    taggingPhoto.init($('img.tagging-photo'), {
+        onAddTag: function (points) {
+            console.log(points); // Event function to return array of tags after add or edit and delete tag
+        }
+    });
+});
+
 function bindDDL(type, ddl){
     $.ajax({
         type: 'GET',
