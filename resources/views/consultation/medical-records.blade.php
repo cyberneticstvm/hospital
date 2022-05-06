@@ -123,11 +123,13 @@
                             <div class="row g-4 mt-1">
                                 <div class="col-sm-6">
                                     <label class="form-label">RE</label>
-                                    <img src="/public/storage/assets/images/eye-re.jpg" class="img-fluid" alt="Right Eye">
+                                    <img src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="img-fluid" alt="Right Eye">
+                                    <!--<img src="/public/storage/assets/images/eye-re.jpg" class="img-fluid" alt="Right Eye">-->
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">LE</label>
-                                    <img src="/public/storage/assets/images/eye-le.jpg" class="img-fluid" alt="Left Eye">
+                                    <img src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="img-fluid" alt="Left Eye">
+                                    <!--<img src="/public/storage/assets/images/eye-re.jpg" class="img-fluid" alt="Right Eye">-->
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
