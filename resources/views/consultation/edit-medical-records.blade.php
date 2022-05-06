@@ -20,7 +20,7 @@
                             <input type="hidden" name="patient_id" value="{{ $record->patient_id }}"/>
                             <input type="hidden" name="doctor_id" value="{{ $record->doctor_id }}"/>
                             <div class="row g-4 mb-3">
-                                <div class="col-sm-3">Medical Record No: <h5 class="text-primary">{{ $record->mrn }}</h5></div>
+                                <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $record->mrn }}</h5></div>
                                 <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
                                 <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5></div>

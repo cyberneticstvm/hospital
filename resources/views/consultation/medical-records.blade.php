@@ -19,7 +19,7 @@
                             <input type="hidden" name="patient_id" value="{{ $patient->id }}"/>
                             <input type="hidden" name="doctor_id" value="{{ $doctor->id }}"/>
                             <div class="row g-4">
-                                <div class="col-sm-3">Medical Record No: <h5 class="text-primary">{{ $reference->id }}</h5></div>
+                                <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $reference->id }}</h5></div>
                                 <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
                                 <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5></div>
@@ -118,6 +118,16 @@
                                     @error('signs')
                                     <small class="text-danger">{{ $errors->first('signs') }}</small>
                                     @enderror
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-1">
+                                <div class="col-sm-6">
+                                    <label class="form-label">RE</label>
+                                    <img src="{{ asset('storage/assets/images/eye-re.jpg') }}" class="img-fluid" alt="Right Eye">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label">LE</label>
+                                    <img src="{{ asset('storage/assets/images/eye-le.jpg') }}" class="img-fluid" alt="Left Eye">
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
