@@ -13,7 +13,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('medical-records.create') }}" method="post">
+                        <form action="{{ route('medical-records.create') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="mrn" value="{{ $reference->id }}"/>
                             <input type="hidden" name="patient_id" value="{{ $patient->id }}"/>
@@ -112,6 +112,16 @@
                                 </div>
                             </div>
                             <div class="row g-4">
+                                <div class="col-sm-6">
+                                    <label class="form-label">RE</label>
+                                    <img src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="img-fluid" alt="Right Eye">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label">LE</label>
+                                    <img src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="img-fluid" alt="Left Eye">
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-1">
                                 <div class="col-sm-11">
                                     <label class="form-label">Signs</label>
                                     <textarea class="form-control form-control-md" name="signs" rows="5" placeholder="Signs">{{ old('signs') }}</textarea>
@@ -121,15 +131,18 @@
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
-                                <div class="col-sm-6">
-                                    <label class="form-label">RE</label>
-                                    <img src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="img-fluid tagging-photo" data-points-color="red" data-allow-add-tags="true" data-show-all-on-hover="true" data-show-tags-buttons="true" data-points='[]' alt="Right Eye">
+                                <label class="form-label">Retina Wellness Report</label>
+                                <div class="col-sm-6">                                    
+                                    <label class="form-label">OD</label>
+                                    <input type="file" class="form-control retina_od" name="retina_od" id="retina_od" data-container="retina_od_container">
+                                    <div class="retina_od_container mt-3 mb-3"></div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <label class="form-label">LE</label>
-                                    <img src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="img-fluid tagging-photo" data-points-color="red" data-allow-add-tags="true" data-show-all-on-hover="true" data-show-tags-buttons="true" data-points='[]' alt="Left Eye">
+                                <div class="col-sm-6">                                    
+                                    <label class="form-label">OS</label>
+                                    <input type="file" class="form-control retina_os" name="retina_os" id="retina_os" data-container="retina_os_container">
+                                    <div class="retina_os_container mt-3 mb-3"></div>
                                 </div>
-                            </div>
+                            </div>                           
                             <div class="row g-4 mt-1">
                                 <div class="col-sm-11">
                                     <label class="form-label">Dignosis<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>

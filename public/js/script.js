@@ -35,17 +35,18 @@ $(function() {
         $(".btn-submit").html("<span class='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'></span>&nbsp;Loading...");
     });
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $(document).on('click', '.btn-ajax-submit', function(e){
         e.preventDefault();
         var frm = $(this).closest('form');
         var ddl = frm.find(".ddl").val();
         var form_data = frm.serialize();
-        var url = $(this).closest('form').attr('action');
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        }); 
+        var url = $(this).closest('form').attr('action'); 
         $.ajax({
             type: 'POST',
             url: url + ddl,
@@ -206,6 +207,20 @@ $(function() {
             });
         }
     });
+
+    $(".retina_od, .retina_os").change(function(e){
+        e.preventDefault();
+        var container = $(this).data("container");
+        var file = $(this).get(0).files[0];
+        if(file){
+            var reader = new FileReader();
+            reader.onload = function(){
+                $("."+container).append("<img src='"+reader.result+"' class='img-fluid mt-1 mb-1' alt=''/>");
+                $("."+container).append("<input type='text' class='form-control' name='' placeholder='Description'>");
+            }
+            reader.readAsDataURL(file);
+        }
+    })
 
     $(".medicineAdvise").click(function(){    
         $(".medicineAdviseContainer").append("<div class='row mb-3'><div class='col-sm-3'><select class='form-control form-control-md select2 selMedicine' data-placeholder='Select' name='medicine_id[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-2'><input type='text' name='dosage[]' class='form-control form-control-md' placeholder='Eg: Daily 3 Drops'/></div><div class='col-sm-2'><select class='form-control form-control-md select2 selDosage' data-placeholder='Select' name='dosage1[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' /></div><div class='col-sm-2'><input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes'/></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");        
