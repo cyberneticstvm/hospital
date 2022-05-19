@@ -111,14 +111,28 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="row g-4">
+                            <!--<div class="row g-4">
                                 <div class="col-sm-6">
-                                    <label class="form-label">RE</label>
+                                    <label class="form-label">OD</label>
                                     <img src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="img-fluid" alt="Right Eye">
                                 </div>
                                 <div class="col-sm-6">
-                                    <label class="form-label">LE</label>
+                                    <label class="form-label">OS</label>
                                     <img src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="img-fluid" alt="Left Eye">
+                                </div>
+                            </div>-->
+                            <div class="row g-4">
+                                <div class="col-sm-6">
+                                    <label class="form-label">OD</label>
+                                    <img id="imgreye" src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="d-none">
+                                    <canvas id="re_eye" style="border: 1px solid #000;"></canvas>
+                                    <a href="javascript:void(0)" id='odclear' class="btn btn-secondary">Clear</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label">OS</label>
+                                    <img id="imgleye" src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="d-none">
+                                    <canvas id="le_eye" style="border: 1px solid #000;"></canvas>
+                                    <a href="javascript:void(0)" id='osclear' class="btn btn-secondary">Clear</a>
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">

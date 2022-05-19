@@ -215,12 +215,16 @@ $(function() {
         if(file){
             var reader = new FileReader();
             reader.onload = function(){
-                $("."+container).append("<img src='"+reader.result+"' class='img-fluid mt-1 mb-1' alt=''/>");
-                $("."+container).append("<input type='text' class='form-control' name='' placeholder='Description'>");
+                $("."+container).append("<div class='imgrow'><img src='"+reader.result+"' class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='' placeholder='Description'></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>");
             }
             reader.readAsDataURL(file);
         }
-    })
+        $(this).val('');
+    });
+
+    $(document).on('click', '.removeImg', function(){
+        $(this).closest('.imgrow').remove();
+    });
 
     $(".medicineAdvise").click(function(){    
         $(".medicineAdviseContainer").append("<div class='row mb-3'><div class='col-sm-3'><select class='form-control form-control-md select2 selMedicine' data-placeholder='Select' name='medicine_id[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-2'><input type='text' name='dosage[]' class='form-control form-control-md' placeholder='Eg: Daily 3 Drops'/></div><div class='col-sm-2'><select class='form-control form-control-md select2 selDosage' data-placeholder='Select' name='dosage1[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-2'><input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' /></div><div class='col-sm-2'><input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes'/></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");        
@@ -253,6 +257,67 @@ $(window).on('load', function () {
             console.log(points); // Event function to return array of tags after add or edit and delete tag
         }
     });
+});
+
+$(window).on('load', function () {
+    var canvas = document.getElementById("re_eye");
+    var ctx = canvas.getContext("2d");
+    var img = document.getElementById("imgreye");
+    //ctx.drawImage(img, 0, 0);
+    drawOnImage(img, canvas, ctx);
+
+    var canvas1 = document.getElementById("le_eye");
+    var ctx1 = canvas1.getContext("2d");
+    var img1 = document.getElementById("imgleye");
+    drawOnImage(img1, canvas1, ctx1);
+});
+
+function drawOnImage(image, canvasElement, context){
+    if (image) {
+        const imageWidth = image.width;
+        const imageHeight = image.height;
+        // rescaling the canvas element
+        canvasElement.width = imageWidth;
+        canvasElement.height = imageHeight;
+        context.drawImage(image, 0, 0, imageWidth, imageHeight);
+    }
+    let isDrawing;
+    canvasElement.onmousedown = (e) => {
+        isDrawing = true;
+        context.beginPath();
+        context.lineWidth = 5;
+        context.strokeStyle = "red";
+        context.lineJoin = "round";
+        context.lineCap = "round";
+        context.moveTo(e.offsetX , e.offsetY);
+    };
+    
+    canvasElement.onmousemove = (e) => {
+        if (isDrawing) {     
+        context.lineTo(e.offsetX , e.offsetY);
+        context.stroke();      
+        }
+    };
+    
+    canvasElement.onmouseup = function () {
+        isDrawing = false;
+        context.closePath();
+    };
+}
+
+$("#odclear").click(function(){
+    var canvas = document.getElementById("re_eye");
+    var ctx = canvas.getContext("2d");
+    var img = document.getElementById("imgreye");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawOnImage(img, canvas, ctx);
+});
+$("#osclear").click(function(){
+    var canvas = document.getElementById("le_eye");
+    var ctx = canvas.getContext("2d");
+    var img = document.getElementById("imgleye");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawOnImage(img, canvas, ctx);
 });
 
 function bindDDL(type, ddl){
