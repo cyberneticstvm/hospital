@@ -47,16 +47,26 @@ class PatientMedicalRecordController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'symptom_id' => 'required',
-            'diagnosis_id' => 'required',
-            'doctor_recommondations' => 'required',
-        ]);
-        $input = $request->all();
+        if(!$request->symptom_id){
+            echo "Please choose symptom";
+            die;
+        }
+        if(!$request->diagnosis_id){
+            echo "Please choose diagnosis";
+            die;
+        }
+        if(!$request->doctor_recommondations){
+            echo "Please enter doctor recommondations";
+            die;
+        }
+        $input = $request->all();        
+        $odospoints = json_decode(stripslashes($input['odospoints']), true);
+
         $input['review_date'] = ($input['review_date']) ? Carbon::createFromFormat('d/M/Y', $request['review_date'])->format('Y-m-d') : NULL;
         $input['symptoms'] = implode(',', $request->symptom_id);
         $input['diagnosis'] = implode(',', $request->diagnosis_id);
         $input['created_by'] = $request->user()->id;
+        
         $record = PMRecord::create($input);        
 
         $input['medicine'] = $request->medicine_id;
@@ -80,8 +90,28 @@ class PatientMedicalRecordController extends Controller
                 endif;
             endfor;
         endif;
-        
-        return redirect()->route('consultation.index')->with('success','Medical Record created successfully');
+        if($odospoints):
+            foreach($odospoints as $value):
+                DB::table('patient_medical_records_vision')->insert([
+                    'medical_record_id' => $record->id,
+                    'description' => $value['description'],
+                    'color' => $value['color'],
+                    'img_type' => $value['type'],
+                ]);
+            endforeach;
+        endif;
+        if($input['retina_img']):
+            for($i=0; $i<count($input['retina_img']); $i++):
+                DB::table('patient_medical_records_retina')->insert([
+                    'medical_record_id' => $record->id,
+                    'retina_img' => $input['retina_img'][$i],
+                    'description' => $input['retina_desc'][$i],
+                    'retina_type' => $input['retina_type'][$i],
+                ]);
+            endfor;
+        endif;
+        echo "Record added successfully";
+        //return redirect()->route('consultation.index')->with('success','Medical Record created successfully');
     }
 
     /**
@@ -112,7 +142,10 @@ class PatientMedicalRecordController extends Controller
         $doctor = DB::table('doctors')->find($record->doctor_id);
         $spectacle = DB::table('spectacles')->where('medical_record_id', $id)->first();
         $medicine_record = DB::table('patient_medicine_records')->where('medical_record_id', $id)->get();
-        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle'));
+        $retina_od = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'od')->get();
+        $retina_os = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'os')->get();
+        $vision = DB::table('patient_medical_records_vision')->where('medical_record_id', $id)->get();
+        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision'));
     }
 
     /**
@@ -124,12 +157,22 @@ class PatientMedicalRecordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'symptom_id' => 'required',
-            'diagnosis_id' => 'required',
-            'doctor_recommondations' => 'required',
-        ]);
+        if(!$request->symptom_id){
+            echo "Please choose symptom";
+            die;
+        }
+        if(!$request->diagnosis_id){
+            echo "Please choose diagnosis";
+            die;
+        }
+        if(!$request->doctor_recommondations){
+            echo "Please enter doctor recommondations";
+            die;
+        }
         $input = $request->all();
+
+        $odospoints = json_decode(stripslashes($input['odospoints']), true);
+
         $input['review_date'] = ($input['review_date']) ? Carbon::createFromFormat('d/M/Y', $request['review_date'])->format('Y-m-d') : NULL;
         $input['symptoms'] = implode(',', $request->symptom_id);
         $input['diagnosis'] = implode(',', $request->diagnosis_id);
@@ -143,6 +186,8 @@ class PatientMedicalRecordController extends Controller
         $input['created_by'] = $record->getOriginal('created_by');
         $record->update($input);
         DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
+        DB::table("patient_medical_records_vision")->where('medical_record_id', $record->id)->delete();
+        DB::table("patient_medical_records_retina")->where('medical_record_id', $record->id)->delete();
 
         if($input['medicine']):
             for($i=0; $i<count($input['medicine']); $i++):
@@ -159,8 +204,28 @@ class PatientMedicalRecordController extends Controller
                 endif;
             endfor;
         endif;
-        
-        return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
+        if($odospoints):
+            foreach($odospoints as $value):
+                DB::table('patient_medical_records_vision')->insert([
+                    'medical_record_id' => $record->id,
+                    'description' => $value['description'],
+                    'color' => $value['color'],
+                    'img_type' => $value['type'],
+                ]);
+            endforeach;
+        endif;
+        if($input['retina_img']):
+            for($i=0; $i<count($input['retina_img']); $i++):
+                DB::table('patient_medical_records_retina')->insert([
+                    'medical_record_id' => $record->id,
+                    'retina_img' => $input['retina_img'][$i],
+                    'description' => $input['retina_desc'][$i],
+                    'retina_type' => $input['retina_type'][$i],
+                ]);
+            endfor;
+        endif;
+        echo "Record updated successfully";
+        //return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
 
     /**

@@ -16,6 +16,7 @@
                         <form action="{{ route('medical-records.update', $record->id) }}" method="post">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" id="mrid" value="{{ $record->id }}"/>
                             <input type="hidden" name="mrn" value="{{ $record->mrn }}"/>
                             <input type="hidden" name="patient_id" value="{{ $record->patient_id }}"/>
                             <input type="hidden" name="doctor_id" value="{{ $record->doctor_id }}"/>
@@ -112,19 +113,87 @@
                                                 <td><input class="form-control form-control-md" type="text" value="{{ $record->k2_os_manual }}" name="k2_os_manual" maxlength="6" placeholder="0"/></td>
                                             </tr>
                                             <tr><td colspan="5" class="fw-bold text-center">AXL</td></tr>
-                                            <tr><td colspan="5" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" name="al" value="{{ $record->al }}" placeholder="0"/></td></tr>
+                                            <tr><td colspan="5" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" name="axl" value="{{ $record->axl }}" placeholder="0"/></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="row g-4">
+                                <div class="col-sm-1">
+                                    <label class="form-label">Color Picker</label>
+                                    <input type="color" class="form-control form-control-md" id="favcolor" name="favcolor" value="#ff0000">
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-1">
                                 <div class="col-sm-6">
-                                    <label class="form-label">RE</label>
-                                    <img src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="img-fluid" alt="Right Eye">
+                                    <label class="form-label">OD</label>
+                                    <img id="imgreye" src="{{ $record->vision_od_img1 }}" class="d-none">
+                                    <img id="imgreye_1" src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="d-none">
+                                    <canvas id="re_eye" style="border: 1px solid #000;"></canvas>
+                                    <div class="odpoints">
+                                        @if($vision)
+                                            @foreach($vision as $v)
+                                                @if($v->img_type == 'vision_od_img1')
+                                                    <span class='badge bg-light' data-color="{{ $v->color }}" data-itype="{{ $v->img_type }}" style="color: {{ $v->color }}">{{ $v->description }}</span>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:void(0)" id='odclear' class="btn btn-secondary mt-1">Clear</a>
+                                    <a href="javascript:void(0)" id='odundo' class="btn btn-warning mt-1">Undo</a>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label class="form-label">LE</label>
-                                    <img src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="img-fluid" alt="Left Eye">
+                                    <label class="form-label">OS</label>
+                                    <img id="imgleye" src="{{ $record->vision_os_img1 }}" class="d-none">
+                                    <img id="imgleye_1" src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="d-none">
+                                    <canvas id="le_eye" style="border: 1px solid #000;"></canvas>
+                                    <div class="ospoints">
+                                        @if($vision)
+                                            @foreach($vision as $v)
+                                                @if($v->img_type == 'vision_os_img1')
+                                                    <span class='badge bg-light' data-color="{{ $v->color }}" data-itype="{{ $v->img_type }}" style="color: {{ $v->color }}">{{ $v->description }}</span>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:void(0)" id='osclear' class="btn btn-secondary mt-1">Clear</a>
+                                    <a href="javascript:void(0)" id='osundo' class="btn btn-warning mt-1">Undo</a>
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-1">
+                                <div class="col-sm-6">
+                                    <label class="form-label">OD</label>
+                                    <img id="imgreye1" src="{{ $record->vision_od_img2 }}" class="d-none">
+                                    <img id="imgreye1_1" src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="d-none">
+                                    <canvas id="re_eye1" style="border: 1px solid #000;"></canvas>
+                                    <div class="odpoints1">
+                                        @if($vision)
+                                            @foreach($vision as $v)
+                                                @if($v->img_type == 'vision_od_img2')
+                                                    <span class='badge bg-light' data-color="{{ $v->color }}" data-itype="{{ $v->img_type }}" style="color: {{ $v->color }}">{{ $v->description }}</span>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:void(0)" id='odclear1' class="btn btn-secondary mt-1">Clear</a>
+                                    <a href="javascript:void(0)" id='odundo1' class="btn btn-warning mt-1">Undo</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label">OS</label>
+                                    <img id="imgleye1" src="{{ $record->vision_os_img2 }}" class="d-none">
+                                    <img id="imgleye1_1" src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="d-none">
+                                    <canvas id="le_eye1" style="border: 1px solid #000;"></canvas>
+                                    <div class="ospoints1">
+                                        @if($vision)
+                                            @foreach($vision as $v)
+                                                @if($v->img_type == 'vision_os_img2')
+                                                    <span class='badge bg-light' data-color="{{ $v->color }}" data-itype="{{ $v->img_type }}" style="color: {{ $v->color }}">{{ $v->description }}</span>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:void(0)" id='osclear1' class="btn btn-secondary mt-1">Clear</a>
+                                    <a href="javascript:void(0)" id='osundo1' class="btn btn-warning mt-1">Undo</a>
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
@@ -134,6 +203,31 @@
                                     @error('signs')
                                     <small class="text-danger">{{ $errors->first('signs') }}</small>
                                     @enderror
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-1">
+                                <label class="form-label">Retina Wellness Report</label>
+                                <div class="col-sm-6">                                    
+                                    <label class="form-label">OD</label>
+                                    <input type="file" class="form-control retina_od" name="retina_od" id="retina_od" data-container="retina_od_container" data-type="od">
+                                    <div class="retina_od_container mt-3 mb-3">
+                                        @if($retina_od)
+                                            @foreach($retina_od as $retina)
+                                                <div class='imgrow'><img src="{{ $retina->retina_img }}" class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' value="{{ $retina->description }}" placeholder='Description'><input type='hidden' name='retina_img[]' value="{{ $retina->retina_img }}"><input type='hidden' name='retina_type[]' value="{{ $retina->retina_type }}"></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">                                    
+                                    <label class="form-label">OS</label>
+                                    <input type="file" class="form-control retina_os" name="retina_os" id="retina_os" data-container="retina_os_container" data-type="os">
+                                    <div class="retina_os_container mt-3 mb-3">
+                                        @if($retina_os)
+                                            @foreach($retina_os as $retina)
+                                                <div class='imgrow'><img src="{{ $retina->retina_img }}" class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' value="{{ $retina->description }}" placeholder='Description'><input type='hidden' name='retina_img[]' value="{{ $retina->retina_img }}"><input type='hidden' name='retina_type[]' value="{{ $retina->retina_type }}"></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>
+                                            @endforeach
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="row g-4 mb-3 mt-3">
@@ -296,7 +390,7 @@
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
-                                    <button type="submit" class="btn btn-primary btn-submit">Update</button>
+                                    <button type="button" class="btn btn-primary btn-consultation">Update</button>
                                 </div>
                             </div>
                         </form>
@@ -357,6 +451,29 @@
                     <button type="button" class="btn btn-ajax-submit btn-primary">Save</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade visionModal" id="visionModal" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Description</h5>
+                <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+            </div>
+            <div class="modal-body">
+                <div class="row g-4">
+                    <div class="col">
+                        <label class="form-label">Description <sup class="text-danger">*</sup></label>
+                        <input type="text" class="form-control form-control-md vision_description" name="vision_description" placeholder="Description"/>
+                        <input type="hidden" class="vision_canvas" value=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+                <button type="button" class="btn btn-primary btnaddpoints">Add</button>
+            </div>
         </div>
     </div>
 </div>

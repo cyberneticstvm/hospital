@@ -15,6 +15,7 @@
                     <div class="card-body">
                         <form action="{{ route('medical-records.create') }}" method="post" enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" id="mrid" value="0"/>
                             <input type="hidden" name="mrn" value="{{ $reference->id }}"/>
                             <input type="hidden" name="patient_id" value="{{ $patient->id }}"/>
                             <input type="hidden" name="doctor_id" value="{{ $doctor->id }}"/>
@@ -106,7 +107,7 @@
                                                 <td><input class="form-control form-control-md" type="text" name="k2_os_manual" maxlength="6" placeholder="0"/></td>
                                             </tr>
                                             <tr><td colspan="5" class="fw-bold text-center">AXL</td></tr>
-                                            <tr><td colspan="5" class="fw-bold text-center"><input class="form-control form-control-md" type="text" name="al" maxlength="7" placeholder="0"/></td></tr>
+                                            <tr><td colspan="5" class="fw-bold text-center"><input class="form-control form-control-md" type="text" name="axl" maxlength="7" placeholder="0"/></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -122,17 +123,45 @@
                                 </div>
                             </div>-->
                             <div class="row g-4">
+                                <div class="col-sm-1">
+                                    <label class="form-label">Color Picker</label>
+                                    <input type="color" class="form-control form-control-md" id="favcolor" name="favcolor" value="#ff0000">
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-1">
                                 <div class="col-sm-6">
                                     <label class="form-label">OD</label>
                                     <img id="imgreye" src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="d-none">
                                     <canvas id="re_eye" style="border: 1px solid #000;"></canvas>
-                                    <a href="javascript:void(0)" id='odclear' class="btn btn-secondary">Clear</a>
+                                    <div class="odpoints"></div>
+                                    <a href="javascript:void(0)" id='odclear' class="btn btn-secondary mt-1">Clear</a>
+                                    <a href="javascript:void(0)" id='odundo' class="btn btn-warning mt-1">Undo</a>
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">OS</label>
                                     <img id="imgleye" src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="d-none">
                                     <canvas id="le_eye" style="border: 1px solid #000;"></canvas>
-                                    <a href="javascript:void(0)" id='osclear' class="btn btn-secondary">Clear</a>
+                                    <div class="ospoints"></div>
+                                    <a href="javascript:void(0)" id='osclear' class="btn btn-secondary mt-1">Clear</a>
+                                    <a href="javascript:void(0)" id='osundo' class="btn btn-warning mt-1">Undo</a>
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-1">
+                                <div class="col-sm-6">
+                                    <label class="form-label">OD</label>
+                                    <img id="imgreye1" src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="d-none">
+                                    <canvas id="re_eye1" style="border: 1px solid #000;"></canvas>
+                                    <div class="odpoints1"></div>
+                                    <a href="javascript:void(0)" id='odclear1' class="btn btn-secondary mt-1">Clear</a>
+                                    <a href="javascript:void(0)" id='odundo1' class="btn btn-warning mt-1">Undo</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label">OS</label>
+                                    <img id="imgleye1" src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="d-none">
+                                    <canvas id="le_eye1" style="border: 1px solid #000;"></canvas>
+                                    <div class="ospoints1"></div>
+                                    <a href="javascript:void(0)" id='osclear1' class="btn btn-secondary mt-1">Clear</a>
+                                    <a href="javascript:void(0)" id='osundo1' class="btn btn-warning mt-1">Undo</a>
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
@@ -148,12 +177,12 @@
                                 <label class="form-label">Retina Wellness Report</label>
                                 <div class="col-sm-6">                                    
                                     <label class="form-label">OD</label>
-                                    <input type="file" class="form-control retina_od" name="retina_od" id="retina_od" data-container="retina_od_container">
+                                    <input type="file" class="form-control retina_od" name="retina_od" id="retina_od" data-container="retina_od_container" data-type="od">
                                     <div class="retina_od_container mt-3 mb-3"></div>
                                 </div>
                                 <div class="col-sm-6">                                    
                                     <label class="form-label">OS</label>
-                                    <input type="file" class="form-control retina_os" name="retina_os" id="retina_os" data-container="retina_os_container">
+                                    <input type="file" class="form-control retina_os" name="retina_os" id="retina_os" data-container="retina_os_container" data-type="os">
                                     <div class="retina_os_container mt-3 mb-3"></div>
                                 </div>
                             </div>                           
@@ -258,7 +287,7 @@
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
-                                    <button type="submit" class="btn btn-primary btn-submit">Save</button>
+                                    <button type="button" class="btn btn-primary btn-consultation">Save</button>
                                 </div>
                             </div>
                         </form>
@@ -319,6 +348,29 @@
                     <button type="button" class="btn btn-ajax-submit btn-primary">Save</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade visionModal" id="visionModal" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Description</h5>
+                <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+            </div>
+            <div class="modal-body">
+                <div class="row g-4">
+                    <div class="col">
+                        <label class="form-label">Description <sup class="text-danger">*</sup></label>
+                        <input type="text" class="form-control form-control-md vision_description" name="vision_description" placeholder="Description"/>
+                        <input type="hidden" class="vision_canvas" value=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+                <button type="button" class="btn btn-primary btnaddpoints">Add</button>
+            </div>
         </div>
     </div>
 </div>
