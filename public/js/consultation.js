@@ -40,8 +40,12 @@ $(function(){
             url: url,
             data: form_data,
             success: function(data){
-                alert(data)
-                window.location.href = '/consultation/medical-records/';
+                if(data.trim() == 'success'){
+                    alert("Record updated successfully.");
+                    window.location.href = '/consultation/medical-records/';
+                }else{
+                    alert(data);
+                }                
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
                 alert(XMLHttpRequest[0]);
@@ -226,6 +230,7 @@ $("#osundo1").click(function(){
 $("#odclear").click(function(){
     var mrid = $("#mrid").val();
     if(mrid > 0) $("#imgreye").attr('src', $("#imgreye_1").attr('src'));
+    if(mrid > 0) $("#odundo").removeClass('d-none');
     var canvas = document.getElementById("re_eye");
     var ctx = canvas.getContext("2d");
     var img = document.getElementById("imgreye");
@@ -238,6 +243,7 @@ $("#odclear").click(function(){
 $("#osclear").click(function(){
     var mrid = $("#mrid").val();
     if(mrid > 0) $("#imgleye").attr('src', $("#imgleye_1").attr('src'));
+    if(mrid > 0) $("#osundo").removeClass('d-none');
     var canvas = document.getElementById("le_eye");
     var ctx = canvas.getContext("2d");
     var img = document.getElementById("imgleye");
@@ -250,6 +256,7 @@ $("#osclear").click(function(){
 $("#odclear1").click(function(){
     var mrid = $("#mrid").val();
     if(mrid > 0) $("#imgreye1").attr('src', $("#imgreye1_1").attr('src'));
+    if(mrid > 0) $("#odundo1").removeClass('d-none');
     var canvas = document.getElementById("re_eye1");
     var ctx = canvas.getContext("2d");
     var img = document.getElementById("imgreye1");
@@ -262,6 +269,7 @@ $("#odclear1").click(function(){
 $("#osclear1").click(function(){
     var mrid = $("#mrid").val();
     if(mrid > 0) $("#imgleye1").attr('src', $("#imgleye1_1").attr('src'));
+    if(mrid > 0) $("#osundo1").removeClass('d-none');
     var canvas = document.getElementById("le_eye1");
     var ctx = canvas.getContext("2d");
     var img = document.getElementById("imgleye1");

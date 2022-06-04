@@ -140,7 +140,7 @@
                                         @endif
                                     </div>
                                     <a href="javascript:void(0)" id='odclear' class="btn btn-secondary mt-1">Clear</a>
-                                    <a href="javascript:void(0)" id='odundo' class="btn btn-warning mt-1">Undo</a>
+                                    <a href="javascript:void(0)" id='odundo' class="btn btn-warning mt-1 d-none">Undo</a>
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">OS</label>
@@ -157,7 +157,7 @@
                                         @endif
                                     </div>
                                     <a href="javascript:void(0)" id='osclear' class="btn btn-secondary mt-1">Clear</a>
-                                    <a href="javascript:void(0)" id='osundo' class="btn btn-warning mt-1">Undo</a>
+                                    <a href="javascript:void(0)" id='osundo' class="btn btn-warning mt-1 d-none">Undo</a>
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
@@ -176,7 +176,7 @@
                                         @endif
                                     </div>
                                     <a href="javascript:void(0)" id='odclear1' class="btn btn-secondary mt-1">Clear</a>
-                                    <a href="javascript:void(0)" id='odundo1' class="btn btn-warning mt-1">Undo</a>
+                                    <a href="javascript:void(0)" id='odundo1' class="btn btn-warning mt-1 d-none">Undo</a>
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">OS</label>
@@ -193,7 +193,7 @@
                                         @endif
                                     </div>
                                     <a href="javascript:void(0)" id='osclear1' class="btn btn-secondary mt-1">Clear</a>
-                                    <a href="javascript:void(0)" id='osundo1' class="btn btn-warning mt-1">Undo</a>
+                                    <a href="javascript:void(0)" id='osundo1' class="btn btn-warning mt-1 d-none">Undo</a>
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">

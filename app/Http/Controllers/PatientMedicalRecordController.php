@@ -110,7 +110,7 @@ class PatientMedicalRecordController extends Controller
                 ]);
             endfor;
         endif;
-        echo "Record added successfully";
+        echo "success";
         //return redirect()->route('consultation.index')->with('success','Medical Record created successfully');
     }
 
@@ -224,7 +224,7 @@ class PatientMedicalRecordController extends Controller
                 ]);
             endfor;
         endif;
-        echo "Record updated successfully";
+        echo "success";
         //return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
 
