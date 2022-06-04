@@ -100,7 +100,7 @@ class PatientMedicalRecordController extends Controller
                 ]);
             endforeach;
         endif;
-        if($input['retina_img']):
+        if(isset($input['retina_img'])):
             for($i=0; $i<count($input['retina_img']); $i++):
                 DB::table('patient_medical_records_retina')->insert([
                     'medical_record_id' => $record->id,
