@@ -164,7 +164,7 @@
                                 <div class="col-sm-6">
                                     <label class="form-label">OD</label>
                                     <img id="imgreye1" src="{{ $record->vision_od_img2 }}" class="d-none">
-                                    <img id="imgreye1_1" src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="d-none">
+                                    <img id="imgreye1_1" src="{{ public_path().'/storage/assets/images/right-eye-od.jpg' }}" class="d-none">
                                     <canvas id="re_eye1" style="border: 1px solid #000;"></canvas>
                                     <div class="odpoints1">
                                         @if($vision)
@@ -181,7 +181,7 @@
                                 <div class="col-sm-6">
                                     <label class="form-label">OS</label>
                                     <img id="imgleye1" src="{{ $record->vision_os_img2 }}" class="d-none">
-                                    <img id="imgleye1_1" src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="d-none">
+                                    <img id="imgleye1_1" src="{{ public_path().'/storage/assets/images/left-eye-os.jpg' }}" class="d-none">
                                     <canvas id="le_eye1" style="border: 1px solid #000;"></canvas>
                                     <div class="ospoints1">
                                         @if($vision)
