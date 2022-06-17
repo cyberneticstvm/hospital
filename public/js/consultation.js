@@ -18,7 +18,8 @@ $(function(){
     $(document).on('click', '.btn-consultation', function(e){
         e.preventDefault();
         var form_data = $(this).closest('form').serializeArray();        
-        var url = $(this).closest('form').attr('action');        
+        var url = $(this).closest('form').attr('action');
+        var btn = $("#btn_text").val();
         var vision_od_canvas = document.getElementById('re_eye');
         var vision_os_canvas = document.getElementById('le_eye');
         var vision_od_canvas1 = document.getElementById('re_eye1');
@@ -46,6 +47,7 @@ $(function(){
                     window.location.href = '/consultation/medical-records/';
                 }else{
                     alert(data);
+                    //console.log(data)
                 }                
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -55,7 +57,7 @@ $(function(){
                 $(".btn-consultation").html("<span class='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'></span>&nbsp;Loading...");
             },
             complete: function(){
-                $(".btn-consultation").html("Save");
+                $(".btn-consultation").html(btn);
             }
         });
     });

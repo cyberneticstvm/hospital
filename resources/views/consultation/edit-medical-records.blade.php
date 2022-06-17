@@ -20,6 +20,7 @@
                             <input type="hidden" name="mrn" value="{{ $record->mrn }}"/>
                             <input type="hidden" name="patient_id" value="{{ $record->patient_id }}"/>
                             <input type="hidden" name="doctor_id" value="{{ $record->doctor_id }}"/>
+                            <input type="hidden" id="btn_text" value="Update"/>
                             <div class="row g-4 mb-3">
                                 <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $record->mrn }}</h5></div>
                                 <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>

@@ -170,6 +170,17 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/spectacle/delete/{id}/', 'App\Http\Controllers\SpectacleController@destroy')->name('spectacle.delete');
     // end spectacles //
 
+    // surgicals //
+    Route::get('/surgery/', 'App\Http\Controllers\SurgeryController@index')->name('surgery.index');
+    // end surgicals //
+
+    // admission //
+    Route::get('/admission/', 'App\Http\Controllers\AdmissionController@index')->name('admission.index');
+    Route::get('/admission/edit/{id}', 'App\Http\Controllers\AdmissionController@edit')->name('admission.edit');
+    Route::put('/admission/edit/{id}', 'App\Http\Controllers\AdmissionController@update')->name('admission.update');
+    Route::delete('/admission/delete/{id}/', 'App\Http\Controllers\AdmissionController@destroy')->name('admission.delete');
+    // end admission //
+
     // PDFs //
     Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
     Route::get('/generate-prescription/{id}/', [PDFController::class, 'prescription']);

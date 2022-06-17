@@ -66,7 +66,6 @@ class PatientMedicalRecordController extends Controller
         $input['symptoms'] = implode(',', $request->symptom_id);
         $input['diagnosis'] = implode(',', $request->diagnosis_id);
         $input['created_by'] = $request->user()->id;
-        
         $record = PMRecord::create($input);        
 
         $input['medicine'] = $request->medicine_id;
@@ -184,11 +183,14 @@ class PatientMedicalRecordController extends Controller
         $input['created_by'] = $request->user()->id;
         $record = PMRecord::find($id);
         $input['created_by'] = $record->getOriginal('created_by');
+        
         $record->update($input);
+        
+
         DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
         DB::table("patient_medical_records_vision")->where('medical_record_id', $record->id)->delete();
         DB::table("patient_medical_records_retina")->where('medical_record_id', $record->id)->delete();
-
+        
         if($input['medicine']):
             for($i=0; $i<count($input['medicine']); $i++):
                 if($input['medicine'][$i] > 0):
@@ -204,6 +206,7 @@ class PatientMedicalRecordController extends Controller
                 endif;
             endfor;
         endif;
+        
         if($odospoints):
             foreach($odospoints as $value):
                 DB::table('patient_medical_records_vision')->insert([
@@ -214,7 +217,7 @@ class PatientMedicalRecordController extends Controller
                 ]);
             endforeach;
         endif;
-        if($input['retina_img']):
+        if(isset($input['retina_img'])):
             for($i=0; $i<count($input['retina_img']); $i++):
                 DB::table('patient_medical_records_retina')->insert([
                     'medical_record_id' => $record->id,

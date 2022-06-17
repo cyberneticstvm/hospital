@@ -19,6 +19,7 @@
                             <input type="hidden" name="mrn" value="{{ $reference->id }}"/>
                             <input type="hidden" name="patient_id" value="{{ $patient->id }}"/>
                             <input type="hidden" name="doctor_id" value="{{ $doctor->id }}"/>
+                            <input type="hidden" id="btn_text" value="Save"/>
                             <div class="row g-4">
                                 <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $reference->id }}</h5></div>
                                 <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
