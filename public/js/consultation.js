@@ -42,12 +42,12 @@ $(function(){
             data: form_data,
             success: function(data){
                 if(data.trim() == 'success'){
-                    //console.log(data);
+                    console.log(data);
                     alert("Record updated successfully.");
                     window.location.href = '/consultation/medical-records/';
                 }else{
                     alert(data);
-                    //console.log(data)
+                    console.log(data)
                 }                
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
