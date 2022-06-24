@@ -233,7 +233,8 @@ class PatientMedicalRecordController extends Controller
             endif;
             echo "hi";
         }catch(Exception $e){
-            echo $e->getMessage();
+            $e = FlattenException::create($e);
+            return response()->view('errors.500', ['exception' => $e], $e->getStatusCode(), $e->getHeaders());
         }        
         //return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
