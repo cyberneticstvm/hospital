@@ -66,6 +66,7 @@ class PatientMedicalRecordController extends Controller
         $input['symptoms'] = implode(',', $request->symptom_id);
         $input['diagnosis'] = implode(',', $request->diagnosis_id);
         $input['created_by'] = $request->user()->id;
+        $input['is_admission'] = ($request->is_admission > 0) ? $request->is_admission : 0;
         $record = PMRecord::create($input);        
 
         $input['medicine'] = $request->medicine_id;
@@ -183,6 +184,8 @@ class PatientMedicalRecordController extends Controller
         $input['created_by'] = $request->user()->id;
         $record = PMRecord::find($id);
         $input['created_by'] = $record->getOriginal('created_by');
+
+        $input['is_admission'] = ($request->is_admission > 0) ? $request->is_admission : 0;
         
         $record->update($input);
         
