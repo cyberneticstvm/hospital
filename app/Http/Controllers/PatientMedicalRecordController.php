@@ -231,9 +231,9 @@ class PatientMedicalRecordController extends Controller
                     ]);
                 endfor;
             endif;
-            echo "success";
+            echo "hi";
         }catch(Exception $e){
-            throw $e;
+            dd($e->getMessage());
         }        
         //return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
