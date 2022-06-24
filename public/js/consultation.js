@@ -49,7 +49,7 @@ $(function(){
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
                 console.log(XMLHttpRequest)
-                alert(XMLHttpRequest[0]);
+                alert(errorThrown);
             },
             beforeSend: function(){
                 $(".btn-consultation").html("<span class='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'></span>&nbsp;Loading...");
