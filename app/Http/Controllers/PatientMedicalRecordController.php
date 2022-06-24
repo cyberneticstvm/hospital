@@ -186,6 +186,9 @@ class PatientMedicalRecordController extends Controller
         $input['created_by'] = $record->getOriginal('created_by');
 
         $input['is_admission'] = ($request->is_admission > 0) ? $request->is_admission : 0;
+
+        echo $request->is_admission;
+        die;
         
         $record->update($input);
         
