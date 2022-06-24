@@ -257,8 +257,8 @@
                                 <div class="col-sm-2 mt-3">
                                     <label class="form-label">Admission Advised?</label>
                                     <select class="form-control form-control-md" name="is_admission" data-placeholder='Select'>
-                                        <option value="0">No</option>
-                                        <option value="1">Yes</option>
+                                        <option value='0'>No</option>
+                                        <option value='1'>Yes</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-2 mt-3">
