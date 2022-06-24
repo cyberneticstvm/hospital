@@ -188,9 +188,6 @@ class PatientMedicalRecordController extends Controller
         $input['is_admission'] = ($request->is_admission > 0) ? $request->is_admission : 0;
         
         $record->update($input);
-        
-        echo 'reached';
-        die;
 
         DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
         DB::table("patient_medical_records_vision")->where('medical_record_id', $record->id)->delete();
@@ -211,7 +208,8 @@ class PatientMedicalRecordController extends Controller
                 endif;
             endfor;
         endif;
-        
+        echo 'reached';
+        die;
         if($odospoints):
             foreach($odospoints as $value):
                 DB::table('patient_medical_records_vision')->insert([
