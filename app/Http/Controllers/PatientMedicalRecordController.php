@@ -208,8 +208,7 @@ class PatientMedicalRecordController extends Controller
                 endif;
             endfor;
         endif;
-        echo 'reached';
-        die;
+        
         if($odospoints):
             foreach($odospoints as $value):
                 DB::table('patient_medical_records_vision')->insert([
@@ -220,6 +219,10 @@ class PatientMedicalRecordController extends Controller
                 ]);
             endforeach;
         endif;
+
+        echo 'reached';
+        die;
+        
         if(isset($input['retina_img'])):
             for($i=0; $i<count($input['retina_img']); $i++):
                 DB::table('patient_medical_records_retina')->insert([
