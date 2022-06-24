@@ -205,8 +205,7 @@ class PatientMedicalRecordController extends Controller
                     endif;
                 endfor;
             endif;
-            echo 'reached here';
-            die;
+
             if($odospoints):
                 foreach($odospoints as $value):
                     DB::table('patient_medical_records_vision')->insert([
