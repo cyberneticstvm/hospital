@@ -186,12 +186,11 @@ class PatientMedicalRecordController extends Controller
         $input['created_by'] = $record->getOriginal('created_by');
 
         $input['is_admission'] = ($request->is_admission > 0) ? $request->is_admission : 0;
-
-        echo $request->is_admission;
-        die;
         
         $record->update($input);
         
+        echo 'reached';
+        die;
 
         DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
         DB::table("patient_medical_records_vision")->where('medical_record_id', $record->id)->delete();
