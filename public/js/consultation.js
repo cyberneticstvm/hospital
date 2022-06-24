@@ -45,12 +45,10 @@ $(function(){
                     console.log(data);
                     alert("Record updated successfully.");
                     window.location.href = '/consultation/medical-records/';
-                }else{
-                    alert(data);
-                    console.log(data)
-                }                
+                }              
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
+                console.log(errorThrown)
                 alert(XMLHttpRequest[0]);
             },
             beforeSend: function(){
