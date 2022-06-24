@@ -229,7 +229,7 @@ class PatientMedicalRecordController extends Controller
             endif;
             echo "hi";
         }catch(Exception $e){
-            echo $e->getHeaders();
+            throw $e;
         }        
         //return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
