@@ -170,9 +170,30 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/spectacle/delete/{id}/', 'App\Http\Controllers\SpectacleController@destroy')->name('spectacle.delete');
     // end spectacles //
 
-    // surgicals //
+    // surgery register //
     Route::get('/surgery/', 'App\Http\Controllers\SurgeryController@index')->name('surgery.index');
-    // end surgicals //
+    Route::get('/surgery/edit/{id}', 'App\Http\Controllers\SurgeryController@edit')->name('surgery.edit');
+    Route::put('/surgery/edit/{id}', 'App\Http\Controllers\SurgeryController@update')->name('surgery.update');
+    Route::delete('/surgery/delete/{id}/', 'App\Http\Controllers\SurgeryController@destroy')->name('surgery.delete');
+    // end surgery register//
+
+    // surgery types management //
+    Route::get('/surgery-type/', 'App\Http\Controllers\SurgeryTypeController@index')->name('stype.index');
+    Route::get('/surgery-type/create/', 'App\Http\Controllers\SurgeryTypeController@create')->name('stype.create');
+    Route::post('/surgery-type/create/', 'App\Http\Controllers\SurgeryTypeController@store')->name('stype.save');
+    Route::get('/surgery-type/edit/{id}/', 'App\Http\Controllers\SurgeryTypeController@edit')->name('stype.edit');
+    Route::put('/surgery-type/edit/{id}/', 'App\Http\Controllers\SurgeryTypeController@update')->name('stype.update');
+    Route::delete('/surgery-type/delete/{id}/', 'App\Http\Controllers\SurgeryTypeController@destroy')->name('stype.delete');
+    // end surgery types management //
+
+    // surgery types management //
+    Route::get('/lab-test-type/', 'App\Http\Controllers\LabTypeController@index')->name('ltype.index');
+    Route::get('/lab-test-type/create/', 'App\Http\Controllers\LabTypeController@create')->name('ltype.create');
+    Route::post('/lab-test-type/create/', 'App\Http\Controllers\LabTypeController@store')->name('ltype.save');
+    Route::get('/lab-test-type/edit/{id}/', 'App\Http\Controllers\LabTypeController@edit')->name('ltype.edit');
+    Route::put('/lab-test-type/edit/{id}/', 'App\Http\Controllers\LabTypeController@update')->name('ltype.update');
+    Route::delete('/lab-test-type/delete/{id}/', 'App\Http\Controllers\LabTypeController@destroy')->name('ltype.delete');
+    // end surgery types management //
 
     // admission //
     Route::get('/admission/', 'App\Http\Controllers\AdmissionController@index')->name('admission.index');

@@ -16,8 +16,7 @@ class AdmissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
+    function __construct(){
          $this->middleware('permission:admission-list|admission-create|admission-edit|admission-delete', ['only' => ['index','store']]);
          $this->middleware('permission:admission-create', ['only' => ['create','store']]);
          $this->middleware('permission:admission-edit', ['only' => ['edit','update']]);
@@ -26,7 +25,7 @@ class AdmissionController extends Controller
 
     public function index()
     {
-        $admissions = DB::table('admissions as a')->leftJoin('patient_registrations as p', 'a.patient_id', '=', 'p.id')->leftJoin('doctors as d', 'a.doctor_id', '=', 'd.id')->leftJoin('rooms as rm', 'a.room_type', '=', 'rm.id')->select('a.id', 'p.patient_name', 'p.patient_id', 'd.doctor_name', 'a.medical_record_id', 'a.admission_date', 'rm.room_type')->orderBy('a.id', 'desc')->get();
+        $admissions = DB::table('admissions as a')->leftJoin('patient_registrations as p', 'a.patient_id', '=', 'p.id')->leftJoin('doctors as d', 'a.doctor_id', '=', 'd.id')->leftJoin('rooms as rm', 'a.room_type', '=', 'rm.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'a.medical_record_id')->selectRaw("a.id, p.patient_name, p.patient_id, d.doctor_name, a.medical_record_id, a.admission_date, rm.room_type, CASE WHEN pmr.is_surgery = 0 THEN 'No' ELSE 'Yes' END AS is_surgery")->orderBy('a.id', 'desc')->get();
         return view('admission.index', compact('admissions'));
     }
 
