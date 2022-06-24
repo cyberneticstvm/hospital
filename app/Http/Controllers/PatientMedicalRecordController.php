@@ -186,54 +186,55 @@ class PatientMedicalRecordController extends Controller
         $input['created_by'] = $record->getOriginal('created_by');
 
         $input['is_admission'] = ($request->is_admission > 0) ? $request->is_admission : 0;
-        
-        $record->update($input);
 
-        DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
-        DB::table("patient_medical_records_vision")->where('medical_record_id', $record->id)->delete();
-        DB::table("patient_medical_records_retina")->where('medical_record_id', $record->id)->delete();
-        
-        if($input['medicine']):
-            for($i=0; $i<count($input['medicine']); $i++):
-                if($input['medicine'][$i] > 0):
-                    DB::table('patient_medicine_records')->insert([
+        try{
+            $record->update($input);
+
+            DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
+            DB::table("patient_medical_records_vision")->where('medical_record_id', $record->id)->delete();
+            DB::table("patient_medical_records_retina")->where('medical_record_id', $record->id)->delete();
+            
+            if($input['medicine']):
+                for($i=0; $i<count($input['medicine']); $i++):
+                    if($input['medicine'][$i] > 0):
+                        DB::table('patient_medicine_records')->insert([
+                            'medical_record_id' => $record->id,
+                            'mrn' => $request->mrn,
+                            'medicine' => $input['medicine'][$i],
+                            'dosage' => $input['dosage'][$i],
+                            'dosage1' => $input['dosage1'][$i],
+                            'qty' => $input['qty'][$i],
+                            'notes' => $input['notes'][$i],
+                        ]);
+                    endif;
+                endfor;
+            endif;
+            
+            if($odospoints):
+                foreach($odospoints as $value):
+                    DB::table('patient_medical_records_vision')->insert([
                         'medical_record_id' => $record->id,
-                        'mrn' => $request->mrn,
-                        'medicine' => $input['medicine'][$i],
-                        'dosage' => $input['dosage'][$i],
-                        'dosage1' => $input['dosage1'][$i],
-                        'qty' => $input['qty'][$i],
-                        'notes' => $input['notes'][$i],
+                        'description' => $value['description'],
+                        'color' => $value['color'],
+                        'img_type' => $value['type'],
                     ]);
-                endif;
-            endfor;
-        endif;
-        
-        if($odospoints):
-            foreach($odospoints as $value):
-                DB::table('patient_medical_records_vision')->insert([
-                    'medical_record_id' => $record->id,
-                    'description' => $value['description'],
-                    'color' => $value['color'],
-                    'img_type' => $value['type'],
-                ]);
-            endforeach;
-        endif;
+                endforeach;
+            endif;
 
-        echo 'reached';
-        die;
-        
-        if(isset($input['retina_img'])):
-            for($i=0; $i<count($input['retina_img']); $i++):
-                DB::table('patient_medical_records_retina')->insert([
-                    'medical_record_id' => $record->id,
-                    'retina_img' => $input['retina_img'][$i],
-                    'description' => $input['retina_desc'][$i],
-                    'retina_type' => $input['retina_type'][$i],
-                ]);
-            endfor;
-        endif;
-        echo "success";
+            if(isset($input['retina_img'])):
+                for($i=0; $i<count($input['retina_img']); $i++):
+                    DB::table('patient_medical_records_retina')->insert([
+                        'medical_record_id' => $record->id,
+                        'retina_img' => $input['retina_img'][$i],
+                        'description' => $input['retina_desc'][$i],
+                        'retina_type' => $input['retina_type'][$i],
+                    ]);
+                endfor;
+            endif;
+            echo "success";
+        }catch(Exception $e){
+            throw $e;
+        }        
         //return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
 
