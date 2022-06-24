@@ -48,7 +48,7 @@ $(function(){
                 }              
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
-                console.log(errorThrown)
+                console.log(textStatus)
                 alert(XMLHttpRequest[0]);
             },
             beforeSend: function(){
