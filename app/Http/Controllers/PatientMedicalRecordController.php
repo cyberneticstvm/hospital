@@ -191,7 +191,7 @@ class PatientMedicalRecordController extends Controller
         $input['created_by'] = $record->getOriginal('created_by');
         //try{
             $res = $record->update($input);
-            dd($res);
+            print_r($res);
             die;
             DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
             DB::table("patient_medical_records_vision")->where('medical_record_id', $record->id)->delete();
