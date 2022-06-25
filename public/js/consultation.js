@@ -46,11 +46,12 @@ $(function(){
                     alert("Record updated successfully.");
                     window.location.href = '/consultation/medical-records/';
                 }else{
-                    console.log(data);
+                    //console.log(data);
                 }              
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
-                console.log(XMLHttpRequest)
+                alert(XMLHttpRequest[0])
+                //console.log(XMLHttpRequest)
             },
             beforeSend: function(){
                 $(".btn-consultation").html("<span class='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'></span>&nbsp;Loading...");
