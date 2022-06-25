@@ -45,6 +45,8 @@ $(function(){
                     console.log(data);
                     alert("Record updated successfully.");
                     window.location.href = '/consultation/medical-records/';
+                }else{
+                    console.log(data);
                 }              
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
