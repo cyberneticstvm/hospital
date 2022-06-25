@@ -360,15 +360,15 @@
                                 <div class="col-sm-2 mt-3">
                                     <label class="form-label">Admission Advised?</label>
                                     <select class="form-control form-control-md" name="is_admission" data-placeholder='Select'>
-                                        <option value='0'>No</option>
-                                        <option value='1' {{ ($record->is_admission == '1') ? 'selected' : '' }}>Yes</option>
+                                        <option value='N'>No</option>
+                                        <option value='Y' {{ ($record->is_admission == 'Y') ? 'selected' : '' }}>Yes</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-2 mt-3">
                                     <label class="form-label">Surgery Advised?</label>
                                     <select class="form-control form-control-md" name="is_surgery" data-placeholder='Select'>
-                                        <option value='0'>No</option>
-                                        <option value='1' {{ ($record->is_surgery == '1') ? 'selected' : '' }}>Yes</option>
+                                        <option value='N'>No</option>
+                                        <option value='Y' {{ ($record->is_surgery == 'Y') ? 'selected' : '' }}>Yes</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-3 mt-3">
