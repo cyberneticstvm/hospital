@@ -189,7 +189,8 @@ class PatientMedicalRecordController extends Controller
             DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
             DB::table("patient_medical_records_vision")->where('medical_record_id', $record->id)->delete();
             DB::table("patient_medical_records_retina")->where('medical_record_id', $record->id)->delete();
-            
+            echo 'reached here';
+            die;
             if($input['medicine']):
                 for($i=0; $i<count($input['medicine']); $i++):
                     if($input['medicine'][$i] > 0):
@@ -205,8 +206,7 @@ class PatientMedicalRecordController extends Controller
                     endif;
                 endfor;
             endif;
-            echo 'reached here';
-            die;
+            
             if($odospoints):
                 foreach($odospoints as $value):
                     DB::table('patient_medical_records_vision')->insert([
