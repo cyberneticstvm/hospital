@@ -51,7 +51,7 @@ $(function(){
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
                 alert(XMLHttpRequest[0])
-                //console.log(XMLHttpRequest)
+                console.log(XMLHttpRequest)
             },
             beforeSend: function(){
                 $(".btn-consultation").html("<span class='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'></span>&nbsp;Loading...");

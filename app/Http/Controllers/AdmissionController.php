@@ -25,7 +25,7 @@ class AdmissionController extends Controller
 
     public function index()
     {
-        $admissions = DB::table('admissions as a')->leftJoin('patient_registrations as p', 'a.patient_id', '=', 'p.id')->leftJoin('doctors as d', 'a.doctor_id', '=', 'd.id')->leftJoin('rooms as rm', 'a.room_type', '=', 'rm.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'a.medical_record_id')->selectRaw("a.id, p.patient_name, p.patient_id, d.doctor_name, a.medical_record_id, a.admission_date, rm.room_type, CASE WHEN pmr.is_surgery = 0 THEN 'No' ELSE 'Yes' END AS is_surgery")->orderBy('a.id', 'desc')->get();
+        $admissions = DB::table('admissions as a')->leftJoin('patient_registrations as p', 'a.patient_id', '=', 'p.id')->leftJoin('doctors as d', 'a.doctor_id', '=', 'd.id')->leftJoin('rooms as rm', 'a.room_type', '=', 'rm.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'a.medical_record_id')->selectRaw("a.id, p.patient_name, p.patient_id, d.doctor_name, a.medical_record_id, a.admission_date, rm.room_type, CASE WHEN pmr.is_patient_surgery = 'N' THEN 'No' ELSE 'Yes' END AS is_patient_surgery")->orderBy('a.id', 'desc')->get();
         return view('admission.index', compact('admissions'));
     }
 

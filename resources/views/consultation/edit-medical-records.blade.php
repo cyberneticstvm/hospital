@@ -359,16 +359,16 @@
                             <div class="row">
                                 <div class="col-sm-2 mt-3">
                                     <label class="form-label">Admission Advised?</label>
-                                    <select class="form-control form-control-md" name="is_admission" data-placeholder='Select'>
+                                    <select class="form-control form-control-md" name="is_patient_admission" data-placeholder='Select'>
                                         <option value='N'>No</option>
-                                        <option value='Y' {{ ($record->is_admission == 'Y') ? 'selected' : '' }}>Yes</option>
+                                        <option value='Y' {{ ($record->is_patient_admission == 'Y') ? 'selected' : '' }}>Yes</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-2 mt-3">
                                     <label class="form-label">Surgery Advised?</label>
-                                    <select class="form-control form-control-md" name="is_surgery" data-placeholder='Select'>
+                                    <select class="form-control form-control-md" name="is_patient_surgery" data-placeholder='Select'>
                                         <option value='N'>No</option>
-                                        <option value='Y' {{ ($record->is_surgery == 'Y') ? 'selected' : '' }}>Yes</option>
+                                        <option value='Y' {{ ($record->is_patient_surgery == 'Y') ? 'selected' : '' }}>Yes</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-3 mt-3">

@@ -22,7 +22,7 @@
                     <td>{{ $admission->doctor_name }}</td>
                     <td>{{ ($admission->admission_date) ? date('d/M/Y', strtotime($admission->admission_date)) : '' }}</td>
                     <td>{{ $admission->room_type }}</td>
-                    <td>{{ $admission->is_surgery }}</td>
+                    <td>{{ $admission->is_patient_surgery }}</td>
                     <td><a class='btn btn-link' href="{{ route('admission.edit', $admission->id) }}"><i class="fa fa-eye text-info"></i></a></td>
                     <td></td>
                     <td><a class='btn btn-link' href="{{ route('admission.edit', $admission->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>

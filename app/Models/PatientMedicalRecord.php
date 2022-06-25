@@ -35,7 +35,7 @@ class PatientMedicalRecord extends Model
         'vision_os_img2',
         'review_date',
         'created_by',
-        'is_admission',
-        'is_surgery',
+        'is_patient_admission',
+        'is_patient_surgery',
     ];
 }
