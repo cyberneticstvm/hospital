@@ -360,14 +360,14 @@
                                 <div class="col-sm-2 mt-3">
                                     <label class="form-label">Admission Advised?</label>
                                     <select class="form-control form-control-md" name="is_admission" data-placeholder='Select'>
-                                        <option value='0' {{ ($record->is_admission == '0') ? 'selected' : '' }}>No</option>
+                                        <option value='0'>No</option>
                                         <option value='1' {{ ($record->is_admission == '1') ? 'selected' : '' }}>Yes</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-2 mt-3">
                                     <label class="form-label">Surgery Advised?</label>
                                     <select class="form-control form-control-md" name="is_surgery" data-placeholder='Select'>
-                                        <option value='0' {{ ($record->is_surgery == '0') ? 'selected' : '' }}>No</option>
+                                        <option value='0'>No</option>
                                         <option value='1' {{ ($record->is_surgery == '1') ? 'selected' : '' }}>Yes</option>
                                     </select>
                                 </div>

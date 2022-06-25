@@ -183,7 +183,7 @@ class PatientMedicalRecordController extends Controller
         $input['created_by'] = $request->user()->id;
         $record = PMRecord::find($id);
         $input['created_by'] = $record->getOriginal('created_by');
-        try{
+        //try{
             $record->update($input);
 
             DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
@@ -205,7 +205,8 @@ class PatientMedicalRecordController extends Controller
                     endif;
                 endfor;
             endif;
-
+            echo 'reached here';
+            die;
             if($odospoints):
                 foreach($odospoints as $value):
                     DB::table('patient_medical_records_vision')->insert([
@@ -227,10 +228,10 @@ class PatientMedicalRecordController extends Controller
                     ]);
                 endfor;
             endif;
-            echo "hi";
-        }catch(Exception $e){
-            throw $e;
-        }        
+            //echo "hi";
+        //}catch(Exception $e){
+            //throw $e;
+        //}        
         //return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
 
