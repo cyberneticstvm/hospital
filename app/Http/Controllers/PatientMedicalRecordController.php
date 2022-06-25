@@ -71,7 +71,7 @@ class PatientMedicalRecordController extends Controller
         $input['dosage'] = $request->dosage;
         $input['dosage1'] = $request->dosage1;
 
-        $input['is_admission'] = $request->is_admission;
+        //$input['is_admission'] = $request->is_admission;
 
         try{
             $record = PMRecord::create($input);
@@ -188,7 +188,7 @@ class PatientMedicalRecordController extends Controller
         $input['dosage'] = $request->dosage;
         $input['dosage1'] = $request->dosage1;
 
-        $input['is_admission'] = $request->is_admission;
+        //$input['is_admission'] = $request->is_admission;
         $record = PMRecord::find($id);
         $input['created_by'] = $record->getOriginal('created_by');
         try{
