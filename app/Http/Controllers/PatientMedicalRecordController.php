@@ -186,7 +186,7 @@ class PatientMedicalRecordController extends Controller
         $input['dosage'] = $request->dosage;
         $input['dosage1'] = $request->dosage1;
 
-        $input['created_by'] = $request->user()->id;
+        $input['is_admission'] = 1;
         $record = PMRecord::find($id);
         $input['created_by'] = $record->getOriginal('created_by');
         //try{
