@@ -189,9 +189,10 @@ class PatientMedicalRecordController extends Controller
         $input['created_by'] = $request->user()->id;
         $record = PMRecord::find($id);
         $input['created_by'] = $record->getOriginal('created_by');
-        try{
+        //try{
             $record->update($input);
-
+            echo 'reached here';
+            die;
             DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
             DB::table("patient_medical_records_vision")->where('medical_record_id', $record->id)->delete();
             DB::table("patient_medical_records_retina")->where('medical_record_id', $record->id)->delete();
@@ -232,10 +233,10 @@ class PatientMedicalRecordController extends Controller
                     ]);
                 endfor;
             endif;
-            echo "success";
-        }catch(Exception $e){
-            throw $e;
-        }        
+            echo "hi";
+        //}catch(Exception $e){
+            //throw $e;
+        //}        
         //return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
 

@@ -50,7 +50,7 @@ $(function(){
                 }              
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
-                //console.log(XMLHttpRequest)
+                console.log(XMLHttpRequest)
                 alert(XMLHttpRequest[0]);
             },
             beforeSend: function(){
