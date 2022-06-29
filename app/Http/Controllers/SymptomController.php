@@ -29,6 +29,12 @@ class SymptomController extends Controller
         if($type == 'dosage'){
             $data = DB::table('dosages')->select('id', 'dosage as name')->get();
         }
+        if($type == 'radiology'){
+            $data = DB::table('lab_types')->where('category_id', 2)->select('id', 'lab_type_name as name')->get();
+        }
+        if($type == 'clinic'){
+            $data = DB::table('lab_types')->where('category_id', 1)->select('id', 'lab_type_name as name')->get();
+        }
         return response()->json($data);
     }
 

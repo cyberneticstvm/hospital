@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('spectacle.show') }}" method="post">
+                        <form action="{{ route('lab.radiology.show') }}" method="post">
                             @csrf
                             <div class="row g-4">
                                 <div class="col-sm-3">

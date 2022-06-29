@@ -186,14 +186,36 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/surgery-type/delete/{id}/', 'App\Http\Controllers\SurgeryTypeController@destroy')->name('stype.delete');
     // end surgery types management //
 
-    // surgery types management //
+    // lab test types management //
     Route::get('/lab-test-type/', 'App\Http\Controllers\LabTypeController@index')->name('ltype.index');
     Route::get('/lab-test-type/create/', 'App\Http\Controllers\LabTypeController@create')->name('ltype.create');
     Route::post('/lab-test-type/create/', 'App\Http\Controllers\LabTypeController@store')->name('ltype.save');
     Route::get('/lab-test-type/edit/{id}/', 'App\Http\Controllers\LabTypeController@edit')->name('ltype.edit');
     Route::put('/lab-test-type/edit/{id}/', 'App\Http\Controllers\LabTypeController@update')->name('ltype.update');
     Route::delete('/lab-test-type/delete/{id}/', 'App\Http\Controllers\LabTypeController@destroy')->name('ltype.delete');
-    // end surgery types management //
+    // end lab test types management //
+
+    // lab-clinical //
+    Route::get('/lab/clinic/', 'App\Http\Controllers\LabClinicController@index')->name('lab.clinic.index');
+    Route::get('/lab/clinic/fetch/', 'App\Http\Controllers\LabClinicController@fetch');
+    Route::post('/lab/clinic/show/', 'App\Http\Controllers\LabClinicController@show')->name('lab.clinic.show');
+    Route::get('/lab/clinic/create/', 'App\Http\Controllers\LabClinicController@create')->name('lab.clinic.create');
+    Route::post('/lab/clinic/create/', 'App\Http\Controllers\LabClinicController@store')->name('lab.clinic.save');
+    Route::get('/lab/clinic/edit/{id}/', 'App\Http\Controllers\LabClinicController@edit')->name('lab.clinic.edit');
+    Route::put('/lab/clinic/edit/{id}/', 'App\Http\Controllers\LabClinicController@update')->name('lab.clinic.update');
+    Route::delete('/lab/clinic/delete/{id}/', 'App\Http\Controllers\LabClinicController@destroy')->name('lab.clinic.delete');
+    // end lab-clinical //
+
+    // lab-radiology //
+    Route::get('/lab/radiology/', 'App\Http\Controllers\LabRadiologyController@index')->name('lab.radiology.index');
+    Route::get('/lab/radiology/fetch/', 'App\Http\Controllers\LabRadiologyController@fetch');
+    Route::post('/lab/radiology/show/', 'App\Http\Controllers\LabRadiologyController@show')->name('lab.radiology.show');
+    Route::get('/lab/radiology/create/', 'App\Http\Controllers\LabRadiologyController@create')->name('lab.radiology.create');
+    Route::post('/lab/radiology/create/', 'App\Http\Controllers\LabRadiologyController@store')->name('lab.radiology.save');
+    Route::get('/lab/radiology/edit/{id}/', 'App\Http\Controllers\LabRadiologyController@edit')->name('lab.radiology.edit');
+    Route::put('/lab/radiology/edit/{id}/', 'App\Http\Controllers\LabRadiologyController@update')->name('lab.radiology.update');
+    Route::delete('/lab/radiology/delete/{id}/', 'App\Http\Controllers\LabRadiologyController@destroy')->name('lab.radiology.delete');
+    // end lab-radiology //
 
     // admission //
     Route::get('/admission/', 'App\Http\Controllers\AdmissionController@index')->name('admission.index');

@@ -102,6 +102,13 @@ $(function() {
         $('.selProductForTransfer').select2();
         bindDDL('medicine', 'selProductForTransfer');
     });
+
+    $(".addLabTest").click(function(){
+        var type = $(this).data('category');
+        $(".labtestRow").append("<div class='row mt-3'><div class='col-sm-8'><select class='form-control form-control-md show-tick ms select2 selLabTest' data-placeholder='Select' name='test_id[]' required='required'></select></div><div class='col-sm-3'><select class='form-control form-control-md show-tick ms select2' data-placeholder='Select' name='tested_from[]' required='required'><option value='1'>Devi Laboratory</option><option value='0'>Outside Laboratory</option></select></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");
+        $('.selLabTest').select2();
+        bindDDL(type, 'selLabTest');
+    })
 });
 
 /*$(window).on('load', function () {
