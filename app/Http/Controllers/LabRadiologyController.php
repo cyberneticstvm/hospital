@@ -26,7 +26,7 @@ class LabRadiologyController extends Controller
 
     public function index()
     {
-        $labs = LabRadiology::leftJoin('patient_medical_records AS m', 'lab_radiologies.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'm.patient_id', '=', 'p.id')->leftJoin('doctors AS d', 'm.doctor_id', '=', 'd.id')->leftJoin('lab_types as t', 't.id', '=', 'lab_radiologies.lab_type_id')->selectRaw("lab_radiologies.id, lab_radiologies.medical_record_id, p.patient_name, p.patient_id, d.doctor_name, DATE_FORMAT(lab_radiologies.created_at, '%d/%b/%Y') AS ldate, t.lab_type_name")->get();
+        $labs = DB::table('lab_radiologies')->leftJoin('patient_medical_records AS m', 'lab_radiologies.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'm.patient_id', '=', 'p.id')->leftJoin('doctors AS d', 'm.doctor_id', '=', 'd.id')->leftJoin('lab_types as t', 't.id', '=', 'lab_radiologies.lab_type_id')->selectRaw("lab_radiologies.id, lab_radiologies.medical_record_id, p.patient_name, p.patient_id, d.doctor_name, DATE_FORMAT(lab_radiologies.created_at, '%d/%b/%Y') AS ldate, t.lab_type_name")->groupBy(DB::Raw('lab_radiologies.medical_record_id'))->get();
         return view('lab.radiology.index', compact('labs'));
     }
 
