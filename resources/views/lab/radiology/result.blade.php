@@ -6,13 +6,13 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">Edit Lab Test - Clinic</h5>
+                        <h5 class="mb-0">Update Lab Result - Radiology</h5>
                         <span class="text-muted"></span>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('lab.clinic.update', $mrecord->id) }}" method="post">
+                        <form action="{{ route('lab.radiology.result.update', $mrecord->id) }}" method="post">
                             @csrf
                             @method("PUT")
                             <input type="hidden" name="medical_record_id" value="{{ $mrecord->id }}" />
@@ -27,9 +27,10 @@
                             @foreach($lab_records as $lab_record)
                             @php $c++; @endphp
                             <div class="row mt-3">
-                                <div class="col-sm-8">
-                                    @if($c == 1)<label class="form-label">Tests<sup class="text-danger">*</sup></label>@endif
-                                    <select class="form-control form-control-md show-tick ms select2 selLabTest" data-placeholder="Select" name="test_id[]" required="required">
+                                <input type="hidden" name="lab_id[]" value="{{ $lab_record->id }}"/>
+                                <div class="col-sm-9">
+                                    <label class="form-label">Test<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md show-tick ms select2 selLabTest" data-placeholder="Select" name="test_id[]" disabled>
                                     <option value="">Select</option>
                                         @foreach($labtests as $test)
                                             <option value="{{ $test->id }}" {{ $lab_record->lab_type_id == $test->id ? 'selected' : '' }}>{{ $test->lab_type_name }}</option>
@@ -40,8 +41,8 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-3">
-                                    @if($c == 1)<label class="form-label">Test From<sup class="text-danger">*</sup></label>@endif
-                                    <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="tested_from[]">
+                                    <label class="form-label">Test From<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="tested_from[]" disabled>
                                     <option value="">Select</option>
                                         <option value="1" {{ $lab_record->tested_from == 1 ? 'selected' : '' }}>Devi Laboratory</option>
                                         <option value="0" {{ $lab_record->tested_from == 0 ? 'selected' : '' }}>Outside Laboratory</option>
@@ -49,19 +50,15 @@
                                     @error('tested_from')
                                     <small class="text-danger">{{ $errors->first('tested_from') }}</small>
                                     @enderror
+                                </div>                              
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-12">
+                                    <label class="form-label">Test Result<sup class="text-danger">*</sup></label>
+                                    <textarea class="form-control" name="lab_result[]" rows="5">{{ $lab_record->lab_result }}</textarea>
                                 </div>
-                                @if($c == 1)
-                                <div class="col-sm-1">
-                                    <a class="addLabTest" data-category="clinic" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i></a>                                    
-                                </div>
-                                @else
-                                <div class="col-sm-1">
-                                    <i class="fa fa-trash text-danger" style="cursor:pointer" onClick="$(this).parent().parent().remove();"></i>                                    
-                                </div>
-                                @endif                                
                             </div>
                             @endforeach
-                            <div class="labtestRow"></div>
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>

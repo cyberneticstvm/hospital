@@ -10,7 +10,7 @@
     <div class="card-body">
         <p class= "text-right my-3"><a href="/lab/radiology/fetch/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Test</th><th>Date</th><th>Report</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Date</th><th>Result</th><th>Report</th><th>Prescription</th><th>Bill</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($labs as $lab)
                 <tr>
@@ -19,9 +19,11 @@
                     <td>{{ $lab->patient_name }}</td>
                     <td>{{ $lab->patient_id }}</td>
                     <td>{{ $lab->doctor_name }}</td>
-                    <td>{{ $lab->lab_type_name }}</td>
                     <td>{{ $lab->ldate }}</td>
-                    <td><a href="/lab/radiology/report/{{ $lab->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
+                    <td><a href="/lab/radiology/result/{{ $lab->medical_record_id }}/" target="_blank"><i class="fa fa-file-o text-muted"></i></a></td>
+                    <td><a href="/lab/radiology/report/{{ $lab->medical_record_id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
+                    <td><a href="/lab/radiology/prescription/{{ $lab->medical_record_id }}/" target="_blank"><i class="fa fa-file-o text-danger"></i></a></td>
+                    <td><a href="/lab/radiology/bill/{{ $lab->medical_record_id }}/" target="_blank"><i class="fa fa-file-o text-warning"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('lab.radiology.edit', $lab->medical_record_id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
                         <form method="post" action="{{ route('lab.radiology.delete', $lab->medical_record_id) }}">

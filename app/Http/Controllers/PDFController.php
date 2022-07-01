@@ -100,4 +100,76 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/spectacle-prescription', compact('patient', 'qrcode', 'reference', 'spectacle', 'mrecord', 'doctor', 'branch'));    
         return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
     }
+
+    public function radiologyprescription($id){
+        $labs = DB::table('lab_radiologies')->where('medical_record_id', $id)->where('tested_from', 0)->get();
+        $mrecord = DB::table('patient_medical_records')->find($id);
+        $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
+        $doctor = DB::table('doctors')->find($mrecord->doctor_id);
+        $reference = DB::table('patient_references')->find($mrecord->mrn);
+        $branch = DB::table('branches')->find($reference->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
+        $pdf = PDF::loadView('/pdf/lab-radiology-prescription', compact('patient', 'qrcode', 'labs', 'mrecord', 'doctor', 'branch'));    
+        return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
+    }
+
+    public function radiologybill($id){
+        $labs = DB::table('lab_radiologies')->where('medical_record_id', $id)->where('tested_from', 1)->get();
+        $mrecord = DB::table('patient_medical_records')->find($id);
+        $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
+        $doctor = DB::table('doctors')->find($mrecord->doctor_id);
+        $reference = DB::table('patient_references')->find($mrecord->mrn);
+        $branch = DB::table('branches')->find($reference->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
+        $pdf = PDF::loadView('/pdf/lab-radiology-bill', compact('patient', 'qrcode', 'labs', 'mrecord', 'doctor', 'branch'));    
+        return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
+    }
+
+    public function radiologyreport($id){
+        $labs = DB::table('lab_radiologies')->where('medical_record_id', $id)->get();
+        $mrecord = DB::table('patient_medical_records')->find($id);
+        $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
+        $doctor = DB::table('doctors')->find($mrecord->doctor_id);
+        $reference = DB::table('patient_references')->find($mrecord->mrn);
+        $branch = DB::table('branches')->find($reference->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
+        $pdf = PDF::loadView('/pdf/lab-radiology-report', compact('patient', 'qrcode', 'labs', 'mrecord', 'doctor', 'branch'));    
+        return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
+    }
+
+    public function clinicprescription($id){
+        $labs = DB::table('lab_clinics')->where('medical_record_id', $id)->where('tested_from', 0)->get();
+        $mrecord = DB::table('patient_medical_records')->find($id);
+        $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
+        $doctor = DB::table('doctors')->find($mrecord->doctor_id);
+        $reference = DB::table('patient_references')->find($mrecord->mrn);
+        $branch = DB::table('branches')->find($reference->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
+        $pdf = PDF::loadView('/pdf/lab-clinic-prescription', compact('patient', 'qrcode', 'labs', 'mrecord', 'doctor', 'branch'));    
+        return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
+    }
+
+    public function clinicbill($id){
+        $labs = DB::table('lab_clinics')->where('medical_record_id', $id)->where('tested_from', 1)->get();
+        $mrecord = DB::table('patient_medical_records')->find($id);
+        $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
+        $doctor = DB::table('doctors')->find($mrecord->doctor_id);
+        $reference = DB::table('patient_references')->find($mrecord->mrn);
+        $branch = DB::table('branches')->find($reference->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
+        $pdf = PDF::loadView('/pdf/lab-clinic-bill', compact('patient', 'qrcode', 'labs', 'mrecord', 'doctor', 'branch'));    
+        return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
+    }
+
+    public function clinicreport($id){
+        $labs = DB::table('lab_clinics')->where('medical_record_id', $id)->get();
+        $mrecord = DB::table('patient_medical_records')->find($id);
+        $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
+        $doctor = DB::table('doctors')->find($mrecord->doctor_id);
+        $reference = DB::table('patient_references')->find($mrecord->mrn);
+        $branch = DB::table('branches')->find($reference->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
+        $pdf = PDF::loadView('/pdf/lab-clinic-report', compact('patient', 'qrcode', 'labs', 'mrecord', 'doctor', 'branch'));    
+        return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
+    }
 }

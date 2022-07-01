@@ -14,6 +14,7 @@
                     <div class="card-body">
                         <form action="{{ route('lab.radiology.update', $mrecord->id) }}" method="post">
                             @csrf
+                            @method("PUT")
                             <input type="hidden" name="medical_record_id" value="{{ $mrecord->id }}" />
                             <input type="hidden" id="age" value="{{ $age }}" />
                             <div class="row g-4">

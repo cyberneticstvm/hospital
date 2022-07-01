@@ -204,6 +204,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/lab/clinic/edit/{id}/', 'App\Http\Controllers\LabClinicController@edit')->name('lab.clinic.edit');
     Route::put('/lab/clinic/edit/{id}/', 'App\Http\Controllers\LabClinicController@update')->name('lab.clinic.update');
     Route::delete('/lab/clinic/delete/{id}/', 'App\Http\Controllers\LabClinicController@destroy')->name('lab.clinic.delete');
+    Route::get('/lab/clinic/result/{id}', 'App\Http\Controllers\LabClinicController@editresult')->name('lab.clinic.result');
+    Route::put('/lab/clinic/result/{id}/', 'App\Http\Controllers\LabClinicController@updateresult')->name('lab.clinic.result.update');
     // end lab-clinical //
 
     // lab-radiology //
@@ -215,6 +217,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/lab/radiology/edit/{id}/', 'App\Http\Controllers\LabRadiologyController@edit')->name('lab.radiology.edit');
     Route::put('/lab/radiology/edit/{id}/', 'App\Http\Controllers\LabRadiologyController@update')->name('lab.radiology.update');
     Route::delete('/lab/radiology/delete/{id}/', 'App\Http\Controllers\LabRadiologyController@destroy')->name('lab.radiology.delete');
+    Route::get('/lab/radiology/result/{id}', 'App\Http\Controllers\LabRadiologyController@editresult')->name('lab.radiology.result');
+    Route::put('/lab/radiology/result/{id}/', 'App\Http\Controllers\LabRadiologyController@updateresult')->name('lab.radiology.result.update');
     // end lab-radiology //
 
     // admission //
@@ -233,6 +237,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/generate-medical-record/{id}/', [PDFController::class, 'medicalrecord']);
     Route::get('/generate-medical-record-history/{id}/', [PDFController::class, 'medicalrecordhistory']);
     Route::get('/generate-spectacle-prescription/{id}/', [PDFController::class, 'spectacleprescription']);
+    Route::get('/lab/radiology/prescription/{id}/', [PDFController::class, 'radiologyprescription']);
+    Route::get('/lab/radiology/bill/{id}/', [PDFController::class, 'radiologybill']);
+    Route::get('/lab/radiology/report/{id}/', [PDFController::class, 'radiologyreport']);
+    Route::get('/lab/clinic/prescription/{id}/', [PDFController::class, 'clinicprescription']);
+    Route::get('/lab/clinic/bill/{id}/', [PDFController::class, 'clinicbill']);
+    Route::get('/lab/clinic/report/{id}/', [PDFController::class, 'clinicreport']);
     // End PDFs //
 
     
