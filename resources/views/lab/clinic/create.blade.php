@@ -23,7 +23,7 @@
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5></div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-sm-8">
+                                <div class="col-sm-3">
                                     <label class="form-label">Tests<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2 selLabTest" data-placeholder="Select" name="test_id[]" required="required">
                                     <option value="">Select</option>
@@ -35,11 +35,18 @@
                                     <small class="text-danger">{{ $errors->first('test_id') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-5">
+                                    <label class="form-label">Notes</label>
+                                    <input type="text" name="notes[]" class="form-control" value="{{ old('notes') }}" placeholder="Notes" />
+                                    @error('notes')
+                                    <small class="text-danger">{{ $errors->first('notes') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Test From<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="tested_from[]">
                                     <option value="">Select</option>
-                                        <option value="1" {{ old('tested_from') == 1 ? 'selected' : '' }}>Devi Laboratory</option>
+                                        <option value="1" {{ old('tested_from') == 1 ? 'selected' : '' }}>Own Laboratory</option>
                                         <option value="0" {{ old('tested_from') == 0 ? 'selected' : '' }}>Outside Laboratory</option>
                                     </select>
                                     @error('tested_from')

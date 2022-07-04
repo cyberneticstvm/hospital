@@ -27,7 +27,7 @@
                             @foreach($lab_records as $lab_record)
                             @php $c++; @endphp
                             <div class="row mt-3">
-                                <div class="col-sm-8">
+                                <div class="col-sm-3">
                                     @if($c == 1)<label class="form-label">Tests<sup class="text-danger">*</sup></label>@endif
                                     <select class="form-control form-control-md show-tick ms select2 selLabTest" data-placeholder="Select" name="test_id[]" required="required">
                                     <option value="">Select</option>
@@ -39,11 +39,18 @@
                                     <small class="text-danger">{{ $errors->first('test_id') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-5">
+                                    @if($c == 1)<label class="form-label">Notes</label>@endif
+                                    <input type="text" name="notes[]" class="form-control" value="{{ $lab_record->notes }}" placeholder="Notes" />
+                                    @error('notes')
+                                    <small class="text-danger">{{ $errors->first('notes') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-3">
                                     @if($c == 1)<label class="form-label">Test From<sup class="text-danger">*</sup></label>@endif
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="tested_from[]">
                                     <option value="">Select</option>
-                                        <option value="1" {{ $lab_record->tested_from == 1 ? 'selected' : '' }}>Devi Laboratory</option>
+                                        <option value="1" {{ $lab_record->tested_from == 1 ? 'selected' : '' }}>Own Laboratory</option>
                                         <option value="0" {{ $lab_record->tested_from == 0 ? 'selected' : '' }}>Outside Laboratory</option>
                                     </select>
                                     @error('tested_from')
@@ -66,7 +73,7 @@
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
-                                    <button type="submit" class="btn btn-primary btn-submit">Upadate</button>
+                                    <button type="submit" class="btn btn-primary btn-submit">Update</button>
                                 </div>
                             </div>
                         </form>

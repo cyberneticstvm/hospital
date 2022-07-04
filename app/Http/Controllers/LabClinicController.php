@@ -52,14 +52,17 @@ class LabClinicController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        $bno = DB::table('lab_clinics')->selectRaw("IFNULL(max(bill_number)+1, 1) AS bill_number")->first();
         try{
             if($input['test_id']):
                 for($i=0; $i<count($input['test_id']); $i++):
                     if($input['test_id'][$i] > 0):
                         DB::table('lab_clinics')->insert([
                             'medical_record_id' => $request->medical_record_id,
+                            'bill_number' => $bno->bill_number,
                             'lab_type_id' => $input['test_id'][$i],
                             'tested_from' => $input['tested_from'][$i],
+                            'notes' => $input['notes'][$i],
                             'created_by' => $request->user()->id,
                             'updated_by' => $request->user()->id,
                             'created_at' => Carbon::now()->toDateTimeString(),
@@ -107,7 +110,7 @@ class LabClinicController extends Controller
     {
         $lab_records = LabClinic::where('medical_record_id', $id)->get();
         $mrecord = DB::table('patient_medical_records')->find($id);
-        $labtests = DB::table('lab_types')->where('category_id', 2)->get();
+        $labtests = DB::table('lab_types')->where('category_id', 1)->get();
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
         $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
@@ -124,15 +127,18 @@ class LabClinicController extends Controller
     public function update(Request $request, $id)
     {
         $input = $request->all();
-        LabRadiology::where('medical_record_id', $id)->delete();
+        $bno = LabClinic::where('medical_record_id', $id)->select('bill_number')->first();
+        LabClinic::where('medical_record_id', $id)->delete();
         try{
             if($input['test_id']):
                 for($i=0; $i<count($input['test_id']); $i++):
                     if($input['test_id'][$i] > 0):
-                        DB::table('lab_clinic')->insert([
+                        DB::table('lab_clinics')->insert([
                             'medical_record_id' => $request->medical_record_id,
+                            'bill_number' => $bno->bill_number,
                             'lab_type_id' => $input['test_id'][$i],
                             'tested_from' => $input['tested_from'][$i],
+                            'notes' => $input['notes'][$i],
                             'created_by' => $request->user()->id,
                             'updated_by' => $request->user()->id,
                             'created_at' => Carbon::now()->toDateTimeString(),

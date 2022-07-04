@@ -36,7 +36,7 @@
             <td>Patient Name</td><td>{{ $patient->patient_name }} / {{ $patient->age }} / {{ $patient->gender }}</td>
         </tr>
         <tr>
-            <td>Doctor Name</td><td>{{ $doctor->doctor_name }}</td>
+            <td>Doctor Name</td><td>{{ $doctor->doctor_name }}</td><td>Bill No</td><td>LABR/{{ $bno->bill_number }}</td>
         </tr>
     </table>
     <br>

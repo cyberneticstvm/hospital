@@ -114,6 +114,7 @@ class PDFController extends Controller
     }
 
     public function radiologybill($id){
+        $bno = DB::table('lab_radiologies')->where('medical_record_id', $id)->select('bill_number')->first();
         $labs = DB::table('lab_radiologies')->where('medical_record_id', $id)->where('tested_from', 1)->get();
         $mrecord = DB::table('patient_medical_records')->find($id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
@@ -121,7 +122,7 @@ class PDFController extends Controller
         $reference = DB::table('patient_references')->find($mrecord->mrn);
         $branch = DB::table('branches')->find($reference->branch);
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
-        $pdf = PDF::loadView('/pdf/lab-radiology-bill', compact('patient', 'qrcode', 'labs', 'mrecord', 'doctor', 'branch'));    
+        $pdf = PDF::loadView('/pdf/lab-radiology-bill', compact('patient', 'qrcode', 'labs', 'mrecord', 'doctor', 'branch', 'bno'));    
         return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
     }
 
@@ -150,6 +151,7 @@ class PDFController extends Controller
     }
 
     public function clinicbill($id){
+        $bno = DB::table('lab_clinics')->where('medical_record_id', $id)->select('bill_number')->first();
         $labs = DB::table('lab_clinics')->where('medical_record_id', $id)->where('tested_from', 1)->get();
         $mrecord = DB::table('patient_medical_records')->find($id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
@@ -157,7 +159,7 @@ class PDFController extends Controller
         $reference = DB::table('patient_references')->find($mrecord->mrn);
         $branch = DB::table('branches')->find($reference->branch);
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
-        $pdf = PDF::loadView('/pdf/lab-clinic-bill', compact('patient', 'qrcode', 'labs', 'mrecord', 'doctor', 'branch'));    
+        $pdf = PDF::loadView('/pdf/lab-clinic-bill', compact('patient', 'qrcode', 'labs', 'mrecord', 'doctor', 'branch', 'bno'));    
         return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
     }
 
