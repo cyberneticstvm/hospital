@@ -79,7 +79,9 @@ class PatientRegistrationController extends Controller
      */
     public function show($id)
     {
-        //
+        $patient = PatientRegistrations::find($id);
+        $mrecords = DB::table('patient_medical_records')->where('patient_id', $patient->id)->orderByDesc('created_at')->get();
+        return view('patient.history', compact('patient', 'mrecords'));
     }
 
     /**

@@ -27,6 +27,9 @@
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5></div>
                                 <!--<div class="col-sm-12"><strong>Patient Complaints:</strong> <p class="text-justify">{{ $reference->symptoms }}</p></div>
                                 <div class="col-sm-12"><strong>Special Notes:</strong> <p class="text-justify">{{ $reference->notes }}</p></div>-->
+                                <div class="col-sm-12 text-center">
+                                    <p><a href="{{ route('patient.history', $patient->id) }}" target="_blank">VIEW PATINET MEDICAL HISTORY</a></p>
+                                </div>
                                 <div class="col-sm-11">
                                     <label class="form-label">Symptoms<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
                                     <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="symptom_id[]" id="symptomSelect">

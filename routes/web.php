@@ -58,6 +58,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/patient/{id}/edit/', 'App\Http\Controllers\PatientRegistrationController@edit')->name('patient.edit');
     Route::put('/patient/{id}/edit/', 'App\Http\Controllers\PatientRegistrationController@update')->name('patient.update');
     Route::delete('/patient/{id}/delete/', 'App\Http\Controllers\PatientRegistrationController@destroy')->name('patient.delete');
+
+    Route::get('/patient/history/{id}/', 'App\Http\Controllers\PatientRegistrationController@show')->name('patient.history');
     // End Patient Registration //
 
     // Doctor Registration//
