@@ -170,12 +170,14 @@ class LabRadiologyController extends Controller
 
     public function editresult($id){
         $lab_records = LabRadiology::where('medical_record_id', $id)->get();
+        $retina_od = DB::table('lab_images')->where('medical_record_id', $id)->where('type', 'od')->get();
+        $retina_os = DB::table('lab_images')->where('medical_record_id', $id)->where('type', 'os')->get();
         $mrecord = DB::table('patient_medical_records')->find($id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
         $labtests = DB::table('lab_types')->where('category_id', 2)->get();
         $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-        return view('lab.radiology.result', compact('lab_records', 'mrecord', 'patient', 'doctor', 'age', 'labtests'));
+        return view('lab.radiology.result', compact('lab_records', 'mrecord', 'patient', 'doctor', 'age', 'labtests', 'retina_od', 'retina_os'));
     }
 
     public function updateresult(Request $request, $id){
@@ -186,6 +188,19 @@ class LabRadiologyController extends Controller
                     if($input['lab_id'][$i] > 0):
                         LabRadiology::where(['medical_record_id' => $id, 'id' => $input['lab_id'][$i]])->update(['lab_result' => $input['lab_result'][$i], 'result_updated_on' => Carbon::now()->toDateTimeString(), 'updated_by' => $request->user()->id]);
                     endif;
+                endfor;
+            endif;
+            DB::table('lab_images')->where('medical_record_id', $id)->delete();
+            if(isset($input['retina_img'])):
+                for($i=0; $i<count($input['retina_img']); $i++):
+                    DB::table('lab_images')->insert([
+                        'medical_record_id' => $id,
+                        'lab_test_id' => $input['lab_test_id'][$i],
+                        'lab_type_id' => 2,
+                        'img' => $input['retina_img'][$i],
+                        'description' => $input['retina_desc'][$i],
+                        'type' => $input['retina_type'][$i],
+                    ]);
                 endfor;
             endif;
         }catch(Exception $e){

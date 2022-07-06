@@ -217,7 +217,7 @@
                                     <div class="retina_od_container mt-3 mb-3">
                                         @if($retina_od)
                                             @foreach($retina_od as $retina)
-                                                <div class='imgrow'><img src="{{ $retina->retina_img }}" class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' value="{{ $retina->description }}" placeholder='Description'><input type='hidden' name='retina_img[]' value="{{ $retina->retina_img }}"><input type='hidden' name='retina_type[]' value="{{ $retina->retina_type }}"></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>
+                                                <div class='imgrow'><img src="{{ $retina->retina_img }}" class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' value="{{ $retina->description }}" placeholder='Description'><input type='hidden' name='retina_img[]' value="{{ $retina->retina_img }}"><input type='hidden' name='retina_type[]' value="{{ $retina->retina_type }}"><input type='hidden' name='lab_test_id[]' value='0'></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>
                                             @endforeach
                                         @endif
                                     </div>
@@ -228,7 +228,7 @@
                                     <div class="retina_os_container mt-3 mb-3">
                                         @if($retina_os)
                                             @foreach($retina_os as $retina)
-                                                <div class='imgrow'><img src="{{ $retina->retina_img }}" class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' value="{{ $retina->description }}" placeholder='Description'><input type='hidden' name='retina_img[]' value="{{ $retina->retina_img }}"><input type='hidden' name='retina_type[]' value="{{ $retina->retina_type }}"></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>
+                                                <div class='imgrow'><img src="{{ $retina->retina_img }}" class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' value="{{ $retina->description }}" placeholder='Description'><input type='hidden' name='retina_img[]' value="{{ $retina->retina_img }}"><input type='hidden' name='retina_type[]' value="{{ $retina->retina_type }}"><input type='hidden' name='lab_test_id[]' value='0'></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>
                                             @endforeach
                                         @endif
                                     </div>

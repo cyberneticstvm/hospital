@@ -67,10 +67,11 @@ $(function(){
         var type = $(this).data("type");
         var container = $(this).data("container");
         var file = $(this).get(0).files[0];
+        var labid = $(this).data("labid"); // Only applicable in Lab test images
         if(file){
             var reader = new FileReader();
             reader.onload = function(){
-                $("."+container).append("<div class='imgrow'><img src='"+reader.result+"' class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' placeholder='Description'><input type='hidden' name='retina_img[]' value='"+reader.result+"'><input type='hidden' name='retina_type[]' value='"+type+"'></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>");
+                $("."+container).append("<div class='imgrow'><img src='"+reader.result+"' class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' placeholder='Description'><input type='hidden' name='retina_img[]' value='"+reader.result+"'><input type='hidden' name='retina_type[]' value='"+type+"'><input type='hidden' name='lab_test_id[]' value='"+labid+"'></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>");
             }
             reader.readAsDataURL(file);
             //console.log(file);

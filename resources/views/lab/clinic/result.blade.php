@@ -44,7 +44,7 @@
                                     <label class="form-label">Test From<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="tested_from[]" disabled>
                                     <option value="">Select</option>
-                                        <option value="1" {{ $lab_record->tested_from == 1 ? 'selected' : '' }}>Devi Laboratory</option>
+                                        <option value="1" {{ $lab_record->tested_from == 1 ? 'selected' : '' }}>Own Laboratory</option>
                                         <option value="0" {{ $lab_record->tested_from == 0 ? 'selected' : '' }}>Outside Laboratory</option>
                                     </select>
                                     @error('tested_from')
@@ -63,7 +63,7 @@
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
-                                    <button type="submit" class="btn btn-primary btn-submit">Upadate</button>
+                                    <button type="submit" class="btn btn-primary btn-submit">Update</button>
                                 </div>
                             </div>
                         </form>

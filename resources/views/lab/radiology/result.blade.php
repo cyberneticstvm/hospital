@@ -44,7 +44,7 @@
                                     <label class="form-label">Test From<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="tested_from[]" disabled>
                                     <option value="">Select</option>
-                                        <option value="1" {{ $lab_record->tested_from == 1 ? 'selected' : '' }}>Devi Laboratory</option>
+                                        <option value="1" {{ $lab_record->tested_from == 1 ? 'selected' : '' }}>Own Laboratory</option>
                                         <option value="0" {{ $lab_record->tested_from == 0 ? 'selected' : '' }}>Outside Laboratory</option>
                                     </select>
                                     @error('tested_from')
@@ -58,12 +58,41 @@
                                     <textarea class="form-control" name="lab_result[]" rows="5">{{ $lab_record->lab_result }}</textarea>
                                 </div>
                             </div>
+                            <div class="row g-4 mt-1">
+                                <label class="form-label">Image Upload</label>
+                                <div class="col-sm-6">                                    
+                                    <label class="form-label">OD</label>
+                                    <input type="file" class="form-control retina_od" name="retina_od" id="retina_od" data-container="retina_od_container_{{ $lab_record->id }}" data-type="od" data-labid="{{ $lab_record->id }}">
+                                    <div class="retina_od_container_{{ $lab_record->id }} mt-3 mb-3">
+                                        @if($retina_od)
+                                            @foreach($retina_od as $retina)
+                                                @if($lab_record->id == $retina->lab_test_id)
+                                                <div class='imgrow'><img src="{{ $retina->img }}" class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' value="{{ $retina->description }}" placeholder='Description'><input type='hidden' name='retina_img[]' value="{{ $retina->img }}"><input type='hidden' name='retina_type[]' value="{{ $retina->type }}"><input type='hidden' name='lab_test_id[]' value="{{ $lab_record->id }}"></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">                                    
+                                    <label class="form-label">OS</label>
+                                    <input type="file" class="form-control retina_os" name="retina_os" id="retina_os" data-container="retina_os_container_{{ $lab_record->id }}" data-type="os" data-labid="{{ $lab_record->id }}">
+                                    <div class="retina_os_container_{{ $lab_record->id }} mt-3 mb-3">
+                                        @if($retina_os)
+                                            @foreach($retina_os as $retina)
+                                                @if($lab_record->id == $retina->lab_test_id)
+                                                <div class='imgrow'><img src="{{ $retina->img }}" class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' value="{{ $retina->description }}" placeholder='Description'><input type='hidden' name='retina_img[]' value="{{ $retina->img }}"><input type='hidden' name='retina_type[]' value="{{ $retina->type }}"><input type='hidden' name='lab_test_id[]' value="{{ $lab_record->id }}"></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                             @endforeach
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
-                                    <button type="submit" class="btn btn-primary btn-submit">Upadate</button>
+                                    <button type="submit" class="btn btn-primary btn-submit">Update</button>
                                 </div>
                             </div>
                         </form>

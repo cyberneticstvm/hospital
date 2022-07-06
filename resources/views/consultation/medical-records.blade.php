@@ -181,12 +181,12 @@
                                 <label class="form-label">Retina Wellness Report</label>
                                 <div class="col-sm-6">                                    
                                     <label class="form-label">OD</label>
-                                    <input type="file" class="form-control retina_od" name="retina_od" id="retina_od" data-container="retina_od_container" data-type="od">
+                                    <input type="file" class="form-control retina_od" name="retina_od" id="retina_od" data-container="retina_od_container" data-type="od" data-labid="0">
                                     <div class="retina_od_container mt-3 mb-3"></div>
                                 </div>
                                 <div class="col-sm-6">                                    
                                     <label class="form-label">OS</label>
-                                    <input type="file" class="form-control retina_os" name="retina_os" id="retina_os" data-container="retina_os_container" data-type="os">
+                                    <input type="file" class="form-control retina_os" name="retina_os" id="retina_os" data-container="retina_os_container" data-type="os" data-labid="0">
                                     <div class="retina_os_container mt-3 mb-3"></div>
                                 </div>
                             </div>                           
