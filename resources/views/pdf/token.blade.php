@@ -32,7 +32,7 @@
         <tbody>
             <tr>
                 <td>Token No:</td><td>{{ $reference->token }}</td>
-                <td>MRN</td><td>{{ $reference->id }}</td>
+                <td>MR.ID</td><td>{{ $reference->medical_record_id }}</td>
             </tr>
             <tr>
                 <td>Patient Name</td><td>{{ $patient->patient_name }}</td>

@@ -10,8 +10,9 @@ use DB;
 
 class PDFController extends Controller
 {
+
     public function token($id){
-        $data = PRef::find($id);
+        $data = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at')->first();
         $patient = DB::table('patient_registrations')->find($data->patient_id);     
         $doctor = DB::table('doctors')->find($data->doctor_id);     
         //view()->share('patient', $data);     
@@ -21,7 +22,7 @@ class PDFController extends Controller
     }
 
     public function prescription($id){
-        $reference = PRef::find($id);
+        $reference = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at')->first();
         $patient = DB::table('patient_registrations')->find($reference->patient_id);     
         $doctor = DB::table('doctors')->find($reference->doctor_id);
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));     
@@ -32,7 +33,7 @@ class PDFController extends Controller
     }
 
     public function receipt($id){
-        $reference = PRef::find($id);
+        $reference = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at')->first();
         $patient = DB::table('patient_registrations')->find($reference->patient_id);     
         $doctor = DB::table('doctors')->find($reference->doctor_id);
         $branch = DB::table('branches')->find($patient->branch);

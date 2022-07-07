@@ -41,7 +41,7 @@
                 <td>PATIENT ID</td>
                 <td>{{ $patient->patient_id }}</td>
                 <td>RECEIPT NUMBER</td>
-                <td>{{ $reference->id }}</td>
+                <td>{{ $reference->medical_record_id }}</td>
             </tr>
             <tr>
                 <td>DOCTOR NAME</td>

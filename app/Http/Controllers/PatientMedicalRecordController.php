@@ -147,7 +147,7 @@ class PatientMedicalRecordController extends Controller
         $medicines = DB::table('products')->get();
         $dosages = DB::table('dosages')->get();
         $doctor = DB::table('doctors')->find($record->doctor_id);
-        $spectacle = DB::table('spectacles')->where('medical_record_id', $id)->first();
+        $spectacle = DB::table('spectacles')->where('medical_record_id', $id)->orderByDesc('medical_record_id')->first();
         $medicine_record = DB::table('patient_medicine_records')->where('medical_record_id', $id)->get();
         $retina_od = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'od')->get();
         $retina_os = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'os')->get();
@@ -164,15 +164,15 @@ class PatientMedicalRecordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(!$request->symptom_id){
+        if(empty($request->symptom_id)){
             echo "Please choose symptom";
             die;
         }
-        if(!$request->diagnosis_id){
+        if(empty($request->diagnosis_id)){
             echo "Please choose diagnosis";
             die;
         }
-        if(!$request->doctor_recommondations){
+        if(empty($request->doctor_recommondations)){
             echo "Please enter doctor recommondations";
             die;
         }
