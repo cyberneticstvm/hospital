@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\PatientMedicalRecord as PMRecord;
@@ -225,9 +226,11 @@ class PatientMedicalRecordController extends Controller
 
             if(isset($input['retina_img'])):
                 for($i=0; $i<count($input['retina_img']); $i++):
+                    $fpath = 'assets/retina/'.$id.'/file_'.$i.'.png';
+                    Storage::disk('public')->put($fpath, base64_decode(str_replace(['data:image/jpeg;base64,', 'data:image/png;base64,', ' '], ['', '', '+'], $input['retina_img'][$i])));
                     DB::table('patient_medical_records_retina')->insert([
                         'medical_record_id' => $record->id,
-                        'retina_img' => $input['retina_img'][$i],
+                        'retina_img' => $fpath,
                         'description' => $input['retina_desc'][$i],
                         'retina_type' => $input['retina_type'][$i],
                     ]);
