@@ -14,6 +14,9 @@ use App\Http\Controllers\PDFController;
 |
 */
 
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+});
 
 Route::get('/', function () {
     return view('/login');
