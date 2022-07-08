@@ -67,7 +67,7 @@
                                         @if($retina_od)
                                             @foreach($retina_od as $retina)
                                                 @if($lab_record->id == $retina->lab_test_id)
-                                                <div class='imgrow'><img src="{{ $retina->img }}" class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' value="{{ $retina->description }}" placeholder='Description'><input type='hidden' name='retina_img[]' value="{{ $retina->img }}"><input type='hidden' name='retina_type[]' value="{{ $retina->type }}"><input type='hidden' name='lab_test_id[]' value="{{ $lab_record->id }}"></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>
+                                                <div class='imgrow'><img src="{{ public_path().'/storage/'.$retina->img }}" class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' value="{{ $retina->description }}" placeholder='Description'><input type='hidden' name='retina_img[]' value="{{ ($retina->img) ? base64_encode(file_get_contents(storage_path('app/public/'.$retina->img))) : '' }}"><input type='hidden' name='retina_type[]' value="{{ $retina->type }}"><input type='hidden' name='lab_test_id[]' value="{{ $lab_record->id }}"></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>
                                                 @endif
                                             @endforeach
                                         @endif
@@ -80,7 +80,7 @@
                                         @if($retina_os)
                                             @foreach($retina_os as $retina)
                                                 @if($lab_record->id == $retina->lab_test_id)
-                                                <div class='imgrow'><img src="{{ $retina->img }}" class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' value="{{ $retina->description }}" placeholder='Description'><input type='hidden' name='retina_img[]' value="{{ $retina->img }}"><input type='hidden' name='retina_type[]' value="{{ $retina->type }}"><input type='hidden' name='lab_test_id[]' value="{{ $lab_record->id }}"></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>
+                                                <div class='imgrow'><img src="{{ public_path().'/storage/'.$retina->img }}" class='img-fluid mt-1 mb-1' alt=''/><div class='row '><div class='col-sm-10'><input type='text' class='form-control' name='retina_desc[]' value="{{ $retina->description }}" placeholder='Description'><input type='hidden' name='retina_img[]' value="{{ ($retina->img) ? base64_encode(file_get_contents(storage_path('app/public/'.$retina->img))) : '' }}"><input type='hidden' name='retina_type[]' value="{{ $retina->type }}"><input type='hidden' name='lab_test_id[]' value="{{ $lab_record->id }}"></div><div class='col-sm-2 '><a href='javascript:void(0)'><i class='fa fa-trash text-danger removeImg'></i></a></div></div></div>
                                                 @endif
                                             @endforeach
                                         @endif

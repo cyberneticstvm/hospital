@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\LabRadiology;
@@ -193,11 +194,13 @@ class LabRadiologyController extends Controller
             DB::table('lab_images')->where('medical_record_id', $id)->delete();
             if(isset($input['retina_img'])):
                 for($i=0; $i<count($input['retina_img']); $i++):
+                    $fpath = 'assets/lab/radiology/'.$id.'/file_'.$i.'.png';
+                    Storage::disk('public')->put($fpath, base64_decode(str_replace(['data:image/jpeg;base64,', 'data:image/png;base64,', ' '], ['', '', '+'], $input['retina_img'][$i])));
                     DB::table('lab_images')->insert([
                         'medical_record_id' => $id,
                         'lab_test_id' => $input['lab_test_id'][$i],
                         'lab_type_id' => 2,
-                        'img' => $input['retina_img'][$i],
+                        'img' => $fpath,
                         'description' => $input['retina_desc'][$i],
                         'type' => $input['retina_type'][$i],
                     ]);
