@@ -16,6 +16,7 @@
                             @csrf
                             <input type="hidden" name="medical_record_id" value="{{ $mrecord->id }}" />
                             <input type="hidden" id="age" value="{{ $age }}" />
+                            <input type="hidden" name="patient_id" value="{{ $patient->id }}" />
                             <div class="row g-4">
                                 <div class="col-sm-3">Medical Record No: <h5 class="text-primary">{{ $mrecord->id }}</h5></div>
                                 <div class="col-sm-3">Patient Name / Age: <h5 class="text-primary">{{ $patient->patient_name }} / {{ $age }}</h5></div>
@@ -109,24 +110,106 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="row g-4">
-                                <div class="col-sm-2">
-                                    <label class="form-label">IOP/R</label>
-                                    <input type="text" maxlength="7" value="{{ old('re_iop') }}" name="re_iop" class="form-control form-control-md" placeholder="0">
+                            <hr class="bg-primary" style="height: 10px;" />
+                            <div class="row mt-3">
+                                <div class="col-sm-2 table-responsive">
+                                    <p class="fw-bold">IOP</p>
+                                    <table class="table spectacle">
+                                        <thead><tr><th></th><th>IOP</th></tr></thead>
+                                        <tbody class="">
+                                            <tr>
+                                                <td>R</td>
+                                                <td><input type="text" maxlength="7" value="{{ old('re_iop') }}" name="re_iop" class="form-control form-control-md" placeholder="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>L</td>
+                                                <td><input type="text" maxlength="7" value="{{ old('le_iop') }}" name="le_iop" class="form-control form-control-md" placeholder="0"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                                <div class="col-sm-4 table-responsive">
+                                    <p class="fw-bold">ARM VALUE</p>
+                                    <table class="table spectacle">
+                                        <thead><tr><th></th><th>SPH</th><th>CYL</th><th>AXIS</th></tr></thead>
+                                        <tbody class="">
+                                            <tr>
+                                                <td>OD</td>
+                                                <td><input type="text" class="form-control form-control-md" name="arm_od_sph" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="arm_od_cyl" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="arm_od_axis" placeholder="0"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td>OS</td>
+                                                <td><input type="text" class="form-control form-control-md" name="arm_os_sph" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="arm_os_cyl" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="arm_os_axis" placeholder="0"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="col-sm-2">
-                                    <label class="form-label">IOP/L</label>
-                                    <input type="text" maxlength="7" value="{{ old('le_iop') }}" name="le_iop" class="form-control form-control-md" placeholder="0">
+                                <div class="col-sm-6 table-responsive">
+                                    <p class="fw-bold">PGP</p>
+                                    <table class="table">
+                                        <thead><tr><th></th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>VISION</th><th>NV</th></tr></thead>
+                                        <tbody class="">
+                                            <tr>
+                                                <td>OD</td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_od_sph" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_od_cyl" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_od_axis" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md text-uppercase" name="pgp_od_add" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_od_vision" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_od_nv" placeholder="0"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td>OS</td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_os_sph" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_os_cyl" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_os_axis" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md text-uppercase" name="pgp_os_add" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_os_vision" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_os_nv" placeholder="0"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+                            <hr class="bg-primary" style="height: 10px;" />
                             <div class="row mt-3">
-                                <p class="fw-bold">CONTACT LENS</p>
-                                <div class="col-sm-12 table-responsive">
-                                    <table class="table" style="width:50%">
+                                <div class="col-sm-6 table-responsive">
+                                    <p class="fw-bold">Dilated Refraction</p>
+                                    <table class="table">
+                                        <thead><tr><th></th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>VISION</th><th>NV</th></tr></thead>
+                                        <tbody class="">
+                                            <tr>
+                                                <td>OD</td>
+                                                <td><input type="text" class="form-control form-control-md" name="dr_od_sph" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="dr_od_cyl" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="dr_od_axis" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md text-uppercase" name="dr_od_add" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="dr_od_vision" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="dr_od_nv" placeholder="0"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td>OS</td>
+                                                <td><input type="text" class="form-control form-control-md" name="dr_os_sph" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="dr_os_cyl" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="dr_os_axis" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md text-uppercase" name="dr_os_add" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="dr_os_vision" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="dr_os_nv" placeholder="0"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                                <div class="col-sm-6 table-responsive">
+                                    <p class="fw-bold">CONTACT LENS</p>
+                                    <table class="table">
                                     <thead><tr><th></th><th>BASE CURVE</th><th>DIAMETER</th><th>SPH</th><th>CYL</th><th>AXIS</th></tr></thead>
                                     <tbody>
                                         <tr>
-                                            <td>RIGHT</td>
+                                            <td>RE</td>
                                             <td><input type="text" class="form-control form-control-md" name="re_base_curve" placeholder="0"/></td>
                                             <td><input type="text" class="form-control form-control-md" name="re_dia" placeholder="0"/></td>
                                             <td><input type="text" class="form-control form-control-md" name="re_sph" placeholder="0"/></td>
@@ -134,7 +217,7 @@
                                             <td><input type="text" class="form-control form-control-md" name="re_axis" placeholder="0"/></td>
                                         </tr>
                                         <tr>
-                                            <td>LEFT</td>
+                                            <td>LE</td>
                                             <td><input type="text" class="form-control form-control-md" name="le_base_curve" placeholder="0"/></td>
                                             <td><input type="text" class="form-control form-control-md" name="le_dia" placeholder="0"/></td>
                                             <td><input type="text" class="form-control form-control-md" name="le_sph" placeholder="0"/></td>

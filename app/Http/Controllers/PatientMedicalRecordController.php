@@ -148,7 +148,7 @@ class PatientMedicalRecordController extends Controller
         $medicines = DB::table('products')->get();
         $dosages = DB::table('dosages')->get();
         $doctor = DB::table('doctors')->find($record->doctor_id);
-        $spectacle = DB::table('spectacles')->where('medical_record_id', $id)->orderByDesc('medical_record_id')->first();
+        $spectacle = DB::table('spectacles')->where('patient_id', $record->patient_id)->orderByDesc('id')->first();
         $medicine_record = DB::table('patient_medicine_records')->where('medical_record_id', $id)->get();
         $retina_od = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'od')->get();
         $retina_os = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'os')->get();
