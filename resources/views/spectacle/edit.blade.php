@@ -25,7 +25,7 @@
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5></div>
                             </div>
                             <div class="row mt-3">
-                                <p class="fw-bold">EYE GLASS</p>
+                                <p class="fw-bold">EYE GLASS PRESCRIPTION</p>
                                 <div class="col-sm-6 table-responsive">
                                     <table class="table spectacle">
                                         <thead><tr><th>RE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>VA</th><th>PRISM</th></tr></thead>
@@ -113,23 +113,30 @@
                             </div>
                             <hr class="bg-primary" style="height: 10px;" />
                             <div class="row mt-3">
-                                <div class="col-sm-2 table-responsive">
+                                <div class="col-sm-3 table-responsive">
                                     <p class="fw-bold">IOP</p>
                                     <table class="table spectacle">
-                                        <thead><tr><th></th><th>IOP</th></tr></thead>
+                                        <thead><tr><th></th><th>NCT</th><th>AT</th></tr></thead>
                                         <tbody class="">
                                             <tr>
                                                 <td>R</td>
                                                 <td><input type="text" maxlength="7" value="{{ $spectacle->re_iop }}" name="re_iop" class="form-control form-control-md" placeholder="0"></td>
+                                                <td><input type="text" maxlength="7" class="form-control form-control-md" placeholder="0"></td>
                                             </tr>
                                             <tr>
                                                 <td>L</td>
                                                 <td><input type="text" maxlength="7" value="{{ $spectacle->le_iop }}" name="le_iop" class="form-control form-control-md" placeholder="0"></td>
+                                                <td><input type="text" maxlength="7" class="form-control form-control-md" placeholder="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Time</td>
+                                                <td><input type="text" maxlength="10" name="nct_time" class="form-control form-control-md" placeholder="0"></td>
+                                                <td><input type="text" maxlength="10" name="at_time" class="form-control form-control-md" placeholder="0" readonly></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>                                
-                                <div class="col-sm-4 table-responsive">
+                                <div class="col-sm-3 table-responsive">
                                     <p class="fw-bold">ARM VALUE</p>
                                     <table class="table">
                                         <thead><tr><th></th><th>SPH</th><th>CYL</th><th>AXIS</th></tr></thead>
@@ -205,7 +212,7 @@
                                     </table>
                                 </div>                                
                                 <div class="col-sm-6 table-responsive">
-                                    <p class="fw-bold">CONTACT LENS</p>
+                                    <p class="fw-bold">CONTACT LENS PRESCRIPTION</p>
                                     <table class="table">
                                     <thead><tr><th></th><th>BASE CURVE</th><th>DIAMETER</th><th>SPH</th><th>CYL</th><th>AXIS</th></tr></thead>
                                     <tbody>
@@ -228,6 +235,40 @@
                                     </tbody>
                                     </table>
                                 </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-12 table-responsive">
+                                    <p class="fw-bold">Biometry</p>
+                                    <table class="table">
+                                        <thead><tr><th></th><th>K1(A)</th><th>K2(A)</th><th>K1(M)</th><th>K2(M)</th><th>AXL</th><th>ACD</th><th>LENS</th><th>K-VALUE(A)</th><th>IOL POWER</th></tr></thead>
+                                        <tbody class="">
+                                            <tr>
+                                                <td>OD</td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k1_od_a }}" name="bm_k1_od_a" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k2_od_a }}" name="bm_k2_od_a" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k1_od_m }}" name="bm_k1_od_m" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k2_od_m }}" name="bm_k2_od_m" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_od_axl }}" name="bm_od_axl" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_od_acd }}" name="bm_od_acd" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_od_lens }}" name="bm_od_lens" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_od_kvalue_a }}" name="bm_od_kvalue_a" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_od_iol }}" name="bm_od_iol" placeholder="0"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td>OS</td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k1_os_a }}" name="bm_k1_os_a" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k2_os_a }}" name="bm_k2_os_a" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k1_os_m }}" name="bm_k1_os_m" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k2_os_m }}" name="bm_k2_os_m" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_os_axl }}" name="bm_os_axl" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_os_acd }}" name="bm_os_acd" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_os_lens }}" name="bm_os_lens" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_os_kvalue_a }}" name="bm_os_kvalue_a" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_os_iol }}" name="bm_os_iol" placeholder="0"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>                                
                             </div>
                             <div class="row g-4">
                                 <div class="col-sm-4">
