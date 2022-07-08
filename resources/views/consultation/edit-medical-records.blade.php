@@ -237,7 +237,7 @@
                             <div class="row g-4 mb-3 mt-3">
                                 <div class="col-sm-11">
                                     @php $olds = explode(',', $record->diagnosis); @endphp
-                                    <label class="form-label">Dignosis<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
+                                    <label class="form-label">Diagnosis<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
                                     <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="diagnosis_id[]" id="diagnosisSelect">
                                     <option value="">Select</option>
                                     @foreach($diagnosis as $dia)
@@ -258,7 +258,7 @@
                                     <a data-bs-toggle="modal" href="#diagnosisModal"><i class="fa fa-plus fa-lg text-success"></i></a>
                                 </div> 
                                 <div class="col-sm-12">
-                                    <label class="form-label">Doctor Recommondations / Advise<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Doctor Recommendations / Advice<sup class="text-danger">*</sup></label>
                                     <textarea class="form-control form-control-md" name="doctor_recommondations" rows="5" placeholder="Doctor Recommondations / Advise" required="required">{{ $record->doctor_recommondations }}</textarea>
                                     @error('doctor_recommondations')
                                     <small class="text-danger">{{ $errors->first('doctor_recommondations') }}</small>
@@ -268,7 +268,7 @@
                                 @if($medicine_record->isEmpty())
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <label class="form-label">Medicine Advise</label>
+                                            <label class="form-label">Medicine Advice</label>
                                             <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_id[]">
                                             <option value="">Select</option>
                                             @foreach($medicines as $med)
