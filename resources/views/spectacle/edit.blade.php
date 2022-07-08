@@ -131,7 +131,7 @@
                                             <tr>
                                                 <td>Time</td>
                                                 <td><input type="text" maxlength="10" name="nct_time" class="form-control form-control-md" placeholder="0"></td>
-                                                <td><input type="text" maxlength="10" name="at_time" class="form-control form-control-md" placeholder="0" readonly></td>
+                                                <td><input type="text" maxlength="10" name="at_time" class="form-control form-control-md" placeholder="0"></td>
                                             </tr>
                                         </tbody>
                                     </table>
