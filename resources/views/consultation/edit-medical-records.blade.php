@@ -74,20 +74,20 @@
                                         <tbody>
                                             <tr>
                                                 <td class="text-center fw-bold">RE/OD</td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbr : '' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_sph : '' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_cyl : '' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_axis : '' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" vvalue="{{ ($spectacle) ? $spectacle->re_dist_add : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbr : '' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" vvalue="{{ ($spectacle) ? $spectacle->re_near_va : '' }}" placeholder="0" readonly="true" /></td>
                                             </tr>
                                             <tr>
-                                                <td class="text-center fw-bold">LE/OS</td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbl : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td class="text-center fw-bold">LE/OS</td>                                                
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_sph : '' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_cyl : '' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_axis : '' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_add : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbl : '' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_near_va : '' }}" placeholder="0" readonly="true" /></td>
                                             </tr>
                                             <tr><td colspan="4" class="fw-bold text-center">IOP-OD</td><td colspan="3" class="fw-bold text-center">IOP-OS</td></tr>
