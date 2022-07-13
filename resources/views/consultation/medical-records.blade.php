@@ -116,16 +116,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <!--<div class="row g-4">
-                                <div class="col-sm-6">
-                                    <label class="form-label">OD</label>
-                                    <img src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="img-fluid" alt="Right Eye">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label class="form-label">OS</label>
-                                    <img src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="img-fluid" alt="Left Eye">
-                                </div>
-                            </div>-->
+                            
                             <div class="row g-4">
                                 <div class="col-sm-1">
                                     <label class="form-label">Color Picker</label>

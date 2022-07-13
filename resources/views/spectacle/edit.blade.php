@@ -120,18 +120,18 @@
                                         <tbody class="">
                                             <tr>
                                                 <td>R</td>
-                                                <td><input type="text" maxlength="7" value="{{ $spectacle->re_iop }}" name="re_iop" class="form-control form-control-md" placeholder="0"></td>
-                                                <td><input type="text" maxlength="7" class="form-control form-control-md" placeholder="0"></td>
+                                                <td><input type="text" maxlength="7" value="{{ $spectacle->re_iop }}" name="re_iop" class="form-control form-control-md" placeholder="0" tabindex="1"></td>
+                                                <td><input type="text" maxlength="7" class="form-control form-control-md" placeholder="0" tabindex="4"></td>
                                             </tr>
                                             <tr>
                                                 <td>L</td>
-                                                <td><input type="text" maxlength="7" value="{{ $spectacle->le_iop }}" name="le_iop" class="form-control form-control-md" placeholder="0"></td>
-                                                <td><input type="text" maxlength="7" class="form-control form-control-md" placeholder="0"></td>
+                                                <td><input type="text" maxlength="7" value="{{ $spectacle->le_iop }}" name="le_iop" class="form-control form-control-md" placeholder="0" tabindex="2"></td>
+                                                <td><input type="text" maxlength="7" class="form-control form-control-md" placeholder="0" tabindex="5"></td>
                                             </tr>
                                             <tr>
                                                 <td>Time</td>
-                                                <td><input type="text" maxlength="10" name="nct_time" class="form-control form-control-md" placeholder="0"></td>
-                                                <td><input type="text" maxlength="10" name="at_time" class="form-control form-control-md" placeholder="0"></td>
+                                                <td><input type="text" maxlength="10" name="nct_time" class="form-control form-control-md" placeholder="0" tabindex="3"></td>
+                                                <td><input type="text" maxlength="10" name="at_time" class="form-control form-control-md" placeholder="0" tabindex="6"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -240,7 +240,7 @@
                                 <div class="col-sm-12 table-responsive">
                                     <p class="fw-bold">Biometry</p>
                                     <table class="table">
-                                        <thead><tr><th></th><th>K1(A)</th><th>K2(A)</th><th>K1(M)</th><th>K2(M)</th><th>AXL</th><th>ACD</th><th>LENS</th><th>K-VALUE(A)</th><th>IOL POWER</th></tr></thead>
+                                        <thead><tr><th></th><th>K1(A)</th><th>K2(A)</th><th>K1(M)</th><th>K2(M)</th><th>AXL</th><th>ACD</th><th>LENS</th><th>K-VALUE(AVG)</th><th>IOL POWER</th></tr></thead>
                                         <tbody class="">
                                             <tr>
                                                 <td>OD</td>

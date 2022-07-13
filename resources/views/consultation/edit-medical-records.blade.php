@@ -123,6 +123,47 @@
                                 </div>
                             </div>
                             <div class="row g-4">
+                                <div class="col-sm-6 text-center">
+                                    <label class="form-label">OD</label>                                    
+                                </div>
+                                <div class="col-sm-6 text-center">
+                                    <label class="form-label">OS</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_appearance[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Appearance<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_appearance[]">
+                                    </select> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_extraocular_movements[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Extraocular Movements<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_extraocular_movements[]">
+                                    </select> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_orbital_margins[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Orbital Margins<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_orbital_margins[]">
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="row g-4  mt-3">
                                 <div class="col-sm-1">
                                     <label class="form-label">Color Picker</label>
                                     <input type="color" class="form-control form-control-md" id="favcolor" name="favcolor" value="#ff0000">
@@ -164,6 +205,61 @@
                                     <a href="javascript:void(0)" id='osundo' class="btn btn-warning mt-1 d-none">Undo</a>
                                 </div>
                             </div>
+                            <div class="row g-4">
+                                <div class="col-sm-4 text-center">
+                                    <label class="form-label">OD</label>                                    
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label"></label>                                    
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <label class="form-label">OS</label>
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_lid_and_adnexa[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">LID and Adnexa<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_lid_and_adnexa[]">
+                                    </select> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_conjunctiva[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Conjunctiva<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_conjunctiva[]">
+                                    </select> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_sclera[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Sclera<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_sclera[]">
+                                    </select> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_cornea[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Cornea<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_cornea[]">
+                                    </select> 
+                                </div>
+                            </div>
                             <div class="row g-4 mt-1">
                                 <div class="col-sm-6">
                                     <label class="form-label">OD</label>
@@ -200,6 +296,50 @@
                                     <a href="javascript:void(0)" id='osundo1' class="btn btn-warning mt-1 d-none">Undo</a>
                                 </div>
                             </div>
+                            <div class="row g-4">
+                                <div class="col-sm-4 text-center">
+                                    <label class="form-label">OD</label>                                    
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label"></label>                                    
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <label class="form-label">OS</label>
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_anterior_chamber[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Anterior Chamber<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_anterior_chamber[]">
+                                    </select> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_iris[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Iris<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_iris[]">
+                                    </select> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_pupil[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Pupil<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_pupil[]">
+                                    </select> 
+                                </div>
+                            </div>
                             <div class="row g-4 mt-1">
                                 <div class="col-sm-11">
                                     <label class="form-label">Signs</label>
@@ -232,6 +372,181 @@
                                             @endforeach
                                         @endif
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-sm-4 text-center">
+                                    <label class="form-label">OD</label>                                    
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label"></label>                                    
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <label class="form-label">OS</label>
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_lens[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Lens<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_lens[]">
+                                    </select> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_avr[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">AVR<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_avr[]">
+                                    </select> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_fundus[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Fundus<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_fundus[]">
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-1">
+                                <div class="col-sm-6">
+                                    <label class="form-label">OD</label>
+                                    <img id="imgreye2" src="{{ ($record->vision_od_img1) ? $record->vision_od_img1 : public_path().'/storage/assets/images/lens-re.png' }}" class="d-none">
+                                    <img id="imgreye2_1" src="{{ public_path().'/storage/assets/images/lens-re.png' }}" class="d-none">
+                                    <canvas id="re_eye2" style="border: 1px solid #000;"></canvas>
+                                    <div class="odpoints2">
+                                        @if($vision)
+                                            @foreach($vision as $v)
+                                                @if($v->img_type == 'vision_od_img1')
+                                                    <span class='badge bg-light' data-color="{{ $v->color }}" data-itype="{{ $v->img_type }}" style="color: {{ $v->color }}">{{ $v->description }}</span>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:void(0)" id='odclear2' class="btn btn-secondary mt-1">Clear</a>
+                                    <a href="javascript:void(0)" id='odundo2' class="btn btn-warning mt-1 d-none">Undo</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label">OS</label>
+                                    <img id="imgleye2_1" src="{{ ($record->vision_os_img1) ? $record->vision_os_img1 : public_path().'/storage/assets/images/lens-le.png' }}" class="d-none">
+                                    <img id="imgleye2" src="{{ public_path().'/storage/assets/images/lens-le.png' }}" class="d-none">
+                                    <canvas id="le_eye2" style="border: 1px solid #000;"></canvas>
+                                    <div class="ospoints2">
+                                        @if($vision)
+                                            @foreach($vision as $v)
+                                                @if($v->img_type == 'vision_os_img1')
+                                                    <span class='badge bg-light' data-color="{{ $v->color }}" data-itype="{{ $v->img_type }}" style="color: {{ $v->color }}">{{ $v->description }}</span>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:void(0)" id='osclear2' class="btn btn-secondary mt-1">Clear</a>
+                                    <a href="javascript:void(0)" id='osundo2' class="btn btn-warning mt-1 d-none">Undo</a>
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-1">
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_media[]">
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Media<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_media[]">
+                                    </select> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="os_disc_margins" placeholder="OD Disc Margins" />                                 
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Disc Margins</label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="os_disc_margins" placeholder="OS Disc Margins" />
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="os_cdr" placeholder="OD CDR" />                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">CDR</label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="os_cdr" placeholder="OS CDR" />
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="os_nrr" placeholder="OD NRR" />                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">NRR</label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="os_nrr" placeholder="OS NRR" /> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="od_av_ratio" placeholder="OD AV Ratio & Bloodvessels" />                                 
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">AV Ratio & Bloodvessels</label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="os_av_ratio" placeholder="OS AV Ratio & Bloodvessels" /> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="os_fr" placeholder="OD FR" />                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">FR</label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="os_fr" placeholder="OS FR" /> 
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="od_bg_retina" placeholder="OD Background Retina & Periphery" />                                 
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Background Retina & Periphery</label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="os_bg_retina" placeholder="OS Background Retina & Periphery" /> 
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-3">
+                                <div class="col-sm-5">
+                                    <table class="table">
+                                        <tr><td></td><td><input type="text" class="form-control" name="" placeholder="0" /></td><td></td></tr>
+                                        <tr><td><input type="text" class="form-control" name="" placeholder="0" /></td><td></td><td><input type="text" class="form-control" name="" placeholder="0" /></td></tr>
+                                        <tr><td></td><td><input type="text" class="form-control" name="" placeholder="0" /></td><td></td></tr>
+                                    </table>
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Gonioscopy</label>                                    
+                                </div>
+                                <div class="col-sm-5">
+                                    <table class="table">
+                                        <tr><td></td><td><input type="text" class="form-control" name="" placeholder="0" /></td><td></td></tr>
+                                        <tr><td><input type="text" class="form-control" name="" placeholder="0" /></td><td></td><td><input type="text" class="form-control" name="" placeholder="0" /></td></tr>
+                                        <tr><td></td><td><input type="text" class="form-control" name="" placeholder="0" /></td><td></td></tr>
+                                    </table>
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="" placeholder="0" />                                 
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">&nbsp;</label>                                    
+                                </div>
+                                <div class="col-sm-5 text-center">
+                                    <input type="text" class="form-control" name="" placeholder="0" /> 
                                 </div>
                             </div>
                             <div class="row g-4 mb-3 mt-3">

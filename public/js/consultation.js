@@ -1,5 +1,4 @@
-let odpoints = []; let ospoints = []; let odpoints1 = []; let ospoints1 = []; let odpoints_paths_array = []; let ospoints_paths_array = [];
-let odpoints1_paths_array = []; let ospoints1_paths_array = [];
+let odpoints = []; let ospoints = []; let odpoints1 = []; let ospoints1 = []; let odpoints2 = []; let ospoints2 = []; let odpoints_paths_array = []; let ospoints_paths_array = []; let odpoints1_paths_array = []; let ospoints1_paths_array = []; let odpoints2_paths_array = []; let ospoints2_paths_array = [];
 $(function(){
     "use strict";
     $(".odpoints span").each(function(){
@@ -109,6 +108,18 @@ $(window).on('load', function () {
     var img3 = document.getElementById("imgleye1");
     var cls3 = "ospoints1";
     drawOnImage(img3, canvas3, ctx3, cls3);
+
+    var canvas4 = document.getElementById("re_eye2");
+    var ctx4 = canvas4.getContext("2d");
+    var img4 = document.getElementById("imgreye2");
+    var cls4 = "odpoints2";
+    drawOnImage(img4, canvas4, ctx4, cls4);
+
+    var canvas5 = document.getElementById("le_eye2");
+    var ctx5 = canvas5.getContext("2d");
+    var img5 = document.getElementById("imgleye2");
+    var cls5 = "ospoints2";
+    drawOnImage(img5, canvas5, ctx5, cls5);
 });
 
 let points = [];
@@ -149,6 +160,8 @@ function drawOnImage(image, canvasElement, context, cls){
         if(cls == 'ospoints'){ospoints_paths_array.push(points)};
         if(cls == 'odpoints1'){odpoints1_paths_array.push(points)};
         if(cls == 'ospoints1'){ospoints1_paths_array.push(points)};
+        if(cls == 'odpoints2'){odpoints2_paths_array.push(points)};
+        if(cls == 'ospoints2'){ospoints2_paths_array.push(points)};
         $("#visionModal .vision_description").val("");
         $("#visionModal .vision_canvas").val(cls);
         $("#visionModal").modal("show");
@@ -172,9 +185,15 @@ $(".btnaddpoints").click(function(){
     }else if(cls == 'odpoints1'){
         odpoints1.push({description: value, color: $("#favcolor").val(), type: 'vision_od_img2'});
         $(".odpoints1").append("<span class='badge bg-light' style='color:"+$("#favcolor").val()+"'>" +value+ "</span>");
-    }else{
+    }else if(cls == 'ospoints1'){
         ospoints1.push({description: value, color: $("#favcolor").val(), type: 'vision_os_img2'});
         $(".ospoints1").append("<span class='badge bg-light' style='color:"+$("#favcolor").val()+"'>" +value+ "</span>");
+    }else if(cls == 'odpoints2'){
+        odpoints2.push({description: value, color: $("#favcolor").val(), type: 'lens_od_img1'});
+        $(".odpoints2").append("<span class='badge bg-light' style='color:"+$("#favcolor").val()+"'>" +value+ "</span>");
+    }else if(cls == 'ospoints2'){
+        ospoints2.push({description: value, color: $("#favcolor").val(), type: 'lens_os_img1'});
+        $(".ospoints2").append("<span class='badge bg-light' style='color:"+$("#favcolor").val()+"'>" +value+ "</span>");
     }
     $("#visionModal").modal("hide");
 });
@@ -231,6 +250,32 @@ $("#osundo1").click(function(){
     drawPaths(ctx, ospoints1_paths_array);
 });
 
+$("#odundo2").click(function(){
+    var canvas = document.getElementById("re_eye2");
+    var ctx = canvas.getContext("2d");
+    var img = document.getElementById("imgreye2");
+    var cls = 'odpoints2';
+    $(".odpoints2 span:last").remove();
+    odpoints2.splice(-1, 1);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawOnImage(img, canvas, ctx, cls);
+    odpoints2_paths_array.splice(-1,1);
+    drawPaths(ctx, odpoints2_paths_array);
+});
+
+$("#osundo2").click(function(){
+    var canvas = document.getElementById("le_eye2");
+    var ctx = canvas.getContext("2d");
+    var img = document.getElementById("imgleye2");
+    var cls = 'ospoints2';
+    $(".ospoints2 span:last").remove();
+    ospoints1.splice(-1, 1);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawOnImage(img, canvas, ctx, cls);
+    ospoints2_paths_array.splice(-1,1);
+    drawPaths(ctx, ospoints2_paths_array);
+});
+
 $("#odclear").click(function(){
     var mrid = $("#mrid").val();
     if(mrid > 0) $("#imgreye").attr('src', $("#imgreye_1").attr('src'));
@@ -282,6 +327,33 @@ $("#osclear1").click(function(){
     drawOnImage(img, canvas, ctx, cls);
     $(".ospoints1").html("");
     ospoints1 = [];
+});
+
+$("#odclear2").click(function(){
+    var mrid = $("#mrid").val();
+    if(mrid > 0) $("#imgreye2").attr('src', $("#imgreye2_1").attr('src'));
+    if(mrid > 0) $("#odundo2").removeClass('d-none');
+    var canvas = document.getElementById("re_eye2");
+    var ctx = canvas.getContext("2d");
+    var img = document.getElementById("imgreye2");
+    var cls = 'odpoints2';
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawOnImage(img, canvas, ctx, cls);
+    $(".odpoints2").html("");
+    odpoints2 = [];
+});
+$("#osclear2").click(function(){
+    var mrid = $("#mrid").val();
+    if(mrid > 0) $("#imgleye2").attr('src', $("#imgleye2_1").attr('src'));
+    if(mrid > 0) $("#osundo2").removeClass('d-none');
+    var canvas = document.getElementById("le_eye2");
+    var ctx = canvas.getContext("2d");
+    var img = document.getElementById("imgleye2");
+    var cls = 'ospoints2';
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawOnImage(img, canvas, ctx, cls);
+    $(".ospoints2").html("");
+    ospoints2 = [];
 });
 
 function drawPaths(ctx, arr){
