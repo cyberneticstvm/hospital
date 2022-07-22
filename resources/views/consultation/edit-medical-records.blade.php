@@ -845,8 +845,8 @@
                             </div>
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-5">
-                                    <table class="table" style="background:url({{ public_path().'/images/assets/x-png-30.png' }}); background-repeat: no-repeat; background-position: center;">
-                                        <tr><td></td><td><input type="text" class="form-control" name="gonio_od_top" value="{{ $record->gonio_od_top }}" placeholder="0" /></td><td></td></tr>
+                                    <table class="table table-borderless" style="background:url({{ public_path().'/images/assets/x-png-30.png' }}); background-repeat: no-repeat; background-position: center;">
+                                        <tr><td></td><td width="20%"><input type="text" class="form-control" name="gonio_od_top" value="{{ $record->gonio_od_top }}" placeholder="0" /></td><td></td></tr>
                                         <tr><td><input type="text" class="form-control" name="gonio_od_left" value="{{ $record->gonio_od_left }}" placeholder="0" /></td><td class="text-center"></td><td><input type="text" class="form-control" name="gonio_od_right" value="{{ $record->gonio_od_right }}" placeholder="0" /></td></tr>
                                         <tr><td></td><td><input type="text" class="form-control" name="gonio_od_bottom" value="{{ $record->gonio_od_bottom }}" placeholder="0" /></td><td></td></tr>
                                     </table>
@@ -855,8 +855,8 @@
                                     <label class="form-label">Gonioscopy</label>                                    
                                 </div>
                                 <div class="col-sm-5">
-                                    <table class="table" style="background:url({{ public_path().'/images/assets/x-png-30.png' }}); background-repeat: no-repeat; background-position: center;">
-                                        <tr><td></td><td><input type="text" class="form-control" name="gonio_os_top" value="{{ $record->gonio_os_top }}" placeholder="0" /></td><td></td></tr>
+                                    <table class="table table-borderless" style="background:url({{ public_path().'/images/assets/x-png-30.png' }}); background-repeat: no-repeat; background-position: center;">
+                                        <tr><td></td><td width="20%"><input type="text" class="form-control" name="gonio_os_top" value="{{ $record->gonio_os_top }}" placeholder="0" /></td><td></td></tr>
                                         <tr><td><input type="text" class="form-control" name="gonio_os_left" value="{{ $record->gonio_os_left }}" placeholder="0" /></td><td class="text-center"></td><td><input type="text" class="form-control" name="gonio_os_right" value="{{ $record->gonio_os_right }}" placeholder="0" /></td></tr>
                                         <tr><td></td><td><input type="text" class="form-control" name="gonio_os_bottom" value="{{ $record->gonio_os_bottom }}" placeholder="0" /></td><td></td></tr>
                                     </table>
