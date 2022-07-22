@@ -148,12 +148,14 @@ class PatientMedicalRecordController extends Controller
         $medicines = DB::table('products')->get();
         $dosages = DB::table('dosages')->get();
         $doctor = DB::table('doctors')->find($record->doctor_id);
-        $spectacle = DB::table('spectacles')->where('patient_id', $record->patient_id)->orderByDesc('id')->first();
+        //$spectacle = DB::table('spectacles')->where('patient_id', $record->patient_id)->orderByDesc('id')->first();
+        $spectacle = DB::table('spectacles')->where('medical_record_id', $id)->first();
         $medicine_record = DB::table('patient_medicine_records')->where('medical_record_id', $id)->get();
         $retina_od = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'od')->get();
         $retina_os = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'os')->get();
         $vision = DB::table('patient_medical_records_vision')->where('medical_record_id', $id)->get();
-        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision'));
+        $vextras = DB::table('vision_extras')->where('cat_id', '>', 0)->get();
+        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision', 'vextras'));
     }
 
     /**
@@ -184,6 +186,35 @@ class PatientMedicalRecordController extends Controller
         $input['review_date'] = ($input['review_date']) ? Carbon::createFromFormat('d/M/Y', $request['review_date'])->format('Y-m-d') : NULL;
         $input['symptoms'] = implode(',', $request->symptom_id);
         $input['diagnosis'] = implode(',', $request->diagnosis_id);
+
+        $input['sel_1_od'] = ($request->sel_1_od) ? implode(',', $request->sel_1_od) : 0;
+        $input['sel_1_os'] = ($request->sel_1_os) ? implode(',', $request->sel_1_os) : 0;
+        $input['sel_2_od'] = ($request->sel_2_od) ? implode(',', $request->sel_2_od) : 0;
+        $input['sel_2_os'] = ($request->sel_2_os) ? implode(',', $request->sel_2_os) : 0;
+        $input['sel_3_od'] = ($request->sel_3_od) ? implode(',', $request->sel_3_od) : 0;
+        $input['sel_3_os'] = ($request->sel_3_os) ? implode(',', $request->sel_3_os) : 0;
+        $input['sel_4_od'] = ($request->sel_4_od) ? implode(',', $request->sel_4_od) : 0;
+        $input['sel_4_os'] = ($request->sel_4_os) ? implode(',', $request->sel_4_os) : 0;
+        $input['sel_5_od'] = ($request->sel_5_od) ? implode(',', $request->sel_5_od) : 0;
+        $input['sel_5_os'] = ($request->sel_5_os) ? implode(',', $request->sel_5_os) : 0;
+        $input['sel_6_od'] = ($request->sel_6_od) ? implode(',', $request->sel_6_od) : 0;
+        $input['sel_6_os'] = ($request->sel_6_os) ? implode(',', $request->sel_6_os) : 0;
+        $input['sel_7_od'] = ($request->sel_7_od) ? implode(',', $request->sel_7_od) : 0;
+        $input['sel_7_os'] = ($request->sel_7_os) ? implode(',', $request->sel_7_os) : 0;
+        $input['sel_8_od'] = ($request->sel_8_od) ? implode(',', $request->sel_8_od) : 0;
+        $input['sel_8_os'] = ($request->sel_8_os) ? implode(',', $request->sel_8_os) : 0;
+        $input['sel_9_od'] = ($request->sel_9_od) ? implode(',', $request->sel_9_od) : 0;
+        $input['sel_9_os'] = ($request->sel_9_os) ? implode(',', $request->sel_9_os) : 0;
+        $input['sel_10_od'] = ($request->sel_10_od) ? implode(',', $request->sel_10_od) : 0;
+        $input['sel_10_os'] = ($request->sel_10_os) ? implode(',', $request->sel_10_os) : 0;
+        $input['sel_11_od'] = ($request->sel_11_od) ? implode(',', $request->sel_11_od) : 0;
+        $input['sel_11_os'] = ($request->sel_11_os) ? implode(',', $request->sel_11_os) : 0;
+        $input['sel_12_od'] = ($request->sel_12_od) ? implode(',', $request->sel_12_od) : 0;
+        $input['sel_12_os'] = ($request->sel_12_os) ? implode(',', $request->sel_12_os) : 0;
+        $input['sel_13_od'] = ($request->sel_13_od) ? implode(',', $request->sel_13_od) : 0;
+        $input['sel_13_os'] = ($request->sel_13_os) ? implode(',', $request->sel_13_os) : 0;
+        $input['sel_14_od'] = ($request->sel_14_od) ? implode(',', $request->sel_14_od) : 0;
+        $input['sel_14_os'] = ($request->sel_14_os) ? implode(',', $request->sel_14_os) : 0;
         
         $input['medicine'] = $request->medicine_id;
         $input['dosage'] = $request->dosage;
@@ -192,6 +223,7 @@ class PatientMedicalRecordController extends Controller
         //$input['is_admission'] = $request->is_admission;
         $record = PMRecord::find($id);
         $input['created_by'] = $record->getOriginal('created_by');
+
         try{
             $record->update($input);
             DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
@@ -236,6 +268,7 @@ class PatientMedicalRecordController extends Controller
                     ]);
                 endfor;
             endif;
+            //print_r($odospoints);
             echo "success";
         }catch(Exception $e){
             throw $e;

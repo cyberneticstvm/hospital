@@ -14,6 +14,11 @@ class SymptomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $vision_extras;
+
+    public function __construct(){
+        $this->vision_extras = array('sel_1' => 1, 'sel_2' => 2, 'sel_3' => 3, 'sel_4' => 4, 'sel_5' => 5, 'sel_6' => 6, 'sel_7' => 7, 'sel_8' => 8, 'sel_9' => 9, 'sel_10' => 10, 'sel_11' => 11, 'sel_12' => 12, 'sel_13' => 13, 'sel_14' => 14);
+    } 
     public function index($type)
     {
         $type = $type; $data = '';
@@ -34,6 +39,9 @@ class SymptomController extends Controller
         }
         if($type == 'clinic'){
             $data = DB::table('lab_types')->where('category_id', 1)->select('id', 'lab_type_name as name')->get();
+        }
+        if(array_key_exists($type, $this->vision_extras)){
+            $data = DB::table('vision_extras')->where('cat_id', $this->vision_extras[$type])->select('id', 'name')->get();
         }
         return response()->json($data);
     }
@@ -74,6 +82,16 @@ class SymptomController extends Controller
                 ['diagnosis_name' => $request->diagnosis_name]
             );
             return response()->json(['success'=>'Diagnosis is successfully added']);
+        endif;
+        if(array_key_exists($type, $this->vision_extras)):            
+            $this->validate($request, [
+                'name' => 'required',
+            ]);            
+            $input = $request->all();
+            DB::table('vision_extras')->insert(
+                ['name' => $request->name, 'cat_id' => $this->vision_extras[$type]]
+            );
+            return response()->json(['success'=>'Record is successfully updated']);
         endif;
     }
 

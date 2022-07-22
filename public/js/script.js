@@ -63,6 +63,7 @@ $(function() {
                         return obj;
                     });
                     $("#"+ddl).select2({data:xdata});
+                    $("."+ddl).select2({data:xdata});
                 });
                 $('.message').html(data.success);
                 $(frm)[0].reset();
@@ -108,6 +109,12 @@ $(function() {
         $(".labtestRow").append("<div class='row mt-3'><div class='col-sm-3'><select class='form-control form-control-md show-tick ms select2 selLabTest' data-placeholder='Select' name='test_id[]' required='required'></select></div><div class='col-sm-5'><input type='text' name='notes[]' class='form-control' placeholder='Notes' /></div><div class='col-sm-3'><select class='form-control form-control-md show-tick ms select2' data-placeholder='Select' name='tested_from[]' required='required'><option value='1'>Own Laboratory</option><option value='0'>Outside Laboratory</option></select></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");
         $('.selLabTest').select2();
         bindDDL(type, 'selLabTest');
+    });
+
+    $(".vEModal").click(function(){
+        var ddl = $(this).data('ddl');
+        $("#frm-vision-extras").find(".ddl").val(ddl);
+        $("#visionExtrasModal").modal("show");
     })
 });
 

@@ -99,25 +99,25 @@
                                     <label class="form-label">Biometry</label>
                                     <table class="table table-bordered" style="">
                                         <thead class="text-center">
-                                            <tr><th></th><th>K1 (Auto)</th><th>K2 (Auto)</th><th>K1 (Manual)</th><th>K2 (Manual)</th></tr>
+                                            <tr><th></th><th>K1 (Auto)</th><th>K2 (Auto)</th><th>K1 (Manual)</th><th>K2 (Manual)</th><th>AXL</th></tr>
                                         </thead>
                                         <tbody>
                                         <tr>
                                                 <td class="text-center fw-bold">OD</td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k1_od_auto }}" name="k1_od_auto" maxlength="6" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k2_od_auto }}" name="k2_od_auto" maxlength="6" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k1_od_manual }}" name="k1_od_manual" maxlength="6" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k2_od_manual }}" name="k2_od_manual" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k1_od_a : '0.0' }}" name="k1_od_auto" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k2_od_a : '0.0' }}" name="k2_od_auto" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k1_od_m : '0.0' }}" name="k1_od_manual" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k2_od_m : '0.0' }}" name="k2_od_manual" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_od_axl : '0.0' }}" placeholder="0" readonly="true"/></td>
                                             </tr>
                                             <tr>
                                                 <td class="text-center fw-bold">OS</td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k1_os_auto }}" name="k1_os_auto" maxlength="6" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k2_os_auto }}" name="k2_os_auto" maxlength="6" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k1_os_manual }}" name="k1_os_manual" maxlength="6" placeholder="0"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ $record->k2_os_manual }}" name="k2_os_manual" maxlength="6" placeholder="0"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k1_os_a : '0.0' }}" name="k1_os_auto" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k2_os_a : '0.0' }}" name="k2_os_auto" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k1_os_m : '0.0' }}" name="k1_os_manual" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k2_os_m : '0.0' }}" name="k2_os_manual" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_os_axl : '0.0' }}" placeholder="0" readonly="true"/></td>
                                             </tr>
-                                            <tr><td colspan="5" class="fw-bold text-center">AXL</td></tr>
-                                            <tr><td colspan="5" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" name="axl" value="{{ $record->axl }}" placeholder="0"/></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -130,36 +130,108 @@
                                     <label class="form-label">OS</label>
                                 </div>
                                 <div class="col-sm-5">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_appearance[]">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_1" multiple data-placeholder="Select" name="sel_1_od[]">
+                                        @php $olds = explode(',', $record->sel_1_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 1)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
-                                    <label class="form-label">Appearance<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                    <label class="form-label">Appearance<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_1"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
                                 </div>
                                 <div class="col-sm-5">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_appearance[]">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_1" multiple data-placeholder="Select" name="sel_1_os[]">
+                                        @php $olds = explode(',', $record->sel_1_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 1)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select> 
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_extraocular_movements[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_2" multiple data-placeholder="Select" name="sel_2_od[]">
+                                        @php $olds = explode(',', $record->sel_2_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 2)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
-                                    <label class="form-label">Extraocular Movements<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                    <label class="form-label">Extraocular Movements<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_2"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_extraocular_movements[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_2" multiple data-placeholder="Select" name="sel_2_os[]">
+                                        @php $olds = explode(',', $record->sel_2_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 2)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select> 
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_orbital_margins[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_3" multiple data-placeholder="Select" name="sel_3_od[]">
+                                        @php $olds = explode(',', $record->sel_3_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 3)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
-                                    <label class="form-label">Orbital Margins<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                    <label class="form-label">Orbital Margins<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_3"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_orbital_margins[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_3" multiple data-placeholder="Select" name="sel_3_os[]">
+                                        @php $olds = explode(',', $record->sel_3_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 3)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select> 
                                 </div>
                             </div>
@@ -215,15 +287,39 @@
                                 <div class="col-sm-4 text-center">
                                     <label class="form-label">OS</label>
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_lid_and_adnexa[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_4" multiple data-placeholder="Select" name="sel_4_od[]">
+                                        @php $olds = explode(',', $record->sel_4_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 4)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
-                                    <label class="form-label">LID and Adnexa<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                    <label class="form-label">LID and Adnexa<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_4"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_lid_and_adnexa[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_4" multiple data-placeholder="Select" name="sel_4_os[]">
+                                        @php $olds = explode(',', $record->sel_4_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 4)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select> 
                                 </div>
                             </div>
@@ -264,132 +360,157 @@
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_conjunctiva[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_5" multiple data-placeholder="Select" name="sel_5_od[]">
+                                        @php $olds = explode(',', $record->sel_5_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 5)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
-                                    <label class="form-label">Conjunctiva<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                    <label class="form-label">Conjunctiva<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_5"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_conjunctiva[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_5" multiple data-placeholder="Select" name="sel_5_os[]">
+                                        @php $olds = explode(',', $record->sel_5_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 5)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select> 
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_sclera[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_6" multiple data-placeholder="Select" name="sel_6_od[]">
+                                        @php $olds = explode(',', $record->sel_6_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 6)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
-                                    <label class="form-label">Sclera<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                    <label class="form-label">Sclera<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_6"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_sclera[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_6" multiple data-placeholder="Select" name="sel_6_os[]">
+                                        @php $olds = explode(',', $record->sel_6_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 6)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select> 
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_cornea[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_7" multiple data-placeholder="Select" name="sel_7_od[]">
+                                        @php $olds = explode(',', $record->sel_7_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 7)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
-                                    <label class="form-label">Cornea<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                    <label class="form-label">Cornea<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_7"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_cornea[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_7" multiple data-placeholder="Select" name="sel_7_os[]">
+                                        @php $olds = explode(',', $record->sel_7_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 7)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select> 
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_anterior_chamber[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_8" multiple data-placeholder="Select" name="sel_8_od[]">
+                                        @php $olds = explode(',', $record->sel_8_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 8)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
-                                    <label class="form-label">Anterior Chamber<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                    <label class="form-label">Anterior Chamber<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_8"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_anterior_chamber[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_8" multiple data-placeholder="Select" name="sel_8_os[]">
+                                        @php $olds = explode(',', $record->sel_8_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 8)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select> 
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
                                 <div class="col-sm-6">
                                     <label class="form-label">OD</label>
-                                    <img id="imgreye3" src="{{ ($record->vision_od_img1) ? $record->vision_od_img1 : public_path().'/storage/assets/images/img-round-od.jpg' }}" class="d-none">
-                                    <img id="imgreye3_1" src="{{ public_path().'/storage/assets/images/img-round-od.jpg' }}" class="d-none">
-                                    <canvas id="re_eye3" style="border: 1px solid #000;"></canvas>
-                                    <div class="odpoints3">
-                                        @if($vision)
-                                            @foreach($vision as $v)
-                                                @if($v->img_type == 'vision_od_img1')
-                                                    <span class='badge bg-light' data-color="{{ $v->color }}" data-itype="{{ $v->img_type }}" style="color: {{ $v->color }}">{{ $v->description }}</span>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                    <a href="javascript:void(0)" id='odclear3' class="btn btn-secondary mt-1">Clear</a>
-                                    <a href="javascript:void(0)" id='odundo3' class="btn btn-warning mt-1 d-none">Undo</a>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label class="form-label">OS</label>
-                                    <img id="imgleye3_1" src="{{ ($record->vision_os_img1) ? $record->vision_os_img1 : public_path().'/storage/assets/images/img-round-os.jpg' }}" class="d-none">
-                                    <img id="imgleye3" src="{{ public_path().'/storage/assets/images/img-round-os.jpg' }}" class="d-none">
-                                    <canvas id="le_eye3" style="border: 1px solid #000;"></canvas>
-                                    <div class="ospoints3">
-                                        @if($vision)
-                                            @foreach($vision as $v)
-                                                @if($v->img_type == 'vision_os_img1')
-                                                    <span class='badge bg-light' data-color="{{ $v->color }}" data-itype="{{ $v->img_type }}" style="color: {{ $v->color }}">{{ $v->description }}</span>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                    <a href="javascript:void(0)" id='osclear3' class="btn btn-secondary mt-1">Clear</a>
-                                    <a href="javascript:void(0)" id='osundo3' class="btn btn-warning mt-1 d-none">Undo</a>
-                                </div>
-                            </div>
-                            <div class="row g-4 mt-1">
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_iris[]">
-                                    </select>                                  
-                                </div>
-                                <div class="col-sm-2 text-center">
-                                    <label class="form-label">Iris<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
-                                </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_iris[]">
-                                    </select> 
-                                </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_pupil[]">
-                                    </select>                                  
-                                </div>
-                                <div class="col-sm-2 text-center">
-                                    <label class="form-label">Pupil<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
-                                </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_pupil[]">
-                                    </select> 
-                                </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_lens[]">
-                                    </select>                                  
-                                </div>
-                                <div class="col-sm-2 text-center">
-                                    <label class="form-label">Lens<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
-                                </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_lens[]">
-                                    </select> 
-                                </div>
-                            </div>
-                            <div class="row g-4 mt-1">
-                                <div class="col-sm-6">
-                                    <label class="form-label">OD</label>
-                                    <img id="imgreye2" src="{{ ($record->vision_od_img1) ? $record->vision_od_img1 : public_path().'/storage/assets/images/right-eye-od.jpg' }}" class="d-none">
-                                    <img id="imgreye2_1" src="{{ public_path().'/storage/assets/images/right-eye-od.jpg' }}" class="d-none">
+                                    <img id="imgreye2" src="{{ ($record->vision_od_img3) ? $record->vision_od_img3 : public_path().'/storage/assets/images/img-round-od.jpg' }}" class="d-none">
+                                    <img id="imgreye2_1" src="{{ public_path().'/storage/assets/images/img-round-od.jpg' }}" class="d-none">
                                     <canvas id="re_eye2" style="border: 1px solid #000;"></canvas>
                                     <div class="odpoints2">
                                         @if($vision)
                                             @foreach($vision as $v)
-                                                @if($v->img_type == 'vision_od_img1')
+                                                @if($v->img_type == 'vision_od_img3')
                                                     <span class='badge bg-light' data-color="{{ $v->color }}" data-itype="{{ $v->img_type }}" style="color: {{ $v->color }}">{{ $v->description }}</span>
                                                 @endif
                                             @endforeach
@@ -400,13 +521,13 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">OS</label>
-                                    <img id="imgleye2_1" src="{{ ($record->vision_os_img1) ? $record->vision_os_img1 : public_path().'/storage/assets/images/left-eye-os.jpg' }}" class="d-none">
-                                    <img id="imgleye2" src="{{ public_path().'/storage/assets/images/left-eye-os.jpg' }}" class="d-none">
+                                    <img id="imgleye2" src="{{ ($record->vision_os_img3) ? $record->vision_os_img3 : public_path().'/storage/assets/images/img-round-os.jpg' }}" class="d-none">
+                                    <img id="imgleye2_1" src="{{ public_path().'/storage/assets/images/img-round-os.jpg' }}" class="d-none">
                                     <canvas id="le_eye2" style="border: 1px solid #000;"></canvas>
                                     <div class="ospoints2">
                                         @if($vision)
                                             @foreach($vision as $v)
-                                                @if($v->img_type == 'vision_os_img1')
+                                                @if($v->img_type == 'vision_os_img3')
                                                     <span class='badge bg-light' data-color="{{ $v->color }}" data-itype="{{ $v->img_type }}" style="color: {{ $v->color }}">{{ $v->description }}</span>
                                                 @endif
                                             @endforeach
@@ -417,122 +538,337 @@
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_avr[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_9" multiple data-placeholder="Select" name="sel_9_od[]">
+                                        @php $olds = explode(',', $record->sel_9_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 9)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
-                                    <label class="form-label">AVR<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                    <label class="form-label">Iris<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_9"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_avr[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_9" multiple data-placeholder="Select" name="sel_9_os[]">
+                                        @php $olds = explode(',', $record->sel_9_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 9)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select> 
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_fundus[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_10" multiple data-placeholder="Select" name="sel_10_od[]">
+                                        @php $olds = explode(',', $record->sel_10_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 10)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
-                                    <label class="form-label">Fundus<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                    <label class="form-label">Pupil<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_10"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_fundus[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_10" multiple data-placeholder="Select" name="sel_10_os[]">
+                                        @php $olds = explode(',', $record->sel_10_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 10)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select> 
+                                </div>
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_11" multiple data-placeholder="Select" name="sel_11_od[]">
+                                        @php $olds = explode(',', $record->sel_11_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 11)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Lens<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_11"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_11" multiple data-placeholder="Select" name="sel_11_os[]">
+                                        @php $olds = explode(',', $record->sel_11_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 11)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select> 
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="od_media[]">
+                                <div class="col-sm-6">
+                                    <label class="form-label">OD</label>
+                                    <img id="imgreye3" src="{{ ($record->vision_od_img4) ? $record->vision_od_img4 : public_path().'/storage/assets/images/right-eye-od.jpg' }}" class="d-none">
+                                    <img id="imgreye3_1" src="{{ public_path().'/storage/assets/images/right-eye-od.jpg' }}" class="d-none">
+                                    <canvas id="re_eye3" style="border: 1px solid #000;"></canvas>
+                                    <div class="odpoints3">
+                                        @if($vision)
+                                            @foreach($vision as $v)
+                                                @if($v->img_type == 'vision_od_img4')
+                                                    <span class='badge bg-light' data-color="{{ $v->color }}" data-itype="{{ $v->img_type }}" style="color: {{ $v->color }}">{{ $v->description }}</span>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:void(0)" id='odclear3' class="btn btn-secondary mt-1">Clear</a>
+                                    <a href="javascript:void(0)" id='odundo3' class="btn btn-warning mt-1 d-none">Undo</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label">OS</label>
+                                    <img id="imgleye3" src="{{ ($record->vision_os_img4) ? $record->vision_os_img4 : public_path().'/storage/assets/images/left-eye-os.jpg' }}" class="d-none">
+                                    <img id="imgleye3_1" src="{{ public_path().'/storage/assets/images/left-eye-os.jpg' }}" class="d-none">
+                                    <canvas id="le_eye3" style="border: 1px solid #000;"></canvas>
+                                    <div class="ospoints3">
+                                        @if($vision)
+                                            @foreach($vision as $v)
+                                                @if($v->img_type == 'vision_os_img4')
+                                                    <span class='badge bg-light' data-color="{{ $v->color }}" data-itype="{{ $v->img_type }}" style="color: {{ $v->color }}">{{ $v->description }}</span>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:void(0)" id='osclear3' class="btn btn-secondary mt-1">Clear</a>
+                                    <a href="javascript:void(0)" id='osundo3' class="btn btn-warning mt-1 d-none">Undo</a>
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-1">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_12" multiple data-placeholder="Select" name="sel_12_od[]">
+                                        @php $olds = explode(',', $record->sel_12_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 12)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
-                                    <label class="form-label">Media<br/><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                    <label class="form-label">AVR<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_12"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="os_media[]">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_12" multiple data-placeholder="Select" name="sel_12_os[]">
+                                        @php $olds = explode(',', $record->sel_12_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 12)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </select> 
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="os_disc_margins" placeholder="OD Disc Margins" />                                 
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_13" multiple data-placeholder="Select" name="sel_13_od[]">
+                                        @php $olds = explode(',', $record->sel_13_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 13)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Fundus<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_13"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_13" multiple data-placeholder="Select" name="sel_13_os[]">
+                                        @php $olds = explode(',', $record->sel_13_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 13)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-1">
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_14" multiple data-placeholder="Select" name="sel_14_od[]">
+                                        @php $olds = explode(',', $record->sel_14_od); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 14)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>                                  
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <label class="form-label">Media<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_14"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                </div>
+                                <div class="col-sm-5">
+                                    <select class="form-control form-control-md show-tick ms select2 sel_14" multiple data-placeholder="Select" name="sel_14_os[]">
+                                        @php $olds = explode(',', $record->sel_14_os); @endphp
+                                        @foreach($vextras as $v)
+                                            @php $selected = ''; @endphp
+                                            @foreach($olds as $key => $value)
+                                                @if($v->id == $value)
+                                                    {{ $selected = 'selected' }}
+                                                @endif
+                                            @endforeach
+                                            @if($v->cat_id == 14)
+                                            <option value="{{ $v->id }}" {{ $selected }}>{{ $v->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select> 
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="od_disc_margins" value="{{ $record->od_disc_margins }}" placeholder="OD Disc Margins" />                                 
                                 </div>
                                 <div class="col-sm-2 text-center">
                                     <label class="form-label">Disc Margins</label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="os_disc_margins" placeholder="OS Disc Margins" />
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="os_disc_margins" value="{{ $record->os_disc_margins }}" placeholder="OS Disc Margins" />
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="os_cdr" placeholder="OD CDR" />                                  
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="od_cdr" value="{{ $record->od_cdr }}" placeholder="OD CDR" />                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
                                     <label class="form-label">CDR</label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="os_cdr" placeholder="OS CDR" />
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="os_cdr" value="{{ $record->os_cdr }}" placeholder="OS CDR" />
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="os_nrr" placeholder="OD NRR" />                                  
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="od_nrr" value="{{ $record->od_nrr }}" placeholder="OD NRR" />                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
                                     <label class="form-label">NRR</label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="os_nrr" placeholder="OS NRR" /> 
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="os_nrr" value="{{ $record->os_nrr }}" placeholder="OS NRR" /> 
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="od_av_ratio" placeholder="OD AV Ratio & Bloodvessels" />                                 
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="od_av_ratio" value="{{ $record->od_av_ratio }}" placeholder="OD AV Ratio & Bloodvessels" />                                 
                                 </div>
                                 <div class="col-sm-2 text-center">
                                     <label class="form-label">AV Ratio & Bloodvessels</label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="os_av_ratio" placeholder="OS AV Ratio & Bloodvessels" /> 
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="os_av_ratio" value="{{ $record->os_av_ratio }}" placeholder="OS AV Ratio & Bloodvessels" /> 
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="os_fr" placeholder="OD FR" />                                  
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="od_fr" value="{{ $record->od_fr }}" placeholder="OD FR" />                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
                                     <label class="form-label">FR</label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="os_fr" placeholder="OS FR" /> 
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="os_fr" value="{{ $record->os_fr }}" placeholder="OS FR" /> 
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="od_bg_retina" placeholder="OD Background Retina & Periphery" />                                 
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="od_periphery" value="{{ $record->od_periphery }}" placeholder="OD Background Retina & Periphery" />                                 
                                 </div>
                                 <div class="col-sm-2 text-center">
                                     <label class="form-label">Background Retina & Periphery</label>                                    
                                 </div>
-                                <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="os_bg_retina" placeholder="OS Background Retina & Periphery" /> 
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" name="os_periphery" value="{{ $record->os_periphery }}" placeholder="OS Background Retina & Periphery" /> 
                                 </div>
                             </div>
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-5">
-                                    <table class="table">
-                                        <tr><td></td><td><input type="text" class="form-control" name="" placeholder="0" /></td><td></td></tr>
-                                        <tr><td><input type="text" class="form-control" name="" placeholder="0" /></td><td class="text-center"><i class="fa fa-times fa-lg text-muted"></i></td><td><input type="text" class="form-control" name="" placeholder="0" /></td></tr>
-                                        <tr><td></td><td><input type="text" class="form-control" name="" placeholder="0" /></td><td></td></tr>
+                                    <table class="table" style="background:url({{ public_path().'/images/assets/x-png-30.png' }}); background-repeat: no-repeat; background-position: center;">
+                                        <tr><td></td><td><input type="text" class="form-control" name="gonio_od_top" value="{{ $record->gonio_od_top }}" placeholder="0" /></td><td></td></tr>
+                                        <tr><td><input type="text" class="form-control" name="gonio_od_left" value="{{ $record->gonio_od_left }}" placeholder="0" /></td><td class="text-center"></td><td><input type="text" class="form-control" name="gonio_od_right" value="{{ $record->gonio_od_right }}" placeholder="0" /></td></tr>
+                                        <tr><td></td><td><input type="text" class="form-control" name="gonio_od_bottom" value="{{ $record->gonio_od_bottom }}" placeholder="0" /></td><td></td></tr>
                                     </table>
                                 </div>
                                 <div class="col-sm-2 text-center">
                                     <label class="form-label">Gonioscopy</label>                                    
                                 </div>
                                 <div class="col-sm-5">
-                                    <table class="table">
-                                        <tr><td></td><td><input type="text" class="form-control" name="" placeholder="0" /></td><td></td></tr>
-                                        <tr><td><input type="text" class="form-control" name="" placeholder="0" /></td><td class="text-center"><i class="fa fa-times fa-lg text-muted"></i></td><td><input type="text" class="form-control" name="" placeholder="0" /></td></tr>
-                                        <tr><td></td><td><input type="text" class="form-control" name="" placeholder="0" /></td><td></td></tr>
+                                    <table class="table" style="background:url({{ public_path().'/images/assets/x-png-30.png' }}); background-repeat: no-repeat; background-position: center;">
+                                        <tr><td></td><td><input type="text" class="form-control" name="gonio_os_top" value="{{ $record->gonio_os_top }}" placeholder="0" /></td><td></td></tr>
+                                        <tr><td><input type="text" class="form-control" name="gonio_os_left" value="{{ $record->gonio_os_left }}" placeholder="0" /></td><td class="text-center"></td><td><input type="text" class="form-control" name="gonio_os_right" value="{{ $record->gonio_os_right }}" placeholder="0" /></td></tr>
+                                        <tr><td></td><td><input type="text" class="form-control" name="gonio_os_bottom" value="{{ $record->gonio_os_bottom }}" placeholder="0" /></td><td></td></tr>
                                     </table>
                                 </div>
                                 <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="" placeholder="0" />                                 
+                                    <input type="text" class="form-control" name="gonio_od" value="{{ $record->gonio_od }}"  placeholder="0" />                                 
                                 </div>
                                 <div class="col-sm-2 text-center">
                                     <label class="form-label">&nbsp;</label>                                    
                                 </div>
                                 <div class="col-sm-5 text-center">
-                                    <input type="text" class="form-control" name="" placeholder="0" /> 
+                                    <input type="text" class="form-control" name="gonio_os" value="{{ $record->gonio_os }}"  placeholder="0" /> 
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
@@ -813,6 +1149,33 @@
                 <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
                 <button type="button" class="btn btn-primary btnaddpoints">Add</button>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="visionExtrasModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form name="frm-vision-extras" id="frm-vision-extras" action="/symptom/create/">
+                <input type="hidden" class="ddl" />
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="exampleModalLiveLabel">Add Record</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <div class="col">
+                            <label class="form-label">Name<sup class="text-danger">*</sup></label>
+                            <input type="text" class="form-control form-control-md" name="name" placeholder="Name"/>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col message text-success"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ajax-submit btn-primary">Save</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -244,26 +244,26 @@
                                         <tbody class="">
                                             <tr>
                                                 <td>OD</td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k1_od_a }}" name="bm_k1_od_a" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k2_od_a }}" name="bm_k2_od_a" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md bm_k1_od_a" value="{{ $spectacle->bm_k1_od_a }}" name="bm_k1_od_a" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md bm_k2_od_a" value="{{ $spectacle->bm_k2_od_a }}" name="bm_k2_od_a" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k1_od_m }}" name="bm_k1_od_m" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k2_od_m }}" name="bm_k2_od_m" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_od_axl }}" name="bm_od_axl" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_od_acd }}" name="bm_od_acd" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_od_lens }}" name="bm_od_lens" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_od_kvalue_a }}" name="bm_od_kvalue_a" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md bm_od_kvalue_a" value="{{ $spectacle->bm_od_kvalue_a }}" name="bm_od_kvalue_a" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_od_iol }}" name="bm_od_iol" placeholder="0"/></td>
                                             </tr>
                                             <tr>
                                                 <td>OS</td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k1_os_a }}" name="bm_k1_os_a" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k2_os_a }}" name="bm_k2_os_a" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md bm_k1_os_a" value="{{ $spectacle->bm_k1_os_a }}" name="bm_k1_os_a" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md bm_k2_os_a" value="{{ $spectacle->bm_k2_os_a }}" name="bm_k2_os_a" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k1_os_m }}" name="bm_k1_os_m" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_k2_os_m }}" name="bm_k2_os_m" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_os_axl }}" name="bm_os_axl" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_os_acd }}" name="bm_os_acd" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_os_lens }}" name="bm_os_lens" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_os_kvalue_a }}" name="bm_os_kvalue_a" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md bm_os_kvalue_a" value="{{ $spectacle->bm_os_kvalue_a }}" name="bm_os_kvalue_a" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" value="{{ $spectacle->bm_os_iol }}" name="bm_os_iol" placeholder="0"/></td>
                                             </tr>
                                         </tbody>

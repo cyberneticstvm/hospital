@@ -20,6 +20,7 @@ Route::get('/', function () {
 Route::post('/', 'App\Http\Controllers\AuthController@userlogin')->name('login');
 
 Route::group(['middleware' => ['auth']], function(){
+
     Route::get('/dash/', function () {
         return view('dash');
     })->name('dash');
@@ -31,6 +32,7 @@ Route::group(['middleware' => ['auth']], function(){
     })->name('notauth');
 
     Route::get('/logout/', 'App\Http\Controllers\AuthController@userlogout');
+
 
     // User Route //
     Route::get('/user/', 'App\Http\Controllers\AuthController@index')->name('user.index');

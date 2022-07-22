@@ -130,4 +130,16 @@ $(function(){
             });
         }
     });
+
+    $(".bm_k1_od_a, .bm_k2_od_a").change(function(){
+        var val1 = (parseFloat($(".bm_k1_od_a").val()) > 0) ? parseFloat($(".bm_k1_od_a").val()) : 0;
+        var val2 = (parseFloat($(".bm_k2_od_a").val()) > 0) ? parseFloat($(".bm_k2_od_a").val()) : 0;
+        $(".bm_od_kvalue_a").val(((val1+val2)/2).toFixed(2));
+    });
+
+    $(".bm_k1_os_a, .bm_k2_os_a").change(function(){
+        var val1 = (parseFloat($(".bm_k1_os_a").val()) > 0) ? parseFloat($(".bm_k1_os_a").val()) : 0;
+        var val2 = (parseFloat($(".bm_k2_os_a").val()) > 0) ? parseFloat($(".bm_k2_os_a").val()) : 0;
+        $(".bm_os_kvalue_a").val(((val1+val2)/2).toFixed(2));
+    });
 });
