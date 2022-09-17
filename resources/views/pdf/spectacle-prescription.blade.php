@@ -13,7 +13,7 @@
         table thead th, table tbody td{
             padding: 5px;
         }
-        .bordered td, .bordered tr{
+        .bordered td, .bordered th, .bordered tr{
             border: 1px solid #e6e6e6;
         }
         .text-right{
@@ -82,18 +82,50 @@
     <pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre />
     <div class="row">
         <table width="100%" class="bordered text-center" cellspacing="0" cellpadding="0">
-            <tr><td>VD</td><td>IPD</td><td>NPD</td><td>RPD</td><td>LPD</td><td>OD-BC</td><td>OS-BC</td></tr>
-            <tr><td>{{ $spectacle->vd }}</td><td>{{ $spectacle->ipd }}</td><td>{{ $spectacle->npd }}</td><td>{{ $spectacle->rpd }}</td><td>{{ $spectacle->lpd }}</td><td>{{ $spectacle->vbr }}</td><td>{{ $spectacle->vbl }}</td></tr>
+            <tr><td>OD-BC</td><td>OS-BC</td><td>VD</td><td>IPD</td><td>NPD</td><td>RPD</td><td>LPD</td></tr>
+            <tr><td>{{ $spectacle->vbr }}</td><td>{{ $spectacle->vbl }}</td><td>{{ $spectacle->vd }}</td><td>{{ $spectacle->ipd }}</td><td>{{ $spectacle->npd }}</td><td>{{ $spectacle->rpd }}</td><td>{{ $spectacle->lpd }}</td></tr>
+        </table>
+    </div>
+    <br />    
+    <div class="row">
+        <table width="100%" class="bordered text-center" cellspacing="0" cellpadding="0">
+            <thead class="bordered">
+                <tr><th colspan="3">IOP</th><th colspan="3">ARM VALUE</th><th colspan="6">PGP</th></tr>
+                <tr><td></td><td>NCT</td><td>AT</td><td>SPH</td><td>CYL</td><td>AXIS</td><td>SPH</td><td>CYL</td><td>AXIS</td><td>ADD</td><td>VISION</td><td>NV</td></tr>
+            </thead>
+            <tbody>
+                <tr><td>OD</td><td>{{ $spectacle->re_iop }}</td><td>{{ $spectacle->iop_at_r }}</td><td>{{ $spectacle->arm_od_sph }}</td><td>{{ $spectacle->arm_od_cyl }}</td><td>{{ $spectacle->arm_od_axis }}</td><td>{{ $spectacle->pgp_od_sph }}</td><td>{{ $spectacle->pgp_od_cyl }}</td><td>{{ $spectacle->pgp_od_axis }}</td><td>{{ $spectacle->pgp_od_add }}</td><td>{{ $spectacle->pgp_od_vision }}</td><td>{{ $spectacle->pgp_od_nv }}</td></tr>
+                <tr><td>OS</td><td>{{ $spectacle->le_iop }}</td><td>{{ $spectacle->iop_at_l }}</td><td>{{ $spectacle->arm_os_sph }}</td><td>{{ $spectacle->arm_os_cyl }}</td><td>{{ $spectacle->arm_os_axis }}</td><td>{{ $spectacle->pgp_os_sph }}</td><td>{{ $spectacle->pgp_os_cyl }}</td><td>{{ $spectacle->pgp_os_axis }}</td><td>{{ $spectacle->pgp_os_add }}</td><td>{{ $spectacle->pgp_os_vision }}</td><td>{{ $spectacle->pgp_os_nv }}</td></tr>
+                <tr><td>Time</td><td>{{ $spectacle->iop_nct_time }}</td><td>{{ $spectacle->iop_at_time }}</td></tr>
+            </tbody>
         </table>
     </div>
     <br />
-    <p>IOP/R: {{ $spectacle->re_iop }} &nbsp;&nbsp; IOP/L: {{ $spectacle->le_iop }}</p>
-    <center><p>CONTACT LENS PRESCRIPTION</p></center>
     <div class="row">
-        <table width="60%" class="bordered" cellspacing="0" cellpadding="0">
-            <tr><td></td><td>BASE CURVE</td><td>DIAMETER</td><td>SPH</td><td>CYL</td><td>AXIS</td></tr>
-            <tr><td>RIGHT</td><td>{{ $spectacle->re_base_curve }}</td><td>{{ $spectacle->re_dia }}</td><td>{{ $spectacle->re_sph }}</td><td>{{ $spectacle->re_cyl }}</td><td>{{ $spectacle->re_axis }}</td></tr>
-            <tr><td>LEFT</td><td>{{ $spectacle->le_base_curve }}</td><td>{{ $spectacle->le_dia }}</td><td>{{ $spectacle->le_sph }}</td><td>{{ $spectacle->le_cyl }}</td><td>{{ $spectacle->le_axis }}</td></tr>
+        <table width="100%" class="bordered text-center" cellspacing="0" cellpadding="0">
+            <thead class="bordered">
+                <tr><th colspan="7">Dilated Refraction</th><th colspan="5">CONTACT LENS PRESCRIPTION</th></tr>
+                <tr><td></td><td>SPH</td><td>CYL</td><td>AXIS</td><td>ADD</td><td>VISION</td><td>NV</td><td>BASE CURVE</td><td>DIAMETER</td><td>SPH</td><td>CYL</td><td>AXIS</td></tr>
+            </thead>
+            <tbody>
+                <tr><td>OD</td><td>{{ $spectacle->dr_od_sph }}</td><td>{{ $spectacle->dr_od_cyl }}</td><td>{{ $spectacle->dr_od_axis }}</td><td>{{ $spectacle->dr_od_add }}</td><td>{{ $spectacle->dr_od_vision }}</td><td>{{ $spectacle->dr_od_nv }}</td><td>{{ $spectacle->re_base_curve }}</td><td>{{ $spectacle->re_dia }}</td><td>{{ $spectacle->re_sph }}</td><td>{{ $spectacle->re_cyl }}</td><td>{{ $spectacle->re_axis }}</td></tr>
+
+                <tr><td>OS</td><td>{{ $spectacle->dr_os_sph }}</td><td>{{ $spectacle->dr_os_cyl }}</td><td>{{ $spectacle->dr_os_axis }}</td><td>{{ $spectacle->dr_os_add }}</td><td>{{ $spectacle->dr_os_vision }}</td><td>{{ $spectacle->dr_os_nv }}</td><td>{{ $spectacle->le_base_curve }}</td><td>{{ $spectacle->le_dia }}</td><td>{{ $spectacle->le_sph }}</td><td>{{ $spectacle->le_cyl }}</td><td>{{ $spectacle->le_axis }}</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div class="row">
+        <p>Biometry</p>
+        <table width="100%" class="bordered text-center" cellspacing="0" cellpadding="0">
+            <thead class="bordered">
+                <tr><td></td><td>K1(A)</td><td>K2(A)</td><td>K1(M)</td><td>K2(M)</td><td>AXL</td><td>ACD</td><td>LENS</td><td>K-VALUE(Avg)</td><td>IOL Power</td></tr>
+            </thead>
+            <tbody>
+                <tr><td>OD</td><td>{{ $spectacle->bm_k1_od_a }}</td><td>{{ $spectacle->bm_k2_od_a }}</td><td>{{ $spectacle->bm_k1_od_m }}</td><td>{{ $spectacle->bm_k2_od_m }}</td><td>{{ $spectacle->bm_od_axl }}</td><td>{{ $spectacle->bm_od_acd }}</td><td>{{ $spectacle->bm_od_lens }}</td><td>{{ $spectacle->bm_od_kvalue_a }}</td><td>{{ $spectacle->bm_od_iol }}</td></tr>
+
+                <tr><td>OS</td><td>{{ $spectacle->bm_k1_os_a }}</td><td>{{ $spectacle->bm_k2_os_a }}</td><td>{{ $spectacle->bm_k1_os_m }}</td><td>{{ $spectacle->bm_k2_os_m }}</td><td>{{ $spectacle->bm_os_axl }}</td><td>{{ $spectacle->bm_os_acd }}</td><td>{{ $spectacle->bm_os_lens }}</td><td>{{ $spectacle->bm_os_kvalue_a }}</td><td>{{ $spectacle->bm_os_iol }}</td></tr>
+            </tbody>
         </table>
     </div>
     <p>Remarks: {{ $spectacle->remarks }}

@@ -95,16 +95,16 @@
                                 </div>
                                 <div class="col-sm-12 table-responsive">
                                     <table class="table spectacle">
-                                        <thead><tr><th>VD</th><th>IPD</th><th>NPD</th><th>RPD</th><th>LPD</th><th>OD-BC</th><th>OS-BC</th></tr></thead>
+                                        <thead><tr><th>OD-BC</th><th>OS-BC</th><th>VD</th><th>IPD</th><th>NPD</th><th>RPD</th><th>LPD</th></tr></thead>
                                         <tbody>
                                             <tr>
+                                                <td><input type="text" class="form-control form-control-md" name="vbr" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="vbl" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="vd" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md ipd" name="ipd" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md npd" name="npd" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md rpd" name="rpd" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md lpd" name="lpd" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="vbr" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="vbl" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md lpd" name="lpd" placeholder="0"/></td>                                                
                                             </tr>
                                         </tbody>
                                     </table>
@@ -120,17 +120,17 @@
                                             <tr>
                                                 <td>R</td>
                                                 <td><input type="text" maxlength="7" value="{{ old('re_iop') }}" name="re_iop" class="form-control form-control-md" placeholder="0" tabindex="1"></td>
-                                                <td><input type="text" maxlength="7" class="form-control form-control-md" placeholder="0" tabindex="4"></td>
+                                                <td><input type="text" maxlength="7" name="iop_at_r" class="form-control form-control-md" placeholder="0" tabindex="4"></td>
                                             </tr>
                                             <tr>
                                                 <td>L</td>
                                                 <td><input type="text" maxlength="7" value="{{ old('le_iop') }}" name="le_iop" class="form-control form-control-md" placeholder="0" tabindex="2"></td>
-                                                <td><input type="text" maxlength="7" class="form-control form-control-md" placeholder="0" tabindex="5"></td>
+                                                <td><input type="text" maxlength="7" name="iop_at_l" class="form-control form-control-md" placeholder="0" tabindex="5"></td>
                                             </tr>
                                             <tr>
                                                 <td>Time</td>
-                                                <td><input type="text" maxlength="10" name="nct_time" class="form-control form-control-md" placeholder="0" tabindex="3"></td>
-                                                <td><input type="text" maxlength="10" name="at_time" class="form-control form-control-md" placeholder="0" tabindex="6"></td>
+                                                <td><input type="text" maxlength="10" name="iop_nct_time" class="form-control form-control-md text-uppercase" placeholder="0" tabindex="3"></td>
+                                                <td><input type="text" maxlength="10" name="iop_at_time" class="form-control form-control-md text-uppercase" placeholder="0" tabindex="6"></td>
                                             </tr>
                                         </tbody>
                                     </table>
