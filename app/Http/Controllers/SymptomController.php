@@ -17,7 +17,7 @@ class SymptomController extends Controller
     protected $vision_extras;
 
     public function __construct(){
-        $this->vision_extras = array('sel_1' => 1, 'sel_2' => 2, 'sel_3' => 3, 'sel_4' => 4, 'sel_5' => 5, 'sel_6' => 6, 'sel_7' => 7, 'sel_8' => 8, 'sel_9' => 9, 'sel_10' => 10, 'sel_11' => 11, 'sel_12' => 12, 'sel_13' => 13, 'sel_14' => 14);
+        $this->vision_extras = array('sel_1' => 1, 'sel_2' => 2, 'sel_3' => 3, 'sel_4' => 4, 'sel_5' => 5, 'sel_6' => 6, 'sel_7' => 7, 'sel_8' => 8, 'sel_9' => 9, 'sel_10' => 10, 'sel_11' => 11, 'sel_12' => 12, 'sel_13' => 13, 'sel_14' => 14, 'sel_15' => 15, 'sel_16' => 16, 'sel_17' => 17, 'sel_18' => 18, 'sel_19' => 19, 'sel_20' => 20);
     } 
     public function index($type)
     {

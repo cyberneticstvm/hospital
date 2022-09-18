@@ -23,9 +23,9 @@
 <body>
     <table width="100%" cellpadding='0' cellspacing='0' class="text-large">
         <tr>
-            <td width='20%'>MR.ID</td><td width='60%'>{{ $reference->medical_record_id }}</td>
+            <td width='20%'>MR.ID</td><td width='50%'>{{ $reference->medical_record_id }}</td>
             <td rowspan='3'>
-                <img src="./images/assets/Devi-Logo-Transparent.jpg" height='75' width='115'/>
+                <img src="./images/assets/Devi-Logo-Transparent.jpg" width='40%'/>
             </td>
         </tr>
         <tr>
@@ -43,7 +43,7 @@
     </table>
     <p class='text-right'>Date: {{ date('d/M/Y H:i:A') }}</p>
     <pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre />
-    <pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre />
+    <pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre />
     <img src="data:image/png;base64, {!! $qrcode !!}">
     <hr>
     <center>

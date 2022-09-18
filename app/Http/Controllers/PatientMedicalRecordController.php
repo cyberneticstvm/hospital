@@ -146,6 +146,7 @@ class PatientMedicalRecordController extends Controller
         $symptoms = DB::table('symptoms')->get();
         $diagnosis = DB::table('diagnosis')->get();
         $medicines = DB::table('products')->get();
+        $medtypes = DB::table('medicine_types')->get();
         $dosages = DB::table('dosages')->get();
         $doctor = DB::table('doctors')->find($record->doctor_id);
         //$spectacle = DB::table('spectacles')->where('patient_id', $record->patient_id)->orderByDesc('id')->first();
@@ -155,7 +156,7 @@ class PatientMedicalRecordController extends Controller
         $retina_os = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'os')->get();
         $vision = DB::table('patient_medical_records_vision')->where('medical_record_id', $id)->get();
         $vextras = DB::table('vision_extras')->where('cat_id', '>', 0)->get();
-        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision', 'vextras'));
+        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision', 'vextras', 'medtypes'));
     }
 
     /**
@@ -215,6 +216,18 @@ class PatientMedicalRecordController extends Controller
         $input['sel_13_os'] = ($request->sel_13_os) ? implode(',', $request->sel_13_os) : 0;
         $input['sel_14_od'] = ($request->sel_14_od) ? implode(',', $request->sel_14_od) : 0;
         $input['sel_14_os'] = ($request->sel_14_os) ? implode(',', $request->sel_14_os) : 0;
+        $input['sel_15_od'] = ($request->sel_15_od) ? implode(',', $request->sel_15_od) : 0;
+        $input['sel_15_os'] = ($request->sel_15_os) ? implode(',', $request->sel_15_os) : 0;
+        $input['sel_16_od'] = ($request->sel_16_od) ? implode(',', $request->sel_16_od) : 0;
+        $input['sel_16_os'] = ($request->sel_16_os) ? implode(',', $request->sel_16_os) : 0;
+        $input['sel_17_od'] = ($request->sel_17_od) ? implode(',', $request->sel_17_od) : 0;
+        $input['sel_17_os'] = ($request->sel_17_os) ? implode(',', $request->sel_17_os) : 0;
+        $input['sel_18_od'] = ($request->sel_18_od) ? implode(',', $request->sel_18_od) : 0;
+        $input['sel_18_os'] = ($request->sel_18_os) ? implode(',', $request->sel_18_os) : 0;
+        $input['sel_19_od'] = ($request->sel_19_od) ? implode(',', $request->sel_19_od) : 0;
+        $input['sel_19_os'] = ($request->sel_19_os) ? implode(',', $request->sel_19_os) : 0;
+        $input['sel_20_od'] = ($request->sel_20_od) ? implode(',', $request->sel_20_od) : 0;
+        $input['sel_20_os'] = ($request->sel_20_os) ? implode(',', $request->sel_20_os) : 0;
         
         $input['medicine'] = $request->medicine_id;
         $input['dosage'] = $request->dosage;
@@ -235,6 +248,7 @@ class PatientMedicalRecordController extends Controller
                         DB::table('patient_medicine_records')->insert([
                             'medical_record_id' => $record->id,
                             'mrn' => $request->mrn,
+                            'medicine_type' => $input['medicine_type'][$i],
                             'medicine' => $input['medicine'][$i],
                             'dosage' => $input['dosage'][$i],
                             'dosage1' => $input['dosage1'][$i],
