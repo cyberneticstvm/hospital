@@ -184,8 +184,8 @@ class PatientMedicalRecordController extends Controller
         $odospoints = json_decode(stripslashes($input['odospoints']), true);
 
         $input['review_date'] = ($input['review_date']) ? Carbon::createFromFormat('d/M/Y', $request['review_date'])->format('Y-m-d') : NULL;
-        $input['symptoms'] = implode(',', $request->symptom_id);
-        $input['diagnosis'] = implode(',', $request->diagnosis_id);
+        $input['symptoms'] = ($request->symptom_id) ? implode(',', $request->symptom_id) : 0;
+        $input['diagnosis'] = ($request->diagnosis_id) ? implode(',', $request->diagnosis_id) : 0;
 
         $input['sel_1_od'] = ($request->sel_1_od) ? implode(',', $request->sel_1_od) : 0;
         $input['sel_1_os'] = ($request->sel_1_os) ? implode(',', $request->sel_1_os) : 0;
