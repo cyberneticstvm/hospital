@@ -36,7 +36,7 @@
             {{ $branch->contact_number }}
     </center>
     <br/>
-    <center><h5>PATIENT MEDICAL RECORD</h5></center>
+    <center><h5>PATIENT MEDICAL RECORD (MRN: {{ $record->mrn }})</h5></center>
     <table width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
@@ -51,23 +51,69 @@
             </tr>
         </tbody>
     </table>
-    <p class="bold">1) Notes</p>
-    {{ $reference->notes }}
-    <br />
-    <p class="bold">2) Symptoms (Consultation)</p>
+    <p> Symptoms (Consultation)</p>
     @foreach($symptoms as $sympt)
         {{ $sympt->symptom_name }}, 
     @endforeach
     <br />
-    <p class="bold">3) Diagnosis</p>
+    <p> Diagnosis</p>
     @foreach($diagnosis as $diag)
         {{ $diag->diagnosis_name }}, 
     @endforeach
+    <br>
+    <p>Vision</p>
+    <table width="100%">
+        <thead class="text-center"><tr><th>&nbsp;</th><th><!--VB--></th><th><!--SPH--></th><th><!--CYL--></th><th><!--AXIS--></th><th><!--ADD--></th><th><!--VA--></th></tr></thead>
+        <tbody>
+            <tr>
+                <td class="text-center fw-bold">RE/OD</td>                                            
+                <td>{{ ($spectacle) ? $spectacle->re_dist_sph : '0.00' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->re_dist_cyl : '0.00' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->re_dist_axis : '0.00' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->re_dist_add : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->vbr : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->re_near_va : '--' }}</td>
+            </tr>
+            <tr>
+                <td class="text-center fw-bold">LE/OS</td>                                            
+                <td>{{ ($spectacle) ? $spectacle->le_dist_sph : '0.00' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->le_dist_cyl : '0.00' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->le_dist_axis : '0.00' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->le_dist_add : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->vbl : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->le_near_va : '--' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Biometry</p>
+    <table width="100%">
+        <thead class="text-center">
+            <tr><th></th><th>K1 (Auto)</th><th>K2 (Auto)</th><th>K1 (Manual)</th><th>K2 (Manual)</th><th>AXL</th></tr>
+        </thead>
+        <tbody>
+        <tr>
+                <td class="text-center fw-bold">OD</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k1_od_a : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k2_od_a : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k1_od_m : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k2_od_m : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_od_axl : '--' }}</td>
+            </tr>
+            <tr>
+                <td class="text-center fw-bold">OS</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k1_os_a : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k2_os_a : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k1_os_m : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k2_os_m : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_os_axl : '--' }}</td>
+            </tr>
+        </tbody>
+    </table>
     <br />
-    <p class="bold">4) Doctor Recommondations</p>
+    <p>Doctor Recommondations</p>
     {{ $record->doctor_recommondations }}
     <br />
-    <p class="bold">5) Medicine / Lab Advise</p>
+    <p> Medicine / Lab Advised</p>
     <table width="100%" cellspacing="0" cellpadding="0">
         <thead><th>SL No.</th><th>Medicine Name</th><th>Dosage</th><th>Qty</th><th>Notes</th></thead>
         <tbody>
@@ -84,10 +130,10 @@
         </tbody>
     </table>
     <br />
-    <p class="bold">6) Other Details</p>
+    <p>Other Details</p>
     <table width="100%" class="no-border">
         <tr><th>Admission Advised: </th><th>Surgery Advised: </th><th>Review Date: </th></tr>
-        <tr><th>{{ ($record->is_admission == 0) ? '' : 'Yes' }}</th><th>{{ ($record->is_surgery == 0) ? '' : 'Yes' }}</th><th>{{ ($record->review_date) ? date('d/M/Y', strtotime($record->review_date)) : '' }}</th></tr>
+        <tr><th>{{ ($record->is_patient_admission == 0) ? '' : 'Yes' }}</th><th>{{ ($record->is_patient_surgery == 0) ? '' : 'Yes' }}</th><th>{{ ($record->review_date) ? date('d/M/Y', strtotime($record->review_date)) : '' }}</th></tr>
     </table>
 </body>
 </html>

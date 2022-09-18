@@ -77,8 +77,9 @@ class PDFController extends Controller
         $diag = explode(',', $record->diagnosis);
         $symptoms = DB::table('symptoms')->whereIn('id', $sympt)->get();
         $diagnosis = DB::table('diagnosis')->whereIn('id', $diag)->get();
+        $spectacle = DB::table('spectacles')->where('medical_record_id', $record->mrn)->first();
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));         
-        $pdf = PDF::loadView('/pdf/medical-record', compact('record', 'patient', 'doctor', 'qrcode', 'branch', 'reference', 'symptoms', 'diagnosis', 'medicines'));    
+        $pdf = PDF::loadView('/pdf/medical-record', compact('record', 'patient', 'doctor', 'qrcode', 'branch', 'reference', 'symptoms', 'diagnosis', 'medicines', 'spectacle'));    
         return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
     }
 
