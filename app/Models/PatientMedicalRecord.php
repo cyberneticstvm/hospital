@@ -19,6 +19,8 @@ class PatientMedicalRecord extends Model
         'history',
         'diagnosis',
         'doctor_recommondations',
+        'va_od',
+        'va_os',
         'signs',
         'vision_od_img1',
         'vision_os_img1',
