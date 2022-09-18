@@ -72,7 +72,7 @@ $(function(){
                     alert("Record updated successfully.");
                     window.location.href = '/consultation/medical-records/';
                 }else{
-                    console.log(data);
+                    alert(data);
                 }              
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){

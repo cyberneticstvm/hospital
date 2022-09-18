@@ -37,7 +37,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">Medical Record ID: {{ $mrecord->id }}, Date: {{ date('d/M/Y', strtotime($mrecord->created_at)) }}</h5>
+                        <h5 class="mb-0">Medical Record ID: {{ $mrecord->id }}, Date: {{ ($mrecord->created_at) ? date('d/M/Y', strtotime($mrecord->created_at)) : '' }}</h5>
                         <span class="text-muted"></span>
                     </div>
                 </div>
@@ -70,24 +70,24 @@
                                     <tbody>
                                         <tr>
                                             <td class="text-center fw-bold">RE/OD</td>                                            
-                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_sph : '' }}" placeholder="0" readonly="true" /></td>
-                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_cyl : '' }}" placeholder="0" readonly="true" /></td>
-                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_axis : '' }}" placeholder="0" readonly="true" /></td>
-                                            <td><input class="form-control form-control-md" type="text" maxlength="6" vvalue="{{ ($spectacle) ? $spectacle->re_dist_add : '' }}" placeholder="0" readonly="true" /></td>
-                                            <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbr : '' }}" placeholder="0" readonly="true" /></td>
-                                            <td><input class="form-control form-control-md" type="text" maxlength="6" vvalue="{{ ($spectacle) ? $spectacle->re_near_va : '' }}" placeholder="0" readonly="true" /></td>
+                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_sph : '0.00' }}" placeholder="0" readonly="true" /></td>
+                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_cyl : '0.00' }}" placeholder="0" readonly="true" /></td>
+                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_axis : '0.00' }}" placeholder="0" readonly="true" /></td>
+                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_add : '--' }}" placeholder="0" readonly="true" /></td>
+                                            <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbr : '--' }}" placeholder="0" readonly="true" /></td>
+                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_near_va : '--' }}" placeholder="0" readonly="true" /></td>
                                         </tr>
                                         <tr>
                                             <td class="text-center fw-bold">LE/OS</td>                                            
-                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_sph : '' }}" placeholder="0" readonly="true" /></td>
-                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_cyl : '' }}" placeholder="0" readonly="true" /></td>
-                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_axis : '' }}" placeholder="0" readonly="true" /></td>
-                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_add : '' }}" placeholder="0" readonly="true" /></td>
-                                            <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbl : '' }}" placeholder="0" readonly="true" /></td>
-                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_near_va : '' }}" placeholder="0" readonly="true" /></td>
+                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_sph : '0.00' }}" placeholder="0" readonly="true" /></td>
+                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_cyl : '0.00' }}" placeholder="0" readonly="true" /></td>
+                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_axis : '0.00' }}" placeholder="0" readonly="true" /></td>
+                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_add : '--' }}" placeholder="0" readonly="true" /></td>
+                                            <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbl : '--' }}" placeholder="0" readonly="true" /></td>
+                                            <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_near_va : '--' }}" placeholder="0" readonly="true" /></td>
                                         </tr>
-                                        <tr><td colspan="4" class="fw-bold text-center">IOP-OD</td><td colspan="3" class="fw-bold text-center">IOP-OS</td></tr>
-                                        <tr><td colspan="4" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" value="{{ ($spectacle) ? $spectacle->re_iop : '' }}" placeholder="0" readonly="true" /></td><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->le_iop : '' }}" maxlength="7" placeholder="0" readonly="true" /></td></tr>
+                                        <!--<tr><td colspan="4" class="fw-bold text-center">IOP-OD</td><td colspan="3" class="fw-bold text-center">IOP-OS</td></tr>
+                                        <tr><td colspan="4" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" value="{{ ($spectacle) ? $spectacle->re_iop : '' }}" placeholder="0" readonly="true" /></td><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->le_iop : '' }}" maxlength="7" placeholder="0" readonly="true" /></td></tr>-->
                                     </tbody>
                                 </table>
                             </div>
@@ -123,6 +123,14 @@
                         $sel_1_os = explode(',', $mrecord->sel_1_os);
                         $appearance_od = DB::table('vision_extras')->whereIn('id', $sel_1_od)->get();
                         $appearance_os = DB::table('vision_extras')->whereIn('id', $sel_1_os)->get();
+                        $sel_2_od = explode(',', $mrecord->sel_2_od);
+                        $sel_2_os = explode(',', $mrecord->sel_2_os);
+                        $em_od = DB::table('vision_extras')->whereIn('id', $sel_2_od)->get();
+                        $em_os = DB::table('vision_extras')->whereIn('id', $sel_2_os)->get();
+                        $sel_3_od = explode(',', $mrecord->sel_3_od);
+                        $sel_3_os = explode(',', $mrecord->sel_3_os);
+                        $om_od = DB::table('vision_extras')->whereIn('id', $sel_3_od)->get();
+                        $om_os = DB::table('vision_extras')->whereIn('id', $sel_3_os)->get();
                         @endphp
                         <div class="row mt-3">
                             <div class="col-sm-12 table-responsive">
@@ -142,8 +150,30 @@
                                                 @endforeach
                                             </td>
                                         </tr>
-                                        <tr><td>Extraocular Movements</td><td></td><td></td></tr>
-                                        <tr><td>Orbital Margins</td><td></td><td></td></tr>
+                                        <tr><td>Extraocular Movements</td>
+                                            <td>
+                                                @foreach($em_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($em_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>Orbital Margins</td>
+                                            <td>
+                                                @foreach($om_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($om_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -158,12 +188,29 @@
                                 <img src="{{ $mrecord->vision_os_img1 }}" alt=""/>
                             </div>
                         </div>
+                        @php
+                        $sel_4_od = explode(',', $mrecord->sel_4_od);
+                        $sel_4_os = explode(',', $mrecord->sel_4_os);
+                        $la_od = DB::table('vision_extras')->whereIn('id', $sel_4_od)->get();
+                        $la_os = DB::table('vision_extras')->whereIn('id', $sel_4_os)->get();
+                        @endphp
                         <div class="row mt-3">
                             <div class="col-sm-12 table-responsive">
                                 <table class="table table-bordered">
                                     <thead><tr><th></th><th>OD</th><th>OS</th></tr></thead>
                                     <tbody>
-                                        <tr><td>LID and Adnexa</td><td></td><td></td></tr>
+                                        <tr><td>LID and Adnexa</td>
+                                            <td>
+                                                @foreach($la_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($la_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -178,15 +225,77 @@
                                 <img src="{{ $mrecord->vision_os_img2 }}" alt=""/>
                             </div>
                         </div>
+                        @php
+                        $sel_5_od = explode(',', $mrecord->sel_5_od);
+                        $sel_5_os = explode(',', $mrecord->sel_5_os);
+                        $conj_od = DB::table('vision_extras')->whereIn('id', $sel_5_od)->get();
+                        $conj_os = DB::table('vision_extras')->whereIn('id', $sel_5_os)->get();
+                        $sel_6_od = explode(',', $mrecord->sel_6_od);
+                        $sel_6_os = explode(',', $mrecord->sel_6_os);
+                        $sclera_od = DB::table('vision_extras')->whereIn('id', $sel_6_od)->get();
+                        $sclera_os = DB::table('vision_extras')->whereIn('id', $sel_6_os)->get();
+                        $sel_7_od = explode(',', $mrecord->sel_7_od);
+                        $sel_7_os = explode(',', $mrecord->sel_7_os);
+                        $cornea_od = DB::table('vision_extras')->whereIn('id', $sel_7_od)->get();
+                        $cornea_os = DB::table('vision_extras')->whereIn('id', $sel_7_os)->get();
+                        $sel_8_od = explode(',', $mrecord->sel_8_od);
+                        $sel_8_os = explode(',', $mrecord->sel_8_os);
+                        $ac_od = DB::table('vision_extras')->whereIn('id', $sel_8_od)->get();
+                        $ac_os = DB::table('vision_extras')->whereIn('id', $sel_8_os)->get();
+                        @endphp
                         <div class="row mt-3">
                             <div class="col-sm-12 table-responsive">
                                 <table class="table table-bordered">
                                     <thead><tr><th></th><th>OD</th><th>OS</th></tr></thead>
                                     <tbody>
-                                        <tr><td>Conjunctiva</td><td></td><td></td></tr>
-                                        <tr><td>Sclera</td><td></td><td></td></tr>
-                                        <tr><td>Cornea</td><td></td><td></td></tr>
-                                        <tr><td>Anterior Chamber</td><td></td><td></td></tr>
+                                        <tr><td>Conjunctiva</td>
+                                            <td>
+                                                @foreach($conj_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($conj_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>Sclera</td>
+                                            <td>
+                                                @foreach($sclera_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($sclera_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>Cornea</td>
+                                         <td>
+                                                @foreach($cornea_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($cornea_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>Anterior Chamber</td>
+                                            <td>
+                                                @foreach($ac_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($ac_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -201,14 +310,61 @@
                                 <img src="{{ $mrecord->vision_os_img3 }}" alt=""/>
                             </div>
                         </div>
+                        @php
+                        $sel_9_od = explode(',', $mrecord->sel_9_od);
+                        $sel_9_os = explode(',', $mrecord->sel_9_os);
+                        $iris_od = DB::table('vision_extras')->whereIn('id', $sel_9_od)->get();
+                        $iris_os = DB::table('vision_extras')->whereIn('id', $sel_9_os)->get();
+                        $sel_10_od = explode(',', $mrecord->sel_10_od);
+                        $sel_10_os = explode(',', $mrecord->sel_10_os);
+                        $pupil_od = DB::table('vision_extras')->whereIn('id', $sel_10_od)->get();
+                        $pupil_os = DB::table('vision_extras')->whereIn('id', $sel_10_os)->get();
+                        $sel_11_od = explode(',', $mrecord->sel_11_od);
+                        $sel_11_os = explode(',', $mrecord->sel_11_os);
+                        $lens_od = DB::table('vision_extras')->whereIn('id', $sel_11_od)->get();
+                        $lens_os = DB::table('vision_extras')->whereIn('id', $sel_11_os)->get();
+                        @endphp
                         <div class="row mt-3">
                             <div class="col-sm-12 table-responsive">
                                 <table class="table table-bordered">
                                     <thead><tr><th></th><th>OD</th><th>OS</th></tr></thead>
                                     <tbody>
-                                        <tr><td>Iris</td><td></td><td></td></tr>
-                                        <tr><td>Pupil</td><td></td><td></td></tr>
-                                        <tr><td>Lens</td><td></td><td></td></tr>
+                                        <tr><td>Iris</td>
+                                            <td>
+                                                @foreach($iris_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($iris_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>Pupil</td>
+                                            <td>
+                                                @foreach($pupil_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($pupil_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>Lens</td>
+                                            <td>
+                                                @foreach($lens_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($lens_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -223,20 +379,157 @@
                                 <img src="{{ $mrecord->vision_os_img4 }}" alt=""/>
                             </div>
                         </div>
+                        @php
+                        $sel_12_od = explode(',', $mrecord->sel_12_od);
+                        $sel_12_os = explode(',', $mrecord->sel_12_os);
+                        $avr_od = DB::table('vision_extras')->whereIn('id', $sel_12_od)->get();
+                        $avr_os = DB::table('vision_extras')->whereIn('id', $sel_12_os)->get();
+                        $sel_13_od = explode(',', $mrecord->sel_13_od);
+                        $sel_13_os = explode(',', $mrecord->sel_13_os);
+                        $fundus_od = DB::table('vision_extras')->whereIn('id', $sel_13_od)->get();
+                        $fundus_os = DB::table('vision_extras')->whereIn('id', $sel_13_os)->get();
+                        $sel_14_od = explode(',', $mrecord->sel_14_od);
+                        $sel_14_os = explode(',', $mrecord->sel_14_os);
+                        $media_od = DB::table('vision_extras')->whereIn('id', $sel_14_od)->get();
+                        $media_os = DB::table('vision_extras')->whereIn('id', $sel_14_os)->get();
+                        $sel_15_od = explode(',', $mrecord->sel_15_od);
+                        $sel_15_os = explode(',', $mrecord->sel_15_os);
+                        $dm_od = DB::table('vision_extras')->whereIn('id', $sel_15_od)->get();
+                        $dm_os = DB::table('vision_extras')->whereIn('id', $sel_15_os)->get();
+                        $sel_16_od = explode(',', $mrecord->sel_16_od);
+                        $sel_16_os = explode(',', $mrecord->sel_16_os);
+                        $cdr_od = DB::table('vision_extras')->whereIn('id', $sel_16_od)->get();
+                        $cdr_os = DB::table('vision_extras')->whereIn('id', $sel_16_os)->get();
+                        $sel_17_od = explode(',', $mrecord->sel_17_od);
+                        $sel_17_os = explode(',', $mrecord->sel_17_os);
+                        $nrr_od = DB::table('vision_extras')->whereIn('id', $sel_17_od)->get();
+                        $nrr_os = DB::table('vision_extras')->whereIn('id', $sel_17_os)->get();
+                        $sel_18_od = explode(',', $mrecord->sel_18_od);
+                        $sel_18_os = explode(',', $mrecord->sel_18_os);
+                        $arb_od = DB::table('vision_extras')->whereIn('id', $sel_18_od)->get();
+                        $arb_os = DB::table('vision_extras')->whereIn('id', $sel_18_os)->get();
+                        $sel_19_od = explode(',', $mrecord->sel_19_od);
+                        $sel_19_os = explode(',', $mrecord->sel_19_os);
+                        $fr_od = DB::table('vision_extras')->whereIn('id', $sel_19_od)->get();
+                        $fr_os = DB::table('vision_extras')->whereIn('id', $sel_19_os)->get();
+                        $sel_20_od = explode(',', $mrecord->sel_20_od);
+                        $sel_20_os = explode(',', $mrecord->sel_20_os);
+                        $brp_od = DB::table('vision_extras')->whereIn('id', $sel_20_od)->get();
+                        $brp_os = DB::table('vision_extras')->whereIn('id', $sel_20_os)->get();
+                        @endphp
                         <div class="row mt-3">
                             <div class="col-sm-12 table-responsive">
                                 <table class="table table-bordered">
                                     <thead><tr><th></th><th>OD</th><th>OS</th></tr></thead>
                                     <tbody>
-                                        <tr><td>AVR</td><td></td><td></td></tr>
-                                        <tr><td>Fundus</td><td></td><td></td></tr>
-                                        <tr><td>Media</td><td></td><td></td></tr>
-                                        <tr><td>Disc Margins</td><td></td><td></td></tr>
-                                        <tr><td>CDR</td><td></td><td></td></tr>
-                                        <tr><td>NRR</td><td></td><td></td></tr>
-                                        <tr><td>AV Ratio & Bloodvessels</td><td></td><td></td></tr>
-                                        <tr><td>FR</td><td></td><td></td></tr>
-                                        <tr><td>Background Retina & Periphery</td><td></td><td></td></tr>
+                                        <tr><td>AVR</td>
+                                            <td>
+                                                @foreach($avr_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($avr_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>Fundus</td>
+                                            <td>
+                                                @foreach($fundus_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($fundus_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>Media</td>
+                                            <td>
+                                                @foreach($media_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($media_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>Disc Margins</td>
+                                            <td>
+                                                @foreach($dm_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($dm_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>CDR</td>
+                                            <td>
+                                                @foreach($cdr_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($cdr_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>NRR</td>
+                                            <td>
+                                                @foreach($nrr_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($nrr_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>AV Ratio & Bloodvessels</td>
+                                            <td>
+                                                @foreach($arb_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($arb_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>FR</td>
+                                            <td>
+                                                @foreach($fr_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($fr_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr><td>Background Retina & Periphery</td>
+                                            <td>
+                                                @foreach($brp_od as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($brp_os as $record)
+                                                    <span class="badge bg-info">{{ $record->name }}</span>
+                                                @endforeach
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

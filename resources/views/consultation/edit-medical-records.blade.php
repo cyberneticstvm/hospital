@@ -74,24 +74,24 @@
                                         <tbody>
                                             <tr>
                                                 <td class="text-center fw-bold">RE/OD</td>
-                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_sph : '' }}" placeholder="0" readonly="true" /></td>
-                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_cyl : '' }}" placeholder="0" readonly="true" /></td>
-                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_axis : '' }}" placeholder="0" readonly="true" /></td>
-                                                <td><input class="form-control form-control-md" type="text" maxlength="6" vvalue="{{ ($spectacle) ? $spectacle->re_dist_add : '' }}" placeholder="0" readonly="true" /></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbr : '' }}" placeholder="0" readonly="true" /></td>
-                                                <td><input class="form-control form-control-md" type="text" maxlength="6" vvalue="{{ ($spectacle) ? $spectacle->re_near_va : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_sph : '0.00' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_cyl : '0.00' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_axis : '0.00' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_add : '--' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbr : '--' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_near_va : '--' }}" placeholder="0" readonly="true" /></td>
                                             </tr>
                                             <tr>
                                                 <td class="text-center fw-bold">LE/OS</td>                                                
-                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_sph : '' }}" placeholder="0" readonly="true" /></td>
-                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_cyl : '' }}" placeholder="0" readonly="true" /></td>
-                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_axis : '' }}" placeholder="0" readonly="true" /></td>
-                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_add : '' }}" placeholder="0" readonly="true" /></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbl : '' }}" placeholder="0" readonly="true" /></td>
-                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_near_va : '' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_sph : '0.00' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_cyl : '0.00' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_axis : '0.00' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_add : '--' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbl : '--' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_near_va : '--' }}" placeholder="0" readonly="true" /></td>
                                             </tr>
-                                            <tr><td colspan="4" class="fw-bold text-center">IOP-OD</td><td colspan="3" class="fw-bold text-center">IOP-OS</td></tr>
-                                            <tr><td colspan="4" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" value="{{ ($spectacle) ? $spectacle->re_iop : '' }}" placeholder="0" readonly="true" /></td><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->le_iop : '' }}" maxlength="7" placeholder="0" readonly="true" /></td></tr>
+                                            <!--<tr><td colspan="4" class="fw-bold text-center">IOP-OD</td><td colspan="3" class="fw-bold text-center">IOP-OS</td></tr>
+                                            <tr><td colspan="4" class="fw-bold text-center"><input class="form-control form-control-md" type="text" maxlength="7" value="{{ ($spectacle) ? $spectacle->re_iop : '' }}" placeholder="0" readonly="true" /></td><td colspan="3" class="fw-bold text-center"><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->le_iop : '' }}" maxlength="7" placeholder="0" readonly="true" /></td></tr>-->
                                         </tbody>
                                     </table>
                                 </div>
@@ -104,19 +104,19 @@
                                         <tbody>
                                         <tr>
                                                 <td class="text-center fw-bold">OD</td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k1_od_a : '0.0' }}" name="k1_od_auto" maxlength="6" placeholder="0" readonly="true"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k2_od_a : '0.0' }}" name="k2_od_auto" maxlength="6" placeholder="0" readonly="true"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k1_od_m : '0.0' }}" name="k1_od_manual" maxlength="6" placeholder="0" readonly="true"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k2_od_m : '0.0' }}" name="k2_od_manual" maxlength="6" placeholder="0" readonly="true"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_od_axl : '0.0' }}" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k1_od_a : '--' }}" name="k1_od_auto" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k2_od_a : '--' }}" name="k2_od_auto" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k1_od_m : '--' }}" name="k1_od_manual" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k2_od_m : '--' }}" name="k2_od_manual" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_od_axl : '--' }}" placeholder="0" readonly="true"/></td>
                                             </tr>
                                             <tr>
                                                 <td class="text-center fw-bold">OS</td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k1_os_a : '0.0' }}" name="k1_os_auto" maxlength="6" placeholder="0" readonly="true"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k2_os_a : '0.0' }}" name="k2_os_auto" maxlength="6" placeholder="0" readonly="true"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k1_os_m : '0.0' }}" name="k1_os_manual" maxlength="6" placeholder="0" readonly="true"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k2_os_m : '0.0' }}" name="k2_os_manual" maxlength="6" placeholder="0" readonly="true"/></td>
-                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_os_axl : '0.0' }}" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k1_os_a : '--' }}" name="k1_os_auto" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k2_os_a : '--' }}" name="k2_os_auto" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k1_os_m : '--' }}" name="k1_os_manual" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_k2_os_m : '--' }}" name="k2_os_manual" maxlength="6" placeholder="0" readonly="true"/></td>
+                                                <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->bm_os_axl : '--' }}" placeholder="0" readonly="true"/></td>
                                             </tr>
                                         </tbody>
                                     </table>
