@@ -155,7 +155,7 @@ class PatientMedicalRecordController extends Controller
         $retina_os = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'os')->get();
         $vision = DB::table('patient_medical_records_vision')->where('medical_record_id', $id)->get();
         $vextras = DB::table('vision_extras')->where('cat_id', '>', 0)->get();
-        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision', 'vextras', 'medtypes'));
+        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision', 'vextras'));
     }
 
     /**
