@@ -147,10 +147,16 @@
             <tr><td>Background Retina & Periphery</td><td>{{ $sel_20_od }}</td><td>{{ $sel_20_os }}</td></tr>
         </tbody>
     </table>
+    @php 
+    $path_od = $record->vision_od_img2;
+    $type = pathinfo($path_od, PATHINFO_EXTENSION);
+    $data_od = file_get_contents($path_od);
+    $img_od = 'data:image/' . $type . ';base64,' . base64_encode($data_od);
+    @endphp
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <td><img src="{{ $record->vision_od_img2 }}" alt=""/></td>
+                <td><img src="{{ $img_od }}" alt=""/></td>
                 <td><img src="{{ $record->vision_os_img2 }}" alt=""/></td>
             </tr>
         </tbody>
