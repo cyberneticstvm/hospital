@@ -248,7 +248,6 @@ class PatientMedicalRecordController extends Controller
                         DB::table('patient_medicine_records')->insert([
                             'medical_record_id' => $record->id,
                             'mrn' => $request->mrn,
-                            'medicine_type' => $input['medicine_type'][$i],
                             'medicine' => $input['medicine'][$i],
                             'dosage' => $input['dosage'][$i],
                             'dosage1' => $input['dosage1'][$i],

@@ -1097,19 +1097,7 @@
                             </div>
                                 @if($medicine_record->isEmpty())
                                     <div class="row mb-3">
-                                        <div class="col-sm-2">
-                                            <label class="form-label">Med. Type</label>
-                                            <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_type[]">
-                                            <option value="">Select</option>
-                                            @foreach($medtypes as $medt)
-                                                <option value="{{ $medt->id }}" {{ old('medicine_type') == $medt->id ? 'selected' : '' }}>{{ $medt->name }}</option>
-                                            @endforeach
-                                            </select>
-                                            @error('medicine_type')
-                                            <small class="text-danger">{{ $errors->first('medicine_type') }}</small>
-                                            @enderror
-                                        </div>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-4">
                                             <label class="form-label">Medicine Adviced</label>
                                             <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_id[]">
                                             <option value="">Select</option>
@@ -1154,20 +1142,8 @@
                                     @foreach($medicine_record as $pmr)
                                         @php $c++; @endphp
                                     <div class="row mb-3">
-                                        <div class="col-sm-2">
-                                        @if($c == 1)<label class="form-label">Med. Type</label>@endif
-                                            <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_type[]">
-                                            <option value="">Select</option>
-                                            @foreach($medtypes as $medt)
-                                                <option value="{{ $medt->id }}" {{ $pmr->medicine_type == $medt->id ? 'selected' : '' }}>{{ $medt->name }}</option>
-                                            @endforeach
-                                            </select>
-                                            @error('medicine_type')
-                                            <small class="text-danger">{{ $errors->first('medicine_type') }}</small>
-                                            @enderror
-                                        </div>
-                                        <div class="col-sm-2">
-                                        @if($c == 1)<label class="form-label">Medicine Advise</label>@endif
+                                        <div class="col-sm-4">
+                                        @if($c == 1)<label class="form-label">Medicine Advised</label>@endif
                                             <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_id[]">
                                             <option value="">Select</option>
                                             @foreach($medicines as $med)

@@ -62,7 +62,7 @@
     @endforeach
     <br>
     <p>Vision</p>
-    <table width="100%">
+    <table width="100%" cellspacing="0" cellpadding="0">
         <thead class="text-center"><tr><th>&nbsp;</th><th><!--VB--></th><th><!--SPH--></th><th><!--CYL--></th><th><!--AXIS--></th><th><!--ADD--></th><th><!--VA--></th></tr></thead>
         <tbody>
             <tr>
@@ -86,7 +86,7 @@
         </tbody>
     </table>
     <p>Biometry</p>
-    <table width="100%">
+    <table width="100%" cellspacing="0" cellpadding="0">
         <thead class="text-center">
             <tr><th></th><th>K1 (Auto)</th><th>K2 (Auto)</th><th>K1 (Manual)</th><th>K2 (Manual)</th><th>AXL</th></tr>
         </thead>
@@ -109,7 +109,77 @@
             </tr>
         </tbody>
     </table>
-    <br />
+    <br>
+    <p>Vision</p>
+    <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td><img src="{{ $record->vision_od_img1 }}" alt=""/></td>
+                <td><img src="{{ $record->vision_os_img1 }}" alt=""/></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <table width="100%" cellspacing="0" cellpadding="0">
+        <thead class="text-center">
+            <tr><th>Vision</th><th>OD</th><th>OS</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Appearance</td><td>{{ $sel_1_od }}</td><td>{{ $sel_1_os }}</td></tr>
+            <tr><td>Extraocular Movements</td><td>{{ $sel_2_od }}</td><td>{{ $sel_2_os }}</td></tr>
+            <tr><td>Orbital Margins</td><td>{{ $sel_3_od }}</td><td>{{ $sel_3_os }}</td></tr>
+            <tr><td>LID and Adnexa</td><td>{{ $sel_4_od }}</td><td>{{ $sel_4_os }}</td></tr>
+            <tr><td>Conjunctiva</td><td>{{ $sel_5_od }}</td><td>{{ $sel_5_os }}</td></tr>
+            <tr><td>Sclera</td><td>{{ $sel_6_od }}</td><td>{{ $sel_6_os }}</td></tr>
+            <tr><td>Cornea</td><td>{{ $sel_7_od }}</td><td>{{ $sel_7_os }}</td></tr>
+            <tr><td>Anterior Chamber</td><td>{{ $sel_8_od }}</td><td>{{ $sel_8_os }}</td></tr>
+            <tr><td>Iris</td><td>{{ $sel_9_od }}</td><td>{{ $sel_9_os }}</td></tr>
+            <tr><td>Pupil</td><td>{{ $sel_10_od }}</td><td>{{ $sel_10_os }}</td></tr>
+            <tr><td>Lens</td><td>{{ $sel_11_od }}</td><td>{{ $sel_11_os }}</td></tr>
+            <tr><td>AVR</td><td>{{ $sel_12_od }}</td><td>{{ $sel_12_os }}</td></tr>
+            <tr><td>Fundus</td><td>{{ $sel_13_od }}</td><td>{{ $sel_13_os }}</td></tr>
+            <tr><td>Media</td><td>{{ $sel_14_od }}</td><td>{{ $sel_14_os }}</td></tr>
+            <tr><td>Disc Margins</td><td>{{ $sel_15_od }}</td><td>{{ $sel_15_os }}</td></tr>
+            <tr><td>CDR</td><td>{{ $sel_16_od }}</td><td>{{ $sel_16_os }}</td></tr>
+            <tr><td>NRR</td><td>{{ $sel_17_od }}</td><td>{{ $sel_17_os }}</td></tr>
+            <tr><td>AV Ratio & Bloodvessels</td><td>{{ $sel_18_od }}</td><td>{{ $sel_18_os }}</td></tr>
+            <tr><td>FR</td><td>{{ $sel_19_od }}</td><td>{{ $sel_19_os }}</td></tr>
+            <tr><td>Background Retina & Periphery</td><td>{{ $sel_20_od }}</td><td>{{ $sel_20_os }}</td></tr>
+        </tbody>
+    </table>
+    <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td><img src="{{ $record->vision_od_img2 }}" alt=""/></td>
+                <td><img src="{{ $record->vision_os_img2 }}" alt=""/></td>
+            </tr>
+        </tbody>
+    </table>
+    <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td><img src="{{ $record->vision_od_img3 }}" alt=""/></td>
+                <td><img src="{{ $record->vision_os_img3 }}" alt=""/></td>
+            </tr>
+        </tbody>
+    </table>
+    <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td><img src="{{ $record->vision_od_img4 }}" alt=""/></td>
+                <td><img src="{{ $record->vision_os_img4 }}" alt=""/></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Gonioscopy</p>
+    <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td ><img src="./images/assets/x-png-30.png" alt=""/></td>
+                <td><img src="./images/assets/x-png-30.png" alt=""/></td>
+            </tr>
+        </tbody>
+    </table>
     <p>Doctor Recommondations</p>
     {{ $record->doctor_recommondations }}
     <br />
