@@ -146,7 +146,6 @@ class PatientMedicalRecordController extends Controller
         $symptoms = DB::table('symptoms')->get();
         $diagnosis = DB::table('diagnosis')->get();
         $medicines = DB::table('products')->get();
-        $medtypes = DB::table('medicine_types')->get();
         $dosages = DB::table('dosages')->get();
         $doctor = DB::table('doctors')->find($record->doctor_id);
         //$spectacle = DB::table('spectacles')->where('patient_id', $record->patient_id)->orderByDesc('id')->first();
@@ -168,7 +167,7 @@ class PatientMedicalRecordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(empty($request->symptom_id)){
+        /*if(empty($request->symptom_id)){
             echo "Please choose symptom";
             die;
         }
@@ -179,7 +178,7 @@ class PatientMedicalRecordController extends Controller
         if(empty($request->doctor_recommondations)){
             echo "Please enter doctor recommondations";
             die;
-        }
+        }*/
         $input = $request->all();
 
         $odospoints = json_decode(stripslashes($input['odospoints']), true);
