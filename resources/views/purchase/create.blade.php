@@ -84,15 +84,19 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">Expiry Date<sup class="text-danger">*</sup></label>
-                                    <input type="text" name="expiry_date[]" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy" required='required'>
+                                    <input type="date" name="expiry_date[]" class="form-control form-control-md" placeholder="dd/mm/yyyy" required='required'>
                                 </div>
                                 <div class="col-sm-1">
                                     <label class="form-label">Qty<sup class="text-danger">*</sup></label>
                                     <input type="number" name="qty[]" class="form-control form-control-md" placeholder="0" required='required'>
                                 </div>
-                                <div class="col-sm-2">
-                                    <label class="form-label">Price/Qty<sup class="text-danger">*</sup></label>
-                                    <input type="number" name="price[]" class="form-control form-control-md" placeholder="0.00" required='required'>
+                                <div class="col-sm-1">
+                                    <label class="form-label">MRP<sup class="text-danger">*</sup></label>
+                                    <input type="number" name="mrp[]" step="any" class="form-control form-control-md" placeholder="0.00" required='required'>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="form-label" title="Selling Price">Price<sup class="text-danger">*</sup></label>
+                                    <input type="number" name="price[]" step="any" class="form-control form-control-md" placeholder="0.00" required='required'>
                                 </div>
                             </div>
                             <div class="purchaseRow"></div>

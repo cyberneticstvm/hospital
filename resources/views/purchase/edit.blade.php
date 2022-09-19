@@ -71,7 +71,7 @@
                             </div>
                             @if($purchase_details->isEmpty())
                             <div class="row mt-3">
-                                <div class="col-sm-5">
+                                <div class="col-sm-3">
                                     <label class="form-label">Product<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2 selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
                                     <option value="">Select</option>
@@ -80,16 +80,24 @@
                                     @endforeach
                                     </select>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label class="form-label">Batch Number<sup class="text-danger">*</sup></label>
                                     <input type="text" name="batch_number[]" class="form-control form-control-md" placeholder="Batch Number" required='required'>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Expiry Date<sup class="text-danger">*</sup></label>
+                                    <input type="date" name="expiry_date[]" class="form-control form-control-md" placeholder="dd/mm/yyyy" required='required'>
                                 </div>
                                 <div class="col-sm-1">
                                     <label class="form-label">Qty<sup class="text-danger">*</sup></label>
                                     <input type="number" name="qty[]" class="form-control form-control-md" placeholder="0" required='required'>
                                 </div>
+                                <div class="col-sm-1">
+                                    <label class="form-label">MRP<sup class="text-danger">*</sup></label>
+                                    <input type="number" name="mrp[]" class="form-control form-control-md" placeholder="0.00" required='required'>
+                                </div>
                                 <div class="col-sm-2">
-                                    <label class="form-label">Price/Qty<sup class="text-danger">*</sup></label>
+                                    <label class="form-label" title="Selling Price">Price<sup class="text-danger">*</sup></label>
                                     <input type="number" name="price[]" class="form-control form-control-md" placeholder="0.00" required='required'>
                                 </div>
                             </div>
@@ -113,15 +121,19 @@
                                     </div>
                                     <div class="col-sm-2">
                                         @if($c == 1)<label class="form-label">Expiry Date<sup class="text-danger">*</sup></label>@endif
-                                        <input type="text" name="expiry_date[]" value="{{ ($purchase->expiry_date) ? date('d/M/Y', strtotime($purchase->expiry_date)) : '' }}" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy" required='required'>
+                                        <input type="date" name="expiry_date[]" value="{{ ($purchase->expiry_date) ? $purchase->expiry_date : '' }}" class="form-control form-control-md" placeholder="dd/mm/yyyy" required='required'>
                                     </div>
                                     <div class="col-sm-1">
                                         @if($c == 1)<label class="form-label">Qty<sup class="text-danger">*</sup></label>@endif
                                         <input type="number" name="qty[]" class="form-control form-control-md" placeholder="0" value="{{ $purchase->qty }}" required='required'>
                                     </div>
-                                    <div class="col-sm-2">
-                                        @if($c == 1)<label class="form-label">Price/Qty<sup class="text-danger">*</sup></label>@endif
-                                        <input type="number" name="price[]" class="form-control form-control-md" placeholder="0.00" value="{{ $purchase->price }}" required='required'>
+                                    <div class="col-sm-1">
+                                        <label class="form-label">MRP<sup class="text-danger">*</sup></label>
+                                        <input type="number" name="mrp[]" value="{{ $purchase->mrp }}" class="form-control form-control-md" placeholder="0.00" step="any" required='required'>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        @if($c == 1)<label class="form-label" title="Selling Price">Price<sup class="text-danger">*</sup></label>@endif
+                                        <input type="number" name="price[]" class="form-control form-control-md" placeholder="0.00" value="{{ $purchase->price }}" step="any" required='required'>
                                     </div>
                                     <div class="col-sm-1">@if($c > 1)<i class="fa fa-trash text-danger" style="cursor:pointer" onClick="$(this).parent().parent().remove();">@endif</i></div>
                                 </div>

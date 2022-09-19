@@ -71,5 +71,8 @@
             @endforeach
         </tbody>
     </table>
+    <br />
+    <div class="text-right">{{ $doctor->doctor_name }}</div>
+    <div class="text-right">{{ $doctor->designation }}</div>
 </body>
 </html>

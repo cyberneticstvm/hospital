@@ -31,7 +31,7 @@
         </thead>
         <tbody>
             <tr>
-                <td>Token No:</td><td>{{ $reference->token }}</td>
+                <td>Token No / Mob:</td><td>{{ $reference->token }} / {{ $patient->mobile_number }}</td>
                 <td>MR.ID</td><td>{{ $reference->medical_record_id }}</td>
             </tr>
             <tr>

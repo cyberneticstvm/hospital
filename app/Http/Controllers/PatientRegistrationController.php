@@ -25,7 +25,7 @@ class PatientRegistrationController extends Controller
      */
     public function index()
     {
-        $patients = PatientRegistrations::orderBy('patient_name','ASC')->get();
+        $patients = PatientRegistrations::orderByDesc('id')->get();
         return view('patient.index', compact('patients'));
     }
 

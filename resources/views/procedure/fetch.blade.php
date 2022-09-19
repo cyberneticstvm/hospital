@@ -41,7 +41,7 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>MR. ID</th><th></th><th>Fee</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>MR. ID</th><th></th><th>Fee</th><th>Receipt</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @forelse($procs as $key => $procedure)
                             <tr>
@@ -49,6 +49,7 @@
                                 <td>{{ $procedure->medical_record_id }}</td>
                                 <td>{{ $procedure->procs }}</td>
                                 <td class="text-right">{{ $procedure->fee }}</td>
+                                <td></td>
                                 <td><a class='btn btn-link' href="{{ route('procedure.editadvise', $procedure->medical_record_id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                 <td>
                                     <form method="post" action="{{ route('procedure.destroyadvise', $procedure->medical_record_id) }}">
