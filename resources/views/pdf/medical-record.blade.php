@@ -120,8 +120,8 @@
                     @endif            
                 </td>
                 <td>
-                    @if($v_od_1 != 'Na')
-                    <img src="{{ $record->vision_os_img1 }}" width="50%" alt=""/><br/>{{ $v_od_1 }}
+                    @if($v_os_1 != 'Na')
+                    <img src="{{ $record->vision_os_img1 }}" width="50%" alt=""/><br/>{{ $v_os_1 }}
                     @endif
                 </td>
             </tr>
@@ -158,24 +158,48 @@
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <td><img src="{{ $record->vision_od_img2 }}" alt=""/></td>
-                <td><img src="{{ $record->vision_os_img2 }}" alt=""/></td>
+                <td>
+                    @if($v_od_2 != 'Na')
+                    <img src="{{ $record->vision_od_img2 }}" width="50%" alt=""/><br/>{{ $v_od_2 }}
+                    @endif            
+                </td>
+                <td>
+                    @if($v_os_2 != 'Na')
+                    <img src="{{ $record->vision_os_img2 }}" width="50%" alt=""/><br/>{{ $v_os_2 }}
+                    @endif
+                </td>
             </tr>
         </tbody>
     </table>
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <td><img src="{{ $record->vision_od_img3 }}" alt=""/></td>
-                <td><img src="{{ $record->vision_os_img3 }}" alt=""/></td>
+                <td>
+                    @if($v_od_3 != 'Na')
+                    <img src="{{ $record->vision_od_img3 }}" width="50%" alt=""/><br/>{{ $v_od_3 }}
+                    @endif            
+                </td>
+                <td>
+                    @if($v_os_3 != 'Na')
+                    <img src="{{ $record->vision_os_img3 }}" width="50%" alt=""/><br/>{{ $v_os_3 }}
+                    @endif
+                </td>
             </tr>
         </tbody>
     </table>
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <td><img src="{{ $record->vision_od_img4 }}" alt=""/></td>
-                <td><img src="{{ $record->vision_os_img4 }}" alt=""/></td>
+                <td>
+                    @if($v_od_4 != 'Na')
+                    <img src="{{ $record->vision_od_img4 }}" width="50%" alt=""/><br/>{{ $v_od_4 }}
+                    @endif            
+                </td>
+                <td>
+                    @if($v_os_4 != 'Na')
+                    <img src="{{ $record->vision_os_img4 }}" width="50%" alt=""/><br/>{{ $v_os_4 }}
+                    @endif
+                </td>
             </tr>
         </tbody>
     </table>
