@@ -224,7 +224,7 @@
             @forelse($retinas as $key => $retina)
                 <tr>
                     <td width="50%"><img src="{{ public_path().'/storage/'.$retina->retina_img }}" width='50%' /></td>
-                    <td width="50%"><img src="https://hospital.speczone.net/public/storage/assets/retina/33/file_0.png" width='50%' /></td>
+                    <td width="50%"><img src="{{ '/public/storage/'.$retina->retina_img }}" width='50%' /></td>
                 </tr>
             @empty
             @endforelse
