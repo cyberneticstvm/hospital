@@ -56,11 +56,12 @@
         {{ $sympt->symptom_name }}, 
     @endforeach
     <br />
-    <p> Diagnosis</p>
-    @foreach($diagnosis as $diag)
-        {{ $diag->diagnosis_name }}, 
-    @endforeach
-    <br>
+    <p> Symptoms / Doctor Findings</p>
+        {{ $record->symptoms_other }}
+    <br />
+    <p> Patient History</p>
+        {{ $record->history }}
+    <br />
     <p>Vision</p>
     <table width="100%" cellspacing="0" cellpadding="0">
         <thead class="text-center"><tr><th>&nbsp;</th><th><!--VB--></th><th><!--SPH--></th><th><!--CYL--></th><th><!--AXIS--></th><th><!--ADD--></th><th><!--VA--></th></tr></thead>
@@ -110,12 +111,19 @@
         </tbody>
     </table>
     <br>
-    <p>Vision</p>
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <td><img src="{{ $record->vision_od_img1 }}" alt=""/></td>
-                <td><img src="{{ $record->vision_os_img1 }}" alt=""/></td>
+                <td>
+                    @if($v_od_1 != 'Na')
+                    <img src="{{ $record->vision_od_img1 }}" width="50%" alt=""/><br/>{{ $v_od_1 }}
+                    @endif            
+                </td>
+                <td>
+                    @if($v_od_1 != 'Na')
+                    <img src="{{ $record->vision_os_img1 }}" width="50%" alt=""/><br/>{{ $v_od_1 }}
+                    @endif
+                </td>
             </tr>
         </tbody>
     </table>
@@ -180,6 +188,14 @@
             </tr>
         </tbody>
     </table>
+    <p> Signs</p>
+        {{ $record->signs }}
+    <br>
+    <p> Diagnosis</p>
+    @foreach($diagnosis as $diag)
+        {{ $diag->diagnosis_name }}, 
+    @endforeach
+    <br>
     <p>Doctor Recommondations</p>
     {{ $record->doctor_recommondations }}
     <br />
@@ -203,7 +219,7 @@
     <p>Other Details</p>
     <table width="100%" class="no-border">
         <tr><th>Admission Advised: </th><th>Surgery Advised: </th><th>Review Date: </th></tr>
-        <tr><th>{{ ($record->is_patient_admission == 0) ? '' : 'Yes' }}</th><th>{{ ($record->is_patient_surgery == 0) ? '' : 'Yes' }}</th><th>{{ ($record->review_date) ? date('d/M/Y', strtotime($record->review_date)) : '' }}</th></tr>
+        <tr><th>{{ ($record->is_patient_admission == 'N') ? 'No' : 'Yes' }}</th><th>{{ ($record->is_patient_surgery == 'N') ? 'No' : 'Yes' }}</th><th>{{ ($record->review_date) ? date('d/M/Y', strtotime($record->review_date)) : '' }}</th></tr>
     </table>
 </body>
 </html>
