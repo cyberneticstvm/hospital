@@ -16,7 +16,7 @@
                             @csrf
                             <div class="row g-4">
                                 <div class="col-sm-3">
-                                    <label class="form-label">Date of Birth</label>
+                                    <label class="form-label">Expense Date</label>
                                     <fieldset class="form-icon-group left-icon position-relative">
                                         <input type="text" value="{{ old('date') }}" name="date" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy">
                                         <div class="form-icon position-absolute">
