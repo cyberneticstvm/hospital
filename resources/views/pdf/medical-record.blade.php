@@ -27,6 +27,9 @@
         table.no-border{
             border: 0px;
         }
+        .text-green, p{
+            color: #00bdaa;
+        }
     </style>
 </head>
 <body>
