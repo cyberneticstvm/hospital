@@ -114,7 +114,7 @@
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <td>
+                <td width="50%">
                     @if($v_od_1 != 'Na')
                     <img src="{{ $record->vision_od_img1 }}" width="50%" alt=""/><br/>{{ $v_od_1 }}
                     @endif            
@@ -158,7 +158,7 @@
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <td>
+                <td width="50%">
                     @if($v_od_2 != 'Na')
                     <img src="{{ $record->vision_od_img2 }}" width="50%" alt=""/><br/>{{ $v_od_2 }}
                     @endif            
@@ -174,7 +174,7 @@
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <td>
+                <td width="50%">
                     @if($v_od_3 != 'Na')
                     <img src="{{ $record->vision_od_img3 }}" width="50%" alt=""/><br/>{{ $v_od_3 }}
                     @endif            
@@ -190,7 +190,7 @@
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <td>
+                <td width="50%">
                     @if($v_od_4 != 'Na')
                     <img src="{{ $record->vision_od_img4 }}" width="50%" alt=""/><br/>{{ $v_od_4 }}
                     @endif            
