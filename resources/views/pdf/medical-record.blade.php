@@ -218,6 +218,18 @@
     <p> Signs</p>
         {{ $record->signs }}
     <br>
+    <p> Retina</p>
+    <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+            @forelse($retinas as $key => $retina)
+                <tr>
+                    <td width="50%">{{ ($retina->retina_type == 'od') ? "<img src='./images/$retina->retina_img' width='50%' />" : '' }}</td>
+                    <td width="50%">{{ ($retina->retina_type == 'os') ? "<img src='./images/$retina->retina_img' width='50%' />" : '' }}</td>
+                </tr>
+            @empty
+            @endforelse
+        </tbody>
+    </table>
     <p> Diagnosis</p>
     @foreach($diagnosis as $diag)
         {{ $diag->diagnosis_name }}, 
