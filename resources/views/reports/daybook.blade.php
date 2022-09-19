@@ -70,7 +70,7 @@
                 <div class="card">
                     <div class="card-body">
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
-                            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient ID</th><th>Patient Name</th><th class="text-end">Doc.Fee</th><th class="text-end">Reg.Fee</th><th class="text-end">Proc.Fee</th><th class="text-end">Total</th></tr></thead><tbody>
+                            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient ID</th><th>Patient Name</th><th class="text-end" title="Doctor Fee">Doc.Fee</th><th class="text-end" title="Registration Fee">Reg.Fee</th><th class="text-end" title="Procedure Fee">Proc.Fee</th><th class="text-end">Total</th></tr></thead><tbody>
                             @php $c = 1; $doc_fee_tot = 0; $reg_fee_tot = 0; $proc_fee_tot = 0; $tot = 0; @endphp
                             @forelse($records as $key => $row)
                             <tr>
