@@ -246,6 +246,15 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/consultation/procedure/delete/{id}/', 'App\Http\Controllers\ProcedureController@destroyadvise')->name('procedure.destroyadvise');
     // End Procedures //
 
+    // Expenses //
+    Route::get('/expense/', 'App\Http\Controllers\ExpenseController@index')->name('expense.index');
+    Route::get('/expense/create/', 'App\Http\Controllers\ExpenseController@create')->name('expense.create');
+    Route::post('/expense/create/', 'App\Http\Controllers\ExpenseController@store')->name('expense.save');
+    Route::get('/expense/edit/{id}/', 'App\Http\Controllers\ExpenseController@edit')->name('expense.edit');
+    Route::put('/expense/edit/{id}/', 'App\Http\Controllers\ExpenseController@update')->name('expense.update');
+    Route::delete('/expense/delete/{id}/', 'App\Http\Controllers\ExpenseController@destroy')->name('expense.delete');
+    // End Expenses //
+
     // OCT/HFA/FFA //
     Route::get('/ohf/', 'App\Http\Controllers\OHFController@index')->name('ohf.index');
     // End OCT/HFA/FFA //

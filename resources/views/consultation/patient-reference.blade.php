@@ -12,7 +12,7 @@
             <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Token</th><th>Prescription</th><th>Receipt</th><th>Edit</th><th>Delete</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($patients as $patient)
-                <tr>
+                <tr class="{{ ($patient->status == 0) ? 'text-decoration-line-through' : '' }}">
                     <td>{{ ++$i }}</td>
                     <td>{{ $patient->medical_record_id }}</td>
                     <td>{{ $patient->pname }}</td>

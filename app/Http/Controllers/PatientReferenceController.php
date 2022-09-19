@@ -29,7 +29,7 @@ class PatientReferenceController extends Controller
     {
         //$patients = DB::table('patient_registrations as pr')->rightJoin('patient_references', 'patient_references.patient_id', '=', 'pr.id')->leftJoin('doctors', 'patient_references.doctor_id', '=', 'doctors.id')->leftJoin('patient_medical_records as pmr', 'patient_references.id', '=', 'pmr.mrn')->select('patient_references.id as reference_id', 'pr.patient_id as pno', 'pr.patient_name as pname', 'patient_references.doctor_fee', 'doctors.doctor_name', 'pmr.id as medical_record_id')->get();
         //dd($patients);
-        $patients = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->select('pr.id as reference_id', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.patient_id as pno', 'doctors.doctor_name')->orderByDesc('pmr.id')->get();
+        $patients = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->select('pr.id as reference_id', 'pr.status', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.patient_id as pno', 'doctors.doctor_name')->orderByDesc('pmr.id')->get();
         return view('consultation.patient-reference', compact('patients'));
     }
 
@@ -63,6 +63,7 @@ class PatientReferenceController extends Controller
         $input['patient_id'] = $request->get('pid');
         $input['doctor_fee'] = $doctor->doctor_fee;
         $input['created_by'] = $request->user()->id;
+        $input['status'] = 1; //active
         $input['branch'] = $request->session()->get('branch');
         $token = PRef::where('department_id', $request->department_id)->where('branch', $request->session()->get('branch'))->whereDate('created_at', Carbon::today())->max('token');
         $input['token'] = ($token > 0) ? $token+1 : 1;
@@ -124,9 +125,11 @@ class PatientReferenceController extends Controller
         $reference = PRef::find($id);
         $input['created_by'] = $reference->getOriginal('created_by');
         $input['branch'] = $request->session()->get('branch');
+        $input['status'] = ($request->status) ? 0 : 1;
         $token = PRef::where('department_id', $request->department_id)->where('branch', $request->session()->get('branch'))->whereDate('created_at', Carbon::today())->max('token');
         $input['token'] = ($token > 0) ? $token+1 : 1;
         $reference->update($input);
+        DB::table('patient_medical_records')->where('mrn', $id)->update(['status' => $input['status']]);
         return redirect()->route('consultation.patient-reference')->with('success','Doctor Updated successfully');
     }
 

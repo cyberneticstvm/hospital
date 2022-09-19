@@ -14,6 +14,19 @@ class ProcedureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+         $this->middleware('permission:procedure-list|procedure-create|procedure-edit|procedure-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:procedure-create', ['only' => ['create','store']]);
+         $this->middleware('permission:procedure-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:procedure-delete', ['only' => ['destroy']]);
+
+         $this->middleware('permission:procedure-advise-list|procedure-advise-create|procedure-advise-edit|procedure-advise-delete', ['only' => ['fetch','saveadvise']]);
+         $this->middleware('permission:procedure-advise-create', ['only' => ['show','saveadvise']]);
+         $this->middleware('permission:procedure-advise-edit', ['only' => ['editadvise','updateadvise']]);
+         $this->middleware('permission:procedure-advise-delete', ['only' => ['destroyadvise']]);
+    }
+
     public function index()
     {
         $procedures = Procedure::all();

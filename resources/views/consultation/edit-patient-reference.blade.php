@@ -40,9 +40,15 @@
                                     <small class="text-danger">{{ $errors->first('doctor') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <label class="form-label">Notes</label>
                                     <textarea class='form-control' name="notes" placeholder="Notes">{{ $reference->notes }}</textarea>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="status" id="flexCheckDefault" {{ ($reference->status == 0) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="flexCheckDefault">Cancel this consultation?</label>
+                                    </div>
                                 </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
