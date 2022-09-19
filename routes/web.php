@@ -231,6 +231,25 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/admission/delete/{id}/', 'App\Http\Controllers\AdmissionController@destroy')->name('admission.delete');
     // end admission //
 
+    // Procedures //
+    Route::get('/procedure/', 'App\Http\Controllers\ProcedureController@index')->name('procedure.index');
+    Route::post('/procedure/', 'App\Http\Controllers\ProcedureController@store')->name('procedure.create');
+    Route::get('/procedure/edit/{id}/', 'App\Http\Controllers\ProcedureController@edit')->name('procedure.edit');
+    Route::put('/procedure/edit/{id}/', 'App\Http\Controllers\ProcedureController@update')->name('procedure.update');
+    Route::delete('/procedure/delete/{id}/', 'App\Http\Controllers\ProcedureController@destroy')->name('procedure.delete');
+
+    Route::get('/consultation/procedure/', 'App\Http\Controllers\ProcedureController@fetch')->name('procedure.fetch');
+    Route::post('/consultation/procedure/', 'App\Http\Controllers\ProcedureController@show')->name('procedure.show');
+    Route::post('/consultation/procedure/save/', 'App\Http\Controllers\ProcedureController@saveadvise')->name('procedure.saveadvise');
+    Route::get('/consultation/procedure/edit/{id}/', 'App\Http\Controllers\ProcedureController@editadvise')->name('procedure.editadvise');
+    Route::put('/consultation/procedure/edit/{id}/', 'App\Http\Controllers\ProcedureController@updateadvise')->name('procedure.updateadvise');
+    Route::delete('/consultation/procedure/delete/{id}/', 'App\Http\Controllers\ProcedureController@destroyadvise')->name('procedure.destroyadvise');
+    // End Procedures //
+
+    // OCT/HFA/FFA //
+    Route::get('/ohf/', 'App\Http\Controllers\OHFController@index')->name('ohf.index');
+    // End OCT/HFA/FFA //
+
     // PDFs //
     Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
     Route::get('/generate-prescription/{id}/', [PDFController::class, 'prescription']);
