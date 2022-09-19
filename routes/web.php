@@ -250,6 +250,11 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/ohf/', 'App\Http\Controllers\OHFController@index')->name('ohf.index');
     // End OCT/HFA/FFA //
 
+    // Reports //
+    Route::get('/reports/daybook/', 'App\Http\Controllers\ReportController@showdaybook')->name('reports.showdaybook');
+    Route::post('/reports/daybook/', 'App\Http\Controllers\ReportController@fetchdaybook')->name('reports.fetchdaybook');
+    // End Reports //
+
     // PDFs //
     Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
     Route::get('/generate-prescription/{id}/', [PDFController::class, 'prescription']);
