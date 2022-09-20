@@ -240,10 +240,10 @@
     <p> Retina</p>
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
-            @forelse($retinas as $key => $retina)
+            @forelse($retina_od as $key => $retina)
                 <tr>
-                    <td width="50%"><img src="{{ ($retina->od_desc) ? 'https://hospital.speczone.net/public/storage/'.$retina->od_img : '' }}" width='100%' /><br>{{ $retina->od_desc }}</td>
-                    <td width="50%"><img src="{{ ($retina->os_desc) ?  'https://hospital.speczone.net/public/storage/'.$retina->os_img : '' }}" width='100%' /><br>{{ $retina->os_desc }}</td>
+                    <td width="50%"><img src="{{ ($retina_od && $retina_od[$key]->description) ? 'https://hospital.speczone.net/public/storage/'.$retina_od[$key]->retina_img : '' }}" width='100%' /><br>{{ $retina->od_desc }}</td>
+                    <td width="50%"><img src="{{ ($retina_os && $retina_os[0]->description) ?  'https://hospital.speczone.net/public/storage/'.$retina_os[$key]->retina_img : '' }}" width='100%' /><br>{{ $retina->os_desc }}</td>
                 </tr>
             @empty
             @endforelse
