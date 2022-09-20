@@ -1193,15 +1193,17 @@
                                 <div class="col-sm-2 mt-3">
                                     <label class="form-label">Admission Advised?</label>
                                     <select class="form-control form-control-md" name="is_patient_admission" data-placeholder='Select'>
-                                        <option value='N'>No</option>
-                                        <option value='Y' {{ ($record->is_patient_admission == 'Y') ? 'selected' : '' }}>Yes</option>
+                                        <option value='sel'>Select</option>
+                                        <option value='no' {{ ($record->is_patient_admission == 'no') ? 'selected' : '' }}>No</option>
+                                        <option value='yes' {{ ($record->is_patient_admission == 'yes') ? 'selected' : '' }}>Yes</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-2 mt-3">
                                     <label class="form-label">Surgery Advised?</label>
                                     <select class="form-control form-control-md" name="is_patient_surgery" data-placeholder='Select'>
-                                        <option value='N'>No</option>
-                                        <option value='Y' {{ ($record->is_patient_surgery == 'Y') ? 'selected' : '' }}>Yes</option>
+                                        <option value='sel'>Select</option>
+                                        <option value='no' {{ ($record->is_patient_surgery == 'no') ? 'selected' : '' }}>No</option>
+                                        <option value='yes' {{ ($record->is_patient_surgery == 'yes') ? 'selected' : '' }}>Yes</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-3 mt-3">
