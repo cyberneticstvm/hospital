@@ -19,6 +19,9 @@
         .text-right{
             text-align: right;
         }
+        .text-center{
+            text-align: center;
+        }
         .bold{
             font-weight: bold;
             font-size: 14px;
@@ -29,6 +32,9 @@
         }
         .text-green, p{
             color: #00bdaa;
+        }
+        .tbl{
+            border-style: none; 
         }
     </style>
 </head>
@@ -114,7 +120,7 @@
         </tbody>
     </table>
     <br>
-    <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
+    <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
                 <td width="50%">
@@ -158,7 +164,7 @@
             <tr><td>Background Retina & Periphery</td><td>{{ $sel_20_od }}</td><td>{{ $sel_20_os }}</td></tr>
         </tbody>
     </table>
-    <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
+    <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
                 <td width="50%">
@@ -174,7 +180,7 @@
             </tr>
         </tbody>
     </table>
-    <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
+    <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
                 <td width="50%">
@@ -190,7 +196,7 @@
             </tr>
         </tbody>
     </table>
-    <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
+    <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
                 <td width="50%">
@@ -207,12 +213,25 @@
         </tbody>
     </table>
     <p>Gonioscopy</p>
-    <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
+    <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <td><img src="./images/assets/x-png-30.png" alt=""/></td>
-                <td><img src="./images/assets/x-png-30.png" alt=""/></td>
+                <td style="background:url(./images/assets/x-png-30.png); background-repeat: no-repeat; background-size: auto;" width="50%">
+                    <table cellpadding="0" cellspacing="0" width="100%" style="border: 0px;">
+                        <tr><td colspan="3" class="text-center" style="padding-bottom:75px; border: 0px;">{{ $record->gonio_od_top }}</td></tr>
+                        <tr><td style="border: 0px;">{{ $record->gonio_od_left }}</td><td style="border: 0px;"></td><td class="text-right" style="border: 0px;">{{ $record->gonio_od_right }}</td></tr>
+                        <tr><td colspan="3" class="text-center" style="padding-top:75px; border: 0px;">{{ $record->gonio_od_bottom }}</td></tr>
+                    </table>
+                </td>
+                <td style="background:url(./images/assets/x-png-30.png); background-repeat: no-repeat; background-size: auto; height:20%" width="50%">
+                    <table cellpadding="0" cellspacing="0" width="100%" style="border: 0px;">
+                        <tr><td colspan="3" class="text-center" style="padding-bottom:75px; border: 0px;">{{ $record->gonio_os_top }}</td></tr>
+                        <tr><td style="border: 0px;">{{ $record->gonio_os_left }}</td><td style="border: 0px;"></td><td class="text-right" style="border: 0px;">{{ $record->gonio_os_right }}</td></tr>
+                        <tr><td colspan="3" class="text-center" style="padding-top:75px; border: 0px;">{{ $record->gonio_os_bottom }}</td></tr>
+                    </table>
+                </td>
             </tr>
+            <tr><td class="text-center">{{ $record->gonio_od }}</td><td class="text-center">{{ $record->gonio_os }}</td></tr>
         </tbody>
     </table>
     <p> Signs</p>
