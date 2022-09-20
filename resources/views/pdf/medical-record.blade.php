@@ -223,8 +223,8 @@
         <tbody>
             @forelse($retinas as $key => $retina)
                 <tr>
-                    <td width="50%"><img src="{{ ($retina->retina_type == 'od') ? 'https://hospital.speczone.net/public/storage/'.$retina->retina_img : '' }}" width='50%' /></td>
-                    <td width="50%"><img src="{{ ($retina->retina_type == 'os') ? 'https://hospital.speczone.net/public/storage/'.$retina->retina_img : '' }}" width='50%' /></td>
+                    <td width="50%"><img src="{{ 'https://hospital.speczone.net/public/storage/'.$retina->od_img }}" width='50%' /><br>{{ $retina->od_desc }}</td>
+                    <td width="50%"><img src="{{ 'https://hospital.speczone.net/public/storage/'.$retina->os_img }}" width='50%' /><br>{{ $retina->os_desc }}</td>
                 </tr>
             @empty
             @endforelse
