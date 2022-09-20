@@ -240,13 +240,13 @@
     <p> Retina</p>
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
-            <!--@forelse($retinas as $key => $retina)-->
+            @forelse($retinas as $key => $retina)
                 <tr>
-                    <td width="50%"><img src="{{ ($retina[0]->od_desc) ? 'https://hospital.speczone.net/public/storage/'.$retina->od_img : '' }}" width='100%' /><br>{{ $retina->od_desc }}</td>
-                    <td width="50%"><img src="{{ ($retina[0]->os_desc) ?  'https://hospital.speczone.net/public/storage/'.$retina->os_img : '' }}" width='100%' /><br>{{ $retina->os_desc }}</td>
+                    <td width="50%"><img src="{{ ($retina->od_desc) ? 'https://hospital.speczone.net/public/storage/'.$retina->od_img : '' }}" width='100%' /><br>{{ $retina->od_desc }}</td>
+                    <td width="50%"><img src="{{ ($retina->os_desc) ?  'https://hospital.speczone.net/public/storage/'.$retina->os_img : '' }}" width='100%' /><br>{{ $retina->os_desc }}</td>
                 </tr>
-            <!--@empty
-            @endforelse-->
+            @empty
+            @endforelse
         </tbody>
     </table>
     <p> Diagnosis</p>

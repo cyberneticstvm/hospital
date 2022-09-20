@@ -68,7 +68,7 @@ class PDFController extends Controller
 
     public function medicalrecord($id){
         $record = DB::table('patient_medical_records')->find($id);
-        $retinas = DB::table('patient_medical_records_retina')->select(DB::raw("CASE WHEN retina_type='od' THEN retina_img END AS od_img, CASE WHEN retina_type='os' THEN retina_img END AS os_img, CASE WHEN retina_type='od' THEN description END AS od_desc, CASE WHEN retina_type='os' THEN description END AS os_desc"))->where('medical_record_id', $id)->get()->toArray();
+        $retinas = DB::table('patient_medical_records_retina')->select(DB::raw("CASE WHEN retina_type='od' THEN retina_img END AS od_img, CASE WHEN retina_type='os' THEN retina_img END AS os_img, CASE WHEN retina_type='od' THEN description END AS od_desc, CASE WHEN retina_type='os' THEN description END AS os_desc"))->where('medical_record_id', $id)->get();
         $v_od_1 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_od_img1')->where('medical_record_id', $id)->value('names');
         $v_os_1 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_os_img1')->where('medical_record_id', $id)->value('names');
         $v_od_2 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_od_img2')->where('medical_record_id', $id)->value('names');
