@@ -70,7 +70,7 @@
                                 <div class="col-sm-6 table-responsive">
                                     <label class="form-label">Vision</label>
                                     <table class="table table-bordered">
-                                        <thead class="text-center"><tr><th>&nbsp;</th><th>VB</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>VA</th><th>VA</th></tr></thead>
+                                        <thead class="text-center"><tr><th>&nbsp;</th><th>VB</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>VA</th><th>VA</th><th></th></tr></thead>
                                         <tbody>
                                             <tr>
                                                 <td class="text-center fw-bold">RE/OD</td>
@@ -80,6 +80,7 @@
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_add : '--' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbr : '--' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_near_va : '--' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->re_dist_va : '--' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" name="va_od" type="text" maxlength="6" value="{{ $record->va_od }}" placeholder="" /></td>
                                             </tr>
                                             <tr>
@@ -90,6 +91,7 @@
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_add : '--' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" value="{{ ($spectacle) ? $spectacle->vbl : '--' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_near_va : '--' }}" placeholder="0" readonly="true" /></td>
+                                                <td><input class="form-control form-control-md" type="text" maxlength="6" value="{{ ($spectacle) ? $spectacle->le_dist_va : '--' }}" placeholder="0" readonly="true" /></td>
                                                 <td><input class="form-control form-control-md" name="va_os" type="text" maxlength="6" value="{{ $record->va_os }}" placeholder="" /></td>
                                             </tr>
                                         </tbody>
