@@ -53,14 +53,14 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Symptoms</label>
-                                    <textarea class="form-control form-control-md" name="symptoms_other" rows="5" value="{{ $record->symptoms_other }}" placeholder="Symptoms">{{ old('symptoms_other') }}</textarea>
+                                    <textarea class="form-control form-control-md" name="symptoms_other" rows="5" placeholder="Symptoms">{{ $record->symptoms_other }}</textarea>
                                     @error('symptoms_other')
                                     <small class="text-danger">{{ $errors->first('symptoms_other') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Patient History</label>
-                                    <textarea class="form-control form-control-md" name="history" rows="5" value="{{ $record->history }}" placeholder="Patient History">{{ old('history') }}</textarea>
+                                    <textarea class="form-control form-control-md" name="history" rows="5" placeholder="Patient History">{{ $record->history }}</textarea>
                                     @error('history')
                                     <small class="text-danger">{{ $errors->first('history') }}</small>
                                     @enderror
