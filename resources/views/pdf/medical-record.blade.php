@@ -321,7 +321,7 @@
     {{ $record->doctor_recommondations }}
     <br />
     @endif
-    @if($medicines)
+    @if(count($medicines) > 0)
     <p> Medicine / Lab Advised</p>
     <table width="100%" cellspacing="0" cellpadding="0">
         <thead><th>SL No.</th><th>Medicine Name</th><th>Dosage</th><th>Qty</th><th>Notes</th></thead>
