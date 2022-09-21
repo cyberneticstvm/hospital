@@ -61,19 +61,27 @@
             </tr>
             <tr>
                 <td>1</td>
-                <td>CONSULTATION FEE</td>
+                <td>Consultation Fee</td>
                 <td class="text-right">1</td>
-                <td class="text-right">{{ $doctor->doctor_fee }}</td>
+                <td class="text-right">{{ $reference->doctor_fee }}</td>
             </tr>
             <tr>
-                <td>1</td>
-                <td>REGISTRATION FEE</td>
+                <td>2</td>
+                <td>Registration Fee</td>
                 <td class="text-right">1</td>
-                <td class="text-right">{{ $branch->registration_fee }}</td>
+                <td class="text-right">{{ $patient->registration_fee }}</td>
             </tr>
+            @if($procedure)
+            <tr>
+                <td>3</td>
+                <td>Procedures Fee ({{ $procedure->procs }})</td>
+                <td class="text-right">1</td>
+                <td class="text-right">{{ $procedure->fee }}</td>
+            </tr>
+            @endif
             <tr>
                 <td colspan="3" class="text-right">Total</td>
-                <td class="text-right">{{ number_format($branch->registration_fee + $doctor->doctor_fee, 2) }}</td>
+                <td class="text-right">{{ number_format($branch->registration_fee + $doctor->doctor_fee + $procedure->fee, 2) }}</td>
             </tr>
         </tbody>
     </table>
