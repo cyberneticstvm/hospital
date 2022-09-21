@@ -34,7 +34,7 @@ class PDFController extends Controller
 
     public function receipt($id){
         $reference = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pr.doctor_fee', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at')->first();
-        $procedure = DB::table('patient_procedures as pr')->where('medical_record_id', )->leftJoin('procedures as p', 'p.id', '=', 'pr.procedure')->select(DB::raw("IFNULL(GROUP_CONCAT(p.name), 'Na') AS procs, IFNULL(SUM(pr.fee), 0.00) AS fee"))->first();
+        $procedure = DB::table('patient_procedures as pr')->where('medical_record_id', $id)->leftJoin('procedures as p', 'p.id', '=', 'pr.procedure')->select(DB::raw("IFNULL(GROUP_CONCAT(p.name), 'Na') AS procs, IFNULL(SUM(p.fee), 0.00) AS fee"))->first();
         $patient = DB::table('patient_registrations')->find($reference->patient_id);     
         $doctor = DB::table('doctors')->find($reference->doctor_id);
         $branch = DB::table('branches')->find($patient->branch);
