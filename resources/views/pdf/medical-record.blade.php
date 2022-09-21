@@ -126,6 +126,7 @@
     </table>
     @endif
     <br>
+    @if($v_od_1 != 'Na' || $v_os_1 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
@@ -142,34 +143,76 @@
             </tr>
         </tbody>
     </table>
+    @endif
     <br>
     <table width="100%" cellspacing="0" cellpadding="0">
         <thead class="text-center">
             <tr><th>Signs</th><th>OD</th><th>OS</th></tr>
         </thead>
         <tbody>
+            @if($sel_1_od || $sel_1_os)
             <tr><td>Appearance</td><td>{{ $sel_1_od }}</td><td>{{ $sel_1_os }}</td></tr>
+            @endif
+            @if($sel_2_od || $sel_2_os)
             <tr><td>Extraocular Movements</td><td>{{ $sel_2_od }}</td><td>{{ $sel_2_os }}</td></tr>
+            @endif
+            @if($sel_3_od || $sel_3_os)
             <tr><td>Orbital Margins</td><td>{{ $sel_3_od }}</td><td>{{ $sel_3_os }}</td></tr>
+            @endif
+            @if($sel_4_od || $sel_4_os)
             <tr><td>LID and Adnexa</td><td>{{ $sel_4_od }}</td><td>{{ $sel_4_os }}</td></tr>
+            @endif
+            @if($sel_5_od || $sel_5_os)
             <tr><td>Conjunctiva</td><td>{{ $sel_5_od }}</td><td>{{ $sel_5_os }}</td></tr>
+            @endif
+            @if($sel_6_od || $sel_6_os)
             <tr><td>Sclera</td><td>{{ $sel_6_od }}</td><td>{{ $sel_6_os }}</td></tr>
+            @endif
+            @if($sel_7_od || $sel_7_os)
             <tr><td>Cornea</td><td>{{ $sel_7_od }}</td><td>{{ $sel_7_os }}</td></tr>
+            @endif
+            @if($sel_8_od || $sel_8_os)
             <tr><td>Anterior Chamber</td><td>{{ $sel_8_od }}</td><td>{{ $sel_8_os }}</td></tr>
+            @endif
+            @if($sel_9_od || $sel_9_os)
             <tr><td>Iris</td><td>{{ $sel_9_od }}</td><td>{{ $sel_9_os }}</td></tr>
+            @endif
+            @if($sel_10_od || $sel_10_os)
             <tr><td>Pupil</td><td>{{ $sel_10_od }}</td><td>{{ $sel_10_os }}</td></tr>
+            @endif
+            @if($sel_11_od || $sel_11_os)
             <tr><td>Lens</td><td>{{ $sel_11_od }}</td><td>{{ $sel_11_os }}</td></tr>
+            @endif
+            @if($sel_12_od || $sel_12_os)
             <tr><td>AVR</td><td>{{ $sel_12_od }}</td><td>{{ $sel_12_os }}</td></tr>
+            @endif
+            @if($sel_13_od || $sel_13_os)
             <tr><td>Fundus</td><td>{{ $sel_13_od }}</td><td>{{ $sel_13_os }}</td></tr>
+            @endif
+            @if($sel_14_od || $sel_14_os)
             <tr><td>Media</td><td>{{ $sel_14_od }}</td><td>{{ $sel_14_os }}</td></tr>
+            @endif
+            @if($sel_15_od || $sel_15_os)
             <tr><td>Disc Margins</td><td>{{ $sel_15_od }}</td><td>{{ $sel_15_os }}</td></tr>
+            @endif
+            @if($sel_16_od || $sel_16_os)
             <tr><td>CDR</td><td>{{ $sel_16_od }}</td><td>{{ $sel_16_os }}</td></tr>
+            @endif
+            @if($sel_17_od || $sel_17_os)
             <tr><td>NRR</td><td>{{ $sel_17_od }}</td><td>{{ $sel_17_os }}</td></tr>
+            @endif
+            @if($sel_18_od || $sel_18_os)
             <tr><td>AV Ratio & Bloodvessels</td><td>{{ $sel_18_od }}</td><td>{{ $sel_18_os }}</td></tr>
+            @endif
+            @if($sel_19_od || $sel_19_os)
             <tr><td>FR</td><td>{{ $sel_19_od }}</td><td>{{ $sel_19_os }}</td></tr>
+            @endif
+            @if($sel_20_od || $sel_20_os)
             <tr><td>Background Retina & Periphery</td><td>{{ $sel_20_od }}</td><td>{{ $sel_20_os }}</td></tr>
+            @endif
         </tbody>
     </table>
+    @if($v_od_2 != 'Na' || $v_os_2 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
@@ -186,6 +229,8 @@
             </tr>
         </tbody>
     </table>
+    @endif
+    @if($v_od_3 != 'Na' || $v_os_3 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
@@ -202,6 +247,8 @@
             </tr>
         </tbody>
     </table>
+    @endif
+    @if($v_od_4 != 'Na' || $v_os_4 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
@@ -218,6 +265,7 @@
             </tr>
         </tbody>
     </table>
+    @endif
     @if($record->gonio_od_top || $record->gonio_od_left || $record->gonio_od_right || $record->gonio_od_bottom || $record->gonio_os_top || $record->gonio_os_left || $record->gonio_os_right || $record->gonio_os_bottom || $record->gonio_od || $record->gonio_os)
     <p>Gonioscopy</p>
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -245,6 +293,7 @@
     <p> Signs</p>
         {{ $record->signs }}
     <br>
+    @if(($retina_od && $retina_od[0]->description) || ($retina_os && $retina_os[0]->description))
     <p> Retina</p>
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
@@ -257,6 +306,7 @@
             @endforelse
         </tbody>
     </table>
+    @endif
     <p> Diagnosis</p>
     @foreach($diagnosis as $diag)
         {{ $diag->diagnosis_name }}, 
