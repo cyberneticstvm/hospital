@@ -15,8 +15,8 @@ $(function(){
             var age = $("#age").val();
             var re_dist_sph = $(".re_dist_sph").val();
             if(age < 52){
-                var int_sph = (parseFloat(int_add)) ? parseFloat(int_add)+parseFloat(re_dist_sph): int_sph;
-                $(".re_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '0.00');
+                //var int_sph = (parseFloat(int_add)) ? parseFloat(int_add)+parseFloat(re_dist_sph): int_sph;
+                //$(".re_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '0.00');
             }else{
                 var int_sph = (parseFloat(int_add)) ? parseFloat(int_add)+parseFloat(re_dist_sph) : int_sph;
                 $(".re_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '0.00');
