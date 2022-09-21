@@ -71,6 +71,7 @@
     <p> Patient History</p>
         {{ $record->history }}
     <br />
+    @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $record->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $record->va_os))
     <p>Vision</p>
     <table width="100%" cellspacing="0" cellpadding="0">
         <thead class="text-center"><tr><th>&nbsp;</th><th><!--VB--></th><th><!--SPH--></th><th><!--CYL--></th><th><!--AXIS--></th><th><!--ADD--></th><th><!--VA--></th><th></th></tr></thead>
@@ -97,6 +98,8 @@
             </tr>
         </tbody>
     </table>
+    @endif
+    @if($spectacle && ($spectacle->bm_k1_od_a || $spectacle->bm_k2_od_a || $spectacle->bm_k1_od_m || $spectacle->bm_k2_od_m || $spectacle->bm_od_axl || $spectacle->bm_k1_os_a || $spectacle->bm_k2_os_a || $spectacle->bm_k1_os_m || $spectacle->bm_k2_os_m || $spectacle->bm_os_axl))
     <p>Biometry</p>
     <table width="100%" cellspacing="0" cellpadding="0">
         <thead class="text-center">
@@ -121,6 +124,7 @@
             </tr>
         </tbody>
     </table>
+    @endif
     <br>
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
