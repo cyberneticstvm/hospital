@@ -70,7 +70,7 @@
                                 <div class="col-sm-6 table-responsive">
                                     <label class="form-label">Vision</label>
                                     <table class="table table-bordered">
-                                        <thead class="text-center"><tr><th>&nbsp;</th><th><!--VB--></th><th><!--SPH--></th><th><!--CYL--></th><th><!--AXIS--></th><th><!--ADD--></th><th><!--VA--></th><th>VA</th></tr></thead>
+                                        <thead class="text-center"><tr><th>&nbsp;</th><th>VB</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>VA</th><th>VA</th></tr></thead>
                                         <tbody>
                                             <tr>
                                                 <td class="text-center fw-bold">RE/OD</td>
@@ -698,7 +698,7 @@
                                     </select>                                  
                                 </div>
                                 <div class="col-sm-2 text-center">
-                                    <label class="form-label">AVR<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_12"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
+                                    <label class="form-label">AVF<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_12"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
                                 </div>
                                 <div class="col-sm-5">
                                     <select class="form-control form-control-md show-tick ms select2 sel_12" multiple data-placeholder="Select" name="sel_12_os[]">
