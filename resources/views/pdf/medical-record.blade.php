@@ -73,7 +73,7 @@
     <br />
     <p>Vision</p>
     <table width="100%" cellspacing="0" cellpadding="0">
-        <thead class="text-center"><tr><th>&nbsp;</th><th><!--VB--></th><th><!--SPH--></th><th><!--CYL--></th><th><!--AXIS--></th><th><!--ADD--></th><th><!--VA--></th></tr></thead>
+        <thead class="text-center"><tr><th>&nbsp;</th><th><!--VB--></th><th><!--SPH--></th><th><!--CYL--></th><th><!--AXIS--></th><th><!--ADD--></th><th><!--VA--></th><th></th></tr></thead>
         <tbody>
             <tr>
                 <td class="text-center fw-bold">RE/OD</td>                                            
@@ -83,6 +83,7 @@
                 <td>{{ ($spectacle) ? $spectacle->re_dist_add : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->vbr : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->re_near_va : '--' }}</td>
+                <td>{{ ($record->va_od) ? $record->va_od : '--' }}</td>
             </tr>
             <tr>
                 <td class="text-center fw-bold">LE/OS</td>                                            
@@ -92,6 +93,7 @@
                 <td>{{ ($spectacle) ? $spectacle->le_dist_add : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->vbl : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->le_near_va : '--' }}</td>
+                <td>{{ ($record->va_os) ? $record->va_os : '--' }}</td>
             </tr>
         </tbody>
     </table>
@@ -139,7 +141,7 @@
     <br>
     <table width="100%" cellspacing="0" cellpadding="0">
         <thead class="text-center">
-            <tr><th>Vision</th><th>OD</th><th>OS</th></tr>
+            <tr><th>Signs</th><th>OD</th><th>OS</th></tr>
         </thead>
         <tbody>
             <tr><td>Appearance</td><td>{{ $sel_1_od }}</td><td>{{ $sel_1_os }}</td></tr>
@@ -212,6 +214,7 @@
             </tr>
         </tbody>
     </table>
+    @if($record->gonio_od_top || $record->gonio_od_left || $record->gonio_od_right || $record->gonio_od_bottom || $record->gonio_os_top || $record->gonio_os_left || $record->gonio_os_right || $record->gonio_os_bottom || $record->gonio_od || $record->gonio_os)
     <p>Gonioscopy</p>
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
@@ -234,6 +237,7 @@
             <tr><td class="text-center">{{ $record->gonio_od }}</td><td class="text-center">{{ $record->gonio_os }}</td></tr>
         </tbody>
     </table>
+    @endif
     <p> Signs</p>
         {{ $record->signs }}
     <br>
