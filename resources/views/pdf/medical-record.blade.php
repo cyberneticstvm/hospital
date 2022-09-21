@@ -60,12 +60,12 @@
             </tr>
         </tbody>
     </table>
-    <p> Symptoms (Consultation)</p>
+    <!--<p> Symptoms (Consultation)</p>
     @foreach($symptoms as $sympt)
         {{ $sympt->symptom_name }}, 
     @endforeach
-    <br />
-    <p> Symptoms / Doctor Findings</p>
+    <br />-->
+    <p> Symptoms</p>
         {{ $record->symptoms_other }}
     <br />
     <p> Patient History</p>
@@ -150,6 +150,7 @@
     <table width="100%" cellspacing="0" cellpadding="0">
         <thead class="text-center">
             <tr><th>Signs</th><th>OD</th><th>OS</th></tr>
+            <tr><td colspan="3"></td></tr>
         </thead>
         <tbody>
             @if($sel_1_od || $sel_1_os)
@@ -296,7 +297,6 @@
         {{ $record->signs }}
     <br>
     @if(($retina_od && $retina_od[0]->retina_img) || ($retina_os && $retina_os[0]->retina_img))
-    <p> Retina</p>
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             @forelse($retina_od as $key => $retina)
@@ -309,14 +309,19 @@
         </tbody>
     </table>
     @endif
+    @if($diagnosis)
     <p> Diagnosis</p>
     @foreach($diagnosis as $diag)
         {{ $diag->diagnosis_name }}, 
     @endforeach
     <br>
-    <p>Doctor Recommondations</p>
+    @endif
+    @if($record->doctor_recommondations)
+    <p>Doctor Recommendations</p>
     {{ $record->doctor_recommondations }}
     <br />
+    @endif
+    @if($medicines)
     <p> Medicine / Lab Advised</p>
     <table width="100%" cellspacing="0" cellpadding="0">
         <thead><th>SL No.</th><th>Medicine Name</th><th>Dosage</th><th>Qty</th><th>Notes</th></thead>
@@ -334,7 +339,7 @@
         </tbody>
     </table>
     <br />
-    <p>Other Details</p>
+    @endif
     <table width="100%" class="no-border">
         <tr><th>{{ ($record->is_patient_admission == 'sel') ? '' : 'Admission Advised:' }}</th><th>{{ ($record->is_patient_surgery == 'sel') ? '' : 'Surgery Advised:' }} </th><th>Review Date: </th></tr>
         <tr><th>{{ ($record->is_patient_admission == 'sel') ? '' : $record->is_patient_admission }}</th><th>{{ ($record->is_patient_surgery == 'sel') ? '' : $record->is_patient_surgery }}</th><th>{{ ($record->review_date) ? date('d/M/Y', strtotime($record->review_date)) : '' }}</th></tr>
