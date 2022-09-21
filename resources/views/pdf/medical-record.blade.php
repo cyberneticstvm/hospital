@@ -84,7 +84,7 @@
                 <td>{{ ($spectacle) ? $spectacle->re_dist_add : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->vbr : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->re_near_va : '--' }}</td>
-                <td>{{ ($spectacle) ? $record->re_dist_va : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->re_dist_va : '--' }}</td>
                 <td>{{ ($record->va_od) ? $record->va_od : '--' }}</td>
             </tr>
             <tr>
@@ -95,7 +95,7 @@
                 <td>{{ ($spectacle) ? $spectacle->le_dist_add : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->vbl : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->le_near_va : '--' }}</td>
-                <td>{{ ($spectacle) ? $record->le_dist_va : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->le_dist_va : '--' }}</td>
                 <td>{{ ($record->va_os) ? $record->va_os : '--' }}</td>
             </tr>
         </tbody>
