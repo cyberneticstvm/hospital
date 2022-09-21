@@ -29,7 +29,7 @@ class PatientReferenceController extends Controller
         $doc_fee = 0.00;
         $days = DB::table('settings')->where('id', 1)->value('consultation_fee_days');
         $date_diff = PRef::where('patient_id', $pid)->select(DB::raw("DATEDIFF(now(), created_at) as days"))->latest()->value('days');
-        if($date_diff > $days):
+        if($date_diff == 0 || $date_diff > $days): // $date_diff = 0 means first consultation
             $doc_fee = $fee; 
         endif;
         return $doc_fee;
@@ -131,8 +131,12 @@ class PatientReferenceController extends Controller
         $input = $request->all();
         $doctor = doctor::find($request->doctor_id);
         $input['patient_id'] = $request->get('pid');
-        $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee);
         $reference = PRef::find($id);
+        if($reference->getOriginal('doctor_id') == $request->doctor_id):
+            $input['doctor_fee'] = $reference->getOriginal('doctor_fee');
+        else:
+            $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee);
+        endif;
         $input['created_by'] = $reference->getOriginal('created_by');
         $input['branch'] = $request->session()->get('branch');
         $input['status'] = ($request->status) ? 0 : 1;
