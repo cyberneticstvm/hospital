@@ -291,9 +291,11 @@
         </tbody>
     </table>
     @endif
+    @if($record->signs)
     <p> Signs</p>
         {{ $record->signs }}
     <br>
+    @endif
     @if(($retina_od && $retina_od[0]->retina_img) || ($retina_os && $retina_os[0]->retina_img))
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
@@ -307,7 +309,7 @@
         </tbody>
     </table>
     @endif
-    @if($diagnosis)
+    @if(count($diagnosis) > 0)
     <p> Diagnosis</p>
     @foreach($diagnosis as $diag)
         {{ $diag->diagnosis_name }}, 
