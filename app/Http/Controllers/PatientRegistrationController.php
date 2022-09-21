@@ -66,6 +66,8 @@ class PatientRegistrationController extends Controller
         $input['patient_id'] = $next->id;
         $input['created_by'] = $request->user()->id;
         $input['branch'] = $request->session()->get('branch');
+        $input['registration_fee'] = DB::table('branches')->where('id', $request->session()->get('branch'))->value('registration_fee');
+
         $patient = PatientRegistrations::create($input);
         
         return redirect()->route('patient.index')->with('success','Patient created successfully');
@@ -125,7 +127,7 @@ class PatientRegistrationController extends Controller
         $input['patient_id'] = $patient->getOriginal('patient_id');
         $input['created_by'] = $patient->getOriginal('created_by');
         $input['branch'] = $patient->getOriginal('branch');
-        
+        $input['registration_fee'] = DB::table('branches')->where('id', $patient->getOriginal('branch'))->value('registration_fee');
         $patient->update($input);
         
         return redirect()->route('patient.index')->with('success','Patient updated successfully');

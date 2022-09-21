@@ -25,6 +25,16 @@ class PatientReferenceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private function getDoctorFee($pid, $fee){
+        $doc_fee = 0.00;
+        $days = DB::table('settings')->where('id', 1)->value('consultation_fee_days');
+        $date_diff = PRef::where('patient_id', $pid)->select(DB::raw("DATEDIFF(now(), created_at) as days"))->latest()->value('days');
+        if($date_diff > $days):
+            $doc_fee = $fee; 
+        endif;
+        return $doc_fee;
+    }
+
     public function index()
     {
         //$patients = DB::table('patient_registrations as pr')->rightJoin('patient_references', 'patient_references.patient_id', '=', 'pr.id')->leftJoin('doctors', 'patient_references.doctor_id', '=', 'doctors.id')->leftJoin('patient_medical_records as pmr', 'patient_references.id', '=', 'pmr.mrn')->select('patient_references.id as reference_id', 'pr.patient_id as pno', 'pr.patient_name as pname', 'patient_references.doctor_fee', 'doctors.doctor_name', 'pmr.id as medical_record_id')->get();
@@ -61,7 +71,7 @@ class PatientReferenceController extends Controller
         $input = $request->all();
         $doctor = doctor::find($request->doctor_id);
         $input['patient_id'] = $request->get('pid');
-        $input['doctor_fee'] = $doctor->doctor_fee;
+        $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee);
         $input['created_by'] = $request->user()->id;
         $input['status'] = 1; //active
         $input['branch'] = $request->session()->get('branch');
@@ -121,7 +131,7 @@ class PatientReferenceController extends Controller
         $input = $request->all();
         $doctor = doctor::find($request->doctor_id);
         $input['patient_id'] = $request->get('pid');
-        $input['doctor_fee'] = $doctor->doctor_fee;
+        $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee);
         $reference = PRef::find($id);
         $input['created_by'] = $reference->getOriginal('created_by');
         $input['branch'] = $request->session()->get('branch');

@@ -25,5 +25,6 @@ class PatientRegistrations extends Model
         'country',
         'created_by',
         'branch',
+        'registration_fee',
     ];
 }

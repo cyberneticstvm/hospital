@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -281,6 +282,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/lab/clinic/report/{id}/', [PDFController::class, 'clinicreport']);
     // End PDFs //
 
-    
+    // Settings //
+    Route::get('/settings/consultation/', [SettingsController::class, 'showConsultation'])->name('settings.showconsultation');
+    Route::put('/settings/consultation/', [SettingsController::class, 'updateConsultation'])->name('settings.consultation.update');
+    // End Settings //
 });
 
