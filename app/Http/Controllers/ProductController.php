@@ -36,9 +36,10 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $med_types = DB::table('medicine_types')->get();
         $categories = DB::table('product_categories')->get();
         $taxes = DB::table('tax')->get();
-        return view('product.create', compact('categories', 'taxes'));
+        return view('product.create', compact('categories', 'taxes', 'med_types'));
     }
 
     /**
@@ -51,6 +52,7 @@ class ProductController extends Controller
     {
         $this->validate($request, [
             'product_name' => 'required',
+            'medicine_type' => 'required',
             'category_id' => 'required',
             'tax_percentage' => 'required'
         ]);
@@ -82,7 +84,8 @@ class ProductController extends Controller
         $product = Product::find($id);
         $categories = DB::table('product_categories')->get();
         $taxes = DB::table('tax')->get();
-        return view('product.edit', compact('product','categories', 'taxes'));
+        $med_types = DB::table('medicine_types')->get();
+        return view('product.edit', compact('product','categories', 'taxes', 'med_types'));
     }
 
     /**
@@ -96,6 +99,7 @@ class ProductController extends Controller
     {
         $this->validate($request, [
             'product_name' => 'required',
+            'medicine_type' => 'required',
             'category_id' => 'required',
             'tax_percentage' => 'required'
         ]);

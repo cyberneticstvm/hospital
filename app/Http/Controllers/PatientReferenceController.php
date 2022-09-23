@@ -25,14 +25,14 @@ class PatientReferenceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private function getDoctorFee($pid, $fee){
+    private function getDoctorFee($pid, $fee, $ctype){
         $doc_fee = 0.00;
         $days = DB::table('settings')->where('id', 1)->value('consultation_fee_days');
         $date_diff = PRef::where('patient_id', $pid)->select(DB::raw("DATEDIFF(now(), created_at) as days"))->latest()->value('days');
         if($date_diff == 0 || $date_diff > $days): // $date_diff = 0 means first consultation
             $doc_fee = $fee; 
         endif;
-        return $doc_fee;
+        return ($ctype == 2) ? 0.00 : $doc_fee; // ctype 2 means purpose of visit is Certificate and no consultation fee for that.
     }
 
     public function index()
@@ -73,7 +73,7 @@ class PatientReferenceController extends Controller
         $input = $request->all();
         $doctor = doctor::find($request->doctor_id);
         $input['patient_id'] = $request->get('pid');
-        $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee);
+        $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
         $input['created_by'] = $request->user()->id;
         $input['status'] = 1; //active
         $input['branch'] = $request->session()->get('branch');
@@ -139,7 +139,7 @@ class PatientReferenceController extends Controller
         if($reference->getOriginal('doctor_id') == $request->doctor_id):
             $input['doctor_fee'] = $reference->getOriginal('doctor_fee');
         else:
-            $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee);
+            $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
         endif;
         $input['created_by'] = $reference->getOriginal('created_by');
         $input['branch'] = $request->session()->get('branch');

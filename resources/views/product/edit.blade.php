@@ -16,14 +16,14 @@
                             @csrf
                             @method("PUT")
                             <div class="row g-4">
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <label class="form-label">Product Name<sup class="text-danger">*</sup></label>
                                     <input type="text" value="{{ $product->product_name }}" name="product_name" class="form-control form-control-md" placeholder="Product Name">
                                     @error('product_name')
                                     <small class="text-danger">{{ $errors->first('product_name') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Product Category<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" data-placeholder="Select" name="category_id">
                                     <option value="">Select</option>
@@ -33,6 +33,17 @@
                                     </select>
                                     @error('category_id')
                                     <small class="text-danger">{{ $errors->first('category_id') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Type<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md" data-placeholder="Select" name="medicine_type">
+                                    @foreach($med_types as $type)
+                                        <option value="{{ $type->id }}" {{ $product->medicine_type == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+                                    @endforeach
+                                    </select>
+                                    @error('medicine_type')
+                                    <small class="text-danger">{{ $errors->first('medicine_type') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-2">
