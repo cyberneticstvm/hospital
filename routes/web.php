@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\IncomeExpenseHeadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -257,7 +256,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/income-expense-heads/delete/{id}/', 'App\Http\Controllers\IncomeExpenseHeadController@destroy')->name('income-expense-heads.delete');
     // End Income / Expense Heads //
 
-    // Expenses //
+    // Expense //
     Route::get('/expense/', 'App\Http\Controllers\ExpenseController@index')->name('expense.index');
     Route::get('/expense/create/', 'App\Http\Controllers\ExpenseController@create')->name('expense.create');
     Route::post('/expense/create/', 'App\Http\Controllers\ExpenseController@store')->name('expense.save');
@@ -265,6 +264,15 @@ Route::group(['middleware' => ['auth']], function(){
     Route::put('/expense/edit/{id}/', 'App\Http\Controllers\ExpenseController@update')->name('expense.update');
     Route::delete('/expense/delete/{id}/', 'App\Http\Controllers\ExpenseController@destroy')->name('expense.delete');
     // End Expenses //
+
+    // Income //
+    Route::get('/income/', 'App\Http\Controllers\IncomeController@index')->name('income.index');
+    Route::get('/income/create/', 'App\Http\Controllers\IncomeController@create')->name('income.create');
+    Route::post('/income/create/', 'App\Http\Controllers\IncomeController@store')->name('income.save');
+    Route::get('/income/edit/{id}/', 'App\Http\Controllers\IncomeController@edit')->name('income.edit');
+    Route::put('/income/edit/{id}/', 'App\Http\Controllers\IncomeController@update')->name('income.update');
+    Route::delete('/income/delete/{id}/', 'App\Http\Controllers\IncomeController@destroy')->name('income.delete');
+    // End Expense //
 
     // OCT/HFA/FFA //
     Route::get('/ohf/', 'App\Http\Controllers\OHFController@index')->name('ohf.index');

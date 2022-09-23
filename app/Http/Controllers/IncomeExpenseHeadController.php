@@ -13,6 +13,13 @@ class IncomeExpenseHeadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+         $this->middleware('permission:iehead-list|iehead-create|iehead-edit|iehead-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:iehead-create', ['only' => ['create','store']]);
+         $this->middleware('permission:iehead-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:iehead-delete', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $heads = DB::table('income_expense_heads')->selectRaw("id, name, CASE WHEN type='I' THEN 'Income' ELSE 'Expense' END AS type")->get();
