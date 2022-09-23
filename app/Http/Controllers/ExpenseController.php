@@ -23,7 +23,7 @@ class ExpenseController extends Controller
     }
     public function index()
     {
-        $expenses = Expense::leftJoin('branches as b', 'b.id', '=', 'expenses.branch')->select('expenses.id', 'expenses.description', 'expenses.amount', DB::raw("DATE_FORMAT(expenses.date, '%d/%b/%Y') AS edate"), 'b.branch_name')->orderByDesc('expenses.id')->get();
+        $expenses = Expense::leftJoin('branches as b', 'b.id', '=', 'expenses.branch')->leftJoin('income_expense_heads as h', 'expenses.head', '=', 'h.id')->select('expenses.id', 'expenses.description', 'expenses.amount', DB::raw("DATE_FORMAT(expenses.date, '%d/%b/%Y') AS edate"), 'b.branch_name', 'h.name as head')->orderByDesc('expenses.id')->get();
         return view('expense.index', compact('expenses'));
     }
 
@@ -35,7 +35,8 @@ class ExpenseController extends Controller
     public function create()
     {   
         $branches = DB::table('branches')->get();    
-        return view('expense.create', compact('branches'));
+        $heads = DB::table('income_expense_heads')->where('type', 'E')->get();    
+        return view('expense.create', compact('branches', 'heads'));
     }
 
     /**
@@ -49,7 +50,7 @@ class ExpenseController extends Controller
         $this->validate($request, [
             'date' => 'required',
             'amount' => 'required',
-            'description' => 'required',
+            'head' => 'required',
             'branch' => 'required',
         ]);
         $input = $request->all();
@@ -79,8 +80,9 @@ class ExpenseController extends Controller
     public function edit($id)
     {
         $branches = DB::table('branches')->get();
-        $expense = Expense::find($id);    
-        return view('expense.edit', compact('branches', 'expense'));
+        $expense = Expense::find($id);
+        $heads = DB::table('income_expense_heads')->where('type', 'E')->get();    
+        return view('expense.edit', compact('branches', 'expense', 'heads'));
     }
 
     /**
@@ -95,7 +97,7 @@ class ExpenseController extends Controller
         $this->validate($request, [
             'date' => 'required',
             'amount' => 'required',
-            'description' => 'required',
+            'head' => 'required',
             'branch' => 'required',
         ]);
         $input = $request->all();

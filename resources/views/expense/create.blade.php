@@ -30,8 +30,20 @@
                                     <small class="text-danger">{{ $errors->first('date') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Head<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="head">
+                                    <option value="">Select</option>
+                                    @foreach($heads as $head)
+                                        <option value="{{ $head->id }}" {{ old('head') == $head->id ? 'selected' : '' }}>{{ $head->name }}</option>
+                                    @endforeach
+                                    </select>
+                                    @error('head')
+                                    <small class="text-danger">{{ $errors->first('head') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-4">
-                                    <label class="form-label">Description<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Description</label>
                                     <input type="text" value="{{ old('description') }}" name="description" class="form-control form-control-md" placeholder="Description">
                                     @error('description')
                                     <small class="text-danger">{{ $errors->first('description') }}</small>
