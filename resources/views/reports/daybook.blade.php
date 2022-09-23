@@ -90,9 +90,10 @@
                                 $tot += $row->doctor_fee+$row->registration_fee+$row->proc_fee;
                             @endphp
                             @empty
-                            <tr><td colspan="8" class="text-center">No Records Found</td></tr>
                             @endforelse
                             <tr><td colspan="4" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{ number_format($doc_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($reg_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($proc_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($tot, 2) }}</td></tr>
+                            <tr><td colspan="7" class="text-end fw-bold">Income from Other Sources</td><td class="text-end fw-bold">{{ number_format($income, 2) }}</td></tr>
+                            <tr><td colspan="7" class="text-end fw-bold">Expenses</td><td class="text-end fw-bold">{{ number_format($expense, 2) }}</td></tr>
                             </tbody>
                         </table>
                     </div>
