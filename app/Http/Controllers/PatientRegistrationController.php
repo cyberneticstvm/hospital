@@ -25,7 +25,8 @@ class PatientRegistrationController extends Controller
      */
     public function index()
     {
-        $patients = PatientRegistrations::orderByDesc('id')->get();
+        //$patients = PatientRegistrations::orderByDesc('id')->get();
+        $patients = DB::table('patient_registrations')->select('*', DB::Raw("DATE_FORMAT(created_at, '%d/%b/%Y') AS rdate"))->get();
         return view('patient.index', compact('patients'));
     }
 

@@ -39,7 +39,7 @@ class PatientReferenceController extends Controller
     {
         //$patients = DB::table('patient_registrations as pr')->rightJoin('patient_references', 'patient_references.patient_id', '=', 'pr.id')->leftJoin('doctors', 'patient_references.doctor_id', '=', 'doctors.id')->leftJoin('patient_medical_records as pmr', 'patient_references.id', '=', 'pmr.mrn')->select('patient_references.id as reference_id', 'pr.patient_id as pno', 'pr.patient_name as pname', 'patient_references.doctor_fee', 'doctors.doctor_name', 'pmr.id as medical_record_id')->get();
         //dd($patients);
-        $patients = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->select('pr.id as reference_id', 'pr.status', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.patient_id as pno', 'doctors.doctor_name')->orderByDesc('pmr.id')->get();
+        $patients = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->select('pr.id as reference_id', 'pr.status', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.patient_id as pno', 'doctors.doctor_name', DB::Raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->orderByDesc('pmr.id')->get();
         return view('consultation.patient-reference', compact('patients'));
     }
 

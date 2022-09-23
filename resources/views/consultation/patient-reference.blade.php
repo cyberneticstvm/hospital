@@ -9,7 +9,7 @@
 <div class="card mb-4 border-0">
     <div class="card-body">
         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Token</th><th>Prescription</th><th>Receipt</th><th>Edit</th><th>Delete</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Reg.Date</th><th>Token</th><th>Prescription</th><th>Receipt</th><th>Edit</th><th>Delete</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($patients as $patient)
                 <tr class="{{ ($patient->status == 0) ? 'text-decoration-line-through' : '' }}">
@@ -18,6 +18,7 @@
                     <td>{{ $patient->pname }}</td>
                     <td>{{ $patient->pno }}</td>
                     <td>{{ $patient->doctor_name }}</td>
+                    <td>{{ $patient->rdate }}</td>
                     <td><a href='/generate-token/{{ $patient->reference_id }}/' target='_blank'><i class="fa fa-file text-info"></i></a></td>
                     <td><a href='/generate-prescription/{{ $patient->reference_id }}/' target='_blank'><i class="fa fa-file text-primary"></i></a></td>
                     <td><a href='/generate-receipt/{{ $patient->reference_id }}/' target="_blank"><i class="fa fa-file text-success"></i></a></td>
