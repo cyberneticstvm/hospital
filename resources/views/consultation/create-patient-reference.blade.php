@@ -18,7 +18,7 @@
                             <div class="row g-4">
                                 <div class="col-sm-6">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
                                 <div class="col-sm-6">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <label class="form-label">Department<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="department_id">
                                     <option value="">Select</option>
@@ -30,7 +30,7 @@
                                     <small class="text-danger">{{ $errors->first('department_id') }}</small>
                                     @enderror
                                 </div>                               
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <label class="form-label">Doctor<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="doctor_id">
                                     <option value="">Select</option>
@@ -40,6 +40,18 @@
                                     </select>
                                     @error('doctor')
                                     <small class="text-danger">{{ $errors->first('doctor') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Purpose of Visit<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="consultation_type">
+                                    <option value="">Select</option>
+                                    @foreach($ctypes as $ctype)
+                                        <option value="{{ $ctype->id }}" {{ old('consultation_type') == $ctype->id ? 'selected' : '' }}>{{ $ctype->name }}</option>
+                                    @endforeach
+                                    </select>
+                                    @error('consultation_type')
+                                    <small class="text-danger">{{ $errors->first('consultation_type') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-6">

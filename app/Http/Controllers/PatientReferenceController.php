@@ -53,7 +53,8 @@ class PatientReferenceController extends Controller
         $patient = Preg::find($id);
         $doctors = DB::table('doctors')->get();   
         $departments = DB::table('departments')->get();
-        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments'));
+        $ctypes = DB::table('consultation_types')->get();
+        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes'));
     }
 
     /**
@@ -67,6 +68,7 @@ class PatientReferenceController extends Controller
         $this->validate($request, [
             'doctor_id' => 'required',
             'department_id' => 'required',
+            'consultation_type' => 'required'
         ]);
         $input = $request->all();
         $doctor = doctor::find($request->doctor_id);
@@ -112,7 +114,8 @@ class PatientReferenceController extends Controller
         $departments = DB::table('departments')->get();
         $reference = PRef::find($id);
         $patient = PReg::find($reference->patient_id);
-        return view('consultation.edit-patient-reference', compact('doctors', 'departments', 'reference', 'patient'));
+        $ctypes = DB::table('consultation_types')->get();
+        return view('consultation.edit-patient-reference', compact('doctors', 'departments', 'reference', 'patient', 'ctypes'));
     }
 
     /**
@@ -127,6 +130,7 @@ class PatientReferenceController extends Controller
         $this->validate($request, [
             'doctor_id' => 'required',
             'department_id' => 'required',
+            'consultation_type' => 'required'
         ]);
         $input = $request->all();
         $doctor = doctor::find($request->doctor_id);
