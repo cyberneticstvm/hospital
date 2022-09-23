@@ -23,7 +23,7 @@ class ExpenseController extends Controller
     }
     public function index()
     {
-        $expenses = Expense::leftJoin('branches as b', 'b.id', '=', 'expenses.branch')->leftJoin('income_expense_heads as h', 'expenses.head', '=', 'h.id')->select('expenses.id', 'expenses.description', 'expenses.amount', DB::raw("DATE_FORMAT(expenses.date, '%d/%b/%Y') AS edate"), 'b.branch_name', 'h.name as head')->orderByDesc('expenses.id')->get();
+        $expenses = Expense::leftJoin('branches as b', 'b.id', '=', 'expenses.branch')->leftJoin('income_expense_heads as h', 'expenses.head', '=', 'h.id')->select('expenses.id', 'expenses.description', 'expenses.amount', DB::raw("DATE_FORMAT(expenses.date, '%d/%b/%Y') AS edate"), 'b.branch_name', 'h.name as head')->whereDate('expenses.created_at', Carbon::today())->orderByDesc('expenses.id')->get();
         return view('expense.index', compact('expenses'));
     }
 

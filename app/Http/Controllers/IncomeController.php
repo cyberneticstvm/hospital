@@ -23,7 +23,7 @@ class IncomeController extends Controller
     }
     public function index()
     {
-        $incomes = Income::leftJoin('branches as b', 'b.id', '=', 'incomes.branch')->leftJoin('income_expense_heads as h', 'incomes.head', '=', 'h.id')->select('incomes.id', 'incomes.description', 'incomes.amount', DB::raw("DATE_FORMAT(incomes.date, '%d/%b/%Y') AS edate"), 'b.branch_name', 'h.name as head')->orderByDesc('incomes.id')->get();
+        $incomes = Income::leftJoin('branches as b', 'b.id', '=', 'incomes.branch')->leftJoin('income_expense_heads as h', 'incomes.head', '=', 'h.id')->select('incomes.id', 'incomes.description', 'incomes.amount', DB::raw("DATE_FORMAT(incomes.date, '%d/%b/%Y') AS edate"), 'b.branch_name', 'h.name as head')->whereDate('income.created_at', Carbon::today())->orderByDesc('incomes.id')->get();
         return view('income.index', compact('incomes'));
     }
 
