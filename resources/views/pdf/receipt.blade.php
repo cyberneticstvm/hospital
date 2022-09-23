@@ -81,7 +81,7 @@
             @endif
             <tr>
                 <td colspan="3" class="text-right">Total</td>
-                <td class="text-right">{{ number_format($branch->registration_fee + $doctor->doctor_fee + $procedure->fee, 2) }}</td>
+                <td class="text-right">{{ number_format($patient->registration_fee + $reference->doctor_fee + $procedure->fee, 2) }}</td>
             </tr>
         </tbody>
     </table>

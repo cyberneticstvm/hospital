@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\IncomeExpenseHeadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -246,6 +247,15 @@ Route::group(['middleware' => ['auth']], function(){
     Route::put('/consultation/procedure/edit/{id}/', 'App\Http\Controllers\ProcedureController@updateadvise')->name('procedure.updateadvise');
     Route::delete('/consultation/procedure/delete/{id}/', 'App\Http\Controllers\ProcedureController@destroyadvise')->name('procedure.destroyadvise');
     // End Procedures //
+
+    // Income / Expense Heads //
+    Route::get('/income-expense-heads/', 'App\Http\Controllers\IncomeExpenseHeadController@index')->name('income-expense-heads.index');
+    Route::get('/income-expense-heads/create/', 'App\Http\Controllers\IncomeExpenseHeadController@create')->name('income-expense-heads.create');
+    Route::post('/income-expense-heads/create/', 'App\Http\Controllers\IncomeExpenseHeadController@store')->name('income-expense-heads.save');
+    Route::get('/income-expense-heads/edit/{id}/', 'App\Http\Controllers\IncomeExpenseHeadController@edit')->name('income-expense-heads.edit');
+    Route::put('/income-expense-heads/edit/{id}/', 'App\Http\Controllers\IncomeExpenseHeadController@update')->name('income-expense-heads.update');
+    Route::delete('/income-expense-heads/delete/{id}/', 'App\Http\Controllers\IncomeExpenseHeadController@destroy')->name('income-expense-heads.delete');
+    // End Income / Expense Heads //
 
     // Expenses //
     Route::get('/expense/', 'App\Http\Controllers\ExpenseController@index')->name('expense.index');
