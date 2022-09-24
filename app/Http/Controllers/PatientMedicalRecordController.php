@@ -86,7 +86,6 @@ class PatientMedicalRecordController extends Controller
                             'mrn' => $request->mrn,
                             'medicine' => $input['medicine'][$i],
                             'dosage' => $input['dosage'][$i],
-                            'dosage1' => $input['dosage1'][$i],
                             'qty' => $input['qty'][$i],
                             'tax_percentage' => $product->tax_percentage,
                             'notes' => $input['notes'][$i],
@@ -251,7 +250,6 @@ class PatientMedicalRecordController extends Controller
                             'mrn' => $request->mrn,
                             'medicine' => $input['medicine'][$i],
                             'dosage' => $input['dosage'][$i],
-                            'dosage1' => $input['dosage1'][$i],
                             'qty' => $input['qty'][$i],
                             'notes' => $input['notes'][$i],
                         ]);

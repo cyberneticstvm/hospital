@@ -221,18 +221,6 @@
                                     <input type="text" name="dosage[]" class="form-control form-control-md" placeholder="Eg: Daily 3 Drops"/>
                                 </div>
                                 <div class="col-sm-2">
-                                    <label class="form-label">Dosage</label>
-                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="dosage1[]">
-                                    <option value="">Select</option>
-                                    @foreach($dosages as $dos)
-                                        <option value="{{ $dos->id }}" {{ old('dosage_id') == $dia->id ? 'selected' : '' }}>{{ $dos->dosage }}</option>
-                                    @endforeach
-                                    </select>
-                                    @error('dosage_id')
-                                    <small class="text-danger">{{ $errors->first('dosage_id') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-2">
                                     <label class="form-label">Qty / NOs.</label>
                                     <input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' />
                                 </div>
