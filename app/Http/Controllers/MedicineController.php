@@ -106,6 +106,8 @@ class MedicineController extends Controller
                         'tax_percentage' => $product->tax_percentage,
                         'total' => $input['total'][$i],
                         'status' => '1', //1-Billed, 0-Not Billed
+                        'updated_by' => $request->user()->id,
+                        'updated_at' => Carbon::now(),
                     ]);
                 endif;
             endfor;
@@ -125,5 +127,10 @@ class MedicineController extends Controller
         DB::table('patient_medicine_records')->where('medical_record_id', $id)->delete();
         return redirect()->route('medicine.index')
                         ->with('success','Record deleted successfully');
+    }
+
+    public function remove($id){
+        DB::table('patient_medicine_records')->where('id', $id)->delete();
+        echo "Medicine Deleted successfully.";
     }
 }

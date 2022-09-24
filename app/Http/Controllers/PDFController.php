@@ -227,4 +227,13 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/lab-clinic-report', compact('patient', 'qrcode', 'labs', 'mrecord', 'doctor', 'branch'));    
         return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
     }
+
+    public function pharmacyreceipt($id){
+        $record = DB::table('pharmacies')->find($id);
+        $branch = DB::table('branches')->find($record->branch);
+        $medicines = DB::table('pharmacy_records as pr')->leftJoin('products as p', 'pr.product', '=', 'p.id')->leftJoin('medicine_types as m', 'm.id', '=', 'pr.type')->select('p.product_name', 'pr.qty', 'pr.batch_number', 'pr.price', 'pr.discount', 'pr.tax', 'pr.tax_amount', 'pr.total', 'm.name as type')->where('pr.pharmacy_id', $id)->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));         
+        $pdf = PDF::loadView('/pdf/pharmacy-receipt', compact('record', 'medicines', 'qrcode', 'branch'));    
+        return $pdf->stream('receipt.pdf', array("Attachment"=>0));
+    }
 }

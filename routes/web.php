@@ -134,7 +134,18 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/consultation/medicine/edit/{id}/', 'App\Http\Controllers\MedicineController@edit')->name('medicine.edit');
     Route::put('/consultation/medicine/edit/{id}/', 'App\Http\Controllers\MedicineController@update')->name('medicine.update');
     Route::delete('/consultation/medicine/delete/{id}/', 'App\Http\Controllers\MedicineController@destroy')->name('medicine.delete');
+    Route::delete('/consultation/medicinesingle/delete/{id}/', 'App\Http\Controllers\MedicineController@remove')->name('medicinesingle.delete');
     // End Patient Medicine Records //
+
+    // Pharmacy -> for both inside and outside customers //
+    Route::get('/extras/pharmacy/', 'App\Http\Controllers\PharmacyController@index')->name('pharmacy.index');
+    Route::get('/extras/pharmacy/create/', 'App\Http\Controllers\PharmacyController@create')->name('pharmacy.create');
+    Route::post('/extras/pharmacy/create/', 'App\Http\Controllers\PharmacyController@store')->name('pharmacy.create');
+    Route::get('/extras/pharmacy/edit/{id}/', 'App\Http\Controllers\PharmacyController@edit')->name('pharmacy.edit');
+    Route::put('/extras/pharmacy/edit/{id}/', 'App\Http\Controllers\PharmacyController@update')->name('pharmacy.update');
+    Route::delete('/extras/pharmacy/delete/{id}/', 'App\Http\Controllers\PharmacyController@destroy')->name('pharmacy.delete');
+    Route::delete('/extras/pharmacy/medicinesingle/delete/{id}/', 'App\Http\Controllers\PharmacyController@remove')->name('pharmacysingle.delete');    
+    // End Pharmacy //
 
     // supplier //
     Route::get('/supplier/', 'App\Http\Controllers\SupplierController@index')->name('supplier.index');
@@ -300,6 +311,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/lab/clinic/prescription/{id}/', [PDFController::class, 'clinicprescription']);
     Route::get('/lab/clinic/bill/{id}/', [PDFController::class, 'clinicbill']);
     Route::get('/lab/clinic/report/{id}/', [PDFController::class, 'clinicreport']);
+    Route::get('/pharmacy/receipt/{id}/', [PDFController::class, 'pharmacyreceipt']);
     // End PDFs //
 
     // Settings //

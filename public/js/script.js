@@ -92,6 +92,12 @@ $(function() {
         bindDDL('medicine', 'selMedicine');
     });
 
+    $(".addPharmacyRow").click(function(){
+        $(".tblPharmacy").append("<tr><td><select class='form-control form-control-sm select2 selProduct' data-placeholder='Select' required='required' name='product[]'></select></td><td><input type='text' class='form-control form-control-sm' name='batch_number[]' placeholder='Batch No.' required='required'/></td><td><input type='number' class='form-control form-control-sm text-end qty' step='any' min='1' name='qty[]' placeholder='0' required='required'/></td><td><input type='number' class='form-control form-control-sm text-end price' step='any' name='price[]' placeholder='0.00' required='required'/></td><td><input type='number' class='form-control form-control-sm text-end discount' step='any' name='discount[]' placeholder='0.00' /></td><td><input type='number' class='form-control form-control-sm text-end tax' step='any' name='tax[]' placeholder='0%' /></td><td><input type='number' class='form-control form-control-sm text-end tax_amount' step='any' name='tax_amount[]' placeholder='0.00' /></td><td><input type='number' class='form-control form-control-sm text-end total' step='any' name='total[]' placeholder='0.00' required='required' /></td><td class='text-center'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></td></tr>");
+        $('.selProduct').select2();
+        bindDDL('medicine', 'selProduct');
+    });
+
     $(".addPurchaseRow").click(function(){
         $(".purchaseRow").append("<div class='row mt-3'><div class='col-sm-4'><select class='form-control form-control-md show-tick ms select2 selProductForPurchase' data-placeholder='Select' name='product[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-2'><input type='text' name='batch_number[]' class='form-control form-control-md' placeholder='Batch Number' required='required'></div><div class='col-sm-2'><input type='date' name='expiry_date[]' class='form-control form-control-md' placeholder='dd/mm/yyyy' required='required'></div><div class='col-sm-1'><input type='number' name='qty[]' class='form-control form-control-md' placeholder='0' required='required'></div><div class='col-sm-1'><input type='number' name='price[]' step='any' class='form-control form-control-md' placeholder='0.00' required='required'></div><div class='col-sm-1'><input type='number' name='mrp[]' step='any' class='form-control form-control-md' placeholder='0.00' required='required'></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");
         $('.selProductForPurchase').select2();
@@ -115,7 +121,24 @@ $(function() {
         var ddl = $(this).data('ddl');
         $("#frm-vision-extras").find(".ddl").val(ddl);
         $("#visionExtrasModal").modal("show");
-    })
+    });
+
+    $(document).on('click', '.dlt', function(){
+        var url = $(this).data('url');
+        $.ajax({
+            type: 'DELETE',
+            url: url,
+            data: {},
+            success: function(data){
+                alert(data);
+                location.reload();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                console.log(XMLHttpRequest);
+            }
+        });
+        return false;
+    });
 });
 
 /*$(window).on('load', function () {

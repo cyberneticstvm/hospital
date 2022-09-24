@@ -89,7 +89,7 @@
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="city">
                                     <option value="">Select</option>
                                     @foreach($cities as $city)
-                                        <option value="{{ $city->id }}" {{ old('city') == $city->id ? 'selected' : '' }}>{{ $city->city_name }}</option>
+                                        <option value="{{ $city->id }}" {{ 1 == $city->id ? 'selected' : '' }}>{{ $city->city_name }}</option>
                                     @endforeach
                                     </select>
                                     @error('city')
@@ -101,7 +101,7 @@
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="state">
                                     <option value="">Select</option>
                                     @foreach($states as $state)
-                                        <option value="{{ $state->id }}" {{ old('state') == $state->id ? 'selected' : '' }}>{{ $state->state_name }}</option>
+                                        <option value="{{ $state->id }}" {{ 1 == $state->id ? 'selected' : '' }}>{{ $state->state_name }}</option>
                                     @endforeach
                                     </select>
                                     @error('state')
@@ -113,7 +113,7 @@
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="country">
                                     <option value="">Select</option>
                                     @foreach($countries as $country)
-                                        <option value="{{ $country->id }}" {{ old('country') == $country->id ? 'selected' : '' }}>{{ $country->country_name }}</option>
+                                        <option value="{{ $country->id }}" {{ 1 == $country->id ? 'selected' : '' }}>{{ $country->country_name }}</option>
                                     @endforeach
                                     </select>
                                     @error('country')

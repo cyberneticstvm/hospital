@@ -90,6 +90,8 @@ class PatientMedicalRecordController extends Controller
                             'qty' => $input['qty'][$i],
                             'tax_percentage' => $product->tax_percentage,
                             'notes' => $input['notes'][$i],
+                            'updated_by' => $request->user()->id,
+                            'updated_at' => Carbon::now(),
                         ]);
                     endif;
                 endfor;

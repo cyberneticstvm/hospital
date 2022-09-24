@@ -25,7 +25,7 @@
                                 <div class="col-sm-12">
                                     <!--<p class= "text-right my-3"><a href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success medicineRow"></i></a></p>-->
                                     <table class="tblMedicine table table-bordered">
-                                        <thead><tr><th width='30%'>Product</th><th>Batch No.</th><th>Dosage</th><th>Qty</th><th>Price</th><th>Total</th><th></th></tr></thead>
+                                        <thead><tr><th width='30%'>Product</th><th>Batch No.</th><th>Dosage</th><th>Qty</th><th>Price</th><th>Total</th><th>Remove</th></tr></thead>
                                         <tbody>
                                             @foreach($medicines as $medicine)
                                             <input type='hidden' name='dosage1[]' value="{{ $medicine->dosage1 }}"/>
@@ -54,7 +54,9 @@
                                                 <td>
                                                     <input type="number" class="form-control form-control-md text-right" placeholder="0" name="total[]" value="{{ $medicine->total }}" required='required' />
                                                 </td>
-                                                <td></td>
+                                                <td>
+                                                    <button class="btn btn-link dlt" data-url="/consultation/medicinesingle/delete/{{ $medicine->id }}/" onclick="javascript: return confirm('Are you sure want to delete this Medicine?');"><i class="fa fa-trash text-danger"></i></button>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
