@@ -23,7 +23,7 @@ class ReportController extends Controller
     public function showdaybook(){
         $branches = Branch::all();
         $records = []; $inputs = []; $income = 0.00; $expense = 0.00; $pharmacy = 0.00; $medicine = 0.00;
-        return view('reports.daybook', compact('branches', 'records', 'inputs', 'income', 'expense'));
+        return view('reports.daybook', compact('branches', 'records', 'inputs', 'income', 'expense', 'medicine', 'pharmacy'));
     }
     public function fetchdaybook(Request $request){
         $this->validate($request, [
