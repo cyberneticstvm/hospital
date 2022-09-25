@@ -241,12 +241,12 @@
             <tr>
                 <td width="50%">
                     @if($v_od_2 != 'Na')
-                    <img src="{{ $record->vision_od_img2 }}" width="50%" alt=""/><br/>{{ $v_od_2 }}
+                    <img src="{{ $mrecord->vision_od_img2 }}" width="50%" alt=""/><br/>{{ $v_od_2 }}
                     @endif            
                 </td>
                 <td>
                     @if($v_os_2 != 'Na')
-                    <img src="{{ $record->vision_os_img2 }}" width="50%" alt=""/><br/>{{ $v_os_2 }}
+                    <img src="{{ $mrecord->vision_os_img2 }}" width="50%" alt=""/><br/>{{ $v_os_2 }}
                     @endif
                 </td>
             </tr>
@@ -259,12 +259,12 @@
             <tr>
                 <td width="50%">
                     @if($v_od_3 != 'Na')
-                    <img src="{{ $record->vision_od_img3 }}" width="50%" alt=""/><br/>{{ $v_od_3 }}
+                    <img src="{{ $mrecord->vision_od_img3 }}" width="50%" alt=""/><br/>{{ $v_od_3 }}
                     @endif            
                 </td>
                 <td>
                     @if($v_os_3 != 'Na')
-                    <img src="{{ $record->vision_os_img3 }}" width="50%" alt=""/><br/>{{ $v_os_3 }}
+                    <img src="{{ $mrecord->vision_os_img3 }}" width="50%" alt=""/><br/>{{ $v_os_3 }}
                     @endif
                 </td>
             </tr>
@@ -277,12 +277,12 @@
             <tr>
                 <td width="50%">
                     @if($v_od_4 != 'Na')
-                    <img src="{{ $record->vision_od_img4 }}" width="50%" alt=""/><br/>{{ $v_od_4 }}
+                    <img src="{{ $mrecord->vision_od_img4 }}" width="50%" alt=""/><br/>{{ $v_od_4 }}
                     @endif            
                 </td>
                 <td>
                     @if($v_os_4 != 'Na')
-                    <img src="{{ $record->vision_os_img4 }}" width="50%" alt=""/><br/>{{ $v_os_4 }}
+                    <img src="{{ $mrecord->vision_os_img4 }}" width="50%" alt=""/><br/>{{ $v_os_4 }}
                     @endif
                 </td>
             </tr>
