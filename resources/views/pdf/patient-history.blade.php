@@ -345,7 +345,7 @@
     @endif
     @if(count($medicines) > 0)
     <p> Medicine / Lab Advised</p>
-    <table width="100%" cellspacing="0" cellpadding="0">
+    <table width="100%" class="table-bordered" cellspacing="0" cellpadding="0">
         <thead><td>SL No.</td><td>Medicine Name</td><td>Dosage</td><td>Qty</td><td>Notes</td></thead>
         <tbody>
         @php $c = 1 @endphp
