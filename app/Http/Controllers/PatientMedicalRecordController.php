@@ -252,6 +252,7 @@ class PatientMedicalRecordController extends Controller
                             'dosage' => $input['dosage'][$i],
                             'qty' => $input['qty'][$i],
                             'notes' => $input['notes'][$i],
+                            'created_at' => Carbon::now(),
                         ]);
                     endif;
                 endfor;
