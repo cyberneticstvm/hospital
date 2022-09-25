@@ -297,6 +297,7 @@ Route::group(['middleware' => ['auth']], function(){
     // End Reports //
 
     // PDFs //
+    Route::get('/patient-history/{id}/', [PDFController::class, 'patienthistory']);
     Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
     Route::get('/generate-prescription/{id}/', [PDFController::class, 'prescription']);
     Route::get('/generate-receipt/{id}/', [PDFController::class, 'receipt']);

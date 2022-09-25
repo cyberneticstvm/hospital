@@ -19,7 +19,7 @@
                     <td>{{ $patient->patient_id }}</td>
                     <td>{{ $patient->mobile_number }}</td>
                     <td>{{ $patient->address }}</td>
-                    <td><a href="/patient/history/{{ $patient->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
+                    <td><a href="/patient-history/{{ $patient->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                     <td>@if(!$patient->is_doctor_assigned)<a href='/consultation/create-patient-reference/{{ $patient->id }}/'>Assign</a>@endif</td>
                     <td>{{ $patient->rdate }}</td>
                     <td><a href='/consultation/create-patient-reference/{{ $patient->id }}/'>Re-open</a></td>
