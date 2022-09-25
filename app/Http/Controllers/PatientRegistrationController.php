@@ -17,6 +17,7 @@ class PatientRegistrationController extends Controller
          $this->middleware('permission:patient-create', ['only' => ['create','store']]);
          $this->middleware('permission:patient-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:patient-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:patient-search', ['only' => ['fetch']]);
     }
     /**
      * Display a listing of the resource.
@@ -85,6 +86,21 @@ class PatientRegistrationController extends Controller
         $patient = PatientRegistrations::find($id);
         $mrecords = DB::table('patient_medical_records')->where('patient_id', $patient->id)->orderByDesc('created_at')->get();
         return view('patient.history', compact('patient', 'mrecords'));
+    }
+
+    public function search(){
+        $records = []; $search_term = '';
+        return view('patient.search', compact('records', 'search_term'));
+    }
+    public function fetch(Request $request){
+        $this->validate($request, [
+            'search_term' => 'required',
+        ]);
+        $input = $request->all();
+        $search_term = $request->search_term;
+        $records = DB::table('patient_registrations')->select('*', DB::Raw("DATE_FORMAT(created_at, '%d/%b/%Y') AS rdate"))->whereDate('patient_registrations.created_at', Carbon::today())->where('patient_name', 'LIKE', "%{$search_term}%")->orWhere('patient_id', 'LIKE', "%{$search_term}%")->orWhere('mobile_number', 'LIKE', "%{$search_term}%")->orderByDesc('patient_registrations.id')->get();
+
+        return view('patient.search', compact('records', 'search_term'));
     }
 
     /**

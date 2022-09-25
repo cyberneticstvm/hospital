@@ -62,6 +62,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/patient/{id}/delete/', 'App\Http\Controllers\PatientRegistrationController@destroy')->name('patient.delete');
 
     Route::get('/patient/history/{id}/', 'App\Http\Controllers\PatientRegistrationController@show')->name('patient.history');
+    Route::get('/patient/search/', 'App\Http\Controllers\PatientRegistrationController@search')->name('patient.search');
+    Route::post('/patient/search/', 'App\Http\Controllers\PatientRegistrationController@fetch')->name('patient.fetch');
     // End Patient Registration //
 
     // Doctor Registration//
