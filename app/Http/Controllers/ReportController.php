@@ -40,7 +40,7 @@ class ReportController extends Controller
         $expense = DB::table('expenses')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->sum('amount');
         $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $request->branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
         $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('m.status', 1)->where('p.branch', $request->branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('m.total');
-        return view('reports.daybook', compact('branches', 'records', 'inputs', 'income', 'expense', 'pharmacy'));
+        return view('reports.daybook', compact('branches', 'records', 'inputs', 'income', 'expense', 'pharmacy', 'medicine'));
     }
     public function showincomeexpense(){
         $branches = Branch::all();
