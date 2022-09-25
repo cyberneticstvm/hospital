@@ -22,7 +22,7 @@ class ReportController extends Controller
 
     public function showdaybook(){
         $branches = Branch::all();
-        $records = []; $inputs = []; $income = 0.00; $expense = 0.00;
+        $records = []; $inputs = []; $income = 0.00; $expense = 0.00; $pharmacy = 0.00; $medicine = 0.00;
         return view('reports.daybook', compact('branches', 'records', 'inputs', 'income', 'expense'));
     }
     public function fetchdaybook(Request $request){
@@ -40,8 +40,6 @@ class ReportController extends Controller
         $expense = DB::table('expenses')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->sum('amount');
         $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $request->branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
         $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('m.status', 1)->where('p.branch', $request->branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('m.total');
-        echo $medicine;
-        die;
         return view('reports.daybook', compact('branches', 'records', 'inputs', 'income', 'expense', 'pharmacy'));
     }
     public function showincomeexpense(){
