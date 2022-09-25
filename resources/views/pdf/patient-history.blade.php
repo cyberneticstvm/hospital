@@ -119,7 +119,7 @@
         {{ ($mrecord->symptoms_other) ? $mrecord->symptoms_other : '--' }}
     <p> Patient History</p>
         {{ ($mrecord->history) ? $mrecord->history : '--' }}
-    @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $record->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $record->va_os))
+    @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $mrecord->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $mrecord->va_os))
     <p>Vision</p>
     <table width="100%" class="table-bordered" cellspacing="0" cellpadding="0">
         <thead class=""><tr><th>&nbsp;</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th></th><th>VA</th><th></th></tr></thead>
@@ -132,7 +132,7 @@
                 <td>{{ ($spectacle) ? $spectacle->re_dist_add : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->re_near_va : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->re_dist_va : '--' }}</td>
-                <td>{{ ($mrecord->va_od) ? $record->va_od : '--' }}</td>
+                <td>{{ ($mrecord->va_od) ? $mrecord->va_od : '--' }}</td>
             </tr>
             <tr>
                 <td class="">LE/OS</td>                                            
@@ -142,7 +142,7 @@
                 <td>{{ ($spectacle) ? $spectacle->le_dist_add : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->le_near_va : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->le_dist_va : '--' }}</td>
-                <td>{{ ($mrecord->va_os) ? $record->va_os : '--' }}</td>
+                <td>{{ ($mrecord->va_os) ? $mrecord->va_os : '--' }}</td>
             </tr>
         </tbody>
     </table>
@@ -153,12 +153,12 @@
             <tr>
                 <td width="50%">
                     @if($v_od_1 != 'Na')
-                    <img src="{{ $record->vision_od_img1 }}" width="50%" alt=""/><br/>{{ $v_od_1 }}
+                    <img src="{{ $mrecord->vision_od_img1 }}" width="50%" alt=""/><br/>{{ $v_od_1 }}
                     @endif            
                 </td>
                 <td>
                     @if($v_os_1 != 'Na')
-                    <img src="{{ $record->vision_os_img1 }}" width="50%" alt=""/><br/>{{ $v_os_1 }}
+                    <img src="{{ $mrecord->vision_os_img1 }}" width="50%" alt=""/><br/>{{ $v_os_1 }}
                     @endif
                 </td>
             </tr>
@@ -309,13 +309,13 @@
                     </table>
                 </td>
             </tr>
-            <tr><td class="text-center">{{ $record->gonio_od }}</td><td class="text-center">{{ $mrecord->gonio_os }}</td></tr>
+            <tr><td class="text-center">{{ $mrecord->gonio_od }}</td><td class="text-center">{{ $mrecord->gonio_os }}</td></tr>
         </tbody>
     </table>
     @endif
     @if($mrecord->signs)
     <p> Signs</p>
-        {{ $record->signs }}
+        {{ $mrecord->signs }}
     <br>
     @endif
     @if(($retina_od && $retina_od[0]->retina_img) || ($retina_os && $retina_os[0]->retina_img))
