@@ -60,13 +60,11 @@
             </tr>
         </tbody>
     </table>
-    <!--<p> Symptoms (Consultation)</p>
+    <p> Symptoms</p>
     @foreach($symptoms as $sympt)
         {{ $sympt->symptom_name }}, 
     @endforeach
-    <br />-->
-    <p> Symptoms</p>
-        {{ $record->symptoms_other }}
+    {{ $record->symptoms_other }}
     <br />
     <p> Patient History</p>
         {{ $record->history }}

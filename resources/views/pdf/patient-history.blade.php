@@ -116,7 +116,7 @@
         <tr><td>Doctor Name: {{ $doctor->doctor_name }} ({{ $department->department_name }})</td><td class="text-right">Branch: {{ $branch->branch_name }}</td></tr>
     </table>
     <p> Symptoms</p>
-        {{ ($mrecord->symptoms_other) ? $mrecord->symptoms_other : '--' }}
+        {{ $symptoms }}, {{ ($mrecord->symptoms_other) ? $mrecord->symptoms_other : '--' }}
     <p> Patient History</p>
         {{ ($mrecord->history) ? $mrecord->history : '--' }}
     @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $mrecord->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $mrecord->va_os))
