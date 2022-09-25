@@ -26,7 +26,7 @@ class PatientRegistrationController extends Controller
     public function index()
     {
         //$patients = PatientRegistrations::orderByDesc('id')->get();
-        $patients = DB::table('patient_registrations')->select('*', DB::Raw("DATE_FORMAT(created_at, '%d/%b/%Y') AS rdate"))->get();
+        $patients = DB::table('patient_registrations')->select('*', DB::Raw("DATE_FORMAT(created_at, '%d/%b/%Y') AS rdate"))->whereDate('patient_registrations.created_at', Carbon::today())->orderByDesc('patient_registrations.id')->get();
         return view('patient.index', compact('patients'));
     }
 
