@@ -346,7 +346,7 @@
     @if(count($medicines) > 0)
     <p> Medicine / Lab Advised</p>
     <table width="100%" cellspacing="0" cellpadding="0">
-        <thead><th>SL No.</th><th>Medicine Name</th><th>Dosage</th><th>Qty</th><th>Notes</th></thead>
+        <thead><td>SL No.</td><td>Medicine Name</td><td>Dosage</td><td>Qty</td><td>Notes</td></thead>
         <tbody>
         @php $c = 1 @endphp
         @foreach($medicines as $medicine)
