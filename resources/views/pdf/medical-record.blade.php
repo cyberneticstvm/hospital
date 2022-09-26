@@ -294,7 +294,7 @@
         {{ $record->signs }}
     <br>
     @endif
-    @if(($retina_od && $retina_od[0]->retina_img) || ($retina_os && $retina_os[0]->retina_img))
+    @if($retina_od || $retina_os)
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             @forelse($retina_od as $key => $retina)
