@@ -294,13 +294,13 @@
         {{ $record->signs }}
     <br>
     @endif
-    @if($retina_od || $retina_os)
+    @if(count($retina_od) > 0 || count($retina_os) > 0)
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             @forelse($retina_od as $key => $retina)
                 <tr>
-                    <td width="50%"><img src="{{ ($retina_od && $retina_od[$key]->retina_img) ? 'https://hospital.speczone.net/public/storage/'.$retina_od[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_od && $retina_od[$key]->description) ? $retina_od[$key]->description : '' }}</td>
-                    <td width="50%"><img src="{{ ($retina_os && $retina_os[$key]->retina_img) ?  'https://hospital.speczone.net/public/storage/'.$retina_os[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_os && $retina_os[$key]->description) ? $retina_os[$key]->description : '' }}</td>
+                    <td width="50%"><img src="{{ (count($retina_od) > 0 && $retina_od[$key]->retina_img) ? 'https://hospital.speczone.net/public/storage/'.$retina_od[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_od[$key]->description) ? $retina_od[$key]->description : '' }}</td>
+                    <td width="50%"><img src="{{ (count($retina_os) > 0 && $retina_os[$key]->retina_img) ?  'https://hospital.speczone.net/public/storage/'.$retina_os[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_os[$key]->description) ? $retina_os[$key]->description : '' }}</td>
                 </tr>
             @empty
             @endforelse
