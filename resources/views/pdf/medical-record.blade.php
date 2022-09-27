@@ -302,7 +302,7 @@
         <tbody>
             @forelse($retinas as $key => $retina)
                 <tr>
-                    <td width="50%"><img src="{{ ($retina_od && $retina_od[$key]->retina_img) ? base64_encode(file_get_contents(storage_path('app/public/'.$retina_od[$key]->retina_img))) : '' }}" width='100%' /><br>{{ ($retina_od && $retina_od[$key]->description) ? $retina_od[$key]->description : '' }}</td>
+                    <td width="50%"><img src="{{ ($retina_od && $retina_od[$key]->retina_img) ? 'https://hospital.speczone.net/public/storage/'.$retina_od[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_od && $retina_od[$key]->description) ? $retina_od[$key]->description : '' }}</td>
                     <td width="50%"><img src="{{ ($retina_os && $retina_os[$key]->retina_img) ?  'https://hospital.speczone.net/public/storage/'.$retina_os[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_os && $retina_os[$key]->description) ? $retina_os[$key]->description : '' }}</td>
                 </tr>
             @empty
