@@ -68,6 +68,26 @@
                                             </tr>
                                             @endforeach
                                         </tbody>
+                                        <!--<tfoot>
+                                            <tr>
+                                                <td colspan="6" class="text-right fw-bold"></td>
+                                                <td class="text-right fw-bold">Advance</td>
+                                                <td>
+                                                    <select class="form-control form-control-sm select2" data-placeholder="Select" name="payment_mode" required='required'>
+                                                    <option value="">Select</option>
+                                                    @foreach($pmodes as $pmode)
+                                                        <option value="{{ $pmode->id }}">{{ $pmode->name }}</option>
+                                                    @endforeach
+                                                    </select>
+                                                </td>
+                                                <td class="text-right fw-bold"><input type="number" step="any" class="form-control form-control-sm text-right" placeholder="0.00" name="advance" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="7" class="text-right fw-bold"></td>
+                                                <td class="text-right fw-bold">Balance</td>                                                
+                                                <td class="text-right fw-bold"><input type="number" step="any" class="form-control form-control-sm text-right" placeholder="0.00" name="advance" /></td>
+                                            </tr>
+                                        </tfoot>-->
                                     </table>
                                 </div>
                                 <div class="col-sm-12 text-right">

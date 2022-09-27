@@ -18,6 +18,8 @@ class PatientRegistrationController extends Controller
          $this->middleware('permission:patient-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:patient-delete', ['only' => ['destroy']]);
          $this->middleware('permission:patient-search', ['only' => ['fetch']]);
+         $this->middleware('permission:consultation-search', ['only' => ['fetchconsultation']]);
+         $this->middleware('permission:medical-record-search', ['only' => ['fetchmedicalrecord']]);
     }
     /**
      * Display a listing of the resource.
@@ -92,6 +94,14 @@ class PatientRegistrationController extends Controller
         $records = []; $search_term = '';
         return view('patient.search', compact('records', 'search_term'));
     }
+    public function searchc(){
+        $records = []; $search_term = '';
+        return view('patient.search-consultation', compact('records', 'search_term'));
+    }
+    public function searchm(){
+        $records = []; $search_term = '';
+        return view('patient.search-medical-record', compact('records', 'search_term'));
+    }
     public function fetch(Request $request){
         $this->validate($request, [
             'search_term' => 'required',
@@ -101,6 +111,25 @@ class PatientRegistrationController extends Controller
         $records = DB::table('patient_registrations')->select('*', DB::Raw("DATE_FORMAT(created_at, '%d/%b/%Y') AS rdate"))->where('patient_name', 'LIKE', "%{$search_term}%")->orWhere('patient_id', 'LIKE', "%{$search_term}%")->orWhere('mobile_number', 'LIKE', "%{$search_term}%")->orderByDesc('patient_registrations.id')->get();
 
         return view('patient.search', compact('records', 'search_term'));
+    }
+    public function fetchconsultation(Request $request){
+        $this->validate($request, [
+            'search_term' => 'required',
+        ]);
+        $input = $request->all();
+        $search_term = $request->search_term;
+        $records = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->select('pr.id as reference_id', 'pr.status', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.patient_id as pno', 'doctors.doctor_name', DB::Raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->where('pmr.id', $search_term)->orderByDesc('pmr.id')->get();
+
+        return view('patient.search-consultation', compact('records', 'search_term'));
+    }
+    public function fetchmedicalrecord(Request $request){
+        $this->validate($request, [
+            'search_term' => 'required',
+        ]);
+        $input = $request->all();
+        $search_term = $request->search_term;
+        $records = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('doctors as doc', 'pmr.doctor_id', '=', 'doc.id')->leftJoin('patient_references as pref', 'pref.id', '=', 'pmr.mrn')->select('pmr.id', 'pmr.mrn', 'pr.patient_name', 'pr.patient_id', 'doc.doctor_name', 'pmr.status', DB::Raw("DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS rdate, IFNULL(DATE_FORMAT(pmr.review_date, '%d/%b/%Y'), '--') AS review_date"))->where('pmr.id', $search_term)->orderByDesc('pmr.id')->get();
+        return view('patient.search-medical-record', compact('records', 'search_term'));
     }
 
     /**
