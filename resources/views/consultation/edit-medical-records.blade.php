@@ -508,21 +508,7 @@
                                 </div>
                                 <div class="col-sm-2 text-center">
                                     <label class="form-label">Anterior Chamber<br/><a href="javascript:void(0)" class="vEModal" data-ddl="sel_8"><i class="fa fa-plus fa-lg text-success"></i></a></label>                                    
-                                </div>
-                                <div class="row g-4  mt-3">
-                                    <div class="col-sm-1">
-                                        <label class="form-label">Color Picker</label>
-                                        <input type="color" class="form-control form-control-md favcolor3" value="#000">
-                                    </div>
-                                    <div class="col-sm-1 text-end">
-                                        <label class="form-label">Pen</label><br />
-                                        <a href="javascript: void(0)"><i class="fa fa-pencil text-primary pen" data-line-width="3"></i></a>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <label class="form-label">Brush</label><br />
-                                        <a href="javascript: void(0)"><i class="fa fa-paint-brush text-danger brush" data-line-width="25"></i></a>
-                                    </div>
-                                </div>
+                                </div>                                
                                 <div class="col-sm-5">
                                     <select class="form-control form-control-md show-tick ms select2 sel_8" multiple data-placeholder="Select" name="sel_8_os[]">
                                         @php $olds = explode(',', $record->sel_8_os); @endphp
@@ -538,6 +524,20 @@
                                             @endif
                                         @endforeach
                                     </select> 
+                                </div>
+                            </div>
+                            <div class="row g-4  mt-3">
+                                <div class="col-sm-1">
+                                    <label class="form-label">Color Picker</label>
+                                    <input type="color" class="form-control form-control-md favcolor3" value="#000">
+                                </div>
+                                <div class="col-sm-1 text-end">
+                                    <label class="form-label">Pen</label><br />
+                                    <a href="javascript: void(0)"><i class="fa fa-pencil text-primary pen" data-line-width="3"></i></a>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="form-label">Brush</label><br />
+                                    <a href="javascript: void(0)"><i class="fa fa-paint-brush text-danger brush" data-line-width="25"></i></a>
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
