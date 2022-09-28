@@ -1,6 +1,8 @@
 let odpoints = []; let ospoints = []; let odpoints1 = []; let ospoints1 = []; let odpoints2 = []; let ospoints3 = []; let odpoints3 = []; let ospoints2 = []; let odpoints_paths_array = []; let ospoints_paths_array = []; let odpoints1_paths_array = []; let ospoints1_paths_array = []; let odpoints2_paths_array = []; let ospoints2_paths_array = []; let odpoints3_paths_array = []; let ospoints3_paths_array = [];
-let lwidth = 3; var favcolor = '#000';
-
+let lwidth = 3; let favcolor = '#00bdaa';
+$(function(){
+    $(".favcolor").val('#00bdaa');
+})
 $(".pen, .brush").click(function(){
     lwidth = $(this).data('line-width');
 });

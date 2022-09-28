@@ -241,7 +241,7 @@
                             <div class="row g-4  mt-3">
                                 <div class="col-sm-1">
                                     <label class="form-label">Color Picker</label>
-                                    <input type="color" class="form-control form-control-md favcolor1" value="#000">
+                                    <input type="color" class="form-control form-control-md favcolor1" value="#00bdaa">
                                 </div>
                                 <div class="col-sm-1 text-end">
                                     <label class="form-label">Pen</label><br />
@@ -257,7 +257,7 @@
                                     <label class="form-label">OD</label>
                                     <img id="imgreye" src="{{ ($record->vision_od_img1) ? $record->vision_od_img1 : public_path().'/storage/assets/images/eye-re.jpg' }}" class="d-none">
                                     <img id="imgreye_1" src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="d-none">
-                                    <canvas id="re_eye" style="border: 1px solid #000;"></canvas>
+                                    <canvas id="re_eye" style="border: 1px solid #00bdaa;"></canvas>
                                     <div class="odpoints">
                                         @if($vision)
                                             @foreach($vision as $v)
@@ -274,7 +274,7 @@
                                     <label class="form-label">OS</label>
                                     <img id="imgleye" src="{{ ($record->vision_os_img1) ? $record->vision_os_img1 : public_path().'/storage/assets/images/eye-le.jpg' }}" class="d-none">
                                     <img id="imgleye_1" src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="d-none">
-                                    <canvas id="le_eye" style="border: 1px solid #000;"></canvas>
+                                    <canvas id="le_eye" style="border: 1px solid #00bdaa;"></canvas>
                                     <div class="ospoints">
                                         @if($vision)
                                             @foreach($vision as $v)
@@ -337,7 +337,7 @@
                             <div class="row g-4  mt-3">
                                 <div class="col-sm-1">
                                     <label class="form-label">Color Picker</label>
-                                    <input type="color" class="form-control form-control-md favcolor2" value="#000">
+                                    <input type="color" class="form-control form-control-md favcolor2" value="#00bdaa">
                                 </div>
                                 <div class="col-sm-1 text-end">
                                     <label class="form-label">Pen</label><br />
@@ -353,7 +353,7 @@
                                     <label class="form-label">OD</label>
                                     <img id="imgreye1" src="{{ ($record->vision_od_img2) ? $record->vision_od_img2 : public_path().'/storage/assets/images/od_lens.jpg' }}" class="d-none">
                                     <img id="imgreye1_1" src="{{ public_path().'/storage/assets/images/od_lens.jpg' }}" class="d-none">
-                                    <canvas id="re_eye1" style="border: 1px solid #000;"></canvas>
+                                    <canvas id="re_eye1" style="border: 1px solid #00bdaa;"></canvas>
                                     <div class="odpoints1">
                                         @if($vision)
                                             @foreach($vision as $v)
@@ -370,7 +370,7 @@
                                     <label class="form-label">OS</label>
                                     <img id="imgleye1" src="{{ ($record->vision_os_img2) ? $record->vision_os_img2 : public_path().'/storage/assets/images/os_lens.jpg' }}" class="d-none">
                                     <img id="imgleye1_1" src="{{ public_path().'/storage/assets/images/os_lens.jpg' }}" class="d-none">
-                                    <canvas id="le_eye1" style="border: 1px solid #000;"></canvas>
+                                    <canvas id="le_eye1" style="border: 1px solid #00bdaa;"></canvas>
                                     <div class="ospoints1">
                                         @if($vision)
                                             @foreach($vision as $v)
@@ -529,7 +529,7 @@
                             <div class="row g-4  mt-3">
                                 <div class="col-sm-1">
                                     <label class="form-label">Color Picker</label>
-                                    <input type="color" class="form-control form-control-md favcolor3" value="#000">
+                                    <input type="color" class="form-control form-control-md favcolor3" value="#00bdaa">
                                 </div>
                                 <div class="col-sm-1 text-end">
                                     <label class="form-label">Pen</label><br />
@@ -545,7 +545,7 @@
                                     <label class="form-label">OD</label>
                                     <img id="imgreye2" src="{{ ($record->vision_od_img3) ? $record->vision_od_img3 : public_path().'/storage/assets/images/img-round-od.jpg' }}" class="d-none">
                                     <img id="imgreye2_1" src="{{ public_path().'/storage/assets/images/img-round-od.jpg' }}" class="d-none">
-                                    <canvas id="re_eye2" style="border: 1px solid #000;"></canvas>
+                                    <canvas id="re_eye2" style="border: 1px solid #00bdaa;"></canvas>
                                     <div class="odpoints2">
                                         @if($vision)
                                             @foreach($vision as $v)
@@ -562,7 +562,7 @@
                                     <label class="form-label">OS</label>
                                     <img id="imgleye2" src="{{ ($record->vision_os_img3) ? $record->vision_os_img3 : public_path().'/storage/assets/images/img-round-os.jpg' }}" class="d-none">
                                     <img id="imgleye2_1" src="{{ public_path().'/storage/assets/images/img-round-os.jpg' }}" class="d-none">
-                                    <canvas id="le_eye2" style="border: 1px solid #000;"></canvas>
+                                    <canvas id="le_eye2" style="border: 1px solid #00bdaa;"></canvas>
                                     <div class="ospoints2">
                                         @if($vision)
                                             @foreach($vision as $v)
@@ -686,7 +686,7 @@
                             <div class="row g-4  mt-3">
                                 <div class="col-sm-1">
                                     <label class="form-label">Color Picker</label>
-                                    <input type="color" class="form-control form-control-md favcolor4" value="#000">
+                                    <input type="color" class="form-control form-control-md favcolor4" value="#00bdaa">
                                 </div>
                                 <div class="col-sm-1 text-end">
                                     <label class="form-label">Pen</label><br />
@@ -702,7 +702,7 @@
                                     <label class="form-label">OD</label>
                                     <img id="imgreye3" src="{{ ($record->vision_od_img4) ? $record->vision_od_img4 : public_path().'/storage/assets/images/right-eye-od.jpg' }}" class="d-none">
                                     <img id="imgreye3_1" src="{{ public_path().'/storage/assets/images/right-eye-od.jpg' }}" class="d-none">
-                                    <canvas id="re_eye3" style="border: 1px solid #000;"></canvas>
+                                    <canvas id="re_eye3" style="border: 1px solid #00bdaa;"></canvas>
                                     <div class="odpoints3">
                                         @if($vision)
                                             @foreach($vision as $v)
@@ -719,7 +719,7 @@
                                     <label class="form-label">OS</label>
                                     <img id="imgleye3" src="{{ ($record->vision_os_img4) ? $record->vision_os_img4 : public_path().'/storage/assets/images/left-eye-os.jpg' }}" class="d-none">
                                     <img id="imgleye3_1" src="{{ public_path().'/storage/assets/images/left-eye-os.jpg' }}" class="d-none">
-                                    <canvas id="le_eye3" style="border: 1px solid #000;"></canvas>
+                                    <canvas id="le_eye3" style="border: 1px solid #00bdaa;"></canvas>
                                     <div class="ospoints3">
                                         @if($vision)
                                             @foreach($vision as $v)
