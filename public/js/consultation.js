@@ -1,4 +1,15 @@
 let odpoints = []; let ospoints = []; let odpoints1 = []; let ospoints1 = []; let odpoints2 = []; let ospoints3 = []; let odpoints3 = []; let ospoints2 = []; let odpoints_paths_array = []; let ospoints_paths_array = []; let odpoints1_paths_array = []; let ospoints1_paths_array = []; let odpoints2_paths_array = []; let ospoints2_paths_array = []; let odpoints3_paths_array = []; let ospoints3_paths_array = [];
+let lwidth = 3; var favcolor = '#000';
+
+$(".pen, .brush").click(function(){
+    lwidth = $(this).data('line-width');
+});
+
+$(document).on("change", ".favcolor1, .favcolor2, .favcolor3, .favcolor4", function(){
+    favcolor = $(this).val();
+    $(".favcolor").val(favcolor);
+});
+
 $(function(){
     "use strict";
     $(".odpoints span").each(function(){
@@ -175,18 +186,19 @@ function drawOnImage(image, canvasElement, context, cls){
     canvasElement.onmousedown = (e) => {
         isDrawing = true;
         context.beginPath();
-        context.lineWidth = 3;
-        context.strokeStyle = $("#favcolor").val();
+        context.lineWidth = lwidth;
+        //context.strokeStyle = favcolor;
         context.lineJoin = "round";
         context.lineCap = "round";
         context.moveTo(e.offsetX, e.offsetY);
         points = [];
-        points.push({x:e.offsetX, y:e.offsetY, color: $("#favcolor").val()});
+        points.push({x:e.offsetX, y:e.offsetY, color: favcolor});
     };
     
     canvasElement.onmousemove = (e) => {
-        if (isDrawing) {     
-        points.push({x:e.offsetX, y:e.offsetY, color: $("#favcolor").val()});
+        if (isDrawing) {
+        context.strokeStyle = favcolor;     
+        points.push({x:e.offsetX, y:e.offsetY, color: favcolor});
         context.lineTo(e.offsetX , e.offsetY);
         context.stroke();      
         }
@@ -209,38 +221,33 @@ function drawOnImage(image, canvasElement, context, cls){
     };
 }
 
-$("#favcolor").change(function(){
-    var favcolor = $(this).val();
-    $("favcolor").val(favcolor);
-});
-
 $(".btnaddpoints").click(function(){
     var cls = $(this).parent().parent().find(".vision_canvas").val();
     var value = $(this).parent().parent().find(".vision_description").val();
     if(cls == 'odpoints'){
-        odpoints.push({description: value, color: $("#favcolor").val(), type: 'vision_od_img1'});
-        $(".odpoints").append("<span class='badge bg-light' style='color:"+$("#favcolor").val()+"'>" +value+ "</span>");
+        odpoints.push({description: value, color: $(".favcolor").val(), type: 'vision_od_img1'});
+        $(".odpoints").append("<span class='badge bg-light' style='color:"+$(".favcolor").val()+"'>" +value+ "</span>");
     }else if(cls == 'ospoints'){
-        ospoints.push({description: value, color: $("#favcolor").val(), type: 'vision_os_img1'});
-        $(".ospoints").append("<span class='badge bg-light' style='color:"+$("#favcolor").val()+"'>" +value+ "</span>");
+        ospoints.push({description: value, color: $(".favcolor").val(), type: 'vision_os_img1'});
+        $(".ospoints").append("<span class='badge bg-light' style='color:"+$(".favcolor").val()+"'>" +value+ "</span>");
     }else if(cls == 'odpoints1'){
-        odpoints1.push({description: value, color: $("#favcolor").val(), type: 'vision_od_img2'});
-        $(".odpoints1").append("<span class='badge bg-light' style='color:"+$("#favcolor").val()+"'>" +value+ "</span>");
+        odpoints1.push({description: value, color: $(".favcolor").val(), type: 'vision_od_img2'});
+        $(".odpoints1").append("<span class='badge bg-light' style='color:"+$(".favcolor").val()+"'>" +value+ "</span>");
     }else if(cls == 'ospoints1'){
-        ospoints1.push({description: value, color: $("#favcolor").val(), type: 'vision_os_img2'});
-        $(".ospoints1").append("<span class='badge bg-light' style='color:"+$("#favcolor").val()+"'>" +value+ "</span>");
+        ospoints1.push({description: value, color: $(".favcolor").val(), type: 'vision_os_img2'});
+        $(".ospoints1").append("<span class='badge bg-light' style='color:"+$(".favcolor").val()+"'>" +value+ "</span>");
     }else if(cls == 'odpoints2'){
-        odpoints2.push({description: value, color: $("#favcolor").val(), type: 'vision_od_img3'});
-        $(".odpoints2").append("<span class='badge bg-light' style='color:"+$("#favcolor").val()+"'>" +value+ "</span>");
+        odpoints2.push({description: value, color: $(".favcolor").val(), type: 'vision_od_img3'});
+        $(".odpoints2").append("<span class='badge bg-light' style='color:"+$(".favcolor").val()+"'>" +value+ "</span>");
     }else if(cls == 'ospoints2'){
-        ospoints2.push({description: value, color: $("#favcolor").val(), type: 'vision_os_img3'});
-        $(".ospoints2").append("<span class='badge bg-light' style='color:"+$("#favcolor").val()+"'>" +value+ "</span>");
+        ospoints2.push({description: value, color: $(".favcolor").val(), type: 'vision_os_img3'});
+        $(".ospoints2").append("<span class='badge bg-light' style='color:"+$(".favcolor").val()+"'>" +value+ "</span>");
     }else if(cls == 'odpoints3'){
-        odpoints3.push({description: value, color: $("#favcolor").val(), type: 'vision_od_img4'});
-        $(".odpoints3").append("<span class='badge bg-light' style='color:"+$("#favcolor").val()+"'>" +value+ "</span>");
+        odpoints3.push({description: value, color: $(".favcolor").val(), type: 'vision_od_img4'});
+        $(".odpoints3").append("<span class='badge bg-light' style='color:"+$(".favcolor").val()+"'>" +value+ "</span>");
     }else if(cls == 'ospoints3'){
-        ospoints3.push({description: value, color: $("#favcolor").val(), type: 'vision_os_img4'});
-        $(".ospoints3").append("<span class='badge bg-light' style='color:"+$("#favcolor").val()+"'>" +value+ "</span>");
+        ospoints3.push({description: value, color: $(".favcolor").val(), type: 'vision_os_img4'});
+        $(".ospoints3").append("<span class='badge bg-light' style='color:"+$(".favcolor").val()+"'>" +value+ "</span>");
     }
     $("#visionModal").modal("hide");
 });
@@ -459,8 +466,8 @@ $("#osclear3").click(function(){
 function drawPaths(ctx, arr){
     arr.forEach(path=>{
     ctx.beginPath();
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = $("#favcolor").val();
+    ctx.lineWidth = lwidth;
+    ctx.strokeStyle = $(".favcolor").val();
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     ctx.moveTo(path[0].x,path[0].y);  
