@@ -1152,7 +1152,7 @@
                                     <div class="row mb-3">
                                         <div class="col-sm-4">
                                             <label class="form-label">Medicine Adviced</label>
-                                            <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_id[]">
+                                            <select class="form-control form-control-md select2 medAdvised" name="medicine_id[]">
                                             <option value="">Select</option>
                                             @foreach($medicines as $med)
                                                 <option value="{{ $med->id }}" {{ old('medicine_id') == $dia->id ? 'selected' : '' }}>{{ $med->product_name }}</option>
@@ -1185,7 +1185,7 @@
                                     <div class="row mb-3">
                                         <div class="col-sm-4">
                                         @if($c == 1)<label class="form-label">Medicine Advised</label>@endif
-                                            <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine_id[]">
+                                            <select class="form-control form-control-md select2 medAdvised" name="medicine_id[]">
                                             <option value="">Select</option>
                                             @foreach($medicines as $med)
                                             <option value="{{ $med->id }}" {{ $pmr->medicine == $med->id ? 'selected' : '' }}>{{ $med->product_name }}</option>

@@ -15,9 +15,9 @@
                         <form action="{{ route('patient-medical-record.fetch') }}" method="post">
                             @csrf
                             <div class="row g-4">
-                                <div class="col-sm-3">
-                                    <label class="form-label">MR.ID<sup class="text-danger">*</sup></label>
-                                    <input type="number" value="{{ $search_term }}" name="search_term" class="form-control form-control-md" placeholder="MR.ID">
+                                <div class="col-sm-6">
+                                    <label class="form-label">MR.ID / Patient Name / Patient ID / Patient Mobile No.<sup class="text-danger">*</sup></label>
+                                    <input type="text" value="{{ $search_term }}" name="search_term" class="form-control form-control-md" placeholder="MR.ID / Patient Name / Patient ID / Patient Mobile No.">
                                     @error('search_term')
                                     <small class="text-danger">{{ $errors->first('search_term') }}</small>
                                     @enderror
@@ -37,7 +37,7 @@
                         </form>
                         <div class="mt-5"></div>
                         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Reg.Date</th><th>Medical Record</th><th>Review Date</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Mobile Number</th><th>Doctor</th><th>Reg.Date</th><th>Medical Record</th><th>Review Date</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @foreach($records as $record)
                             <tr class="{{ ($record->status == 0) ? 'text-decoration-line-through' : '' }}">
@@ -45,6 +45,7 @@
                                 <td>{{ $record->id }}</td>
                                 <td>{{ $record->patient_name }}</td>
                                 <td>{{ $record->patient_id }}</td>
+                                <td>{{ $record->mobile_number }}</td>
                                 <td>{{ $record->doctor_name }}</td>
                                 <td>{{ $record->rdate }}</td>
                                 <td class="text-center"><a href="/generate-medical-record/{{ $record->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>

@@ -2,6 +2,13 @@ let odpoints = []; let ospoints = []; let odpoints1 = []; let ospoints1 = []; le
 let lwidth = 3; let favcolor = '#00bdaa';
 $(function(){
     $(".favcolor").val('#00bdaa');
+    $(".medAdvised").change(function(){
+        if($(this).val() === ""){
+            $(this).parent().parent().find(".form-control").each(function(){
+                $(this).val('');
+            })
+        };
+    })
 })
 $(".pen, .brush").click(function(){
     lwidth = $(this).data('line-width');
