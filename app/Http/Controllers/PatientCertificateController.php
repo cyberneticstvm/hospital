@@ -115,6 +115,8 @@ class PatientCertificateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        PC::find($id)->delete();
+        return redirect()->route('certificate.index')
+                        ->with('success','Record deleted successfully');
     }
 }
