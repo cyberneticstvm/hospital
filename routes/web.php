@@ -294,6 +294,13 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/income/delete/{id}/', 'App\Http\Controllers\IncomeController@destroy')->name('income.delete');
     // End Expense //
 
+    // Certificates //
+    Route::get('/consultation/certificates/', 'App\Http\Controllers\PatientCertificateController@index')->name('certificate.index');
+    Route::get('/consultation/certificate/edit/{id}', 'App\Http\Controllers\PatientCertificateController@edit')->name('certificate.edit');
+    Route::put('/consultation/certificate/edit/{id}', 'App\Http\Controllers\PatientCertificateController@update')->name('certificate.update');
+    Route::delete('/consultation/certificate/delete/{id}/', 'App\Http\Controllers\PatientCertificateController@destroy')->name('certificate.delete');
+    // End Certificates //
+
     // OCT/HFA/FFA //
     Route::get('/ohf/', 'App\Http\Controllers\OHFController@index')->name('ohf.index');
     // End OCT/HFA/FFA //
