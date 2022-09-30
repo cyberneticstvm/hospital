@@ -94,7 +94,7 @@
                             <tr><td colspan="6" class="text-end fw-bold">Income from Procedure</td><td class="text-end fw-bold">{{ number_format($procs, 2) }}</td></tr>
                             <tr><td colspan="6" class="text-end fw-bold">Income from Other Sources</td><td class="text-end fw-bold">{{ number_format($income, 2) }}</td></tr> 
                             <tr><td colspan="6" class="text-end fw-bold">Expenses</td><td class="text-end fw-bold">{{ number_format($expense, 2) }}</td></tr>
-                            <tr><td colspan="7" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{ number_format(($tot+$income+$medicine+$pharmacy+$procs)-$expense, 2) }}</td></tr>
+                            <tr><td colspan="6" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{ number_format(($tot+$income+$medicine+$pharmacy+$procs)-$expense, 2) }}</td></tr>
                             </tbody>
                         </table>
                     </div>
