@@ -1174,9 +1174,6 @@
                                             <label class="form-label">Notes.</label>
                                             <input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes' />
                                         </div>
-                                        <div class="col-sm-1">
-                                            <a class="medicineAdvise" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i></a>                                    
-                                        </div>
                                         <div class="col-sm-2">
                                             <label class="form-label">Eye</label>
                                             <select class="form-control form-control-md select2" name="eye[]">
@@ -1184,6 +1181,9 @@
                                                 <option value="R">RE</option>
                                                 <option value="L">LE</option>
                                             </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <a class="medicineAdvise" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i></a>                                    
                                         </div>
                                     </div>
                                 @else
