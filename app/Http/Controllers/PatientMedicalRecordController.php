@@ -180,6 +180,7 @@ class PatientMedicalRecordController extends Controller
             echo "Please enter doctor recommondations";
             die;
         }*/
+        $img1 = NULL; $img2 = NULL; $img3 = NULL; $img4 = NULL; $img5 = NULL; $img6 = NULL; $img7 = NULL; $img8 = NULL;
         $input = $request->all();
 
         $odospoints = json_decode(stripslashes($input['odospoints']), true);
@@ -238,7 +239,7 @@ class PatientMedicalRecordController extends Controller
         $input['created_by'] = $record->getOriginal('created_by');
 
         try{
-            $record->update($input);
+            //$record->update($input);
             DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
             DB::table("patient_medical_records_vision")->where('medical_record_id', $record->id)->delete();
             DB::table("patient_medical_records_retina")->where('medical_record_id', $record->id)->delete();
@@ -261,6 +262,30 @@ class PatientMedicalRecordController extends Controller
             
             if($odospoints):
                 foreach($odospoints as $value):
+                    if($value['type'] == 'vision_od_img1' && !empty($value['description'])):
+                        $img1 = $input['vision_od_img1'];
+                    endif;
+                    if($value['type'] == 'vision_os_img1' && !empty($value['description'])):
+                        $img2 = $input['vision_os_img1'];
+                    endif;
+                    if($value['type'] == 'vision_od_img2' && !empty($value['description'])):
+                        $img3 = $input['vision_od_img2'];
+                    endif;
+                    if($value['type'] == 'vision_os_img2' && !empty($value['description'])):
+                        $img4 = $input['vision_os_img2'];
+                    endif;
+                    if($value['type'] == 'vision_od_img3' && !empty($value['description'])):
+                        $img5 = $input['vision_od_img3'];
+                    endif;
+                    if($value['type'] == 'vision_os_img3' && !empty($value['description'])):
+                        $img6 = $input['vision_os_img3'];
+                    endif;
+                    if($value['type'] == 'vision_od_img4' && !empty($value['description'])):
+                        $img7 = $input['vision_od_img4'];
+                    endif;
+                    if($value['type'] == 'vision_os_img4' && !empty($value['description'])):
+                        $img8 = $input['vision_os_img4'];
+                    endif;
                     DB::table('patient_medical_records_vision')->insert([
                         'medical_record_id' => $record->id,
                         'description' => $value['description'],
@@ -282,6 +307,15 @@ class PatientMedicalRecordController extends Controller
                     ]);
                 endfor;
             endif;
+            $input['vision_od_img1'] = $img1;
+            $input['vision_os_img1'] = $img2;
+            $input['vision_od_img2'] = $img3;
+            $input['vision_os_img2'] = $img4;
+            $input['vision_od_img3'] = $img5;
+            $input['vision_os_img3'] = $img6;
+            $input['vision_od_img4'] = $img7;
+            $input['vision_os_img4'] = $img8;
+            $record->update($input);
             //print_r($odospoints);
             echo "success";
         }catch(Exception $e){
