@@ -80,12 +80,12 @@
                                 <td>{{ $row->patient_name }}</td>
                                 <td class="text-end">{{ $row->doctor_fee }}</td>
                                 <td class="text-end">{{ $row->registration_fee }}</td>
-                                <td class="text-end">{{ number_format($row->doctor_fee+$row->registration_fee+$row->proc_fee, 2) }}</td>
+                                <td class="text-end">{{ number_format($row->doctor_fee+$row->registration_fee, 2) }}</td>
                             </tr>
                             @php 
                                 $doc_fee_tot += $row->doctor_fee;
                                 $reg_fee_tot += $row->registration_fee;
-                                $tot += $row->doctor_fee+$row->registration_fee+$row->proc_fee;
+                                $tot += $row->doctor_fee+$row->registration_fee;
                             @endphp
                             @empty
                             @endforelse
