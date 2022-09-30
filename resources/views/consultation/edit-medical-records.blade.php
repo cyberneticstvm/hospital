@@ -1177,12 +1177,20 @@
                                         <div class="col-sm-1">
                                             <a class="medicineAdvise" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i></a>                                    
                                         </div>
+                                        <div class="col-sm-2">
+                                            <label class="form-label">Eye</label>
+                                            <select class="form-control form-control-md select2" name="eye[]">
+                                                <option value="B">Both</option>
+                                                <option value="R">RE</option>
+                                                <option value="L">LE</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 @else
                                     @php $c = 0; @endphp
                                     @foreach($medicine_record as $pmr)
                                         @php $c++; @endphp
-                                    <div class="row mb-3">
+                                    <div class="row mb-3">                                        
                                         <div class="col-sm-4">
                                         @if($c == 1)<label class="form-label">Medicine Advised</label>@endif
                                             <select class="form-control form-control-md select2 medAdvised" name="medicine_id[]">
@@ -1206,6 +1214,14 @@
                                         <div class="col-sm-2">
                                         @if($c == 1)<label class="form-label">Notes.</label>@endif
                                             <input type='text' class='form-control form-control-md' name='notes[]' value="{{ $pmr->notes }}" placeholder='Notes' />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            @if($c == 1)<label class="form-label"><label class="form-label">Eye</label>@endif
+                                            <select class="form-control" name="eye[]">
+                                                <option value="B" {{ ($pmr->eye == 'B') ? 'selected' : '' }}>Both</option>
+                                                <option value="R" {{ ($pmr->eye == 'R') ? 'selected' : '' }}>RE</option>
+                                                <option value="L" {{ ($pmr->eye == 'L') ? 'selected' : '' }}>LE</option>
+                                            </select>
                                         </div>
                                         @if($c == 1)
                                             <div class="col-sm-1">
