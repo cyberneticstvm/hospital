@@ -70,7 +70,7 @@
                 <div class="card">
                     <div class="card-body">
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
-                            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient ID</th><th>Patient Name</th><th class="text-end" title="Doctor Fee">Doc.Fee</th><th class="text-end" title="Registration Fee">Reg.Fee</th><th class="text-end" title="Procedure Fee">Proc.Fee</th><th class="text-end">Total</th></tr></thead><tbody>
+                            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient ID</th><th>Patient Name</th><th class="text-end" title="Doctor Fee">Doc.Fee</th><th class="text-end" title="Registration Fee">Reg.Fee</th><th class="text-end">Total</th></tr></thead><tbody>
                             @php $c = 1; $doc_fee_tot = 0; $reg_fee_tot = 0; $proc_fee_tot = 0; $tot = 0; @endphp
                             @forelse($records as $key => $row)
                             <tr>
@@ -80,23 +80,21 @@
                                 <td>{{ $row->patient_name }}</td>
                                 <td class="text-end">{{ $row->doctor_fee }}</td>
                                 <td class="text-end">{{ $row->registration_fee }}</td>
-                                <td class="text-end">{{ $row->proc_fee }}</td>
                                 <td class="text-end">{{ number_format($row->doctor_fee+$row->registration_fee+$row->proc_fee, 2) }}</td>
                             </tr>
                             @php 
                                 $doc_fee_tot += $row->doctor_fee;
                                 $reg_fee_tot += $row->registration_fee;
-                                $proc_fee_tot += $row->proc_fee;
                                 $tot += $row->doctor_fee+$row->registration_fee+$row->proc_fee;
                             @endphp
                             @empty
                             @endforelse
-                            <tr><td colspan="4" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{ number_format($doc_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($reg_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($proc_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($tot, 2) }}</td></tr>                                                       
-                            <tr><td colspan="7" class="text-end fw-bold">Income from Pharmacy</td><td class="text-end fw-bold">{{ number_format($medicine+$pharmacy, 2) }}</td></tr>
-                            <tr><td colspan="7" class="text-end fw-bold">Income from Procedure</td><td class="text-end fw-bold">{{ number_format($procs, 2) }}</td></tr>
-                            <tr><td colspan="7" class="text-end fw-bold">Income from Other Sources</td><td class="text-end fw-bold">{{ number_format($income, 2) }}</td></tr> 
-                            <tr><td colspan="7" class="text-end fw-bold">Expenses</td><td class="text-end fw-bold">{{ number_format($expense, 2) }}</td></tr>
-                            <tr><td colspan="7" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{ number_format(($tot+$income+$medicine+$pharmacy)-$expense, 2) }}</td></tr>
+                            <tr><td colspan="3" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{ number_format($doc_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($reg_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($proc_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($tot, 2) }}</td></tr>                                                       
+                            <tr><td colspan="6" class="text-end fw-bold">Income from Pharmacy</td><td class="text-end fw-bold">{{ number_format($medicine+$pharmacy, 2) }}</td></tr>
+                            <tr><td colspan="6" class="text-end fw-bold">Income from Procedure</td><td class="text-end fw-bold">{{ number_format($procs, 2) }}</td></tr>
+                            <tr><td colspan="6" class="text-end fw-bold">Income from Other Sources</td><td class="text-end fw-bold">{{ number_format($income, 2) }}</td></tr> 
+                            <tr><td colspan="6" class="text-end fw-bold">Expenses</td><td class="text-end fw-bold">{{ number_format($expense, 2) }}</td></tr>
+                            <tr><td colspan="7" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{ number_format(($tot+$income+$medicine+$pharmacy+$procs)-$expense, 2) }}</td></tr>
                             </tbody>
                         </table>
                     </div>
