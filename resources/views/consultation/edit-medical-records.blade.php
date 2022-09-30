@@ -1176,7 +1176,7 @@
                                         </div>
                                         <div class="col-sm-1">
                                             <label class="form-label">Eye</label>
-                                            <select class="form-control form-control-md select2" name="eye[]">
+                                            <select class="form-control form-control-md" name="eye[]">
                                                 <option value="B">Both</option>
                                                 <option value="R">RE</option>
                                                 <option value="L">LE</option>
