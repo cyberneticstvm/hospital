@@ -40,9 +40,10 @@ class ReportController extends Controller
         })->select('pref.id', 'pr.patient_id', 'pr.patient_name', 'pref.doctor_fee', 'pr.registration_fee', DB::raw("IFNULL(SUM(pp.fee), 0.00) as proc_fee"))->where('pr.branch', $request->branch)->whereBetween('pref.created_at', [$startDate, $endDate])->where('pref.status', 1)->groupBy('pref.id')->get();
         $income = DB::table('incomes')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->sum('amount');
         $expense = DB::table('expenses')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->sum('amount');
+        $procs = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->where('pmr.branch', $request->branch)->whereBetween('pp.created_at', [$startDate, $endDate])->sum('fee');
         $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $request->branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
         $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('m.status', 1)->where('p.branch', $request->branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('m.total');
-        return view('reports.daybook', compact('branches', 'records', 'inputs', 'income', 'expense', 'pharmacy', 'medicine'));
+        return view('reports.daybook', compact('branches', 'records', 'inputs', 'income', 'expense', 'pharmacy', 'medicine', 'procs'));
     }
     public function showincomeexpense(){
         $branches = Branch::all();
