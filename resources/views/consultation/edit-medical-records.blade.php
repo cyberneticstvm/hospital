@@ -1174,7 +1174,7 @@
                                             <label class="form-label">Notes.</label>
                                             <input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes' />
                                         </div>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-1">
                                             <label class="form-label">Eye</label>
                                             <select class="form-control form-control-md select2" name="eye[]">
                                                 <option value="B">Both</option>
@@ -1215,7 +1215,7 @@
                                         @if($c == 1)<label class="form-label">Notes.</label>@endif
                                             <input type='text' class='form-control form-control-md' name='notes[]' value="{{ $pmr->notes }}" placeholder='Notes' />
                                         </div>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-1">
                                             @if($c == 1)<label class="form-label"><label class="form-label">Eye</label>@endif
                                             <select class="form-control" name="eye[]">
                                                 <option value="B" {{ ($pmr->eye == 'B') ? 'selected' : '' }}>Both</option>
