@@ -89,7 +89,7 @@
                             @endphp
                             @empty
                             @endforelse
-                            <tr><td colspan="3" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{ number_format($doc_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($reg_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($proc_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($tot, 2) }}</td></tr>                                                       
+                            <tr><td colspan="3" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{ number_format($doc_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($reg_fee_tot, 2) }}</td><td class="text-end fw-bold">{{ number_format($tot, 2) }}</td></tr>                                                       
                             <tr><td colspan="6" class="text-end fw-bold">Income from Pharmacy</td><td class="text-end fw-bold">{{ number_format($medicine+$pharmacy, 2) }}</td></tr>
                             <tr><td colspan="6" class="text-end fw-bold">Income from Procedure</td><td class="text-end fw-bold">{{ number_format($procs, 2) }}</td></tr>
                             <tr><td colspan="6" class="text-end fw-bold">Income from Other Sources</td><td class="text-end fw-bold">{{ number_format($income, 2) }}</td></tr> 
