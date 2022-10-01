@@ -244,7 +244,7 @@ class PDFController extends Controller
         return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
     }
     public function visioncertificate($id){
-        $patient = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->select('pr.patient_name', 'pr.age')->first();
+        $patient = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->select('pr.patient_name', 'pr.age')->where('pmr.id', $id)->first();
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));         
         $pdf = PDF::loadView('/pdf/license/vision', compact('qrcode', 'patient'));    
         return $pdf->stream('vision.pdf', array("Attachment"=>0));
