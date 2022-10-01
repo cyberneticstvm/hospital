@@ -287,12 +287,15 @@ Route::group(['middleware' => ['auth']], function(){
     // End Expenses //
 
     // Income //
-    Route::get('/income/', 'App\Http\Controllers\IncomeController@index')->name('income.index');
+    /*Route::get('/income/', 'App\Http\Controllers\IncomeController@index')->name('income.index');
     Route::get('/income/create/', 'App\Http\Controllers\IncomeController@create')->name('income.create');
     Route::post('/income/create/', 'App\Http\Controllers\IncomeController@store')->name('income.save');
     Route::get('/income/edit/{id}/', 'App\Http\Controllers\IncomeController@edit')->name('income.edit');
     Route::put('/income/edit/{id}/', 'App\Http\Controllers\IncomeController@update')->name('income.update');
-    Route::delete('/income/delete/{id}/', 'App\Http\Controllers\IncomeController@destroy')->name('income.delete');
+    Route::delete('/income/delete/{id}/', 'App\Http\Controllers\IncomeController@destroy')->name('income.delete');*/
+
+    Route::get('/income/', 'App\Http\Controllers\IncomeController@fetch')->name('income.fetch');
+    Route::post('/income/', 'App\Http\Controllers\IncomeController@show')->name('income.show');
     // End Expense //
 
     // Certificates //

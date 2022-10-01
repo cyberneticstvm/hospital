@@ -66,9 +66,26 @@ class IncomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function fetch(){
+        $medical_record_number = ""; $heads = []; $pmodes = [];
+        $reg_fee = 0.00; $consultation_fee = 0.00; $procedure_fee = 0.00; $certificate_fee = 0.00; $medicine = 0.00; $tot = 0.00;
+        return view('income.fetch', compact('medical_record_number', 'heads', 'pmodes', 'reg_fee', 'consultation_fee', 'procedure_fee', 'certificate_fee', 'medicine', 'tot'));
+    }
+    public function show(Request $request)
     {
-        //
+        $this->validate($request, [
+            'medical_record_number' => 'required',
+        ]);
+        $heads = DB::table('income_expense_heads')->where('type', 'I')->where('category', 'patient')->orderBy('name')->get();
+        $pmodes = DB::table('payment_modes')->orderBy('name')->get();
+        $medical_record_number = $request->medical_record_number;
+        $reg_fee = 0.00;
+        $consultation_fee = 0.00;
+        $procedure_fee = 0.00;
+        $certificate_fee = 0.00;
+        $medicine = 0.00;
+        $tot = $reg_fee+$consultation_fee+$procedure_fee+$certificate_fee+$medicine;
+        return view('income.fetch', compact('medical_record_number', 'heads', 'pmodes', 'reg_fee', 'consultation_fee', 'procedure_fee', 'certificate_fee', 'medicine', 'tot'));
     }
 
     /**
