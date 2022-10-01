@@ -45,7 +45,7 @@ class PDFController extends Controller
 
     public function pharmacybill($id){
         $medical_record = DB::table('patient_medical_records')->find($id);
-        $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->select('p.product_name', 'p.hsn', 'm.batch_number', 'm.qty', 'm.price', 'm.tax_percentage', 'm.total', 'pd.expiry_date')->leftJoin('purchase_details as pd', function($join){
+        $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->select('p.product_name', 'p.hsn', 'm.batch_number', 'm.qty', 'm.price', 'm.tax_percentage', 'm.total', 'pd.expiry_date', DB::raw("CASE WHEN m.eye = 'R' THEN 'RE' WHEN m.eye='L' THEN 'LE' ELSE 'Both' END AS eye"))->leftJoin('purchase_details as pd', function($join){
             $join->on('pd.product', '=', 'm.medicine')->on('pd.batch_number', '=', 'm.batch_number');
         })->where('m.medical_record_id', $id)->groupBy('p.product_name', 'p.hsn', 'm.batch_number', 'm.qty', 'm.price', 'm.tax_percentage', 'm.total', 'pd.expiry_date')->get();
         $patient = DB::table('patient_registrations')->find($medical_record->patient_id);     

@@ -56,6 +56,7 @@
             <tr>
                 <td>SLNo.</td>
                 <td width="30%">ITEM NAME</td>
+                <td>Eye</td>
                 <td>HSN</td>
                 <td>BATCH</td>
                 <td>EXPIRY</td>
@@ -72,6 +73,7 @@
                 <tr>
                     <td>{{ $c++ }}</td>
                     <td>{{ $medicine->product_name }}</td>
+                    <td>{{ $medicine->eye }}</td>
                     <td>{{ $medicine->hsn }}</td>
                     <td>{{ $medicine->batch_number }}</td>
                     <td>{{ ($medicine->expiry_date) ? date('d/M/Y', strtotime($medicine->expiry_date)) : '' }}</td>
@@ -85,7 +87,7 @@
                     {{ $net_total += $tot }}
                 </tr>
             @endforeach
-            <tr><td colspan="9" class="text-right">Total</td><td class="text-right">{{ number_format($tax_total, 2) }}</td><td class="text-right">{{ number_format($net_total, 2) }}</td></tr>
+            <tr><td colspan="10" class="text-right">Total</td><td class="text-right">{{ number_format($tax_total, 2) }}</td><td class="text-right">{{ number_format($net_total, 2) }}</td></tr>
         </tbody>
     </table>
 </body>
