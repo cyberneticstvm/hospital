@@ -66,7 +66,7 @@
         <p><b>Certificate of Medical Fitness</b></p>
     </center>
     <p>I certify that:</p>
-    (i) I have personally examined the applicant Shri/Smt/Kum {{ $patient->patient_name }}<br/><br/>
+    (i) I have personally examined the applicant Shri/Smt/Kum <b>{{ $patient->patient_name }}</b><br/><br/>
     (ii) that while examining the applicant I have directed special attention to his/her distant vision;<br/><br/>
     (iii) while examining the applicant, I have directed special attention to his/her hearing ability, the condition of the
     arms, legs, hands and joints of both extremities of the applicant; and<br/><br/>
