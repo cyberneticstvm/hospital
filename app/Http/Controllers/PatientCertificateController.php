@@ -23,7 +23,7 @@ class PatientCertificateController extends Controller
    }
     public function index()
     {
-        $records = DB::table('patient_certificates as pc')->leftJoin('patient_registrations as pr', 'pc.patient_id', '=', 'pr.id')->leftJoin('branches as b', 'b.id', '=', 'pc.branch_id')->leftJoin('doctors as d', 'd.id', '=', 'pc.doctor_id')->select('pc.id', 'pr.patient_id', 'pr.patient_name', 'b.branch_name', 'd.doctor_name', DB::raw("DATE_FORMAT(pc.created_at, '%d/%b/%Y') AS cdate"))->whereDate('pc.created_at', Carbon::today())->orderByDesc('pc.id')->get();
+        $records = DB::table('patient_certificates as pc')->leftJoin('patient_registrations as pr', 'pc.patient_id', '=', 'pr.id')->leftJoin('branches as b', 'b.id', '=', 'pc.branch_id')->leftJoin('doctors as d', 'd.id', '=', 'pc.doctor_id')->select('pc.id', 'pr.patient_id', 'pr.patient_name', 'b.branch_name', 'pc.medical_record_id', 'd.doctor_name', DB::raw("DATE_FORMAT(pc.created_at, '%d/%b/%Y') AS cdate"))->whereDate('pc.created_at', Carbon::today())->orderByDesc('pc.id')->get();
         return view('certificate.index', compact('records'));
     }
 

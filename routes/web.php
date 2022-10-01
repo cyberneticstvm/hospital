@@ -329,6 +329,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/lab/clinic/bill/{id}/', [PDFController::class, 'clinicbill']);
     Route::get('/lab/clinic/report/{id}/', [PDFController::class, 'clinicreport']);
     Route::get('/pharmacy/receipt/{id}/', [PDFController::class, 'pharmacyreceipt']);
+    Route::get('/license/vision/{id}/', [PDFController::class, 'visioncertificate']);
+    Route::get('/license/medical/{id}/', [PDFController::class, 'medicalcertificate']);
     // End PDFs //
 
     // Settings //

@@ -9,7 +9,7 @@
 <div class="card mb-4 border-0">
     <div class="card-body">
         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-            <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Branch</th><th>Date</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Branch</th><th>Date</th><th>Vision</th><th>Medical</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($records as $record)
                 <tr>
@@ -19,6 +19,8 @@
                     <td>{{ $record->doctor_name }}</td>
                     <td>{{ $record->branch_name }}</td>
                     <td>{{ $record->cdate }}</td>
+                    <td class="text-center"><a href="/license/vision/{{ $record->medical_record_id }}/" target="_blank"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
+                    <td class="text-center"><a href="/license/medical/{{ $record->medical_record_id }}/" target="_blank"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('certificate.edit', $record->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
                         <form method="post" action="{{ route('certificate.delete', $record->id) }}">
