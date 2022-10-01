@@ -1148,8 +1148,13 @@
                                     @enderror
                                 </div>
                             </div>
-                                @if($medicine_record->isEmpty())
+                                @if($medicine_record->isEmpty())                                    
                                     <div class="row mb-3">
+                                        <input type='hidden' name='price[]' value='0.00' />
+                                        <input type='hidden' name='discount[]' value='0.00' />
+                                        <input type='hidden' name='tax_amount[]' value='0.00' />
+                                        <input type='hidden' name='tax_percentage[]' value='0.00' />
+                                        <input type='hidden' name='total[]' value='0.00' />
                                         <div class="col-sm-4">
                                             <label class="form-label">Medicine Adviced</label>
                                             <select class="form-control form-control-md select2 medAdvised" name="medicine_id[]">
@@ -1164,11 +1169,11 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <label class="form-label">Dosage</label>
-                                            <input type="text" name="dosage[]" class="form-control form-control-md" placeholder="Eg: Daily 3 Drops"/>
+                                            <input type="text" name="dosage[]" class="form-control form-control-md dos" placeholder="Eg: Daily 3 Drops"/>
                                         </div>
                                         <div class="col-sm-1">
                                             <label class="form-label">Qty / NOs.</label>
-                                            <input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' />
+                                            <input type='number' class='form-control form-control-md qty' name='qty[]' placeholder='0' />
                                         </div>
                                         <div class="col-sm-2">
                                             <label class="form-label">Notes.</label>
@@ -1190,7 +1195,12 @@
                                     @php $c = 0; @endphp
                                     @foreach($medicine_record as $pmr)
                                         @php $c++; @endphp
-                                    <div class="row mb-3">                                        
+                                    <div class="row mb-3">
+                                        <input type='hidden' name='price[]' value='{{ $pmr->price }}' />
+                                        <input type='hidden' name='discount[]' value='{{ $pmr->discount }}' />
+                                        <input type='hidden' name='tax_amount[]' value='{{ $pmr->tax_amount }}' />
+                                        <input type='hidden' name='tax_percentage[]' value='{{ $pmr->tax_percentage }}' />
+                                        <input type='hidden' name='total[]' value='{{ $pmr->total }}' />                                        
                                         <div class="col-sm-4">
                                         @if($c == 1)<label class="form-label">Medicine Advised</label>@endif
                                             <select class="form-control form-control-md select2 medAdvised" name="medicine_id[]">
@@ -1205,11 +1215,11 @@
                                         </div>
                                         <div class="col-sm-2">
                                         @if($c == 1)<label class="form-label">Dosage</label>@endif
-                                            <input type="text" name="dosage[]" class="form-control form-control-md" value="{{ $pmr->dosage }}" placeholder="Eg: Daily 3 Drops"/>
+                                            <input type="text" name="dosage[]" class="form-control form-control-md dos" value="{{ $pmr->dosage }}" placeholder="Eg: Daily 3 Drops"/>
                                         </div>
                                         <div class="col-sm-1">
                                         @if($c == 1)<label class="form-label">Qty / NOs.</label>@endif
-                                            <input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' value="{{ $pmr->qty }}" />
+                                            <input type='number' class='form-control form-control-md qty' name='qty[]' placeholder='0' value="{{ $pmr->qty }}" />
                                         </div>
                                         <div class="col-sm-2">
                                         @if($c == 1)<label class="form-label">Notes.</label>@endif

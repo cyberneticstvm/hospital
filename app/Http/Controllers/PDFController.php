@@ -79,7 +79,7 @@ class PDFController extends Controller
         $v_os_3 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_os_img3')->where('medical_record_id', $id)->value('names');
         $v_od_4 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_od_img4')->where('medical_record_id', $id)->value('names');
         $v_os_4 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_os_img4')->where('medical_record_id', $id)->value('names');
-        $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->select('p.product_name', 'm.dosage', 'm.notes', 'm.qty')->where('m.medical_record_id', $id)->get();
+        $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->select('p.product_name', 'm.dosage', 'm.notes', 'm.qty', DB::raw("CASE WHEN m.eye = 'R' THEN 'RE' WHEN m.eye='L' THEN 'LE' ELSE 'Both' END AS eye"))->where('m.medical_record_id', $id)->get();
         $patient = DB::table('patient_registrations')->find($record->patient_id);
         $reference = DB::table('patient_references')->find($record->mrn);     
         $doctor = DB::table('doctors')->find($record->doctor_id);

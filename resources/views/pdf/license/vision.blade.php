@@ -26,7 +26,7 @@
         <i>(see instructions overleaf before filling up the certificate)</i>
     </center>
     <br/><br/>
-    <p>I have examined Shri/Smt <strong>{{ $patient->patient_name }}</strong> aged <strong>{{ $patient->age }}</strong> and his/her visual standards are as follows:</p>
+    <p>I have examined Shri/Smt <strong>{{ $patient->patient_name }}</strong> aged ............. and his/her visual standards are as follows:</p>
     <table class="no-border" width="100%">
     <tr>
         <td class="w-50">

@@ -68,7 +68,7 @@ class PatientCertificateController extends Controller
     public function edit($id)
     {
         $ctypes = DB::table('certificate_types')->where('category', 'license')->get();
-        $certificate = DB::table('patient_certificates as pc')->leftJoin('patient_registrations as pr', 'pc.patient_id', '=', 'pr.id')->leftJoin('branches as b', 'b.id', '=', 'pc.branch_id')->leftJoin('doctors as d', 'd.id', '=', 'pc.doctor_id')->select('pc.*', 'pr.patient_id', 'pr.patient_name', 'b.branch_name', 'd.doctor_name', DB::raw("DATE_FORMAT(pc.created_at, '%d/%b/%Y') AS cdate"))->first();
+        $certificate = DB::table('patient_certificates as pc')->leftJoin('patient_registrations as pr', 'pc.patient_id', '=', 'pr.id')->leftJoin('branches as b', 'b.id', '=', 'pc.branch_id')->leftJoin('doctors as d', 'd.id', '=', 'pc.doctor_id')->select('pc.*', 'pr.patient_id', 'pr.patient_name', 'b.branch_name', 'd.doctor_name', DB::raw("DATE_FORMAT(pc.created_at, '%d/%b/%Y') AS cdate"))->where('pc.id', $id)->first();
         $details = DB::table('patient_certificate_details')->where('patient_certificate_id', $id)->get();
         return view('certificate.edit', compact('ctypes', 'certificate', 'details'));
     }

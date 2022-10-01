@@ -253,7 +253,13 @@ class PatientMedicalRecordController extends Controller
                             'medicine' => $input['medicine'][$i],
                             'dosage' => $input['dosage'][$i],
                             'qty' => $input['qty'][$i],
+                            'price' => $input['price'][$i],
+                            'discount' => $input['discount'][$i],
+                            'tax_amount' => $input['tax_amount'][$i],
+                            'tax_percentage' => $input['tax_percentage'][$i],
+                            'total' => $input['total'][$i],
                             'notes' => $input['notes'][$i],
+                            'status' => ($input['price'][$i] > 0) ? 1 : 0,
                             'created_at' => Carbon::now(),
                         ]);
                     endif;

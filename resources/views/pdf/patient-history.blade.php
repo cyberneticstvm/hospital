@@ -55,7 +55,7 @@
         $symptoms = DB::table('symptoms')->whereIn('id', $sympt)->get();
         $diagnosis = DB::table('diagnosis')->whereIn('id', $diag)->get();
         $spectacle = DB::table('spectacles')->where('medical_record_id', $mrecord->id)->first();
-        $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->where('m.medical_record_id', $mrecord->id)->select('p.product_name', 'm.dosage', 'm.qty', 'm.notes')->get();
+        $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->where('m.medical_record_id', $mrecord->id)->select('p.product_name', 'm.dosage', 'm.qty', 'm.notes', DB::raw("CASE WHEN m.eye = 'R' THEN 'RE' WHEN m.eye='L' THEN 'LE' ELSE 'Both' END AS eye"))->get();
         $labc = DB::table('lab_clinics as lc')->leftJoin('lab_types as lt', 'lc.lab_type_id', '=', 'lt.id')->where('lc.medical_record_id', $mrecord->id)->select('lt.lab_type_name', 'lc.notes', 'lc.lab_result', 'lc.tested_from')->get();
         $labr = DB::table('lab_radiologies as lr')->leftJoin('lab_types as lt', 'lr.lab_type_id', '=', 'lt.id')->where('lr.medical_record_id', $mrecord->id)->select('lt.lab_type_name', 'lr.notes', 'lr.lab_result', 'lr.tested_from')->get();
 
@@ -352,7 +352,7 @@
     @if(count($medicines) > 0)
     <p> Medicine / Lab Advised</p>
     <table width="100%" class="table-bordered" cellspacing="0" cellpadding="0">
-        <thead><td>SL No.</td><td>Medicine Name</td><td>Dosage</td><td>Qty</td><td>Notes</td></thead>
+        <thead><td>SL No.</td><td>Medicine Name</td><td>Dosage</td><td>Qty</td><td>Notes</td><td>Eye</td></thead>
         <tbody>
         @php $c = 1 @endphp
         @foreach($medicines as $medicine)
@@ -362,6 +362,7 @@
             <td>{{ $medicine->dosage }}</td>
             <td class="text-right">{{ $medicine->qty }}</td>
             <td>{{ $medicine->notes }}</td>            
+            <td>{{ $medicine->eye }}</td>            
         </tr>
         @endforeach
         </tbody>

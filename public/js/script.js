@@ -81,9 +81,9 @@ $(function() {
     });
 
     $(".medicineAdvise").click(function(){    
-        $(".medicineAdviseContainer").append("<div class='row mb-3'><div class='col-sm-4'><select class='form-control form-control-md select2 selMedicine' data-placeholder='Select' name='medicine_id[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-2'><input type='text' name='dosage[]' class='form-control form-control-md' placeholder='Eg: Daily 3 Drops'/></div><div class='col-sm-1'><input type='number' class='form-control form-control-md' name='qty[]' placeholder='0' /></div><div class='col-sm-2'><input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes'/></div><div class='col-sm-1'><select class='form-control' name='eye[]'><option value='B'>Both</option><option value='R'>RE</option><option value='L'>LE</option></select></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");        
-        $('.selMedicine').select2();
-        bindDDL('medicine', 'selMedicine');
+        $(".medicineAdviseContainer").append("<div class='row mb-3'><input type='hidden' name='price[]' value='0.00' /><input type='hidden' name='discount[]' value='0.00' /><input type='hidden' name='tax_amount[]' value='0.00' /><input type='hidden' name='tax_percentage[]' value='0.00' /><input type='hidden' name='total[]' value='0.00' /><div class='col-sm-4'><select class='form-control form-control-md select2 medAdvised' data-placeholder='Select' name='medicine_id[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-2'><input type='text' name='dosage[]' class='form-control form-control-md dos' placeholder='Eg: Daily 3 Drops'/></div><div class='col-sm-1'><input type='number' class='form-control form-control-md qty' name='qty[]' placeholder='0' /></div><div class='col-sm-2'><input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes'/></div><div class='col-sm-1'><select class='form-control' name='eye[]'><option value='B'>Both</option><option value='R'>RE</option><option value='L'>LE</option></select></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");        
+        $('.medAdvised').select2();
+        bindDDL('medicine', 'medAdvised');
     });
 
     $(".medicineRow").click(function(){

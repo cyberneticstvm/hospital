@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\HelperController;
 
 /*
 |--------------------------------------------------------------------------
@@ -311,6 +312,10 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/reports/income-expense/', 'App\Http\Controllers\ReportController@showincomeexpense')->name('reports.showincomeexpense');
     Route::post('/reports/income-expense/', 'App\Http\Controllers\ReportController@fetchincomeexpense')->name('reports.fetchincomeexpense');
     // End Reports //
+
+    // Helper //
+    Route::get('/helper/getmedicinetype/{mid}', 'App\Http\Controllers\HelperController@getMedicineType');
+    // End Helper //
 
     // PDFs //
     Route::get('/patient-history/{id}/', [PDFController::class, 'patienthistory'])->name('patienthistory');

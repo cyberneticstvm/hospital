@@ -2,11 +2,23 @@ let odpoints = []; let ospoints = []; let odpoints1 = []; let ospoints1 = []; le
 let lwidth = 3; let favcolor = '#00bdaa';
 $(function(){
     $(".favcolor").val('#00bdaa');
-    $(".medAdvised").change(function(){
-        if($(this).val() === ""){
-            $(this).parent().parent().find(".form-control").each(function(){
+    $(document).on('change', ".medAdvised", function(){
+        var mid = $(this).val();
+        var dis = $(this).parent().parent();
+        if(mid === ""){
+            dis.find(".form-control").each(function(){
                 $(this).val('');
             })
+        }else{
+            $.ajax({
+                type: 'GET',
+                url: '/helper/getmedicinetype/'+mid,
+                data: {'mid': mid},
+                success: function(data){
+                    dis.find('.qty').val(data.default_qty);           
+                    dis.find('.dos').val(data.default_dosage);           
+                }
+            });
         };
     })
 })
