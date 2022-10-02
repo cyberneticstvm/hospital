@@ -49,7 +49,7 @@ class IncomeExpenseHeadController extends Controller
             'type' => 'required',
         ]);
         $input = $request->all();
-        $branch = IncomeExpenseHead::create($input);
+        $iehead = IncomeExpenseHead::create($input);
         return redirect()->route('income-expense-heads.index')
                         ->with('success','Head created successfully');
     }

@@ -17,20 +17,16 @@
                             <div class="row g-4">
                                 <div class="col-sm-3">
                                     <label class="form-label">Medical Record ID (MR.ID)<sup class="text-danger">*</sup></label>
-                                    <input type="number" value="{{ $medical_record_number }}" name="medical_record_number" class="form-control form-control-md" placeholder="Mediical Record Number">
+                                    <input type="number" value="{{ $medical_record_id }}" name="medical_record_id" class="form-control form-control-md" placeholder="Mediical Record ID">
+                                    @error('medical_record_id')
+                                    <small class="text-danger">{{ $errors->first('medical_record_id') }}</small>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">&nbsp;</label>
                                     <button type="submit" class="btn btn-primary btn-submit w-100">Fetch</button>
                                 </div>
                             </div>
-                            @if (count($errors) > 0)
-                            <div role="alert" class="text-danger mt-3">
-                                @foreach ($errors->all() as $error)
-                                    {{ $error }}
-                                @endforeach
-                            </div>
-                            @endif
                         </form>
                     </div>
                 </div>
@@ -44,24 +40,28 @@
                 </div>
                 <div class="card">
                     <div class="card-body table-responsive">
-                        <form action="" method="post">
+                        <form id="frm-patient-payment" action="{{ route('income.update') }}" method="post">
                             @csrf
+                            <input type="hidden" name="medical_record_id" value="{{ $medical_record_id }}" />
                             <table class="table table-sm table-striped table-hover align-middle">
                                 <thead><tr><th>Income Head</th><th>Amount</th></tr></thead>
                                 <tbody>
                                     @forelse($heads as $key => $head)
-                                        <tr><td>{{ $head->name }}</td><td class="text-right">{{ $reg_fee }}</td></tr>
+                                        <tr><td>{{ $head->name }}</td><td class="text-right">{{ number_format($fee[$key], 2) }}</td></tr>
                                     @empty
                                     @endif
                                 </tbody>
                                 <tfoot>
-                                    <tr><th class="text-end fw-bold">Total</th><th class="text-end fw-bold">{{ $tot }}</th></tr>
+                                    <tr><th class="text-end fw-bold">Total</th><th class="text-end fw-bold">{{ number_format($tot, 2) }}</th></tr>
                                 </tfoot>
                             </table>
                             <div class="row g-4">
                                 <div class="col-sm-3">
                                     <label class="form-label">Amount<sup class="text-danger">*</sup></label>
                                     <input type="number" name="amount" class="form-control form-control-md" placeholder="0.00">
+                                    @error('amount')
+                                    <small class="text-danger">{{ $errors->first('amount') }}</small>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Payment Mode<sup class="text-danger">*</sup></label>
@@ -72,6 +72,9 @@
                                         @empty
                                         @endforelse
                                     </select>
+                                    @error('payment_mode')
+                                    <small class="text-danger">{{ $errors->first('payment_mode') }}</small>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Notes</label>
@@ -79,7 +82,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">&nbsp;</label>
-                                    <button type="submit" class="btn btn-primary btn-submit w-100">Update</button>
+                                    <button type="button" class="btn btn-patient-payment-update btn-primary w-100">Update</button>
                                 </div>
                             </div>
                         </form>

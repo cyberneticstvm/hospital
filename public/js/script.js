@@ -139,6 +139,33 @@ $(function() {
         });
         return false;
     });
+
+    $(".btn-patient-payment-update").click(function(){
+        $.ajax({
+            type: 'POST',
+            url: '/income/update/',
+            data: $("#frm-patient-payment").serialize(),
+            beforeSend: function(){
+                $(".btn-patient-payment-update").attr("disabled", true);
+                $(".btn-patient-payment-update").html("<span class='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'></span>&nbsp;Loading...");
+            },
+            success: function(data){
+                if(data == 'success'){
+                    alert("Payment recorded successfully.")
+                    window.location.href = "/income/list/";
+                }else{
+                    alert("Something went wrong. Please try again later");
+                };
+            },
+            complete: function(){
+                $(".btn-patient-payment-update").attr("disabled", false);
+                $(".btn-patient-payment-update").html("Update");
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+    });
 });
 
 /*$(window).on('load', function () {
