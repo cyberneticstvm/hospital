@@ -41,12 +41,14 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>MR. ID</th><th></th><th>Fee</th><th>Receipt</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>MR. ID</th><th>Patient Name</th><th>Patient ID</th><th></th><th>Fee</th><th>Receipt</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @forelse($procs as $key => $procedure)
                             <tr>
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $procedure->medical_record_id }}</td>
+                                <td>{{ $procedure->patient_name }}</td>
+                                <td>{{ $procedure->patient_id }}</td>
                                 <td>{{ $procedure->procs }}</td>
                                 <td class="text-right">{{ $procedure->fee }}</td>
                                 <td></td>

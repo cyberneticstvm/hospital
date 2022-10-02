@@ -133,7 +133,7 @@ class ProcedureController extends Controller
 
     public function fetch(){
         $procedures = Procedure::all();
-        $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', DB::raw("SUM(pp.fee) as 'fee'"))->groupBy('pp.medical_record_id')->get();
+        $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'pp.medical_record_id')->leftJoin('patient_registrations as pr', 'pr.id', '=', 'pmr.patient_id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', 'pr.patient_name', 'pr.patient_id', DB::raw("SUM(pp.fee) as 'fee'"))->whereDate('pp.created_at', Carbon::today())->groupBy('pp.medical_record_id')->get();
         return view('procedure.fetch', compact('procedures', 'procs'));
     }
 
