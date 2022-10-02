@@ -40,12 +40,18 @@
                 </div>
                 <div class="card">
                     <div class="card-body table-responsive">
+                        <div class="row g-4 mb-3">
+                            <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $medical_record_id }}</h5></div>
+                            <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ ($patient) ? $patient->patient_name : '' }}</h5></div>
+                            <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ ($patient) ? $patient->patient_id : '' }}</h5></div>
+                        </div>
                         <form id="frm-patient-payment" action="{{ route('income.update') }}" method="post">
                             @csrf
                             <input type="hidden" name="medical_record_id" value="{{ $medical_record_id }}" />
                             <table class="table table-sm table-striped table-hover align-middle">
                                 <thead><tr><th>Income Head</th><th>Amount</th></tr></thead>
                                 <tbody>
+                                    <tr><td>Previous Due</td><td class="text-right"><a href="" target="_blank">0.00</a></td></tr>
                                     @forelse($heads as $key => $head)
                                         <tr><td>{{ $head->name }}</td><td class="text-right">{{ number_format($fee[$key], 2) }}</td></tr>
                                     @empty
