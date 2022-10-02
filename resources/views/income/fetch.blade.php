@@ -49,10 +49,26 @@
                                     @forelse($heads as $key => $head)
                                         <tr><td>{{ $head->name }}</td><td class="text-right">{{ number_format($fee[$key], 2) }}</td></tr>
                                     @empty
-                                    @endif
+                                    @endforelse
                                 </tbody>
                                 <tfoot>
                                     <tr><th class="text-end fw-bold">Total</th><th class="text-end fw-bold">{{ number_format($tot, 2) }}</th></tr>
+                                </tfoot>
+                            </table>
+                            <h5 class="mb-3">Payments received against MR.ID <span class="fw-bold">{{ $medical_record_id }}</span></h5>
+                            <table class="table table-sm table-striped table-hover align-middle">
+                                <thead><tr><th>Payment Mode</th><th>Notes</th><th>Amount</th></tr></thead>
+                                <tbody>
+                                    @php $ptot = 0.00; @endphp
+                                    @forelse($payments as $key => $payment)
+                                        <tr><td>{{ $payment->name }}</td><td>{{ $payment->notes }}</td><td class="text-right">{{ $payment->amount }}</td></tr>
+                                    @php $ptot += $payment->amount; @endphp
+                                    @empty
+                                    @endforelse
+                                </tbody>
+                                <tfoot>
+                                    <tr><th colspan="2" class="text-end fw-bold">Received</th><th class="text-end fw-bold">{{ number_format($ptot, 2) }}</th></tr>
+                                    <tr><th colspan="2" class="text-end fw-bold">Balance</th><th class="text-end fw-bold">{{ number_format($tot-$ptot, 2) }}</th></tr>
                                 </tfoot>
                             </table>
                             <div class="row g-4">
@@ -78,7 +94,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Notes</label>
-                                    <input type="text" name="medical_record_number" class="form-control form-control-md" placeholder="Notes">
+                                    <input type="text" name="notes" class="form-control form-control-md" placeholder="Notes">
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">&nbsp;</label>

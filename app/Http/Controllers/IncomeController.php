@@ -70,9 +70,9 @@ class IncomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function fetch(){
-        $medical_record_id = ""; $heads = []; $pmodes = [];
+        $medical_record_id = ""; $heads = []; $pmodes = []; $payments = [];
         $reg_fee = 0.00; $consultation_fee = 0.00; $procedure_fee = 0.00; $certificate_fee = 0.00; $medicine = 0.00; $tot = 0.00;
-        return view('income.fetch', compact('medical_record_id', 'heads', 'pmodes', 'reg_fee', 'consultation_fee', 'procedure_fee', 'certificate_fee', 'medicine', 'tot'));
+        return view('income.fetch', compact('medical_record_id', 'heads', 'pmodes', 'reg_fee', 'consultation_fee', 'procedure_fee', 'certificate_fee', 'medicine', 'tot', 'payments'));
     }
     public function show(Request $request)
     {
@@ -92,11 +92,15 @@ class IncomeController extends Controller
         $certificate_fee = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->where('pc.medical_record_id', $request->medical_record_id)->where('pcd.status', 'I')->sum('pcd.fee');
 
         $pharmacy = DB::table('patient_medicine_records')->where('medical_record_id', $request->medical_record_id)->sum('total');
+        
         $clinical_lab = 0.00;
         $radiology_lab = 0.00;
+
+        $payments = PP::where('medical_record_id', $request->medical_record_id)->leftJoin('payment_modes as p', 'patient_payments.payment_mode', '=', 'p.id')->select('patient_payments.amount', 'patient_payments.notes', 'p.name')->get();
+
         $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $procedure_fee, $reg_fee);
         $tot = $reg_fee+$consultation_fee+$procedure_fee+$certificate_fee+$pharmacy+$radiology_lab+$clinical_lab;
-        return view('income.fetch', compact('medical_record_id', 'heads', 'pmodes', 'fee', 'tot'));
+        return view('income.fetch', compact('medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments'));
     }
 
     /**
