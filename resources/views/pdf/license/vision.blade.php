@@ -58,7 +58,7 @@
     <p>(Category-I means Non Transport Vehicles which include Motor Cycles, Motor Cars, etc. specified as such
     in Central Government Notification No.S.O.1248(E)dated 5th November 2004 as non-transport vehicles)</p>
     <p>(Category-II means Transport vehicles which include Autorickshaws, Taxis, Stage carriages, Contract
-    Carriages, Goods carriages, Private Service Vehicles etc. specified as such in the said Notification.)</p><br/>
+    Carriages, Goods carriages, Private Service Vehicles etc. specified as such in the said Notification.)</p>
     <table class="no-border" width="100%">
     <tr>
         <td class="w-50">
