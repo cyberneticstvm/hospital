@@ -78,7 +78,7 @@
                                 <td>2</td><td>Income from Consultation</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#dayBookModal" data-title="Consultation Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="consultation">{{ number_format($consultation_fee_total, 2) }}</a></td>       
                             </tr>
                             <tr>
-                                <td>3</td><td>Income from Procedures</td><td class="text-end">{{ number_format($procedure_fee_total, 2) }}</td>       
+                                <td>3</td><td>Income from Procedures</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#dayBookModal" data-title="Procedure Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="procedure">{{ number_format($procedure_fee_total, 2) }}</a></td>       
                             </tr>
                             <tr>
                                 <td>4</td><td>Income from Certificates</td><td class="text-end">{{ number_format($certificate_fee_total, 2) }}</td>       
