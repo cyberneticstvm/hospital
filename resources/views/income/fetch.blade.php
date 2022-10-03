@@ -16,7 +16,7 @@
                             <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $medical_record_id }}</h5></div>
                             <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ ($patient) ? $patient->patient_name : '' }}</h5></div>
                             <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ ($patient) ? $patient->patient_id : '' }}</h5></div>
-                            <div class="col-sm-3">Date: <h5 class="text-primary">{{ ($patient) ? $patient->patient_id : '' }}</h5></div>
+                            <div class="col-sm-3">Date: <h5 class="text-primary">{{ ($patient) ? $patient->cdate : '' }}</h5></div>
                         </div>
                         <form id="frm-patient-payment" action="{{ route('income.update') }}" method="post">
                             @csrf

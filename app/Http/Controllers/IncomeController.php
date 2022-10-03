@@ -68,11 +68,6 @@ class IncomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function fetch(){
-        $medical_record_id = ""; $heads = []; $pmodes = []; $payments = []; $patient = 0;
-        $reg_fee = 0.00; $consultation_fee = 0.00; $procedure_fee = 0.00; $certificate_fee = 0.00; $medicine = 0.00; $tot = 0.00;
-        return view('income.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'reg_fee', 'consultation_fee', 'procedure_fee', 'certificate_fee', 'medicine', 'tot', 'payments'));
-    }
     public function show(Request $request)
     {
         $this->validate($request, [
@@ -81,7 +76,7 @@ class IncomeController extends Controller
         $heads = DB::table('income_expense_heads')->where('type', 'I')->where('category', 'patient')->orderBy('name')->get();
         $pmodes = DB::table('payment_modes')->orderBy('name')->get();
         $medical_record_id = $request->medical_record_id;
-        $patient = DB::table('patient_registrations as pr')->leftJoin('patient_medical_records as pmr', 'pmr.patient_id', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->select('pr.id', 'pr.patient_name', 'pr.patient_id')->first();
+        $patient = DB::table('patient_registrations as pr')->leftJoin('patient_medical_records as pmr', 'pmr.patient_id', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->select('pr.id', 'pr.patient_name', 'pr.patient_id', DB::raw("DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS cdate"))->first();
 
         $reg_fee = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->value('pr.registration_fee');
 
