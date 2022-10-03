@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('income.update', $income->id) }}" method="post">
+                        <form action="{{ route('incomeo.update', $income->id) }}" method="post">
                             @csrf
                             @method("PUT")
                             <div class="row g-4">

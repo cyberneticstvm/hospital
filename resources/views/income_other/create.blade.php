@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('income.create') }}" method="post">
+                        <form action="{{ route('incomeo.create') }}" method="post">
                             @csrf
                             <div class="row g-4">
                                 <div class="col-sm-3">

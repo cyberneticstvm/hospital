@@ -51,8 +51,8 @@ class ReportController extends Controller
 
         $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('m.status', 1)->where('p.branch', $request->branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('m.total');
 
-        $income = DB::table('incomes')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->sum('amount');
-        $expense = DB::table('expenses')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->sum('amount');
+        $income = DB::table('incomes')->where('branch', $request->branch)->whereBetween('date', [$startDate, $endDate])->sum('amount');
+        $expense = DB::table('expenses')->where('branch', $request->branch)->whereBetween('date', [$startDate, $endDate])->sum('amount');
 
         $income_received_cash = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->where('payment_mode', 1)->sum('amount');
 

@@ -23,6 +23,10 @@ class IncomeController extends Controller
          $this->middleware('permission:income-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:income-delete', ['only' => ['destroy']]);
     }
+    public function indexo(){
+        $incomes = Income::leftJoin('branches as b', 'incomes.branch', '=', 'b.id')->leftJoin('income_expense_heads as ie', 'incomes.head', '=', 'ie.id')->select('incomes.id', 'incomes.description', 'incomes.amount', 'b.branch_name', 'ie.name as head', DB::raw("DATE_FORMAT(incomes.date, '%d/%b/%Y') AS edate"))->whereDate('incomes.created_at', Carbon::today())->orderByDesc("incomes.id")->get();
+        return view('income_other.index', compact('incomes'));
+    }
     public function index()
     {
         $incomes = PP::leftJoin('patient_medical_records as pmr', 'patient_payments.medical_record_id', '=', 'pmr.id')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('payment_modes as pm', 'pm.id', '=', 'patient_payments.payment_mode')->select("patient_payments.id", "patient_payments.amount", "patient_payments.medical_record_id", "patient_payments.notes", "pm.name", "pr.patient_name", "pr.patient_id")->whereDate('patient_payments.created_at', Carbon::today())->orderByDesc("patient_payments.id")->get();
@@ -38,7 +42,7 @@ class IncomeController extends Controller
     {
         $branches = DB::table('branches')->get();    
         $heads = DB::table('income_expense_heads')->where('type', 'I')->get();    
-        return view('income.create', compact('branches', 'heads'));
+        return view('income_other.create', compact('branches', 'heads'));
     }
 
     /**
@@ -59,7 +63,7 @@ class IncomeController extends Controller
         $input['created_by'] = $request->user()->id;
         $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;
         $income = Income::create($input);        
-        return redirect()->route('income.index')->with('success','Income recorded successfully');
+        return redirect()->route('incomeo.index')->with('success','Income recorded successfully');
     }
 
     /**
@@ -109,7 +113,7 @@ class IncomeController extends Controller
         $branches = DB::table('branches')->get();
         $income = Income::find($id);
         $heads = DB::table('income_expense_heads')->where('type', 'I')->get();    
-        return view('income.edit', compact('branches', 'income', 'heads'));
+        return view('income_other.edit', compact('branches', 'income', 'heads'));
     }
 
     /**
@@ -131,7 +135,8 @@ class IncomeController extends Controller
         $pp = PP::create($input);
         return redirect()->route('income.index')->with('success','Income recorded successfully');
     }
-    /*public function update(Request $request, $id)
+
+    public function updateo(Request $request, $id)
     {
         $this->validate($request, [
             'date' => 'required',
@@ -144,8 +149,8 @@ class IncomeController extends Controller
         $input['created_by'] = $income->getOriginal('created_by');
         $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;        
         $income->update($input);        
-        return redirect()->route('income.index')->with('success','Income updated successfully');
-    }*/
+        return redirect()->route('incomeo.index')->with('success','Income updated successfully');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -157,6 +162,12 @@ class IncomeController extends Controller
     {
         PP::find($id)->delete();
         return redirect()->route('income.list')
+                        ->with('success','Record deleted successfully');
+    }
+    public function destroyo($id)
+    {
+        Income::find($id)->delete();
+        return redirect()->route('incomeo.index')
                         ->with('success','Record deleted successfully');
     }
 }
