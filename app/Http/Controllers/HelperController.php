@@ -26,6 +26,9 @@ class HelperController extends Controller
         if($request->type == 'certificate'):
             $html = $this->getCertificateDetailed($fdate, $tdate, $branch);
         endif;
+        if($request->type == 'medicine'):
+            $html = $this->getMedicineDetailed($fdate, $tdate, $branch);
+        endif;
         echo $html;
     }
     private function getConsultationDetailed($fdate, $tdate, $branch){
@@ -70,6 +73,24 @@ class HelperController extends Controller
         $c = 1; $tot = 0;
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Date</th><th>Amount</th></tr></thead><tbody>";
         foreach($certificate as $key => $record):
+            $html .= "<tr>";
+                $html .= "<td>".$c++."</td>";
+                $html .= "<td>".$record->mrid."</td>";
+                $html .= "<td>".$record->patient_name."</td>";
+                $html .= "<td>".$record->patient_id."</td>";
+                $html .= "<td>".$record->cdate."</td>";
+                $html .= "<td class='text-end'>".$record->fee."</td>";
+            $html .= "</tr>";
+            $tot += $record->fee;
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='5' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>".number_format($tot, 2)."</td></tr></tfoot></table>";
+        return $html;
+    }
+    private function getMedicineDetailed($fdate, $tdate, $branch){
+        $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->leftJoin('patient_registrations as preg', 'preg.id', '=', 'p.patient_id')->select('preg.patient_name', 'preg.patient_id', 'p.id as mrid', DB::raw("SUM(m.total) AS fee, DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate"))->where('m.status', 1)->whereBetween('p.created_at', [$fdate, $tdate])->where('p.branch', $branch)->groupBy('m.medical_record_id')->orderByDesc('m.medical_record_id')->get();
+        $c = 1; $tot = 0;
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Date</th><th>Amount</th></tr></thead><tbody>";
+        foreach($medicine as $key => $record):
             $html .= "<tr>";
                 $html .= "<td>".$c++."</td>";
                 $html .= "<td>".$record->mrid."</td>";

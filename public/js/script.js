@@ -161,12 +161,7 @@ $(function() {
                 }
             });
         });
-    });
-
-    /*$('#dayBookModal').on('hide.bs.modal', function(){
-        $(this).removeData('bs.modal');
-    });*/
-    
+    });    
 });
 
 /*$(window).on('load', function () {
