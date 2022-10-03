@@ -102,10 +102,13 @@
                                 <td colspan="2" class="text-end fw-bold">Net Total</td><td class="text-end fw-bold">{{ number_format($income_total - $expense, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Amount Received</td><td class="text-end fw-bold">{{ number_format($income_received, 2) }}</td>       
+                                <td colspan="2" class="text-end fw-bold">Payment Received in Cash</td><td class="text-end fw-bold">{{ number_format($income_received_cash, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Balance</td><td class="text-end fw-bold">{{ number_format($income_total-($income_received+$expense), 2) }}</td>       
+                                <td colspan="2" class="text-end fw-bold">Payment Received through Other Sources (UPI/Bank Transfer/Cheque)</td><td class="text-end fw-bold">{{ number_format($income_received_other, 2) }}</td>       
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="text-end fw-bold">Balance</td><td class="text-end fw-bold">{{ number_format($income_total-($income_received_cash + $income_received_other + $expense), 2) }}</td>       
                             </tr>             
                             </tbody>
                         </table>
