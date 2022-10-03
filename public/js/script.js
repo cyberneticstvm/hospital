@@ -163,7 +163,7 @@ $(function() {
     });
 
     $('#dayBookModal').on('hide.bs.modal', function(){
-        $(this).find(".dayBookDetailed").html("");
+        $(this).removeData('bs.modal');
     });
     
 });
