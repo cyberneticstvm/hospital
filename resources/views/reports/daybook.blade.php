@@ -72,25 +72,25 @@
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
                             <thead><tr><th>SL No.</th><th>Particulars</th><th class="text-end">Total</th></tr></thead><tbody>
                             <tr>
-                                <td>1</td><td>Income from Registration</td><td class="text-end">{{ number_format($reg_fee_total, 2) }}</td>                                
+                                <td>1</td><td>Income from Registration</td><td class="text-end text-danger">{{ number_format($reg_fee_total, 2) }}</td>                                
                             </tr>
                             <tr>
-                                <td>2</td><td>Income from Consultation</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="consultationModal" data-bs-target="#consultationModal" data-title="Consultation Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="consultation">{{ number_format($consultation_fee_total, 2) }}</a></td>       
+                                <td>2</td><td>Income from Consultation</td><td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="consultationModal" data-bs-target="#consultationModal" data-title="Consultation Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="consultation">{{ number_format($consultation_fee_total, 2) }}</a></td>       
                             </tr>
                             <tr>
-                                <td>3</td><td>Income from Procedures</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="procedureModal" data-bs-target="#procedureModal" data-title="Procedure Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="procedure">{{ number_format($procedure_fee_total, 2) }}</a></td>       
+                                <td>3</td><td>Income from Procedures</td><td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="procedureModal" data-bs-target="#procedureModal" data-title="Procedure Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="procedure">{{ number_format($procedure_fee_total, 2) }}</a></td>       
                             </tr>
                             <tr>
-                                <td>4</td><td>Income from Certificates</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="certificateModal" data-bs-target="#certificateModal" data-title="Certificate Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="certificate">{{ number_format($certificate_fee_total, 2) }}</a></td>       
+                                <td>4</td><td>Income from Certificates</td><td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="certificateModal" data-bs-target="#certificateModal" data-title="Certificate Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="certificate">{{ number_format($certificate_fee_total, 2) }}</a></td>       
                             </tr>
                             <tr>
-                                <td>5</td><td>Income from Pharmacy (Direct)</td><td class="text-end">{{ number_format($pharmacy, 2) }}</td>       
+                                <td>5</td><td>Income from Pharmacy (Direct)</td><td class="text-end text-danger">{{ number_format($pharmacy, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td>6</td><td>Income from Pharmacy</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="medicineModal" data-bs-target="#medicineModal" data-title="Pharmacy Income Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="medicine">{{ number_format($medicine, 2) }}</a></td>       
+                                <td>6</td><td>Income from Pharmacy</td><td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="medicineModal" data-bs-target="#medicineModal" data-title="Pharmacy Income Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="medicine">{{ number_format($medicine, 2) }}</a></td>       
                             </tr>
                             <tr>
-                                <td>7</td><td>Income from Other Sources</td><td class="text-end">{{ number_format($income, 2) }}</td>       
+                                <td>7</td><td>Income from Other Sources</td><td class="text-end text-danger">{{ number_format($income, 2) }}</td>       
                             </tr>
                             <tr>
                                 <td colspan="2" class="text-end fw-bold">Grand Total</td><td class="text-end fw-bold">{{ number_format($income_total, 2) }}</td>       
