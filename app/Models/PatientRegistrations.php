@@ -16,6 +16,7 @@ class PatientRegistrations extends Model
         'gender',
         'dob',
         'age',
+        'new_born_baby',
         'contact_person_name',
         'mobile_number',
         'email',

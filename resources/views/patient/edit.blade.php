@@ -36,11 +36,18 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-2">
-                                    <label class="form-label">Age<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Age (Months if Baby)<sup class="text-danger">*</sup></label>
                                     <input type="number" value="{{ $patient->age }}" name="age" class="form-control form-control-md" placeholder="0">
                                     @error('age')
                                     <small class="text-danger">{{ $errors->first('age') }}</small>
                                     @enderror
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">New Born Baby</label>
+                                    <select class="form-control form-control-md" data-placeholder="Select" name="new_born_baby">
+                                    <option value="0" {{ $patient->new_born_baby == 0 ? 'selected' : '' }}>No</option>
+                                    <option value="1" {{ $patient->new_born_baby == 1 ? 'selected' : '' }}>Yes</option>
+                                    </select>
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Date of Birth</label>

@@ -150,6 +150,36 @@
         </tbody>
     </table>
     @endif
+    @if($spectacle && ($spectacle->bm_k1_od_a || $spectacle->bm_k1_os_a || $spectacle->bm_k2_od_a || $spectacle->bm_k2_os_a || $spectacle->bm_k1_od_m || $spectacle->bm_k1_os_m || $spectacle->bm_k2_od_m || $spectacle->bm_k2_os_m || $spectacle->bm_od_axl || $spectacle->bm_os_axl || $spectacle->bm_od_acd || $spectacle->bm_os_acd || $spectacle->bm_od_lens || $spectacle->bm_os_lens || $spectacle->bm_od_kvalue_a || $spectacle->bm_os_kvalue_a || $spectacle->bm_od_iol || $spectacle->bm_os_iol))
+    <p>Biometry</p>
+    <table width="100%" class="table-bordered" cellspacing="0" cellpadding="0">
+        <thead class=""><tr><th>&nbsp;</th><th>K1(A)</th><th>K2(A)</th><th>K1(M)</th><th>K2(M)</th><th>AXL</th><th>ACD</th><th>LENS</th><th>K-VALUE(Avg)</th><th>IOL</th></tr></thead>
+        <tbody>
+            <tr>
+                <td class="">OD</td>                                            
+                <td>{{ ($spectacle) ? $spectacle->bm_k1_od_a : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k2_od_a : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k1_od_m : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k2_od_m : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_od_axl : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_od_lens : '--' }}</td>
+                <td>{{ ($mrecord->va_od) ? $spectacle->bm_od_kvalue_a : '--' }}</td>
+                <td>{{ ($mrecord->va_od) ? $spectacle->bm_od_iol : '--' }}</td>
+            </tr>
+            <tr>
+                <td class="">OS</td>                                            
+                <td>{{ ($spectacle) ? $spectacle->bm_k1_os_a : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k2_os_a : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k1_os_m : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_k2_os_m : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_os_axl : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->bm_os_lens : '--' }}</td>
+                <td>{{ ($mrecord->va_os) ? $spectacle->bm_os_kvalue_a : '--' }}</td>
+                <td>{{ ($mrecord->va_os) ? $spectacle->bm_os_iol : '--' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    @endif
     @if($v_od_1 != 'Na' || $v_os_1 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
