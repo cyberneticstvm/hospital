@@ -141,7 +141,6 @@ class ProcedureController extends Controller
         $this->validate($request, [
             'procedure' => 'required',
         ]);
-        //$input['created_by'] = $record->getOriginal('created_by');
         $input = $request->all();
         try{
             if($input['procedure']):
@@ -150,6 +149,8 @@ class ProcedureController extends Controller
                         $proc = Procedure::find($input['procedure'][$i]);
                         DB::table('patient_procedures')->insert([
                             'medical_record_id' => $request->medical_record_id,
+                            'patient_id' => $request->patient_id,
+                            'branch' => $request->session()->get('branch'),
                             'procedure' => $input['procedure'][$i],
                             'fee' => $proc->fee,
                             'created_by' => $request->user()->id,
@@ -183,6 +184,7 @@ class ProcedureController extends Controller
             'procedure' => 'required',
         ]);
         $input = $request->all();
+        $input['branch'] = $request->session()->get('branch');
         try{
             DB::table('patient_procedures')->where('medical_record_id', $id)->delete();
             if($input['procedure']):
@@ -191,6 +193,8 @@ class ProcedureController extends Controller
                         $proc = Procedure::find($input['procedure'][$i]);
                         DB::table('patient_procedures')->insert([
                             'medical_record_id' => $request->medical_record_id,
+                            'patient_id' => $request->patient_id,
+                            'branch' => $request->session()->get('branch'),
                             'procedure' => $input['procedure'][$i],
                             'fee' => $proc->fee,
                             'created_by' => $request->user()->id,
