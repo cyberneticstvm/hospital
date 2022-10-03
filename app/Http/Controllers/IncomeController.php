@@ -57,10 +57,10 @@ class IncomeController extends Controller
             'date' => 'required',
             'amount' => 'required',
             'head' => 'required',
-            'branch' => 'required',
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
+        $input['branch'] = $request->session()->get('branch');
         $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;
         $income = Income::create($input);        
         return redirect()->route('incomeo.index')->with('success','Income recorded successfully');
@@ -142,11 +142,11 @@ class IncomeController extends Controller
             'date' => 'required',
             'amount' => 'required',
             'head' => 'required',
-            'branch' => 'required',
         ]);
         $input = $request->all();
         $income = Income::find($id);
         $input['created_by'] = $income->getOriginal('created_by');
+        $input['branch'] = $request->session()->get('branch');
         $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;        
         $income->update($input);        
         return redirect()->route('incomeo.index')->with('success','Income updated successfully');

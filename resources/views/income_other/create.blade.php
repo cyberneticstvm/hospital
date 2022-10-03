@@ -56,7 +56,7 @@
                                     <small class="text-danger">{{ $errors->first('amount') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-3">
+                                <!--<div class="col-sm-3">
                                     <label class="form-label">Branch<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="branch">
                                     <option value="">Select</option>
@@ -67,7 +67,7 @@
                                     @error('branch')
                                     <small class="text-danger">{{ $errors->first('branch') }}</small>
                                     @enderror
-                                </div>
+                                </div>-->
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>

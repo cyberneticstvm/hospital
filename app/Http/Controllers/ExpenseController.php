@@ -51,10 +51,10 @@ class ExpenseController extends Controller
             'date' => 'required',
             'amount' => 'required',
             'head' => 'required',
-            'branch' => 'required',
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
+        $input['branch'] = $request->session()->get('branch');
         $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;
         $expense = Expense::create($input);        
         return redirect()->route('expense.index')->with('success','Expense recorded successfully');
@@ -98,11 +98,11 @@ class ExpenseController extends Controller
             'date' => 'required',
             'amount' => 'required',
             'head' => 'required',
-            'branch' => 'required',
         ]);
         $input = $request->all();
         $expense = Expense::find($id);
         $input['created_by'] = $expense->getOriginal('created_by');
+        $input['branch'] = $request->session()->get('branch');
         $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;        
         $expense->update($input);        
         return redirect()->route('expense.index')->with('success','Expense updated successfully');
