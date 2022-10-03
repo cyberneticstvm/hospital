@@ -141,19 +141,20 @@ $(function() {
     });
 
     $(".daybook").click(function(){        
+        var modal = $(this).data('modal');
         var title = $(this).data('title');
         var fdate = $(this).data('fdate');
         var tdate = $(this).data('tdate');
         var branch = $(this).data('branch');
         var type = $(this).data('type');
-        $("#dayBookModal").on('shown.bs.modal', function(){
+        $("#"+modal).on('shown.bs.modal', function(){
             $(this).find(".modal-title").html(title);
             $.ajax({
                 type: 'GET',
                 url: '/helper/daybook/',
                 data: {'fdate': fdate, 'tdate': tdate, 'branch': branch, 'type': type},
                 success: function(data){
-                    $("#dayBookModal").find(".dayBookDetailed").html(data);
+                    $("#"+modal).find(".dayBookDetailed").html(data);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown){
                     console.log(XMLHttpRequest);
@@ -162,9 +163,9 @@ $(function() {
         });
     });
 
-    $('#dayBookModal').on('hide.bs.modal', function(){
+    /*$('#dayBookModal').on('hide.bs.modal', function(){
         $(this).removeData('bs.modal');
-    });
+    });*/
     
 });
 

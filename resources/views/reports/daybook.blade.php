@@ -75,13 +75,13 @@
                                 <td>1</td><td>Income from Registration</td><td class="text-end">{{ number_format($reg_fee_total, 2) }}</td>                                
                             </tr>
                             <tr>
-                                <td>2</td><td>Income from Consultation</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#dayBookModal" data-title="Consultation Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="consultation">{{ number_format($consultation_fee_total, 2) }}</a></td>       
+                                <td>2</td><td>Income from Consultation</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="consultationModal" data-bs-target="#consultationModal" data-title="Consultation Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="consultation">{{ number_format($consultation_fee_total, 2) }}</a></td>       
                             </tr>
                             <tr>
-                                <td>3</td><td>Income from Procedures</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#dayBookModal" data-title="Procedure Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="procedure">{{ number_format($procedure_fee_total, 2) }}</a></td>       
+                                <td>3</td><td>Income from Procedures</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="procedureModal" data-bs-target="#procedureModal" data-title="Procedure Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="procedure">{{ number_format($procedure_fee_total, 2) }}</a></td>       
                             </tr>
                             <tr>
-                                <td>4</td><td>Income from Certificates</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#dayBookModal" data-title="Certificate Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="certificate">{{ number_format($certificate_fee_total, 2) }}</a></td>       
+                                <td>4</td><td>Income from Certificates</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="certificateModal" data-bs-target="#certificateModal" data-title="Certificate Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="certificate">{{ number_format($certificate_fee_total, 2) }}</a></td>       
                             </tr>
                             <tr>
                                 <td>5</td><td>Income from Pharmacy (Direct)</td><td class="text-end">{{ number_format($pharmacy, 2) }}</td>       
@@ -118,7 +118,33 @@
         </div> <!-- .row end -->
     </div>
 </div>
-<div class="modal fade" id="dayBookModal" tabindex="-1">
+<div class="modal fade" id="consultationModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row"><div class="col-md-12 table-responsive dayBookDetailed"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="procedureModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row"><div class="col-md-12 table-responsive dayBookDetailed"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="certificateModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
