@@ -102,10 +102,10 @@
                                 <td colspan="2" class="text-end fw-bold">Net Total</td><td class="text-end fw-bold">{{ number_format($income_total - $expense, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Payment Received in Cash</td><td class="text-end fw-bold">{{ number_format($income_received_cash, 2) }}</td>       
+                                <td colspan="2" class="text-end fw-bold">Payments Received in Cash</td><td class="text-end fw-bold"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomeCashModal" data-bs-target="#incomeCashModal" data-title="Payments received in Cash" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomecash">{{ number_format($income_received_cash, 2) }}</a></td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Payment Received through Other Sources (UPI/Bank Transfer/Cheque)</td><td class="text-end fw-bold">{{ number_format($income_received_other, 2) }}</td>       
+                                <td colspan="2" class="text-end fw-bold">Payments Received through Other Sources (UPI/Bank Transfer/Cheque)</td><td class="text-end fw-bold"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomeUpiModal" data-bs-target="#incomeUpiModal" data-title="Payments received through UPI/Bank Transfer/Cheque" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomeupi">{{ number_format($income_received_other, 2) }}</a></td>       
                             </tr>
                             <tr>
                                 <td colspan="2" class="text-end fw-bold">Balance</td><td class="text-end fw-bold">{{ number_format($income_total-($income_received_cash + $income_received_other + $expense), 2) }}</td>       
@@ -158,6 +158,32 @@
     </div>
 </div>
 <div class="modal fade" id="medicineModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row"><div class="col-md-12 table-responsive dayBookDetailed"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="incomeCashModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row"><div class="col-md-12 table-responsive dayBookDetailed"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="incomeUpiModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
