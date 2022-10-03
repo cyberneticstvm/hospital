@@ -321,6 +321,7 @@ Route::group(['middleware' => ['auth']], function(){
 
     // Helper //
     Route::get('/helper/getmedicinetype/{mid}', 'App\Http\Controllers\HelperController@getMedicineType');
+    Route::get('/helper/daybook/', 'App\Http\Controllers\HelperController@getDayBookDetailed');
     // End Helper //
 
     // PDFs //

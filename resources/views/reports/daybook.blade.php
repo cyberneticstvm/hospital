@@ -68,14 +68,14 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
                             <thead><tr><th>SL No.</th><th>Particulars</th><th class="text-end">Total</th></tr></thead><tbody>
                             <tr>
                                 <td>1</td><td>Income from Registration</td><td class="text-end">{{ number_format($reg_fee_total, 2) }}</td>                                
                             </tr>
                             <tr>
-                                <td>2</td><td>Income from Consultation</td><td class="text-end">{{ number_format($consultation_fee_total, 2) }}</td>       
+                                <td>2</td><td>Income from Consultation</td><td class="text-end"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#dayBookModal" data-title="Consultation Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="consultation">{{ number_format($consultation_fee_total, 2) }}</a></td>       
                             </tr>
                             <tr>
                                 <td>3</td><td>Income from Procedures</td><td class="text-end">{{ number_format($procedure_fee_total, 2) }}</td>       
@@ -116,6 +116,19 @@
                 </div>
             </div>
         </div> <!-- .row end -->
+    </div>
+</div>
+<div class="modal fade" id="dayBookModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary">Ready to build Layouts</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row"><div class="col-md-12 table-responsive dayBookDetailed"></div></div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
