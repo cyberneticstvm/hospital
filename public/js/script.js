@@ -140,13 +140,14 @@ $(function() {
         return false;
     });
 
-    $(".daybook").click(function(){
+    $(".daybook").click(function(){        
         var title = $(this).data('title');
         var fdate = $(this).data('fdate');
         var tdate = $(this).data('tdate');
         var branch = $(this).data('branch');
         var type = $(this).data('type');
         $("#dayBookModal").on('shown.bs.modal', function(){
+            $("#dayBookModal").find(".dayBookDetailed").html("");
             $(this).find(".modal-title").html(title);
             $.ajax({
                 type: 'GET',
