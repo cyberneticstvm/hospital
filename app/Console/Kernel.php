@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
                 $closing_balance = $this->getClosingBalance($branch->id);
                 DB::table('branches')->where('id', $branch->id)->update(['closing_balance' => $closing_balance]);
             endforeach;
-        })->everyFiveMinutes()->emailOutputOnFailure('cybernetics.me@outlook.com');
+        })->dailyAt('23:30')->emailOutputOnFailure('cybernetics.me@outlook.com');
     }
 
     private function getClosingBalance($branch){
