@@ -23,6 +23,9 @@ class HelperController extends Controller
         if($request->type == 'procedure'):
             $html = $this->getProcedureDetailed($fdate, $tdate, $branch);
         endif;
+        if($request->type == 'certificate'):
+            $html = $this->getCertificateDetailed($fdate, $tdate, $branch);
+        endif;
         echo $html;
     }
     private function getConsultationDetailed($fdate, $tdate, $branch){
@@ -60,6 +63,24 @@ class HelperController extends Controller
             $tot += $record->fee;
         endforeach;
         $html .= "</tbody><tfoot><tr><td colspan='6' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>".number_format($tot, 2)."</td></tr></tfoot></table>";
+        return $html;
+    }
+    private function getCertificateDetailed($fdate, $tdate, $branch){
+        $certificate = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->leftJoin('patient_references as pr', 'pr.id', '=', 'pc.medical_record_id')->leftJoin('patient_registrations as preg', 'preg.id', '=', 'pr.patient_id')->select('preg.patient_name', 'preg.patient_id', 'pr.id as mrid', DB::raw("SUM(pcd.fee) AS fee, DATE_FORMAT(pc.created_at, '%d/%b/%Y') AS cdate"), )->whereBetween('pc.created_at', [$fdate, $tdate])->where('pc.branch_id', $branch)->where('pcd.status', 'I')->groupBy('pcd.patient_certificate_id')->orderByDesc('pc.medical_record_id')->get();
+        $c = 1; $tot = 0;
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Date</th><th>Amount</th></tr></thead><tbody>";
+        foreach($certificate as $key => $record):
+            $html .= "<tr>";
+                $html .= "<td>".$c++."</td>";
+                $html .= "<td>".$record->mrid."</td>";
+                $html .= "<td>".$record->patient_name."</td>";
+                $html .= "<td>".$record->patient_id."</td>";
+                $html .= "<td>".$record->cdate."</td>";
+                $html .= "<td class='text-end'>".$record->fee."</td>";
+            $html .= "</tr>";
+            $tot += $record->fee;
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='5' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>".number_format($tot, 2)."</td></tr></tfoot></table>";
         return $html;
     }
 }
