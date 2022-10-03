@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,6 +17,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            DB::table('settings')->where('id', 1)->update(['opening_balance' => 1000]);
+        })->everyFiveMinutes()->emailOutputOnFailure('cybernetics.me@outlook.com');
     }
 
     /**
