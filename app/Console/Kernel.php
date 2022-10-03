@@ -18,8 +18,16 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
-            DB::table('settings')->where('id', 1)->update(['opening_balance' => 1000]);
+            $branches = DB::table('branches')->all();
+            foreach($branches as $key => $branch):
+                $closing_balance = $this->getClosingBalance($branch->id);
+                DB::table('branches')->where('id', $branch->id)->update(['closing_balance' => $closing_balance]);
+            endforeach;
         })->everyFiveMinutes()->emailOutputOnFailure('cybernetics.me@outlook.com');
+    }
+
+    protected function getClosingBalance($branch){
+        return 1110;
     }
 
     /**

@@ -22,8 +22,8 @@ class ReportController extends Controller
 
     public function showdaybook(){
         $branches = Branch::all();
-        $records = []; $inputs = []; $reg_fee_total = 0.00; $consultation_fee_total = 0.00; $procedure_fee_total = 0.00; $certificate_fee_total = 0.00; $pharmacy = 0.00; $medicine = 0.00; $income = 0.00; $expense = 0.00; $income_total = 0.00; $income_received_cash = 0.00; $income_received_other = 0.00;
-        return view('reports.daybook', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_other'));
+        $records = []; $inputs = []; $reg_fee_total = 0.00; $consultation_fee_total = 0.00; $procedure_fee_total = 0.00; $certificate_fee_total = 0.00; $pharmacy = 0.00; $medicine = 0.00; $income = 0.00; $expense = 0.00; $income_total = 0.00; $income_received_cash = 0.00; $income_received_other = 0.00; $opening_balance = 0.00;
+        return view('reports.daybook', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_other'. 'opening_balance'));
     }
     public function fetchdaybook(Request $request){
         $this->validate($request, [
@@ -38,6 +38,8 @@ class ReportController extends Controller
         /*$records = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('patient_references as pref', 'pr.id', '=', 'pref.patient_id')->leftJoin('patient_procedures as pp', function($q){
             $q->on('pmr.id', '=', 'pp.medical_record_id');
         })->select('pref.id', 'pr.patient_id', 'pr.patient_name', 'pref.doctor_fee', 'pr.registration_fee')->where('pr.branch', $request->branch)->whereBetween('pref.created_at', [$startDate, $endDate])->where('pref.status', 1)->groupBy('pref.id')->get();*/
+
+        $opening_balance = DB::table('branches as b')->where('id', $request->branch)->value('closing_balance');
 
         $reg_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->whereBetween('pmr.created_at', [$startDate, $endDate])->where('pr.branch', $request->branch)->sum('pr.registration_fee');
 
@@ -58,9 +60,9 @@ class ReportController extends Controller
 
         $income_received_other = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->where('payment_mode', '!=', 1)->sum('amount');
 
-        $income_total = $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $income;
+        $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $income;
 
-        return view('reports.daybook', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_other'));
+        return view('reports.daybook', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_other', 'opening_balance'));
     }
     public function showincomeexpense(){
         $branches = Branch::all();
