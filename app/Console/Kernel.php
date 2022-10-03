@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
-            $branches = DB::table('branches')->all();
+            $branches = DB::table('branches')->get();
             foreach($branches as $key => $branch):
                 $closing_balance = $this->getClosingBalance($branch->id);
                 DB::table('branches')->where('id', $branch->id)->update(['closing_balance' => $closing_balance]);
