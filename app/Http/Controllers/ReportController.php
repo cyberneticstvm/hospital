@@ -39,7 +39,7 @@ class ReportController extends Controller
             $q->on('pmr.id', '=', 'pp.medical_record_id');
         })->select('pref.id', 'pr.patient_id', 'pr.patient_name', 'pref.doctor_fee', 'pr.registration_fee')->where('pr.branch', $request->branch)->whereBetween('pref.created_at', [$startDate, $endDate])->where('pref.status', 1)->groupBy('pref.id')->get();*/
 
-        $opening_balance = DB::table('branches as b')->where('id', $request->branch)->value('closing_balance');
+        $opening_balance = DB::table('branches as b')->where('b.id', $request->branch)->value('b.closing_balance');
 
         $reg_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->whereBetween('pmr.created_at', [$startDate, $endDate])->where('pr.branch', $request->branch)->sum('pr.registration_fee');
 
