@@ -147,7 +147,6 @@ $(function() {
         var branch = $(this).data('branch');
         var type = $(this).data('type');
         $("#dayBookModal").on('shown.bs.modal', function(){
-            $("#dayBookModal").find(".dayBookDetailed").html("");
             $(this).find(".modal-title").html(title);
             $.ajax({
                 type: 'GET',
@@ -161,6 +160,10 @@ $(function() {
                 }
             });
         });
+    });
+
+    $('#dayBookModal').on('hide.bs.modal', function(){
+        $(this).find(".dayBookDetailed").html("");
     });
     
 });
