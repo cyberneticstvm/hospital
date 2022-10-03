@@ -18,7 +18,7 @@
                             <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ ($patient) ? $patient->patient_id : '' }}</h5></div>
                             <div class="col-sm-3">Date: <h5 class="text-primary">{{ ($patient) ? $patient->cdate : '' }}</h5></div>
                         </div>
-                        <form id="frm-patient-payment" action="{{ route('income.update') }}" method="post">
+                        <form action="{{ route('income.update') }}" method="post">
                             @csrf
                             <input type="hidden" name="medical_record_id" value="{{ $medical_record_id }}" />
                             <input type="hidden" name="patient_id" value="{{ ($patient) ? $patient->id : 0 }}" />
@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">&nbsp;</label>
-                                    <button type="button" class="btn btn-patient-payment-update btn-primary w-100">Update</button>
+                                    <button type="submit" class="btn btn-submit btn-primary w-100">Update</button>
                                 </div>
                             </div>
                         </form>

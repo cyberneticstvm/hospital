@@ -129,7 +129,7 @@ class IncomeController extends Controller
         $input['created_by'] = Auth::user()->id;
         $input['branch'] = $request->session()->get('branch');
         $pp = PP::create($input);
-        echo "success";
+        return redirect()->route('income.index')->with('success','Income recorded successfully');
     }
     /*public function update(Request $request, $id)
     {
