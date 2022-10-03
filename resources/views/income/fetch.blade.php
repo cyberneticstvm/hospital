@@ -6,34 +6,6 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">Fetch All Expenses</h5>
-                        <span class="text-muted"></span>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <form action="{{ route('income.show') }}" method="post">
-                            @csrf
-                            <div class="row g-4">
-                                <div class="col-sm-3">
-                                    <label class="form-label">Medical Record ID (MR.ID)<sup class="text-danger">*</sup></label>
-                                    <input type="number" value="{{ $medical_record_id }}" name="medical_record_id" class="form-control form-control-md" placeholder="Mediical Record ID">
-                                    @error('medical_record_id')
-                                    <small class="text-danger">{{ $errors->first('medical_record_id') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-2">
-                                    <label class="form-label">&nbsp;</label>
-                                    <button type="submit" class="btn btn-primary btn-submit w-100">Fetch</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="d-flex flex-wrap justify-content-between align-items-end">
-                    <div class="mb-3">
                         <h5 class="mb-0">Expenses Detailed</h5>
                         <span class="text-muted"></span>
                     </div>
@@ -44,6 +16,7 @@
                             <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $medical_record_id }}</h5></div>
                             <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ ($patient) ? $patient->patient_name : '' }}</h5></div>
                             <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ ($patient) ? $patient->patient_id : '' }}</h5></div>
+                            <div class="col-sm-3">Date: <h5 class="text-primary">{{ ($patient) ? $patient->patient_id : '' }}</h5></div>
                         </div>
                         <form id="frm-patient-payment" action="{{ route('income.update') }}" method="post">
                             @csrf

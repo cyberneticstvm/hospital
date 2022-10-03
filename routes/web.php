@@ -294,7 +294,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::put('/income/edit/{id}/', 'App\Http\Controllers\IncomeController@update')->name('income.update');
     Route::delete('/income/delete/{id}/', 'App\Http\Controllers\IncomeController@destroy')->name('income.delete');*/
 
-    Route::get('/income/fetch/', 'App\Http\Controllers\IncomeController@fetch')->name('income.fetch');
     Route::post('/income/fetch/', 'App\Http\Controllers\IncomeController@show')->name('income.show');
     Route::post('/income/update/', 'App\Http\Controllers\IncomeController@update')->name('income.update');
     Route::get('/income/list/', 'App\Http\Controllers\IncomeController@index')->name('income.list');
