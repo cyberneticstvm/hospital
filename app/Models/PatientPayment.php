@@ -11,6 +11,8 @@ class PatientPayment extends Model
 
     protected $fillable = [
         'medical_record_id',
+        'patient_id',
+        'branch',
         'amount',
         'payment_mode',
         'notes',

@@ -133,6 +133,7 @@ class IncomeController extends Controller
         ]);
         $input = $request->all();
         $input['created_by'] = Auth::user()->id;
+        $input['branch'] = $request->session()->get('branch');
         $pp = PP::create($input);
         echo "success";
     }
