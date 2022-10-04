@@ -23,7 +23,10 @@ class Kernel extends ConsoleKernel
             $branches = DB::table('branches')->get();
             foreach($branches as $key => $branch):
                 $closing_balance = $this->getClosingBalance($branch->id);
-                DB::table('branches')->where('id', $branch->id)->update(['closing_balance' => $closing_balance]);
+                //DB::table('branches')->where('id', $branch->id)->update(['closing_balance' => $closing_balance]);
+                DB::table('daily_closing')->insert(
+                    ['date' => Carbon::today(), 'closing_balance' => $closing_balance, 'branch' => $branch->id, 'closed_by' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]
+                );
             endforeach;
         })->dailyAt('23:30')->emailOutputOnFailure('cybernetics.me@outlook.com');
     }
@@ -33,7 +36,7 @@ class Kernel extends ConsoleKernel
         $startDate = Carbon::now()->startOfDay();
         $endDate = Carbon::now()->endOfDay();
 
-        $opening_balance = DB::table('branches as b')->where('b.id', $branch)->value('b.closing_balance');
+        $opening_balance = DB::table('daily_closing as d')->whereDate('d.date', '=', $startDate->subDays(1))->where('d.branch', $branch)->orderByDesc('d.id')->first(['d.closing_balance'])->closing_balance;
 
         $reg_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->whereBetween('pmr.created_at', [$startDate, $endDate])->where('pr.branch', $branch)->sum('pr.registration_fee');
 
