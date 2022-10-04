@@ -67,51 +67,55 @@
                         </form>
                     </div>
                 </div>
+                @php $rtot = $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine; @endphp
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
-                            <thead><tr><th>SL No.</th><th>Particulars</th><th class="text-end">Total</th></tr></thead><tbody>
+                            <thead><tr><th>SL No.</th><th>Particulars</th><th class="text-end">Total</th><th class="text-end">Receivables</th></tr></thead><tbody>
                             <tr>
-                                <td>1</td><td>Opening Balance</td><td class="text-end text-danger">{{ number_format($opening_balance, 2) }}</td>                                
+                                <td>1</td><td>Opening Balance</td><td class="text-end text-danger">{{ number_format($opening_balance, 2) }}</td><td></td>                                
                             </tr>
                             <tr>
-                                <td>2</td><td>Income from Registration</td><td class="text-end text-danger">{{ number_format($reg_fee_total, 2) }}</td>                                
+                                <td>2</td><td>Income from Registration</td><td class="text-end text-danger">{{ number_format($reg_fee_total, 2) }}</td><td class="text-right text-danger">{{ number_format($reg_fee_total, 2) }}</td>                                
                             </tr>
                             <tr>
-                                <td>3</td><td>Income from Consultation</td><td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="consultationModal" data-bs-target="#consultationModal" data-title="Consultation Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="consultation">{{ number_format($consultation_fee_total, 2) }}</a></td>       
+                                <td>3</td><td>Income from Consultation</td><td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="consultationModal" data-bs-target="#consultationModal" data-title="Consultation Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="consultation">{{ number_format($consultation_fee_total, 2) }}</a></td><td class="text-right text-danger">{{ number_format($consultation_fee_total, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td>4</td><td>Income from Procedures</td><td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="procedureModal" data-bs-target="#procedureModal" data-title="Procedure Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="procedure">{{ number_format($procedure_fee_total, 2) }}</a></td>       
+                                <td>4</td><td>Income from Procedures</td><td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="procedureModal" data-bs-target="#procedureModal" data-title="Procedure Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="procedure">{{ number_format($procedure_fee_total, 2) }}</a></td><td class="text-right text-danger">{{ number_format($procedure_fee_total, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td>5</td><td>Income from Certificates</td><td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="certificateModal" data-bs-target="#certificateModal" data-title="Certificate Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="certificate">{{ number_format($certificate_fee_total, 2) }}</a></td>       
+                                <td>5</td><td>Income from Certificates</td><td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="certificateModal" data-bs-target="#certificateModal" data-title="Certificate Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="certificate">{{ number_format($certificate_fee_total, 2) }}</a></td><td class="text-right text-danger">{{ number_format($certificate_fee_total, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td>6</td><td>Income from Pharmacy (Direct)</td><td class="text-end text-danger">{{ number_format($pharmacy, 2) }}</td>       
+                                <td>6</td><td>Income from Pharmacy (Direct)</td><td class="text-end text-danger">{{ number_format($pharmacy, 2) }}</td><td class="text-right text-danger">{{ number_format($pharmacy, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td>7</td><td>Income from Pharmacy</td><td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="medicineModal" data-bs-target="#medicineModal" data-title="Pharmacy Income Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="medicine">{{ number_format($medicine, 2) }}</a></td>       
+                                <td>7</td><td>Income from Pharmacy</td><td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="medicineModal" data-bs-target="#medicineModal" data-title="Pharmacy Income Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="medicine">{{ number_format($medicine, 2) }}</a></td><td class="text-right text-danger">{{ number_format($medicine, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td>8</td><td>Income from Other Sources</td><td class="text-end text-danger">{{ number_format($income, 2) }}</td>       
+                                <td>8</td><td>Income from Other Sources</td><td class="text-end text-primary">{{ number_format($income, 2) }}</td><td></td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Grand Total</td><td class="text-end fw-bold">{{ number_format($income_total, 2) }}</td>       
+                                <td colspan="2" class="text-end fw-bold">Grand Total</td><td class="text-end fw-bold">{{ number_format($income_total, 2) }}</td><td class="text-end text-danger">{{ number_format($rtot, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Expenses</td><td class="text-end fw-bold">{{ number_format($expense, 2) }}</td>       
+                                <td colspan="2" class="text-end fw-bold">Expenses</td><td class="text-end fw-bold">{{ number_format($expense, 2) }}</td><td class="text-end text-warning">{{ number_format($expense, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Net Total</td><td class="text-end fw-bold">{{ number_format($income_total - $expense, 2) }}</td>       
+                                <td colspan="2" class="text-end fw-bold">Net Total</td><td class="text-end fw-bold">{{ number_format($income_total - $expense, 2) }}</td><td class="text-end text-danger">{{ number_format($rtot - $expense, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Payments Received in Cash</td><td class="text-end fw-bold"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomeCashModal" data-bs-target="#incomeCashModal" data-title="Payments received in Cash" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomecash">{{ number_format($income_received_cash, 2) }}</a></td>       
+                                <td colspan="2" class="text-end fw-bold">Payments Received in Cash</td><td class="text-end fw-bold"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomeCashModal" data-bs-target="#incomeCashModal" data-title="Payments received in Cash" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomecash">{{ number_format($income_received_cash, 2) }}</a></td><td class="text-end text-primary">{{ number_format($income_received_cash, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Payments received through other sources (UPI/Bank Transfer/Cheque)</td><td class="text-end fw-bold"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomeUpiModal" data-bs-target="#incomeUpiModal" data-title="Payments received through UPI/Bank Transfer/Cheque" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomeupi">{{ number_format($income_received_other, 2) }}</a></td>       
+                                <td colspan="2" class="text-end fw-bold">Payments received (UPI/Bank Transfer)</td><td class="text-end fw-bold"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomeUpiModal" data-bs-target="#incomeUpiModal" data-title="Payments received through UPI/Bank Transfer/Cheque" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomeupi">{{ number_format($income_received_upi, 2) }}</a></td><td class="text-end text-primary">{{ number_format($income_received_upi, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Balance</td><td class="text-end fw-bold">{{ number_format($income_total-($income_received_cash + $income_received_other + $expense), 2) }}</td>       
+                                <td colspan="2" class="text-end fw-bold">Payments received (Cheque/Card)</td><td class="text-end fw-bold"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomeUpiModal" data-bs-target="#incomeUpiModal" data-title="Payments received through UPI/Bank Transfer/Cheque" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomeupi">{{ number_format($income_received_card, 2) }}</a></td><td class="text-end text-primary">{{ number_format($income_received_card, 2) }}</td>       
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="text-end fw-bold">Balance</td><td class="text-end fw-bold">{{ number_format($income_total-($income_received_cash + $income_received_upi + $income_received_card + $expense), 2) }}</td><td class="text-end text-danger">{{ number_format($rtot-($income_received_cash + $income_received_upi + $income_received_card + $expense), 2) }}</td>       
                             </tr>             
                             </tbody>
                         </table>
