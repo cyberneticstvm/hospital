@@ -33,10 +33,11 @@ class ReportController extends Controller
         ]);
         $branches = Branch::all();
         $inputs = array($request->fromdate, $request->todate, $request->branch);
+        $prev_day = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay()->subDays(1);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
 
-        $opening_balance = DB::table('daily_closing as d')->whereDate('d.date', '=', $startDate->subDays(1))->where('d.branch', $request->branch)->orderByDesc('d.id')->first(['d.closing_balance'])->closing_balance;
+        $opening_balance = DB::table('daily_closing as d')->whereDate('d.date', '=', $prev_day)->where('d.branch', $request->branch)->orderByDesc('d.id')->first(['d.closing_balance'])->closing_balance;
 
         $reg_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->whereBetween('pmr.created_at', [$startDate, $endDate])->where('pr.branch', $request->branch)->sum('pr.registration_fee');
 
