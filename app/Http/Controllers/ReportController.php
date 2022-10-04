@@ -37,7 +37,7 @@ class ReportController extends Controller
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
 
-        $opening_balance = DB::table('daily_closing as d')->whereDate('d.date', '=', $prev_day)->where('d.branch', $request->branch)->orderByDesc('d.id')->first(['d.closing_balance'])->closing_balance;
+        $opening_balance = DB::table('daily_closing as d')->select(DB::raw("MAX(d.id), IFNULL(d.closing_balance, 0) AS closing_balance"))->whereDate('d.date', '=', $prev_day)->where('d.branch', $request->branch)->orderByDesc('d.id')->first()->closing_balance;
 
         $reg_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->whereBetween('pmr.created_at', [$startDate, $endDate])->where('pr.branch', $request->branch)->sum('pr.registration_fee');
 
