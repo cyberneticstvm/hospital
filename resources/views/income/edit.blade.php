@@ -6,19 +6,20 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">Add New Income</h5>
+                        <h5 class="mb-0">Edit Income</h5>
                         <span class="text-muted"></span>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('incomeo.create') }}" method="post">
+                        <form action="{{ route('income.update', $income->id) }}" method="post">
                             @csrf
+                            @method("PUT")
                             <div class="row g-4">
                                 <div class="col-sm-3">
                                     <label class="form-label">Income Date</label>
                                     <fieldset class="form-icon-group left-icon position-relative">
-                                        <input type="text" value="{{ old('date') }}" name="date" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy">
+                                        <input type="text" value="{{ date('d/M/Y', strtotime($income->date)) }}" name="date" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy">
                                         <div class="form-icon position-absolute">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
                                                 <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
@@ -35,7 +36,7 @@
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="head">
                                     <option value="">Select</option>
                                     @foreach($heads as $head)
-                                        <option value="{{ $head->id }}" {{ old('head') == $head->id ? 'selected' : '' }}>{{ $head->name }}</option>
+                                        <option value="{{ $head->id }}" {{ $income->head == $head->id ? 'selected' : '' }}>{{ $head->name }}</option>
                                     @endforeach
                                     </select>
                                     @error('head')
@@ -44,14 +45,14 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="form-label">Description</label>
-                                    <input type="text" value="{{ old('description') }}" name="description" class="form-control form-control-md" placeholder="Description">
+                                    <input type="text" value="{{ $income->description }}" name="description" class="form-control form-control-md" placeholder="Description">
                                     @error('description')
                                     <small class="text-danger">{{ $errors->first('description') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">Amount<sup class="text-danger">*</sup></label>
-                                    <input type="number" value="{{ old('amount') }}" name="amount" step="any" class="form-control form-control-md" placeholder="0.00">
+                                    <input type="number" value="{{ $income->amount }}" name="amount" step="any" class="form-control form-control-md" placeholder="0.00">
                                     @error('amount')
                                     <small class="text-danger">{{ $errors->first('amount') }}</small>
                                     @enderror
@@ -61,7 +62,7 @@
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="branch">
                                     <option value="">Select</option>
                                     @foreach($branches as $branch)
-                                        <option value="{{ $branch->id }}" {{ old('branch') == $branch->id ? 'selected' : '' }}>{{ $branch->branch_name }}</option>
+                                        <option value="{{ $branch->id }}" {{ $income->branch == $branch->id ? 'selected' : '' }}>{{ $branch->branch_name }}</option>
                                     @endforeach
                                     </select>
                                     @error('branch')
@@ -71,7 +72,7 @@
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
-                                    <button type="submit" class="btn btn-primary btn-submit">Save</button>
+                                    <button type="submit" class="btn btn-primary btn-submit">Update</button>
                                 </div>
                             </div>
                         </form>

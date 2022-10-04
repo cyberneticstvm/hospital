@@ -23,13 +23,9 @@ class IncomeController extends Controller
          $this->middleware('permission:income-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:income-delete', ['only' => ['destroy']]);
     }
-    public function indexo(){
-        $incomes = Income::leftJoin('branches as b', 'incomes.branch', '=', 'b.id')->leftJoin('income_expense_heads as ie', 'incomes.head', '=', 'ie.id')->select('incomes.id', 'incomes.description', 'incomes.amount', 'b.branch_name', 'ie.name as head', DB::raw("DATE_FORMAT(incomes.date, '%d/%b/%Y') AS edate"))->whereDate('incomes.created_at', Carbon::today())->orderByDesc("incomes.id")->get();
-        return view('income_other.index', compact('incomes'));
-    }
     public function index()
     {
-        $incomes = PP::leftJoin('patient_medical_records as pmr', 'patient_payments.medical_record_id', '=', 'pmr.id')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('payment_modes as pm', 'pm.id', '=', 'patient_payments.payment_mode')->select("patient_payments.id", "patient_payments.amount", "patient_payments.medical_record_id", "patient_payments.notes", "pm.name", "pr.patient_name", "pr.patient_id")->whereDate('patient_payments.created_at', Carbon::today())->orderByDesc("patient_payments.id")->get();
+        $incomes = Income::leftJoin('branches as b', 'incomes.branch', '=', 'b.id')->leftJoin('income_expense_heads as ie', 'incomes.head', '=', 'ie.id')->select('incomes.id', 'incomes.description', 'incomes.amount', 'b.branch_name', 'ie.name as head', DB::raw("DATE_FORMAT(incomes.date, '%d/%b/%Y') AS edate"))->whereDate('incomes.created_at', Carbon::today())->orderByDesc("incomes.id")->get();
         return view('income.index', compact('incomes'));
     }
 
@@ -42,7 +38,7 @@ class IncomeController extends Controller
     {
         $branches = DB::table('branches')->get();    
         $heads = DB::table('income_expense_heads')->where('type', 'I')->get();    
-        return view('income_other.create', compact('branches', 'heads'));
+        return view('income.create', compact('branches', 'heads'));
     }
 
     /**
@@ -63,7 +59,7 @@ class IncomeController extends Controller
         $input['branch'] = $request->session()->get('branch');
         $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;
         $income = Income::create($input);        
-        return redirect()->route('incomeo.index')->with('success','Income recorded successfully');
+        return redirect()->route('income.index')->with('success','Income recorded successfully');
     }
 
     /**
@@ -72,34 +68,9 @@ class IncomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($id)
     {
-        $this->validate($request, [
-            'medical_record_id' => 'required',
-        ]);
-        $heads = DB::table('income_expense_heads')->where('type', 'I')->where('category', 'patient')->orderBy('name')->get();
-        $pmodes = DB::table('payment_modes')->orderBy('name')->get();
-        $medical_record_id = $request->medical_record_id;
-        $patient = DB::table('patient_registrations as pr')->leftJoin('patient_medical_records as pmr', 'pmr.patient_id', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->select('pr.id', 'pr.patient_name', 'pr.patient_id', DB::raw("DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS cdate"))->first();
-
-        $reg_fee = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->value('pr.registration_fee');
-
-        $consultation_fee = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pr', 'pmr.mrn', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->value('pr.doctor_fee');
-
-        $procedure_fee = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->where('pmr.id', $request->medical_record_id)->sum('fee');
-
-        $certificate_fee = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->where('pc.medical_record_id', $request->medical_record_id)->where('pcd.status', 'I')->sum('pcd.fee');
-
-        $pharmacy = DB::table('patient_medicine_records')->where('medical_record_id', $request->medical_record_id)->sum('total');
-        
-        $clinical_lab = 0.00;
-        $radiology_lab = 0.00;
-
-        $payments = PP::where('medical_record_id', $request->medical_record_id)->leftJoin('payment_modes as p', 'patient_payments.payment_mode', '=', 'p.id')->select('patient_payments.amount', 'patient_payments.notes', 'p.name')->get();
-
-        $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $procedure_fee, $reg_fee);
-        $tot = $reg_fee+$consultation_fee+$procedure_fee+$certificate_fee+$pharmacy+$radiology_lab+$clinical_lab;
-        return view('income.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments'));
+        //
     }
 
     /**
@@ -113,7 +84,7 @@ class IncomeController extends Controller
         $branches = DB::table('branches')->get();
         $income = Income::find($id);
         $heads = DB::table('income_expense_heads')->where('type', 'I')->get();    
-        return view('income_other.edit', compact('branches', 'income', 'heads'));
+        return view('income.edit', compact('branches', 'income', 'heads'));
     }
 
     /**
@@ -123,20 +94,7 @@ class IncomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request){
-        $this->validate($request, [
-            'amount' => 'required',
-            'payment_mode' => 'required',
-            'medical_record_id' => 'required',
-        ]);
-        $input = $request->all();
-        $input['created_by'] = Auth::user()->id;
-        $input['branch'] = $request->session()->get('branch');
-        $pp = PP::create($input);
-        return redirect()->route('income.index')->with('success','Income recorded successfully');
-    }
-
-    public function updateo(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'date' => 'required',
@@ -149,7 +107,7 @@ class IncomeController extends Controller
         $input['branch'] = $request->session()->get('branch');
         $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;        
         $income->update($input);        
-        return redirect()->route('incomeo.index')->with('success','Income updated successfully');
+        return redirect()->route('income.index')->with('success','Income updated successfully');
     }
 
     /**
@@ -160,14 +118,8 @@ class IncomeController extends Controller
      */
     public function destroy($id)
     {
-        PP::find($id)->delete();
-        return redirect()->route('income.list')
-                        ->with('success','Record deleted successfully');
-    }
-    public function destroyo($id)
-    {
         Income::find($id)->delete();
-        return redirect()->route('incomeo.index')
+        return redirect()->route('income.index')
                         ->with('success','Record deleted successfully');
     }
 }

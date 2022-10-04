@@ -287,19 +287,21 @@ Route::group(['middleware' => ['auth']], function(){
     // End Expenses //
 
     // Income //
-    Route::get('/income-other/', 'App\Http\Controllers\IncomeController@indexo')->name('incomeo.index');
-    Route::get('/income-other/create/', 'App\Http\Controllers\IncomeController@create')->name('incomeo.create');
-    Route::post('/income-other/create/', 'App\Http\Controllers\IncomeController@store')->name('incomeo.save');
-    Route::get('/income-other/edit/{id}/', 'App\Http\Controllers\IncomeController@edit')->name('incomeo.edit');
-    Route::put('/income-other/edit/{id}/', 'App\Http\Controllers\IncomeController@updateo')->name('incomeo.update');
-    Route::delete('/income-other/delete/{id}/', 'App\Http\Controllers\IncomeController@destroyo')->name('incomeo.delete');
-
     Route::get('/income/', 'App\Http\Controllers\IncomeController@index')->name('income.index');
-    Route::post('/income/fetch/', 'App\Http\Controllers\IncomeController@show')->name('income.show');
-    Route::post('/income/update/', 'App\Http\Controllers\IncomeController@update')->name('income.update');
-    Route::get('/income/list/', 'App\Http\Controllers\IncomeController@index')->name('income.list');
+    Route::get('/income/create/', 'App\Http\Controllers\IncomeController@create')->name('income.create');
+    Route::post('/income/create/', 'App\Http\Controllers\IncomeController@store')->name('income.save');
+    Route::get('/income/edit/{id}/', 'App\Http\Controllers\IncomeController@edit')->name('income.edit');
+    Route::put('/income/edit/{id}/', 'App\Http\Controllers\IncomeController@update')->name('income.update');
     Route::delete('/income/delete/{id}/', 'App\Http\Controllers\IncomeController@destroy')->name('income.delete');
-    // End Expense //
+    // End Income //
+
+    // Patient Payments //
+    Route::get('/patient-payment/', 'App\Http\Controllers\PatientPaymentController@index')->name('patient-payment.index');
+    Route::post('/patient-payment/fetch/', 'App\Http\Controllers\PatientPaymentController@show')->name('patient-payment.show');
+    Route::post('/patient-payment/create/', 'App\Http\Controllers\PatientPaymentController@store')->name('patient-payment.save');
+    Route::get('/patient-payment/list/', 'App\Http\Controllers\PatientPaymentController@index')->name('patient-payment.list');
+    Route::delete('/patient-payment/delete/{id}/', 'App\Http\Controllers\PatientPaymentController@destroy')->name('patient-payment.delete');
+    // End Patient Payments //
 
     // Certificates //
     Route::get('/consultation/certificates/', 'App\Http\Controllers\PatientCertificateController@index')->name('certificate.index');
