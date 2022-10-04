@@ -71,7 +71,7 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
-                            <thead><tr><th>SL No.</th><th>Particulars</th><th class="text-end">Total</th><th class="text-end">Receivables</th></tr></thead><tbody>
+                            <thead><tr><th>SL No.</th><th>Particulars</th><th class="text-end">Total</th><th class="text-end">Receivables Today</th></tr></thead><tbody>
                             <tr>
                                 <td>1</td><td>Opening Balance</td><td class="text-end text-danger">{{ number_format($opening_balance, 2) }}</td><td></td>                                
                             </tr>
