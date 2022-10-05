@@ -38,6 +38,9 @@ class HelperController extends Controller
         if($request->type == 'incomecard'):
             $html = $this->getIncomeCardDetailed($fdate, $tdate, $branch);
         endif;
+        if($request->type == 'incomepending'):
+            $html = $this->getIncomePendingDetailed($fdate, $tdate, $branch);
+        endif;
         echo $html;
     }
     private function getConsultationDetailed($fdate, $tdate, $branch){
@@ -166,5 +169,47 @@ class HelperController extends Controller
         endforeach;
         $html .= "</tbody><tfoot><tr><td colspan='5' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>".number_format($tot, 2)."</td></tr></tfoot></table>";
         return $html;
+    }
+    private function getIncomePendingDetailed($fdate, $tdate, $branch){
+        $records = DB::table('patient_medical_records as p')->leftJoin('patient_registrations as preg', 'p.patient_id', '=', 'preg.id')->where('p.branch', $branch)->whereBetween('p.created_at', [$fdate, $tdate])->select('p.id as mrid', 'preg.patient_name', 'preg.patient_id')->get();
+        $c = 1; $owed_tot = 0; $paid_tot = 0; $tot = 0; $cls = '';
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Owed</th><th>Paid</th><th>Due</th></tr></thead><tbody>";
+        foreach($records as $row):
+            $html .= "<tr>";
+                $owed = $this->getOwedTotal($row->mrid);
+                $paid = $this->getPaidTotal($row->mrid);
+                $cls = ($owed - $paid > 0) ? 'text-danger' : '';
+                $html .= "<td>".$c++."</td>";
+                $html .= "<td>".$row->mrid."</td>";
+                $html .= "<td>".$row->patient_name."</td>";
+                $html .= "<td>".$row->patient_id."</td>";
+                $html .= "<td class='text-end'>".number_format($owed, 2)."</td>";
+                $html .= "<td class='text-end'>".number_format($paid, 2)."</td>";
+                $html .= "<td class='text-end ".$cls."'>".number_format($owed - $paid, 2)."</td>";
+            $html .= "</tr>";
+            $paid_tot += $paid; $owed_tot += $owed; $tot += $owed - $paid;
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='4' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>".number_format($owed_tot, 2)."</td><td class='text-end fw-bold'>".number_format($paid_tot, 2)."</td><td class='text-end fw-bold ".$cls."'>".number_format($tot, 2)."</td></tr></tfoot></table>";
+        return $html;
+    }
+    public function getOwedTotal($mrid){
+        $reg_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->where('pmr.id', $mrid)->sum('pr.registration_fee');
+
+        $consultation_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pr', 'pmr.mrn', '=', 'pr.id')->where('pmr.id', $mrid)->sum('pr.doctor_fee');
+
+        $procedure_fee_total = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->where('pp.medical_record_id', $mrid)->sum('fee');
+
+        $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->where('pc.medical_record_id', $mrid)->where('pcd.status', 'I')->sum('pcd.fee');
+
+        $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('p.id', $mrid)->where('m.status', 1)->sum('m.total');
+
+        return $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine;
+    }
+    public function getPaidTotal($mrid){
+        $paid = DB::table('patient_payments as p')->where('p.medical_record_id', $mrid)->sum('amount');
+        return $paid;
+    }
+    public function getPreviousDues($patient_id){
+
     }
 }
