@@ -102,9 +102,11 @@
                             <tr>
                                 <td colspan="2" class="text-end fw-bold">Expenses</td><td class="text-end fw-bold">{{ number_format($expense, 2) }}</td><td class="text-end text-warning"></td>       
                             </tr>
+                            <tr><td colspan="4" class="bg-primary"></td></tr>
                             <tr>
                                 <td colspan="2" class="text-end fw-bold">Net Total</td><td class="text-end fw-bold">{{ number_format($income_total - $expense, 2) }}</td><td class="text-end text-danger">{{ number_format($rtot, 2) }}</td>       
                             </tr>
+                            <tr><td colspan="4" class="bg-primary"></td></tr>
                             <tr>
                                 <td colspan="2" class="text-end fw-bold">Payments Received in Cash</td><td class="text-end fw-bold">{{ number_format($income_received_cash, 2) }}</td><td class="text-end"><a class="daybook text-primary" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomeCashModal" data-bs-target="#incomeCashModal" data-title="Payments received in Cash" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomecash">{{ number_format($income_received_cash, 2) }}</a></td>       
                             </tr>
@@ -114,8 +116,9 @@
                             <tr>
                                 <td colspan="2" class="text-end fw-bold">Payments received (Cheque/Card)</td><td class="text-end fw-bold">{{ number_format($income_received_card, 2) }}</td><td class="text-end"><a class="daybook text-primary" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomeCardModal" data-bs-target="#incomeCardModal" data-title="Payments received through Card/Cheque" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomecard">{{ number_format($income_received_card, 2) }}</a></td>       
                             </tr>
+                            <tr><td colspan="4" class="bg-primary"></td></tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Balance</td><td class="text-end fw-bold">{{ number_format($income_total-($income_received_cash + $income_received_upi + $income_received_card + $expense), 2) }}</td><td class="text-end text-danger"><a class="daybook text-primary" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomePendingdModal" data-bs-target="#incomePendingdModal" data-title="Pending Payments" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomepending">{{ number_format($rtot-($income_received_cash + $income_received_upi + $income_received_card), 2) }}</a></td>       
+                                <td colspan="2" class="text-end fw-bold">Balance</td><td class="text-end fw-bold">{{ number_format($income_total-($income_received_upi + $income_received_card + $expense), 2) }}</td><td class="text-end text-danger"><a class="daybook text-primary" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomePendingdModal" data-bs-target="#incomePendingdModal" data-title="Pending Payments" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomepending">{{ number_format($rtot-($income_received_cash + $income_received_upi + $income_received_card), 2) }}</a></td>       
                             </tr>             
                             </tbody>
                         </table>

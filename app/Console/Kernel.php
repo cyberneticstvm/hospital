@@ -60,7 +60,7 @@ class Kernel extends ConsoleKernel
 
         $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $income;
 
-        $closing_balance = $income_total-($income_received_cash + $income_received_other + $expense);
+        $closing_balance = $income_total-($income_received_other + $expense);
 
         return $closing_balance;
     }
