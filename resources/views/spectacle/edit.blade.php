@@ -59,7 +59,7 @@
                                                 <select class="form-control select2 re_dist_add" name="re_dist_add">
                                                     <option value="">Select</option>
                                                 @foreach($reading_adds as $key => $radd)
-                                                    <option value="{{ $radd->value }}" {{ $radd->value == $spectacle->re_dist_add) ? 'selected': '' }}>{{ $radd->value }}</option>
+                                                    <option value="{{ $radd->value }}" {{ ($radd->value == $spectacle->re_dist_add) ? 'selected': '' }}>{{ $radd->value }}</option>
                                                 @endforeach
                                                 </select>
                                                 </td><td class="fw-bold text-right">INT ADD</td><td><input type="text" class="form-control form-control-md re_int_add" value="{{ $spectacle->re_int_add }}" name="re_int_add" placeholder="0"/></td><td class="text-right fw-bold">RE => LE</td><td><input type="checkbox" class="chkREtoLE"></td>
@@ -100,7 +100,7 @@
                                                 <select class="form-control select2 le_dist_add" name="le_dist_add">
                                                     <option value="">Select</option>
                                                 @foreach($reading_adds as $key => $radd)
-                                                    <option value="{{ $radd->value }}" {{ $radd->value == $spectacle->le_dist_add) ? 'selected': '' }}>{{ $radd->value }}</option>
+                                                    <option value="{{ $radd->value }}" {{ ($radd->value == $spectacle->le_dist_add) ? 'selected': '' }}>{{ $radd->value }}</option>
                                                 @endforeach
                                                 </select>
                                                 </td><td class="fw-bold text-right">INT ADD</td><td><input type="text" class="form-control form-control-md le_int_add" value="{{ $spectacle->le_int_add }}" name="le_int_add" placeholder="0"/></td><td colspan="2"></td>
