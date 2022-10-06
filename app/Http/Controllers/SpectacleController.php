@@ -93,11 +93,12 @@ class SpectacleController extends Controller
     public function edit($id)
     {
         $spectacle = Spectacle::find($id);
+        $reading_adds = DB::table('eye_powers')->where('category', 'reading_add')->get();
         $mrecord = DB::table('patient_medical_records')->find($spectacle->medical_record_id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
         $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-        return view('spectacle.edit', compact('mrecord', 'patient', 'doctor', 'spectacle', 'age'));
+        return view('spectacle.edit', compact('mrecord', 'patient', 'doctor', 'spectacle', 'age', 'reading_adds'));
     }
 
     /**
