@@ -39,8 +39,8 @@ class SpectacleController extends Controller
     }
 
     public function fetch(){
-        $medical_record = [];
-        return view('spectacle.fetch', compact('medical_record'));
+        $medical_record = []; $reading_adds = DB::table('eye_powers')->where('category', 'reading_add')->get();
+        return view('spectacle.fetch', compact('medical_record', 'reading_adds'));
     }
 
     /**
@@ -74,10 +74,11 @@ class SpectacleController extends Controller
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_number);
         if($mrecord):
+            $reading_adds = DB::table('eye_powers')->where('category', 'reading_add')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-            return view('spectacle.create', compact('mrecord', 'patient', 'doctor', 'age'));
+            return view('spectacle.create', compact('mrecord', 'patient', 'doctor', 'age', 'reading_adds'));
         else:
             return redirect("/spectacle/fetch/")->withErrors('No records found.');
         endif;

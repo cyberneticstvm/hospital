@@ -54,7 +54,14 @@
                                                 <td><input type="text" class="form-control form-control-md" name="re_near_prism" placeholder="0"/></td>
                                             </tr>
                                             <tr>
-                                                <td class="fw-bold">ADD</td><td><input type="text" class="form-control form-control-md re_dist_add" name="re_dist_add" placeholder="0"/></td><td class="fw-bold text-right">INT ADD</td><td><input type="text" class="form-control form-control-md re_int_add" name="re_int_add" placeholder="0"/></td><td class="text-right fw-bold">RE => LE</td><td><input type="checkbox" class="chkREtoLE"></td>
+                                                <td class="fw-bold">ADD</td><td><!--<input type="text" class="form-control form-control-md re_dist_add" name="re_dist_add" placeholder="0"/>-->
+                                                <select class="form-control select2 re_dist_add" name="re_dist_add">
+                                                    <option value="">Select</option>
+                                                @foreach($reading_adds as $key => $radd)
+                                                    <option value="{{ $radd->value }}">{{ $radd->value }}</option>
+                                                @endforeach
+                                                </select>
+                                                </td><td class="fw-bold text-right">INT ADD</td><td><input type="text" class="form-control form-control-md re_int_add" name="re_int_add" placeholder="0"/></td><td class="text-right fw-bold">RE => LE</td><td><input type="checkbox" class="chkREtoLE"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -88,7 +95,14 @@
                                                 <td><input type="text" class="form-control form-control-md" name="le_near_prism" placeholder="0"/></td>
                                             </tr>
                                             <tr>
-                                                <td class="fw-bold">ADD</td><td><input type="text" class="form-control form-control-md le_dist_add" name="le_dist_add" placeholder="0"/></td><td class="fw-bold text-right">INT ADD</td><td><input type="text" class="form-control form-control-md le_int_add" name="le_int_add" placeholder="0"/></td><td colspan="2"></td>
+                                                <td class="fw-bold">ADD</td><td><!--<input type="text" class="form-control form-control-md le_dist_add" name="le_dist_add" placeholder="0"/>-->
+                                                <select class="form-control select2 le_dist_add" name="le_dist_add">
+                                                    <option value="">Select</option>
+                                                @foreach($reading_adds as $key => $radd)
+                                                    <option value="{{ $radd->value }}">{{ $radd->value }}</option>
+                                                @endforeach
+                                                </select>
+                                                </td><td class="fw-bold text-right">INT ADD</td><td><input type="text" class="form-control form-control-md le_int_add" name="le_int_add" placeholder="0"/></td><td colspan="2"></td>
                                             </tr>
                                         </tbody>
                                     </table>
