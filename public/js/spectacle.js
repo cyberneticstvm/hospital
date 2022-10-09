@@ -78,7 +78,7 @@ $(function(){
         }
     });
 
-    $(".spectacle .le_dist_add").focusout(function(){
+    $(".spectacle .le_dist_add").change(function(){
         var le_dist_add = $(this).val();
         var le_dist_sph = $(".le_dist_sph").val();
         var le_dist_cyl = $(".le_dist_cyl").val();
