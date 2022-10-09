@@ -87,10 +87,10 @@ $(function(){
         var le_near = (parseFloat(le_dist_sph)+parseFloat(le_dist_add) > 0) ? parseFloat(le_dist_sph)+parseFloat(le_dist_add) : parseFloat(le_dist_sph)+parseFloat(le_dist_add);
         $(".le_near_sph").val((le_near > 0) ? '+' + le_near.toFixed(2) : (le_near) ? le_near.toFixed(2) : '0.00');
 
-        if(age < 52 && re_dist_add > 0 && le_dist_sph){
+        if(age < 52 && le_dist_add > 0 && le_dist_sph){
             var int_sph = (parseFloat(le_dist_sph)) ? parseFloat(le_dist_sph)+0.75 : 0.75;
             $(".le_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '');
-        }else if(age > 52 && re_dist_add > 0 && le_dist_sph){
+        }else if(age > 52 && le_dist_add > 0 && le_dist_sph){
             var int_sph = (parseFloat(le_dist_sph)) ? parseFloat(le_dist_sph)+1.25 : 1.25;
             $(".le_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '');
         }
