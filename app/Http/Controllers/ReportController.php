@@ -58,7 +58,7 @@ class ReportController extends Controller
 
         $income_received_upi = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [3,4])->sum('amount');
 
-        $income_received_card = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [2,5,6])->sum('amount');
+        $income_received_card = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [2,5,6,7])->sum('amount');
 
         $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $income;
 

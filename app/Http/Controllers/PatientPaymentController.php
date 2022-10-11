@@ -16,10 +16,10 @@ class PatientPaymentController extends Controller
      * @return \Illuminate\Http\Response
      */
     function __construct(){
-         $this->middleware('permission:patient-payments-list|patient-payments-create|patient-payments-edit|patient-payments-delete', ['only' => ['index']]);
+         $this->middleware('permission:patient-payments-list|patient-payments-create|patient-payments-edit|patient-payments-delete', ['only' => ['index', 'store']]);
          $this->middleware('permission:patient-payments-list', ['only' => ['index']]);
          $this->middleware('permission:patient-payments-create', ['only' => ['store']]);
-         $this->middleware('permission:patient-payments-edit', ['only' => ['update']]);
+         $this->middleware('permission:patient-payments-edit', ['only' => ['edit', 'update']]);
          $this->middleware('permission:patient-payments-delete', ['only' => ['destroy']]);
     }
     public function index()
@@ -87,7 +87,7 @@ class PatientPaymentController extends Controller
         $clinical_lab = 0.00;
         $radiology_lab = 0.00;
 
-        $payments = PP::where('medical_record_id', $request->medical_record_id)->leftJoin('payment_modes as p', 'patient_payments.payment_mode', '=', 'p.id')->select('patient_payments.amount', 'patient_payments.notes', 'p.name')->get();
+        $payments = PP::where('medical_record_id', $request->medical_record_id)->leftJoin('payment_modes as p', 'patient_payments.payment_mode', '=', 'p.id')->select('patient_payments.id', 'patient_payments.amount', 'patient_payments.notes', 'p.name')->get();
 
         $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $procedure_fee, $reg_fee);
         $tot = $reg_fee+$consultation_fee+$procedure_fee+$certificate_fee+$pharmacy+$radiology_lab+$clinical_lab;
@@ -102,7 +102,10 @@ class PatientPaymentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $payment = PP::find($id);
+        $pmodes = DB::table('payment_modes')->orderBy('name')->get();
+        $patient = DB::table('patient_registrations')->find($payment->patient_id);
+        return view('patient-payment.edit', compact('payment', 'pmodes', 'patient'));
     }
 
     /**
@@ -112,18 +115,18 @@ class PatientPaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        /*$this->validate($request, [
+        $this->validate($request, [
             'amount' => 'required',
             'payment_mode' => 'required',
             'medical_record_id' => 'required',
         ]);
         $input = $request->all();
-        $input['created_by'] = Auth::user()->id;
-        $input['branch'] = $request->session()->get('branch');
-        $pp = PP::create($input);
-        return redirect()->route('patient-payment.index')->with('success','Payment recorded successfully');*/
+        $created_at = (!empty($request->created_at)) ? Carbon::createFromFormat('d/M/Y', $input['created_at'])->format('Y-m-d H:i:s') : Carbon::now();
+        $branch = $request->session()->get('branch');
+        $pp = PP::where('id', $id)->update(['branch' => $branch, 'amount' => $request->amount, 'payment_mode' => $request->payment_mode, 'notes' => $request->notes, 'created_at' => $created_at]);
+        return redirect()->route('patient-payment.index')->with('success','Payment updated successfully');
     }
 
     /**

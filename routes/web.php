@@ -300,6 +300,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/patient-payment/fetch/', 'App\Http\Controllers\PatientPaymentController@show')->name('patient-payment.show');
     Route::post('/patient-payment/create/', 'App\Http\Controllers\PatientPaymentController@store')->name('patient-payment.save');
     Route::get('/patient-payment/list/', 'App\Http\Controllers\PatientPaymentController@index')->name('patient-payment.list');
+    Route::get('/patient-payment/edit/{id}/', 'App\Http\Controllers\PatientPaymentController@edit')->name('patient-payment.edit');
+    Route::put('/patient-payment/edit/{id}/', 'App\Http\Controllers\PatientPaymentController@update')->name('patient-payment.update');
     Route::delete('/patient-payment/delete/{id}/', 'App\Http\Controllers\PatientPaymentController@destroy')->name('patient-payment.delete');
     // End Patient Payments //
 

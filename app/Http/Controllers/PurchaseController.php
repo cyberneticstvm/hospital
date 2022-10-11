@@ -56,8 +56,8 @@ class PurchaseController extends Controller
             'price' => 'required',
         ]);
         $input = $request->all();
-        $input['order_date'] = (!empty($request->order_date)) ? Carbon::createFromFormat('d/M/Y', $request['order_date'])->format('Y-m-d') : NULL;
-        $input['delivery_date'] = (!empty($request->delivery_date)) ? Carbon::createFromFormat('d/M/Y', $request['delivery_date'])->format('Y-m-d') : NULL;
+        $input['order_date'] = (!empty($request->order_date)) ? Carbon::createFromFormat('d/M/Y', $input['order_date'])->format('Y-m-d') : NULL;
+        $input['delivery_date'] = (!empty($request->delivery_date)) ? Carbon::createFromFormat('d/M/Y', $input['delivery_date'])->format('Y-m-d') : NULL;
         $input['created_by'] = $request->user()->id;
         $purchase = Purchase::create($input);
         if($input['product']):
@@ -122,8 +122,8 @@ class PurchaseController extends Controller
             'price' => 'required',
         ]);
         $input = $request->all();
-        $input['order_date'] = (!empty($request->order_date)) ? Carbon::createFromFormat('d/M/Y', $request['order_date'])->format('Y-m-d') : NULL;
-        $input['delivery_date'] = (!empty($request->delivery_date)) ? Carbon::createFromFormat('d/M/Y', $request['delivery_date'])->format('Y-m-d') : NULL;
+        $input['order_date'] = (!empty($request->order_date)) ? Carbon::createFromFormat('d/M/Y', $input['order_date'])->format('Y-m-d') : NULL;
+        $input['delivery_date'] = (!empty($request->delivery_date)) ? Carbon::createFromFormat('d/M/Y', $input['delivery_date'])->format('Y-m-d') : NULL;
         $purchase = Purchase::find($id);
         $input['created_by'] = $purchase->getOriginal('created_by');
         $purchase->update($input);
