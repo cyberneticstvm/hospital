@@ -1,0 +1,56 @@
+@extends("templates.base")
+@section("content")
+<div class="body d-flex">
+    <div class="container">        
+        <div class="row g-4">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="d-flex flex-wrap justify-content-between align-items-end">
+                    <div class="mb-3">
+                        <h5 class="mb-0">Create A-Scan</h5>
+                        <span class="text-muted"></span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body table-responsive">
+                        <div class="row g-4 mb-3">
+                            <div class="col-sm-3">MR.ID: <h5 class="text-primary">{{ $mrecord->id }}</h5></div>
+                            <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ ($patient) ? $patient->patient_name : '' }}</h5></div>
+                            <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ ($patient) ? $patient->patient_id : '' }}</h5></div>
+                            <div class="col-sm-3">Age: <h5 class="text-primary">{{ ($age) ? $age : '' }}</h5></div>
+                        </div>
+                        <form action="{{ route('ascan.save') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="medical_record_id" value="{{ $mrecord->id }}" />
+                            <input type="hidden" name="patient_id" value="{{ ($patient) ? $patient->id : 0 }}" />
+                            <input type="hidden" name="branch" value="{{ $mrecord->branch }}" />
+                            <div class="row g-4">                                
+                                <div class="col-sm-12 table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead><tr><th>AXL<th>ACD</th><th>LENS</th><th>A-CONST.</th><th>IOL</th></tr></thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="text" name="axl" class="form-control" placeholder="Axl" /></td>
+                                                <td><input type="text" name="acd" class="form-control" placeholder="Acd" /></td>
+                                                <td><input type="text" name="lens" class="form-control" placeholder="Lens" /></td>
+                                                <td><input type="text" name="a_constant" class="form-control" placeholder="A-Constant" /></td>
+                                                <td><input type="text" name="iol_power" class="form-control" placeholder="IOL Power" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-3">
+                                <div class="col-sm-12 text-end">
+                                    <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
+                                    <button type="reset" class="btn btn-warning">Reset</button>
+                                    <button type="submit" class="btn btn-primary btn-submit">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .row end -->
+    </div>
+</div>
+@endsection

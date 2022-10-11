@@ -195,6 +195,33 @@ Route::group(['middleware' => ['auth']], function(){
     Route::delete('/spectacle/delete/{id}/', 'App\Http\Controllers\SpectacleController@destroy')->name('spectacle.delete');
     // end spectacles //
 
+    // keratometry //
+    Route::get('/keratometry/', 'App\Http\Controllers\KeratometryController@index')->name('keratometry.index');
+    Route::post('/keratometry/show/', 'App\Http\Controllers\KeratometryController@show')->name('keratometry.show');
+    Route::post('/keratometry/create/', 'App\Http\Controllers\KeratometryController@store')->name('keratometry.save');
+    Route::get('/keratometry/edit/{id}/', 'App\Http\Controllers\KeratometryController@edit')->name('keratometry.edit');
+    Route::put('/keratometry/edit/{id}/', 'App\Http\Controllers\KeratometryController@update')->name('keratometry.update');
+    Route::delete('/keratometry/delete/{id}/', 'App\Http\Controllers\KeratometryController@destroy')->name('keratometry.delete');
+    // end keratometry //
+
+    // tonometry //
+    Route::get('/tonometry/', 'App\Http\Controllers\TonometryController@index')->name('tonometry.index');
+    Route::post('/tonometry/show/', 'App\Http\Controllers\TonometryController@show')->name('tonometry.show');
+    Route::post('/tonometry/create/', 'App\Http\Controllers\TonometryController@store')->name('tonometry.save');
+    Route::get('/tonometry/edit/{id}/', 'App\Http\Controllers\TonometryController@edit')->name('tonometry.edit');
+    Route::put('/tonometry/edit/{id}/', 'App\Http\Controllers\TonometryController@update')->name('tonometry.update');
+    Route::delete('/tonometry/delete/{id}/', 'App\Http\Controllers\TonometryController@destroy')->name('tonometry.delete');
+    // end tonometry //
+
+    // ascan //
+    Route::get('/ascan/', 'App\Http\Controllers\AscanController@index')->name('ascan.index');
+    Route::post('/ascan/show/', 'App\Http\Controllers\AscanController@show')->name('ascan.show');
+    Route::post('/ascan/create/', 'App\Http\Controllers\AscanController@store')->name('ascan.save');
+    Route::get('/ascan/edit/{id}/', 'App\Http\Controllers\AscanController@edit')->name('ascan.edit');
+    Route::put('/ascan/edit/{id}/', 'App\Http\Controllers\AscanController@update')->name('ascan.update');
+    Route::delete('/ascan/delete/{id}/', 'App\Http\Controllers\AscanController@destroy')->name('ascan.delete');
+    // end ascan //
+
     // surgery register //
     Route::get('/surgery/', 'App\Http\Controllers\SurgeryController@index')->name('surgery.index');
     Route::get('/surgery/edit/{id}', 'App\Http\Controllers\SurgeryController@edit')->name('surgery.edit');
