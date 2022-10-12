@@ -46,7 +46,7 @@ class TonometryController extends Controller
     {
         $this->validate($request, [
             'medical_record_id' => 'required',
-            'procedure' => 'required',
+            'procedure' => 'required|array|min:1',
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
@@ -130,7 +130,7 @@ class TonometryController extends Controller
     {
         $this->validate($request, [
             'medical_record_id' => 'required',
-            'procedure' => 'required',
+            'procedure' => 'required|array|min:1',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
