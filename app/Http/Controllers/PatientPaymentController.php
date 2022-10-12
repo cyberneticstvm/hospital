@@ -53,7 +53,6 @@ class PatientPaymentController extends Controller
         ]);
         $input = $request->all();
         $input['created_by'] = Auth::user()->id;
-        $input['branch'] = $request->session()->get('branch');
         $pp = PP::create($input);
         return redirect()->route('patient-payment.index')->with('success','Payment recorded successfully');
     }
@@ -72,7 +71,7 @@ class PatientPaymentController extends Controller
         $heads = DB::table('income_expense_heads')->where('type', 'I')->where('category', 'patient')->orderBy('name')->get();
         $pmodes = DB::table('payment_modes')->orderBy('name')->get();
         $medical_record_id = $request->medical_record_id;
-        $patient = DB::table('patient_registrations as pr')->leftJoin('patient_medical_records as pmr', 'pmr.patient_id', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->select('pr.id', 'pr.patient_name', 'pr.patient_id', DB::raw("DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS cdate"))->first();
+        $patient = DB::table('patient_registrations as pr')->leftJoin('patient_medical_records as pmr', 'pmr.patient_id', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->select('pr.id', 'pr.patient_name', 'pr.patient_id', 'pmr.branch', DB::raw("DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS cdate"))->first();
 
         $reg_fee = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->value('pr.registration_fee');
 
@@ -124,8 +123,7 @@ class PatientPaymentController extends Controller
         ]);
         $input = $request->all();
         $created_at = (!empty($request->created_at)) ? Carbon::createFromFormat('d/M/Y', $input['created_at'])->format('Y-m-d H:i:s') : Carbon::now();
-        $branch = $request->session()->get('branch');
-        $pp = PP::where('id', $id)->update(['branch' => $branch, 'amount' => $request->amount, 'payment_mode' => $request->payment_mode, 'notes' => $request->notes, 'created_at' => $created_at]);
+        $pp = PP::where('id', $id)->update(['amount' => $request->amount, 'payment_mode' => $request->payment_mode, 'notes' => $request->notes, 'created_at' => $created_at]);
         return redirect()->route('patient-payment.index')->with('success','Payment updated successfully');
     }
 

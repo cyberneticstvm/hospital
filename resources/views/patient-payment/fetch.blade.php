@@ -22,6 +22,7 @@
                             @csrf
                             <input type="hidden" name="medical_record_id" value="{{ $medical_record_id }}" />
                             <input type="hidden" name="patient_id" value="{{ ($patient) ? $patient->id : 0 }}" />
+                            <input type="hidden" name="branch" value="{{ ($patient) ? $patient->branch : 0 }}" />
                             <table class="table table-sm table-striped table-hover align-middle">
                                 <thead><tr><th>Income Head</th><th>Amount</th></tr></thead>
                                 <tbody>
