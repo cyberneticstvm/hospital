@@ -142,10 +142,10 @@ class PatientReferenceController extends Controller
             $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
         //endif;
         $input['created_by'] = $reference->getOriginal('created_by');
-        $input['branch'] = $request->session()->get('branch');
+        $input['branch'] = $reference->getOriginal('branch');
         $input['status'] = ($request->status) ? 0 : 1;
-        $token = PRef::where('department_id', $request->department_id)->where('branch', $request->session()->get('branch'))->whereDate('created_at', Carbon::today())->max('token');
-        $input['token'] = ($token > 0) ? $token+1 : 1;
+        $token = $reference->getOriginal('token');//PRef::where('department_id', $request->department_id)->where('branch', $request->session()->get('branch'))->whereDate('created_at', Carbon::today())->max('token');
+        //$input['token'] = ($token > 0) ? $token+1 : 1;
         $reference->update($input);
         DB::table('patient_medical_records')->where('mrn', $id)->update(['status' => $input['status']]);
         return redirect()->route('consultation.patient-reference')->with('success','Doctor Updated successfully');
