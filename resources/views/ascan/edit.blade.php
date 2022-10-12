@@ -40,6 +40,26 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="row g-4">                                
+                                <div class="col-sm-6">
+                                    <label class="form-label">Procedures<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="procedure[]">
+                                    <option value="">Select</option>
+                                    @foreach($procedures as $proc)
+                                        @php $selected = ''; @endphp
+                                        @foreach($advised as $key => $value)
+                                            @if($proc->id == $value->procedure)
+                                                {{ $selected = 'selected' }}
+                                            @endif
+                                        @endforeach
+                                        <option value="{{ $proc->id }}" {{ $selected }}>{{ $proc->name }}</option>
+                                    @endforeach
+                                    </select>
+                                    @error('procedure')
+                                    <small class="text-danger">{{ $errors->first('procedure') }}</small>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-12 text-end">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>

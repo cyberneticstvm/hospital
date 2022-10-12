@@ -29,7 +29,6 @@ class Keratometry extends Model
         'k2_os_manual',
         'k2_od_axis_m',
         'k2_os_axis_m',
-        'fee',
         'created_by',
         'updated_by',
     ];

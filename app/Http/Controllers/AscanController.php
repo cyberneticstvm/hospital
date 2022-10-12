@@ -46,12 +46,34 @@ class AscanController extends Controller
     {
         $this->validate($request, [
             'medical_record_id' => 'required',
+            'procedure' => 'required',
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
-        $input['fee'] = 0.00;
-        $ascan = Ascan::create($input);
+        try{
+            $ascan = Ascan::create($input);
+            if(!empty($input['procedure'])):
+                for($i=0; $i<count($request->procedure); $i++):
+                    $proc = DB::table('procedures')->find($input['procedure'][$i]);
+                    $data[] = [
+                        'medical_record_id' => $request->medical_record_id,
+                        'patient_id' => $request->patient_id,
+                        'branch' => $request->branch,
+                        'procedure' => $proc->id,
+                        'fee' => $proc->fee,
+                        'type' => 'A',
+                        'created_by' => $request->user()->id,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endfor;
+                DB::table('patient_procedures')->insert($data);
+            endif;
+        }catch(Exception $e){
+            throw $e;
+        }
+        
         return redirect()->route('ascan.index')->with('success','Record created successfully');
     }
 
@@ -68,10 +90,11 @@ class AscanController extends Controller
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
         if($mrecord):
+            $procedures = DB::table('procedures')->where('type', 'A')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-            return view('ascan.create', compact('mrecord', 'patient', 'doctor', 'age'));
+            return view('ascan.create', compact('mrecord', 'patient', 'doctor', 'age', 'procedures'));
         else:
             return redirect("/ascan/")->withErrors('No records found.');
         endif;
@@ -89,8 +112,10 @@ class AscanController extends Controller
         $mrecord = DB::table('patient_medical_records')->find($ascan->medical_record_id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
+        $procedures = DB::table('procedures')->where('type', 'A')->get();
+        $advised = DB::table('patient_procedures')->where('medical_record_id', $ascan->medical_record_id)->where('type', 'A')->get();
         $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-        return view('ascan.edit', compact('mrecord', 'patient', 'doctor', 'age', 'ascan'));
+        return view('ascan.edit', compact('mrecord', 'patient', 'doctor', 'age', 'ascan', 'procedures', 'advised'));
     }
 
     /**
@@ -104,12 +129,34 @@ class AscanController extends Controller
     {
         $this->validate($request, [
             'medical_record_id' => 'required',
+            'procedure' => 'required',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
-        $input['fee'] = 0.00;
         $asc = Ascan::find($id);
-        $asc->update($input);
+        try{
+            DB::table('patient_procedures')->where('medical_record_id', $request->medical_record_id)->where('type', 'A')->delete();
+            $asc->update($input);
+            if(!empty($input['procedure'])):
+                for($i=0; $i<count($request->procedure); $i++):
+                    $proc = DB::table('procedures')->find($input['procedure'][$i]);
+                    $data[] = [
+                        'medical_record_id' => $request->medical_record_id,
+                        'patient_id' => $request->patient_id,
+                        'branch' => $request->branch,
+                        'procedure' => $proc->id,
+                        'fee' => $proc->fee,
+                        'type' => 'A',
+                        'created_by' => $request->user()->id,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endfor;
+                DB::table('patient_procedures')->insert($data);
+            endif;
+        }catch(Exception $e){
+            throw $e;
+        }        
         return redirect()->route('ascan.index')->with('success','Record updated successfully');
     }
 
@@ -121,7 +168,9 @@ class AscanController extends Controller
      */
     public function destroy($id)
     {
-        Ascan::find($id)->delete();
+        $ascan = Ascan::find($id);
+        DB::table('patient_procedures')->where('medical_record_id', $ascan->medical_record_id)->where('type', 'A')->delete();
+        $ascan->delete();
         return redirect()->route('ascan.index')
                         ->with('success','Record deleted successfully');
     }

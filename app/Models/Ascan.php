@@ -18,7 +18,6 @@ class Ascan extends Model
         'lens',
         'a_constant',
         'iol_power',
-        'fee',
         'created_by',
         'updated_by',
     ];

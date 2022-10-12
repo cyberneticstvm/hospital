@@ -28,17 +28,17 @@ class PatientReferenceController extends Controller
     private function getDoctorFee($pid, $fee, $ctype){
         $doc_fee = 0.00;
         $days = DB::table('settings')->where('id', 1)->value('consultation_fee_days');
-        $date_diff = PRef::where('patient_id', $pid)->select(DB::raw("DATEDIFF(now(), created_at) as days"))->latest()->value('days');
+        //$date_diff = PRef::where('patient_id', $pid)->select(DB::raw("IFNULL(DATEDIFF(now(), created_at), 0) as days"))->latest()->value('days');
+        $date_diff = PRef::where('patient_id', $pid)->select(DB::raw("IFNULL(DATEDIFF(now(), created_at), 0) as days"))->first();
+        $date_diff = ($date_diff && $date_diff['days'] > 0) ? $date_diff['days'] : 0;
         if($date_diff == 0 || $date_diff > $days): // $date_diff = 0 means first consultation
             $doc_fee = $fee; 
         endif;
-        return ($ctype == 2) ? 0.00 : $doc_fee; // ctype 2 means purpose of visit is Certificate and no consultation fee for that.
+        return ($ctype == 2 || $ctype == 4) ? 0.00 : $doc_fee; // ctype 2/4 means purpose of visit is Certificate/Camp and no consultation fee for that.
     }
 
     public function index()
     {
-        //$patients = DB::table('patient_registrations as pr')->rightJoin('patient_references', 'patient_references.patient_id', '=', 'pr.id')->leftJoin('doctors', 'patient_references.doctor_id', '=', 'doctors.id')->leftJoin('patient_medical_records as pmr', 'patient_references.id', '=', 'pmr.mrn')->select('patient_references.id as reference_id', 'pr.patient_id as pno', 'pr.patient_name as pname', 'patient_references.doctor_fee', 'doctors.doctor_name', 'pmr.id as medical_record_id')->get();
-        //dd($patients);
         $patients = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->select('pr.id as reference_id', 'pr.status', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.patient_id as pno', 'doctors.doctor_name', DB::Raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->whereDate('pr.created_at', Carbon::today())->orderByDesc('pmr.id')->get();
         return view('consultation.patient-reference', compact('patients'));
     }

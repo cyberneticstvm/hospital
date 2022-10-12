@@ -19,7 +19,6 @@ class Tonometry extends Model
         'at_od',
         'at_os',
         'at_time',
-        'fee',
         'created_by',
         'updated_by',
     ];

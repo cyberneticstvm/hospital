@@ -29,7 +29,7 @@ class ProcedureController extends Controller
 
     public function index()
     {
-        $procedures = Procedure::all();
+        $procedures = Procedure::orderBy('name', 'ASC')->get();
         $proc = [];
         return view('procedure.index', compact('procedures', 'proc'));
     }
@@ -163,7 +163,7 @@ class ProcedureController extends Controller
         }catch(Exception $e){
             throw $e;
         }
-        $procedures = Procedure::all();
+        $procedures = Procedure::orderBy('name', 'ASC')->get();
         $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', DB::raw("SUM(pp.fee) as 'fee'"))->groupBy('pp.medical_record_id')->get();
         return redirect()->route('procedure.fetch', compact('procs', 'procedures'))
                         ->with('success','Procedure created successfully');
@@ -207,7 +207,7 @@ class ProcedureController extends Controller
         }catch(Exception $e){
             throw $e;
         }
-        $procedures = Procedure::all();
+        $procedures = Procedure::orderBy('name', 'ASC')->get();
         $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', DB::raw("SUM(pp.fee) as 'fee'"))->groupBy('pp.medical_record_id')->get();
         return redirect()->route('procedure.fetch', compact('procs', 'procedures'))
                         ->with('success','Procedure updated successfully');
@@ -215,7 +215,7 @@ class ProcedureController extends Controller
 
     public function destroyadvise($id){
         DB::table('patient_procedures')->where('medical_record_id', $id)->delete();
-        $procedures = Procedure::all();
+        $procedures = Procedure::orderBy('name', 'ASC')->get();
         $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', DB::raw("SUM(pp.fee) as 'fee'"))->groupBy('pp.medical_record_id')->get();
         return redirect()->route('procedure.fetch', compact('procs', 'procedures'))
                         ->with('success','Procedure deleted successfully');

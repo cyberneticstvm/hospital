@@ -126,7 +126,7 @@
                             </div>
                             <hr class="bg-primary" style="height: 10px;" />
                             <div class="row mt-3">
-                                <div class="col-sm-3 table-responsive">
+                                <!--<div class="col-sm-3 table-responsive">
                                     <p class="fw-bold">IOP</p>
                                     <table class="table spectacle">
                                         <thead><tr><th></th><th>NCT</th><th>AT</th></tr></thead>
@@ -148,8 +148,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>                                
-                                <div class="col-sm-3 table-responsive">
+                                </div>-->                                
+                                <div class="col-sm-5 table-responsive">
                                     <p class="fw-bold">ARM VALUE</p>
                                     <table class="table spectacle">
                                         <thead><tr><th></th><th>SPH</th><th>CYL</th><th>AXIS</th></tr></thead>
@@ -169,7 +169,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-sm-6 table-responsive">
+                                <div class="col-sm-7 table-responsive">
                                     <p class="fw-bold">PGP</p>
                                     <table class="table">
                                         <thead><tr><th></th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th>VISION</th><th>NV</th></tr></thead>
@@ -249,7 +249,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="row mt-3">
+                            <!--<div class="row mt-3">
                                 <div class="col-sm-12 table-responsive">
                                     <p class="fw-bold">Biometry</p>
                                     <table class="table">
@@ -282,7 +282,7 @@
                                         </tbody>
                                     </table>
                                 </div>                                
-                            </div>
+                            </div>-->
                             <div class="row g-4">
                                 <div class="col-sm-4">
                                     <label class="form-label">Remarks</label>

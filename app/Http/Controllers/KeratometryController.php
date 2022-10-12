@@ -46,12 +46,33 @@ class KeratometryController extends Controller
     {
         $this->validate($request, [
             'medical_record_id' => 'required',
+            'procedure' => 'required',
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
-        $input['fee'] = 0.00;
-        $keratometry = Keratometry::create($input);
+        try{
+            $keratometry = Keratometry::create($input);
+            if(!empty($input['procedure'])):
+                for($i=0; $i<count($request->procedure); $i++):
+                    $proc = DB::table('procedures')->find($input['procedure'][$i]);
+                    $data[] = [
+                        'medical_record_id' => $request->medical_record_id,
+                        'patient_id' => $request->patient_id,
+                        'branch' => $request->branch,
+                        'procedure' => $proc->id,
+                        'fee' => $proc->fee,
+                        'type' => 'K',
+                        'created_by' => $request->user()->id,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endfor;
+                DB::table('patient_procedures')->insert($data);
+            endif;
+        }catch(Exception $e){
+            throw $e;
+        }        
         return redirect()->route('keratometry.index')->with('success','Record created successfully');
     }
     /**
@@ -67,11 +88,12 @@ class KeratometryController extends Controller
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
         if($mrecord):
+            $procedures = DB::table('procedures')->where('type', 'K')->get();
             $powers = DB::table('eye_powers')->where('category', 'keratometry')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-            return view('keratometry.create', compact('mrecord', 'patient', 'doctor', 'age', 'powers'));
+            return view('keratometry.create', compact('mrecord', 'patient', 'doctor', 'age', 'powers', 'procedures'));
         else:
             return redirect("/keratometry/")->withErrors('No records found.');
         endif;
@@ -90,8 +112,10 @@ class KeratometryController extends Controller
         $powers = DB::table('eye_powers')->where('category', 'keratometry')->get();
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
+        $procedures = DB::table('procedures')->where('type', 'K')->get();
+        $advised = DB::table('patient_procedures')->where('medical_record_id', $keratometry->medical_record_id)->where('type', 'K')->get();
         $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-        return view('keratometry.edit', compact('mrecord', 'patient', 'doctor', 'age', 'powers', 'keratometry'));
+        return view('keratometry.edit', compact('mrecord', 'patient', 'doctor', 'age', 'powers', 'keratometry', 'procedures', 'advised'));
     }
 
     /**
@@ -105,12 +129,34 @@ class KeratometryController extends Controller
     {
         $this->validate($request, [
             'medical_record_id' => 'required',
+            'procedure' => 'required',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
-        $input['fee'] = 0.00;
-        $ke = Keratometry::find($id);
-        $ke->update($input);
+        try{
+            DB::table('patient_procedures')->where('medical_record_id', $request->medical_record_id)->where('type', 'K')->delete();
+            $ke = Keratometry::find($id);
+            $ke->update($input);
+            if(!empty($input['procedure'])):
+                for($i=0; $i<count($request->procedure); $i++):
+                    $proc = DB::table('procedures')->find($input['procedure'][$i]);
+                    $data[] = [
+                        'medical_record_id' => $request->medical_record_id,
+                        'patient_id' => $request->patient_id,
+                        'branch' => $request->branch,
+                        'procedure' => $proc->id,
+                        'fee' => $proc->fee,
+                        'type' => 'K',
+                        'created_by' => $request->user()->id,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endfor;
+                DB::table('patient_procedures')->insert($data);
+            endif;
+        }catch(Exception $e){
+            throw $e;
+        }
         return redirect()->route('keratometry.index')->with('success','Record updated successfully');
     }
 
@@ -122,7 +168,9 @@ class KeratometryController extends Controller
      */
     public function destroy($id)
     {
-        Keratometry::find($id)->delete();
+        $ke = Keratometry::find($id);
+        DB::table('patient_procedures')->where('medical_record_id', $ke->medical_record_id)->where('type', 'K')->delete();
+        $ke->delete();
         return redirect()->route('keratometry.index')
                         ->with('success','Record deleted successfully');
     }

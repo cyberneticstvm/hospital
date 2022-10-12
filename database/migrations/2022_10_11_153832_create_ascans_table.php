@@ -23,7 +23,6 @@ return new class extends Migration
             $table->String('lens', 8)->nullable();
             $table->String('a_constant', 8)->nullable();
             $table->String('iol_power', 8)->nullable();
-            $table->decimal('fee', 6, 2)->default(0.00);
             $table->unsignedBigInteger('created_by')->references('id')->on('users');
             $table->unsignedBigInteger('updated_by')->references('id')->on('users');
             $table->foreign('medical_record_id')->references('id')->on('patient_medical_records')->onDelete('cascade');
