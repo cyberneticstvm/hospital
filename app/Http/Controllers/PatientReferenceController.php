@@ -136,11 +136,11 @@ class PatientReferenceController extends Controller
         $doctor = doctor::find($request->doctor_id);
         $input['patient_id'] = $request->get('pid');
         $reference = PRef::find($id);
-        if($reference->getOriginal('doctor_id') == $request->doctor_id):
-            $input['doctor_fee'] = $reference->getOriginal('doctor_fee');
-        else:
+        //if($reference->getOriginal('doctor_id') == $request->doctor_id):
+            //$input['doctor_fee'] = $reference->getOriginal('doctor_fee');
+        //else:
             $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
-        endif;
+        //endif;
         $input['created_by'] = $reference->getOriginal('created_by');
         $input['branch'] = $request->session()->get('branch');
         $input['status'] = ($request->status) ? 0 : 1;
