@@ -22,13 +22,23 @@ class PDFController extends Controller
     }
 
     public function prescription($id){
-        $reference = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at')->first();
+        $reference = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pr.consultation_type', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at')->first();
         $patient = DB::table('patient_registrations')->find($reference->patient_id);     
         $doctor = DB::table('doctors')->find($reference->doctor_id);
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));     
         //view()->share('patient', $reference);     
         $pdf = PDF::loadView('/pdf/prescription', compact('reference', 'patient', 'doctor', 'qrcode'));    
         //return $pdf->download('token.pdf');
+        if($reference->consultation_type == 4):
+            $pdf->output();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->set_opacity(.2,"Multiply");
+            $canvas->set_opacity(.2);
+            //$canvas->page_text($x, $y, $text, $font, 40,$color = array(255,0,0),$word_space = 0.0, $char_space = 0.0, $angle = 20.0);
+            $canvas->page_text($width/3, $height/2, 'CAMPAIGN', null, 40, array(0,0,0),2,2,-30);
+        endif;
         return $pdf->stream('prescription.pdf', array("Attachment"=>0));
     }
 
