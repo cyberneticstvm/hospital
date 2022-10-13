@@ -48,9 +48,9 @@ class AuthController extends Controller
         ]);
         $request->session()->put('branch', $request->branch_id);
         $branches = DB::table('branches')->get();
+        $br = DB::table('branches')->find($request->branch_id);
         
-        return redirect()->route('dash')
-                        ->with('success','Branch updated successfully');
+        return redirect()->route('dash')->with('success','Branch updated successfully');
         //return view('dash', compact('branches'));
     }
     /*public function createform(){
