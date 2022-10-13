@@ -58,11 +58,13 @@ class ReportController extends Controller
 
         $income_received_upi = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [3,4])->sum('amount');
 
-        $income_received_card = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [2,5,6,7])->sum('amount');
+        $income_received_card = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [2,5,7])->sum('amount');
+
+        $income_received_staff = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [6])->sum('amount');
 
         $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $income;
 
-        return view('reports.daybook', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'opening_balance'));
+        return view('reports.daybook', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance'));
     }
     public function showincomeexpense(){
         $branches = Branch::all();
