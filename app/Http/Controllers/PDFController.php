@@ -37,7 +37,7 @@ class PDFController extends Controller
             $canvas->set_opacity(.2,"Multiply");
             $canvas->set_opacity(.2);
             //$canvas->page_text($x, $y, $text, $font, 40,$color = array(255,0,0),$word_space = 0.0, $char_space = 0.0, $angle = 20.0);
-            $canvas->page_text($width/3, $height/2, 'CAMPAIGN', null, 40, array(0,0,0),2,2,-30);
+            $canvas->page_text($width/2.5, $height/2, 'CAMP', null, 40, array(0,0,0),2,2,-40);
         endif;
         return $pdf->stream('prescription.pdf', array("Attachment"=>0));
     }
