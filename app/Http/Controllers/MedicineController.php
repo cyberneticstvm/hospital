@@ -10,12 +10,15 @@ use DB;
 
 class MedicineController extends Controller
 {
+    private $branch;
+
     function __construct()
     {
          $this->middleware('permission:patient-medicine-record-list|patient-medicine-record-create|patient-medicine-record-edit|patient-medicine-record-delete', ['only' => ['index','store']]);
          $this->middleware('permission:patient-medicine-record-create', ['only' => ['create','store']]);
          $this->middleware('permission:patient-medicine-record-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:patient-medicine-record-delete', ['only' => ['destroy']]);
+         $this->branch = session()->get('branch');
     }
     /**
      * Display a listing of the resource.
@@ -24,7 +27,7 @@ class MedicineController extends Controller
      */
     public function index()
     {
-        $medicines = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->select('pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->groupBy('pmr.medical_record_id', 'pmr.status')->orderByDesc('pmr.id')->whereDate('pmr1.created_at', Carbon::today())->orderByDesc("pmr.id")->get();
+        $medicines = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->where('pmr1.branch', $this->branch)->select('pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->groupBy('pmr.medical_record_id', 'pmr.status')->orderByDesc('pmr.id')->whereDate('pmr1.created_at', Carbon::today())->orderByDesc("pmr.id")->get();
         return view('medicine.index', compact('medicines'));
     }
 

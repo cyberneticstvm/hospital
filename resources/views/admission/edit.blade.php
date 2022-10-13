@@ -18,6 +18,7 @@
                             <input type='hidden' name='medical_record_id' value="{{ $admission->medical_record_id }}" />
                             <input type='hidden' name='doctor_id' value="{{ $admission->doctor_id }}" />
                             <input type='hidden' name='patient_id' value="{{ $admission->patient_id }}" />
+                            <input type='hidden' name='branch' value="{{ $admission->branch }}" />
                             <div class="row g-4">
                                 <div class="col-sm-4">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
                                 <div class="col-sm-4">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>

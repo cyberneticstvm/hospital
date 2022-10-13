@@ -11,11 +11,14 @@ use DB;
 
 class SpectacleController extends Controller
 {
+    private $branch;
+
     function __construct(){
          $this->middleware('permission:spectacle-list|spectacle-create|spectacle-edit|spectacle-delete', ['only' => ['index','store']]);
          $this->middleware('permission:spectacle-create', ['only' => ['create','store']]);
          $this->middleware('permission:spectacle-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:spectacle-delete', ['only' => ['destroy']]);
+         $this->branch = session()->get('branch');
     }
     /**
      * Display a listing of the resource.
@@ -24,7 +27,7 @@ class SpectacleController extends Controller
      */
     public function index()
     {
-        $spectacles = Spectacle::leftJoin('patient_medical_records AS m', 'spectacles.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'm.patient_id', '=', 'p.id')->leftJoin('users AS u', 'spectacles.created_by', '=', 'u.id')->selectRaw("spectacles.id, spectacles.medical_record_id, p.id as pid, p.patient_name, p.patient_id, u.name AS optometrist, DATE_FORMAT(spectacles.created_at, '%d/%b/%Y') AS pdate")->whereDate('spectacles.created_at', Carbon::today())->orderByDesc("spectacles.id")->get();
+        $spectacles = Spectacle::leftJoin('patient_medical_records AS m', 'spectacles.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'm.patient_id', '=', 'p.id')->leftJoin('users AS u', 'spectacles.created_by', '=', 'u.id')->selectRaw("spectacles.id, spectacles.medical_record_id, p.id as pid, p.patient_name, p.patient_id, u.name AS optometrist, DATE_FORMAT(spectacles.created_at, '%d/%b/%Y') AS pdate")->where('m.branch', $this->branch)->whereDate('spectacles.created_at', Carbon::today())->orderByDesc("spectacles.id")->get();
         return view('spectacle.index', compact('spectacles'));
     }
 

@@ -13,12 +13,14 @@ use DB;
 
 class PatientReferenceController extends Controller
 {
+    private $branch;
     function __construct()
     {
          $this->middleware('permission:patient-reference-list|patient-reference-create|patient-reference-edit|patient-reference-delete', ['only' => ['index','store']]);
          $this->middleware('permission:patient-reference-create', ['only' => ['create','store']]);
          $this->middleware('permission:patient-reference-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:patient-reference-delete', ['only' => ['destroy']]);
+         $this->branch = session()->get('branch');
     }
     /**
      * Display a listing of the resource.
@@ -39,7 +41,7 @@ class PatientReferenceController extends Controller
 
     public function index()
     {
-        $patients = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->select('pr.id as reference_id', 'pr.status', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.patient_id as pno', 'doctors.doctor_name', DB::Raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->whereDate('pr.created_at', Carbon::today())->orderByDesc('pmr.id')->get();
+        $patients = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->select('pr.id as reference_id', 'pr.status', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.patient_id as pno', 'doctors.doctor_name', DB::Raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->where('pr.branch', $this->branch)->whereDate('pr.created_at', Carbon::today())->orderByDesc('pmr.id')->get();
         return view('consultation.patient-reference', compact('patients'));
     }
 
@@ -76,8 +78,8 @@ class PatientReferenceController extends Controller
         $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
         $input['created_by'] = $request->user()->id;
         $input['status'] = 1; //active
-        $input['branch'] = $request->session()->get('branch');
-        $token = PRef::where('department_id', $request->department_id)->where('branch', $request->session()->get('branch'))->whereDate('created_at', Carbon::today())->max('token');
+        $input['branch'] = $this->branch;
+        $token = PRef::where('department_id', $request->department_id)->where('branch', $this->branch)->whereDate('created_at', Carbon::today())->max('token');
         $input['token'] = ($token > 0) ? $token+1 : 1;
         $reference = PRef::create($input);
         PReg::where(['id' => $request->pid])->update(['is_doctor_assigned' => 1]);

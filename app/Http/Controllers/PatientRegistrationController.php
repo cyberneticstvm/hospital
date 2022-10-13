@@ -11,6 +11,8 @@ use DB;
 
 class PatientRegistrationController extends Controller
 {
+    private $branch;
+
     function __construct()
     {
          $this->middleware('permission:patient-list|patient-create|patient-edit|patient-delete', ['only' => ['index','store']]);
@@ -20,6 +22,9 @@ class PatientRegistrationController extends Controller
          $this->middleware('permission:patient-search', ['only' => ['fetch']]);
          $this->middleware('permission:consultation-search', ['only' => ['fetchconsultation']]);
          $this->middleware('permission:medical-record-search', ['only' => ['fetchmedicalrecord']]);
+
+         $this->branch = session()->get('branch');
+         
     }
     /**
      * Display a listing of the resource.
@@ -29,7 +34,7 @@ class PatientRegistrationController extends Controller
     public function index()
     {
         //$patients = PatientRegistrations::orderByDesc('id')->get();
-        $patients = DB::table('patient_registrations')->select('*', DB::Raw("DATE_FORMAT(created_at, '%d/%b/%Y') AS rdate"))->whereDate('patient_registrations.created_at', Carbon::today())->orderByDesc('patient_registrations.id')->get();
+        $patients = DB::table('patient_registrations as pr')->select('pr.*', DB::Raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->where('pr.branch', $this->branch)->whereDate('pr.created_at', Carbon::today())->orderByDesc('pr.id')->get();
         return view('patient.index', compact('patients'));
     }
 
@@ -69,7 +74,7 @@ class PatientRegistrationController extends Controller
         $next = DB::table('patient_registrations')->selectRaw("CONCAT_WS('-', 'P', LPAD(IFNULL(max(id)+1, 1), 6, '0')) AS id")->first();
         $input['patient_id'] = $next->id;
         $input['created_by'] = $request->user()->id;
-        $input['branch'] = $request->session()->get('branch');
+        $input['branch'] = $this->branch;
         $input['registration_fee'] = DB::table('branches')->where('id', $request->session()->get('branch'))->value('registration_fee');
 
         $patient = PatientRegistrations::create($input);

@@ -16,16 +16,19 @@ class IncomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $branch;
+
     function __construct()
     {
          $this->middleware('permission:income-list|income-create|income-edit|income-delete', ['only' => ['index','store']]);
          $this->middleware('permission:income-create', ['only' => ['create','store']]);
          $this->middleware('permission:income-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:income-delete', ['only' => ['destroy']]);
+         $this->branch = session()->get('branch');
     }
     public function index()
     {
-        $incomes = Income::leftJoin('branches as b', 'incomes.branch', '=', 'b.id')->leftJoin('income_expense_heads as ie', 'incomes.head', '=', 'ie.id')->select('incomes.id', 'incomes.description', 'incomes.amount', 'b.branch_name', 'ie.name as head', DB::raw("DATE_FORMAT(incomes.date, '%d/%b/%Y') AS edate"))->whereDate('incomes.created_at', Carbon::today())->orderByDesc("incomes.id")->get();
+        $incomes = Income::leftJoin('branches as b', 'incomes.branch', '=', 'b.id')->leftJoin('income_expense_heads as ie', 'incomes.head', '=', 'ie.id')->select('incomes.id', 'incomes.description', 'incomes.amount', 'b.branch_name', 'ie.name as head', DB::raw("DATE_FORMAT(incomes.date, '%d/%b/%Y') AS edate"))->where('incomes.branch', $this->branch)->whereDate('incomes.created_at', Carbon::today())->orderByDesc("incomes.id")->get();
         return view('income.index', compact('incomes'));
     }
 
@@ -56,7 +59,7 @@ class IncomeController extends Controller
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
-        $input['branch'] = $request->session()->get('branch');
+        $input['branch'] = $this->branch;
         $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;
         $income = Income::create($input);        
         return redirect()->route('income.index')->with('success','Income recorded successfully');
@@ -104,7 +107,7 @@ class IncomeController extends Controller
         $input = $request->all();
         $income = Income::find($id);
         $input['created_by'] = $income->getOriginal('created_by');
-        $input['branch'] = $request->session()->get('branch');
+        $input['branch'] = $this->branch;
         $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;        
         $income->update($input);        
         return redirect()->route('income.index')->with('success','Income updated successfully');

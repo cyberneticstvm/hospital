@@ -11,12 +11,15 @@ use DB;
 
 class PurchaseController extends Controller
 {
+    private $branch;
+    
     function __construct()
     {
          $this->middleware('permission:purchase-list|purchase-create|purchase-edit|purchase-delete', ['only' => ['index','store']]);
          $this->middleware('permission:purchase-create', ['only' => ['create','store']]);
          $this->middleware('permission:purchase-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:purchase-delete', ['only' => ['destroy']]);
+         $this->branch = session()->get('branch');
     }
     /**
      * Display a listing of the resource.

@@ -15,15 +15,18 @@ class PatientCertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $branch;
+
     function __construct()    {
         $this->middleware('permission:certificate-list|certificate-create|certificate-edit|certificate-delete', ['only' => ['index','store']]);
         $this->middleware('permission:certificate-create', ['only' => ['create','store']]);
         $this->middleware('permission:certificate-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:certificate-delete', ['only' => ['destroy']]);
+        $this->branch = session()->get('branch');
    }
     public function index()
     {
-        $records = DB::table('patient_certificates as pc')->leftJoin('patient_registrations as pr', 'pc.patient_id', '=', 'pr.id')->leftJoin('branches as b', 'b.id', '=', 'pc.branch_id')->leftJoin('doctors as d', 'd.id', '=', 'pc.doctor_id')->select('pc.id', 'pr.patient_id', 'pr.patient_name', 'b.branch_name', 'pc.medical_record_id', 'd.doctor_name', DB::raw("DATE_FORMAT(pc.created_at, '%d/%b/%Y') AS cdate"))->whereDate('pc.created_at', Carbon::today())->orderByDesc('pc.id')->get();
+        $records = DB::table('patient_certificates as pc')->leftJoin('patient_registrations as pr', 'pc.patient_id', '=', 'pr.id')->leftJoin('branches as b', 'b.id', '=', 'pc.branch_id')->leftJoin('doctors as d', 'd.id', '=', 'pc.doctor_id')->select('pc.id', 'pr.patient_id', 'pr.patient_name', 'b.branch_name', 'pc.medical_record_id', 'd.doctor_name', DB::raw("DATE_FORMAT(pc.created_at, '%d/%b/%Y') AS cdate"))->where('pc.branch_id', $this->branch)->whereDate('pc.created_at', Carbon::today())->orderByDesc('pc.id')->get();
         return view('certificate.index', compact('records'));
     }
 

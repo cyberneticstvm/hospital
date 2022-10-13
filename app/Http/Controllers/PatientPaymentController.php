@@ -15,16 +15,19 @@ class PatientPaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $branch;
+
     function __construct(){
          $this->middleware('permission:patient-payments-list|patient-payments-create|patient-payments-edit|patient-payments-delete', ['only' => ['index', 'store']]);
          $this->middleware('permission:patient-payments-list', ['only' => ['index']]);
          $this->middleware('permission:patient-payments-create', ['only' => ['store']]);
          $this->middleware('permission:patient-payments-edit', ['only' => ['edit', 'update']]);
          $this->middleware('permission:patient-payments-delete', ['only' => ['destroy']]);
+         $this->branch = session()->get('branch');
     }
     public function index()
     {
-        $incomes = PP::leftJoin('patient_medical_records as pmr', 'patient_payments.medical_record_id', '=', 'pmr.id')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('payment_modes as pm', 'pm.id', '=', 'patient_payments.payment_mode')->select("patient_payments.id", "patient_payments.amount", "patient_payments.medical_record_id", "patient_payments.notes", "pm.name", "pr.patient_name", "pr.patient_id")->whereDate('patient_payments.created_at', Carbon::today())->orderByDesc("patient_payments.id")->get();
+        $incomes = PP::leftJoin('patient_medical_records as pmr', 'patient_payments.medical_record_id', '=', 'pmr.id')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('payment_modes as pm', 'pm.id', '=', 'patient_payments.payment_mode')->select("patient_payments.id", "patient_payments.amount", "patient_payments.medical_record_id", "patient_payments.notes", "pm.name", "pr.patient_name", "pr.patient_id")->where('patient_payments.branch', $this->branch)->whereDate('patient_payments.created_at', Carbon::today())->orderByDesc("patient_payments.id")->get();
         return view('patient-payment.index', compact('incomes'));
     }
 

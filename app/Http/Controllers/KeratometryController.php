@@ -14,15 +14,18 @@ class KeratometryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $branch;
+
     function __construct(){
         $this->middleware('permission:keratometry-list|keratometry-create|keratometry-edit|keratometry-delete', ['only' => ['index','store']]);
         $this->middleware('permission:keratometry-create', ['only' => ['create','store']]);
         $this->middleware('permission:keratometry-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:keratometry-delete', ['only' => ['destroy']]);
+        $this->branch = session()->get('branch');
     }
 
     public function index(){
-        $keratometries = Keratometry::leftJoin('patient_medical_records AS m', 'keratometries.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'keratometries.patient_id', '=', 'p.id')->selectRaw("keratometries.*, p.patient_name, p.patient_id, keratometries.medical_record_id")->whereDate('keratometries.created_at', Carbon::today())->orderByDesc("keratometries.id")->get();
+        $keratometries = Keratometry::leftJoin('patient_medical_records AS m', 'keratometries.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'keratometries.patient_id', '=', 'p.id')->selectRaw("keratometries.*, p.patient_name, p.patient_id, keratometries.medical_record_id")->where('keratometries.branch', $this->branch)->whereDate('keratometries.created_at', Carbon::today())->orderByDesc("keratometries.id")->get();
         return view('keratometry.index', compact('keratometries'));
     }
 

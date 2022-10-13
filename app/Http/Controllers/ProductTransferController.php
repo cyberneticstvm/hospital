@@ -12,12 +12,15 @@ use App\Helper\Helper;
 
 class ProductTransferController extends Controller
 {
+    private $branch;
+
     function __construct()
     {
          $this->middleware('permission:product-transfer-list|product-transfer-create|product-transfer-edit|product-transfer-delete', ['only' => ['index','store']]);
          $this->middleware('permission:product-transfer-create', ['only' => ['create','store']]);
          $this->middleware('permission:product-transfer-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:product-transfer-delete', ['only' => ['destroy']]);
+         $this->branch = session()->get('branch');
     }
     /**
      * Display a listing of the resource.
@@ -26,7 +29,7 @@ class ProductTransferController extends Controller
      */
     public function index()
     {
-        $transfers = DB::table('product_transfers AS t')->leftJoin('branches AS b', 't.from_branch', '=', 'b.id')->leftJoin('branches AS b1', 't.to_branch', '=', 'b1.id')->select('t.id', 't.transfer_note AS tnote', DB::raw("IFNULL('Main Stock', b.branch_name) AS from_branch"), 'b1.branch_name AS to_branch', 't.transfer_date AS tdate')->orderBy('t.transfer_date','DESC')->get();
+        $transfers = DB::table('product_transfers AS t')->leftJoin('branches AS b', 't.from_branch', '=', 'b.id')->leftJoin('branches AS b1', 't.to_branch', '=', 'b1.id')->where('t.from_branch', $this->branch)->select('t.id', 't.transfer_note AS tnote', DB::raw("IFNULL('Main Stock', b.branch_name) AS from_branch"), 'b1.branch_name AS to_branch', 't.transfer_date AS tdate')->orderBy('t.transfer_date','DESC')->get();
         return view('product-transfer.index', compact('transfers'));
     }
 

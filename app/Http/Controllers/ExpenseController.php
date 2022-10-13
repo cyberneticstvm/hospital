@@ -14,16 +14,20 @@ class ExpenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $branch;
+
     function __construct()
     {
          $this->middleware('permission:expense-list|expense-create|expense-edit|expense-delete', ['only' => ['index','store']]);
          $this->middleware('permission:expense-create', ['only' => ['create','store']]);
          $this->middleware('permission:expense-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:expense-delete', ['only' => ['destroy']]);
+
+         $this->branch = session()->get('branch');
     }
     public function index()
     {
-        $expenses = Expense::leftJoin('branches as b', 'b.id', '=', 'expenses.branch')->leftJoin('income_expense_heads as h', 'expenses.head', '=', 'h.id')->select('expenses.id', 'expenses.description', 'expenses.amount', DB::raw("DATE_FORMAT(expenses.date, '%d/%b/%Y') AS edate"), 'b.branch_name', 'h.name as head')->whereDate('expenses.created_at', Carbon::today())->orderByDesc('expenses.id')->get();
+        $expenses = Expense::leftJoin('branches as b', 'b.id', '=', 'expenses.branch')->leftJoin('income_expense_heads as h', 'expenses.head', '=', 'h.id')->select('expenses.id', 'expenses.description', 'expenses.amount', DB::raw("DATE_FORMAT(expenses.date, '%d/%b/%Y') AS edate"), 'b.branch_name', 'h.name as head')->where('expenses.branch', $this->branch)->whereDate('expenses.created_at', Carbon::today())->orderByDesc('expenses.id')->get();
         return view('expense.index', compact('expenses'));
     }
 
@@ -54,7 +58,7 @@ class ExpenseController extends Controller
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
-        $input['branch'] = $request->session()->get('branch');
+        $input['branch'] = $this->branch;
         $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;
         $expense = Expense::create($input);        
         return redirect()->route('expense.index')->with('success','Expense recorded successfully');
@@ -102,7 +106,7 @@ class ExpenseController extends Controller
         $input = $request->all();
         $expense = Expense::find($id);
         $input['created_by'] = $expense->getOriginal('created_by');
-        $input['branch'] = $request->session()->get('branch');
+        $input['branch'] = $this->branch;
         $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;        
         $expense->update($input);        
         return redirect()->route('expense.index')->with('success','Expense updated successfully');

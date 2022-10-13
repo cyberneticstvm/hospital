@@ -14,6 +14,7 @@ class Admission extends Model
         'medical_record_id',
         'doctor_id',
         'patient_id',
+        'branch',
         'room_type',
         'room_number',
         'bystander_name',

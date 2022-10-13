@@ -14,15 +14,19 @@ class AscanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $branch;
+
     function __construct(){
         $this->middleware('permission:ascan-list|ascan-create|ascan-edit|ascan-delete', ['only' => ['index','store']]);
         $this->middleware('permission:ascan-create', ['only' => ['create','store']]);
         $this->middleware('permission:ascan-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:ascan-delete', ['only' => ['destroy']]);
+
+        $this->branch = session()->get('branch');
     }
     public function index()
     {
-        $ascans = Ascan::leftJoin('patient_medical_records AS m', 'ascans.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'ascans.patient_id', '=', 'p.id')->selectRaw("ascans.*, p.patient_name, p.patient_id, ascans.medical_record_id")->whereDate('ascans.created_at', Carbon::today())->orderByDesc("ascans.id")->get();
+        $ascans = Ascan::leftJoin('patient_medical_records AS m', 'ascans.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'ascans.patient_id', '=', 'p.id')->where('ascans.branch', $this->branch)->selectRaw("ascans.*, p.patient_name, p.patient_id, ascans.medical_record_id")->whereDate('ascans.created_at', Carbon::today())->orderByDesc("ascans.id")->get();
         return view('ascan.index', compact('ascans'));
     }
 

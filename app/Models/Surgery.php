@@ -14,6 +14,7 @@ class Surgery extends Model
         'medical_record_id',
         'doctor_id',
         'patient_id',
+        'branch',
         'surgery_date',
         'surgery_type',
         'surgeon',

@@ -15,15 +15,18 @@ class PharmacyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $branch;
+
     function __construct()    {
          $this->middleware('permission:pharmacy-list|pharmacy-create|pharmacy-edit|pharmacy-delete', ['only' => ['index','store']]);
          $this->middleware('permission:pharmacy-create', ['only' => ['create','store']]);
          $this->middleware('permission:pharmacy-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:pharmacy-delete', ['only' => ['destroy']]);
+         $this->branch = session()->get('branch');
     }
     public function index()
     {
-        $records = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'pr.pharmacy_id', '=', 'p.id')->select('p.id', 'p.patient_name', 'p.other_info', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate"))->groupBy('p.id')->orderByDesc('p.id')->get();
+        $records = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'pr.pharmacy_id', '=', 'p.id')->where('p.branch', $this->branch)->whereDate('p.created_at', Carbon::today())->select('p.id', 'p.patient_name', 'p.other_info', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate"))->groupBy('p.id')->orderByDesc('p.id')->get();
         return view('pharmacy.index', compact('records'));
     }
 
@@ -52,7 +55,7 @@ class PharmacyController extends Controller
         $input = $request->all();
         $input['created_by'] = Auth::user()->id;
         $input['updated_by'] = Auth::user()->id;
-        $input['branch'] = $request->session()->get('branch');
+        $input['branch'] = $this->branch;
         try{
             $pharmacy = Pharmacy::create($input);
             if(!empty($input['product'])):
@@ -122,7 +125,7 @@ class PharmacyController extends Controller
         $pharmacy = Pharmacy::find($id);
         $input['updated_by'] = Auth::user()->id;
         $input['created_by'] = $pharmacy->getOriginal('created_by');
-        $input['branch'] = $request->session()->get('branch');
+        $input['branch'] = $this->branch;
         try{
             $pharmacy->update($input);
             DB::table("pharmacy_records")->where('pharmacy_id', $id)->delete();

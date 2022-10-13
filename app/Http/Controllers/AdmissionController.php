@@ -16,16 +16,19 @@ class AdmissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct(){
-         $this->middleware('permission:admission-list|admission-create|admission-edit|admission-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:admission-create', ['only' => ['create','store']]);
-         $this->middleware('permission:admission-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:admission-delete', ['only' => ['destroy']]);
+    private $branch;
+
+    function __construct(){        
+        $this->middleware('permission:admission-list|admission-create|admission-edit|admission-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:admission-create', ['only' => ['create','store']]);
+        $this->middleware('permission:admission-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:admission-delete', ['only' => ['destroy']]);
+        $this->branch = session()->get('branch');
     }
 
     public function index()
-    {
-        $admissions = DB::table('admissions as a')->leftJoin('patient_registrations as p', 'a.patient_id', '=', 'p.id')->leftJoin('doctors as d', 'a.doctor_id', '=', 'd.id')->leftJoin('rooms as rm', 'a.room_type', '=', 'rm.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'a.medical_record_id')->selectRaw("a.id, p.patient_name, p.patient_id, d.doctor_name, a.medical_record_id, a.admission_date, rm.room_type, CASE WHEN pmr.is_patient_surgery = 'N' THEN 'No' ELSE 'Yes' END AS is_patient_surgery")->orderBy('a.id', 'desc')->get();
+    { 
+        $admissions = DB::table('admissions as a')->leftJoin('patient_registrations as p', 'a.patient_id', '=', 'p.id')->leftJoin('doctors as d', 'a.doctor_id', '=', 'd.id')->leftJoin('rooms as rm', 'a.room_type', '=', 'rm.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'a.medical_record_id')->where('a.branch', $this->branch)->selectRaw("a.id, p.patient_name, p.patient_id, d.doctor_name, a.medical_record_id, a.admission_date, rm.room_type, CASE WHEN pmr.is_patient_surgery = 'N' THEN 'No' ELSE 'Yes' END AS is_patient_surgery")->orderBy('a.id', 'desc')->get();
         return view('admission.index', compact('admissions'));
     }
 
@@ -95,8 +98,9 @@ class AdmissionController extends Controller
         ]);
         $input = $request->all();
         $input['admission_date'] = (!empty($request->admission_date)) ? Carbon::createFromFormat('d/M/Y', $request['admission_date'])->format('Y-m-d') : NULL;
-        $input['updated_by'] = $request->user()->id;
+        $input['updated_by'] = $request->user()->id;        
         $admission = Admission::find($id);
+        $input['branch'] = $admission->getOriginal('branch');
         $admission->update($input);        
         return redirect()->route('admission.index')->with('success','Admission updated successfully');
     }

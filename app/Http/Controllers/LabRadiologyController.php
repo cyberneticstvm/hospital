@@ -17,17 +17,19 @@ class LabRadiologyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $branch;
 
     function __construct(){
         $this->middleware('permission:lab-radiology-list|lab-radiology-create|lab-radiology-edit|lab-radiology-delete', ['only' => ['index','store']]);
         $this->middleware('permission:lab-radiology-create', ['only' => ['create','store', 'fetch']]);
         $this->middleware('permission:lab-radiology-edit', ['only' => ['edit','update', 'fetch']]);
         $this->middleware('permission:lab-radiology-delete', ['only' => ['destroy']]);
+        $this->branch = session()->get('branch');
    }
 
     public function index()
     {
-        $labs = DB::table('lab_radiologies')->leftJoin('patient_medical_records AS m', 'lab_radiologies.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'm.patient_id', '=', 'p.id')->leftJoin('doctors AS d', 'm.doctor_id', '=', 'd.id')->selectRaw("lab_radiologies.id, lab_radiologies.medical_record_id, p.patient_name, p.patient_id, d.doctor_name, DATE_FORMAT(lab_radiologies.created_at, '%d/%b/%Y') AS ldate")->groupBy('lab_radiologies.medical_record_id')->get();
+        $labs = DB::table('lab_radiologies')->leftJoin('patient_medical_records AS m', 'lab_radiologies.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'm.patient_id', '=', 'p.id')->leftJoin('doctors AS d', 'm.doctor_id', '=', 'd.id')->where('m.branch', $this->branch)->selectRaw("lab_radiologies.id, lab_radiologies.medical_record_id, p.patient_name, p.patient_id, d.doctor_name, DATE_FORMAT(lab_radiologies.created_at, '%d/%b/%Y') AS ldate")->groupBy('lab_radiologies.medical_record_id')->get();
         return view('lab.radiology.index', compact('labs'));
     }
 

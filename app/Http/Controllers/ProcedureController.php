@@ -14,6 +14,8 @@ class ProcedureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $branch;
+
     function __construct()
     {
          $this->middleware('permission:procedure-list|procedure-create|procedure-edit|procedure-delete', ['only' => ['index','store']]);
@@ -25,6 +27,8 @@ class ProcedureController extends Controller
          $this->middleware('permission:procedure-advise-create', ['only' => ['show','saveadvise']]);
          $this->middleware('permission:procedure-advise-edit', ['only' => ['editadvise','updateadvise']]);
          $this->middleware('permission:procedure-advise-delete', ['only' => ['destroyadvise']]);
+
+         $this->branch = session()->get('branch');
     }
 
     public function index()
@@ -57,7 +61,7 @@ class ProcedureController extends Controller
             'fee' => 'required',
         ]);
         $input = $request->all();
-        $branch = Procedure::create($input);
+        $proc = Procedure::create($input);
         return redirect()->route('procedure.index')
                         ->with('success','Procedure created successfully');
     }
@@ -133,7 +137,7 @@ class ProcedureController extends Controller
 
     public function fetch(){
         $procedures = Procedure::all();
-        $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'pp.medical_record_id')->leftJoin('patient_registrations as pr', 'pr.id', '=', 'pmr.patient_id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', 'pr.patient_name', 'pr.patient_id', DB::raw("SUM(pp.fee) as 'fee'"))->whereDate('pp.created_at', Carbon::today())->groupBy('pp.medical_record_id')->orderByDesc('pp.id')->get();
+        $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'pp.medical_record_id')->leftJoin('patient_registrations as pr', 'pr.id', '=', 'pmr.patient_id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', 'pr.patient_name', 'pr.patient_id', DB::raw("SUM(pp.fee) as 'fee'"))->where('pp.branch', $this->branch)->whereDate('pp.created_at', Carbon::today())->groupBy('pp.medical_record_id')->orderByDesc('pp.id')->get();
         return view('procedure.fetch', compact('procedures', 'procs'));
     }
 
@@ -150,7 +154,7 @@ class ProcedureController extends Controller
                         DB::table('patient_procedures')->insert([
                             'medical_record_id' => $request->medical_record_id,
                             'patient_id' => $request->patient_id,
-                            'branch' => $request->session()->get('branch'),
+                            'branch' => $this->branch,
                             'procedure' => $input['procedure'][$i],
                             'fee' => $proc->fee,
                             'created_by' => $request->user()->id,
@@ -184,7 +188,6 @@ class ProcedureController extends Controller
             'procedure' => 'required',
         ]);
         $input = $request->all();
-        $input['branch'] = $request->session()->get('branch');
         try{
             DB::table('patient_procedures')->where('medical_record_id', $id)->delete();
             if($input['procedure']):
@@ -194,7 +197,7 @@ class ProcedureController extends Controller
                         DB::table('patient_procedures')->insert([
                             'medical_record_id' => $request->medical_record_id,
                             'patient_id' => $request->patient_id,
-                            'branch' => $request->session()->get('branch'),
+                            'branch' => $this->branch,
                             'procedure' => $input['procedure'][$i],
                             'fee' => $proc->fee,
                             'created_by' => $request->user()->id,
