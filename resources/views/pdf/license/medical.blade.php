@@ -27,30 +27,22 @@
         .text-center{
             text-align: center;
         }
+        .text-justify{
+            text-align: justify;
+        }
     </style>
 </head>
 <body>
     <center>
-        <p><b>FORM 1-A</b></p>
-        <p><b>[See Rules 5(1), (3), (7), 10(a), 14(d) and 18(d)]</b></p>
-        <p><b>MEDICAL CERTIFICATE</b></p>
+        <b>FORM 1-A</b><br/>
+        <b>MEDICAL CERTIFICATE</b><br/>
+        <b>[See Rules 5(1), (3), (7), 10(a), 14(b) and 18(d)]</b>        
     </center>
-    <br/><br/>
-    <table class="no-border" width="100%">
-    <tr>
-        <td class="w-75"></td>
-        <td>
-            <table class="no-border" cellpadding="0" cellspacing="0" border="1px"><tr><td class="h-150 w-150 text-center">space for<br/>Passport size<br/>Photograph</td></tr></table>
-        </td>
-    </tr>
-    </table>
-    <p>[To be filled in by a registered medical practitioner appointed for the purpose by the State Government or person
-    authorised in this behalf by the State Government referred to under sub-section (3) of Section 8.]</p>
+    [To be filled in by a registered medical practitioner appointed for the purpose by the State Government or person
+    authorised in this behalf by the State Government referred to under sub-section (3) of Section 8.]<br/><br/>
     1. Name of the Applicant: <b>{{ $patient->patient_name }}</b><br/>
-    2. Identification marks: <br/>
-    (1): ...............................................................................................................................<br/><br/>
-    (2): ...............................................................................................................................<br/>
-    <p>Declaration</p>
+    2. Identification marks: (1) ................................................................................................<br/><br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(2) .................................................................................................<br/>
     3.  <table class="no-border" width="100%">
         <tr><td width="5%">(a)</td><td width="80%">Does the applicant, to the best of your judgment, suffer from any defect of vision? If so, has it been corrected by suitable Spectacles?</td><td>Yes / No</td></tr>
         <tr><td width="5%">(b)</td><td width="80%"> Can the applicant, to the best of your judgment, readily distinguish the pigmentary colours, red and green?</td><td>Yes / No</td></tr>
@@ -59,46 +51,65 @@
         <tr><td width="5%">(e)</td><td width="80%">In your opinion, does the applicant suffer from night blindness?</td><td>Yes / No</td></tr>
         <tr><td width="5%">(f)</td><td width="80%">Has the applicant any defect or deformity or loss of member which would interfere with the
         efficient performance of his duties as a driver? If so, give your reasons in detail.</td><td>Yes / No</td></tr>
-        <tr><td width="5%">(g)</td><td width="80%">Optional<br/>(a) Blood Group of the applicant (if the applicant so desires that the information may be noted in his driving licence),<br/>(b) RH factor of the applicant (if the applicant so desires that the information may be noted in his driving licence).</td><td></td></tr>
+        <tr><td width="5%">(g)</td><td width="80%">OPTIONAL<br/>(a) Blood Group of the applicant (if the applicant so desires that the information may be noted in his driving licence),<br/>(b) RH factor of the applicant (if the applicant so desires that the information may be noted in his driving licence).</td><td></td></tr>
         </table>
-    <center><p><b>Declaration made by the applicant in Form-1 as to his physical fitness is attached</b></p></center><br/><br/>
-    <center>
-        <p><b>Certificate of Medical Fitness</b></p>
-    </center>
-    <p>I certify that:</p>
-    (i) I have personally examined the applicant Shri/Smt/Kum <b>{{ $patient->patient_name }}</b><br/><br/>
-    (ii) that while examining the applicant I have directed special attention to his/her distant vision;<br/><br/>
-    (iii) while examining the applicant, I have directed special attention to his/her hearing ability, the condition of the
-    arms, legs, hands and joints of both extremities of the applicant; and<br/><br/>
-    (iv) I have personally examined the applicant for reaction time, side vision and glare recovery, (applicable in case of
-    persons applying for a licence to drive goods carriage carrying goods of dangerous or hazardous nature to human life).<br/>
-    <p>And, therefore, I certify that, to the best of my judgment, he is medically fit/not fit to hold a driving licence.</p>
-    <p>The applicant is not medically fit to hold a licence for the following reasons:-</p>
-    <pre>
-
+    <center>Declaration made by the applicant in Form-1 as to his physical fitness is attached</center>
+    <div class="text-justify">I certify that I have personally examined the applicant. I also certify that while examining the applicant I have directed special attention to the distant vision and hearing ability, the condition of the arms, legs, hands and joints of both extremities of the candidate and to the best of my judgment, he is medically fit/not fit to hold a driving licence.<br/>
+    The applicant is not medically fit to hold a licence for the following reasons:-</div>
     <table class="no-border" width="100%">
     <tr>
-        <td class="w-40">
-            
         <td>
-        <td>
+            <table class="no-border" cellpadding="0" cellspacing="0" border="1px"><tr><td class="h-150 w-150 text-center"></td></tr></table>
+        </td>
+        <td class="w-40"></td>
+        <td class="w-75">
             <p>Signature:</p>
-            <p>1. Name and designation of the Medical Officer/Practitioner</p><br/>
-            <p class="text-center">Seal</p><br/>
-            <p>2. Registration Number of Medical Officer</p><br/>
+            <p>1. Name and designation of the Medical Officer/Practitioner</p>
+            <p class="text-center">Seal</p>
+            <p>2. Registration Number of Medical Officer</p>
         </td>
     </tr>
     <tr>
-        <td class="w-40">
+        <td>
             <p>Date:</p>
         <td>
-        <td>
+        <td class="w-75">
             <p>Signature or thumb impression of the candidate</p>
         </td>
     </tr>
     </table>
-    <p>Note 1. - The medical officer shall affix his signature over the photograph affixed in such a manner that part of his
-    signature is upon the photograph and part on the certificate.]</p>
-    <p>2. Dumb persons without deafness may be granted a valid certificate of driving licence for non-transport vehicle.</p>
+    <p>Note:- The medical officer shall affix his signature over the photograph affixed manner that part of his
+    signature is upon the photograph and part on the certificate.</p>
+    <center>
+        <b>FORM 1</b><br/>
+        <b>[See Rules 5(2)]</b><br/>
+        <b>APPLICATION CUM -DECLARATION AS TO BE PHYSICAL FITNESS</b><br/><br/>
+    </center>
+    1. Name of the Applicant    : <b>{{ $patient->patient_name }}</b><br/><br/>
+    2. Son/Wife/Daughter of     :<br/><br/>
+    3. Permanent Address    :<br/><br/>
+    4. Temporary Address/Official Address (if any)     :<br/><br/>
+    5. (a) Date of Birth     :<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;(b) Age on date of application     :<br/><br/>
+    6. Identification Marks (1)     :<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(2)     :<br/><br/>
+    <table class="no-border" width="100%">
+    <tr><td width="5%">(a)</td><td width="80%">Do you suffer from epilepsy or from sudden attacks of loss of consciousness or giddiness from any cause?</td><td>Yes / No</td></tr>
+    <tr><td width="5%">(b)</td><td width="80%"> Are you able to distinguish with each eye (or if you have held a driving licence to drive a motor vehicle for a period of not less than five years and if you have lost the sight of one eye after the said period of five years and if the application is for driving a light motor vehicle other than a transport vehicle fitted with an outside mirror on the steering wheel side) or with one eye, at a distance of 25 metres in good day light (with glasses, if worn) a motor car number plate? </td><td>Yes / No</td></tr>
+    <tr><td width="5%">(c)</td><td width="80%">Have you lost either hand or foot or are you suffering from any defect of muscular power of either arm or leg?</td><td>Yes / No</td></tr>
+    <tr><td width="5%">(d)</td><td width="80%">Can you readily distinguish the pigmentary colours, red and green?</td><td>Yes / No</td></tr>
+    <tr><td width="5%">(e)</td><td width="80%">Do you suffer from night blindness?</td><td>Yes / No</td></tr>
+    <tr><td width="5%">(f)</td><td width="80%">Are you so deaf so as to be unable to hear (and if the application is for driving a light motor vehicle, with or without hearing aid) the ordinary sound signal?</td><td>Yes / No</td></tr>
+    <tr><td width="5%">(g)</td><td width="80%">Do you suffer from any other disease or disability likely to cause your driving of a motor vehicle to be a source of danger to the public, if so, give details. </td><td></td></tr>
+    </table>
+    <p>I hereby declare that, to the best of my knowledge and belief, the particulars given above and the declaration
+    made therein are true.</p>
+    <pre/><pre/>
+    <div class="text-end">(Signature or thumb impression of the Applicant)</div>
+    Note:-
+    <p>1. An applicant who answers "Yes" to any of the questions (a), (c), (e), (f) and (g) or "No" to either of
+        the questions (b) and (d) should amplify his answers with full particulars, and may be required to
+        give further information relating thereto.</p>
+    <p>2. This declaration is to be submitted invariably with medical certificate in Form 1 A. </p>
 </body>
 </html>
