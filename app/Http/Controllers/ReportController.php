@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Branch;
 use App\Models\IncomeExpenseHead as Head;
@@ -11,6 +12,8 @@ use DB;
 
 class ReportController extends Controller
 {
+    private $branch;
+
     function __construct()
     {
         $this->middleware('permission:report-daybook-show|report-daybook-fetch|report-income-expense-show|report-income-expense-fetch', ['only' => ['showdaybook','fetchdaybook','showincomeexpense','fetchincomeexpense']]);
@@ -18,10 +21,21 @@ class ReportController extends Controller
         $this->middleware('permission:report-daybook-fetch', ['only' => ['fetchdaybook']]);
         $this->middleware('permission:report-income-expense-show', ['only' => ['showincomeexpense']]);
         $this->middleware('permission:report-income-expense-fetch', ['only' => ['fetchincomeexpense']]);
+
+        $this->branch = session()->get('branch');
+    }
+
+    private function getBranches($branch){
+        if(Auth::user()->roles->first()->name == 'Admin'):
+            $branches = Branch::all();
+        else:
+            $branches = Branch::where('id', $branch)->get();
+        endif;
+        return $branches;
     }
 
     public function showdaybook(){
-        $branches = Branch::all();
+        $branches = $this->getBranches($this->branch);
         $records = []; $inputs = []; $reg_fee_total = 0.00; $consultation_fee_total = 0.00; $procedure_fee_total = 0.00; $certificate_fee_total = 0.00; $pharmacy = 0.00; $medicine = 0.00; $income = 0.00; $expense = 0.00; $income_total = 0.00; $income_received_cash = 0.00; $income_received_upi = 0.00; $income_received_card = 0.00; $income_received_staff = 0.00; $opening_balance = 0.00;
         return view('reports.daybook', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance'));
     }
@@ -31,7 +45,7 @@ class ReportController extends Controller
             'todate' => 'required',
             'branch' => 'required',
         ]);
-        $branches = Branch::all();
+        $branches = $this->getBranches($this->branch);
         $inputs = array($request->fromdate, $request->todate, $request->branch);
         $prev_day = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay()->subDays(1);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
@@ -67,7 +81,7 @@ class ReportController extends Controller
         return view('reports.daybook', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance'));
     }
     public function showincomeexpense(){
-        $branches = Branch::all();
+        $branches = $this->getBranches($this->branch);
         $heads = Head::all();
         $records = []; $inputs = []; 
         return view('reports.income-expense', compact('branches', 'records', 'inputs', 'heads'));
@@ -79,7 +93,7 @@ class ReportController extends Controller
             'branch' => 'required',
             'type' => 'required'
         ]);
-        $branches = Branch::all();
+        $branches = $this->getBranches($this->branch);
         $heads = Head::all();
         $inputs = array($request->fromdate, $request->todate, $request->branch, $request->type, $request->head);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
