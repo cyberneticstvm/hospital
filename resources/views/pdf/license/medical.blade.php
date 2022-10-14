@@ -110,6 +110,7 @@
     <p>1. An applicant who answers "Yes" to any of the questions (a), (c), (e), (f) and (g) or "No" to either of
         the questions (b) and (d) should amplify his answers with full particulars, and may be required to
         give further information relating thereto.</p>
-    <p>2. This declaration is to be submitted invariably with medical certificate in Form 1 A. </p>
+    <p>2. This declaration is to be submitted invariably with medical certificate in Form 1 A. </p><br/>
+    <div class="text-center"><img src="data:image/png;base64, {!! $qrcode !!}"></div>
 </body>
 </html>

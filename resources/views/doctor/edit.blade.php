@@ -29,6 +29,13 @@
                                     @error('designation')
                                     <small class="text-danger">{{ $errors->first('designation') }}</small>
                                     @enderror
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Registration No.</label>
+                                    <input type="text" value="{{ $doctor->reg_no }}" name="reg_no" class="form-control form-control-md" placeholder="Registration No.">
+                                    @error('reg_no')
+                                    <small class="text-danger">{{ $errors->first('reg_no') }}</small>
+                                    @enderror
                                 </div>                                
                                 <div class="col-sm-3">
                                     <label class="form-label">Date of Join<sup class="text-danger">*</sup></label>

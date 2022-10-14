@@ -212,4 +212,12 @@ class HelperController extends Controller
     public function getPreviousDues($patient_id){
 
     }
+    public function certificateAuthentication($id){
+        $patient = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->select('pr.patient_name', 'pr.age', 'pmr.doctor_id', 'pmr.branch', 'pr.address')->where('pmr.id', $id)->first();
+        $doctor = DB::table('doctors')->find($patient->doctor_id);
+        $branch = DB::table('branches')->find($patient->branch);
+        $certificate = DB::table('patient_certificates as pc')->where('pc.medical_record_id', $id)->first();
+        $details = DB::table('patient_certificate_details as pcd')->select(DB::raw("DATE_FORMAT(pcd.created_at, '%d/%b/%Y %h:%i %p') AS created_at"))->where('pcd.patient_certificate_id', $certificate->id)->where('pcd.status', 'I')->first();
+        return view('authentication.certificate', compact('certificate', 'details', 'patient', 'doctor', 'branch'));
+    }
 }

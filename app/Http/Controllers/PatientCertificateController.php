@@ -89,6 +89,7 @@ class PatientCertificateController extends Controller
         try{
             $user = Auth::user()->id;
             $time = Carbon::now();
+            $pc = PC::find($id);
             PC::where('id', $id)->update(['updated_by' => $user, 'updated_at' => $time]);
             DB::table('patient_certificate_details')->where('patient_certificate_id', $id)->delete();
             if(!empty($input['certificate_type'])):
@@ -98,7 +99,9 @@ class PatientCertificateController extends Controller
                         'certificate_type' => $request->certificate_type[$i],
                         'fee' => $request->fee[$i],
                         'status' => $request->status[$i],
-                        'notes' => $request->notes[$i]
+                        'notes' => $request->notes[$i],
+                        'created_at' => $pc->created_at,
+                        'updated_at' => $time,
                     ];
                 endfor;
                 DB::table('patient_certificate_details')->insert($data);

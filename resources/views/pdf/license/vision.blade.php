@@ -3,6 +3,9 @@
 <head>
     <title>Vision Certificate</title>
     <style>
+        body{
+            font-size: 15px;
+        }
         .text-end{
             text-align: right;
         }
@@ -17,6 +20,9 @@
         }
         .p-5 td, .p-5 th{
             padding: 5px;
+        }
+        .text-center{
+            text-align: center;
         }
     </style>
 </head>
@@ -72,5 +78,6 @@
         </td>
     </tr>
     </table>
+    <div class="text-center"><img src="data:image/png;base64, {!! $qrcode !!}"></div>
 </body>
 </html>

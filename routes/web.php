@@ -380,5 +380,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/settings/consultation/', [SettingsController::class, 'showConsultation'])->name('settings.showconsultation');
     Route::put('/settings/consultation/', [SettingsController::class, 'updateConsultation'])->name('settings.consultation.update');
     // End Settings //
+
+    // Authentication //
+    Route::get('/auth/certificate/{id}/', [HelperController::class, 'certificateAuthentication'])->name('auth.certificateAuth');
+    // End Authentication //
 });
 
