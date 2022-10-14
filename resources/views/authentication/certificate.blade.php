@@ -23,7 +23,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12 text-center">
-        <img src="/images/assets/Devi-Logo-Transparent.jpg" width="10%" class="img-fluid"/>
+        <img src="{{ public_path().'/images/assets/Devi-Logo-Transparent.jpg }}" width="10%" class="img-fluid"/>
         <p>{{ $branch->address }}, {{ $branch->contact_number }}</p>
     </div>
     <div class="col-md-4"></div>
@@ -41,7 +41,7 @@
     <div class="col-md-4"></div>
     <div class="col-md-12 mt-10 text-center">
         @if($details->created_at)
-            <img src="/images/assets/verified.png" width="10%" class="img-fluid"/>
+            <img src="{{ public_path().'/images/assets/verified.png' }}" width="10%" class="img-fluid"/>
         @endif
     </div>
     <div class="col mt-10 text-center">
