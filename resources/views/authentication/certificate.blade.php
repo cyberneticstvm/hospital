@@ -21,7 +21,7 @@
 <body>
 
 <div class="container">
-@if($details->created_at)
+@if($details && $details->created_at)
   <div class="row">
     <div class="col-md-12 text-center">
         <img src="{{ public_path().'/images/assets/Devi-Logo-Transparent.jpg' }}" width="10%" class="img-fluid"/>
