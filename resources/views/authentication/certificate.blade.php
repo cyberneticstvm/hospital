@@ -50,7 +50,7 @@
     </div>
   </div>
 @else
-    <div class="row"><div class="col text-center text-danger">Certificate yet to be issued.</div></div>
+    <div class="row"><div class="col text-center text-danger mt-10">Certificate yet to be issued.</div></div>
 @endif
 </div>
 
