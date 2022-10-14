@@ -97,33 +97,70 @@
         </tbody>
     </table>
     @endif
-    @if($spectacle && ($spectacle->bm_k1_od_a || $spectacle->bm_k2_od_a || $spectacle->bm_k1_od_m || $spectacle->bm_k2_od_m || $spectacle->bm_od_axl || $spectacle->bm_k1_os_a || $spectacle->bm_k2_os_a || $spectacle->bm_k1_os_m || $spectacle->bm_k2_os_m || $spectacle->bm_os_axl))
-    <p>Biometry</p>
-    <table width="100%" cellspacing="0" cellpadding="0">
-        <thead class="text-center">
-            <tr><th></th><th>K1 (Auto)</th><th>K2 (Auto)</th><th>K1 (Manual)</th><th>K2 (Manual)</th><th>AXL</th></tr>
-        </thead>
-        <tbody>
-        <tr>
-                <td class="text-center fw-bold">OD</td>
-                <td>{{ ($spectacle) ? $spectacle->bm_k1_od_a : '--' }}</td>
-                <td>{{ ($spectacle) ? $spectacle->bm_k2_od_a : '--' }}</td>
-                <td>{{ ($spectacle) ? $spectacle->bm_k1_od_m : '--' }}</td>
-                <td>{{ ($spectacle) ? $spectacle->bm_k2_od_m : '--' }}</td>
-                <td>{{ ($spectacle) ? $spectacle->bm_od_axl : '--' }}</td>
-            </tr>
-            <tr>
-                <td class="text-center fw-bold">OS</td>
-                <td>{{ ($spectacle) ? $spectacle->bm_k1_os_a : '--' }}</td>
-                <td>{{ ($spectacle) ? $spectacle->bm_k2_os_a : '--' }}</td>
-                <td>{{ ($spectacle) ? $spectacle->bm_k1_os_m : '--' }}</td>
-                <td>{{ ($spectacle) ? $spectacle->bm_k2_os_m : '--' }}</td>
-                <td>{{ ($spectacle) ? $spectacle->bm_os_axl : '--' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <br/>
+    @if($keratometry)
+        <p>Keratometry</p>
+        <table>
+            <thead><tr><th>K1 (A)</th><th>AXIS</th><th>K2 (A)</th><th>AXIS</th><th>K1 (M)</th><th>AXIS</th><th>K2 (M)</th><th>AXIS</th></tr></thead><tbody>
+                <tr>
+                    <td>{{ $keratometry->k1_od_auto }}</td>
+                    <td>{{ $keratometry->k1_od_axis_a }}</td>
+                    <td>{{ $keratometry->k2_od_auto }}</td>
+                    <td>{{ $keratometry->k2_od_axis_a }}</td>
+                    <td>{{ $keratometry->k1_od_manual }}</td>
+                    <td>{{ $keratometry->k1_od_axis_m }}</td>
+                    <td>{{ $keratometry->k2_od_manual }}</td>
+                    <td>{{ $keratometry->k2_od_axis_m }}</td>
+                </tr>
+                <tr>
+                    <td>{{ $keratometry->k1_os_auto }}</td>
+                    <td>{{ $keratometry->k1_os_axis_a }}</td>
+                    <td>{{ $keratometry->k2_os_auto }}</td>
+                    <td>{{ $keratometry->k2_os_axis_a }}</td>
+                    <td>{{ $keratometry->k1_os_manual }}</td>
+                    <td>{{ $keratometry->k1_os_axis_m }}</td>
+                    <td>{{ $keratometry->k2_os_manual }}</td>
+                    <td>{{ $keratometry->k2_os_axis_m }}</td>
+                </tr>
+            <tr></tr></tbody>
+        </table>
     @endif
-    <br>
+    <br/>
+    @if($tonometry)
+        <p>Tonometry</p>
+        <table style="width:50%">
+            <thead><tr><th>NCT</th><th>AT</th></tr></thead><tbody>
+                <tr>
+                    <td>{{ $tonometry->nct_od }}</td>
+                    <td>{{ $tonometry->at_od }}</td>
+                </tr>
+                <tr>
+                    <td>{{ $tonometry->nct_os }}</td>
+                    <td>{{ $tonometry->at_os }}</td>
+                </tr>
+                <tr>
+                    <td>{{ $tonometry->nct_time }}</td>
+                    <td>{{ $tonometry->at_time }}</td>
+                </tr>
+            <tr></tr></tbody>
+        </table>
+    @endif    
+    <br/>
+    @if($ascan)
+        <p>A-Scan</p>
+        <table style="width:50%">
+            <thead><tr><th>AXL<th>ACD</th><th>LENS</th><th>A-CONST.</th><th>IOL</th></tr></thead><tbody>
+                <tr>
+                    <td>{{ $ascan->axl }}</td>
+                    <td>{{ $ascan->acd }}</td>
+                    <td>{{ $ascan->lens }}</td>
+                    <td>{{ $ascan->a_constant }}</td>
+                    <td>{{ $ascan->iol_power }}</td>
+                </tr>
+            <tr></tr></tbody>
+        </table>
+    @endif
+    <br/>
     @if($v_od_1 != 'Na' || $v_os_1 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
