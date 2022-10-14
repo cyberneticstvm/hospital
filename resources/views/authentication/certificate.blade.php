@@ -21,6 +21,7 @@
 <body>
 
 <div class="container">
+@if($details->created_at)
   <div class="row">
     <div class="col-md-12 text-center">
         <img src="{{ public_path().'/images/assets/Devi-Logo-Transparent.jpg' }}" width="10%" class="img-fluid"/>
@@ -40,16 +41,17 @@
         Issued Date & Time: {{ $details->created_at }}<br/>
     </div>
     <div class="col-md-4"></div>
-    <div class="col-md-12 mt-10 text-center">
-        @if($details->created_at)
-            <img src="{{ public_path().'/images/assets/verified.png' }}" width="10%" class="img-fluid"/>
-        @endif
+    <div class="col-md-12 mt-10 text-center">        
+            <img src="{{ public_path().'/images/assets/verified.png' }}" width="10%" class="img-fluid"/>        
     </div>
     <div class="col mt-10 text-center">
         <p class='text-medium'>VARKALA | PARIPPALLY | POTHENCODE | PARAVOOR | CHIRAYINKEEZHU | KADAKKAL | ATTINGAL | OONNINMOODU | EDAVA | NADAYARA</p>
         <p class="text-small">Ph: +91 9388611622</p>
     </div>
   </div>
+@else
+    <div class="row"><div class="col text-center text-danger">Certificate yet to be issued.</div></div>
+@endif
 </div>
 
 </body>
