@@ -217,7 +217,10 @@ class HelperController extends Controller
         $doctor = DB::table('doctors')->find($patient->doctor_id);
         $branch = DB::table('branches')->find($patient->branch);
         $certificate = DB::table('patient_certificates as pc')->where('pc.medical_record_id', $id)->first();
+
+        $certs = DB::table('patient_certificate_details as pcd')->leftJoin('certificate_types as ct', 'pcd.certificate_type', '=', 'ct.id')->leftJoin('patient_certificates as pc', 'pc.id', '=', 'pcd.patient_certificate_id')->select(DB::raw("(GROUP_CONCAT(ct.name SEPARATOR ', ')) as certs"))->where('pc.medical_record_id', $id)->where('pcd.status', 'I')->value('certs');
+
         $details = DB::table('patient_certificate_details as pcd')->select(DB::raw("DATE_FORMAT(pcd.created_at, '%d/%b/%Y %h:%i %p') AS created_at"))->where('pcd.patient_certificate_id', $certificate->id)->where('pcd.status', 'I')->first();
-        return view('authentication.certificate', compact('certificate', 'details', 'patient', 'doctor', 'branch'));
+        return view('authentication.certificate', compact('certificate', 'details', 'patient', 'doctor', 'branch', 'certs'));
     }
 }
