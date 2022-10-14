@@ -37,7 +37,7 @@
         Registration No.: {{ $doctor->reg_no }}<br/>
         <h5 class="mt-5">Other Details</h5>
         Issued Certificate(s): {{ $certs }}<br/>
-        Issued Date & time: {{ $details->created_at }}<br/>
+        Issued Date & Time: {{ $details->created_at }}<br/>
     </div>
     <div class="col-md-4"></div>
     <div class="col-md-12 mt-10 text-center">
