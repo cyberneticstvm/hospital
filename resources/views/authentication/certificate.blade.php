@@ -25,22 +25,24 @@
   <div class="row">
     <div class="col-md-12 text-center">
         <img src="{{ public_path().'/images/assets/Devi-Logo-Transparent.jpg' }}" width="10%" class="img-fluid"/>
-        <p>{{ $branch->address }}, {{ $branch->contact_number }}</p>
+        <!--<p>{{ $branch->address }}, {{ $branch->contact_number }}</p>-->
     </div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <h5>Patient Details</h5>
-        Patient Name: {{ $patient->patient_name }}<br/>
-        Patient Address: {{ $patient->address }}<br/>
+    <div class="col-md-4 mt-5"></div>
+    <div class="col-md-4 mt-5">
+        <h5>Issued to Details</h5>
+        Name: {{ $patient->patient_name }}<br/>
+        Address: {{ $patient->address }}<br/>
         <h5 class="mt-5">Doctor Details</h5>        
-        Doctor Name: {{ $doctor->doctor_name }}<br/>
+        Name: {{ $doctor->doctor_name }}<br/>
         Designation: {{ $doctor->designation }}<br/>
         Registration No.: {{ $doctor->reg_no }}<br/>
         <h5 class="mt-5">Other Details</h5>
         Issued Certificate(s): {{ $certs }}<br/>
         Issued Date & Time: {{ $details->created_at }}<br/>
+        Purpose of Certificate(s): License<br/>
+
     </div>
-    <div class="col-md-4"></div>
+    <div class="col-md-4 mt-5"></div>
     <div class="col-md-12 mt-10 text-center">        
             <img src="{{ public_path().'/images/assets/verified.png' }}" width="10%" class="img-fluid"/>        
     </div>
