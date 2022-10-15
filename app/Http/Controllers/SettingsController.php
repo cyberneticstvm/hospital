@@ -38,12 +38,12 @@ class SettingsController extends Controller
     public function updatePassword(Request $request){
         $this->validate($request, [
             'password' => 'required|confirmed|min:6',
-        ]);
-        $password = Hash::make($request->password);        
+        ]);                
         try{
+            $password = Hash::make($request->password);
             User::where('id', Auth::user()->id)->update(['password' => $password]);
         }catch(Exception $e){
-            throw $e;
+            //throw $e;
         }
         return redirect()->route('settings.showpassword')
                         ->with('success', "Password has been changed successfully.");
