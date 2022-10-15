@@ -383,6 +383,8 @@ Route::group(['middleware' => ['auth']], function(){
     // Settings //
     Route::get('/settings/consultation/', [SettingsController::class, 'showConsultation'])->name('settings.showconsultation');
     Route::put('/settings/consultation/', [SettingsController::class, 'updateConsultation'])->name('settings.consultation.update');
+    Route::get('/settings/change-password/', [SettingsController::class, 'showpassword'])->name('settings.showpassword');
+    Route::post('/settings/change-password/', [SettingsController::class, 'updatePassword'])->name('settings.password.update');
     // End Settings //
 });
 
