@@ -27,7 +27,7 @@
     <table width="100%" cellpadding='0' cellspacing='0' class='bordered' >
         <thead>
             <tr rowspan='2'><th colspan='4' class='text-center title'>Devi Eye Clinic & Opticians</th></tr>
-            <tr><th colspan='4' class='text-center'>Near Police Station, Maithanam, Varkala, Thiruvananthapuram, Phone: +91 470 2611622</th></tr>
+            <tr><th colspan='4' class='text-center'>{{ $branch->address}}, Phone: {{ $branch->contact_number }}</th></tr>
         </thead>
         <tbody>
             <tr>

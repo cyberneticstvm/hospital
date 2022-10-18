@@ -14,9 +14,10 @@ class PDFController extends Controller
     public function token($id){
         $data = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at')->first();
         $patient = DB::table('patient_registrations')->find($data->patient_id);     
-        $doctor = DB::table('doctors')->find($data->doctor_id);     
+        $doctor = DB::table('doctors')->find($data->doctor_id);
+        $branch = DB::table('branches')->find($data->branch);     
         //view()->share('patient', $data);     
-        $pdf = PDF::loadView('/pdf/token', ['reference' => $data, 'patient' => $patient, 'doctor' => $doctor]);    
+        $pdf = PDF::loadView('/pdf/token', ['reference' => $data, 'patient' => $patient, 'doctor' => $doctor, 'branch' => $branch]);    
         //return $pdf->download('token.pdf');
         return $pdf->stream('token.pdf', array("Attachment"=>0));
     }
