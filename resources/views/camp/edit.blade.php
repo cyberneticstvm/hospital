@@ -31,7 +31,7 @@
                                     <small class="text-danger">{{ $errors->first('camp_date') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <label class="form-label">Patient Name<sup class="text-danger">*</sup></label>
                                     <input type="text" value="{{ $camp->patient_name }}" name="patient_name" class="form-control form-control-md" placeholder="Patient Name">
                                     @error('patient_name')
@@ -45,22 +45,44 @@
                                     <small class="text-danger">{{ $errors->first('age') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-3">
-                                    <label class="form-label">Std.</label>
-                                    <input type="text" value="{{ $camp->standard }}" name="standard" class="form-control form-control-md" placeholder="Std.">
-                                </div>
                                 <div class="col-sm-2">
-                                    <label class="form-label">Treatment Required</label>
+                                    <label class="form-label">Gender</label>
+                                    <select class="form-control" name="gender">
+                                        <option value="M" {{ ($camp->gender == 'M') ? 'selected' : '' }}>Male</option>
+                                        <option value="F" {{ ($camp->gender == 'F') ? 'selected' : '' }}>Female</option>                                        
+                                        <option value="O" {{ ($camp->gender == 'O') ? 'selected' : '' }}>Other</option>                                        
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Venue<sup class="text-danger">*</sup></label>
+                                    <input type="text" value="{{ $camp->venue }}" name="venue" class="form-control form-control-md" placeholder="Venue">
+                                    @error('venue')
+                                    <small class="text-danger">{{ $errors->first('venue') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Class/Address</label>
+                                    <input type="text" value="{{ $camp->standard }}" name="standard" class="form-control form-control-md" placeholder="Class/Address">
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Further Investigation Required</label>
                                     <select class="form-control" name="treatment_required">
                                         <option value="0" {{ ($camp->treatment_required == 0) ? 'selected' : '' }}>No</option>
                                         <option value="1" {{ ($camp->treatment_required == 1) ? 'selected' : '' }}>Yes</option>                                        
                                     </select>
                                 </div>
-                                <div class="col-sm-2">
-                                    <label class="form-label">Specs Required</label>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Glasses Required</label>
                                     <select class="form-control" name="specs_required">
                                         <option value="0" {{ ($camp->specs_required == 0) ? 'selected' : '' }}>No</option>
                                         <option value="1" {{ ($camp->specs_required == 1) ? 'selected' : '' }}>Yes</option>                                        
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Yearly Eye Test Advised</label>
+                                    <select class="form-control" name="specs_required">
+                                        <option value="0" {{ ($camp->yearly_test_advised == 0) ? 'selected' : '' }}>No</option>
+                                        <option value="1" {{ ($camp->yearly_test_advised == 1) ? 'selected' : '' }}>Yes</option>                                        
                                     </select>
                                 </div>
                                 <div class="col-sm-12 table-responsive">

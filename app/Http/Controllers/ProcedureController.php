@@ -61,6 +61,7 @@ class ProcedureController extends Controller
             'fee' => 'required',
         ]);
         $input = $request->all();
+        $input['type'] = 'P';
         $proc = Procedure::create($input);
         return redirect()->route('procedure.index')
                         ->with('success','Procedure created successfully');
@@ -79,7 +80,7 @@ class ProcedureController extends Controller
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_number);
         if($mrecord):
-            $procedures = Procedure::all();
+            $procedures = Procedure::where('type', 'P')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
@@ -116,6 +117,7 @@ class ProcedureController extends Controller
             'fee' => 'required',
         ]);
         $input = $request->all();
+        $input['type'] = 'P';
         $proc = Procedure::find($id);
         $proc->update($input);
         return redirect()->route('procedure.index')
@@ -136,7 +138,7 @@ class ProcedureController extends Controller
     }
 
     public function fetch(){
-        $procedures = Procedure::all();
+        $procedures = Procedure::where('type', 'P')->get();
         $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'pp.medical_record_id')->leftJoin('patient_registrations as pr', 'pr.id', '=', 'pmr.patient_id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', 'pr.patient_name', 'pr.patient_id', DB::raw("SUM(pp.fee) as 'fee'"))->where('pp.branch', $this->branch)->whereDate('pp.created_at', Carbon::today())->groupBy('pp.medical_record_id')->orderByDesc('pp.id')->get();
         return view('procedure.fetch', compact('procedures', 'procs'));
     }
@@ -167,7 +169,7 @@ class ProcedureController extends Controller
         }catch(Exception $e){
             throw $e;
         }
-        $procedures = Procedure::orderBy('name', 'ASC')->get();
+        $procedures = Procedure::where('type', 'P')->get();
         $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', DB::raw("SUM(pp.fee) as 'fee'"))->groupBy('pp.medical_record_id')->get();
         return redirect()->route('procedure.fetch', compact('procs', 'procedures'))
                         ->with('success','Procedure created successfully');
@@ -178,7 +180,7 @@ class ProcedureController extends Controller
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
         $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-        $procedures = Procedure::all();
+        $procedures = Procedure::where('type', 'P')->get();
         $advised = DB::table('patient_procedures')->where('medical_record_id', $id)->get();
         return view('procedure.edit', compact('mrecord', 'patient', 'doctor', 'age', 'procedures', 'advised'));
     }
@@ -210,7 +212,7 @@ class ProcedureController extends Controller
         }catch(Exception $e){
             throw $e;
         }
-        $procedures = Procedure::orderBy('name', 'ASC')->get();
+        $procedures = Procedure::where('type', 'P')->get();
         $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', DB::raw("SUM(pp.fee) as 'fee'"))->groupBy('pp.medical_record_id')->get();
         return redirect()->route('procedure.fetch', compact('procs', 'procedures'))
                         ->with('success','Procedure updated successfully');
@@ -218,7 +220,7 @@ class ProcedureController extends Controller
 
     public function destroyadvise($id){
         DB::table('patient_procedures')->where('medical_record_id', $id)->delete();
-        $procedures = Procedure::orderBy('name', 'ASC')->get();
+        $procedures = Procedure::where('type', 'P')->get();
         $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', DB::raw("SUM(pp.fee) as 'fee'"))->groupBy('pp.medical_record_id')->get();
         return redirect()->route('procedure.fetch', compact('procs', 'procedures'))
                         ->with('success','Procedure deleted successfully');

@@ -12,7 +12,9 @@ class Camp extends Model
     protected $fillable = [
         'patient_name',
         'age',
+        'gender',
         'standard',
+        'venue',
         're_sph',
         're_cyl',
         're_axis',
@@ -28,6 +30,7 @@ class Camp extends Model
         'branch',
         'treatment_required',
         'specs_required',
+        'yearly_test_advised',
         'camp_date',
         'created_by',
         'updated_by',

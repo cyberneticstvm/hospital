@@ -22,7 +22,7 @@ class IncomeExpenseHeadController extends Controller
     }
     public function index()
     {
-        $heads = DB::table('income_expense_heads')->selectRaw("id, name, CASE WHEN type='I' THEN 'Income' ELSE 'Expense' END AS type")->get();
+        $heads = DB::table('income_expense_heads')->selectRaw("id, name, CASE WHEN type='I' THEN 'Income' ELSE 'Expense' END AS type")->whereNull('category')->get();
         return view('ieheads.index', compact('heads'));
     }
 
