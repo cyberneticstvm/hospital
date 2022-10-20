@@ -40,7 +40,7 @@ class IncomeController extends Controller
     public function create()
     {
         $branches = DB::table('branches')->get();    
-        $heads = DB::table('income_expense_heads')->where('type', 'I')->get();    
+        $heads = DB::table('income_expense_heads')->where('type', 'I')->whereNull('category')->get();    
         return view('income.create', compact('branches', 'heads'));
     }
 
