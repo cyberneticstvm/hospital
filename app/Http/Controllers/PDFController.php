@@ -269,4 +269,10 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/license/medical', compact('qrcode', 'patient'));    
         return $pdf->stream('medical.pdf', array("Attachment"=>0));
     }
+    public function campprint($id){
+        $camp = DB::table('camps')->find($id);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://hospital.speczone.net/auth/certificate/$id/"));         
+        $pdf = PDF::loadView('/pdf/camp', compact('qrcode', 'camp'));    
+        return $pdf->stream('camp.pdf', array("Attachment"=>0));
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CampController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\HelperController;
@@ -25,20 +26,23 @@ Route::post('/', 'App\Http\Controllers\AuthController@userlogin')->name('login')
 Route::get('/auth/certificate/{id}/', [HelperController::class, 'certificateAuthentication'])->name('auth.certificateAuth');
 // End Authentication //
 
-Route::group(['middleware' => ['auth']], function(){
+Route::get('/errors/error/', function () {
+    return view('errors.error');
+})->name('error');
 
+Route::group(['middleware' => ['auth']], function(){
     Route::get('/dash/', function () {
         return view('dash');
     })->name('dash');
-
+    Route::get('/logout/', 'App\Http\Controllers\AuthController@userlogout');
     Route::post('store_branch_session', 'App\Http\Controllers\AuthController@store_branch_session')->name('store_branch_session');
+});
+
+Route::group(['middleware' => ['auth', 'branch']], function(){    
 
     Route::get('/permission/not-authorized/', function () {
         return view('permission');
     })->name('notauth');
-
-    Route::get('/logout/', 'App\Http\Controllers\AuthController@userlogout');
-
 
     // User Route //
     Route::get('/user/', 'App\Http\Controllers\AuthController@index')->name('user.index');
@@ -347,6 +351,15 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/ohf/', 'App\Http\Controllers\OHFController@index')->name('ohf.index');
     // End OCT/HFA/FFA //
 
+    // Camp //
+    Route::get('/camp/', [CampController::class, 'index'])->name('camp.index');
+    Route::get('/camp/create/', [CampController::class, 'create'])->name('camp.create');
+    Route::post('/camp/create/', [CampController::class, 'store'])->name('camp.save');
+    Route::get('/camp/edit/{id}/', [CampController::class, 'edit'])->name('camp.edit');
+    Route::put('/camp/edit/{id}/', [CampController::class, 'update'])->name('camp.update');
+    Route::delete('/camp/delete/{id}/', [CampController::class, 'destroy'])->name('camp.delete');
+    // End Camp //
+
     // Reports //
     Route::get('/reports/daybook/', 'App\Http\Controllers\ReportController@showdaybook')->name('reports.showdaybook');
     Route::post('/reports/daybook/', 'App\Http\Controllers\ReportController@fetchdaybook')->name('reports.fetchdaybook');
@@ -378,6 +391,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/pharmacy/receipt/{id}/', [PDFController::class, 'pharmacyreceipt']);
     Route::get('/license/vision/{id}/', [PDFController::class, 'visioncertificate']);
     Route::get('/license/medical/{id}/', [PDFController::class, 'medicalcertificate']);
+    Route::get('/camp/print/{id}/', [PDFController::class, 'campprint']);
     // End PDFs //
 
     // Settings //
