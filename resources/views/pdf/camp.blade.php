@@ -19,7 +19,7 @@
             font-size: 15px;
         }
         td,th{
-            padding: 10px;
+            padding: 5px;
         }
         th{
             text-align: left;
@@ -33,17 +33,17 @@
     </center>
     <table width="100%" cellpadding='0' cellspacing='0' class="text-large">
         <tr>
-            <td>Name: {{ strtoupper($camp->patient_name) }}</td>
+            <td>Name / SL No: {{ strtoupper($camp->patient_name) }} / {{ $camp->id }}</td><td>Age/Gender: {{ $camp->age }}/{{ $camp->gender }}</td>
             <td>Date: {{ date('d/M/Y', strtotime($camp->camp_date)) }}</td>
-        </tr>
+        </tr>        
         <tr>
-            <td>Age: {{ $camp->age }}</td>
-            <td>Std. {{ $camp->standard }}</td>
-        </tr>
-        <tr>
-            <td>Treatment Required: {{ ($camp->treatment_required == 1) ? 'Yes' : 'No' }}</td>
-            <td>Specs Required: {{ ($camp->specs_required == 1) ? 'Yes' : 'No' }}</td>
-        </tr>          
+            <td>Further Investigation Required: {{ ($camp->treatment_required == 1) ? 'Yes' : 'No' }}</td>
+            <td>Glasses Required: {{ ($camp->specs_required == 1) ? 'Yes' : 'No' }}</td>
+            <td>Yearly Test: {{ ($camp->yearly_test_advised == 1) ? 'Yes' : 'No' }}</td>
+        </tr>    
+        <tr>            
+            <td>Venue: {{ $camp->venue }}</td><td colspan="2">Standard/Address: {{ $camp->standard }}</td>
+        </tr>      
     </table>
     <table width="100%" cellpadding='0' cellspacing='0' class="text-large">
         <thead><tr><th>Eye</th><th>Sph</th><th>Cyl</th><th>Axis</th><th>Add</th><th>VB</th><th>VA</th></tr></thead>
