@@ -36,7 +36,10 @@ class PatientReferenceController extends Controller
         if($date_diff == 0 || $date_diff > $days): // $date_diff = 0 means first consultation
             $doc_fee = $fee; 
         endif;
-        return ($ctype == 2 || $ctype == 4) ? 0.00 : $doc_fee; // ctype 2/4 means purpose of visit is Certificate/Camp and no consultation fee for that.
+        if($ctype == 2 || $ctype == 4 || $ctype == 5):
+            $doc_fee = 0.00; // ctype 2/4 means purpose of visit is Certificate/Camp/Vision Examination and no consultation fee for that.
+        endif;
+        return $doc_fee; 
     }
 
     public function index()

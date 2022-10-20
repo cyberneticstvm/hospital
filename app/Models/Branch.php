@@ -15,6 +15,7 @@ class Branch extends Model
         'contact_number',
         'address',
         'registration_fee',
+        'fee_vision',
     ];
 
     public function getUserBranches(){

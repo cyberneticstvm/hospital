@@ -122,6 +122,7 @@ class Spectacle extends Model
         'iop_at_time',
         'remarks',
         'advice',
+        'fee',
         'review_date',
         'created_by',
     ];

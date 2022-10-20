@@ -10,7 +10,7 @@
     <div class="card-body">
         <p class= "text-right my-3"><a href="/branch/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-            <thead><tr><th>SL No.</th><th>Branch Name</th><th>Contact Number</th><th>Address</th><th>Registration Fee</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>Branch Name</th><th>Contact Number</th><th>Address</th><th>Registration Fee</th><th>Vision Fee</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($branches as $branch)
                 <tr>
@@ -19,6 +19,7 @@
                     <td>{{ $branch->contact_number }}</td>
                     <td>{{ $branch->address }}</td>
                     <td class="text-right">{{ $branch->registration_fee }}</td>
+                    <td class="text-right">{{ $branch->fee_vision }}</td>
                     <td><a class='btn btn-link' href="{{ route('branch.edit', $branch->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
                         <form method="post" action="{{ route('branch.delete', $branch->id) }}">

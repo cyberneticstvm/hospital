@@ -43,6 +43,13 @@
                                     <small class="text-danger">{{ $errors->first('registration_fee') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Vision Exam. Fee<sup class="text-danger">*</sup></label>
+                                    <input type="text" value="{{ old('fee_vision') }}" name="fee_vision" class="form-control form-control-md" placeholder="0.00" required="required">
+                                    @error('fee_vision')
+                                    <small class="text-danger">{{ $errors->first('fee_vision') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>

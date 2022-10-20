@@ -17,6 +17,7 @@
                             <input type="hidden" name="medical_record_id" value="{{ $mrecord->id }}" />
                             <input type="hidden" id="age" value="{{ $age }}" />
                             <input type="hidden" name="patient_id" value="{{ $patient->id }}" />
+                            <input type="hidden" name="ctype" value="{{ $pref->consultation_type }}" />
                             <div class="row g-4">
                                 <div class="col-sm-3">Medical Record No: <h5 class="text-primary">{{ $mrecord->id }}</h5></div>
                                 <div class="col-sm-3">Patient Name / Age: <h5 class="text-primary">{{ $patient->patient_name }} / {{ $age }}</h5></div>

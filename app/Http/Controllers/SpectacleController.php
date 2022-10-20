@@ -60,6 +60,10 @@ class SpectacleController extends Controller
         $input = $request->all();
         $input['review_date'] = (!empty($request->review_date)) ? Carbon::createFromFormat('d/M/Y', $request->review_date)->format('Y-m-d') : NULL;
         $input['created_by'] = $request->user()->id;
+        $input['fee'] = 0.00;
+        if($request->ctype == 5):
+            $input['fee'] = DB::table('branches')->where('id', $this->branch)->value('fee_vision');
+        endif;
         $spectacle = Spectacle::create($input);
         return redirect()->route('spectacle.index')->with('success','Record created successfully');
     }
@@ -75,13 +79,14 @@ class SpectacleController extends Controller
         $this->validate($request, [
             'medical_record_number' => 'required',
         ]);
-        $mrecord = DB::table('patient_medical_records')->find($request->medical_record_number);
+        $mrecord = DB::table('patient_medical_records')->find($request->medical_record_number);        
         if($mrecord):
+            $pref = DB::table('patient_references')->where('id', $mrecord->mrn)->first();
             $reading_adds = DB::table('eye_powers')->where('category', 'reading_add')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-            return view('spectacle.create', compact('mrecord', 'patient', 'doctor', 'age', 'reading_adds'));
+            return view('spectacle.create', compact('mrecord', 'patient', 'doctor', 'age', 'reading_adds', 'pref'));
         else:
             return redirect("/spectacle/fetch/")->withErrors('No records found.');
         endif;
@@ -98,10 +103,11 @@ class SpectacleController extends Controller
         $spectacle = Spectacle::find($id);
         $reading_adds = DB::table('eye_powers')->where('category', 'reading_add')->get();
         $mrecord = DB::table('patient_medical_records')->find($spectacle->medical_record_id);
+        $pref = DB::table('patient_references')->where('id', $mrecord->mrn)->first();
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
         $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-        return view('spectacle.edit', compact('mrecord', 'patient', 'doctor', 'spectacle', 'age', 'reading_adds'));
+        return view('spectacle.edit', compact('mrecord', 'patient', 'doctor', 'spectacle', 'age', 'reading_adds', 'pref'));
     }
 
     /**
@@ -119,6 +125,10 @@ class SpectacleController extends Controller
         $input = $request->all();
         $input['review_date'] = (!empty($request->review_date)) ? Carbon::createFromFormat('d/M/Y', $request->review_date)->format('Y-m-d') : NULL;
         $input['created_by'] = $request->user()->id;
+        $input['fee'] = 0.00;
+        if($request->ctype == 5):
+            $input['fee'] = DB::table('branches')->where('id', $this->branch)->value('fee_vision');
+        endif;
         $spectacle = Spectacle::find($id);
         $spectacle->update($input);
         return redirect()->route('spectacle.index')->with('success','Record updated successfully');

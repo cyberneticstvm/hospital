@@ -51,6 +51,7 @@ class BranchController extends Controller
             'contact_number' => 'required',
             'address' => 'required',
             'registration_fee' => 'required',
+            'fee_vision' => 'required',
         ]);
         $input = $request->all();
         $branch = Branch::create($input);
@@ -95,6 +96,7 @@ class BranchController extends Controller
             'contact_number' => 'required',
             'address' => 'required',
             'registration_fee' => 'required',
+            'fee_vision' => 'required',
         ]);
         $input = $request->all();
         $branch = Branch::find($id);
