@@ -1141,7 +1141,7 @@
                                     <a data-bs-toggle="modal" href="#diagnosisModal"><i class="fa fa-plus fa-lg text-success"></i></a>
                                 </div> 
                                 <div class="col-sm-12">
-                                    <label class="form-label">Doctor Recommendations / Advice<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Doctor Recommendations / Advise<sup class="text-danger">*</sup></label>
                                     <textarea class="form-control form-control-md" name="doctor_recommondations" rows="5" placeholder="Doctor Recommondations / Advise" required="required">{{ $record->doctor_recommondations }}</textarea>
                                     @error('doctor_recommondations')
                                     <small class="text-danger">{{ $errors->first('doctor_recommondations') }}</small>
@@ -1168,7 +1168,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-sm-3 asd">
-                                            <label class="form-label">Medicine Adviced</label>
+                                            <label class="form-label">Medicine Advised</label>
                                             <select class="form-control form-control-md select2 medAdvised" name="medicine_id[]">
                                             <option value="">Select</option>
                                             
