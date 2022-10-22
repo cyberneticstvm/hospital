@@ -25,7 +25,7 @@ class CampController extends Controller
     }
     public function index()
     {
-        $camps = Camp::leftJoin('branches as b', 'camps.branch', '=', 'b.id')->selectRaw("camps.*, b.branch_name")->where('camps.branch', $this->branch)->whereDate('camps.created_at', Carbon::today())->orderByDesc("camps.id")->get();
+        $camps = Camp::leftJoin('camp_masters as m', 'camps.camp_id', '=', 'm.id')->where('m.branch', $this->branch)->whereDate('camps.created_at', Carbon::today())->select('camps.id', 'camps.patient_name', 'camps.age', 'camps.camp_date', 'm.camp_id', 'm.venue', 'm.address')->orderByDesc("camps.id")->get();
         return view('camp.index', compact('camps'));
     }
 
@@ -34,9 +34,10 @@ class CampController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('camp.create');
+        $camp = DB::table('camp_masters')->find($id);
+        return view('camp.create', compact('camp'));
     }
 
     /**
@@ -56,7 +57,6 @@ class CampController extends Controller
         $input['camp_date'] = Carbon::createFromFormat('d/M/Y', $request->camp_date);
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
-        $input['branch'] = $this->branch;
         try{
             $camp = Camp::create($input);
         }catch(Exception $e){
@@ -85,7 +85,8 @@ class CampController extends Controller
     public function edit($id)
     {
         $camp = Camp::find($id);
-        return view('camp.edit', compact('camp'));
+        $campm = DB::table('camp_masters')->find($camp->camp_id);
+        return view('camp.edit', compact('camp', 'campm'));
     }
 
     /**
@@ -107,7 +108,6 @@ class CampController extends Controller
         $input['camp_date'] = Carbon::createFromFormat('d/M/Y', $request->camp_date);
         $input['created_by'] = $camp->getOriginal('created_by');
         $input['updated_by'] = $request->user()->id;
-        $input['branch'] = $camp->getOriginal('branch');
         try{
             $camp->update($input);
         }catch(Exception $e){

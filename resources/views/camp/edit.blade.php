@@ -15,7 +15,11 @@
                         <form action="{{ route('camp.update', $camp->id) }}" method="post">
                             @csrf
                             @method("PUT")
+                            <input type="hidden" name="camp_id" value="{{ $campm->id }}" />
                             <div class="row g-4">
+                                <div class="col-sm-4">Camp ID: <h5 class="text-primary">{{ $campm->camp_id }}</h5></div>
+                                <div class="col-sm-4">Venue: <h5 class="text-primary">{{ $campm->venue }}</h5></div>
+                                <div class="col-sm-4">Address: <h5 class="text-primary">{{ $campm->address }}</h5></div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Date<sup class="text-danger">*</sup></label>
                                     <fieldset class="form-icon-group left-icon position-relative">
@@ -54,17 +58,6 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
-                                    <label class="form-label">Venue<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ $camp->venue }}" name="venue" class="form-control form-control-md" placeholder="Venue">
-                                    @error('venue')
-                                    <small class="text-danger">{{ $errors->first('venue') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-3">
-                                    <label class="form-label">Class/Address</label>
-                                    <input type="text" value="{{ $camp->standard }}" name="standard" class="form-control form-control-md" placeholder="Class/Address">
-                                </div>
-                                <div class="col-sm-3">
                                     <label class="form-label">Further Investigation Required</label>
                                     <select class="form-control" name="treatment_required">
                                         <option value="0" {{ ($camp->treatment_required == 0) ? 'selected' : '' }}>No</option>
@@ -87,24 +80,24 @@
                                 </div>
                                 <div class="col-sm-12 table-responsive">
                                     <table class="table table-bordered">
-                                        <thead><tr><th>Eye</th><th>Sph</th><th>Cyl</th><th>Axis</th><th>Add</th><th>VB</th><th>VA</th></tr></thead>
+                                        <thead><tr><th>Eye</th><th>VB</th><th>Sph</th><th>Cyl</th><th>Axis</th><th>Add</th><th>VA</th></tr></thead>
                                         <tbody>
                                             <tr>
                                                 <td>RE</td>
+                                                <td><input class="form-control form-control-sm" type="text" value="{{ $camp->re_vb }}" name="re_vb" placeholder="0/0" /></td>
                                                 <td><input class="form-control form-control-sm" value="{{ $camp->re_sph }}" type="text" name="re_sph" placeholder="0.00" /></td>
                                                 <td><input class="form-control form-control-sm" type="text" value="{{ $camp->re_cyl }}" name="re_cyl" placeholder="0.00" /></td>
                                                 <td><input class="form-control form-control-sm" type="text" value="{{ $camp->re_axis }}" name="re_axis" placeholder="0" /></td>
-                                                <td><input class="form-control form-control-sm" type="text" value="{{ $camp->re_add }}" name="re_add" placeholder="0.00" /></td>
-                                                <td><input class="form-control form-control-sm" type="text" value="{{ $camp->re_vb }}" name="re_vb" placeholder="0/0" /></td>
+                                                <td><input class="form-control form-control-sm" type="text" value="{{ $camp->re_add }}" name="re_add" placeholder="0.00" /></td>                                                
                                                 <td><input class="form-control form-control-sm" type="text" value="{{ $camp->re_va }}" name="re_va" placeholder="0/0" /></td>
                                             </tr>
                                             <tr>
                                                 <td>LE</td>
+                                                <td><input class="form-control form-control-sm" type="text" value="{{ $camp->le_vb }}" name="le_vb" placeholder="0/0" /></td>
                                                 <td><input class="form-control form-control-sm" type="text" value="{{ $camp->le_sph }}" name="le_sph" placeholder="0.00" /></td>
                                                 <td><input class="form-control form-control-sm" type="text" value="{{ $camp->le_cyl }}" name="le_cyl" placeholder="0.00" /></td>
                                                 <td><input class="form-control form-control-sm" type="text" value="{{ $camp->le_axis }}" name="le_axis" placeholder="0" /></td>
-                                                <td><input class="form-control form-control-sm" type="text" value="{{ $camp->le_add }}" name="le_add" placeholder="0.00" /></td>
-                                                <td><input class="form-control form-control-sm" type="text" value="{{ $camp->le_vb }}" name="le_vb" placeholder="0/0" /></td>
+                                                <td><input class="form-control form-control-sm" type="text" value="{{ $camp->le_add }}" name="le_add" placeholder="0.00" /></td>                                                
                                                 <td><input class="form-control form-control-sm" type="text" value="{{ $camp->le_va }}" name="le_va" placeholder="0/0" /></td>
                                             </tr>
                                         </tbody>

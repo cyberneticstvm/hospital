@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CampController;
+use App\Http\Controllers\CampMasterController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\HelperController;
@@ -353,12 +354,21 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     // Camp //
     Route::get('/camp/', [CampController::class, 'index'])->name('camp.index');
-    Route::get('/camp/create/', [CampController::class, 'create'])->name('camp.create');
-    Route::post('/camp/create/', [CampController::class, 'store'])->name('camp.save');
+    Route::get('/camp/create/{id}/', [CampController::class, 'create'])->name('camp.create');
+    Route::post('/camp/create/{id}/', [CampController::class, 'store'])->name('camp.save');
     Route::get('/camp/edit/{id}/', [CampController::class, 'edit'])->name('camp.edit');
     Route::put('/camp/edit/{id}/', [CampController::class, 'update'])->name('camp.update');
     Route::delete('/camp/delete/{id}/', [CampController::class, 'destroy'])->name('camp.delete');
     // End Camp //
+
+    // Camp Master //
+    Route::get('/campmaster/', [CampMasterController::class, 'index'])->name('campmaster.index');
+    Route::get('/campmaster/create/', [CampMasterController::class, 'create'])->name('campmaster.create');
+    Route::post('/campmaster/create/', [CampMasterController::class, 'store'])->name('campmaster.save');
+    Route::get('/campmaster/edit/{id}/', [CampMasterController::class, 'edit'])->name('campmaster.edit');
+    Route::put('/campmaster/edit/{id}/', [CampMasterController::class, 'update'])->name('campmaster.update');
+    Route::delete('/campmaster/delete/{id}/', [CampMasterController::class, 'destroy'])->name('campmaster.delete');
+    // End Camp Master //
 
     // Reports //
     Route::get('/reports/daybook/', 'App\Http\Controllers\ReportController@showdaybook')->name('reports.showdaybook');

@@ -12,6 +12,8 @@ $(function() {
         responsive: true
     });
 
+    $(".alert").show().delay(5000).fadeOut();
+
     $('.select2').select2();
 
     $(".search-select").select2({

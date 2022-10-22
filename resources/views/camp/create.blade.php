@@ -12,9 +12,13 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('camp.create') }}" method="post">
+                        <form action="{{ route('camp.create', $camp->id) }}" method="post">
                             @csrf
+                            <input type="hidden" name="camp_id" value="{{ $camp->id }}" />
                             <div class="row g-4">
+                                <div class="col-sm-4">Camp ID: <h5 class="text-primary">{{ $camp->camp_id }}</h5></div>
+                                <div class="col-sm-4">Venue: <h5 class="text-primary">{{ $camp->venue }}</h5></div>
+                                <div class="col-sm-4">Address: <h5 class="text-primary">{{ $camp->address }}</h5></div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Date<sup class="text-danger">*</sup></label>
                                     <fieldset class="form-icon-group left-icon position-relative">
@@ -54,17 +58,6 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
-                                    <label class="form-label">Venue<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ old('venue') }}" name="venue" class="form-control form-control-md" placeholder="Venue">
-                                    @error('venue')
-                                    <small class="text-danger">{{ $errors->first('venue') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-3">
-                                    <label class="form-label">Class/Address</label>
-                                    <input type="text" value="{{ old('standard') }}" name="standard" class="form-control form-control-md" placeholder="Class/Address">
-                                </div>
-                                <div class="col-sm-3">
                                     <label class="form-label">Further Investigation Required</label>
                                     <select class="form-control" name="treatment_required">
                                         <option value="0">Select</option>
@@ -90,24 +83,24 @@
                                 </div>
                                 <div class="col-sm-12 table-responsive">
                                     <table class="table table-bordered">
-                                        <thead><tr><th>Eye</th><th>Sph</th><th>Cyl</th><th>Axis</th><th>Add</th><th>VB</th><th>VA</th></tr></thead>
+                                        <thead><tr><th>Eye</th><th>VB</th><th>Sph</th><th>Cyl</th><th>Axis</th><th>Add</th><th>VA</th></tr></thead>
                                         <tbody>
                                             <tr>
                                                 <td>RE</td>
+                                                <td><input class="form-control form-control-sm" type="text" name="re_vb" placeholder="0/0" /></td>
                                                 <td><input class="form-control form-control-sm" type="text" name="re_sph" placeholder="0.00" /></td>
                                                 <td><input class="form-control form-control-sm" type="text" name="re_cyl" placeholder="0.00" /></td>
                                                 <td><input class="form-control form-control-sm" type="text" name="re_axis" placeholder="0" /></td>
-                                                <td><input class="form-control form-control-sm" type="text" name="re_add" placeholder="0.00" /></td>
-                                                <td><input class="form-control form-control-sm" type="text" name="re_vb" placeholder="0/0" /></td>
+                                                <td><input class="form-control form-control-sm" type="text" name="re_add" placeholder="0.00" /></td>                                                
                                                 <td><input class="form-control form-control-sm" type="text" name="re_va" placeholder="0/0" /></td>
                                             </tr>
                                             <tr>
                                                 <td>LE</td>
+                                                <td><input class="form-control form-control-sm" type="text" name="le_vb" placeholder="0/0" /></td>
                                                 <td><input class="form-control form-control-sm" type="text" name="le_sph" placeholder="0.00" /></td>
                                                 <td><input class="form-control form-control-sm" type="text" name="le_cyl" placeholder="0.00" /></td>
                                                 <td><input class="form-control form-control-sm" type="text" name="le_axis" placeholder="0" /></td>
-                                                <td><input class="form-control form-control-sm" type="text" name="le_add" placeholder="0.00" /></td>
-                                                <td><input class="form-control form-control-sm" type="text" name="le_vb" placeholder="0/0" /></td>
+                                                <td><input class="form-control form-control-sm" type="text" name="le_add" placeholder="0.00" /></td>                                                
                                                 <td><input class="form-control form-control-sm" type="text" name="le_va" placeholder="0/0" /></td>
                                             </tr>
                                         </tbody>
