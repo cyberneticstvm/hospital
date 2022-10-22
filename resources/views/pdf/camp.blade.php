@@ -30,6 +30,7 @@
     <center>
     <img src="./images/assets/Devi-Logo-Transparent.jpg" height='75' width='115'/>
     <p>BASIC VISION SCREENING REPORT</p>
+    <p>Camp ID: {{ $campm->camp_id }}</p>
     </center>
     <table width="100%" cellpadding='0' cellspacing='0' class="text-large">
         <tr>
@@ -40,16 +41,13 @@
             <td>Further Investigation Required: {{ ($camp->treatment_required == 1) ? 'Yes' : 'No' }}</td>
             <td>Glasses Required: {{ ($camp->specs_required == 1) ? 'Yes' : 'No' }}</td>
             <td>Yearly Test: {{ ($camp->yearly_test_advised == 1) ? 'Yes' : 'No' }}</td>
-        </tr>    
-        <tr>            
-            <td>Venue: {{ $camp->venue }}</td><td colspan="2">Standard/Address: {{ $camp->standard }}</td>
-        </tr>      
+        </tr>     
     </table>
     <table width="100%" cellpadding='0' cellspacing='0' class="text-large">
-        <thead><tr><th>Eye</th><th>Sph</th><th>Cyl</th><th>Axis</th><th>Add</th><th>VB</th><th>VA</th></tr></thead>
+        <thead><tr><th>Eye</th><th>VB</th><th>Sph</th><th>Cyl</th><th>Axis</th><th>Add</th><th>VA</th></tr></thead>
         <tbody>
-            <tr><td>RE</td><td>{{ $camp->re_sph }}</td><td>{{ $camp->re_cyl }}</td><td>{{ $camp->re_axis }}</td><td>{{ $camp->re_add }}</td><td>{{ $camp->re_vb }}</td><td>{{ $camp->re_va }}</td></tr>
-            <tr><td>LE</td><td>{{ $camp->le_sph }}</td><td>{{ $camp->le_cyl }}</td><td>{{ $camp->le_axis }}</td><td>{{ $camp->le_add }}</td><td>{{ $camp->le_vb }}</td><td>{{ $camp->le_va }}</td></tr>
+            <tr><td>RE</td><td>{{ $camp->re_vb }}</td><td>{{ $camp->re_sph }}</td><td>{{ $camp->re_cyl }}</td><td>{{ $camp->re_axis }}</td><td>{{ $camp->re_add }}</td><td>{{ $camp->re_va }}</td></tr>
+            <tr><td>LE</td><td>{{ $camp->le_vb }}</td><td>{{ $camp->le_sph }}</td><td>{{ $camp->le_cyl }}</td><td>{{ $camp->le_axis }}</td><td>{{ $camp->le_add }}</td><td>{{ $camp->le_va }}</td></tr>
         </tbody>
     </table>
     <center>

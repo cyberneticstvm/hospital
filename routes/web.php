@@ -402,6 +402,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/license/vision/{id}/', [PDFController::class, 'visioncertificate']);
     Route::get('/license/medical/{id}/', [PDFController::class, 'medicalcertificate']);
     Route::get('/camp/print/{id}/', [PDFController::class, 'campprint']);
+    Route::get('/campmaster/print/{id}/', [PDFController::class, 'campmasterprint']);
     // End PDFs //
 
     // Settings //

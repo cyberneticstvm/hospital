@@ -29,17 +29,17 @@
     </div>
     <div class="col-md-4 mt-5"></div>
     <div class="col-md-4 mt-5">
-        <h5>Issued to Details</h5>
+        <h5>Issued to</h5>
         Name: {{ $patient->patient_name }}<br/>
         Address: {{ $patient->address }}<br/>
-        <h5 class="mt-5">Doctor Details</h5>        
-        Name: {{ $doctor->doctor_name }}<br/>
-        Designation: {{ $doctor->designation }}<br/>
-        Registration No.: {{ $doctor->reg_no }}<br/>
-        <h5 class="mt-5">Other Details</h5>
+        
         Issued Certificate(s): {{ $certs }}<br/>
         Issued Date & Time: {{ $details->created_at }}<br/>
         Purpose of Certificate(s): License<br/>
+        <h5 class="mt-5">Doctor Details</h5>        
+        Name: {{ $doctor->doctor_name }}<br/>
+        Designation: {{ $doctor->designation }}<br/>
+        Registration No.: {{ $doctor->reg_no }}
 
     </div>
     <div class="col-md-4 mt-5"></div>

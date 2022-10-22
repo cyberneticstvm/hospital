@@ -271,8 +271,21 @@ class PDFController extends Controller
     }
     public function campprint($id){
         $camp = DB::table('camps')->find($id);
+        $campm = DB::table('camp_masters')->find($camp->camp_id);
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://hospital.speczone.net/auth/certificate/$id/"));         
-        $pdf = PDF::loadView('/pdf/camp', compact('qrcode', 'camp'));    
+        $pdf = PDF::loadView('/pdf/camp', compact('qrcode', 'camp', 'campm'));    
+        return $pdf->stream('camp.pdf', array("Attachment"=>0));
+    }
+    public function campmasterprint($id){
+        $campm = DB::table('camp_masters')->find($id);
+        $camps = DB::table('camps')->where('camp_id', $id)->get();
+        $branch = DB::table('branches')->find($campm->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://hospital.speczone.net/auth/certificate/$id/"));         
+        $pdf = PDF::loadView('/pdf/campmaster', compact('qrcode', 'camps', 'campm', 'branch'));
+        $pdf->output();
+        $canvas = $pdf->getDomPDF()->getCanvas();    
+        $canvas->page_text($x = 50, $y = 800, $text = "Page {PAGE_NUM} of {PAGE_COUNT}", $font = null, $size = 10, $color = array(0,0,0), $word_space = 0.0, $char_space = 0.0, $angle = 0.0);
+        $canvas->page_text($x = 450, $y = 800, $text = $campm->camp_id, $font = null, $size = 10, $color = array(0,0,0), $word_space = 0.0, $char_space = 0.0, $angle = 0.0);
         return $pdf->stream('camp.pdf', array("Attachment"=>0));
     }
 }
