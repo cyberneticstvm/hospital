@@ -1155,29 +1155,35 @@
                                         <input type='hidden' name='tax_amount[]' value='0.00' />
                                         <input type='hidden' name='tax_percentage[]' value='0.00' />
                                         <input type='hidden' name='total[]' value='0.00' />
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-2">
+                                            <label class="form-label">Medicine Type</label>
+                                            <select class="form-control form-control-md select2 medType" name="medicine_type[]">
+                                            <option value="0">Select</option>
+                                            @foreach($mtypes as $medt)
+                                                <option value="{{ $medt->id }}" {{ old('type') == $medt->id ? 'selected' : '' }}>{{ $medt->name }}</option>
+                                            @endforeach
+                                            </select>
+                                            @error('medicine_type')
+                                            <small class="text-danger">{{ $errors->first('medicine_type') }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-3 asd">
                                             <label class="form-label">Medicine Adviced</label>
                                             <select class="form-control form-control-md select2 medAdvised" name="medicine_id[]">
                                             <option value="">Select</option>
-                                            @foreach($medicines as $med)
-                                                <option value="{{ $med->id }}" {{ old('medicine_id') == $dia->id ? 'selected' : '' }}>{{ $med->product_name }}</option>
-                                            @endforeach
+                                            
                                             </select>
                                             @error('medicine_id')
                                             <small class="text-danger">{{ $errors->first('medicine_id') }}</small>
                                             @enderror
                                         </div>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-1">
                                             <label class="form-label">Dosage</label>
                                             <input type="text" name="dosage[]" class="form-control form-control-md dos" placeholder="Eg: Daily 3 Drops"/>
                                         </div>
                                         <div class="col-sm-1">
-                                            <label class="form-label">Qty / NOs.</label>
-                                            <input type='number' class='form-control form-control-md qty' name='qty[]' placeholder='0' />
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <label class="form-label">Notes.</label>
-                                            <input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes' />
+                                            <label class="form-label">Duration</label>
+                                            <input type="text" name="duration[]" class="form-control form-control-md dos" placeholder="Duration"/>
                                         </div>
                                         <div class="col-sm-1">
                                             <label class="form-label">Eye</label>
@@ -1187,6 +1193,14 @@
                                                 <option value="L">LE</option>
                                             </select>
                                         </div>
+                                        <div class="col-sm-1">
+                                            <label class="form-label">Qty / NOs.</label>
+                                            <input type='number' class='form-control form-control-md qty' name='qty[]' placeholder='0' />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label class="form-label">Notes.</label>
+                                            <input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes' />
+                                        </div>                                        
                                         <div class="col-sm-1">
                                             <a class="medicineAdvise" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i></a>                                    
                                         </div>
@@ -1200,8 +1214,20 @@
                                         <input type='hidden' name='discount[]' value='{{ $pmr->discount }}' />
                                         <input type='hidden' name='tax_amount[]' value='{{ $pmr->tax_amount }}' />
                                         <input type='hidden' name='tax_percentage[]' value='{{ $pmr->tax_percentage }}' />
-                                        <input type='hidden' name='total[]' value='{{ $pmr->total }}' />                                        
-                                        <div class="col-sm-4">
+                                        <input type='hidden' name='total[]' value='{{ $pmr->total }}' />
+                                        <div class="col-sm-2">
+                                        @if($c == 1)<label class="form-label">Medicine Type</label>@endif
+                                            <select class="form-control form-control-md select2 medType" name="medicine_type[]">
+                                            <option value="0">Select</option>
+                                            @foreach($mtypes as $medt)
+                                                <option value="{{ $medt->id }}" {{ $pmr->medicine_type == $medt->id ? 'selected' : '' }}>{{ $medt->name }}</option>
+                                            @endforeach
+                                            </select>
+                                            @error('medicine_type')
+                                            <small class="text-danger">{{ $errors->first('medicine_type') }}</small>
+                                            @enderror
+                                        </div>                                        
+                                        <div class="col-sm-3">
                                         @if($c == 1)<label class="form-label">Medicine Advised</label>@endif
                                             <select class="form-control form-control-md select2 medAdvised" name="medicine_id[]">
                                             <option value="">Select</option>
@@ -1213,9 +1239,21 @@
                                             <small class="text-danger">{{ $errors->first('medicine_id') }}</small>
                                             @enderror
                                         </div>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-1">
                                         @if($c == 1)<label class="form-label">Dosage</label>@endif
                                             <input type="text" name="dosage[]" class="form-control form-control-md dos" value="{{ $pmr->dosage }}" placeholder="Eg: Daily 3 Drops"/>
+                                        </div>
+                                        <div class="col-sm-1">
+                                        @if($c == 1)<label class="form-label">Duration</label>@endif
+                                            <input type="text" name="duration[]" class="form-control form-control-md dos" value="{{ $pmr->duration }}" placeholder=""/>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            @if($c == 1)<label class="form-label"><label class="form-label">Eye</label>@endif
+                                            <select class="form-control form-control-md" name="eye[]">
+                                                <option value="B" {{ ($pmr->eye == 'B') ? 'selected' : '' }}>Both</option>
+                                                <option value="R" {{ ($pmr->eye == 'R') ? 'selected' : '' }}>RE</option>
+                                                <option value="L" {{ ($pmr->eye == 'L') ? 'selected' : '' }}>LE</option>
+                                            </select>
                                         </div>
                                         <div class="col-sm-1">
                                         @if($c == 1)<label class="form-label">Qty / NOs.</label>@endif
@@ -1224,15 +1262,7 @@
                                         <div class="col-sm-2">
                                         @if($c == 1)<label class="form-label">Notes.</label>@endif
                                             <input type='text' class='form-control form-control-md' name='notes[]' value="{{ $pmr->notes }}" placeholder='Notes' />
-                                        </div>
-                                        <div class="col-sm-1">
-                                            @if($c == 1)<label class="form-label"><label class="form-label">Eye</label>@endif
-                                            <select class="form-control" name="eye[]">
-                                                <option value="B" {{ ($pmr->eye == 'B') ? 'selected' : '' }}>Both</option>
-                                                <option value="R" {{ ($pmr->eye == 'R') ? 'selected' : '' }}>RE</option>
-                                                <option value="L" {{ ($pmr->eye == 'L') ? 'selected' : '' }}>LE</option>
-                                            </select>
-                                        </div>
+                                        </div>                                        
                                         @if($c == 1)
                                             <div class="col-sm-1">
                                                 <a class="medicineAdvise" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i></a>                                    

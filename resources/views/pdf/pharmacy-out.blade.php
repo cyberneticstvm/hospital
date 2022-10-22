@@ -55,22 +55,26 @@
     <table class="bordered" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
-                <td width="10%">SLNo.</td>
-                <td width="50%">MEDICINE</td>
-                <td>Eye</td>
-                <td>Type</td>
-                <td width="30%">DOSAGE</td>
-                <td width="10%">QTY</td>                
+                <td>SLNo.</td>
+                <td>TYPE</td>
+                <td>MEDICINE</td>                
+                <td>DOSAGE</td>
+                <td>DURATION</td>
+                <td>EYE</td>
+                <td>QTY</td>                
+                <td>NOTES</td>                
             </tr>
             @php $c =1 @endphp
             @foreach($medicines as $medicine)
                 <tr>
                     <td>{{ $c++ }}</td>
-                    <td>{{ $medicine->product_name }}</td>
-                    <td>{{ $medicine->eye }}</td>
                     <td>{{ $medicine->name }}</td>
+                    <td>{{ $medicine->product_name }}</td>
                     <td>{{ $medicine->dosage }}</td>
+                    <td>{{ $medicine->duration }}</td>
+                    <td>{{ $medicine->eye }}</td>            
                     <td class="text-right">{{ $medicine->qty }}</td>
+                    <td>{{ $medicine->notes }}</td> 
                 </tr>
             @endforeach
         </tbody>

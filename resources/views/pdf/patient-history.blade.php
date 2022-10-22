@@ -58,7 +58,8 @@
         $tonometry = DB::table('tonometries')->where('medical_record_id', $mrecord->id)->first();
         $keratometry = DB::table('keratometries')->where('medical_record_id', $mrecord->id)->first();
         $ascan = DB::table('ascans')->where('medical_record_id', $mrecord->id)->first();
-        $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->where('m.medical_record_id', $mrecord->id)->select('p.product_name', 'm.dosage', 'm.qty', 'm.notes', DB::raw("CASE WHEN m.eye = 'R' THEN 'RE' WHEN m.eye='L' THEN 'LE' ELSE 'Both' END AS eye"))->get();
+        $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.product_name', 'm.qty', 'm.dosage', 'm.duration', 'm.notes', 't.name', DB::raw("CASE WHEN m.eye='L' THEN 'Left Eye Only' WHEN m.eye='R' THEN 'Right Eye Only' ELSE 'Both' END AS eye"))->where('m.medical_record_id', $mrecord->id)->get();
+        
         $labc = DB::table('lab_clinics as lc')->leftJoin('lab_types as lt', 'lc.lab_type_id', '=', 'lt.id')->where('lc.medical_record_id', $mrecord->id)->select('lt.lab_type_name', 'lc.notes', 'lc.lab_result', 'lc.tested_from')->get();
         $labr = DB::table('lab_radiologies as lr')->leftJoin('lab_types as lt', 'lr.lab_type_id', '=', 'lt.id')->where('lr.medical_record_id', $mrecord->id)->select('lt.lab_type_name', 'lr.notes', 'lr.lab_result', 'lr.tested_from')->get();
 
@@ -419,17 +420,19 @@
     @if(count($medicines) > 0)
     <p> Medicine / Lab Advised</p>
     <table width="100%" class="table-bordered" cellspacing="0" cellpadding="0">
-        <thead><td>SL No.</td><td>Medicine Name</td><td>Dosage</td><td>Qty</td><td>Notes</td><td>Eye</td></thead>
+    <thead><th>SL No.</th><th>Type</th><th>Medicine Name</th><th>Dosage</th><th>Duration</th><th>Eye</th><th>Qty</th><th>Notes</th></thead>
         <tbody>
         @php $c = 1 @endphp
         @foreach($medicines as $medicine)
         <tr>
-            <td>{{ $c++ }}</td>
+        <td>{{ $c++ }}</td>
+            <td>{{ $medicine->name }}</td>
             <td>{{ $medicine->product_name }}</td>
             <td>{{ $medicine->dosage }}</td>
+            <td>{{ $medicine->duration }}</td>
+            <td>{{ $medicine->eye }}</td> 
             <td class="text-right">{{ $medicine->qty }}</td>
             <td>{{ $medicine->notes }}</td>            
-            <td>{{ $medicine->eye }}</td>            
         </tr>
         @endforeach
         </tbody>

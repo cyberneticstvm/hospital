@@ -83,9 +83,10 @@ $(function() {
     });
 
     $(".medicineAdvise").click(function(){    
-        $(".medicineAdviseContainer").append("<div class='row mb-3'><input type='hidden' name='price[]' value='0.00' /><input type='hidden' name='discount[]' value='0.00' /><input type='hidden' name='tax_amount[]' value='0.00' /><input type='hidden' name='tax_percentage[]' value='0.00' /><input type='hidden' name='total[]' value='0.00' /><div class='col-sm-4'><select class='form-control form-control-md select2 medAdvised' data-placeholder='Select' name='medicine_id[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-2'><input type='text' name='dosage[]' class='form-control form-control-md dos' placeholder='Eg: Daily 3 Drops'/></div><div class='col-sm-1'><input type='number' class='form-control form-control-md qty' name='qty[]' placeholder='0' /></div><div class='col-sm-2'><input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes'/></div><div class='col-sm-1'><select class='form-control' name='eye[]'><option value='B'>Both</option><option value='R'>RE</option><option value='L'>LE</option></select></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");        
-        $('.medAdvised').select2();
-        bindDDL('medicine', 'medAdvised');
+        $(".medicineAdviseContainer").append("<div class='row mb-3'><input type='hidden' name='price[]' value='0.00' /><input type='hidden' name='discount[]' value='0.00' /><input type='hidden' name='tax_amount[]' value='0.00' /><input type='hidden' name='tax_percentage[]' value='0.00' /><input type='hidden' name='total[]' value='0.00' /><div class='col-sm-2'><select class='form-control form-control-md select2 medType' data-placeholder='Select' name='medicine_type[]' required='required'><option value='0'>Select</option></select></div><div class='col-sm-3'><select class='form-control form-control-md select2 medAdvised' data-placeholder='Select' name='medicine_id[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-1'><input type='text' name='dosage[]' class='form-control form-control-md dos' placeholder='Eg: Daily 3 Drops'/></div><div class='col-sm-1'><input type='text' name='duration[]' class='form-control form-control-md dos' placeholder='Duration'/></div><div class='col-sm-1'><select class='form-control' name='eye[]'><option value='B'>Both</option><option value='R'>RE</option><option value='L'>LE</option></select></div><div class='col-sm-1'><input type='number' class='form-control form-control-md qty' name='qty[]' placeholder='0' /></div><div class='col-sm-2'><input type='text' class='form-control form-control-md' name='notes[]' placeholder='Notes'/></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");        
+        $('.medAdvised').select2(); $('.medType').select2();
+        //bindDDL('medicine', 'medAdvised'); 
+        bindDDL('medtype', 'medType');
     });
 
     $(".medicineRow").click(function(){
@@ -163,7 +164,25 @@ $(function() {
                 }
             });
         });
-    });    
+    }); 
+    
+    $(document).on("change", ".medType", function(){
+        var type = parseInt($(this).val());
+        //if(type > 0){
+            var dis = $(this).parent().next();
+            dis.find('.medAdvised').empty();
+            $.ajax({
+                type: 'GET',
+                url: '/symptom/products/'+type
+            }).then(function (data){
+                var xdata = $.map(data, function(obj){
+                    obj.text = obj.name || obj.id;  
+                    return obj;
+                });
+                dis.find('.medAdvised').select2({data:xdata});
+            });
+        //}        
+    });
 });
 
 /*$(window).on('load', function () {

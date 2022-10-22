@@ -362,17 +362,19 @@
     @if(count($medicines) > 0)
     <p> Medicine / Lab Advised</p>
     <table width="100%" cellspacing="0" cellpadding="0">
-        <thead><th>SL No.</th><th>Medicine Name</th><th>Dosage</th><th>Qty</th><th>Notes</th><th>Eye</th></thead>
+        <thead><th>SL No.</th><th>Type</th><th>Medicine Name</th><th>Dosage</th><th>Duration</th><th>Eye</th><th>Qty</th><th>Notes</th></thead>
         <tbody>
         @php $c = 1 @endphp
         @foreach($medicines as $medicine)
         <tr>
             <td>{{ $c++ }}</td>
+            <td>{{ $medicine->name }}</td>
             <td>{{ $medicine->product_name }}</td>
             <td>{{ $medicine->dosage }}</td>
+            <td>{{ $medicine->duration }}</td>
+            <td>{{ $medicine->eye }}</td> 
             <td class="text-right">{{ $medicine->qty }}</td>
-            <td>{{ $medicine->notes }}</td>            
-            <td>{{ $medicine->eye }}</td>            
+            <td>{{ $medicine->notes }}</td>                      
         </tr>
         @endforeach
         </tbody>

@@ -149,8 +149,9 @@ class PatientMedicalRecordController extends Controller
         $patient = DB::table('patient_registrations')->find($record->patient_id);
         $symptoms = DB::table('symptoms')->get();
         $diagnosis = DB::table('diagnosis')->get();
-        //$medicines = DB::table('products')->get();
-        $medicines = DB::table('products as p')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.id', DB::raw("CONCAT_WS(' - ', p.product_name, t.name) AS product_name"))->get();
+        $medicines = DB::table('products')->get();
+        $mtypes = DB::table('medicine_types')->get();
+        //$medicines = DB::table('products as p')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.id', DB::raw("CONCAT_WS(' - ', p.product_name, t.name) AS product_name"))->get();
         $dosages = DB::table('dosages')->get();
         $doctor = DB::table('doctors')->find($record->doctor_id);
         //$spectacle = DB::table('spectacles')->where('patient_id', $record->patient_id)->orderByDesc('id')->first();
@@ -160,7 +161,7 @@ class PatientMedicalRecordController extends Controller
         $retina_os = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'os')->get();
         $vision = DB::table('patient_medical_records_vision')->where('medical_record_id', $id)->get();
         $vextras = DB::table('vision_extras')->where('cat_id', '>', 0)->get();
-        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision', 'vextras'));
+        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision', 'vextras', 'mtypes'));
     }
 
     /**
@@ -253,9 +254,11 @@ class PatientMedicalRecordController extends Controller
                         DB::table('patient_medicine_records')->insert([
                             'medical_record_id' => $record->id,
                             'mrn' => $request->mrn,
+                            'medicine_type' => $input['medicine_type'][$i],
                             'eye' => $input['eye'][$i],
                             'medicine' => $input['medicine'][$i],
                             'dosage' => $input['dosage'][$i],
+                            'duration' => $input['duration'][$i],
                             'qty' => $input['qty'][$i],
                             'price' => $input['price'][$i],
                             'discount' => $input['discount'][$i],

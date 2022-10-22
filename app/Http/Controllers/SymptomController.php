@@ -29,8 +29,11 @@ class SymptomController extends Controller
             $data = DB::table('diagnosis')->select('id', 'diagnosis_name as name')->get();
         }
         if($type == 'medicine'){
-            //$data = DB::table('products')->select('id', 'product_name as name')->get();
-            $data = DB::table('products as p')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.id', DB::raw("CONCAT_WS(' - ', p.product_name, t.name) AS name"))->get();
+            $data = DB::table('products')->select('id', 'product_name as name')->get();
+            //$data = DB::table('products as p')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.id', DB::raw("CONCAT_WS(' - ', p.product_name, t.name) AS name"))->get();
+        }
+        if($type == 'medtype'){
+            $data = DB::table('medicine_types')->select('id', 'name')->get();
         }
         if($type == 'dosage'){
             $data = DB::table('dosages')->select('id', 'dosage as name')->get();
@@ -52,6 +55,10 @@ class SymptomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function products($type){
+        $data = DB::table('products')->select('id', 'product_name as name')->where('medicine_type', $type)->get();
+        return response()->json($data);
+    }
     public function create()
     {
         //

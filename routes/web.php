@@ -134,6 +134,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     // Symptoms //
     Route::get('/symptom/index/{type}', 'App\Http\Controllers\SymptomController@index');
+    Route::get('/symptom/products/{type}', 'App\Http\Controllers\SymptomController@products');
     Route::post('/symptom/create/{type}', 'App\Http\Controllers\SymptomController@store');
     // End Symptoms //
 
