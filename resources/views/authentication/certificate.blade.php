@@ -31,7 +31,7 @@
     <div class="col-md-4 mt-5">
         <h5>Issued to</h5>
         Name: {{ $patient->patient_name }}<br/>
-        Address: {{ $patient->address }}<br/>
+        Address: {{ $patient->address }}<br/><br/>
         
         Issued Certificate(s): {{ $certs }}<br/>
         Issued Date & Time: {{ $details->created_at }}<br/>

@@ -57,6 +57,7 @@
             <tr>
                 <td width="10%">SLNo.</td>
                 <td width="50%">MEDICINE</td>
+                <td>Eye</td>
                 <td width="30%">DOSAGE</td>
                 <td width="10%">QTY</td>                
             </tr>
@@ -65,6 +66,7 @@
                 <tr>
                     <td>{{ $c++ }}</td>
                     <td>{{ $medicine->product_name }}</td>
+                    <td>{{ $medicine->eye }}</td>
                     <td>{{ $medicine->dosage }}</td>
                     <td class="text-right">{{ $medicine->qty }}</td>
                 </tr>
