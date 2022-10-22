@@ -149,7 +149,8 @@ class PatientMedicalRecordController extends Controller
         $patient = DB::table('patient_registrations')->find($record->patient_id);
         $symptoms = DB::table('symptoms')->get();
         $diagnosis = DB::table('diagnosis')->get();
-        $medicines = DB::table('products')->get();
+        //$medicines = DB::table('products')->get();
+        $medicines = DB::table('products as p')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.id', DB::raw("CONCAT_WS(' - ', p.product_name, t.name) AS product_name"))->get();
         $dosages = DB::table('dosages')->get();
         $doctor = DB::table('doctors')->find($record->doctor_id);
         //$spectacle = DB::table('spectacles')->where('patient_id', $record->patient_id)->orderByDesc('id')->first();

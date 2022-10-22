@@ -72,7 +72,7 @@ class PDFController extends Controller
         $patient = DB::table('patient_registrations')->find($medical_record->patient_id); 
         $branch = DB::table('branches')->find($patient->branch);
         $doctor = DB::table('doctors')->find($medical_record->doctor_id);
-        $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->select('p.product_name', 'm.qty', 'm.dosage', 'm.eye')->where('m.medical_record_id', $id)->get();
+        $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.product_name', 'm.qty', 'm.dosage', 't.name', DB::raw("CASE WHEN m.eye='L' THEN 'Left' WHEN m.eye='R' THEN 'Right' ELSE 'Both' END AS eye"))->where('m.medical_record_id', $id)->get();
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));         
         $pdf = PDF::loadView('/pdf/pharmacy-out', compact('patient', 'doctor', 'qrcode', 'branch', 'medical_record', 'medicines'));    
         return $pdf->stream('prescription.pdf', array("Attachment"=>0));
