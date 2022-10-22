@@ -41,7 +41,7 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Report</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Report</th><th>Receipt</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @foreach($keratometries as $ke)
                             <tr>
@@ -49,7 +49,8 @@
                                 <td>{{ $ke->medical_record_id }}</td>
                                 <td>{{ $ke->patient_name }}</td>
                                 <td>{{ $ke->patient_id }}</td>
-                                <td></td>
+                                <td><a href="/keratometry/report/{{ $ke->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
+                                <td><a href="/keratometry/receipt/{{ $ke->id }}/" target="_blank"><i class="fa fa-file-o text-danger"></i></a></td>
                                 <td><a class='btn btn-link' href="{{ route('keratometry.edit', $ke->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                 <td>
                                     <form method="post" action="{{ route('keratometry.delete', $ke->id) }}">

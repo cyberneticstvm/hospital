@@ -272,7 +272,7 @@ class PDFController extends Controller
     public function campprint($id){
         $camp = DB::table('camps')->find($id);
         $campm = DB::table('camp_masters')->find($camp->camp_id);
-        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://hospital.speczone.net/auth/certificate/$id/"));         
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
         $pdf = PDF::loadView('/pdf/camp', compact('qrcode', 'camp', 'campm'));    
         return $pdf->stream('camp.pdf', array("Attachment"=>0));
     }
@@ -280,12 +280,64 @@ class PDFController extends Controller
         $campm = DB::table('camp_masters')->find($id);
         $camps = DB::table('camps')->where('camp_id', $id)->get();
         $branch = DB::table('branches')->find($campm->branch);
-        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://hospital.speczone.net/auth/certificate/$id/"));         
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
         $pdf = PDF::loadView('/pdf/campmaster', compact('qrcode', 'camps', 'campm', 'branch'));
         $pdf->output();
         $canvas = $pdf->getDomPDF()->getCanvas();    
         $canvas->page_text($x = 50, $y = 800, $text = "Page {PAGE_NUM} of {PAGE_COUNT}", $font = null, $size = 10, $color = array(0,0,0), $word_space = 0.0, $char_space = 0.0, $angle = 0.0);
         $canvas->page_text($x = 450, $y = 800, $text = $campm->camp_id, $font = null, $size = 10, $color = array(0,0,0), $word_space = 0.0, $char_space = 0.0, $angle = 0.0);
         return $pdf->stream('camp.pdf', array("Attachment"=>0));
+    }
+    public function tonometryreceipt($id){
+        $tonometry = DB::table('tonometries')->find($id);
+        $patient = DB::table('patient_registrations')->find($tonometry->patient_id);
+        $branch = DB::table('branches')->find($tonometry->branch);
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'p.fee')->where('pp.medical_record_id', $tonometry->medical_record_id)->where('pp.type', 'T')->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
+        $pdf = PDF::loadView('/pdf/tonometry/receipt', compact('qrcode', 'tonometry', 'patient', 'branch', 'procedures'));    
+        return $pdf->stream('tonometry.pdf', array("Attachment"=>0));
+    }
+    public function tonometryreport($id){
+        $tonometry = DB::table('tonometries')->find($id);
+        $patient = DB::table('patient_registrations')->find($tonometry->patient_id);
+        $branch = DB::table('branches')->find($tonometry->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
+        $pdf = PDF::loadView('/pdf/tonometry/report', compact('qrcode', 'tonometry', 'patient', 'branch'));    
+        return $pdf->stream('tonometry.pdf', array("Attachment"=>0));
+    }
+    public function keratometryreceipt($id){
+        $keratometry = DB::table('keratometries')->find($id);
+        $patient = DB::table('patient_registrations')->find($keratometry->patient_id);
+        $branch = DB::table('branches')->find($keratometry->branch);
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'p.fee')->where('pp.medical_record_id', $keratometry->medical_record_id)->where('pp.type', 'K')->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
+        $pdf = PDF::loadView('/pdf/keratometry/receipt', compact('qrcode', 'keratometry', 'patient', 'branch', 'procedures'));    
+        return $pdf->stream('tonometry.pdf', array("Attachment"=>0));
+    }
+    public function keratometryreport($id){
+        $keratometry = DB::table('keratometries')->find($id);
+        $patient = DB::table('patient_registrations')->find($keratometry->patient_id);
+        $branch = DB::table('branches')->find($keratometry->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
+        $pdf = PDF::loadView('/pdf/keratometry/report', compact('qrcode', 'keratometry', 'patient', 'branch'));    
+        return $pdf->stream('tonometry.pdf', array("Attachment"=>0));
+    }
+    public function ascanreceipt($id){
+        $ascan = DB::table('ascans')->find($id);
+        $patient = DB::table('patient_registrations')->find($ascan->patient_id);
+        $branch = DB::table('branches')->find($ascan->branch);
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'p.fee')->where('pp.medical_record_id', $ascan->medical_record_id)->where('pp.type', 'A')->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
+        $pdf = PDF::loadView('/pdf/ascan/receipt', compact('qrcode', 'ascan', 'patient', 'branch', 'procedures'));    
+        return $pdf->stream('tonometry.pdf', array("Attachment"=>0));
+    }
+    public function ascanreport($id){
+        $ascan = DB::table('ascans')->find($id);
+        $keratometry = DB::table('keratometries')->where('medical_record_id', $ascan->medical_record_id)->first();
+        $patient = DB::table('patient_registrations')->find($keratometry->patient_id);
+        $branch = DB::table('branches')->find($keratometry->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
+        $pdf = PDF::loadView('/pdf/ascan/report', compact('qrcode', 'keratometry', 'patient', 'branch', 'ascan'));    
+        return $pdf->stream('tonometry.pdf', array("Attachment"=>0));
     }
 }
