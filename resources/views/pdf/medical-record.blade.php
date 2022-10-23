@@ -64,7 +64,7 @@
             </tr>
         </tbody>
     </table>
-    @if(!empty($symptoms) || $record->symptoms_other)
+    @if(!$symptoms->isEmpty() || $record->symptoms_other)
         <p>Symptoms</p>
         @foreach($symptoms as $sympt)
             {{ $sympt->symptom_name }}, 
