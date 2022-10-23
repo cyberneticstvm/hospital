@@ -65,12 +65,13 @@
         </tbody>
     </table>
     @if(!empty($symptoms) || $record->symptoms_other)
-        <p> Symptoms</p>
+        <p>Symptoms</p>
         @foreach($symptoms as $sympt)
             {{ $sympt->symptom_name }}, 
         @endforeach
         {{ $record->symptoms_other }}
     @endif
+    <br/>
     @if($record->history)
         <p> Patient History</p>
         {{ $record->history }}
