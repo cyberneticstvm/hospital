@@ -134,6 +134,7 @@
     @endif
     <br/>
     @if($tonometry)
+    <div>
         <p>Tonometry</p>
         <table style="width:50%" style="margin:0 auto;" cellspacing="0" cellpadding="0">
             <thead><tr><th>NCT</th><th>AT</th></tr></thead><tbody>
@@ -151,9 +152,11 @@
                 </tr>
             </tbody>
         </table>
+    </div>
     @endif    
     <br/>
     @if($ascan)
+    <div>
         <p>A-Scan</p>
         <table style="width:50%" cellspacing="0" cellpadding="0" style="margin:0 auto;">
             <thead><tr><th>AXL<th>ACD</th><th>LENS</th><th>A-CONST.</th><th>IOL</th></tr></thead><tbody>
@@ -166,6 +169,7 @@
                 </tr>
             </tbody>
         </table>
+    </div>
     @endif
     <br/>
     @if($v_od_1 != 'Na' || $v_os_1 != 'Na')
