@@ -179,33 +179,33 @@
                     <td>{{ $keratometry->k2_os_manual }}</td>
                     <td>{{ $keratometry->k2_os_axis_m }}</td>
                 </tr>
-            <tr></tr></tbody>
+            </tbody>
         </table>
     @endif
     <br/>
     @if($tonometry)
         <p>Tonometry</p>
-        <table style="width:50%">
+        <table style="width:50%; margin:0 auto;" cellspacing="0" cellpadding="0">
             <thead><tr><th>NCT</th><th>AT</th></tr></thead><tbody>
                 <tr>
-                    <td>{{ $tonometry->nct_od }}</td>
-                    <td>{{ $tonometry->at_od }}</td>
+                    <td>{{ $tonometry->nct_od }} {{ ($tonometry->nct_od) ? 'mmHg' : '' }}</td>
+                    <td>{{ $tonometry->at_od }} {{ ($tonometry->at_od) ? 'mmHg' : '' }}</td>
                 </tr>
                 <tr>
-                    <td>{{ $tonometry->nct_os }}</td>
-                    <td>{{ $tonometry->at_os }}</td>
+                    <td>{{ $tonometry->nct_os }} {{ ($tonometry->nct_os) ? 'mmHg' : '' }}</td>
+                    <td>{{ $tonometry->at_os }} {{ ($tonometry->at_os) ? 'mmHg' : '' }}</td>
                 </tr>
                 <tr>
                     <td>{{ $tonometry->nct_time }}</td>
                     <td>{{ $tonometry->at_time }}</td>
                 </tr>
-            <tr></tr></tbody>
+            </tbody>
         </table>
     @endif    
     <br/>
     @if($ascan)
         <p>A-Scan</p>
-        <table style="width:50%">
+        <table style="width:50%; margin:0 auto;" cellspacing="0" cellpadding="0">
             <thead><tr><th>AXL<th>ACD</th><th>LENS</th><th>A-CONST.</th><th>IOL</th></tr></thead><tbody>
                 <tr>
                     <td>{{ $ascan->axl }}</td>
@@ -214,7 +214,7 @@
                     <td>{{ $ascan->a_constant }}</td>
                     <td>{{ $ascan->iol_power }}</td>
                 </tr>
-            <tr></tr></tbody>
+            </tbody>
         </table>
     @endif
     <br/>
