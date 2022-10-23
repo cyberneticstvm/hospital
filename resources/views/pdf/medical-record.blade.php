@@ -76,6 +76,7 @@
         <p> Patient History</p>
         {{ $record->history }}
     @endif
+    <br/>
     @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $record->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $record->va_os))
     <p>Vision</p>
     <table width="100%" cellspacing="0" cellpadding="0">
@@ -136,7 +137,7 @@
     @if($tonometry)
     <div>
         <p>Tonometry</p>
-        <table style="width:50%" style="margin:0 auto;" cellspacing="0" cellpadding="0">
+        <table width="50%" style="margin:0 auto;" cellspacing="0" cellpadding="0">
             <thead><tr><th>NCT</th><th>AT</th></tr></thead><tbody>
                 <tr>
                     <td>{{ $tonometry->nct_od }} {{ ($tonometry->nct_od) ? 'mmHg' : '' }}</td>
@@ -158,7 +159,7 @@
     @if($ascan)
     <div>
         <p>A-Scan</p>
-        <table style="width:50%" cellspacing="0" cellpadding="0" style="margin:0 auto;">
+        <table width="50%" cellspacing="0" cellpadding="0" style="margin:0 auto;">
             <thead><tr><th>AXL<th>ACD</th><th>LENS</th><th>A-CONST.</th><th>IOL</th></tr></thead><tbody>
                 <tr>
                     <td>{{ $ascan->axl }}</td>
