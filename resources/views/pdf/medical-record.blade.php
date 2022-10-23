@@ -129,7 +129,7 @@
                     <td>{{ $keratometry->k2_os_manual }}</td>
                     <td>{{ $keratometry->k2_os_axis_m }}</td>
                 </tr>
-            <tr></tr></tbody>
+            </tbody>
         </table>
     @endif
     <br/>
@@ -149,7 +149,7 @@
                     <td>{{ $tonometry->nct_time }}</td>
                     <td>{{ $tonometry->at_time }}</td>
                 </tr>
-            <tr></tr></tbody>
+            </tbody>
         </table>
     @endif    
     <br/>
@@ -164,7 +164,7 @@
                     <td>{{ $ascan->a_constant }}</td>
                     <td>{{ $ascan->iol_power }}</td>
                 </tr>
-            <tr></tr></tbody>
+            </tbody>
         </table>
     @endif
     <br/>
