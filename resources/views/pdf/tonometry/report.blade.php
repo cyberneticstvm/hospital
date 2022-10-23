@@ -47,19 +47,16 @@
                 <td>AT</td>                                                                               
             </tr>
             <tr>
-                <td>OD</td>
-                <td>{{ $tonometry->nct_od }}</td>
-                <td>{{ $tonometry->at_od }}</td>                                                                                
-            </tr>
-            <tr>
-                <td>OS</td>
-                <td>{{ $tonometry->nct_os }}</td>
-                <td>{{ $tonometry->at_os }}</td>                                                                                
-            </tr>
-            <tr>
-                <td>TIME</td>
-                <td>{{ $tonometry->nct_time }}</td>
-                <td>{{ $tonometry->at_time }}</td>                                                                                
+                    <td>{{ $tonometry->nct_od }} {{ ($tonometry->nct_od) ? 'mmHg' : '' }}</td>
+                    <td>{{ $tonometry->at_od }} {{ ($tonometry->at_od) ? 'mmHg' : '' }}</td>
+                </tr>
+                <tr>
+                    <td>{{ $tonometry->nct_os }} {{ ($tonometry->nct_os) ? 'mmHg' : '' }}</td>
+                    <td>{{ $tonometry->at_os }} {{ ($tonometry->at_os) ? 'mmHg' : '' }}</td>
+                </tr>
+                <tr>
+                    <td>{{ $tonometry->nct_time }}</td>
+                    <td>{{ $tonometry->at_time }}</td>
             </tr>
         </tbody>
     </table>
