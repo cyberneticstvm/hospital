@@ -139,12 +139,12 @@
         <table style="width:50%" style="margin:0 auto;" cellspacing="0" cellpadding="0">
             <thead><tr><th>NCT</th><th>AT</th></tr></thead><tbody>
                 <tr>
-                    <td>{{ $tonometry->nct_od }} mmHg</td>
-                    <td>{{ $tonometry->at_od }} mmHg</td>
+                    <td>{{ $tonometry->nct_od }} {{ ($tonometry->nct_od) ? 'mmHg' : '' }}</td>
+                    <td>{{ $tonometry->at_od }} {{ ($tonometry->at_od) ? 'mmHg' : '' }}</td>
                 </tr>
                 <tr>
-                    <td>{{ $tonometry->nct_os }} mmHg</td>
-                    <td>{{ $tonometry->at_os }} mmHg</td>
+                    <td>{{ $tonometry->nct_os }} {{ ($tonometry->nct_os) ? 'mmHg' : '' }}</td>
+                    <td>{{ $tonometry->at_os }} {{ ($tonometry->at_os) ? 'mmHg' : '' }}</td>
                 </tr>
                 <tr>
                     <td>{{ $tonometry->nct_time }}</td>
