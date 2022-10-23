@@ -13,6 +13,9 @@
         table thead th, table tbody td{
             padding: 5px;
         }
+        .signs th, td{
+            border: 1px solid #000;
+        }
         tbody td{
             border: 1px solid #e6e6e6;
         }
@@ -53,22 +56,25 @@
                 <td>Patient ID</td><td>{{ $patient->patient_id }}</td>
                 <td>AGE / SEX</td><td>{{ $patient->age }} / {{ $patient->gender }}</td>
             </tr>
+            <tr><td>Address</td><td colspan="5">{{ $patient->address }}</td></tr>
             <tr>
                 <td>Doctor Name</td><td>{{ $doctor->doctor_name }}</td>
                 <td>Medical Record Number</td><td>{{ $record->id }}</td>
-                <td>Date</td><td>{{ ($record->created_at) ? date('d/M/Y', strtotime($record->created_at)) : '' }}</td>
+                <td>Date</td><td>{{ ($record->created_at) ? date('d/M/Y h:i A', strtotime($record->created_at)) : '' }}</td>
             </tr>
         </tbody>
     </table>
-    <p> Symptoms</p>
-    @foreach($symptoms as $sympt)
-        {{ $sympt->symptom_name }}, 
-    @endforeach
-    {{ $record->symptoms_other }}
-    <br />
-    <p> Patient History</p>
+    @if(!empty($symptoms) || $record->symptoms_other)
+        <p> Symptoms</p>
+        @foreach($symptoms as $sympt)
+            {{ $sympt->symptom_name }}, 
+        @endforeach
+        {{ $record->symptoms_other }}
+    @endif
+    @if($record->history)
+        <p> Patient History</p>
         {{ $record->history }}
-    <br />
+    @endif
     @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $record->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $record->va_os))
     <p>Vision</p>
     <table width="100%" cellspacing="0" cellpadding="0">
@@ -128,7 +134,7 @@
     <br/>
     @if($tonometry)
         <p>Tonometry</p>
-        <table style="width:50%">
+        <table style="width:50%" style="margin:0 auto;">
             <thead><tr><th>NCT</th><th>AT</th></tr></thead><tbody>
                 <tr>
                     <td>{{ $tonometry->nct_od }}</td>
@@ -181,9 +187,8 @@
     @endif
     <br>
     <table width="100%" cellspacing="0" cellpadding="0">
-        <thead class="text-center">
+        <thead class="text-center signs">
             <tr><th>Signs</th><th>OD</th><th>OS</th></tr>
-            <tr><td colspan="3"></td></tr>
         </thead>
         <tbody>
             @if($sel_1_od || $sel_1_os)
@@ -382,10 +387,10 @@
     <br />
     @endif
     <table width="100%" class="no-border">
-        <tr><th>{{ ($record->is_patient_admission == 'sel') ? '' : 'Admission Advised:' }}</th><th>{{ ($record->is_patient_surgery == 'sel') ? '' : 'Surgery Advised:' }} </th><th class="text-right">Review Date: </th></tr>
+        <tr><th>{{ ($record->is_patient_admission == 'sel') ? '' : 'Admission Advised:' }}</th><th>{{ ($record->is_patient_surgery == 'sel') ? '' : 'Surgery Advised:' }} </th><th class="text-right">{{ ($record->review_date) ? 'Review Date:' : '' }}</th></tr>
         <tr><th>{{ ($record->is_patient_admission == 'sel') ? '' : $record->is_patient_admission }}</th><th>{{ ($record->is_patient_surgery == 'sel') ? '' : $record->is_patient_surgery }}</th><th class="text-right">{{ ($record->review_date) ? date('d/M/Y', strtotime($record->review_date)) : '' }}</th></tr>
     </table>
     <br />
-    <div class="text-right">{{ $doctor->doctor_name }}<br/>{{ $doctor->designation }}</div>
+    <div class="text-right">{{ $doctor->doctor_name }}<br/>{{ $doctor->designation }}<br/>Reg. No: {{ $doctor->reg_no }}</div>
 </body>
 </html>
