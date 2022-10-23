@@ -107,7 +107,7 @@
     <br/>
     @if($keratometry)
         <p>Keratometry</p>
-        <table>
+        <table cellspacing="0" cellpadding="0">
             <thead><tr><th>K1 (A)</th><th>AXIS</th><th>K2 (A)</th><th>AXIS</th><th>K1 (M)</th><th>AXIS</th><th>K2 (M)</th><th>AXIS</th></tr></thead><tbody>
                 <tr>
                     <td>{{ $keratometry->k1_od_auto }}</td>
@@ -135,7 +135,7 @@
     <br/>
     @if($tonometry)
         <p>Tonometry</p>
-        <table style="width:50%" style="margin:0 auto;">
+        <table style="width:50%" style="margin:0 auto;" cellspacing="0" cellpadding="0">
             <thead><tr><th>NCT</th><th>AT</th></tr></thead><tbody>
                 <tr>
                     <td>{{ $tonometry->nct_od }}</td>
@@ -155,7 +155,7 @@
     <br/>
     @if($ascan)
         <p>A-Scan</p>
-        <table style="width:50%">
+        <table style="width:50%" cellspacing="0" cellpadding="0" style="margin:0 auto;">
             <thead><tr><th>AXL<th>ACD</th><th>LENS</th><th>A-CONST.</th><th>IOL</th></tr></thead><tbody>
                 <tr>
                     <td>{{ $ascan->axl }}</td>
