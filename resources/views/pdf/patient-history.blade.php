@@ -127,6 +127,7 @@
     <br/>
     <p> Patient History</p>
         {{ ($mrecord->history) ? $mrecord->history : '--' }}
+    <br/>
     @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $mrecord->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $mrecord->va_os))
     <p>Vision</p>
     <table width="100%" class="table-bordered" cellspacing="0" cellpadding="0">
