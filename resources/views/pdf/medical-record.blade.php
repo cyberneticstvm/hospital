@@ -194,9 +194,10 @@
     </table>
     @endif
     <br>
-    <table width="100%" cellspacing="0" cellpadding="0" border="1">
-        <thead class="text-center">
+    <table width="100%" cellspacing="0" cellpadding="0">
+        <thead class="text-center signs">
             <tr><th>Signs</th><th>OD</th><th>OS</th></tr>
+            <tr><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th></tr>
         </thead>
         <tbody>
             @if($sel_1_od || $sel_1_os)
