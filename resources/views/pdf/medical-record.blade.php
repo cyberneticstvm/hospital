@@ -134,8 +134,8 @@
                 </tr>
             </tbody>
         </table>
-    @endif
     <br/>
+    @endif
     @if($tonometry)
     <div>
         <p>Tonometry</p>
@@ -156,8 +156,8 @@
             </tbody>
         </table>
     </div>
-    @endif    
     <br/>
+    @endif    
     @if($ascan)
     <div>
         <p>A-Scan</p>
@@ -173,6 +173,7 @@
             </tbody>
         </table>
     </div>
+    <br/>
     @endif
     @if($v_od_1 != 'Na' || $v_os_1 != 'Na')
     <br/>
