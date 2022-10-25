@@ -244,7 +244,6 @@
     <table width="100%" cellspacing="0" cellpadding="0" class="table-bordered">
         <thead class="text-center">
             <tr><th>Signs</th><th>OD</th><th>OS</th></tr>
-            <tr><td colspan="3"></td></tr>
         </thead>
         <tbody>
             @if($sel_1_od || $sel_1_os)
