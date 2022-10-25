@@ -174,8 +174,8 @@
         </table>
     </div>
     @endif
-    <br/>
     @if($v_od_1 != 'Na' || $v_os_1 != 'Na')
+    <br/>
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>

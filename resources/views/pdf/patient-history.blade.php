@@ -239,8 +239,8 @@
             </tr>
         </tbody>
     </table>
+    <br/>
     @endif
-    <div class="br"></div>
     <table width="100%" cellspacing="0" cellpadding="0" class="table-bordered">
         <thead class="text-center">
             <tr><th>Signs</th><th>OD</th><th>OS</th></tr>
