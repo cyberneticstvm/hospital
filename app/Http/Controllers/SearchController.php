@@ -14,12 +14,10 @@ class SearchController extends Controller
     private $branch;
 
     function __construct(){
-         /*
-         $this->middleware('permission:spectacle-fetch', ['only' => ['spectaclefetch']]);
-         */
 
-         $this->branch = session()->get('branch');
-         
+         $this->middleware('permission:spectacle-search', ['only' => ['spectaclefetch']]);
+
+         $this->branch = session()->get('branch');         
     }
 
     public function spectaclesearch(){
