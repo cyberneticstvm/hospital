@@ -39,7 +39,7 @@ class PatientReferenceController extends Controller
             $doc_fee = $fee; 
         endif;
         if($ctype == 2 || $ctype == 4 || $ctype == 5):
-            $doc_fee = 0.00; // ctype 2/4 means purpose of visit is Certificate/Camp/Vision Examination and no consultation fee for that.
+            $doc_fee = 0.00; // ctype 2/4/5 means purpose of visit is Certificate/Camp/Vision Examination and no consultation fee for that.
         endif;
         return $doc_fee; 
     }

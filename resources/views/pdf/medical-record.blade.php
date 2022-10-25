@@ -108,9 +108,10 @@
     <br/>
     @if($keratometry)
         <p>Keratometry</p>
-        <table cellspacing="0" cellpadding="0">
-            <thead><tr><th>K1 (A)</th><th>AXIS</th><th>K2 (A)</th><th>AXIS</th><th>K1 (M)</th><th>AXIS</th><th>K2 (M)</th><th>AXIS</th></tr></thead><tbody>
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <thead><tr><th></th><th>K1 (A)</th><th>AXIS</th><th>K2 (A)</th><th>AXIS</th><th>K1 (M)</th><th>AXIS</th><th>K2 (M)</th><th>AXIS</th></tr></thead><tbody>
                 <tr>
+                    <td>OD</td>
                     <td>{{ $keratometry->k1_od_auto }}</td>
                     <td>{{ $keratometry->k1_od_axis_a }}</td>
                     <td>{{ $keratometry->k2_od_auto }}</td>
@@ -121,6 +122,7 @@
                     <td>{{ $keratometry->k2_od_axis_m }}</td>
                 </tr>
                 <tr>
+                    <td>OS</td>
                     <td>{{ $keratometry->k1_os_auto }}</td>
                     <td>{{ $keratometry->k1_os_axis_a }}</td>
                     <td>{{ $keratometry->k2_os_auto }}</td>
