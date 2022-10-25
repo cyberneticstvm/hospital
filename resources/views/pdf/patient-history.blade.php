@@ -33,6 +33,9 @@
         .br{
             margin: 10px 0px;
         }
+        .signs th, td{
+            border: 1px solid #000;
+        }
     </style>
 </head>
 <body>
@@ -155,8 +158,9 @@
             </tr>
         </tbody>
     </table>
-    @endif
     <br/>
+    @endif
+    
     @if($keratometry)
         <p>Keratometry</p>
         <table width="100%" class="table-bordered" cellspacing="0" cellpadding="0">
@@ -185,8 +189,9 @@
                 </tr>
             </tbody>
         </table>
+        <br/>
     @endif
-    <br/>
+    
     @if($tonometry)
         <p>Tonometry</p>
         <table style="width:50%; margin:0 auto;" class="table-bordered" cellspacing="0" cellpadding="0">
@@ -205,8 +210,9 @@
                 </tr>
             </tbody>
         </table>
+        <br/>
     @endif    
-    <br/>
+    
     @if($ascan)
         <p>A-Scan</p>
         <table style="width:50%; margin:0 auto;" class="table-bordered" cellspacing="0" cellpadding="0">
@@ -220,8 +226,8 @@
                 </tr>
             </tbody>
         </table>
+        <br/>
     @endif
-    <br/>
     @if($v_od_1 != 'Na' || $v_os_1 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
@@ -242,10 +248,8 @@
     <br/>
     @endif
     <table width="100%" cellspacing="0" cellpadding="0" class="table-bordered">
-        <thead class="text-center">
-            <tr><th>Signs</th><th>OD</th><th>OS</th></tr>
-        </thead>
         <tbody>
+        <tr><th>Signs</th><th>OD</th><th>OS</th></tr>
             @if($sel_1_od || $sel_1_os)
             <tr><td>Appearance</td><td>{{ $sel_1_od }}</td><td>{{ $sel_1_os }}</td></tr>
             @endif
