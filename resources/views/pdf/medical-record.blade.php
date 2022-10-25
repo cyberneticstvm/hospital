@@ -194,8 +194,8 @@
     </table>
     @endif
     <br>
-    <table width="100%" cellspacing="0" cellpadding="0">
-        <thead class="text-center signs">
+    <table width="100%" cellspacing="0" cellpadding="0" border="1">
+        <thead class="text-center">
             <tr><th>Signs</th><th>OD</th><th>OS</th></tr>
         </thead>
         <tbody>
