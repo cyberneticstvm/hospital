@@ -195,7 +195,7 @@
     @endif
     <br>
     <table width="100%" cellspacing="0" cellpadding="0">
-        <tbody>
+        <tbody class="signs">
             <tr><th>Signs</th><th>OD</th><th>OS</th></tr>
             @if($sel_1_od || $sel_1_os)
             <tr><td>Appearance</td><td>{{ $sel_1_od }}</td><td>{{ $sel_1_os }}</td></tr>
