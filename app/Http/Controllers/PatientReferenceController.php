@@ -31,7 +31,7 @@ class PatientReferenceController extends Controller
         $doc_fee = 0.00;
         $days = DB::table('settings')->where('id', 1)->value('consultation_fee_days');
         //$date_diff = PRef::where('patient_id', $pid)->select(DB::raw("IFNULL(DATEDIFF(now(), created_at), 0) as days"))->latest()->value('days');
-        $date_diff = PRef::where('patient_id', $pid)->select(DB::raw("IFNULL(DATEDIFF(now(), created_at), 0) as days, status"))->first();
+        $date_diff = PRef::where('patient_id', $pid)->select(DB::raw("IFNULL(DATEDIFF(now(), created_at), 0) as days, status"))->latest()->first();
         $diff = ($date_diff && $date_diff['days'] > 0) ? $date_diff['days'] : 0;
         $cstatus = ($date_diff && $date_diff['status'] > 0) ? $date_diff['status'] : 0;
         if($diff == 0 || $diff > $days || ($diff < $days && $cstatus == 0)): 
