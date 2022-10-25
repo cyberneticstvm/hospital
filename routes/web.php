@@ -5,6 +5,7 @@ use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampMasterController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HelperController;
 
 /*
@@ -72,7 +73,9 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::delete('/patient/{id}/delete/', 'App\Http\Controllers\PatientRegistrationController@destroy')->name('patient.delete');
 
     Route::get('/patient/history/{id}/', 'App\Http\Controllers\PatientRegistrationController@show')->name('patient.history');
+    // End Patient Registration //
 
+    // Search //
     Route::get('/patient/search/', 'App\Http\Controllers\PatientRegistrationController@search')->name('patient.search');
     Route::post('/patient/search/', 'App\Http\Controllers\PatientRegistrationController@fetch')->name('patient.fetch');
 
@@ -81,7 +84,10 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     Route::get('/patient/medical-record/search/', 'App\Http\Controllers\PatientRegistrationController@searchm')->name('patientm.search');
     Route::post('/patient/medical-record/search/', 'App\Http\Controllers\PatientRegistrationController@fetchmedicalrecord')->name('patient-medical-record.fetch');
-    // End Patient Registration //
+
+    Route::get('/spectacle/search/', [SearchController::class, 'spectaclesearch'])->name('spectacle.search');
+    Route::post('/spectacle/search/', [SearchController::class, 'spectaclefetch'])->name('spectacle.fetch');
+    // End Search //
 
     // Doctor Registration//
     Route::get('/doctor/', 'App\Http\Controllers\DoctorRegistrationController@index')->name('doctor.index');
