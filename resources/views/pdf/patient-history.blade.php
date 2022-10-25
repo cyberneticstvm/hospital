@@ -33,7 +33,7 @@
         .br{
             margin: 10px 0px;
         }
-        .signs th, td{
+        .signs th, .signs.td{
             border: 1px solid #000;
         }
     </style>
