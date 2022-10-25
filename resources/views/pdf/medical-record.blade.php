@@ -13,6 +13,9 @@
         table thead th, table tbody td{
             padding: 5px;
         }
+        .signs th, td{
+            border: 1px solid #000;
+        }
         tbody td{
             border: 1px solid #e6e6e6;
         }
