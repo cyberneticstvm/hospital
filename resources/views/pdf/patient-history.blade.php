@@ -159,7 +159,7 @@
     <br/>
     @if($keratometry)
         <p>Keratometry</p>
-        <table width="100%" cellspacing="0" cellpadding="0">
+        <table width="100%" class="table-bordered" cellspacing="0" cellpadding="0">
             <thead><tr><th></th><th>K1 (A)</th><th>AXIS</th><th>K2 (A)</th><th>AXIS</th><th>K1 (M)</th><th>AXIS</th><th>K2 (M)</th><th>AXIS</th></tr></thead><tbody>
                 <tr>
                     <td>OD</td>
@@ -189,7 +189,7 @@
     <br/>
     @if($tonometry)
         <p>Tonometry</p>
-        <table style="width:50%; margin:0 auto;" cellspacing="0" cellpadding="0">
+        <table style="width:50%; margin:0 auto;" class="table-bordered" cellspacing="0" cellpadding="0">
             <thead><tr><th>NCT</th><th>AT</th></tr></thead><tbody>
                 <tr>
                     <td>{{ $tonometry->nct_od }} {{ ($tonometry->nct_od) ? 'mmHg' : '' }}</td>
@@ -209,7 +209,7 @@
     <br/>
     @if($ascan)
         <p>A-Scan</p>
-        <table style="width:50%; margin:0 auto;" cellspacing="0" cellpadding="0">
+        <table style="width:50%; margin:0 auto;" class="table-bordered" cellspacing="0" cellpadding="0">
             <thead><tr><th>AXL<th>ACD</th><th>LENS</th><th>A-CONST.</th><th>IOL</th></tr></thead><tbody>
                 <tr>
                     <td>{{ $ascan->axl }}</td>
