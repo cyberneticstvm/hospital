@@ -376,7 +376,7 @@
     @endif
     @if($mrecord->gonio_od_top || $mrecord->gonio_od_left || $mrecord->gonio_od_right || $mrecord->gonio_od_bottom || $mrecord->gonio_os_top || $mrecord->gonio_os_left || $mrecord->gonio_os_right || $mrecord->gonio_os_bottom || $mrecord->gonio_od || $mrecord->gonio_os)
     <p>Gonioscopy</p>
-    <table border="0" width="100%" cellspacing="0" cellpadding="0">
+    <table width="100%" cellspacing="0" cellpadding="0" class="table-bordered">
         <tbody>
             <tr>
                 <td style="background:url(./images/assets/x-png-30.png); background-repeat: no-repeat; background-size: auto;" width="50%">
