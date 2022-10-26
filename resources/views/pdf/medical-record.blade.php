@@ -347,7 +347,7 @@
     @endif
     @if(($retina_od && $retina_od[0]->retina_img) || ($retina_os && $retina_os[0]->retina_img))
     @php
-        $retinas = ($retina_od) ? $retina_od : $retina_os;
+        $retinas = (count($retina_od) > count($retina_os)) ? $retina_od : $retina_os;
     @endphp
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
