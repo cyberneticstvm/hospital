@@ -106,7 +106,7 @@
                                                     <input type="number" class="form-control" name="k2_os_axis_a" max="999" step="1" placeholder="0" />
                                                 </td>
                                                 <td>
-                                                    <select class="form-control form-control-sm select2" name="k2_os_auto">
+                                                    <select class="form-control form-control-sm select2" name="k1_os_manual">
                                                         <option value="">Sel</option>
                                                         @forelse($powers as $key => $power)
                                                         <option value="{{ $power->value }}">{{ $power->value }}</option>
@@ -115,7 +115,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control" name="k2_os_axis_a" max="999" step="1" placeholder="0" />
+                                                    <input type="number" class="form-control" name="k1_os_axis_m" max="999" step="1" placeholder="0" />
                                                 </td>
                                                 <td>
                                                     <select class="form-control form-control-sm select2" name="k2_os_manual">
