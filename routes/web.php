@@ -422,6 +422,9 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::put('/settings/consultation/', [SettingsController::class, 'updateConsultation'])->name('settings.consultation.update');
     Route::get('/settings/change-password/', [SettingsController::class, 'showpassword'])->name('settings.showpassword');
     Route::post('/settings/change-password/', [SettingsController::class, 'updatePassword'])->name('settings.password.update');
+    Route::get('/settings/revise-closing-balance/', [SettingsController::class, 'fetchclosingbalance'])->name('settings.fetchclosingbalance');
+    Route::post('/settings/revise-closing-balance/', [SettingsController::class, 'fetchClosingBalanceforUpdate'])->name('settings.fetchClosingBalanceforUpdate');
+    Route::post('/settings/revise-closing-balance/update/', [SettingsController::class, 'updateClosingBalance'])->name('settings.closingbalance.update');
     // End Settings //
 });
 
