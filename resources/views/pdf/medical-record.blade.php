@@ -262,7 +262,7 @@
             @endif
         </tbody>
     </table>
-    </br>
+    <br><br>
     @if($v_od_2 != 'Na' || $v_os_2 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
