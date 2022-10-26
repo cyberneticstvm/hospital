@@ -36,6 +36,7 @@
                 <td>{{ $patient->patient_name }} / {{ $patient->patient_id }} / {{ $tonometry->medical_record_id }}</td>
                 <td>Date</td><td>{{ date('d/M/Y', strtotime($tonometry->created_at)) }}</td>
             </tr>
+            <tr><td>Address</td><td colspan="3">{{ $patient->address }}</td></tr>
         </tbody>
     </table>
     <br />

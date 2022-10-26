@@ -29,13 +29,14 @@
     </center>
     <br/>
     <table width="100%">
-        <thead><tr><th text-align="center" colspan="4">KERATOMETRY REPORT</th></tr></thead>
+        <thead><tr><th text-align="center" colspan="4">A-SCAN REPORT</th></tr></thead>
         <tbody>
             <tr>
                 <td>Patient Name / ID / MR.ID</td>
                 <td>{{ $patient->patient_name }} / {{ $patient->patient_id }} / {{ $keratometry->medical_record_id }}</td>
                 <td>Date</td><td>{{ date('d/M/Y', strtotime($keratometry->created_at)) }}</td>
             </tr>
+            <tr><td>Address</td><td colspan="3">{{ $patient->address }}</td></tr>
         </tbody>
     </table>
     <br />
