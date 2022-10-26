@@ -70,13 +70,15 @@
             {{ $sympt->symptom_name }}, 
         @endforeach
         {{ $record->symptoms_other }}
+        <br/>
     @endif
-    <br/>
+    
     @if($record->history)
         <p> Patient History</p>
         {{ $record->history }}
+        <br/>
     @endif
-    <br/>
+    
     @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $record->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $record->va_os))
     <p>Vision</p>
     <table width="100%" cellspacing="0" cellpadding="0">

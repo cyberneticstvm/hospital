@@ -122,15 +122,19 @@
         <tr><td>Date: {{ ($mrecord->created_at) ? date('d/M/Y', strtotime($mrecord->created_at)) : '' }}</td><td class="text-right">Medical Record Number: {{ $mrecord->id }}</td></tr>
         <tr><td>Doctor Name: {{ $doctor->doctor_name }} ({{ $department->department_name }})</td><td class="text-right">Branch: {{ $branch->branch_name }}</td></tr>
     </table>
+    @if(!$symptoms->isEmpty() || $record->symptoms_other)
     <p> Symptoms</p>
         @foreach($symptoms as $sympt)
             {{ $sympt->symptom_name }}, 
         @endforeach 
-        {{ ($mrecord->symptoms_other) ? $mrecord->symptoms_other : '--' }}
+        {{ ($mrecord->symptoms_other) ? $mrecord->symptoms_other : '' }}
     <br/>
+    @endif
+    @if($mrecord->history)
     <p> Patient History</p>
-        {{ ($mrecord->history) ? $mrecord->history : '--' }}
+        {{ ($mrecord->history) ? $mrecord->history : '' }}
     <br/>
+    @endif
     @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $mrecord->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $mrecord->va_os))
     <p>Vision</p>
     <table width="100%" class="table-bordered" cellspacing="0" cellpadding="0">
