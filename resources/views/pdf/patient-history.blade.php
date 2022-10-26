@@ -408,7 +408,7 @@
     @php
         $retinas = (count($retina_od) > count($retina_os)) ? $retina_od : $retina_os;
     @endphp
-    <table border="1px" width="100%" cellspacing="0" cellpadding="0">
+    <table border="0" width="100%" cellspacing="1px" cellpadding="">
         <tbody>
             @forelse($retinas as $key => $retina)
                 <tr>
