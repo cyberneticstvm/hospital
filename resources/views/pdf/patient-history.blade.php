@@ -122,7 +122,7 @@
         <tr><td>Date: {{ ($mrecord->created_at) ? date('d/M/Y', strtotime($mrecord->created_at)) : '' }}</td><td class="text-right">Medical Record Number: {{ $mrecord->id }}</td></tr>
         <tr><td>Doctor Name: {{ $doctor->doctor_name }} ({{ $department->department_name }})</td><td class="text-right">Branch: {{ $branch->branch_name }}</td></tr>
     </table>
-    @if(!$symptoms->isEmpty() || $record->symptoms_other)
+    @if(!$symptoms->isEmpty() || $mrecord->symptoms_other)
     <p> Symptoms</p>
         @foreach($symptoms as $sympt)
             {{ $sympt->symptom_name }}, 
