@@ -1220,7 +1220,7 @@
                                             <select class="form-control form-control-md select2 medType" name="medicine_type[]">
                                             <option value="0">Select</option>
                                             @foreach($mtypes as $medt)
-                                                <option value="{{ $medt->id }}" {{ $pmr->medicine_type == $medt->id ? 'selected' : '' }}>{{ $medt->name }} {{ $pmr->medicine_type }}</option>
+                                                <option value="{{ $medt->id }}" {{ $pmr->medicine_type == $medt->id ? 'selected' : '' }}>{{ $medt->name }} {{ $medt->id }}</option>
                                             @endforeach
                                             </select>
                                             @error('medicine_type')
