@@ -347,18 +347,18 @@
     @endif
     @if(($retina_od && $retina_od[0]->retina_img) || ($retina_os && $retina_os[0]->retina_img))
     @php
-        $retinas = ($retina_od) ? $retina_od : $retina_os;
+        $retinas = (count($retina_od) > count($retina_os)) ? $retina_od : $retina_os;
     @endphp
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             @forelse($retinas as $key => $retina)
                 <tr>
-                    @if($retina_od && $retina_od[$key]->retina_img)
+                    @if($retina_od && !empty($retina_od[$key]))
                     <td width="50%"><img src="{{ ($retina_od && $retina_od[$key]->retina_img) ? 'https://hospital.speczone.net/public/storage/'.$retina_od[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_od && $retina_od[$key]->description) ? $retina_od[$key]->description : '' }}</td>
                     @else
                     <td width="50%"></td>
                     @endif
-                    @if($retina_os && $retina_os[$key]->retina_img)
+                    @if($retina_os && !empty($retina_os[$key]))
                     <td width="50%"><img src="{{ ($retina_os && $retina_os[$key]->retina_img) ?  'https://hospital.speczone.net/public/storage/'.$retina_os[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_os && $retina_os[$key]->description) ? $retina_os[$key]->description : '' }}</td>
                     @else
                     <td width="50%"></td>
