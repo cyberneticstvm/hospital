@@ -427,19 +427,19 @@
             @endforelse
         </tbody>
     </table>
-    </br>
+    <br>
     @endif
     @if(count($diagnosis) > 0)
         <p> Diagnosis</p>
         @foreach($diagnosis as $diag)
             {{ $diag->diagnosis_name }}, 
         @endforeach
-    </br>
+    <br>
     @endif
     @if($mrecord->doctor_recommondations)
         <p>Doctor Recommendations</p>
         {{ $mrecord->doctor_recommondations }}
-    </br>
+    <br>
     @endif
     @if(count($medicines) > 0)
     <p> Medicine / Lab Advised</p>
@@ -461,7 +461,7 @@
         @endforeach
         </tbody>
     </table>
-    <br />
+    <br>
     @endif
     <table width="100%" class="no-border">
         <tr><th>{{ ($mrecord->is_patient_admission == 'sel') ? '' : 'Admission Advised:' }}</th><th>{{ ($mrecord->is_patient_surgery == 'sel') ? '' : 'Surgery Advised:' }} </th><th class="text-right">Review Date: </th></tr>
