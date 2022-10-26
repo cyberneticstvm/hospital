@@ -353,12 +353,12 @@
         <tbody>
             @forelse($retinas as $key => $retina)
                 <tr>
-                    @if($retina_od[$key])
+                    @if(!$retina_od[$key]->isEmpty())
                     <td width="50%"><img src="{{ ($retina_od && $retina_od[$key]->retina_img) ? 'https://hospital.speczone.net/public/storage/'.$retina_od[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_od && $retina_od[$key]->description) ? $retina_od[$key]->description : '' }}</td>
                     @else
                     <td width="50%"></td>
                     @endif
-                    @if($retina_os[$key])
+                    @if($retina_os[$key]->isEmpty())
                     <td width="50%"><img src="{{ ($retina_os && $retina_os[$key]->retina_img) ?  'https://hospital.speczone.net/public/storage/'.$retina_os[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_os && $retina_os[$key]->description) ? $retina_os[$key]->description : '' }}</td>
                     @else
                     <td width="50%"></td>
