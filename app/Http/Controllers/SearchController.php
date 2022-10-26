@@ -15,8 +15,9 @@ class SearchController extends Controller
 
     function __construct(){
 
+         $this->middleware('permission:spectacle-search|income-expense-search', ['only' => ['spectaclefetch', 'iefetch']]);
          $this->middleware('permission:spectacle-search', ['only' => ['spectaclefetch']]);
-
+         $this->middleware('permission:income-expense-search', ['only' => ['iefetch']]);
          $this->branch = session()->get('branch');         
     }
 
@@ -33,5 +34,33 @@ class SearchController extends Controller
         $search_term = $request->search_term;
         $spectacles = Spectacle::leftJoin('patient_medical_records AS m', 'spectacles.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'm.patient_id', '=', 'p.id')->leftJoin('users AS u', 'spectacles.created_by', '=', 'u.id')->selectRaw("spectacles.id, spectacles.medical_record_id, p.id as pid, p.patient_name, p.patient_id, u.name AS optometrist, DATE_FORMAT(spectacles.created_at, '%d/%b/%Y') AS pdate")->where('m.id', $search_term)->orWhere('p.patient_name', 'LIKE', "%{$search_term}%")->orWhere('p.mobile_number', 'LIKE', "%{$search_term}%")->orWhere('p.patient_id', 'LIKE', "%{$search_term}%")->get();
         return view('search.spectacle', compact('spectacles', 'search_term'));
+    }
+
+    public function iesearch(){
+        $records = []; $inputs = []; $heads = DB::table('income_expense_heads')->get();
+        return view('search.income-expense', compact('records', 'inputs', 'heads'));
+    }
+
+    public function iefetch(Request $request){
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+            'type' => 'required',
+        ]);
+        $input = $request->all();
+        $heads = DB::table('income_expense_heads')->get();
+        $inputs = array($request->from_date, $request->to_date, $request->type, $request->head);
+        $startDate = Carbon::createFromFormat('d/M/Y', $request->from_date)->format('Y-m-d');
+        $endDate = Carbon::createFromFormat('d/M/Y', $request->to_date)->format('Y-m-d');
+        if($request->type == 'I'):
+            $records = DB::table('incomes')->leftJoin('branches as b', 'incomes.branch', '=', 'b.id')->leftJoin('income_expense_heads as h', 'h.id', '=', 'incomes.head')->select('incomes.id', 'b.branch_name', 'incomes.description', 'incomes.amount', DB::raw("DATE_FORMAT(incomes.date, '%d/%b/%Y') AS date"), 'h.name as hname')->whereBetween('date', [$startDate,$endDate])->where('branch', $this->branch)->when($request->head > 0, function($query) use ($request){
+                return $query->where('incomes.head', $request->head);
+            })->orderBy('incomes.date')->get();
+        else:
+            $records = DB::table('expenses')->leftJoin('branches as b', 'expenses.branch', '=', 'b.id')->leftJoin('income_expense_heads as h', 'h.id', '=', 'expenses.head')->select('expenses.id', 'b.branch_name', 'expenses.description', 'expenses.amount', DB::raw("DATE_FORMAT(expenses.date, '%d/%b/%Y') AS date"), 'h.name as hname')->whereBetween('date', [$startDate,$endDate])->where('branch', $this->branch)->when($request->head > 0, function($query) use ($request){
+                return $query->where('expenses.head', $request->head);
+            })->orderBy('expenses.date')->get();
+        endif;
+        return view('search.income-expense', compact('records', 'inputs', 'heads'));
     }
 }

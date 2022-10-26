@@ -87,6 +87,9 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     Route::get('/spectacle/search/', [SearchController::class, 'spectaclesearch'])->name('spectacle.search');
     Route::post('/spectacle/search/', [SearchController::class, 'spectaclefetch'])->name('spectacle.fetch');
+
+    Route::get('/income-expense/search/', [SearchController::class, 'iesearch'])->name('ie.search');
+    Route::post('/income-expense/search/', [SearchController::class, 'iefetch'])->name('ie.fetch');
     // End Search //
 
     // Doctor Registration//
