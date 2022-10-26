@@ -262,6 +262,7 @@
             @endif
         </tbody>
     </table>
+    </br>
     @if($v_od_2 != 'Na' || $v_os_2 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
@@ -279,6 +280,7 @@
             </tr>
         </tbody>
     </table>
+    </br>
     @endif
     @if($v_od_3 != 'Na' || $v_os_3 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -297,6 +299,7 @@
             </tr>
         </tbody>
     </table>
+    </br>
     @endif
     @if($v_od_4 != 'Na' || $v_os_4 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -315,6 +318,7 @@
             </tr>
         </tbody>
     </table>
+    </br>
     @endif
     @if($record->gonio_od_top || $record->gonio_od_left || $record->gonio_od_right || $record->gonio_od_bottom || $record->gonio_os_top || $record->gonio_os_left || $record->gonio_os_right || $record->gonio_os_bottom || $record->gonio_od || $record->gonio_os)
     <p>Gonioscopy</p>
@@ -339,11 +343,12 @@
             <tr><td class="text-center">{{ $record->gonio_od }}</td><td class="text-center">{{ $record->gonio_os }}</td></tr>
         </tbody>
     </table>
+    </br>
     @endif
     @if($record->signs)
     <p> Signs</p>
         {{ $record->signs }}
-    <br>
+    </br>
     @endif
     @if(($retina_od && $retina_od[0]->retina_img) || ($retina_os && $retina_os[0]->retina_img))
     @php

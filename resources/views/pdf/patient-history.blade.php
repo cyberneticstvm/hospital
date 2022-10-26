@@ -316,7 +316,7 @@
             @endif
         </tbody>
     </table>
-    <div class="br"></div>
+    </br>
     @if($v_od_2 != 'Na' || $v_os_2 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
@@ -334,6 +334,7 @@
             </tr>
         </tbody>
     </table>
+    </br>
     @endif
     @if($v_od_3 != 'Na' || $v_os_3 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -352,6 +353,7 @@
             </tr>
         </tbody>
     </table>
+    </br>
     @endif
     @if($v_od_4 != 'Na' || $v_os_4 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -370,6 +372,7 @@
             </tr>
         </tbody>
     </table>
+    </br>
     @endif
     @if($mrecord->gonio_od_top || $mrecord->gonio_od_left || $mrecord->gonio_od_right || $mrecord->gonio_od_bottom || $mrecord->gonio_os_top || $mrecord->gonio_os_left || $mrecord->gonio_os_right || $mrecord->gonio_os_bottom || $mrecord->gonio_od || $mrecord->gonio_os)
     <p>Gonioscopy</p>
@@ -394,39 +397,49 @@
             <tr><td class="text-center">{{ $mrecord->gonio_od }}</td><td class="text-center">{{ $mrecord->gonio_os }}</td></tr>
         </tbody>
     </table>
+    </br>
     @endif
     @if($mrecord->signs)
     <p> Signs</p>
         {{ $mrecord->signs }}
-    <br>
+    </br>
     @endif
     @if(($retina_od && $retina_od[0]->retina_img) || ($retina_os && $retina_os[0]->retina_img))
     @php
-        $retinas = ($retina_od) ? $retina_od : $retina_os;
+        $retinas = (count($retina_od) > count($retina_os)) ? $retina_od : $retina_os;
     @endphp
     <table boredr="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             @forelse($retinas as $key => $retina)
                 <tr>
-                    <td width="50%"><img src="{{ ($retina_od && $retina_od[$key]->retina_img) ? 'https://hospital.speczone.net/public/storage/'.$retina_od[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_od && $retina_od[$key]->description) ? $retina_od[$key]->description : '' }}</td>
-                    <td width="50%"><img src="{{ ($retina_os && $retina_os[$key]->retina_img) ?  'https://hospital.speczone.net/public/storage/'.$retina_os[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_os && $retina_os[$key]->description) ? $retina_os[$key]->description : '' }}</td>
+                    @if($retina_od && !empty($retina_od[$key]))
+                        <td width="50%"><img src="{{ ($retina_od && $retina_od[$key]->retina_img) ? 'https://hospital.speczone.net/public/storage/'.$retina_od[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_od && $retina_od[$key]->description) ? $retina_od[$key]->description : '' }}</td>
+                        @else
+                        <td width="50%"></td>
+                        @endif
+                        @if($retina_os && !empty($retina_os[$key]))
+                        <td width="50%"><img src="{{ ($retina_os && $retina_os[$key]->retina_img) ?  'https://hospital.speczone.net/public/storage/'.$retina_os[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_os && $retina_os[$key]->description) ? $retina_os[$key]->description : '' }}</td>
+                        @else
+                        <td width="50%"></td>
+                    @endif
                 </tr>
             @empty
             @endforelse
         </tbody>
     </table>
+    </br>
     @endif
     @if(count($diagnosis) > 0)
         <p> Diagnosis</p>
         @foreach($diagnosis as $diag)
             {{ $diag->diagnosis_name }}, 
         @endforeach
-        <br>
+    </br>
     @endif
     @if($mrecord->doctor_recommondations)
         <p>Doctor Recommendations</p>
         {{ $mrecord->doctor_recommondations }}
-        <br />
+    </br>
     @endif
     @if(count($medicines) > 0)
     <p> Medicine / Lab Advised</p>
