@@ -59,8 +59,8 @@
             </tr>
             <tr>
                 <td>TIME</td>
-                <td>{{ ($tonometry->nct_od > 0 || $tonometry->at_od > 0) ? $tonometry->nct_time : '' }}</td>
-                <td>{{ ($tonometry->nct_os > 0 || $tonometry->at_os > 0) ? $tonometry->at_time : '' }}</td>                                                                                
+                <td>{{ ($tonometry->nct_od > 0 || $tonometry->nct_os > 0) ? $tonometry->nct_time : '' }}</td>
+                <td>{{ ($tonometry->at_od > 0 || $tonometry->at_os > 0) ? $tonometry->at_time : '' }}</td>                                                                               
             </tr>
         </tbody>
     </table>
