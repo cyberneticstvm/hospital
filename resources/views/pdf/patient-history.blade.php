@@ -34,7 +34,7 @@
             margin: 10px 0px;
         }
         .signs th, .signs.td{
-            border: 1px solid #000;
+            /*border: 1px solid #000;*/
         }
     </style>
 </head>
@@ -199,18 +199,21 @@
     @if($tonometry)
         <p>Tonometry</p>
         <table style="width:50%; margin:0 auto;" class="table-bordered" cellspacing="0" cellpadding="0">
-            <thead><tr><th>NCT</th><th>AT</th></tr></thead><tbody>
+            <thead><tr><th></th><th>NCT</th><th>AT</th></tr></thead><tbody>
                 <tr>
+                    <td>OD</td>
                     <td>{{ $tonometry->nct_od }} {{ ($tonometry->nct_od) ? 'mmHg' : '' }}</td>
                     <td>{{ $tonometry->at_od }} {{ ($tonometry->at_od) ? 'mmHg' : '' }}</td>
                 </tr>
                 <tr>
+                    <td>OS</td>
                     <td>{{ $tonometry->nct_os }} {{ ($tonometry->nct_os) ? 'mmHg' : '' }}</td>
                     <td>{{ $tonometry->at_os }} {{ ($tonometry->at_os) ? 'mmHg' : '' }}</td>
                 </tr>
                 <tr>
-                    <td>{{ $tonometry->nct_time }}</td>
-                    <td>{{ $tonometry->at_time }}</td>
+                    <td>Time</td>
+                    <td>{{ ($tonometry->nct_od || $tonometry->at_od) ? $tonometry->nct_time : '' }}</td>
+                    <td>{{ ($tonometry->nct_os || $tonometry->at_os) ? $tonometry->at_time : '' }}</td>
                 </tr>
             </tbody>
         </table>
