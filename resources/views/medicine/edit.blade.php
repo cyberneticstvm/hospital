@@ -25,7 +25,7 @@
                                 <div class="col-sm-12">
                                     <!--<p class= "text-right my-3"><a href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success medicineRow"></i></a></p>-->
                                     <table class="tblMedicine table table-bordered">
-                                        <thead><tr><th width='30%'>Product</th><th>Batch No.</th><th>Dosage</th><th>Qty</th><th>Price</th><th>Discount</th><th>Tax%</th><th>Tax Amount</th><th>Total</th><th>Remove</th></tr></thead>
+                                        <thead><tr><th width='30%'>Product</th><th>Batch No.</th><th>Dosage</th><th>Duration</th><th>Qty</th><th>Price</th><th>Discount</th><th>Tax%</th><th>Tax Amount</th><th>Total</th><th>Remove</th></tr></thead>
                                         <tbody>
                                             @foreach($medicines as $medicine)
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}"/>
@@ -43,6 +43,9 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control form-control-md" placeholder="Dosage" name="dosage[]" value="{{ $medicine->dosage }}" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control form-control-md" placeholder="Dosage" name="duration[]" value="{{ $medicine->duration }}" />
                                                 </td>
                                                 <td>
                                                     <input type="number" class="form-control form-control-md text-right" placeholder="0" name="qty[]" value="{{ $medicine->qty }}" required='required' />

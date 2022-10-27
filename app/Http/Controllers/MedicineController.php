@@ -103,6 +103,7 @@ class MedicineController extends Controller
                         'medicine' => $input['medicine'][$i],
                         'batch_number' => $input['batch_number'][$i],
                         'dosage' => $input['dosage'][$i],
+                        'duration' => $input['duration'][$i],
                         'notes' => $input['notes'][$i],
                         'qty' => $input['qty'][$i],
                         'price' => $input['price'][$i],
