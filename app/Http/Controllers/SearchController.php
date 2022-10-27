@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\Spectacle;
+use App\Models\Branch;
 use Carbon\Carbon;
 use DB;
 
@@ -15,9 +16,10 @@ class SearchController extends Controller
 
     function __construct(){
 
-         $this->middleware('permission:spectacle-search|income-expense-search', ['only' => ['spectaclefetch', 'iefetch']]);
+         $this->middleware('permission:spectacle-search|income-expense-search', ['only' => ['spectaclefetch', 'iefetch', 'fetchPatient']]);
          $this->middleware('permission:spectacle-search', ['only' => ['spectaclefetch']]);
          $this->middleware('permission:income-expense-search', ['only' => ['iefetch']]);
+         $this->middleware('permission:patient-search-datewise', ['only' => ['fetchPatient']]);
          $this->branch = session()->get('branch');         
     }
 
@@ -62,5 +64,24 @@ class SearchController extends Controller
             })->orderBy('expenses.date')->get();
         endif;
         return view('search.income-expense', compact('records', 'inputs', 'heads'));
+    }
+
+    public function searchPatient(){
+        $patients = []; $inputs = []; $branches = Branch::all();
+        return view('search.patient', compact('patients', 'branches', 'inputs'));
+    }
+    public function fetchPatient(Request $request){
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+        ]);
+        $branches = Branch::all();
+        $inputs = array($request->from_date, $request->to_date, $request->branch);
+        $startDate = Carbon::createFromFormat('d/M/Y', $request->from_date)->startOfDay();
+        $endDate = Carbon::createFromFormat('d/M/Y', $request->to_date)->endOfDay();
+        $patients = DB::table('patient_registrations as p')->leftJoin('branches as b', 'p.branch', '=', 'b.id')->select('p.patient_name', 'p.age', 'p.patient_id', 'p.address', 'p.mobile_number', 'b.branch_name', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS rdate"))->whereBetween('p.created_at', [$startDate,$endDate])->when($request->branch > 0, function($query) use ($request){
+            return $query->where('p.branch', $request->branch);
+        })->orderByDesc('p.created_at')->get();
+        return view('search.patient', compact('patients', 'branches', 'inputs'));
     }
 }
