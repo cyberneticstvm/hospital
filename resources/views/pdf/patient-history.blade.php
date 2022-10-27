@@ -212,8 +212,8 @@
                 </tr>
                 <tr>
                     <td>Time</td>
-                    <td>{{ ($tonometry->nct_od || $tonometry->at_od) ? $tonometry->nct_time : '' }}</td>
-                    <td>{{ ($tonometry->nct_os || $tonometry->at_os) ? $tonometry->at_time : '' }}</td>
+                    <td>{{ ($tonometry->nct_od > 0 || $tonometry->at_od > 0) ? $tonometry->nct_time : '' }}</td>
+                    <td>{{ ($tonometry->nct_os > 0 || $tonometry->at_os > 0) ? $tonometry->at_time : '' }}</td>
                 </tr>
             </tbody>
         </table>
