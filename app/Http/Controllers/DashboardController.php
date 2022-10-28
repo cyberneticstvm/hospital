@@ -50,6 +50,7 @@ class DashboardController extends Controller
         $camp = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->whereIn('r.consultation_type', [4])->whereDate('r.created_at', Carbon::today())->count('r.id');
 
         $day_tot_exp = DB::table('expenses')->where('branch', $branch_id)->whereDate('created_at', Carbon::today())->sum('amount');
+
         $day_tot_income = $this->getDayTotal();
 
         return view('dash', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'tot_patients', 'day_tot_income', 'day_tot_exp'));
@@ -71,7 +72,7 @@ class DashboardController extends Controller
         $vision = DB::table('spectacles as s')->leftJoin('patient_medical_records as p', 'p.id', '=', 's.medical_record_id')->whereDate('s.created_at', Carbon::today())->where('p.branch', $this->branch)->sum('s.fee');
 
         $tot = $reg_fee_total+$consultation_fee_total+$procedure_fee_total+$certificate_fee_total+$medicine+$pharmacy+$vision;
-        return $tot;
+        return $reg_fee_total;
     }
 
     public function patientOverview(){
