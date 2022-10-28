@@ -29,7 +29,7 @@
         <div class="row g-3 clearfix">
             <div class="col-lg-8 col-md-12">
                 <div class="row g-3 clearfix row-deck">
-                    <div class="col-xl-4 col-lg-6 col-md-4 col-sm-6">
+                    <div class="col-xl-3 col-lg-6 col-md-3 col-sm-6">
                         <div class="card">
                             <div class="card-body">
                                 <span class="text-uppercase text-primary">New Registrations</span>
@@ -39,7 +39,7 @@
                             <div id="apexspark1"></div>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-6 col-md-4 col-sm-6">
+                    <div class="col-xl-3 col-lg-6 col-md-3 col-sm-6">
                         <div class="card">
                             <div class="card-body">
                                 <span class="text-uppercase text-primary">Reviews</span>
@@ -49,14 +49,24 @@
                             <div id="apexspark2"></div>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-12 col-md-4 col-sm-12">
+                    <div class="col-xl-3 col-lg-6 col-md-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="text-uppercase text-primary">Total Consultation</span>
+                                <h4 class="mb-0 mt-2">{{ $new_patients_count+$review_count }}</h4>
+                                <small class="text-muted">Analytics today</small>
+                            </div>
+                            <div id="apexspark3"></div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-12 col-md-3 col-sm-12">
                         <div class="card">
                             <div class="card-body">
                                 <span class="text-uppercase text-danger">Cancelled</span>
                                 <h4 class="mb-0 mt-2">{{ $cancelled }}</h4>
                                 <small class="text-muted">Analytics today</small>
                             </div>
-                            <div id="apexspark3"></div>
+                            <div id="apexspark4"></div>
                         </div>
                     </div>
                     <div class="col-12">
@@ -155,7 +165,7 @@
                                 </div>
                                 <small class="text-muted">Analytics today</small>
                             </div>
-                            <div id="apexspark4"></div>
+                            <div id="apexspark5"></div>
                         </div>
                     </div>
                 </div>
