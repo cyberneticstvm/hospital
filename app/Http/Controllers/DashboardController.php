@@ -65,7 +65,7 @@ class DashboardController extends Controller
 
         $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->where('pc.branch_id', $this->branch)->whereDate('pc.created_at', Carbon::today())->where('pcd.status', 'I')->sum('pcd.fee');
 
-        $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->whereDate('m.created_at', Carbon::today())->where('p.branch', $this->branch)->where('m.status', 1)->sum('m.total');
+        $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('m.status', 1)->where('p.branch', $request->branch)->whereDate('p.created_at', Carbon::today())->sum('m.total');
 
         $pharmacy = DB::table('pharmacy_records as r')->leftJoin('pharmacies as p', 'p.id', '=', 'r.pharmacy_id')->whereDate('p.created_at', Carbon::today())->where('p.branch', $this->branch)->sum('r.total');
 
