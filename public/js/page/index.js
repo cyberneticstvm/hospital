@@ -166,7 +166,7 @@ $(function() {
     spark5.render();
 
     $.getJSON('/patientOverview/', function(response){
-        console.log(response);
+        //console.log(response);
         var options = {
             chart: {
                 height: 350,

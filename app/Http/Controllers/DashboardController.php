@@ -55,7 +55,7 @@ class DashboardController extends Controller
         return view('dash', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'tot_patients', 'day_tot_income', 'day_tot_exp'));
     }
 
-    private function getDayTotal(){
+    public function getDayTotal(){
         $reg_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->whereDate('pmr.created_at', Carbon::today())->where('pmr.branch', $this->branch)->sum('pr.registration_fee');
 
         $consultation_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pr', 'pmr.mrn', '=', 'pr.id')->where('pmr.created_at', Carbon::today())->where('pmr.branch', $this->branch)->where('pr.status', 1)->sum('pr.doctor_fee');
