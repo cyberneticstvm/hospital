@@ -142,6 +142,15 @@
                                                 <div class="avatar lg rounded-circle no-thumbnail bg-info text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
                                             </div>
                                         </div>
+                                        <div class="carousel-item" data-bs-interval="3000">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-fill me-3 text-truncate">
+                                                    <div class="text-warning mb-2 text-uppercase">Vision</div>
+                                                    <h4 class="mb-0">{{ $vision }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-info"></i> Nos.</small></div></h4>
+                                                </div>
+                                                <div class="avatar lg rounded-circle no-thumbnail bg-warning text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <small class="text-muted">Analytics today</small>
