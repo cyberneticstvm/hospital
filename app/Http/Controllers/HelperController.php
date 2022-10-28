@@ -203,7 +203,9 @@ class HelperController extends Controller
 
         $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('p.id', $mrid)->where('m.status', 1)->sum('m.total');
 
-        return $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine;
+        $vision = DB::table('spectacles')->where('medical_record_id', $mrid)->sum('fee');
+
+        return $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine + $vision;
     }
     public function getPaidTotal($mrid){
         $paid = DB::table('patient_payments as p')->where('p.medical_record_id', $mrid)->sum('amount');
