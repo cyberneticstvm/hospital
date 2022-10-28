@@ -9,16 +9,16 @@
             </div>
             <div class="col d-flex justify-content-lg-end mt-2 mt-md-0">
                 <div class="p-2 me-md-3">
-                    <div><span class="h6 mb-0 fw-bold">8.18K</span> <small class="text-success"><i class="fa fa-angle-up"></i> 1.3%</small></div>
-                    <small class="text-muted text-uppercase">Income</small>
+                    <div><span class="h6 mb-0 fw-bold">{{ number_format($day_tot_income, 2) }}</span> <small class="text-success"><i class="fa fa-angle-up"></i></small></div>
+                    <small class="text-muted text-uppercase">Income Today</small>
                 </div>
                 <div class="p-2 me-md-3">
-                    <div><span class="h6 mb-0 fw-bold">1.11K</span> <small class="text-success"><i class="fa fa-angle-up"></i> 4.1%</small></div>
-                    <small class="text-muted text-uppercase">Expense</small>
+                    <div><span class="h6 mb-0 fw-bold">{{ number_format($day_tot_exp, 2) }}</span> <small class="text-danger"><i class="fa fa-angle-down"></i></small></div>
+                    <small class="text-muted text-uppercase">Expense Today</small>
                 </div>
                 <div class="p-2 pe-lg-0">
-                    <div><span class="h6 mb-0 fw-bold">3.66K</span> <small class="text-danger"><i class="fa fa-angle-down"></i> 7.5%</small></div>
-                    <small class="text-muted text-uppercase">Revenue</small>
+                    <div><span class="h6 mb-0 fw-bold">{{ number_format($day_tot_income-$day_tot_exp, 2) }}</span> <small class="text-success"><i class="fa fa-angle-up"></i></small></div>
+                    <small class="text-muted text-uppercase">Revenue Today</small>
                 </div>
             </div>
         </div>
@@ -32,9 +32,9 @@
                     <div class="col-xl-4 col-lg-6 col-md-4 col-sm-6">
                         <div class="card">
                             <div class="card-body">
-                                <span class="text-uppercase">New Sessions</span>
-                                <h4 class="mb-0 mt-2">22,500</h4>
-                                <small class="text-muted">Analytics for last week</small>
+                                <span class="text-uppercase text-primary">New Registrations</span>
+                                <h4 class="mb-0 mt-2">{{ $new_patients_count }}</h4>
+                                <small class="text-muted">Analytics today</small>
                             </div>
                             <div id="apexspark1"></div>
                         </div>
@@ -42,9 +42,9 @@
                     <div class="col-xl-4 col-lg-6 col-md-4 col-sm-6">
                         <div class="card">
                             <div class="card-body">
-                                <span class="text-uppercase">TIME ON SITE</span>
-                                <h4 class="mb-0 mt-2">1,070</h4>
-                                <small class="text-muted">Analytics for last week</small>
+                                <span class="text-uppercase text-primary">Reviews</span>
+                                <h4 class="mb-0 mt-2">{{ $review_count }}</h4>
+                                <small class="text-muted">Analytics today</small>
                             </div>
                             <div id="apexspark2"></div>
                         </div>
@@ -52,9 +52,9 @@
                     <div class="col-xl-4 col-lg-12 col-md-4 col-sm-12">
                         <div class="card">
                             <div class="card-body">
-                                <span class="text-uppercase">BOUNCE RATE</span>
-                                <h4 class="mb-0 mt-2">10K</h4>
-                                <small class="text-muted">Analytics for last week</small>
+                                <span class="text-uppercase text-danger">Cancelled</span>
+                                <h4 class="mb-0 mt-2">{{ $cancelled }}</h4>
+                                <small class="text-muted">Analytics today</small>
                             </div>
                             <div id="apexspark3"></div>
                         </div>
@@ -63,7 +63,7 @@
                         <div class="card">
                             <div class="card-header py-3 d-flex flex-wrap  justify-content-between align-items-center bg-transparent border-bottom-0">
                                 <div>
-                                    <h6 class="card-title m-0">Audience Overview</h6>
+                                    <h6 class="card-title m-0">Patient Overview Last 12 months (All Branches)</h6>
                                     <small class="text-muted">Or you can <a href="#">sync data to Dashboard</a> to ensure your data is always up-to-date.</small>
                                 </div>
                                 <div class="dropdown">
@@ -81,12 +81,12 @@
                                 <div class="card-header border">
                                     <div class="d-flex flex-row align-items-center">
                                         <div>
-                                            <h6 class="mb-0 fw-bold">$3,056</h6>
-                                            <small class="text-muted font-11">Rate</small>
+                                            <h6 class="mb-0 fw-bold">{{ number_format($tot_patients, 0) }}</h6>
+                                            <small class="text-muted font-11">Registered Patients</small>
                                         </div>
                                         <div class="ms-lg-5 ms-md-4 ms-3">
-                                            <h6 class="mb-0 fw-bold">$1,998</h6>
-                                            <small class="text-muted font-11">Value</small>
+                                            <h6 class="mb-0 fw-bold">0</h6>
+                                            <small class="text-muted font-11">Appointments</small>
                                         </div>
                                         <div class="d-none d-sm-block ms-auto">
                                             <div class="btn-group" role="group">
@@ -102,7 +102,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="apex-AudienceOverview"></div>
+                                <div id="patientOverview"></div>
                             </div>
                         </div>
                     </div>
@@ -113,9 +113,38 @@
                     <div class="col-lg-12 col-md-6 col-sm-12">
                         <div class="card">
                             <div class="card-body">
-                                <span class="text-uppercase">GOAL COMPLETIONS</span>
-                                <h4 class="mb-0 mt-2">$1,22,500</h4>
-                                <small class="text-muted">Analytics for last week</small>
+                                <div id="oneExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active" data-bs-interval="3000">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-fill me-3 text-truncate">
+                                                    <div class="text-primary mb-2 text-uppercase">Consultation</div>
+                                                    <h4 class="mb-0">{{ $consultation }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-primary"></i> Nos.</small></div></h4>
+                                                </div>
+                                                <div class="avatar lg rounded-circle no-thumbnail bg-primary text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item" data-bs-interval="3000">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-fill me-3 text-truncate">
+                                                    <div class="text-success mb-2 text-uppercase">Certificate</div>
+                                                    <h4 class="mb-0">{{ $certificate }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-success"></i> Nos.</small></div></h4>
+                                                </div>
+                                                <div class="avatar lg rounded-circle no-thumbnail bg-success text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item" data-bs-interval="3000">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-fill me-3 text-truncate">
+                                                    <div class="text-info mb-2 text-uppercase">Camp</div>
+                                                    <h4 class="mb-0">{{ $camp }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-info"></i> Nos.</small></div></h4>
+                                                </div>
+                                                <div class="avatar lg rounded-circle no-thumbnail bg-info text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <small class="text-muted">Analytics today</small>
                             </div>
                             <div id="apexspark4"></div>
                         </div>

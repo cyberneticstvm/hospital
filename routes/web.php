@@ -7,6 +7,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HelperController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ use App\Http\Controllers\HelperController;
 Route::get('/', function () {
     return view('/login');
 })->name('login');
-Route::post('/', 'App\Http\Controllers\AuthController@userlogin')->name('login');
+Route::post('/', 'App\Http\Controllers\DashboardController@userlogin')->name('login');
 
 // Authentication //
 Route::get('/auth/certificate/{id}/', [HelperController::class, 'certificateAuthentication'])->name('auth.certificateAuth');
@@ -33,9 +34,11 @@ Route::get('/errors/error/', function () {
 })->name('error');
 
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('/dash/', function () {
+    /*Route::get('/dash/', function () {
         return view('dash');
-    })->name('dash');
+    })->name('dash');*/
+    Route::get('/dash/', [DashboardController::class, 'index'])->name('dash.index');
+    Route::get('/patientOverview/', [DashboardController::class, 'patientOverview'])->name('dash.patientoverview');
     Route::get('/logout/', 'App\Http\Controllers\AuthController@userlogout');
     Route::post('store_branch_session', 'App\Http\Controllers\AuthController@store_branch_session')->name('store_branch_session');
 });

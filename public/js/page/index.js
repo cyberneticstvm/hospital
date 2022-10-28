@@ -165,8 +165,48 @@ $(function() {
     var spark5 = new ApexCharts(document.querySelector("#apexspark5"), spark5);
     spark5.render();
 
+    $.getJSON('/patientOverview/', function(response){
+        console.log(response);
+        var options = {
+            chart: {
+                height: 350,
+                type: 'line',
+                toolbar: {
+                    show: false,
+                },
+            },
+            colors: ['var(--chart-color1)'],
+            dataLabels: {
+                enabled: false
+            },
+            series: [{
+                name: 'Registration',
+                type: 'column',
+                data: [response[11].ptot, response[10].ptot, response[9].ptot, response[8].ptot, response[7].ptot, response[6].ptot, response[5].ptot, response[4].ptot, response[3].ptot, response[2].ptot, response[1].ptot, response[0].ptot]
+            }],
+            stroke: {
+                width: [0, 2]
+            },
+            title: {
+                text: '',
+            },
+            labels: [response[11].mname, response[10].mname, response[9].mname, response[8].mname, response[7].mname, response[6].mname, response[5].mname, response[4].mname, response[3].mname, response[2].mname, response[1].mname, response[0].mname],
+            xaxis: {
+                type: ''
+            },
+            yaxis: [{
+                title: {
+                    text: 'Patient Registration',
+                },
+
+            }]
+        }
+        var chart = new ApexCharts(document.querySelector("#patientOverview"), options);
+        chart.render();
+    });
+
     // Organic Visits & Conversions
-    var options = {
+    /*var options = {
         chart: {
             height: 300,
             type: 'line',
@@ -204,8 +244,8 @@ $(function() {
             }
         }]
     }
-    var chart = new ApexCharts(document.querySelector("#apex-AudienceOverview"),options);
-    chart.render();
+    var chart = new ApexCharts(document.querySelector("#patientOverview"),options);
+    chart.render();*/
 
     // Social Media Traffic
     function generateSocialMediaData(baseval, count, yrange) {

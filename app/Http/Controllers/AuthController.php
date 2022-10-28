@@ -50,7 +50,7 @@ class AuthController extends Controller
         $branches = DB::table('branches')->get();
         $br = DB::table('branches')->find($request->branch_id);
         
-        return redirect()->route('dash')->with('success','Branch updated successfully');
+        return redirect()->route('dash.index')->with(['branch_id' => $request->branch_id]);
         //return view('dash', compact('branches'));
     }
     /*public function createform(){
@@ -109,23 +109,7 @@ class AuthController extends Controller
         'password' => Hash::make($data['password'])
       ]);
     }*/    
-    public function userlogin(Request $request)
-    {
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required|min:6',
-        ]);
-   
-        $credentials = $request->only('username', 'password');
-        if (Auth::attempt($credentials)) {
-            $user_id = Auth::user()->id;
-            $branches = DB::table('branches')->leftJoin('user_branches', 'branches.id', '=', 'user_branches.branch_id')->select('branches.id', 'branches.branch_name')->where('user_branches.user_id', '=', $user_id)->get();
-
-            return view('dash', compact('branches'));
-            //return redirect()->route('dash')->with(['branches' => $branches]);
-        }  
-        return redirect("/")->withErrors('Login details are not valid');
-    }
+    
 
     public function show()
     {
