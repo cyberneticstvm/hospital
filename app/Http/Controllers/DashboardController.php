@@ -72,7 +72,7 @@ class DashboardController extends Controller
         $vision = DB::table('spectacles as s')->leftJoin('patient_medical_records as p', 'p.id', '=', 's.medical_record_id')->whereDate('s.created_at', Carbon::today())->where('p.branch', $this->branch)->sum('s.fee');
 
         $tot = $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine + $pharmacy + $vision;
-        return $medicine;
+        return $tot;
     }
 
     public function patientOverview(){
