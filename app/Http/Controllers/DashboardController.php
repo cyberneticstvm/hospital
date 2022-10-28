@@ -61,22 +61,18 @@ class DashboardController extends Controller
 
         $consultation_fee_total = DB::table('patient_references as pr')->whereDate('pr.created_at', Carbon::today())->where('pr.branch', $this->branch)->where('pr.status', 1)->sum('pr.doctor_fee');
 
-        return $consultation_fee_total;
+        $procedure_fee_total = DB::table('patient_procedures as pp')->whereDate('pp.branch', $this->branch)->where('pp.created_at', Carbon::today())->sum('pp.fee');
 
-        /*
+        $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->where('pc.branch_id', $this->branch)->whereDate('pc.created_at', Carbon::today())->where('pcd.status', 'I')->sum('pcd.fee');
 
-        $procedure_fee_total = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->where('pp.branch', $this->branch)->where('pp.created_at', Carbon::today())->sum('pp.fee');
-
-        $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->where('pc.branch_id', $this->branch)->where('pc.created_at', Carbon::today())->where('pcd.status', 'I')->sum('pcd.fee');
-
-        $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('p.created_at', Carbon::today())->where('p.branch', $this->branch)->where('m.status', 1)->sum('m.total');
+        $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->whereDate('m.created_at', Carbon::today())->where('p.branch', $this->branch)->where('m.status', 1)->sum('m.total');
 
         $pharmacy = DB::table('pharmacy_records as r')->leftJoin('pharmacies as p', 'p.id', '=', 'r.pharmacy_id')->whereDate('p.created_at', Carbon::today())->where('p.branch', $this->branch)->sum('r.total');
 
         $vision = DB::table('spectacles as s')->leftJoin('patient_medical_records as p', 'p.id', '=', 's.medical_record_id')->whereDate('s.created_at', Carbon::today())->where('p.branch', $this->branch)->sum('s.fee');
 
         $tot = $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine + $pharmacy + $vision;
-        return $tot;*/
+        return $tot;
     }
 
     public function patientOverview(){
