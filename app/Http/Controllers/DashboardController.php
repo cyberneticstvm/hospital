@@ -61,7 +61,7 @@ class DashboardController extends Controller
 
         $consultation_fee_total = DB::table('patient_references as pr')->whereDate('pr.created_at', Carbon::today())->where('pr.branch', $this->branch)->where('pr.status', 1)->sum('pr.doctor_fee');
 
-        $procedure_fee_total = DB::table('patient_procedures as pp')->whereDate('pp.branch', $this->branch)->where('pp.created_at', Carbon::today())->sum('pp.fee');
+        $procedure_fee_total = DB::table('patient_procedures as pp')->where('pp.branch', $this->branch)->whereDate('pp.created_at', Carbon::today())->sum('pp.fee');
 
         $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->where('pc.branch_id', $this->branch)->whereDate('pc.created_at', Carbon::today())->where('pcd.status', 'I')->sum('pcd.fee');
 
@@ -72,7 +72,7 @@ class DashboardController extends Controller
         $vision = DB::table('spectacles as s')->leftJoin('patient_medical_records as p', 'p.id', '=', 's.medical_record_id')->whereDate('s.created_at', Carbon::today())->where('p.branch', $this->branch)->sum('s.fee');
 
         $tot = $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine + $pharmacy + $vision;
-        return $procedure_fee_total;
+        return $tot;
     }
 
     public function patientOverview(){
