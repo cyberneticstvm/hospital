@@ -27,6 +27,150 @@
 <div class="body d-flex py-lg-4 py-3">
     <div class="container">
         <div class="row g-3 clearfix">
+            <div class="col-lg-8 col-md-12">
+                <div class="row g-3 clearfix row-deck">
+                    <div class="col-xl-3 col-lg-6 col-md-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="text-uppercase text-primary">New Registrations</span>
+                                <h4 class="mb-0 mt-2">{{ $new_patients_count }}</h4>
+                                <small class="text-muted">Analytics today</small>
+                            </div>
+                            <div id="apexspark1"></div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="text-uppercase text-primary">Reviews</span>
+                                <h4 class="mb-0 mt-2">{{ $review_count }}</h4>
+                                <small class="text-muted">Analytics today</small>
+                            </div>
+                            <div id="apexspark2"></div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="text-uppercase text-primary">Total Consultation</span>
+                                <h4 class="mb-0 mt-2">{{ $new_patients_count+$review_count }}</h4>
+                                <small class="text-muted">Analytics today</small>
+                            </div>
+                            <div id="apexspark3"></div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-12 col-md-3 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="text-uppercase text-danger">Cancelled</span>
+                                <h4 class="mb-0 mt-2">{{ $cancelled }}</h4>
+                                <small class="text-muted">Analytics today</small>
+                            </div>
+                            <div id="apexspark4"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header py-3 d-flex flex-wrap  justify-content-between align-items-center bg-transparent border-bottom-0">
+                                <div>
+                                    <h6 class="card-title m-0">Patient Overview Last 12 months (All Branches)</h6>
+                                    <small class="text-muted">Or you can <a href="#">sync data to Dashboard</a> to ensure your data is always up-to-date.</small>
+                                </div>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-link text-muted d-none d-sm-inline-block" type="button"><i class="fa fa-download"></i></button>
+                                    <button class="btn btn-sm btn-link text-muted d-none d-sm-inline-block" type="button"><i class="fa fa-external-link"></i></button>
+                                    <button class="btn btn-sm btn-link text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <ul class="dropdown-menu dropdown-animation dropdown-menu-end shadow border-0">
+                                        <li><a class="dropdown-item" href="#">Action<i class="fa fa-arrow-right"></i></a></li>
+                                        <li><a class="dropdown-item" href="#">Another action<i class="fa fa-arrow-right"></i></a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here<i class="fa fa-arrow-right"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-header border">
+                                    <div class="d-flex flex-row align-items-center">
+                                        <div>
+                                            <h6 class="mb-0 fw-bold">{{ number_format($tot_patients, 0) }}</h6>
+                                            <small class="text-muted font-11">Registered Patients</small>
+                                        </div>
+                                        <div class="ms-lg-5 ms-md-4 ms-3">
+                                            <h6 class="mb-0 fw-bold">0</h6>
+                                            <small class="text-muted font-11">Appointments</small>
+                                        </div>
+                                        <div class="d-none d-sm-block ms-auto">
+                                            <div class="btn-group" role="group">
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1">
+                                                <label class="btn btn-outline-secondary" for="btnradio1">Week</label>
+
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2">
+                                                <label class="btn btn-outline-secondary" for="btnradio2">Month</label>
+
+                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" checked="">
+                                                <label class="btn btn-outline-secondary" for="btnradio3">Year</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="patientOverview"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="row g-3 row-deck">
+                    <div class="col-lg-12 col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="oneExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active" data-bs-interval="3000">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-fill me-3 text-truncate">
+                                                    <div class="text-primary mb-2 text-uppercase">Consultation</div>
+                                                    <h4 class="mb-0">{{ $consultation }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-primary"></i> Nos.</small></div></h4>
+                                                </div>
+                                                <div class="avatar lg rounded-circle no-thumbnail bg-primary text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item" data-bs-interval="3000">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-fill me-3 text-truncate">
+                                                    <div class="text-success mb-2 text-uppercase">Certificate</div>
+                                                    <h4 class="mb-0">{{ $certificate }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-success"></i> Nos.</small></div></h4>
+                                                </div>
+                                                <div class="avatar lg rounded-circle no-thumbnail bg-success text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item" data-bs-interval="3000">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-fill me-3 text-truncate">
+                                                    <div class="text-info mb-2 text-uppercase">Camp</div>
+                                                    <h4 class="mb-0">{{ $camp }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-info"></i> Nos.</small></div></h4>
+                                                </div>
+                                                <div class="avatar lg rounded-circle no-thumbnail bg-info text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item" data-bs-interval="3000">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-fill me-3 text-truncate">
+                                                    <div class="text-warning mb-2 text-uppercase">Vision</div>
+                                                    <h4 class="mb-0">{{ $vision }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-info"></i> Nos.</small></div></h4>
+                                                </div>
+                                                <div class="avatar lg rounded-circle no-thumbnail bg-warning text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <small class="text-muted">Analytics today</small>
+                            </div>
+                            <div id="apexspark5"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- .row end -->
+            </div>
         </div>
     </div>
 </div>
