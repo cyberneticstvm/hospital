@@ -18,6 +18,7 @@ class PatientMedicalRecord extends Model
         'symptoms_other',
         'history',
         'diagnosis',
+        'allergic_drugs',
         'doctor_recommondations',
         'va_od',
         'va_os',

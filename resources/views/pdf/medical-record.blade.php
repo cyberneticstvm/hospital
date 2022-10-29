@@ -70,15 +70,19 @@
             {{ $sympt->symptom_name }}, 
         @endforeach
         {{ $record->symptoms_other }}
-        <br/>
+        <br>
     @endif
     
     @if($record->history)
         <p> Patient History</p>
         {{ $record->history }}
-        <br/>
+        <br>
     @endif
-    
+    @if($record->allergic_drugs)
+    <p> Allergic to Drugs</p>
+        {{ ($record->allergic_drugs) ? $record->allergic_drugs : '' }}
+    <br>
+    @endif
     @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $record->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $record->va_os))
     <p>Vision</p>
     <table width="100%" cellspacing="0" cellpadding="0">
@@ -107,7 +111,7 @@
         </tbody>
     </table>
     @endif
-    <br/>
+    <br>
     @if($keratometry)
         <p>Keratometry</p>
         <table width="100%" cellspacing="0" cellpadding="0">
@@ -136,7 +140,7 @@
                 </tr>
             </tbody>
         </table>
-    <br/>
+    <br>
     @endif
     @if($tonometry)
     <div>
@@ -161,7 +165,7 @@
             </tbody>
         </table>
     </div>
-    <br/>
+    <br>
     @endif    
     @if($ascan)
     <div>
@@ -178,10 +182,10 @@
             </tbody>
         </table>
     </div>
-    <br/>
+    <br>
     @endif
     @if($v_od_1 != 'Na' || $v_os_1 != 'Na')
-    <br/>
+    <br>
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
@@ -283,7 +287,7 @@
             </tr>
         </tbody>
     </table>
-    </br>
+    <br>
     @endif
     @if($v_od_3 != 'Na' || $v_os_3 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -302,7 +306,7 @@
             </tr>
         </tbody>
     </table>
-    </br>
+    <br>
     @endif
     @if($v_od_4 != 'Na' || $v_os_4 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -321,7 +325,7 @@
             </tr>
         </tbody>
     </table>
-    </br>
+    <br>
     @endif
     @if($record->gonio_od_top || $record->gonio_od_left || $record->gonio_od_right || $record->gonio_od_bottom || $record->gonio_os_top || $record->gonio_os_left || $record->gonio_os_right || $record->gonio_os_bottom || $record->gonio_od || $record->gonio_os)
     <p>Gonioscopy</p>
@@ -346,12 +350,12 @@
             <tr><td class="text-center">{{ $record->gonio_od }}</td><td class="text-center">{{ $record->gonio_os }}</td></tr>
         </tbody>
     </table>
-    </br>
+    <br>
     @endif
     @if($record->signs)
     <p> Signs</p>
         {{ $record->signs }}
-    </br>
+    <br>
     @endif
     @if(($retina_od && $retina_od[0]->retina_img) || ($retina_os && $retina_os[0]->retina_img))
     @php
@@ -387,7 +391,7 @@
     @if($record->doctor_recommondations)
     <p>Doctor Recommendations</p>
     {{ $record->doctor_recommondations }}
-    <br />
+    <br>
     @endif
     @if(count($medicines) > 0)
     <p> Medicine / Lab Advised</p>
@@ -409,13 +413,13 @@
         @endforeach
         </tbody>
     </table>
-    <br />
+    <br>
     @endif
     <table width="100%" class="no-border">
         <tr><th>{{ ($record->is_patient_admission == 'sel') ? '' : 'Admission Advised:' }}</th><th>{{ ($record->is_patient_surgery == 'sel') ? '' : 'Surgery Advised:' }} </th><th class="text-right">{{ ($record->review_date) ? 'Review Date:' : '' }}</th></tr>
         <tr><th>{{ ($record->is_patient_admission == 'sel') ? '' : $record->is_patient_admission }}</th><th>{{ ($record->is_patient_surgery == 'sel') ? '' : $record->is_patient_surgery }}</th><th class="text-right">{{ ($record->review_date) ? date('d/M/Y', strtotime($record->review_date)) : '' }}</th></tr>
     </table>
-    <br />
+    <br>
     <div class="text-right">{{ $doctor->doctor_name }}<br/>{{ $doctor->designation }}<br/>Reg. No: {{ $doctor->reg_no }}</div>
 </body>
 </html>
