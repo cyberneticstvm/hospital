@@ -67,6 +67,12 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                    <label class="form-label">Is allergic to any drugs?</label>
+                                    <textarea class="form-control form-control-md" name="allergic_drugs" rows="5" placeholder="Please specify if any" >{{ $record->allergic_drugs }}</textarea>
+                                </div>
+                            </div>
                             <div class="row mt-3">
                                 <div class="col-sm-6 table-responsive">
                                     <label class="form-label">Vision</label>
@@ -1147,13 +1153,7 @@
                                     <small class="text-danger">{{ $errors->first('doctor_recommondations') }}</small>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-12">
-                                    <label class="form-label">Is allergic to any drugs?</label>
-                                    <textarea class="form-control form-control-md" name="allergic_drugs" rows="5" placeholder="Please specify if any" >{{ $record->allergic_drugs }}</textarea>
-                                </div>
-                            </div>
+                            </div>                            
                                 @if($medicine_record->isEmpty())                                    
                                     <div class="row mb-3">
                                         <input type='hidden' name='price[]' value='0.00' />

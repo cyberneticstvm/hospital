@@ -55,7 +55,13 @@ class DashboardController extends Controller
 
         $day_tot_income = $this->getDayTotal();
 
-        return view('dash', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp'));
+        if(Auth::user()->roles->first()->name == 'Admin'):
+            return view('dash', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp'));
+        elseif(Auth::user()->roles->first()->name == 'Accounts'):
+            return view('dash-accounts', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp'));
+        else:
+            return view('dash-other', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp'));
+        endif;
     }
 
     private function getDayTotal(){
