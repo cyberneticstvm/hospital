@@ -34,16 +34,23 @@ class PatientReferenceController extends Controller
         $date_diff = PRef::where('patient_id', $pid)->select(DB::raw("IFNULL(DATEDIFF(now(), created_at), 0) as days, status, consultation_type"))->latest()->first();
         $diff = ($date_diff && $date_diff['days'] > 0) ? $date_diff['days'] : 0;
         $cstatus = ($date_diff && $date_diff['status'] > 0) ? $date_diff['status'] : 0;
-        if($diff == 0 || $diff > $days || ($diff < $days && $cstatus == 0) || ($diff < $days && $date_diff['consultation_type'] == 2) || ($diff < $days && $date_diff['consultation_type'] == 4) || ($diff < $days && $date_diff['consultation_type'] == 5)): 
+        if($diff == 0 || $diff > $days || ($diff < $days && $cstatus == 0) || ($diff < $days && $date_diff['consultation_type'] == 2) || ($diff < $days && $date_diff['consultation_type'] == 4) || ($diff < $days && $date_diff['consultation_type'] == 5) || ($diff < $days && $date_diff['consultation_type'] == 6)): 
             // $diff = 0 means first consultation, $diff<$days and cstatus means the patient might be cancelled the consultation
             $doc_fee = $fee; 
         endif;
-        if($ctype == 2 || $ctype == 4 || $ctype == 5):
+        if($ctype == 2 || $ctype == 4 || $ctype == 5 || $ctype == 6):
             $doc_fee = 0.00; // ctype 2/4/5 means purpose of visit is Certificate/Camp/Vision Examination and no consultation fee for that.
         endif;
         return $doc_fee; 
     }
 
+    private function getRegistrationFee($branch, $ctype){        
+        $fee = DB::table('branches')->where('id', $branch)->value('registration_fee');
+        if($ctype == 1 || $ctype == 3):
+            return $fee;
+        endif;
+        return 0;
+    }
     public function index()
     {
         $patients = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->select('pr.id as reference_id', 'pr.status', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.patient_id as pno', 'doctors.doctor_name', DB::Raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->where('pr.branch', $this->branch)->whereDate('pr.created_at', Carbon::today())->orderByDesc('pmr.id')->get();
@@ -83,11 +90,12 @@ class PatientReferenceController extends Controller
         $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
         $input['created_by'] = $request->user()->id;
         $input['status'] = 1; //active
+        $reg_fee = $this->getRegistrationFee($this->branch, $request->consultation_type);
         $input['branch'] = $this->branch;
         $token = PRef::where('department_id', $request->department_id)->where('branch', $this->branch)->whereDate('created_at', Carbon::today())->max('token');
         $input['token'] = ($token > 0) ? $token+1 : 1;
         $reference = PRef::create($input);
-        PReg::where(['id' => $request->pid])->update(['is_doctor_assigned' => 1]);
+        PReg::where(['id' => $request->pid])->update(['is_doctor_assigned' => 1, 'registration_fee' => $reg_fee]);
         return redirect()->route('consultation.patient-reference')->with('success','Doctor Assigned successfully');
     }
 
@@ -151,11 +159,12 @@ class PatientReferenceController extends Controller
         $input['created_by'] = $reference->getOriginal('created_by');
         $input['branch'] = $reference->getOriginal('branch');
         $input['status'] = ($request->status) ? 0 : 1;
+        $reg_fee = $this->getRegistrationFee($reference->getOriginal('branch'), $request->consultation_type);
         $token = $reference->getOriginal('token');//PRef::where('department_id', $request->department_id)->where('branch', $request->session()->get('branch'))->whereDate('created_at', Carbon::today())->max('token');
         //$input['token'] = ($token > 0) ? $token+1 : 1;
         $reference->update($input);
         DB::table('patient_medical_records')->where('mrn', $id)->update(['status' => $input['status']]);
-        return redirect()->route('consultation.patient-reference')->with('success','Doctor Updated successfully');
+        return redirect()->route('consultation.patient-reference')->with('success','Record Updated successfully');
     }
 
     /**
