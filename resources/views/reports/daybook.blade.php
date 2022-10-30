@@ -49,7 +49,6 @@
                                 <div class="col-sm-4">
                                     <label class="form-label">Branch<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="branch">
-                                    <option value="">Select</option>
                                     @foreach($branches as $key => $branch)
                                         <option value="{{ $branch->id }}" {{ ($inputs && $inputs[2] == $branch->id) ? 'selected'  : '' }}>{{ $branch->branch_name }}</option>
                                     @endforeach
@@ -94,10 +93,10 @@
                                 <td>7</td><td>Income from Pharmacy</td><td class="text-end">{{ number_format($medicine, 2) }}</td><td class="text-right text-danger"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="medicineModal" data-bs-target="#medicineModal" data-title="Pharmacy Income Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="medicine">{{ number_format($medicine, 2) }}</a></td>       
                             </tr>
                             <tr>
-                                <td>6</td><td>Income from Vision</td><td class="text-end text-danger">{{ number_format($vision, 2) }}</td><td class="text-right text-danger">{{ number_format($vision, 2) }}</td>       
+                                <td>8</td><td>Income from Vision</td><td class="text-end text-danger">{{ number_format($vision, 2) }}</td><td class="text-right text-danger">{{ number_format($vision, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td>8</td><td>Income from Other Sources</td><td class="text-end text-primary">{{ number_format($income, 2) }}</td><td></td>       
+                                <td>9</td><td>Income from Other Sources</td><td class="text-end text-primary">{{ number_format($income, 2) }}</td><td></td>       
                             </tr>
                             <tr>
                                 <td colspan="2" class="text-end fw-bold">Grand Total</td><td class="text-end fw-bold">{{ number_format($income_total, 2) }}</td><td class="text-end text-danger">{{ number_format($rtot, 2) }}</td>       
