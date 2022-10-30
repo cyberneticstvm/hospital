@@ -29,6 +29,9 @@ class HelperController extends Controller
         if($request->type == 'medicine'):
             $html = $this->getMedicineDetailed($fdate, $tdate, $branch);
         endif;
+        if($request->type == 'vision'):
+            $html = $this->getVisionDetailed($fdate, $tdate, $branch);
+        endif;
         if($request->type == 'incomecash'):
             $html = $this->getIncomeCashDetailed($fdate, $tdate, $branch);
         endif;
@@ -103,6 +106,24 @@ class HelperController extends Controller
         $c = 1; $tot = 0;
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Date</th><th>Amount</th></tr></thead><tbody>";
         foreach($medicine as $key => $record):
+            $html .= "<tr>";
+                $html .= "<td>".$c++."</td>";
+                $html .= "<td>".$record->mrid."</td>";
+                $html .= "<td>".$record->patient_name."</td>";
+                $html .= "<td>".$record->patient_id."</td>";
+                $html .= "<td>".$record->cdate."</td>";
+                $html .= "<td class='text-end'>".$record->fee."</td>";
+            $html .= "</tr>";
+            $tot += $record->fee;
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='5' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>".number_format($tot, 2)."</td></tr></tfoot></table>";
+        return $html;
+    }
+    function getVisionDetailed($fdate, $tdate, $branch){
+        $vision = DB::table('spectacles as s')->leftJoin('patient_medical_records as m', 'm.id', '=', 's.medical_record_id')->leftJoin('patient_registrations as p', 'm.patient_id', '=', 'p.id')->where('m.branch', $branch)->where('s.fee', '>', 0)->whereBetween('s.created_at', [$fdate, $tdate])->select('p.patient_name', 'p.patient_id', 'm.id as mrid', 's.fee', DB::raw("DATE_FORMAT(s.created_at, '%d/%b/%Y') AS cdate"))->get();
+        $c = 1; $tot = 0;
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Date</th><th>Amount</th></tr></thead><tbody>";
+        foreach($vision as $key => $record):
             $html .= "<tr>";
                 $html .= "<td>".$c++."</td>";
                 $html .= "<td>".$record->mrid."</td>";

@@ -93,7 +93,7 @@
                                 <td>7</td><td>Income from Pharmacy</td><td class="text-end">{{ number_format($medicine, 2) }}</td><td class="text-right text-danger"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="medicineModal" data-bs-target="#medicineModal" data-title="Pharmacy Income Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="medicine">{{ number_format($medicine, 2) }}</a></td>       
                             </tr>
                             <tr>
-                                <td>8</td><td>Income from Vision</td><td class="text-end text-danger">{{ number_format($vision, 2) }}</td><td class="text-right text-danger">{{ number_format($vision, 2) }}</td>       
+                                <td>8</td><td>Income from Vision</td><td class="text-end text-danger">{{ number_format($vision, 2) }}</td><td class="text-right text-danger"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="visionModal" data-bs-target="#visionModal" data-title="Vision Income Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="vision">{{ number_format($vision, 2) }}</a></td>       
                             </tr>
                             <tr>
                                 <td>9</td><td>Income from Other Sources</td><td class="text-end text-primary">{{ number_format($income, 2) }}</td><td></td>       
@@ -225,6 +225,19 @@
     </div>
 </div>
 <div class="modal fade" id="incomePendingdModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row"><div class="col-md-12 table-responsive dayBookDetailed"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="visionModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
