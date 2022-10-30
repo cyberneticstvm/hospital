@@ -9,9 +9,12 @@
 <div class="card mb-4 border-0">
     <div class="card-body">
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Reg.Date</th><th>Medical Record</th><th>Review Date</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Reg.Date</th><th>diagnosis</t><th>Medical Record</th><th>Review Date</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($medical_records as $record)
+                @php 
+                $diagnosis = explode(',', $record->diagnosis);
+                @endphp
                 <tr class="{{ ($record->status == 0) ? 'text-decoration-line-through' : '' }}">
                     <td>{{ ++$i }}</td>
                     <td>{{ $record->id }}</td>
@@ -19,6 +22,7 @@
                     <td>{{ $record->patient_id }}</td>
                     <td>{{ $record->doctor_name }}</td>
                     <td>{{ $record->rdate }}</td>
+                    <td>{{ DB::table('diagnosis')->select(DB::raw("IFNULL(group_concat(diagnosis_name), 'Na') as names"))->whereIn('id', $diagnosis)->value('names'); }}</td>
                     <td class="text-center"><a href="/generate-medical-record/{{ $record->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>
                     <td>{{ $record->review_date }}</td>
                     @if($record->status == 1)
