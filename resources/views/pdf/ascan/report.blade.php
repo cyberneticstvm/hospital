@@ -33,14 +33,15 @@
         <tbody>
             <tr>
                 <td>Patient Name / ID / MR.ID</td>
-                <td>{{ $patient->patient_name }} / {{ $patient->patient_id }} / {{ $keratometry->medical_record_id }}</td>
-                <td>Date</td><td>{{ date('d/M/Y', strtotime($keratometry->created_at)) }}</td>
+                <td>{{ $patient->patient_name }} / {{ $patient->patient_id }} / {{ $ascan->medical_record_id }}</td>
+                <td>Date</td><td>{{ date('d/M/Y', strtotime($ascan->created_at)) }}</td>
             </tr>
             <tr><td>Address</td><td colspan="3">{{ $patient->address }}</td></tr>
         </tbody>
     </table>
     <br />
     <h3>Keratometry</h3>
+    @if($keratometry)
     <table class="bordered" width="100%" cellspacing="0" cellpadding="0">
         <thead><tr><th></th><th>K1(A)</th><th>AXIS</th><th>K2(A)</th><th>AXIS</th><th>K1(M)</th><th>AXIS</th><th>K2(M)</th><th>AXIS</th></tr></thead>
         <tbody>
@@ -52,6 +53,10 @@
             </tr>
         </tbody>
     </table>
+    @else
+    --
+    @endif
+    <br>
     <h3>A-Scan</h3>
     <table class="bordered" width="100%" cellspacing="0" cellpadding="0">
         <thead><tr><th>AXL</th><th>ACD</th><th>LENS</th><th>A-CONST.</th><th>IOL</th></tr></thead>

@@ -96,6 +96,9 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     Route::get('/search/patient/', [SearchController::class, 'searchPatient'])->name('search.patient');
     Route::post('/search/patient/', [SearchController::class, 'fetchPatient'])->name('fetch.patient');
+
+    Route::get('/search/kta/', [SearchController::class, 'searchKta'])->name('search.kta');
+    Route::post('/search/kta/', [SearchController::class, 'fetchKta'])->name('fetch.kta');
     // End Search //
 
     // Doctor Registration//

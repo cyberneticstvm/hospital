@@ -335,8 +335,8 @@ class PDFController extends Controller
     public function ascanreport($id){
         $ascan = DB::table('ascans')->find($id);
         $keratometry = DB::table('keratometries')->where('medical_record_id', $ascan->medical_record_id)->first();
-        $patient = DB::table('patient_registrations')->find($keratometry->patient_id);
-        $branch = DB::table('branches')->find($keratometry->branch);
+        $patient = DB::table('patient_registrations')->find($ascan->patient_id);
+        $branch = DB::table('branches')->find($ascan->branch);
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
         $pdf = PDF::loadView('/pdf/ascan/report', compact('qrcode', 'keratometry', 'patient', 'branch', 'ascan'));    
         return $pdf->stream('tonometry.pdf', array("Attachment"=>0));
