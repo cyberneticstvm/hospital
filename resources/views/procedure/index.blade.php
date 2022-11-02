@@ -25,7 +25,7 @@
                                 </div>                                
                                 <div class="col-sm-2">
                                     <label class="form-label">Fee<sup class="text-danger">*</sup></label>
-                                    <input type="number" value="{{ ($proc) ? $proc->fee : old('fee') }}" name="fee" class="form-control form-control-md" placeholder="0.00">
+                                    <input type="number" value="{{ ($proc) ? $proc->fee : old('fee') }}" name="fee" class="form-control form-control-md" step="any" placeholder="0.00">
                                     @error('fee')
                                     <small class="text-danger">{{ $errors->first('fee') }}</small>
                                     @enderror
