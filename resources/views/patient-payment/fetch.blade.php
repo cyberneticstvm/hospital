@@ -55,7 +55,7 @@
                             <div class="row g-4">
                                 <div class="col-sm-3">
                                     <label class="form-label">Amount<sup class="text-danger">*</sup></label>
-                                    <input type="number" name="amount" class="form-control form-control-md" placeholder="0.00">
+                                    <input type="number" name="amount" step="any" class="form-control form-control-md" placeholder="0.00">
                                     @error('amount')
                                     <small class="text-danger">{{ $errors->first('amount') }}</small>
                                     @enderror
