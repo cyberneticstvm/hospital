@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampMasterController;
+use App\Http\Controllers\OperationNoteController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SearchController;
@@ -388,6 +389,15 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::put('/campmaster/edit/{id}/', [CampMasterController::class, 'update'])->name('campmaster.update');
     Route::delete('/campmaster/delete/{id}/', [CampMasterController::class, 'destroy'])->name('campmaster.delete');
     // End Camp Master //
+
+    // Operation Notes //
+    Route::get('/operation-notes/', [OperationNoteController::class, 'index'])->name('onote.index');
+    Route::post('/operation-notes/show/', [OperationNoteController::class, 'show'])->name('onote.show');
+    Route::post('/operation-notes/create/', [OperationNoteController::class, 'store'])->name('onote.save');
+    Route::get('/operation-notes/edit/{id}/', [OperationNoteController::class, 'edit'])->name('onote.edit');
+    Route::put('/operation-notes/edit/{id}/', [OperationNoteController::class, 'update'])->name('onote.update');
+    Route::delete('/operation-notes/delete/{id}/', [OperationNoteController::class, 'destroy'])->name('onote.delete');
+    // end Operation Notes //
 
     // Reports //
     Route::get('/reports/daybook/', 'App\Http\Controllers\ReportController@showdaybook')->name('reports.showdaybook');
