@@ -479,7 +479,7 @@
     <br>
     @endif
     <table width="100%" class="no-border">
-        <tr><th>{{ ($mrecord->is_patient_admission == 'sel') ? '' : 'Admission Advised:' }}</th><th>{{ ($mrecord->is_patient_surgery == 'sel') ? '' : 'Surgery Advised:' }} </th><th class="text-right">Review Date: </th></tr>
+        <tr><th>{{ ($mrecord->is_patient_admission == 'sel') ? '' : 'Admission Advised:' }}</th><th>{{ ($mrecord->is_patient_surgery == 'sel') ? '' : 'Surgery Advised:' }} </th><th class="text-right">{{ ($record->review_date) ? 'Review Date:' : '' }}</th></tr>
         <tr><th>{{ ($mrecord->is_patient_admission == 'sel') ? '' : $mrecord->is_patient_admission }}</th><th>{{ ($mrecord->is_patient_surgery == 'sel') ? '' : $mrecord->is_patient_surgery }}</th><th class="text-right">{{ ($mrecord->review_date) ? date('d/M/Y', strtotime($mrecord->review_date)) : '' }}</th></tr>
     </table>
     <br>
