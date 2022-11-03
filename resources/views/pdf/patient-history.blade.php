@@ -61,6 +61,8 @@
         $tonometry = DB::table('tonometries')->where('medical_record_id', $mrecord->id)->first();
         $keratometry = DB::table('keratometries')->where('medical_record_id', $mrecord->id)->first();
         $ascan = DB::table('ascans')->where('medical_record_id', $mrecord->id)->first();
+        $onotes = DB::table('operation_notes')->where('medical_record_id', $mrecord->id)->first();
+
         $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.product_name', 'm.qty', 'm.dosage', 'm.duration', 'm.notes', 't.name', DB::raw("CASE WHEN m.eye='L' THEN 'Left Eye Only' WHEN m.eye='R' THEN 'Right Eye Only' ELSE 'Both' END AS eye"))->where('m.medical_record_id', $mrecord->id)->get();
         
         $labc = DB::table('lab_clinics as lc')->leftJoin('lab_types as lt', 'lc.lab_type_id', '=', 'lt.id')->where('lc.medical_record_id', $mrecord->id)->select('lt.lab_type_name', 'lc.notes', 'lc.lab_result', 'lc.tested_from')->get();
@@ -442,6 +444,11 @@
         @foreach($diagnosis as $diag)
             {{ $diag->diagnosis_name }}, 
         @endforeach
+    <br>
+    @endif
+    @if($onotes && $onotes->notes)
+        <p>Operation Notes</p>
+        {{ $onotes->notes }}
     <br>
     @endif
     @if($mrecord->doctor_recommondations)
