@@ -15,9 +15,9 @@
                         <form action="{{ route('patient.fetch') }}" method="post">
                             @csrf
                             <div class="row g-4">
-                                <div class="col-sm-2">
-                                    <label class="form-label">Patient ID<sup class="text-danger">*</sup></label>
-                                    <input type="number" value="{{ $search_term }}" name="search_term" class="form-control form-control-md" placeholder="Patient ID">
+                                <div class="col-sm-4">
+                                    <label class="form-label">ID/Mobile/Name<sup class="text-danger">*</sup></label>
+                                    <input type="number" value="{{ $search_term }}" name="search_term" class="form-control form-control-md" placeholder="ID/Mobile/Name">
                                     @error('search_term')
                                     <small class="text-danger">{{ $errors->first('search_term') }}</small>
                                     @enderror

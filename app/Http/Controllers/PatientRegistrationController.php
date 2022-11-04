@@ -113,8 +113,8 @@ class PatientRegistrationController extends Controller
         ]);
         $input = $request->all();
         $search_term = $request->search_term;
-        //$records = DB::table('patient_registrations')->select('*', DB::Raw("DATE_FORMAT(created_at, '%d/%b/%Y') AS rdate"))->where('patient_name', 'LIKE', "%{$search_term}%")->orWhere('patient_id', 'LIKE', "%{$search_term}%")->orWhere('mobile_number', 'LIKE', "%{$search_term}%")->orderByDesc('patient_registrations.id')->get();
-        $records = DB::table('patient_registrations')->select('*', DB::Raw("DATE_FORMAT(created_at, '%d/%b/%Y') AS rdate"))->where('patient_registrations.id', $search_term)->get();
+        $records = DB::table('patient_registrations')->select('*', DB::Raw("DATE_FORMAT(created_at, '%d/%b/%Y') AS rdate"))->where('patient_name', 'LIKE', "%{$search_term}%")->orWhere('patient_id', 'LIKE', "%{$search_term}%")->orWhere('mobile_number', 'LIKE', "%{$search_term}%")->orderByDesc('patient_registrations.id')->get();
+        /*$records = DB::table('patient_registrations')->select('*', DB::Raw("DATE_FORMAT(created_at, '%d/%b/%Y') AS rdate"))->where('patient_registrations.id', $search_term)->get();*/
 
         return view('patient.search', compact('records', 'search_term'));
     }
