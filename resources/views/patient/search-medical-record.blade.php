@@ -40,7 +40,7 @@
                         <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Mobile Number</th><th>Doctor</th><th>Reg.Date</th><th>Medical Record</th><th>Review Date</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
                         @php $i = 1; @endphp
                         @foreach($records as $record)
-                            <tr class="{{ ($record->status == 0) ? 'text-decoration-line-through' : '' }} {{ ($i == 0) ? 'bg-warning' : '' }}">
+                            <tr class="{{ ($record->status == 0) ? 'text-decoration-line-through' : '' }} {{ ($i == 1) ? 'bg-warning' : '' }}">
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $record->id }}</td>
                                 <td>{{ $record->patient_name }}</td>
