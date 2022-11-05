@@ -10,7 +10,7 @@
     <div class="card-body">
         <p class= "text-right my-3"><a href="/spectacle/fetch/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Optometrist</th><th>Date</th><th>Prescription</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Optometrist</th><th>Date</th><th>Receipt</th><th>Prescription</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($spectacles as $spectacle)
                 <tr>
@@ -20,6 +20,7 @@
                     <td>{{ $spectacle->patient_id }}</td>
                     <td>{{ $spectacle->optometrist }}</td>
                     <td>{{ $spectacle->pdate }}</td>
+                    <td><a href="/vision-receipt/{{ $spectacle->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>
                     <td><a href="/generate-spectacle-prescription/{{ $spectacle->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('spectacle.edit', $spectacle->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>

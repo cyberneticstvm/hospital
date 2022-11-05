@@ -343,4 +343,13 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/ascan/report', compact('qrcode', 'keratometry', 'patient', 'branch', 'ascan'));    
         return $pdf->stream('tonometry.pdf', array("Attachment"=>0));
     }
+    public function visionreceipt($id){
+        $spectacle = DB::table('spectacles')->find($id);
+        $pref = DB::table('patient_references')->find($spectacle->medical_record_id);
+        $patient = DB::table('patient_registrations')->find($pref->patient_id);
+        $branch = DB::table('branches')->find($pref->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
+        $pdf = PDF::loadView('/pdf/vision-receipt', compact('qrcode', 'spectacle', 'patient', 'branch', 'pref'));    
+        return $pdf->stream('vision-receipt.pdf', array("Attachment"=>0));
+    }
 }

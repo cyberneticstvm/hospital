@@ -437,6 +437,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/keratometry/report/{id}/', [PDFController::class, 'keratometryreport']);
     Route::get('/ascan/receipt/{id}/', [PDFController::class, 'ascanreceipt']);
     Route::get('/ascan/report/{id}/', [PDFController::class, 'ascanreport']);
+    Route::get('/vision-receipt/{id}/', [PDFController::class, 'visionreceipt']);
     // End PDFs //
 
     // Settings //
