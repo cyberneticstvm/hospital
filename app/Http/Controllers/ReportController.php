@@ -46,12 +46,18 @@ class ReportController extends Controller
         endif;
         return false;
     }
+    private function isCEO(){
+        if(Auth::user()->roles->first()->name == 'CEO'):
+            return true;
+        endif;
+        return false;
+    }
 
     public function showdaybook(){
         $branches = $this->getBranches($this->branch);
-        $is_admin = $this->isAdmin(); $is_accounts = $this->isAccounts();
+        $is_admin = $this->isAdmin(); $is_accounts = $this->isAccounts(); $isCEO = $this->isCEO();
         $records = []; $inputs = []; $reg_fee_total = 0.00; $consultation_fee_total = 0.00; $procedure_fee_total = 0.00; $certificate_fee_total = 0.00; $pharmacy = 0.00; $medicine = 0.00; $income = 0.00; $expense = 0.00; $income_total = 0.00; $income_received_cash = 0.00; $income_received_upi = 0.00; $income_received_card = 0.00; $income_received_staff = 0.00; $opening_balance = 0.00; $vision = 0.00;
-        return view('reports.daybook', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts'));
+        return view('reports.daybook', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO'));
     }
     public function fetchdaybook(Request $request){
         $this->validate($request, [
@@ -59,8 +65,8 @@ class ReportController extends Controller
             'todate' => 'required',
             'branch' => 'required',
         ]);
-        $branches = $this->getBranches($this->branch);
-        $is_admin = $this->isAdmin(); $is_accounts = $this->isAccounts();
+        $branches = $this->getBranches($this->branch); 
+        $is_admin = $this->isAdmin(); $is_accounts = $this->isAccounts(); $isCEO = $this->isCEO();
         $inputs = array($request->fromdate, $request->todate, $request->branch);
         $prev_day = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay()->subDays(1);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
@@ -95,7 +101,7 @@ class ReportController extends Controller
 
         $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $income;
 
-        return view('reports.daybook', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts'));
+        return view('reports.daybook', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO'));
     }
     public function showincomeexpense(){
         $branches = $this->getBranches($this->branch);
