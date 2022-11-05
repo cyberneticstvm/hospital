@@ -56,7 +56,6 @@
             <tr>
                 <td>SLNo.</td>
                 <td width="30%">ITEM NAME</td>
-                <td>Eye</td>
                 <td>HSN</td>
                 <td>BATCH</td>
                 <td>EXPIRY</td>
@@ -73,7 +72,6 @@
                 <tr>
                     <td>{{ $c++ }}</td>
                     <td>{{ $medicine->product_name }}</td>
-                    <td>{{ $medicine->eye }}</td>
                     <td>{{ $medicine->hsn }}</td>
                     <td>{{ $medicine->batch_number }}</td>
                     <td>{{ ($medicine->expiry_date) ? date('d/M/Y', strtotime($medicine->expiry_date)) : '' }}</td>
