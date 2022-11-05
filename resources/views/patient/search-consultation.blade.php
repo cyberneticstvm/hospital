@@ -41,7 +41,7 @@
                         @php $i = 0; @endphp
                         @foreach($records as $patient)
                             <tr class="{{ ($patient->status == 0) ? 'text-decoration-line-through' : '' }} {{ ($i == 0) ? 'bg-warning' : '' }}">
-                                <td>{{ ++$i }}</td>
+                                <td>{{ $i++ }}</td>
                                 <td>{{ $patient->medical_record_id }}</td>
                                 <td>{{ $patient->pname }}</td>
                                 <td>{{ $patient->pno }}</td>
