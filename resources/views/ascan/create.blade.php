@@ -26,14 +26,23 @@
                             <div class="row g-4">                                
                                 <div class="col-sm-12 table-responsive">
                                     <table class="table table-bordered">
-                                        <thead><tr><th>AXL<th>ACD</th><th>LENS</th><th>A-CONST.</th><th>IOL</th></tr></thead>
+                                        <thead><tr><th></th><th>AXL<th>ACD</th><th>LENS</th><th>A-CONST.</th><th>IOL</th></tr></thead>
                                         <tbody>
                                             <tr>
-                                                <td><input type="text" name="axl" class="form-control" placeholder="Axl" /></td>
-                                                <td><input type="text" name="acd" class="form-control" placeholder="Acd" /></td>
-                                                <td><input type="text" name="lens" class="form-control" placeholder="Lens" /></td>
-                                                <td><input type="text" name="a_constant" class="form-control" placeholder="A-Constant" /></td>
-                                                <td><input type="text" name="iol_power" class="form-control" placeholder="IOL Power" /></td>
+                                                <td>OD</td>
+                                                <td><input type="text" name="od_axl" class="form-control" placeholder="Axl" /></td>
+                                                <td><input type="text" name="od_acd" class="form-control" placeholder="Acd" /></td>
+                                                <td><input type="text" name="od_lens" class="form-control" placeholder="Lens" /></td>
+                                                <td><input type="text" name="od_a_constant" class="form-control" placeholder="A-Constant" /></td>
+                                                <td><input type="text" name="od_iol_power" class="form-control" placeholder="IOL Power" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>OS</td>
+                                                <td><input type="text" name="os_axl" class="form-control" placeholder="Axl" /></td>
+                                                <td><input type="text" name="os_acd" class="form-control" placeholder="Acd" /></td>
+                                                <td><input type="text" name="os_lens" class="form-control" placeholder="Lens" /></td>
+                                                <td><input type="text" name="os_a_constant" class="form-control" placeholder="A-Constant" /></td>
+                                                <td><input type="text" name="os_iol_power" class="form-control" placeholder="IOL Power" /></td>
                                             </tr>
                                         </tbody>
                                     </table>

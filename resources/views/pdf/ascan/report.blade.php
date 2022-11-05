@@ -59,10 +59,13 @@
     <br>
     <h3>A-Scan</h3>
     <table class="bordered" width="100%" cellspacing="0" cellpadding="0">
-        <thead><tr><th>AXL</th><th>ACD</th><th>LENS</th><th>A-CONST.</th><th>IOL</th></tr></thead>
+        <thead><tr><th></th><th>AXL</th><th>ACD</th><th>LENS</th><th>A-CONST.</th><th>IOL</th></tr></thead>
         <tbody>
             <tr>
-                <td>{{ $ascan->axl }}</td><td>{{ $ascan->acd }}</td><td>{{ $ascan->lens }}</td><td>{{ $ascan->a_constant }}</td><td>{{ $ascan->iol_power }}</td>
+                <td>OD</td><td>{{ $ascan->od_axl }}</td><td>{{ $ascan->od_acd }}</td><td>{{ $ascan->od_lens }}</td><td>{{ $ascan->od_a_constant }}</td><td>{{ $ascan->od_iol_power }}</td>
+            </tr>
+            <tr>
+                <td>OS</td><td>{{ $ascan->os_axl }}</td><td>{{ $ascan->os_acd }}</td><td>{{ $ascan->os_lens }}</td><td>{{ $ascan->os_a_constant }}</td><td>{{ $ascan->os_iol_power }}</td>
             </tr>
         </tbody>
     </table>
