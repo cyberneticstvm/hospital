@@ -28,3 +28,6 @@
     font-weight: 600;
     color: #4c7d93;
 }
+.text-highlight td{
+    color: blue !important;
+}
