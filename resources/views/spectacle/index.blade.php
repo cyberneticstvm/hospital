@@ -20,7 +20,11 @@
                     <td>{{ $spectacle->patient_id }}</td>
                     <td>{{ $spectacle->optometrist }}</td>
                     <td>{{ $spectacle->pdate }}</td>
+                    @if($spectacle->consultation_type == 5)
                     <td><a href="/vision-receipt/{{ $spectacle->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>
+                    @else
+                    <td></td>
+                    @endif
                     <td><a href="/generate-spectacle-prescription/{{ $spectacle->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('spectacle.edit', $spectacle->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
