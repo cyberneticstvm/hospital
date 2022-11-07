@@ -51,7 +51,7 @@
                                                     <input type="number" class="form-control form-control-md text-right" placeholder="0" name="qty[]" value="{{ $medicine->qty }}" required='required' />
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="price[]" value="{{ $medicine->price }}" required='required' />
+                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="price[]" step="any" value="{{ $medicine->price }}" required='required' />
                                                 </td>
                                                 <td>
                                                     <input type="number" step="any" class="form-control form-control-md text-right" placeholder="0" name="discount[]" value="{{ $medicine->discount }}" />
