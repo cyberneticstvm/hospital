@@ -61,6 +61,25 @@
                                     <small class="text-danger">{{ $errors->first('surgeon') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Surgery Fee </label>
+                                    <input type="number" value="{{ $surgery->surgery_fee }}" name="surgery_fee" class="form-control form-control-md" placeholder="0.00">
+                                    @error('surgery_fee')
+                                    <small class="text-danger">{{ $errors->first('surgery_fee') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Surgery Status <sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="status" >
+                                        <option value="">Select</option>
+                                        @foreach($status as $st)
+                                        <option value="{{ $st->id }}" {{ ($st->id == $surgery->status) ? 'selected' : '' }}>{{ $st->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('status')
+                                    <small class="text-danger">{{ $errors->first('status') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">Remarks </label>
                                     <input type="text" value="{{ $surgery->remarks }}" name="remarks" class="form-control form-control-md" placeholder="Remarks">

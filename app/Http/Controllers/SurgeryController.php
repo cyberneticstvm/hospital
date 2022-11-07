@@ -77,7 +77,8 @@ class SurgeryController extends Controller
         $surgery = Surgery::find($id);
         $patient = DB::table('patient_registrations')->find($surgery->patient_id);
         $doctor = DB::table('doctors')->find($surgery->doctor_id);
-        return view('surgery.edit', compact('surgery', 'stypes', 'patient', 'doctor', 'doctors'));
+        $status = DB::table('types')->where('category', 'surgery')->get();
+        return view('surgery.edit', compact('surgery', 'stypes', 'patient', 'doctor', 'doctors', 'status'));
     }
 
     /**

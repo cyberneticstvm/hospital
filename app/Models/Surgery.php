@@ -19,6 +19,8 @@ class Surgery extends Model
         'surgery_type',
         'surgeon',
         'remarks',
+        'status',
+        'surgery_fee',
         'updated_by'
     ];
 }
