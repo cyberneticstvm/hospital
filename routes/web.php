@@ -431,6 +431,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/license/vision/{id}/', [PDFController::class, 'visioncertificate']);
     Route::get('/license/medical/{id}/', [PDFController::class, 'medicalcertificate']);
     Route::get('/camp/print/{id}/', [PDFController::class, 'campprint']);
+    Route::get('/campmaster/print/{id}/', [PDFController::class, 'campmasterprint']);
     Route::get('/tonometry/receipt/{id}/', [PDFController::class, 'tonometryreceipt']);
     Route::get('/tonometry/report/{id}/', [PDFController::class, 'tonometryreport']);
     Route::get('/keratometry/receipt/{id}/', [PDFController::class, 'keratometryreceipt']);
