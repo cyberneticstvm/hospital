@@ -47,7 +47,7 @@
                 <td>OD</td><td>{{ $keratometry->k1_od_auto }}</td><td>{{ $keratometry->k1_od_axis_a }}</td><td>{{ $keratometry->k2_od_auto }}</td><td>{{ $keratometry->k2_od_axis_a }}</td><td>{{ $keratometry->k1_od_manual }}</td><td>{{ $keratometry->k1_od_axis_m }}</td><td>{{ $keratometry->k2_od_manual }}</td><td>{{ $keratometry->k2_od_axis_m }}</td>
             </tr>
             <tr>
-                <td>OS</td><td>{{ $keratometry->k1_os_auto }}</td><td>{{ $keratometry->k1_os_axis_a }}</td><td>{{ $keratometry->k2_os_auto }}</td><td>{{ $keratometry->k2_os_axis_a }}</td><td>{{ $keratometry->k2_os_manual }}</td><td>{{ $keratometry->k2_os_axis_m }}</td><td>{{ $keratometry->k2_os_manual }}</td><td>{{ $keratometry->k2_os_axis_m }}</td>
+                <td>OS</td><td>{{ $keratometry->k1_os_auto }}</td><td>{{ $keratometry->k1_os_axis_a }}</td><td>{{ $keratometry->k2_os_auto }}</td><td>{{ $keratometry->k2_os_axis_a }}</td><td>{{ $keratometry->k1_os_manual }}</td><td>{{ $keratometry->k1_os_axis_m }}</td><td>{{ $keratometry->k2_os_manual }}</td><td>{{ $keratometry->k2_os_axis_m }}</td>
             </tr>
         </tbody>
     </table>
