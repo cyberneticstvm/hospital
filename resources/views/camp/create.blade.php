@@ -34,7 +34,7 @@
                                     <small class="text-danger">{{ $errors->first('camp_date') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-3">
                                     <label class="form-label">Patient Name<sup class="text-danger">*</sup></label>
                                     <input type="text" value="{{ old('patient_name') }}" name="patient_name" class="form-control form-control-md" placeholder="Patient Name">
                                     @error('patient_name')
@@ -57,6 +57,14 @@
                                         <option value="O">Other</option>
                                     </select>
                                 </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="text" value="{{ old('phone_number') }}" maxlength="10" name="phone_number" class="form-control form-control-md" placeholder="Phone Number">
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Address</label>
+                                    <input type="text" value="{{ old('address') }}" name="address" class="form-control form-control-md" placeholder="Address">
+                                </div>                                
                                 <div class="col-sm-3">
                                     <label class="form-label">Further Investigation Required</label>
                                     <select class="form-control" name="treatment_required">
@@ -77,9 +85,13 @@
                                     <label class="form-label">Yearly Eye Test Advised</label>
                                     <select class="form-control" name="yearly_test_advised">
                                         <option value="0">Select</option>
-                                        <option value="1">Yes</option>
+                                        <option value="1" selected>Yes</option>
                                         <option value="0">No</option>
                                     </select>
+                                </div>
+                                <div class="col-sm-5">
+                                    <label class="form-label">Notes</label>
+                                    <input type="text" value="{{ old('notes') }}" name="notes" class="form-control form-control-md" placeholder="Notes">
                                 </div>
                                 <div class="col-sm-12 table-responsive">
                                     <table class="table table-bordered">

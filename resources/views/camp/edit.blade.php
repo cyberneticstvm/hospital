@@ -57,6 +57,14 @@
                                         <option value="O" {{ ($camp->gender == 'O') ? 'selected' : '' }}>Other</option>                                        
                                     </select>
                                 </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="text" value="{{ $camp->phone_number }}" maxlength="10" name="phone_number" class="form-control form-control-md" placeholder="Phone Number">
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Address</label>
+                                    <input type="text" value="{{ $camp->address }}" name="address" class="form-control form-control-md" placeholder="Address">
+                                </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Further Investigation Required</label>
                                     <select class="form-control" name="treatment_required">
@@ -77,6 +85,10 @@
                                         <option value="0" {{ ($camp->yearly_test_advised == 0) ? 'selected' : '' }}>No</option>
                                         <option value="1" {{ ($camp->yearly_test_advised == 1) ? 'selected' : '' }}>Yes</option>                                        
                                     </select>
+                                </div>
+                                <div class="col-sm-5">
+                                    <label class="form-label">Notes</label>
+                                    <input type="text" value="{{ $camp->notes }}" name="notes" class="form-control form-control-md" placeholder="Notes">
                                 </div>
                                 <div class="col-sm-12 table-responsive">
                                     <table class="table table-bordered">
