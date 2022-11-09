@@ -124,11 +124,11 @@ class ReportController extends Controller
         if($request->type == 'I'):
             $records = DB::table('incomes as i')->leftJoin('income_expense_heads as h', 'i.head', '=', 'h.id')->leftJoin('branches as b', 'i.branch', '=', 'b.id')->select('i.id', DB::raw("DATE_FORMAT(i.created_at, '%d/%b/%Y') AS cdate"), 'i.description', 'i.amount', DB::raw("'Income' AS type"), 'b.branch_name', 'h.name')->whereBetween('i.created_at', [$startDate, $endDate])->when($request->head > 0, function($query) use ($request){
                 return $query->where('i.head', $request->head);
-            })->orderBy('i.created_at')->get();
+            })->where('i.branch', $request->branch)->orderBy('i.created_at')->get();
         else:
             $records = DB::table('expenses as e')->leftJoin('income_expense_heads as h', 'e.head', '=', 'h.id')->leftJoin('branches as b', 'e.branch', '=', 'b.id')->select('e.id', DB::raw("DATE_FORMAT(e.created_at, '%d/%b/%Y') AS cdate"), 'e.description', 'e.amount', DB::raw("'Expense' AS type"), 'b.branch_name', 'h.name')->whereBetween('e.created_at', [$startDate, $endDate])->when($request->head > 0, function($query) use ($request){
                 return $query->where('e.head', $request->head);
-            })->orderBy('e.created_at')->get();
+            })->where('e.branch', $request->branch)->orderBy('e.created_at')->get();
         endif;
         return view('reports.income-expense', compact('branches', 'records', 'inputs', 'heads'));
     }
