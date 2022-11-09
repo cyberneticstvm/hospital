@@ -128,7 +128,7 @@
                                         <input type="number" name="qty[]" class="form-control form-control-md" placeholder="0" value="{{ $purchase->qty }}" required='required'>
                                     </div>
                                     <div class="col-sm-1">
-                                        <label class="form-label">MRP<sup class="text-danger">*</sup></label>
+                                        @if($c == 1)<label class="form-label">MRP<sup class="text-danger">*</sup></label>@endif
                                         <input type="number" name="mrp[]" value="{{ $purchase->mrp }}" class="form-control form-control-md" placeholder="0.00" step="any" required='required'>
                                     </div>
                                     <div class="col-sm-1">

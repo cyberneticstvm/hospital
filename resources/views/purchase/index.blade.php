@@ -15,10 +15,10 @@
             @foreach($purchases as $purchase)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{ $purchase->name }}</td>
+                    <td>{{ $purchase->name }}</td>                    
+                    <td>{{ $purchase->invoice_number }}</td>
                     <td>{{ ($purchase->order_date) ? date('d/M/Y', strtotime($purchase->order_date)) : '' }}</td>
                     <td>{{ ($purchase->delivery_date) ? date('d/M/Y', strtotime($purchase->delivery_date)) : '' }}</td>
-                    <td>{{ $purchase->invoice_number }}</td>
                     <td><a class='btn btn-link' href="/"><i class="fa fa-eye text-warning"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('purchase.edit', $purchase->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
