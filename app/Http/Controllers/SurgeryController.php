@@ -28,7 +28,7 @@ class SurgeryController extends Controller
 
     public function index()
     {
-        $surgeries = DB::table('surgeries as s')->leftJoin('patient_registrations as p', 's.patient_id', '=', 'p.id')->leftJoin('doctors as d', 's.doctor_id', '=', 'd.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 's.medical_record_id')->leftJoin('surgery_types as st', 's.surgery_type', '=', 'st.id')->leftjoin('doctors as doc', 's.surgeon', '=', 'doc.id')->whereIn('s.status', [1,2])->selectRaw("s.id, p.id as pid, p.patient_name, p.mobile_number, p.patient_id, d.doctor_name, s.medical_record_id, DATE_FORMAT(s.surgery_date, '%d/%b/%Y') AS sdate, CASE WHEN pmr.is_patient_surgery = 'N' THEN 'No' ELSE 'Yes' END AS is_patient_surgery, st.surgery_name, doc.doctor_name as surgeon, s.eye, s.remarks")->orderByRaw('COALESCE(s.surgery_date)')->get();
+        $surgeries = DB::table('surgeries as s')->leftJoin('patient_registrations as p', 's.patient_id', '=', 'p.id')->leftJoin('doctors as d', 's.doctor_id', '=', 'd.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 's.medical_record_id')->leftJoin('surgery_types as st', 's.surgery_type', '=', 'st.id')->leftjoin('doctors as doc', 's.surgeon', '=', 'doc.id')->whereIn('s.status', [1,2])->selectRaw("s.id, p.id as pid, p.patient_name, p.mobile_number, p.patient_id, d.doctor_name, s.medical_record_id, DATE_FORMAT(s.surgery_date, '%d/%b/%Y') AS sdate, CASE WHEN pmr.is_patient_surgery = 'N' THEN 'No' ELSE 'Yes' END AS is_patient_surgery, st.surgery_name, doc.doctor_name as surgeon, s.eye, s.remarks")->orderByRaw('ISNULL(s.surgery_date), s.surgery_date ASC')->get();
         return view('surgery.index', compact('surgeries'));
     }
 
