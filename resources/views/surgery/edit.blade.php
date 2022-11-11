@@ -62,6 +62,18 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-2">
+                                    <label class="form-label">Eye <sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="eye" >
+                                        <option value="">Select</option>
+                                        <option value="right">Right</option>
+                                        <option value="left">Left</option>
+                                        <option value="both">Both</option>
+                                    </select>
+                                    @error('eye')
+                                    <small class="text-danger">{{ $errors->first('eye') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-2">
                                     <label class="form-label">Surgery Fee </label>
                                     <input type="number" value="{{ $surgery->surgery_fee }}" name="surgery_fee" class="form-control form-control-md" placeholder="0.00">
                                     @error('surgery_fee')
@@ -80,8 +92,8 @@
                                     <small class="text-danger">{{ $errors->first('status') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-6">
-                                    <label class="form-label">Remarks </label>
+                                <div class="col-sm-5">
+                                    <label class="form-label">Notes / Remarks </label>
                                     <input type="text" value="{{ $surgery->remarks }}" name="remarks" class="form-control form-control-md" placeholder="Remarks">
                                     @error('remarks')
                                     <small class="text-danger">{{ $errors->first('remarks') }}</small>

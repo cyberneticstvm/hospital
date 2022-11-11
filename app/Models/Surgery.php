@@ -18,6 +18,7 @@ class Surgery extends Model
         'surgery_date',
         'surgery_type',
         'surgeon',
+        'eye',
         'remarks',
         'status',
         'surgery_fee',
