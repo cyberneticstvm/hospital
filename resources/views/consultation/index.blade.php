@@ -14,7 +14,7 @@
             <div class="col-md-4"><h5 class="text-danger">Consultation Pending: {{ $ccount }}</h5></div>
         </div>
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Reg.Date</th><th>diagnosis</t><th>Medical Record</th><th>Review Date</th><th>Status</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Age</th><th>Doctor</th><th>Reg.Date</th><th>diagnosis</t><th>Medical Record</th><th>Review Date</th><th>Status</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($medical_records as $record)
                 @php 
@@ -25,6 +25,7 @@
                     <td>{{ $record->id }}</td>
                     <td>{{ $record->patient_name }}</td>
                     <td>{{ $record->patient_id }}</td>
+                    <td>{{ $record->age }}</td>
                     <td>{{ $record->doctor_name }}</td>
                     <td>{{ $record->rdate }}</td>                    
                     <td>{{ DB::table('diagnosis')->select(DB::raw("IFNULL(group_concat(diagnosis_name), 'Na') as names"))->whereIn('id', $diagnosis)->value('names'); }}</td>
