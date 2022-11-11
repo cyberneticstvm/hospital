@@ -8,8 +8,13 @@
 </div>
 <div class="card mb-4 border-0">
     <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-md-4"><h5 class="text-info">Total Consultation: {{ $ccount+$ccount1 }}</h5></div>
+            <div class="col-md-4"><h5 class="text-primary">Consultation Completed: {{ $ccount1 }}</h5></div>
+            <div class="col-md-4"><h5 class="text-danger">Consultation Pending: {{ $ccount }}</h5></div>
+        </div>
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Reg.Date</th><th>diagnosis</t><th>Medical Record</th><th>Review Date</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Reg.Date</th><th>diagnosis</t><th>Medical Record</th><th>Review Date</th><th>Status</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($medical_records as $record)
                 @php 
@@ -21,10 +26,11 @@
                     <td>{{ $record->patient_name }}</td>
                     <td>{{ $record->patient_id }}</td>
                     <td>{{ $record->doctor_name }}</td>
-                    <td>{{ $record->rdate }}</td>
+                    <td>{{ $record->rdate }}</td>                    
                     <td>{{ DB::table('diagnosis')->select(DB::raw("IFNULL(group_concat(diagnosis_name), 'Na') as names"))->whereIn('id', $diagnosis)->value('names'); }}</td>
                     <td class="text-center"><a href="/generate-medical-record/{{ $record->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>
                     <td>{{ $record->review_date }}</td>
+                    <td><i class="{{ ($record->cstatus == 'no') ? 'fa fa-times text-danger' : 'fa fa-check text-primary' }}"></i></td>
                     @if($record->status == 1)
                     <td><a class='btn btn-link' href="{{ route('medical-records.edit', $record->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     @else
