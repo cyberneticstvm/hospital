@@ -9,9 +9,9 @@
 <div class="card mb-4 border-0">
     <div class="card-body">
         <div class="row mb-3">
-            <div class="col-md-4"><h5 class="text-info">Total Consultation: {{ $ccount+$ccount1 }}</h5></div>
-            <div class="col-md-4"><h5 class="text-primary">Consultation Completed: {{ $ccount1 }}</h5></div>
-            <div class="col-md-4"><h5 class="text-danger">Consultation Pending: {{ $ccount }}</h5></div>
+            <div class="col-md-4"><h5 class="text-primary">Total Consultation: {{ $ccount+$ccount1 }}</h5></div>
+            <div class="col-md-4 text-center"><h5 class="text-warning">Consultation Completed: {{ $ccount1 }}</h5></div>
+            <div class="col-md-4 text-end"><h5 class="text-danger">Consultation Pending: {{ $ccount }}</h5></div>
         </div>
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
             <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Age</th><th>Doctor</th><th>Reg.Date</th><th>diagnosis</t><th>Medical Record</th><th>Review Date</th><th>Status</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
