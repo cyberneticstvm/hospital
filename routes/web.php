@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampMasterController;
 use App\Http\Controllers\OperationNoteController;
+use App\Http\Controllers\LetterheadController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SearchController;
@@ -399,6 +400,15 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::delete('/operation-notes/delete/{id}/', [OperationNoteController::class, 'destroy'])->name('onote.delete');
     // end Operation Notes //
 
+    // Letterheads //
+    Route::get('/letterheads/', [LetterheadController::class, 'index'])->name('letterheads.index');
+    Route::get('/letterhead/create/', [LetterheadController::class, 'create'])->name('letterhead.create');
+    Route::post('/letterhead/create/', [LetterheadController::class, 'store'])->name('letterhead.save');
+    Route::get('/letterhead/edit/{id}/', [LetterheadController::class, 'edit'])->name('letterhead.edit');
+    Route::put('/letterhead/edit/{id}/', [LetterheadController::class, 'update'])->name('letterhead.update');
+    Route::delete('/letterhead/delete/{id}/', [LetterheadController::class, 'destroy'])->name('letterhead.delete');
+    // end Letterheads //
+
     // Reports //
     Route::get('/reports/daybook/', 'App\Http\Controllers\ReportController@showdaybook')->name('reports.showdaybook');
     Route::post('/reports/daybook/', 'App\Http\Controllers\ReportController@fetchdaybook')->name('reports.fetchdaybook');
@@ -439,6 +449,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/ascan/receipt/{id}/', [PDFController::class, 'ascanreceipt']);
     Route::get('/ascan/report/{id}/', [PDFController::class, 'ascanreport']);
     Route::get('/vision-receipt/{id}/', [PDFController::class, 'visionreceipt']);
+    Route::get('/printletterhead/{id}/', [PDFController::class, 'printletterhead']);
     // End PDFs //
 
     // Settings //

@@ -352,4 +352,10 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/vision-receipt', compact('qrcode', 'spectacle', 'patient', 'branch', 'pref'));    
         return $pdf->stream('vision-receipt.pdf', array("Attachment"=>0));
     }
+    public function printletterhead($id){
+        
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
+        $pdf = PDF::loadView('/pdf/letterhead', compact('qrcode'));    
+        return $pdf->stream('letterhead.pdf', array("Attachment"=>0));
+    }
 }
