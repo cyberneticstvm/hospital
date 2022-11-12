@@ -41,7 +41,7 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Branch</th><th>Patient Name</th><th>Patient ID</th><th>Notes</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Branch</th><th>Patient Name</th><th>Patient ID</th><th>Print</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @foreach($mfitnesses as $mfit)
                             <tr>
@@ -50,7 +50,7 @@
                                 <td>{{ $mfit->branch_name }}</td>
                                 <td>{{ $mfit->patient_name }}</td>
                                 <td>{{ $mfit->patient_id }}</td>
-                                <td>{{ $mfit->notes }}</td>                                
+                                <td><a href="/medical-fitness/print/{{ $mfit->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>                                
                                 <td><a class='btn btn-link' href="{{ route('mfit.edit', $mfit->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                 <td>
                                     <form method="post" action="{{ route('mfit.delete', $mfit->id) }}">

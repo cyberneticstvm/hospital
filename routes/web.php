@@ -460,6 +460,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/ascan/report/{id}/', [PDFController::class, 'ascanreport']);
     Route::get('/vision-receipt/{id}/', [PDFController::class, 'visionreceipt']);
     Route::get('/printletterhead/{id}/', [PDFController::class, 'printletterhead']);
+    Route::get('/medical-fitness/print/{id}/', [PDFController::class, 'printmfit']);
     // End PDFs //
 
     // Settings //

@@ -26,7 +26,7 @@
                             <div class="row g-4">
                                 <div class="col-sm-12">
                                     <label class="form-label">Fitness Advice<sup class="text-danger">*</sup></label>
-                                    <textarea name="fitness_advice" class="form-control" rows="5" placeholder="Fitness Advice">{{ $surgery->fitness_advice }}</textarea>
+                                    <textarea name="fitness_advice" class="form-control" rows="5" placeholder="Fitness Advice">{{ ($surgery && $surgery->fitness_advice) ? $surgery->fitness_advice : '' }}</textarea>
                                     @error('fitness_advice')
                                     <small class="text-danger">{{ $errors->first('fitness_advice') }}</small>
                                     @enderror
