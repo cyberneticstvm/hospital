@@ -193,7 +193,7 @@ class LabRadiologyController extends Controller
                         if($request->hasFile('docs')):
                             foreach($request->file('docs') as $key => $doc):
                                 //$path = $doc->store('public/lab-docs/'.$id);
-                                $fname = 'lab-docs/'.$id.'/'.$doc->getClientOriginalName();
+                                $fname = 'labdocs/'.$id.'/'.$doc->getClientOriginalName();
                                 Storage::disk('public')->putFileAs($fname, $doc, '');
                                 $paths[$key] = $fname;
                             endforeach;                  
