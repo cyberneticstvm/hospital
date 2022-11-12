@@ -5,9 +5,7 @@
     <style>
         body{
             background-image:url('./storage/assets/images/letter-head.jpg');
-            background-repeat:no-repeat;
             width:100%;
-            height:100vh;
             background-size: cover;
         }
         .text-blue{

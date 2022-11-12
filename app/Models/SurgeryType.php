@@ -14,6 +14,7 @@ class SurgeryType extends Model
         'surgery_name',
         'description',
         'fee',
+        'fitness_advice',
         'created_by'
     ];
 }

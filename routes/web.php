@@ -5,6 +5,7 @@ use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampMasterController;
 use App\Http\Controllers\OperationNoteController;
 use App\Http\Controllers\LetterheadController;
+use App\Http\Controllers\MedicalFitnessController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SearchController;
@@ -408,6 +409,15 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::put('/letterhead/edit/{id}/', [LetterheadController::class, 'update'])->name('letterhead.update');
     Route::delete('/letterhead/delete/{id}/', [LetterheadController::class, 'destroy'])->name('letterhead.delete');
     // end Letterheads //
+
+    // Medical Fitness //
+    Route::get('/medical-fitness/', [MedicalFitnessController::class, 'index'])->name('mfit.index');
+    Route::post('/medical-fitness/show/', [MedicalFitnessController::class, 'show'])->name('mfit.show');
+    Route::post('/medical-fitness/create/', [MedicalFitnessController::class, 'store'])->name('mfit.save');
+    Route::get('/medical-fitness/edit/{id}/', [MedicalFitnessController::class, 'edit'])->name('mfit.edit');
+    Route::put('/medical-fitness/edit/{id}/', [MedicalFitnessController::class, 'update'])->name('mfit.update');
+    Route::delete('/medical-fitness/delete/{id}/', [MedicalFitnessController::class, 'destroy'])->name('mfit.delete');
+    // end Medical Fitness //
 
     // Reports //
     Route::get('/reports/daybook/', 'App\Http\Controllers\ReportController@showdaybook')->name('reports.showdaybook');

@@ -36,6 +36,13 @@
                                     <small class="text-danger">{{ $errors->first('fee') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-12">
+                                    <label class="form-label">Fitness Advice<sup class="text-danger">*</sup></label>
+                                    <textarea class="form-control" name="fitness_advice" placeholder="Default Fitness Advice">{{ old('fitness_advice') }}</textarea>
+                                    @error('fitness_advice')
+                                    <small class="text-danger">{{ $errors->first('fitness_advice') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
