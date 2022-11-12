@@ -21,7 +21,7 @@
                         <form action="{{ route('mfit.save') }}" method="post">
                             @csrf
                             <input type="hidden" name="medical_record_id" value="{{ $mrecord->id }}" />
-                            <input type="hidden" name="patient_id" value="{{ ($patient) ? $patient->id : 0 }}" />
+                            <input type="hidden" name="patient" value="{{ ($patient) ? $patient->id : 0 }}" />
                             <input type="hidden" name="branch" value="{{ $mrecord->branch }}" />
                             <div class="row g-4">
                                 <div class="col-sm-12">
