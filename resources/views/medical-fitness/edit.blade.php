@@ -18,7 +18,7 @@
                             <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ ($patient) ? $patient->patient_id : '' }}</h5></div>
                             <div class="col-sm-3">Branch: <h5 class="text-primary">{{ $branch->branch_name }}</h5></div>
                         </div>
-                        <form action="{{ route('mfit.update') }}" method="post">
+                        <form action="{{ route('mfit.update', $mfit->id) }}" method="post">
                             @csrf
                             @method("PUT")
                             <input type="hidden" name="medical_record_id" value="{{ $mrecord->id }}" />
