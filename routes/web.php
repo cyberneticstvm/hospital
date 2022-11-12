@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth']], function(){
     })->name('dash');*/
     Route::get('/dash/', [DashboardController::class, 'index'])->name('dash.index');
     Route::get('/patientOverview/', [DashboardController::class, 'patientOverview'])->name('dash.patientoverview');
+    Route::get('/patientmonth/', [DashboardController::class, 'patientMonth'])->name('dash.patientmonth');
     Route::get('/logout/', 'App\Http\Controllers\AuthController@userlogout');
     Route::post('store_branch_session', 'App\Http\Controllers\AuthController@store_branch_session')->name('store_branch_session');
 });

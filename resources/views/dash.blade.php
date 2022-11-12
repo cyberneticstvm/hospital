@@ -168,6 +168,19 @@
                             <div id="apexspark5"></div>
                         </div>
                     </div>
+                    <div class="col-lg-12 col-md-4 col-sm-12">
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
+                                <div>
+                                    <h6 class="card-title m-0">Patient Overview Last month (All Branches)</h6>
+                                    <small class="text-muted">Or you can <a href="#">sync data to Dashboard</a> to ensure your data is always up-to-date.</small>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="patientmonth"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- .row end -->
             </div>

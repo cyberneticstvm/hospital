@@ -101,4 +101,9 @@ class DashboardController extends Controller
 		LEFT JOIN patient_registrations p ON p.created_at >= date AND p.created_at < date + INTERVAL 1 MONTH GROUP BY date");
         return json_encode($patients);
     }
+
+    public function patientMonth(){
+        $patients = DB::table('patient_registrations')->selectRaw("COUNT(id) AS pcount, DAY(created_at) AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->groupBy('day')->orderByDesc('id')->get();
+        return json_encode($patients);
+    }
 }
