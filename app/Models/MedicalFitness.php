@@ -9,11 +9,11 @@ class MedicalFitness extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'surgery_type',
+    protected $fillable = [        
         'medical_record_id',
         'patient',
         'branch',
+        'fitness_advice',
         'notes',
         'created_by',
         'updated_by'
