@@ -54,7 +54,7 @@
                                 <div class="col-sm-5">
                                     <label class="form-label">Upload Result Doc.</label>
                                     <input class="form-control" type="file" name="docs[]" />
-                                    <small>Uploaded Doc: <a href="/{{ public_path().$lab_record->doc_path }}" target="_blank">{{ ($lab_record->doc_path) ? 'View' : '' }}</a></small>
+                                    <small>Uploaded Doc: <a href="{{ public_path().'/storage'.$lab_record->doc_path }}" target="_blank">{{ ($lab_record->doc_path) ? 'View' : '' }}</a></small>
                                 </div>                                                              
                             </div>
                             <div class="row mt-3">

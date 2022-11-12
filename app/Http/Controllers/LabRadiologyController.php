@@ -193,7 +193,7 @@ class LabRadiologyController extends Controller
                         if($request->hasFile('docs')):
                             foreach($request->file('docs') as $key => $doc):
                                 $path = $doc->store('public/lab-docs/'.$id);
-                                $paths[$key] = str_replace('public', 'storage', $path);
+                                $paths[$key] = str_replace('public', '', $path);
                             endforeach;                  
                         endif;
                         $paths[$i] = (isset($paths[$i]) && $paths[$i]) ? $paths[$i] : $lc->getOriginal('doc_path');
