@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('lab.radiology.result.update', $mrecord->id) }}" method="post">
+                        <form action="{{ route('lab.radiology.result.update', $mrecord->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method("PUT")
                             <input type="hidden" name="medical_record_id" value="{{ $mrecord->id }}" />
@@ -28,7 +28,7 @@
                             @php $c++; @endphp
                             <div class="row mt-3">
                                 <input type="hidden" name="lab_id[]" value="{{ $lab_record->id }}"/>
-                                <div class="col-sm-9">
+                                <div class="col-sm-4">
                                     <label class="form-label">Test<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2 selLabTest" data-placeholder="Select" name="test_id[]" disabled>
                                     <option value="">Select</option>
@@ -50,6 +50,11 @@
                                     @error('tested_from')
                                     <small class="text-danger">{{ $errors->first('tested_from') }}</small>
                                     @enderror
+                                </div>
+                                <div class="col-sm-5">
+                                    <label class="form-label">Upload Result Doc.</label>
+                                    <input class="form-control" type="file" name="docs[]" />
+                                    <small>Uploaded Doc: <a href="/{{ $lab_record->doc_path }}" target="_blank">{{ ($lab_record->doc_path) ? 'View' : '' }}</a></small>
                                 </div>                              
                             </div>
                             <div class="row mt-3">

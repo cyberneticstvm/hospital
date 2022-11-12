@@ -184,12 +184,20 @@ class LabRadiologyController extends Controller
     }
 
     public function updateresult(Request $request, $id){
-        $input = $request->all();
+        $input = $request->all(); $paths = [];
         try{
             if($input['lab_id']):
                 for($i=0; $i<count($input['lab_id']); $i++):
+                    $lc = LabRadiology::find($input['lab_id'][$i]);
                     if($input['lab_id'][$i] > 0):
-                        LabRadiology::where(['medical_record_id' => $id, 'id' => $input['lab_id'][$i]])->update(['lab_result' => $input['lab_result'][$i], 'result_updated_on' => Carbon::now()->toDateTimeString(), 'updated_by' => $request->user()->id]);
+                        if($request->hasFile('docs')):
+                            foreach($request->file('docs') as $key => $doc):
+                                $path = $doc->store('public/lab-docs/'.$id);
+                                $paths[$key] = str_replace('public', 'storage', $path);
+                            endforeach;                  
+                        endif;
+                        $paths[$i] = (isset($paths[$i]) && $paths[$i]) ? $paths[$i] : $lc->getOriginal('doc_path');
+                        LabRadiology::where(['medical_record_id' => $id, 'id' => $input['lab_id'][$i]])->update(['lab_result' => $input['lab_result'][$i], 'doc_path' => $paths[$i], 'result_updated_on' => Carbon::now()->toDateTimeString(), 'updated_by' => $request->user()->id]);
                     endif;
                 endfor;
             endif;
