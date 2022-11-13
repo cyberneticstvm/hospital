@@ -197,11 +197,11 @@
                             <div class="card-header border">
                                 <div class="d-flex flex-row align-items-center">
                                     <div>
-                                        <h6 class="mb-0 fw-bold">{{ number_format($income_monthly, 2) }}</h6>
+                                        <h6 class="mb-0 fw-bold">₹ {{ number_format($income_monthly, 2) }}</h6>
                                         <small class="text-muted font-11">Income</small>
                                     </div>
                                     <div class="ms-lg-5 ms-md-4 ms-3">
-                                        <h6 class="mb-0 fw-bold">{{ number_format($expense_monthly, 2) }}</h6>
+                                        <h6 class="mb-0 fw-bold">₹ {{ number_format($expense_monthly, 2) }}</h6>
                                         <small class="text-muted font-11">Expenses</small>
                                     </div>
                                 </div>
