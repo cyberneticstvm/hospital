@@ -134,7 +134,7 @@ $(function() {
             colors: ['var(--chart-color1)', '#FFA500'],
             chart: {
                 type: 'bar',
-                height: 280,
+                height: 350,
                 toolbar: {
                     show: false,
                 },
@@ -178,5 +178,70 @@ $(function() {
             },
         };
         new ApexCharts(document.querySelector("#incomeexpense"), options).render();
+    });
+
+    $.getJSON('/reviewmonth/', function(response){        
+        var arr = response;
+        var dayArr = []; var pArr = [];
+        dayArr = arr.map(function(el){
+            return el.day
+        });
+        pArr = arr.map(function(el){
+            return el.pcount
+        });        
+        var options = {
+            chart: {
+                height: 400,
+                type: 'bar',
+                toolbar: {
+                    show: false,
+                },
+            },
+            colors: '#FFA500',
+            grid: {
+                yaxis: {
+                    lines: {
+                        show: false,
+                    }
+                },
+                padding: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
+                },
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            series: [{
+                data: pArr,
+                type: 'column',
+                name: 'Number of Patients'
+            }],
+            xaxis: {
+                categories: dayArr,
+                title: {
+                    text: 'Patient Count'
+                }
+            },
+            yaxis: [{
+                title: {
+                    text: 'Days',
+                },
+            }]
+        };
+    
+        var chart = new ApexCharts(
+            document.querySelector("#reviewmonth"),
+            options
+        );
+        
+        chart.render();
     });
 });
