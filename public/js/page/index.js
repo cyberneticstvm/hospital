@@ -131,7 +131,7 @@ $(function() {
                 name: 'Expense',
                 data: expArr
             }],
-            colors: ['var(--chart-color1)', '#FFA500'],
+            colors: ['#4FB8C9', '#FFA500'],
             chart: {
                 type: 'bar',
                 height: 350,
@@ -222,7 +222,7 @@ $(function() {
             series: [{
                 data: pArr,
                 type: 'column',
-                name: 'Number of Patients'
+                name: 'Number of Reviews'
             }],
             xaxis: {
                 categories: dayArr,
