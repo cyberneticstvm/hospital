@@ -118,7 +118,8 @@ class DashboardController extends Controller
 
     public function incomeExpense(){
         //$income = DB::select("select u.*, (select u.closing_balance - u2.closing_balance from daily_closing u2 where u2.branch = u.branch and u2.id < u.id order by u2.id desc limit 1 ) as diff from daily_closing u WHERE u.date BETWEEN LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY AND LAST_DAY(NOW()) AND u.branch = $branch")->get();
-        $records = DB::select("SELECT tbl1.day, tbl1.income, tbl1.cdate, SUM(e.amount) AS expense FROM (SELECT DATE(i.created_at) AS cdate, DATE_FORMAT(i.created_at, '%d/%b') AS day, SUM(i.amount) AS income FROM patient_payments i WHERE MONTH(i.created_at) = MONTH(NOW()) AND YEAR(i.created_at) = YEAR(NOW()) GROUP BY DATE(i.created_at) ORDER BY i.id DESC) AS tbl1 JOIN expenses e ON DATE(e.created_at) = tbl1.cdate GROUP BY tbl1.cdate ORDER BY tbl1.cdate DESC");
+        //$records = DB::select("SELECT tbl1.day, tbl1.income, tbl1.cdate, SUM(e.amount) AS expense FROM (SELECT DATE(i.created_at) AS cdate, DATE_FORMAT(i.created_at, '%d/%b') AS day, SUM(i.amount) AS income FROM patient_payments i WHERE MONTH(i.created_at) = MONTH(NOW()) AND YEAR(i.created_at) = YEAR(NOW()) GROUP BY DATE(i.created_at) ORDER BY i.id DESC) AS tbl1 JOIN expenses e ON DATE(e.created_at) = tbl1.cdate GROUP BY tbl1.cdate ORDER BY tbl1.cdate DESC");
+        $records = DB::select("SELECT tbl1.*, IFNULL(SUM(e.amount), 0) AS expense FROM (SELECT DATE(i.created_at) AS cdate, DATE_FORMAT(i.created_at, '%d/%b') AS day, SUM(i.amount) AS income FROM patient_payments i WHERE MONTH(i.created_at) = MONTH(NOW()) AND YEAR(i.created_at) = YEAR(NOW()) GROUP BY DATE(i.created_at) ORDER BY i.id DESC) AS tbl1 LEFT JOIN expenses e ON tbl1.cdate = e.date GROUP BY tbl1.cdate ORDER BY tbl1.cdate DESC");
         return json_encode($records);
     }
 }
