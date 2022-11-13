@@ -19,6 +19,7 @@ class PatientReference extends Model
         'created_by',
         'branch',
         'consultation_type',
+        'review',
         'token',
         'status',
     ];

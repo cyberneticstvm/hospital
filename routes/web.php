@@ -117,6 +117,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     // Patient Reference //
     Route::get('/consultation/refer_to_department/', 'App\Http\Controllers\PatientReferenceController@index')->name('consultation.patient-reference');
+    Route::get('/consultation/reopen/{id}/', 'App\Http\Controllers\PatientReferenceController@reopen');
     Route::get('/consultation/create-patient-reference/{id}/', 'App\Http\Controllers\PatientReferenceController@create');
     Route::post('/consultation/create-patient-reference/', 'App\Http\Controllers\PatientReferenceController@store')->name('patient_reference.create');
     Route::get('/consultation/edit-patient-reference/{id}/', 'App\Http\Controllers\PatientReferenceController@edit')->name('patient_reference.edit');

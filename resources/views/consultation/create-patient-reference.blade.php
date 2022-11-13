@@ -15,6 +15,7 @@
                         <form action="{{ route('patient_reference.create') }}" method="post">
                             @csrf
                             <input type="hidden" name="pid" value="{{ $patient->id }}"/>
+                            <input type="hidden" name="review" value="{{ $review }}"/>
                             <div class="row g-4">
                                 <div class="col-sm-6">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
                                 <div class="col-sm-6">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>
