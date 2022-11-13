@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampMasterController;
 use App\Http\Controllers\OperationNoteController;
@@ -72,6 +73,17 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::put('/roles/{id}/edit/', 'App\Http\Controllers\RoleController@update')->name('roles.update');
     Route::delete('/roles/{id}/delete/', 'App\Http\Controllers\RoleController@destroy')->name('roles.delete');
     // End Role Route //
+
+    // Appointments //
+    Route::get('/appointment/gettime/{date}/{branch}/', [AppointmentController::class, 'gettime'])->name('appointment.gettime');
+    Route::get('/appointment/', [AppointmentController::class, 'index'])->name('appointment.index');
+    Route::get('/appointment/create/', [AppointmentController::class, 'create'])->name('appointment.create');
+    Route::post('/appointment/show/', [AppointmentController::class, 'show'])->name('appointment.show');
+    Route::post('/appointment/create/', [AppointmentController::class, 'store'])->name('appointment.save');
+    Route::get('/appointment/edit/{id}/', [AppointmentController::class, 'edit'])->name('appointment.edit');
+    Route::put('/appointment/edit/{id}/', [AppointmentController::class, 'update'])->name('appointment.update');
+    Route::delete('/appointment/delete/{id}/', [AppointmentController::class, 'destroy'])->name('appointment.delete');
+    // End Appointments //
 
     // Patient Registration //
     Route::get('/patient/', 'App\Http\Controllers\PatientRegistrationController@index')->name('patient.index');
@@ -479,6 +491,8 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/settings/revise-closing-balance/', [SettingsController::class, 'fetchclosingbalance'])->name('settings.fetchclosingbalance');
     Route::post('/settings/revise-closing-balance/', [SettingsController::class, 'fetchClosingBalanceforUpdate'])->name('settings.fetchClosingBalanceforUpdate');
     Route::post('/settings/revise-closing-balance/update/', [SettingsController::class, 'updateClosingBalance'])->name('settings.closingbalance.update');
+    Route::get('/settings/appointment/', [SettingsController::class, 'showAppointment'])->name('settings.showappointment');
+    Route::put('/settings/appointment/', [SettingsController::class, 'updateAppointment'])->name('settings.appointment.update');
     // End Settings //
 });
 

@@ -20,6 +20,9 @@ class SettingsController extends Controller
         $this->middleware('permission:settings-closing-balance-show', ['only' => ['fetchClosingBalanceforUpdate']]);
         $this->middleware('permission:settings-closing-balance-update', ['only' => ['updateClosingBalance']]);
 
+        $this->middleware('permission:settings-appointment-show', ['only' => ['showAppointment']]);
+        $this->middleware('permission:settings-appointment-update', ['only' => ['updateAppointment']]);
+
         $this->branch = session()->get('branch');
         $this->id = 1;
     }
@@ -78,5 +81,23 @@ class SettingsController extends Controller
             DB::table("daily_closing")->where("branch", $this->branch)->where('date', '>=', $date)->decrement('closing_balance', $request->amount);
         endif;
         return redirect()->back()->with('message', 'Record updated successfully');
+    }
+    public function showAppointment(){
+        $start = strtotime("00:00"); $end = strtotime("23:30");
+        $settings = DB::table('settings')->selectRaw("DATE_FORMAT(appointment_from_time, '%h:%i %p') AS appointment_from_time, DATE_FORMAT(appointment_to_time, '%h:%i %p') AS appointment_to_time, appointment_interval")->find($this->id);
+        return view('settings.appointment', compact('settings', 'start', 'end'));
+    }
+    public function updateAppointment(Request $request){
+        $settings = DB::table('settings')->find($this->id);
+        $this->validate($request, [
+            'appointment_from_time' => 'required',
+            'appointment_to_time' => 'required',
+            'appointment_interval' => 'required',
+        ]);
+        $from = Carbon::createFromFormat('h:i A', $request->appointment_from_time)->format('H:i:s');
+        $to = Carbon::createFromFormat('h:i A', $request->appointment_to_time)->format('H:i:s');
+        $consultation = DB::table('settings')->where('id', $this->id)->update(['appointment_from_time' => $from, 'appointment_to_time' => $to, 'appointment_interval' => $request->appointment_interval]);
+        return redirect()->route('settings.showappointment', compact('settings'))
+                        ->with('success','Settings updated successfully');
     }
 }

@@ -183,6 +183,21 @@ $(function() {
             });
         //}        
     });
+
+    $(".appo").change(function(){
+        var date = $(".dtpicker").val();
+        var branch = $(".br").val();
+        $.ajax({
+            type: 'GET',
+            url: '/appointment/gettime/'+date+'/'+branch
+        }).then(function (data){
+            var xdata = $.map(data, function(obj){
+                obj.text = obj.name || obj.id;  
+                return obj;
+            });
+            dis.find('.medAdvised').select2({data:xdata});
+        });
+    });
 });
 
 /*$(window).on('load', function () {
