@@ -57,7 +57,7 @@ $(function() {
         });        
         var options = {
             chart: {
-                height: 350,
+                height: 400,
                 type: 'bar',
                 toolbar: {
                     show: false,
@@ -109,5 +109,74 @@ $(function() {
         );
         
         chart.render();
+    });
+
+    $.getJSON('/incomeexpense/', function(response){        
+        var arr = response;
+        var incArr = []; var expArr = []; var dayArr = [];
+        incArr = arr.map(function(el){
+            return el.income
+        });
+        expArr = arr.map(function(el){
+            return el.expense
+        });
+        dayArr = arr.map(function(el){
+            return el.day
+        });
+        var options = {
+            series: [{
+                name: 'Income',
+                data: incArr
+            }, {
+                name: 'Expense',
+                data: expArr
+            }],
+            colors: ['var(--chart-color1)', '#FFA500'],
+            chart: {
+                type: 'bar',
+                height: 280,
+                toolbar: {
+                    show: false,
+                },
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    //endingShape: 'rounded'
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 1,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: dayArr,
+            },
+            yaxis: {
+                title: {
+                    text: '₹'
+                }
+            },
+            legend: {
+                position: 'bottom', // left, right, top, bottom
+                horizontalAlign: 'left',  // left, right, top, bottom
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                    return "₹ " + val
+                    }
+                }
+            },
+        };
+        new ApexCharts(document.querySelector("#incomeexpense"), options).render();
     });
 });

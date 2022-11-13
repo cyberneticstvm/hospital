@@ -106,4 +106,14 @@ class DashboardController extends Controller
         $patients = DB::table('patient_registrations')->selectRaw("COUNT(id) AS pcount, DAY(created_at) AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->groupBy('day')->orderByDesc('id')->get();
         return json_encode($patients);
     }
+
+    public function incomeExpense(){
+        //$income = DB::select("select u.*, (select u.closing_balance - u2.closing_balance from daily_closing u2 where u2.branch = u.branch and u2.id < u.id order by u2.id desc limit 1 ) as diff from daily_closing u WHERE u.date BETWEEN LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY AND LAST_DAY(NOW()) AND u.branch = $branch")->get();
+        /*$arr = array();
+        $arr[0] = DB::table('patient_payments')->selectRaw("SUM(amount) AS amount, DAY(created_at) AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->groupBy('day')->orderByDesc('id')->get();
+        $arr[1] = DB::table('expenses')->selectRaw("SUM(amount) AS amount, DAY(date) AS day")->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->groupBy('day')->orderByDesc('id')->get();
+        return json_encode($arr);*/
+        $records = DB::select("SELECT tbl1.day, tbl1.income, tbl1.cdate, SUM(e.amount) AS expense FROM (SELECT DATE(i.created_at) AS cdate, DATE_FORMAT(i.created_at, '%d/%b') AS day, SUM(i.amount) AS income FROM patient_payments i WHERE MONTH(i.created_at) = MONTH(NOW()) AND YEAR(i.created_at) = YEAR(NOW()) GROUP BY DATE(i.created_at) ORDER BY i.id DESC) AS tbl1 JOIN expenses e ON DATE(e.created_at) = tbl1.cdate GROUP BY tbl1.cdate ORDER BY tbl1.cdate DESC");
+        return json_encode($records);
+    }
 }
