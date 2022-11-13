@@ -25,8 +25,8 @@ class DashboardController extends Controller
         if (Auth::attempt($credentials)) {
             $user_id = Auth::user()->id;
             $branches = DB::table('branches')->leftJoin('user_branches', 'branches.id', '=', 'user_branches.branch_id')->select('branches.id', 'branches.branch_name')->where('user_branches.user_id', '=', $user_id)->get();
-            $branch_id = 0; $new_patients_count = 0; $review_count = 0; $cancelled = 0; $consultation = 0; $certificate = 0; $camp = 0; $vision = 0; $tot_patients = 0; $day_tot_income = 0; $day_tot_exp = 0;
-            return view('dash', compact('branches', 'branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp'));
+            $branch_id = 0; $new_patients_count = 0; $review_count = 0; $cancelled = 0; $consultation = 0; $certificate = 0; $camp = 0; $vision = 0; $tot_patients = 0; $day_tot_income = 0; $day_tot_exp = 0; $income_monthly = 0.00; $expense_monthly = 0.00;
+            return view('dash', compact('branches', 'branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
             //return redirect()->route('dash')->with(['branches' => $branches]);
         }  
         return redirect("/")->withErrors('Login details are not valid');
@@ -55,12 +55,16 @@ class DashboardController extends Controller
 
         $day_tot_income = $this->getDayTotal();
 
+        $income_monthly = DB::table('patient_payments')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->sum('amount');
+
+        $expense_monthly = DB::table('expenses')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->sum('amount');
+
         if(Auth::user()->roles->first()->name == 'Admin'):
-            return view('dash', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp'));
+            return view('dash', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
         elseif(Auth::user()->roles->first()->name == 'Accounts'):
-            return view('dash-accounts', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp'));
+            return view('dash-accounts', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
         else:
-            return view('dash-other', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp'));
+            return view('dash-other', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
         endif;
     }
 
@@ -109,10 +113,6 @@ class DashboardController extends Controller
 
     public function incomeExpense(){
         //$income = DB::select("select u.*, (select u.closing_balance - u2.closing_balance from daily_closing u2 where u2.branch = u.branch and u2.id < u.id order by u2.id desc limit 1 ) as diff from daily_closing u WHERE u.date BETWEEN LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY AND LAST_DAY(NOW()) AND u.branch = $branch")->get();
-        /*$arr = array();
-        $arr[0] = DB::table('patient_payments')->selectRaw("SUM(amount) AS amount, DAY(created_at) AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->groupBy('day')->orderByDesc('id')->get();
-        $arr[1] = DB::table('expenses')->selectRaw("SUM(amount) AS amount, DAY(date) AS day")->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->groupBy('day')->orderByDesc('id')->get();
-        return json_encode($arr);*/
         $records = DB::select("SELECT tbl1.day, tbl1.income, tbl1.cdate, SUM(e.amount) AS expense FROM (SELECT DATE(i.created_at) AS cdate, DATE_FORMAT(i.created_at, '%d/%b') AS day, SUM(i.amount) AS income FROM patient_payments i WHERE MONTH(i.created_at) = MONTH(NOW()) AND YEAR(i.created_at) = YEAR(NOW()) GROUP BY DATE(i.created_at) ORDER BY i.id DESC) AS tbl1 JOIN expenses e ON DATE(e.created_at) = tbl1.cdate GROUP BY tbl1.cdate ORDER BY tbl1.cdate DESC");
         return json_encode($records);
     }

@@ -98,18 +98,6 @@
                                             <h6 class="mb-0 fw-bold">0</h6>
                                             <small class="text-muted font-11">Appointments</small>
                                         </div>
-                                        <div class="d-none d-sm-block ms-auto">
-                                            <div class="btn-group" role="group">
-                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1">
-                                                <label class="btn btn-outline-secondary" for="btnradio1">Week</label>
-
-                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2">
-                                                <label class="btn btn-outline-secondary" for="btnradio2">Month</label>
-
-                                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" checked="">
-                                                <label class="btn btn-outline-secondary" for="btnradio3">Year</label>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div id="patientOverview"></div>
@@ -191,7 +179,7 @@
                     <div class="card">
                         <div class="card-header py-3 d-flex flex-wrap  justify-content-between align-items-center bg-transparent border-bottom-0">
                             <div>
-                                <h6 class="card-title m-0">Income/Expense Overview Present Month (All Branches)</h6>
+                                <h6 class="card-title m-0">Income/Expense Overview Current Month (All Branches)</h6>
                                 <small class="text-muted">Or you can <a href="#">sync data to Dashboard</a> to ensure your data is always up-to-date.</small>
                             </div>
                             <div class="dropdown">
@@ -209,24 +197,12 @@
                             <div class="card-header border">
                                 <div class="d-flex flex-row align-items-center">
                                     <div>
-                                        <h6 class="mb-0 fw-bold">0.00</h6>
+                                        <h6 class="mb-0 fw-bold">{{ number_format($income_monthly, 2) }}</h6>
                                         <small class="text-muted font-11">Income</small>
                                     </div>
                                     <div class="ms-lg-5 ms-md-4 ms-3">
-                                        <h6 class="mb-0 fw-bold">0.00</h6>
+                                        <h6 class="mb-0 fw-bold">{{ number_format($expense_monthly, 2) }}</h6>
                                         <small class="text-muted font-11">Expenses</small>
-                                    </div>
-                                    <div class="d-none d-sm-block ms-auto">
-                                        <div class="btn-group" role="group">
-                                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1">
-                                            <label class="btn btn-outline-secondary" for="btnradio1">Week</label>
-
-                                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2">
-                                            <label class="btn btn-outline-secondary" for="btnradio2">Month</label>
-
-                                            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" checked="">
-                                            <label class="btn btn-outline-secondary" for="btnradio3">Year</label>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
