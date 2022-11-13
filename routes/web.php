@@ -264,6 +264,10 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::delete('/surgery/delete/{id}/', 'App\Http\Controllers\SurgeryController@destroy')->name('surgery.delete');
     // end surgery register//
 
+    // Post Operative register //
+    Route::get('/post-operative-suggestion/', 'App\Http\Controllers\PostOperativeController@index')->name('pop.index');
+    // end Post Operative register//
+
     // surgery types management //
     Route::get('/surgery-type/', 'App\Http\Controllers\SurgeryTypeController@index')->name('stype.index');
     Route::get('/surgery-type/create/', 'App\Http\Controllers\SurgeryTypeController@create')->name('stype.create');
