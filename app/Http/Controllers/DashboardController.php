@@ -103,7 +103,7 @@ class DashboardController extends Controller
     }
 
     public function patientMonth(){
-        $patients = DB::table('patient_registrations')->selectRaw("COUNT(id) AS pcount, DAY(created_at) AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->groupBy('day')->orderByDesc('id')->get();
+        $patients = DB::table('patient_registrations')->selectRaw("COUNT(id) AS pcount, DATE_FORMAT(created_at, '%d/%b') AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->groupBy('day')->orderByDesc('id')->get();
         return json_encode($patients);
     }
 
