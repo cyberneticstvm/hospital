@@ -456,6 +456,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
     Route::get('/generate-prescription/{id}/', [PDFController::class, 'prescription']);
     Route::get('/generate-receipt/{id}/', [PDFController::class, 'receipt']);
+    Route::get('/certificate/receipt/{id}/', [PDFController::class, 'certreceipt']);
     Route::get('/generate-pharmacy-bill/{id}/', [PDFController::class, 'pharmacybill']);
     Route::get('/generate-pharmacy-out/{id}/', [PDFController::class, 'pharmacyout']);
     Route::get('/generate-medical-record/{id}/', [PDFController::class, 'medicalrecord']);

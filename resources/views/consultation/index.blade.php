@@ -14,7 +14,7 @@
             <div class="col-md-4 text-end"><h5 class="text-danger">Consultation Pending: {{ $ccount }}</h5></div>
         </div>
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Age</th><th>Doctor</th><th>Reg.Date</th><th>diagnosis</t><th>Medical Record</th><th>Review Date</th><th>Status</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Age</th><th>Doctor</th><th>Reg.Date</th><th>diagnosis</t><th>Medical Record</th><th>Review Date</th><th>Status</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($medical_records as $record)
                 @php 
@@ -37,13 +37,13 @@
                     @else
                     <td></td>
                     @endif                    
-                    <td>
+                    <!--<td>
                         <form method="post" action="{{ route('medical-records.delete', $record->id) }}">
                             @csrf 
                             @method("DELETE")
                             <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Record?');"><i class="fa fa-trash text-danger"></i></button>
                         </form>
-                    </td>
+                    </td>-->
                 </tr>
             @endforeach
         </tbody></table>

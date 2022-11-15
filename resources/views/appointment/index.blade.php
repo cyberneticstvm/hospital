@@ -42,7 +42,7 @@
                     <div class="card-body table-responsive">
                         <p class= "text-right my-3"><a href="/appointment/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>Patient Name</th><th>Age</th><th>Contact Number</th><th>Address</th><th>Date</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>Patient Name</th><th>Age</th><th>Contact Number</th><th>Address</th><th>Date</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @forelse($appointments as $key => $ap)
                             <tr>
@@ -53,13 +53,13 @@
                                 <td>{{ $ap->address }}</td>
                                 <td>{{ $ap->adate }}</td>
                                 <td><a class='btn btn-link' href="{{ route('appointment.edit', $ap->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
-                                <td>
+                                <!--<td>
                                     <form method="post" action="{{ route('appointment.delete', $ap->id) }}">
                                         @csrf 
                                         @method("DELETE")
                                         <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this record?');"><i class="fa fa-trash text-danger"></i></button>
                                     </form>
-                                </td>
+                                </td>-->
                             </tr>
                         @empty
                         @endforelse

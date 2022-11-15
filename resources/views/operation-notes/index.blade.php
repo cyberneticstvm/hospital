@@ -41,7 +41,7 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Branch</th><th>Patient Name</th><th>Patient ID</th><th>Notes</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Branch</th><th>Patient Name</th><th>Patient ID</th><th>Notes</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @foreach($onotes as $note)
                             <tr>
@@ -52,13 +52,13 @@
                                 <td>{{ $note->patient_id }}</td>
                                 <td>{{ $note->notes }}</td>                                
                                 <td><a class='btn btn-link' href="{{ route('onote.edit', $note->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
-                                <td>
+                                <!--<td>
                                     <form method="post" action="{{ route('onote.delete', $note->id) }}">
                                         @csrf 
                                         @method("DELETE")
                                         <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this record?');"><i class="fa fa-trash text-danger"></i></button>
                                     </form>
-                                </td>
+                                </td>-->
                             </tr>
                         @endforeach
                         </tbody></table>

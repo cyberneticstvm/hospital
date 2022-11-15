@@ -12,20 +12,20 @@
         <p class= "text-right my-3"><a href="/roles/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         @endcan
         <table id="dataTbl" class="table display table-striped dataTable table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>Role</th><th>Edit</th><th>Delete</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>Role</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($roles as $role)
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ $role->name }}</td>
                     <td><a class='btn btn-link' href="{{ route( 'roles.edit', $role->id) }}"><i class='fa fa-pencil text-warning'></i></a></td>
-                    <td>
+                    <!--<td>
                         <form method="post" action="{{ route('roles.delete', $role->id) }}">
                             @csrf 
                             @method("DELETE")
                             <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Role?');"><i class="fa fa-trash text-danger"></i></button>
                         </form>
-                    </td>
+                    </td>-->
                 </tr>
             @endforeach
         </tbody></table>

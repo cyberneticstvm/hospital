@@ -43,7 +43,7 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>Procedure Name</th><th>Fee</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>Procedure Name</th><th>Fee</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @forelse($procedures as $key => $procedure)
                             <tr>
@@ -51,13 +51,13 @@
                                 <td>{{ $procedure->name }}</td>
                                 <td class="text-right">{{ $procedure->fee }}</td>
                                 <td><a class='btn btn-link' href="{{ route('procedure.edit', $procedure->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
-                                <td>
+                                <!--<td>
                                     <form method="post" action="{{ route('procedure.delete', $procedure->id) }}">
                                         @csrf 
                                         @method("DELETE")
                                         <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Procedure?');"><i class="fa fa-trash text-danger"></i></button>
                                     </form>
-                                </td>
+                                </td>-->
                             </tr>
                         @empty
                         @endforelse

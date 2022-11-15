@@ -53,6 +53,17 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/receipt', compact('reference', 'patient', 'doctor', 'qrcode', 'branch', 'procedure'));    
         return $pdf->stream('receipt.pdf', array("Attachment"=>0));
     }
+    public function certreceipt($id){
+        $cert = DB::table('patient_certificates')->find($id);
+        $cert_details = DB::table('patient_certificate_details as c')->leftJoin('certificate_types as t', 'c.certificate_type', '=', 't.id')->select('t.name', 'c.fee')->where('patient_certificate_id', $id)->where('status', 'I')->get();
+        $reference = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pmr.id', $cert->medical_record_id)->select('pr.id', 'pr.doctor_fee', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at')->first();
+        $patient = DB::table('patient_registrations')->find($reference->patient_id);     
+        $doctor = DB::table('doctors')->find($reference->doctor_id);
+        $branch = DB::table('branches')->find($patient->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));         
+        $pdf = PDF::loadView('/pdf/certificate-receipt', compact('reference', 'patient', 'doctor', 'qrcode', 'branch', 'cert_details'));    
+        return $pdf->stream('receipt.pdf', array("Attachment"=>0));
+    }
 
     public function pharmacybill($id){
         $medical_record = DB::table('patient_medical_records')->find($id);

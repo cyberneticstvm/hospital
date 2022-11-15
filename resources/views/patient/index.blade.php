@@ -10,7 +10,7 @@
     <div class="card-body">
         <p class= "text-right my-3"><a href="/patient/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         <table id="dataTbl" class="table display dataTable table-striped table-sm table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>Address</th><th>History</th><th>Assign Doctor</th><th>Reg.Date</th><th>Re-open</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>Address</th><th>History</th><th>Assign Doctor</th><th>Reg.Date</th><th>Re-open</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($patients as $patient)
                 <tr>
@@ -23,13 +23,13 @@
                     <td>{{ $patient->rdate }}</td>
                     <td>@if($patient->is_doctor_assigned)<a href='/consultation/reopen/{{ $patient->id }}/'>Re-open</a>@endif</td>
                     <td><a class='btn btn-link' href="{{ route('patient.edit', $patient->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
-                    <td>
+                    <!--<td>
                         <form method="post" action="{{ route('patient.delete', $patient->id) }}">
                             @csrf 
                             @method("DELETE")
                             <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Patient?');"><i class="fa fa-trash text-danger"></i></button>
                         </form>
-                    </td>
+                    </td>-->
                 </tr>
             @endforeach
         </tbody></table>
