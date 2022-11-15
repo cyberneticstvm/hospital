@@ -17,6 +17,10 @@ class User extends Authenticatable
         return $this->hasMany(UserBranch::class);
     }
 
+    public function labClinics(): HasMany {
+        return $this->hasMany(LabClinic::class, 'updated_by', 'id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

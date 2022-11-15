@@ -28,7 +28,7 @@
                             @php $c++; @endphp
                             <div class="row mt-3">
                                 <input type="hidden" name="lab_id[]" value="{{ $lab_record->id }}"/>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Test<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2 selLabTest" data-placeholder="Select" name="test_id[]" disabled>
                                     <option value="">Select</option>
@@ -40,7 +40,7 @@
                                     <small class="text-danger">{{ $errors->first('test_id') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label class="form-label">Test From<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="tested_from[]" disabled>
                                     <option value="">Select</option>
@@ -51,7 +51,22 @@
                                     <small class="text-danger">{{ $errors->first('tested_from') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-3">
+                                    <label class="form-label">Result Date<sup class="text-danger">*</sup></label>
+                                    <fieldset class="form-icon-group left-icon position-relative">
+                                        <input type="text" value="{{ ($lab_record && $lab_record->result_date) ? date('d/M/Y', strtotime($lab_record->result_date)) : '' }}" name="result_date" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy">
+                                        <div class="form-icon position-absolute">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                            </svg>
+                                        </div>
+                                    </fieldset>
+                                    @error('result_date')
+                                    <small class="text-danger">{{ $errors->first('result_date') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-4">
                                     <label class="form-label">Upload Result Doc.</label>
                                     <input class="form-control" type="file" name="docs[]" />
                                     <small>Uploaded Doc: <a href="{{ public_path().'/storage/'.$lab_record->doc_path }}" target="_blank">{{ ($lab_record->doc_path) ? 'View' : '' }}</a></small>

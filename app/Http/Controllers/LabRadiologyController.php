@@ -185,6 +185,7 @@ class LabRadiologyController extends Controller
 
     public function updateresult(Request $request, $id){
         $input = $request->all(); $paths = [];
+        $rdate = (!empty($request->result_date)) ? Carbon::createFromFormat('d/M/Y', $input['result_date'])->format('Y-m-d') : NULL;
         try{
             if($input['lab_id']):
                 for($i=0; $i<count($input['lab_id']); $i++):
@@ -199,7 +200,7 @@ class LabRadiologyController extends Controller
                             endforeach;                  
                         endif;
                         $paths[$i] = (isset($paths[$i]) && $paths[$i]) ? $paths[$i] : $lc->getOriginal('doc_path');
-                        LabRadiology::where(['medical_record_id' => $id, 'id' => $input['lab_id'][$i]])->update(['lab_result' => $input['lab_result'][$i], 'doc_path' => $paths[$i], 'result_updated_on' => Carbon::now()->toDateTimeString(), 'updated_by' => $request->user()->id]);
+                        LabRadiology::where(['medical_record_id' => $id, 'id' => $input['lab_id'][$i]])->update(['lab_result' => $input['lab_result'][$i], 'doc_path' => $paths[$i], 'result_date' => $rdate, 'result_updated_on' => Carbon::now()->toDateTimeString(), 'updated_by' => $request->user()->id]);
                     endif;
                 endfor;
             endif;

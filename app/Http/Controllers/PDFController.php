@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PatientReference as PRef;
+use App\Models\LabClinic;
 use QrCode;
 use PDF;
 use DB;
