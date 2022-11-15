@@ -27,7 +27,13 @@
                             <div class="row g-4">
                                 <div class="col-sm-12">
                                     <label class="form-label">Fitness Advice<sup class="text-danger">*</sup></label>
-                                    <textarea name="fitness_advice" class="form-control" rows="5" placeholder="Medical Fitness">{{ $mfit->fitness_advice }}</textarea>
+                                    <select class="form-control" name="fitness_advice">
+                                        <option value="">Select</option>
+                                        @forelse($stypes as $key => $stype)
+                                            <option value="{{ $stype->id }}" {{ ($mfit->fitness_advice == $stype->id) ? 'selected' : '' }}>{{ $stype->surgery_name }} ({{ $stype->fitness_advice }})</option>
+                                        @empty
+                                        @endforelse
+                                    </select>
                                     @error('fitness_advice')
                                     <small class="text-danger">{{ $errors->first('fitness_advice') }}</small>
                                     @enderror

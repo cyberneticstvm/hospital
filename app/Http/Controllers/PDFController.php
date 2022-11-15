@@ -360,12 +360,13 @@ class PDFController extends Controller
     }
     public function printmfit($id){
         $mfit = DB::table('medical_fitnesses')->find($id);
+        $madvice = DB::table('surgery_types')->find($mfit->fitness_advice);
         $patient = DB::table('patient_registrations')->find($mfit->patient);
         $pref = DB::table('patient_references')->find($mfit->medical_record_id);
         $branch = DB::table('branches')->find($mfit->branch);
         $doctor = DB::table('doctors')->find($pref->doctor_id);
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
-        $pdf = PDF::loadView('/pdf/medicalfitness', compact('qrcode', 'mfit', 'patient', 'pref', 'branch', 'doctor'));    
+        $pdf = PDF::loadView('/pdf/medicalfitness', compact('qrcode', 'mfit', 'patient', 'pref', 'branch', 'doctor', 'madvice'));    
         return $pdf->stream('letterhead.pdf', array("Attachment"=>0));
     }
 }

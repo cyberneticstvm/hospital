@@ -168,6 +168,7 @@ class PatientReferenceController extends Controller
         //endif;
         $input['created_by'] = $reference->getOriginal('created_by');
         $input['branch'] = $reference->getOriginal('branch');
+        $input['review'] = $reference->getOriginal('review');
         $input['status'] = ($request->status) ? 0 : 1;
         $reg_fee = $this->getRegistrationFee($reference->getOriginal('branch'), $request->consultation_type);
         $token = $reference->getOriginal('token');//PRef::where('department_id', $request->department_id)->where('branch', $request->session()->get('branch'))->whereDate('created_at', Carbon::today())->max('token');

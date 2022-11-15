@@ -80,7 +80,8 @@ class MedicalFitnessController extends Controller
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $branch = DB::table('branches')->find($mrecord->branch);
             $surgery = DB::table('surgeries as s')->leftJoin('surgery_types as st', 'st.id', '=', 's.surgery_type')->select('st.fitness_advice')->where('s.medical_record_id', $request->medical_record_id)->latest('s.id')->first();
-            return view('medical-fitness.create', compact('mrecord', 'patient', 'branch', 'surgery'));
+            $stypes = DB::table('surgery_types')->get();
+            return view('medical-fitness.create', compact('mrecord', 'patient', 'branch', 'surgery', 'stypes'));
         else:
             return redirect("/medical-fitness/")->withErrors('No records found.');
         endif;
@@ -98,7 +99,8 @@ class MedicalFitnessController extends Controller
         $mrecord = DB::table('patient_medical_records')->find($mfit->medical_record_id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $branch = DB::table('branches')->find($mrecord->branch);
-        return view('medical-fitness.edit', compact('mrecord', 'patient', 'branch', 'mfit'));
+        $stypes = DB::table('surgery_types')->get();
+        return view('medical-fitness.edit', compact('mrecord', 'patient', 'branch', 'mfit', 'stypes'));
     }
 
     /**
