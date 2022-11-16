@@ -31,3 +31,6 @@
 .text-highlight td{
     color: blue !important;
 }
+.select2-container--default .select2-results__option--disabled {
+    color: #dc3545 !important;
+}
