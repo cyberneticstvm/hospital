@@ -59,7 +59,7 @@ class ExpenseController extends Controller
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
         $input['branch'] = $this->branch;
-        $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $request['date'])->format('Y-m-d') : NULL;
+        $input['date'] = (!empty($request->date)) ? Carbon::createFromFormat('d/M/Y', $input['date'])->format('Y-m-d') : NULL;
         $expense = Expense::create($input);        
         return redirect()->route('expense.index')->with('success','Expense recorded successfully');
     }

@@ -185,17 +185,20 @@ $(function() {
     });
 
     $(".appo").change(function(){
-        var date = $(".dtpicker").val();
+        var date = convertToDate($(".dtpicker").val());
         var branch = $(".br").val();
+        var doctor = $(".dr").val();
         $.ajax({
             type: 'GET',
-            url: '/appointment/gettime/'+date+'/'+branch
-        }).then(function (data){
-            var xdata = $.map(data, function(obj){
-                obj.text = obj.name || obj.id;  
-                return obj;
-            });
-            dis.find('.medAdvised').select2({data:xdata});
+            url: '/appointment/gettime/'+date+'/'+branch+'/'+doctor,
+            data: {},
+            success: function(response){
+                $(".atime").html(response);
+                $('.atime').select2();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                console.log(XMLHttpRequest);
+            }
         });
     });
 });
@@ -219,4 +222,11 @@ function bindDDL(type, ddl){
         });
         $('.'+ddl).select2({data:xdata});
     });
+}
+
+function convertToDate(date){
+    var dt = date.split("/");
+    var m = new Date(dt[1]+'-1-01').getMonth()+1;
+    m = (parseInt(m) > 9) ? m : "0"+m;
+    return [dt[2], m, dt[0]].join('-');
 }

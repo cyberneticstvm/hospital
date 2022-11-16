@@ -27,7 +27,7 @@
                                     <button type="submit" class="btn btn-primary btn-submit w-100">Fetch</button>
                                 </div>
                             </div>
-                            @if (count($errors) > 0)
+                            @if(count($errors) > 0)
                             <div role="alert" class="text-danger mt-3">
                                 @foreach ($errors->all() as $error)
                                     {{ $error }}

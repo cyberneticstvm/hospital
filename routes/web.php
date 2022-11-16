@@ -75,7 +75,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     // End Role Route //
 
     // Appointments //
-    Route::get('/appointment/gettime/{date}/{branch}/', [AppointmentController::class, 'gettime'])->name('appointment.gettime');
+    Route::get('/appointment/gettime/{date}/{branch}/{doctor}/', [AppointmentController::class, 'gettime'])->name('appointment.gettime');
     Route::get('/appointment/', [AppointmentController::class, 'index'])->name('appointment.index');
     Route::get('/appointment/create/', [AppointmentController::class, 'create'])->name('appointment.create');
     Route::post('/appointment/show/', [AppointmentController::class, 'show'])->name('appointment.show');

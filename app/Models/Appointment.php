@@ -20,6 +20,8 @@ class Appointment extends Model
         'doctor',
         'appointment_date',
         'appointment_time',
+        'status',
+        'notes',
         'created_by',
         'updated_by',
     ];
