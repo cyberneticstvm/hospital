@@ -164,6 +164,14 @@ class AppointmentController extends Controller
         return redirect()->route('appointment.index')->with('success','Appointment updated successfully');
     }
 
+    public function createPatient($id){
+        $patient = Appointment::find($id);
+        $cities = DB::table('city')->get();   
+        $states = DB::table('state')->get();    
+        $countries = DB::table('country')->get();    
+        return view('patient.create', compact('cities', 'states', 'countries', 'patient'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -172,6 +180,8 @@ class AppointmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ascan = Appointment::find($id)->delete();
+        return redirect()->route('appointment.index')
+                        ->with('success','Record deleted successfully');
     }
 }

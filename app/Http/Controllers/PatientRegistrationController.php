@@ -45,10 +45,11 @@ class PatientRegistrationController extends Controller
      */
     public function create()
     {
+        $patient = [];
         $cities = DB::table('city')->get();   
         $states = DB::table('state')->get();    
         $countries = DB::table('country')->get();    
-        return view('patient.create', compact('cities', 'states', 'countries'));
+        return view('patient.create', compact('cities', 'states', 'countries', 'patient'));
     }
 
     /**

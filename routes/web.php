@@ -76,6 +76,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     // Appointments //
     Route::get('/appointment/gettime/{date}/{branch}/{doctor}/', [AppointmentController::class, 'gettime'])->name('appointment.gettime');
+    Route::get('/appointment/patient/create/{id}/', [AppointmentController::class, 'createPatient'])->name('appointment.patient.create');
     Route::get('/appointment/', [AppointmentController::class, 'index'])->name('appointment.index');
     Route::get('/appointment/create/', [AppointmentController::class, 'create'])->name('appointment.create');
     Route::post('/appointment/show/', [AppointmentController::class, 'show'])->name('appointment.show');

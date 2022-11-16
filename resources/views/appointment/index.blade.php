@@ -47,7 +47,7 @@
                         @forelse($appointments as $key => $ap)
                             <tr>
                                 <td>{{ ++$i }}</td>
-                                <td>{{ $ap->patient_name }}</td>
+                                <td><a href="/appointment/patient/create/{{ $ap->id }}/">{{ $ap->patient_name }}</a></td>
                                 <td>{{ $ap->age }}</td>
                                 <td>{{ $ap->mobile_number }}</td>
                                 <td>{{ $ap->address }}</td>

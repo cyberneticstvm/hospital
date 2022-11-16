@@ -17,7 +17,7 @@
                             <div class="row g-4">
                                 <div class="col-sm-4">
                                     <label class="form-label">Patient Name<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ old('patient_name') }}" name="patient_name" class="form-control form-control-md" placeholder="Patient Name">
+                                    <input type="text" value="{{ ($patient && $patient->patient_name) ? $patient->patient_name : old('patient_name') }}" name="patient_name" class="form-control form-control-md" placeholder="Patient Name">
                                     @error('patient_name')
                                     <small class="text-danger">{{ $errors->first('patient_name') }}</small>
                                     @enderror
@@ -26,9 +26,9 @@
                                     <label class="form-label">Gender<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" data-placeholder="Select" name="gender">
                                         <option value="">Select</option>
-                                        <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
-                                        <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
-                                        <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
+                                        <option value="male" {{ ($patient && $patient->gender == 'male') ? 'selected' : '' }}>Male</option>
+                                        <option value="female" {{ ($patient && $patient->gender == 'female') ? 'selected' : '' }}>Female</option>
+                                        <option value="other" {{ ($patient && $patient->gender == 'other') ? 'selected' : '' }}>Other</option>
                                     </select>
                                     @error('gender')
                                     <small class="text-danger">{{ $errors->first('gender') }}</small>
@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">Age (Months if Baby)<sup class="text-danger">*</sup></label>
-                                    <input type="number" value="{{ old('age') }}" name="age" class="form-control form-control-md" placeholder="0">
+                                    <input type="number" value="{{ ($patient && $patient->age) ? $patient->age : '' }}" name="age" class="form-control form-control-md" placeholder="0">
                                     @error('age')
                                     <small class="text-danger">{{ $errors->first('age') }}</small>
                                     @enderror
@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Mobile Number<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ old('mobile_number') }}" name="mobile_number" class="form-control form-control-md" placeholder="Mobile Number">
+                                    <input type="text" value="{{ ($patient && $patient->mobile_number) ? $patient->mobile_number : '' }}" name="mobile_number" class="form-control form-control-md" placeholder="Mobile Number">
                                     @error('mobile_number')
                                     <small class="text-danger">{{ $errors->first('mobile_number') }}</small>
                                     @enderror
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">Address<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ old('address') }}" name="address" class="form-control form-control-md" placeholder="Address">
+                                    <input type="text" value="{{ ($patient && $patient->address) ? $patient->address : '' }}" name="address" class="form-control form-control-md" placeholder="Address">
                                     @error('address')
                                     <small class="text-danger">{{ $errors->first('address') }}</small>
                                     @enderror
