@@ -47,7 +47,11 @@
                         @forelse($appointments as $key => $ap)
                             <tr>
                                 <td>{{ ++$i }}</td>
+                                @if($ap->patient_id > 0):
+                                <td><a href="/consultation/reopen/{{ $ap->patient_id }}/">{{ $ap->patient_name }}</a></td>
+                                @else
                                 <td><a href="/appointment/patient/create/{{ $ap->id }}/">{{ $ap->patient_name }}</a></td>
+                                @endif
                                 <td>{{ $ap->age }}</td>
                                 <td>{{ $ap->mobile_number }}</td>
                                 <td>{{ $ap->address }}</td>
