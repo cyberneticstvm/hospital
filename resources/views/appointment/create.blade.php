@@ -98,6 +98,10 @@
                                         <option value="">Select</option>
                                     </select>
                                 </div>
+                                <div class="col-sm-5">
+                                    <label class="form-label">Notes </label>
+                                    <input type="text" name="notes" class="form-control form-control-md" placeholder="Notes">                                   
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>

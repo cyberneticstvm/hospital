@@ -24,6 +24,7 @@ class PatientRegistrations extends Model
         'city',
         'state',
         'country',
+        'appointment_id',
         'created_by',
         'branch',
         'registration_fee',

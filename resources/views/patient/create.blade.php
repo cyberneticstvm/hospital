@@ -14,6 +14,7 @@
                     <div class="card-body">
                         <form action="{{ route('patient.create') }}" method="post">
                             @csrf
+                            <input type="hidden" name="appointment_id" value="{{ ($patient && $patient->id) ? $patient->id : 0 }}" />
                             <div class="row g-4">
                                 <div class="col-sm-4">
                                     <label class="form-label">Patient Name<sup class="text-danger">*</sup></label>

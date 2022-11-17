@@ -7,6 +7,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\PatientReference as PRef;
 use App\Models\PatientRegistrations as PReg;
+use App\Models\Appointment;
 use App\Models\doctor;
 use Carbon\Carbon;
 use DB;
@@ -72,13 +73,13 @@ class PatientReferenceController extends Controller
         return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review'));
     }
 
-    public function reopen($id){
+    public function reopen($id, $appid){
         $patient = Preg::find($id);
         $doctors = DB::table('doctors')->get();   
         $departments = DB::table('departments')->get();
         $ctypes = DB::table('consultation_types')->get();
         $review = 'yes';
-        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review'));
+        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid'));
     }
 
     /**
@@ -104,8 +105,11 @@ class PatientReferenceController extends Controller
         $input['branch'] = $this->branch;
         $token = PRef::where('department_id', $request->department_id)->where('branch', $this->branch)->whereDate('created_at', Carbon::today())->max('token');
         $input['token'] = ($token > 0) ? $token+1 : 1;
-        $reference = PRef::create($input);
-        PReg::where(['id' => $request->pid])->update(['is_doctor_assigned' => 1, 'registration_fee' => $reg_fee]);
+        DB::transaction(function() use ($input, $request, $reg_fee) {
+            $reference = PRef::create($input);
+            PReg::where(['id' => $request->pid])->update(['is_doctor_assigned' => 1, 'registration_fee' => $reg_fee]);
+            Appointment::where(['id' => $request->appointment_id])->update(['medical_record_id' => $reference->id]);
+        });
         return redirect()->route('consultation.patient-reference')->with('success','Doctor Assigned successfully');
     }
 
@@ -169,6 +173,7 @@ class PatientReferenceController extends Controller
         $input['created_by'] = $reference->getOriginal('created_by');
         $input['branch'] = $reference->getOriginal('branch');
         $input['review'] = $reference->getOriginal('review');
+        $input['appointment_id'] = $reference->getOriginal('appointment_id');
         $input['status'] = ($request->status) ? 0 : 1;
         $reg_fee = $this->getRegistrationFee($reference->getOriginal('branch'), $request->consultation_type);
         $token = $reference->getOriginal('token');//PRef::where('department_id', $request->department_id)->where('branch', $request->session()->get('branch'))->whereDate('created_at', Carbon::today())->max('token');

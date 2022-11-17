@@ -117,9 +117,6 @@
                                 <div class="col-sm-7">
                                     <label class="form-label">Notes </label>
                                     <input type="text" value="{{ $appointment->notes }}" name="notes" class="form-control form-control-md" placeholder="Notes">
-                                    @error('address')
-                                    <small class="text-danger">{{ $errors->first('address') }}</small>
-                                    @enderror
                                 </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>

@@ -22,5 +22,6 @@ class PatientReference extends Model
         'review',
         'token',
         'status',
+        'appointment_id',
     ];
 }

@@ -49,7 +49,7 @@
                                     <td><a href="/patient-history/{{ $patient->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                                     <td>@if(!$patient->is_doctor_assigned)<a href='/consultation/create-patient-reference/{{ $patient->id }}/'>Assign</a>@endif</td>
                                     <td>{{ $patient->rdate }}</td>
-                                    <td>@if($patient->is_doctor_assigned)<a href='/consultation/reopen/{{ $patient->id }}/'>Re-open</a>@endif</td>
+                                    <td>@if($patient->is_doctor_assigned)<a href='/consultation/reopen/{{ $patient->id }}/0/'>Re-open</a>@endif</td>
                                     <td><a class='btn btn-link' href="{{ route('patient.edit', $patient->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                     <td>
                                         <form method="post" action="{{ route('patient.delete', $patient->id) }}">
