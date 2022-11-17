@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body">                        
                         <form action="{{ route('appointment.show') }}" method="post">
                             @csrf
                             <div class="row g-4">
@@ -40,6 +40,11 @@
                 <h5 class="mb-3 mt-3">Appointment Register</h5>
                 <div class="card">                    
                     <div class="card-body table-responsive">
+                        @if(session()->has('success'))
+                            <div class="alert alert-success">
+                                {{ session()->get('success') }}
+                            </div>
+                        @endif
                         <p class= "text-right my-3"><a href="/appointment/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
                         <thead><tr><th>SL No.</th><th>Patient Name</th><th>Age</th><th>Contact Number</th><th>Address</th><th>Date</th><th>Notes</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
