@@ -6,7 +6,7 @@
     <style>
         @font-face {
             font-family: 'malayalam';
-            src: url("{{ storage_path('/fonts/kartika-regular-unicode-font.ttf') }}") format("truetype");
+            src: url("{{ storage_path('/fonts/TholikaTraditionalUnicode.ttf') }}") format("truetype");
         }
         body{
             background-image:url('./storage/assets/images/letter-head.jpeg');
@@ -42,7 +42,7 @@
             text-decoration: underline;
         }
         .matter{
-            text-align:justify;
+            /*text-align:justify;*/
             margin-left: 6%;
             margin-right:2%;
             font-family: 'malayalam';

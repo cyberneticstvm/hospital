@@ -79,7 +79,7 @@ return array (
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'malayalam' => array(
-    'normal' => $fontDir . '/malayalam_normal_13b6494b58df022641cbcfcc7009a5b1',
+    'normal' => $fontDir . '/malayalam_normal_14c9004498c644a5838cb615691f170e',
   ),
 );
 }; ?>
