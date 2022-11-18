@@ -65,9 +65,9 @@
                                     <label class="form-label">Eye <sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="eye" >
                                         <option value="">Select</option>
-                                        <option value="right">Right</option>
-                                        <option value="left">Left</option>
-                                        <option value="both">Both</option>
+                                        <option value="right" {{ ($surgery->eye == 'right') ? 'selected' : '' }}>Right</option>
+                                        <option value="left" {{ ($surgery->eye == 'left') ? 'selected' : '' }}>Left</option>
+                                        <option value="both" {{ ($surgery->eye == 'both') ? 'selected' : '' }}>Both</option>
                                     </select>
                                     @error('eye')
                                     <small class="text-danger">{{ $errors->first('eye') }}</small>
