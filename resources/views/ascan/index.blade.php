@@ -52,13 +52,13 @@
                                 <td><a href="/ascan/report/{{ $asc->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                                 <td><a href="/ascan/receipt/{{ $asc->id }}/" target="_blank"><i class="fa fa-file-o text-danger"></i></a></td>
                                 <td><a class='btn btn-link' href="{{ route('ascan.edit', $asc->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
-                                <!--<td>
+                                <td>
                                     <form method="post" action="{{ route('ascan.delete', $asc->id) }}">
                                         @csrf 
                                         @method("DELETE")
                                         <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this record?');"><i class="fa fa-trash text-danger"></i></button>
                                     </form>
-                                </td>-->
+                                </td>
                             </tr>
                         @endforeach
                         </tbody></table>

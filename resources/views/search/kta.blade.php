@@ -72,7 +72,7 @@
                         <div class="row mt-5">
                             <div class="col-md-12 table-responsive">
                                 <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                                <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>MR.ID</th><th>Branch</th><th>Date</th><th>Report</th><th>Receipt</th></tr></thead><tbody>
+                                <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>MR.ID</th><th>Branch</th><th>Date</th><th>Report</th><th>Receipt</th><th>Edit</th></tr></thead><tbody>
                                 @php $i = 0; @endphp
                                 @forelse($kta as $key => $row)
                                     <tr>
@@ -85,12 +85,15 @@
                                         @if($inputs[2] == 'k')
                                         <td><a href="/keratometry/report/{{ $row->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                                         <td><a href="/keratometry/receipt/{{ $row->id }}/" target="_blank"><i class="fa fa-file-o text-danger"></i></a></td>
+                                        <td><a class='btn btn-link' href="{{ route('keratometry.edit', $row->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                         @elseif($inputs[2] == 't')
                                         <td><a href="/tonometry/report/{{ $row->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                                         <td><a href="/tonometry/receipt/{{ $row->id }}/" target="_blank"><i class="fa fa-file-o text-danger"></i></a></td>
+                                        <td><a class='btn btn-link' href="{{ route('tonometry.edit', $row->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                         @else
                                         <td><a href="/ascan/report/{{ $row->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                                         <td><a href="/ascan/receipt/{{ $row->id }}/" target="_blank"><i class="fa fa-file-o text-danger"></i></a></td>
+                                        <td><a class='btn btn-link' href="{{ route('ascan.edit', $row->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                         @endif
                                     </tr>
                                 @empty
