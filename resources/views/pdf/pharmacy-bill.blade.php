@@ -85,7 +85,7 @@
                     {{ $net_total += $tot }}
                 </tr>
             @endforeach
-            <tr><td colspan="10" class="text-right">Total</td><td class="text-right">{{ number_format($tax_total, 2) }}</td><td class="text-right">{{ number_format($net_total, 2) }}</td></tr>
+            <tr><td colspan="9" class="text-right">Total</td><td class="text-right">{{ number_format($tax_total, 2) }}</td><td class="text-right">{{ number_format($net_total, 2) }}</td></tr>
         </tbody>
     </table>
 </body>
