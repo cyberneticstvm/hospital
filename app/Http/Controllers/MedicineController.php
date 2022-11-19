@@ -101,6 +101,8 @@ class MedicineController extends Controller
                         'medical_record_id' => $id,
                         'mrn' => $mrn,
                         'medicine' => $input['medicine'][$i],
+                        'medicine_type' => $input['medicine_type'][$i],
+                        'eye' => $input['eye'][$i],
                         'batch_number' => $input['batch_number'][$i],
                         'dosage' => $input['dosage'][$i],
                         'duration' => $input['duration'][$i],
