@@ -69,7 +69,7 @@ class PatientReferenceController extends Controller
         $doctors = DB::table('doctors')->get();   
         $departments = DB::table('departments')->get();
         $ctypes = DB::table('consultation_types')->get();
-        $review = 'no'; $appid = 0;
+        $review = 'no'; $appid = $patient->appointment_id;
         return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid'));
     }
 
