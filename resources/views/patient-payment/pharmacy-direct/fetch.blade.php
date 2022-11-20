@@ -6,38 +6,32 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">Expenses Detailed</h5>
+                        <h5 class="mb-0">Pharmacy Direct Detailed</h5>
                         <span class="text-muted"></span>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body table-responsive">
                         <div class="row g-4 mb-3">
-                            <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $medical_record_id }}</h5></div>
-                            <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ ($patient) ? $patient->patient_name : '' }}</h5></div>
-                            <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ ($patient) ? $patient->patient_id : '' }}</h5></div>
-                            <div class="col-sm-3">Date: <h5 class="text-primary">{{ ($patient) ? $patient->cdate : '' }}</h5></div>
+                            <div class="col-sm-3">Bill No: <h5 class="text-primary">{{ $patient->id }}</h5></div>
+                            <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
+                            <div class="col-sm-3">Date: <h5 class="text-primary">{{ date('d/M/Y', strtotime($patient->created_at)) }}</h5></div>
                         </div>
-                        <form action="{{ route('patient-payment.save') }}" method="post">
+                        <form action="{{ route('paypharma.save') }}" method="post">
                             @csrf
-                            <input type="hidden" name="medical_record_id" value="{{ $medical_record_id }}" />
-                            <input type="hidden" name="pharmacy_id" value="0" />
-                            <input type="hidden" name="patient_id" value="{{ ($patient) ? $patient->id : 0 }}" />
-                            <input type="hidden" name="branch" value="{{ ($patient) ? $patient->branch : 0 }}" />
+                            <input type="hidden" name="pharmacy_id" value="{{ $patient->id }}" />
+                            <input type="hidden" name="branch" value="{{ $patient->branch }}" />
                             <table class="table table-sm table-striped table-hover align-middle">
                                 <thead><tr><th>Income Head</th><th>Amount</th></tr></thead>
                                 <tbody>
                                     <tr><td>Previous Due</td><td class="text-right"><a href="" target="_blank">0.00</a></td></tr>
-                                    @forelse($heads as $key => $head)
-                                        <tr><td>{{ $head->name }}</td><td class="text-right">{{ number_format($fee[$key], 2) }}</td></tr>
-                                    @empty
-                                    @endforelse
+                                    <tr><td>Pharmacy Direct</td><td class="text-right">{{ number_format($amount, 2) }}</td></tr>
                                 </tbody>
                                 <tfoot>
-                                    <tr><th class="text-end fw-bold">Total</th><th class="text-end fw-bold">{{ number_format($tot, 2) }}</th></tr>
+                                    <tr><th class="text-end fw-bold">Total</th><th class="text-end fw-bold">{{ number_format($amount, 2) }}</th></tr>
                                 </tfoot>
                             </table>
-                            <h5 class="mb-3">Payments received against MR.ID <span class="fw-bold">{{ $medical_record_id }}</span></h5>
+                            <h5 class="mb-3">Payments received against Bill Number <span class="fw-bold">{{ $patient->id }}</span></h5>
                             <table class="table table-sm table-striped table-hover align-middle">
                                 <thead><tr><th>Payment Mode</th><th>Notes</th><th>Amount</th></tr></thead>
                                 <tbody>
@@ -50,7 +44,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr><th colspan="2" class="text-end fw-bold">Received</th><th class="text-end fw-bold">{{ number_format($ptot, 2) }}</th></tr>
-                                    <tr><th colspan="2" class="text-end fw-bold">Balance</th><th class="text-end fw-bold">{{ number_format($tot-$ptot, 2) }}</th></tr>
+                                    <tr><th colspan="2" class="text-end fw-bold">Balance</th><th class="text-end fw-bold">{{ number_format($amount-$ptot, 2) }}</th></tr>
                                 </tfoot>
                             </table>
                             <div class="row g-4">

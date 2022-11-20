@@ -28,14 +28,16 @@
             {{ $branch->contact_number }}
     </center>
     <br/>
-    <table width="100%">
-        <thead><tr><th text-align="center" colspan="4">PHARMACY RECEIPT</th></tr></thead>
+    <table width="100%" border="1" cellspacing="0" cellpadding="0">
+        <thead><tr><th text-align="center" colspan="6">PHARMACY RECEIPT</th></tr></thead>
         <tbody>
             <tr>
                 <td>Patient Name / ID / MR.ID</td>
                 <td>{{ $record->patient_name }}</td>
                 <td>Other Info</td>
                 <td>{{ $record->other_info }}</td>
+                <td>Bill/Receipt No.</td>
+                <td>{{ $record->id }}</td>
             </tr>
         </tbody>
     </table>

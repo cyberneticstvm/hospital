@@ -7,6 +7,7 @@ use App\Http\Controllers\CampMasterController;
 use App\Http\Controllers\OperationNoteController;
 use App\Http\Controllers\LetterheadController;
 use App\Http\Controllers\MedicalFitnessController;
+use App\Http\Controllers\PharmacyPaymentController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SearchController;
@@ -382,6 +383,15 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/patient-payment/edit/{id}/', 'App\Http\Controllers\PatientPaymentController@edit')->name('patient-payment.edit');
     Route::put('/patient-payment/edit/{id}/', 'App\Http\Controllers\PatientPaymentController@update')->name('patient-payment.update');
     Route::delete('/patient-payment/delete/{id}/', 'App\Http\Controllers\PatientPaymentController@destroy')->name('patient-payment.delete');
+
+    
+    Route::get('/paypharma/', 'App\Http\Controllers\PharmacyPaymentController@index')->name('paypharma.index');
+    Route::post('/paypharmafetch/', 'App\Http\Controllers\PharmacyPaymentController@create')->name('paypharma.fetch');
+    Route::post('/paypharmasave/', 'App\Http\Controllers\PharmacyPaymentController@store')->name('paypharma.save');        
+    Route::get('/paypharmaedit/{id}/', 'App\Http\Controllers\PharmacyPaymentController@edit')->name('paypharma.edit');
+    Route::put('/paypharmaedit/{id}/', 'App\Http\Controllers\PharmacyPaymentController@update')->name('paypharma.update');
+    Route::delete('/paypharmadelete/{id}/', 'App\Http\Controllers\PharmacyPaymentController@destroy')->name('paypharma.delete');
+    
     // End Patient Payments //
 
     // Certificates //

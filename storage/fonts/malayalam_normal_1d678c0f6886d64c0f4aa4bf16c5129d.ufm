@@ -1,0 +1,157 @@
+StartFontMetrics 4.1
+Notice Converted by PHP-font-lib
+Comment https://github.com/PhenX/php-font-lib
+EncodingScheme FontSpecific
+Copyright  ©  Supersoft, Computer Software R&D Centre, Kesavadasapuram, Thiruvananthapuram, Kerala. e-mail: supersoft@eth.net, Malayalam, Full font. Contains font + Unicode set requirements.
+FontName ThoolikaTraditionalUnicode
+FontSubfamily Regular
+UniqueID ThoolikaTraditionalUnicode
+FullName ThoolikaTraditionalUnicode
+Version Version 1.02
+PostScriptName ThoolikaTraditionalUnicode
+Trademark ™ Supersoft, Computer Software R&D Centre, Kesavadasapuram, Thiruvananthapuram, Kerala. e-mail: supersoft@eth.net, Malayalam, Full font. Contains font + Unicode set requirements.
+Manufacturer Supersoft
+Designer Ajayalal S.
+Description not included.
+FontVendorURL mailto:supersoft@eth.net
+FontDesignerURL mailto:supersoft@eth.net
+LicenseURL mailto:supersoft@eth.net
+Weight Medium
+ItalicAngle 0
+IsFixedPitch false
+UnderlineThickness 10
+UnderlinePosition -65
+FontHeightOffset 0
+Ascender 928
+Descender -732
+FontBBox -654 -658 2161 889
+StartCharMetrics 676
+U 32 ; WX 251 ; N space ; G 3
+U 33 ; WX 381 ; N exclam ; G 6
+U 34 ; WX 467 ; N quotedbl ; G 7
+U 35 ; WX 572 ; N numbersign ; G 8
+U 36 ; WX 572 ; N dollar ; G 9
+U 37 ; WX 953 ; N percent ; G 10
+U 38 ; WX 890 ; N ampersand ; G 11
+U 39 ; WX 381 ; N quotesingle ; G 12
+U 40 ; WX 362 ; N parenleft ; G 13
+U 41 ; WX 362 ; N parenright ; G 14
+U 42 ; WX 544 ; N asterisk ; G 15
+U 43 ; WX 612 ; N plus ; G 16
+U 44 ; WX 271 ; N comma ; G 17
+U 45 ; WX 554 ; N hyphen ; G 18
+U 46 ; WX 271 ; N period ; G 19
+U 47 ; WX 302 ; N slash ; G 20
+U 48 ; WX 544 ; N zero ; G 21
+U 49 ; WX 544 ; N one ; G 22
+U 50 ; WX 544 ; N two ; G 23
+U 51 ; WX 544 ; N three ; G 24
+U 52 ; WX 544 ; N four ; G 25
+U 53 ; WX 544 ; N five ; G 26
+U 54 ; WX 544 ; N six ; G 27
+U 55 ; WX 544 ; N seven ; G 28
+U 56 ; WX 544 ; N eight ; G 29
+U 57 ; WX 544 ; N nine ; G 30
+U 58 ; WX 302 ; N colon ; G 31
+U 59 ; WX 302 ; N semicolon ; G 32
+U 60 ; WX 612 ; N less ; G 33
+U 61 ; WX 612 ; N equal ; G 34
+U 62 ; WX 612 ; N greater ; G 35
+U 63 ; WX 482 ; N question ; G 36
+U 64 ; WX 1055 ; N at ; G 37
+U 91 ; WX 381 ; N bracketleft ; G 38
+U 92 ; WX 317 ; N backslash ; G 39
+U 93 ; WX 381 ; N bracketright ; G 40
+U 94 ; WX 537 ; N asciicircum ; G 41
+U 95 ; WX 572 ; N underscore ; G 42
+U 123 ; WX 550 ; N braceleft ; G 43
+U 124 ; WX 229 ; N bar ; G 44
+U 125 ; WX 550 ; N braceright ; G 45
+U 126 ; WX 701 ; N asciitilde ; G 46
+U 197 ; WX 223 ; N glyph4 ; G 47
+U 203 ; WX 331 ; N glyph148 ; G 150
+U 232 ; WX 381 ; N glyph55 ; G 61
+U 3330 ; WX 380 ; N u0D02 ; G 63
+U 3331 ; WX 276 ; N u0D03 ; G 64
+U 3333 ; WX 1271 ; N u0D05 ; G 65
+U 3334 ; WX 1456 ; N u0D06 ; G 66
+U 3335 ; WX 942 ; N u0D07 ; G 67
+U 3336 ; WX 1742 ; N u0D08 ; G 68
+U 3337 ; WX 667 ; N u0D09 ; G 69
+U 3338 ; WX 1466 ; N u0D0A ; G 70
+U 3339 ; WX 787 ; N u0D0B ; G 71
+U 3342 ; WX 1199 ; N u0D0E ; G 74
+U 3343 ; WX 1169 ; N u0D0F ; G 75
+U 3344 ; WX 1786 ; N uD010 ; G 76
+U 3346 ; WX 689 ; N u0D12 ; G 78
+U 3347 ; WX 1135 ; N u0D13 ; G 79
+U 3348 ; WX 1488 ; N u0D14 ; G 80
+U 3349 ; WX 920 ; N u0D15 ; G 81
+U 3350 ; WX 1013 ; N u0D16 ; G 82
+U 3351 ; WX 812 ; N u0D17 ; G 83
+U 3352 ; WX 1329 ; N u0D18 ; G 84
+U 3353 ; WX 976 ; N u0D19 ; G 85
+U 3354 ; WX 906 ; N u0D1A ; G 86
+U 3355 ; WX 1226 ; N u0D1B ; G 87
+U 3356 ; WX 879 ; N u0D1C ; G 88
+U 3357 ; WX 1477 ; N u0D1D ; G 89
+U 3358 ; WX 1314 ; N u0D1E ; G 90
+U 3359 ; WX 576 ; N u0D1F ; G 91
+U 3360 ; WX 615 ; N u0D20 ; G 92
+U 3361 ; WX 1177 ; N u0D21 ; G 93
+U 3362 ; WX 1241 ; N u0D22 ; G 94
+U 3363 ; WX 1310 ; N u0D23 ; G 95
+U 3364 ; WX 912 ; N u0D24 ; G 96
+U 3365 ; WX 886 ; N u0D25 ; G 97
+U 3366 ; WX 575 ; N u0D26 ; G 98
+U 3367 ; WX 872 ; N u0D27 ; G 99
+U 3368 ; WX 864 ; N u0D28 ; G 100
+U 3370 ; WX 1010 ; N u0D2A ; G 101
+U 3371 ; WX 1146 ; N u0D2B ; G 102
+U 3372 ; WX 1247 ; N u0D2C ; G 103
+U 3373 ; WX 607 ; N u0D2D ; G 104
+U 3374 ; WX 601 ; N u0D2E ; G 105
+U 3375 ; WX 931 ; N u0D2F ; G 106
+U 3376 ; WX 650 ; N u0D30 ; G 107
+U 3377 ; WX 607 ; N u0D31 ; G 108
+U 3378 ; WX 864 ; N u0D32 ; G 109
+U 3379 ; WX 686 ; N u0D33 ; G 110
+U 3380 ; WX 601 ; N u0D34 ; G 111
+U 3381 ; WX 906 ; N u0D35 ; G 112
+U 3382 ; WX 958 ; N u0D36 ; G 113
+U 3383 ; WX 1122 ; N u0D37 ; G 114
+U 3384 ; WX 1169 ; N u0D38 ; G 115
+U 3385 ; WX 1188 ; N u0D39 ; G 116
+U 3388 ; WX 1232 ; N uD03C ; G 72
+U 3390 ; WX 470 ; N u0D3E ; G 117
+U 3391 ; WX 250 ; N u0D3F ; G 118
+U 3392 ; WX 241 ; N u0D40 ; G 119
+U 3393 ; WX 0 ; N u0D41 ; G 120
+U 3394 ; WX 0 ; N u0D42 ; G 121
+U 3395 ; WX 0 ; N u0D43 ; G 122
+U 3398 ; WX 623 ; N u0D46 ; G 123
+U 3399 ; WX 563 ; N u0D47 ; G 124
+U 3400 ; WX 1224 ; N u0D48 ; G 125
+U 3402 ; WX 1355 ; N u0D4A ; G 126
+U 3403 ; WX 1402 ; N u0D4B ; G 127
+U 3404 ; WX 827 ; N u0D4C ; G 128
+U 3405 ; WX 0 ; N u0D4D ; G 129
+U 3415 ; WX 827 ; N u0D57 ; G 130
+U 3424 ; WX 787 ; N u0D60 ; G 131
+U 3425 ; WX 1314 ; N u0D61 ; G 132
+U 3430 ; WX 836 ; N u0D66 ; G 133
+U 3431 ; WX 825 ; N u0D67 ; G 134
+U 3432 ; WX 831 ; N u0D68 ; G 135
+U 3433 ; WX 910 ; N u0D69 ; G 136
+U 3434 ; WX 890 ; N u0D6A ; G 137
+U 3435 ; WX 867 ; N u0D6B ; G 138
+U 3436 ; WX 867 ; N u0D6C ; G 139
+U 3437 ; WX 849 ; N u0D6D ; G 140
+U 3438 ; WX 833 ; N u0D6E ; G 141
+U 3439 ; WX 844 ; N u0D6F ; G 142
+U 8203 ; WX 0 ; N .notdef ; G 670
+U 8204 ; WX 0 ; N glyph450 ; G 449
+U 8205 ; WX 0 ; N glyph452 ; G 451
+U 9676 ; WX 730 ; N glyph451 ; G 450
+EndCharMetrics
+EndFontMetrics

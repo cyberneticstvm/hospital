@@ -54,7 +54,7 @@ class AppointmentController extends Controller
             for($j=0; $j<=60-$params->ti; $j+=$params->ti):
                 $val = $i.':'.$j; $val = date("h:i A", strtotime($val));
                 $time = Carbon::parse($val)->toTimeString();
-                $dis = DB::table('appointments')->selectRaw("TIME_FORMAT(appointment_time, '%h:%i %p') AS btime")->where('branch', $branch)->where('doctor', $doctor)->whereDate('appointment_date', $date)->whereTime('appointment_time', $time)->where('status', 1)->first();
+                $dis = DB::table('appointments')->selectRaw("TIME_FORMAT(appointment_time, '%h:%i %p') AS btime")->where('branch', $branch)->where('doctor', $doctor)->whereDate('appointment_date', $date)->whereTime('appointment_time', $time)->where('status', 1)->where('medical_record_id', 0)->first();
 				$dis = ($dis && $dis->btime) ? "disabled" : "";
 				$op .= "<option value='$val' $dis>".$val."</option>";
             endfor;

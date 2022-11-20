@@ -27,7 +27,7 @@ class PatientPaymentController extends Controller
     }
     public function index()
     {
-        $incomes = PP::leftJoin('patient_medical_records as pmr', 'patient_payments.medical_record_id', '=', 'pmr.id')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('payment_modes as pm', 'pm.id', '=', 'patient_payments.payment_mode')->select("patient_payments.id", "patient_payments.amount", "patient_payments.medical_record_id", "patient_payments.notes", "pm.name", "pr.patient_name", "pr.patient_id")->where('patient_payments.branch', $this->branch)->whereDate('patient_payments.created_at', Carbon::today())->orderByDesc("patient_payments.id")->get();
+        $incomes = PP::leftJoin('patient_medical_records as pmr', 'patient_payments.medical_record_id', '=', 'pmr.id')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('payment_modes as pm', 'pm.id', '=', 'patient_payments.payment_mode')->select("patient_payments.id", "patient_payments.amount", "patient_payments.medical_record_id", "patient_payments.notes", "pm.name", "pr.patient_name", "pr.patient_id")->where('patient_payments.branch', $this->branch)->where('patient_payments.medical_record_id', '>', 0)->whereDate('patient_payments.created_at', Carbon::today())->orderByDesc("patient_payments.id")->get();
         return view('patient-payment.index', compact('incomes'));
     }
 
@@ -94,7 +94,11 @@ class PatientPaymentController extends Controller
 
         $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $procedure_fee, $reg_fee, $vision);
         $tot = $reg_fee+$consultation_fee+$procedure_fee+$certificate_fee+$pharmacy+$radiology_lab+$clinical_lab+$vision;
-        return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments'));
+        if($patient):
+            return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments'));
+        else:
+            return redirect()->back()->with('error', 'No records found.');
+        endif;
     }
 
     /**

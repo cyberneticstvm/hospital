@@ -6,22 +6,22 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">Update Patient Payment</h5>
+                        <h5 class="mb-0">Update Pharmacy Payment</h5>
                         <span class="text-muted"></span>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('patient-payment.update', $payment->id) }}" method="post">
+                        <form action="{{ route('paypharma.update', $payment->id) }}" method="post">
                             @csrf
                             @method("PUT")
-                            <input type="hidden" name="medical_record_id" value="{{ $payment->id }}" />
-                            <input type="hidden" name="patient_id" value="{{ $patient->id }}" />
+                            <input type="hidden" name="medical_record_id" value="0" />
+                            <input type="hidden" name="patient_id" value="0" />
                             <input type="hidden" name="pharmacy_id" value="0" />
                             <div class="row g-4">
-                                <div class="col-sm-3">Medical Record ID: <h5 class="text-primary">{{ $payment->medical_record_id }}</h5></div>
-                                <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }} </h5></div>
-                                <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>
+                                <div class="col-sm-3">Bill No: <h5 class="text-primary">{{ $patient->id }}</h5></div>
+                                <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
+                                <div class="col-sm-3">Date: <h5 class="text-primary">{{ date('d/M/Y', strtotime($patient->created_at)) }}</h5></div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-sm-3">
