@@ -109,7 +109,7 @@
                             </div>
                             <div class="purchaseRow purchase"></div>
                             <div class="row mt-3">
-                                <div class="col-sm-12 text-end">Total: <span class="purchase_total text-primary fw-bold">0.00</span></div>
+                                <div class="col-sm-11 text-end">Total: <span class="purchase_total text-primary fw-bold">0.00</span></div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-sm-12 text-right">
