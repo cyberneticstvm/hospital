@@ -4,10 +4,10 @@
     <title>Devi Eye Clinic & Opticians</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
-        @font-face {
+        /*@font-face {
             font-family: 'malayalam';
             src: url("{{ storage_path('/fonts/TholikaTraditionalUnicode.ttf') }}") format("truetype");
-        }
+        }*/
         body{
             background-image:url('./storage/assets/images/letter-head.jpeg');
             width:100%;
@@ -42,10 +42,9 @@
             text-decoration: underline;
         }
         .matter{
-            /*text-align:justify;*/
+            text-align:justify;
             margin-left: 6%;
             margin-right:2%;
-            font-family: 'malayalam';
         }
         .text-end{
             margin-left: 75%;
