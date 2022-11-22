@@ -10,15 +10,16 @@ $(function(){
     });
     $(".spectacle .re_int_add").focusout(function(){
         var int_add = $(this).val();
+        
         var int_sph = $(".re_int_sph").val();
         if(int_add){
             var age = $("#age").val();
             var re_dist_sph = $(".re_dist_sph").val();
-            if(age < 52 && re_dist_add > 0 && re_dist_sph){
-                var int_sph = (parseFloat(int_add)) ? parseFloat(int_add)+parseFloat(re_dist_sph): int_sph;
+            if(age < 52){
+                var int_sph = (parseFloat(int_add)) ? parseFloat(int_add)+parseFloat(re_dist_sph)+0.75: 0.75;
                 $(".re_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '0.00');
-            }else if(age < 52 && re_dist_add > 0 && re_dist_sph){
-                var int_sph = (parseFloat(int_add)) ? parseFloat(int_add)+parseFloat(re_dist_sph) : int_sph;
+            }else{ 
+                var int_sph = (parseFloat(int_add)) ? parseFloat(int_add)+parseFloat(re_dist_sph)+1.25 : 1.25;
                 $(".re_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '0.00');
             }
         }else{
@@ -52,11 +53,14 @@ $(function(){
         }else{
             $(".re_int_axis, .re_near_axis").val('');
         }
-        $(".le_dist_add").val(re_dist_add);
+        //$(".le_dist_add").val(re_dist_add);
         $(".re_near_va").focus();
     });
 
     $(".spectacle .le_dist_va").focusout(function(){
+        $(".le_near_va").focus();
+    });
+    $(".spectacle .le_near_va").focusout(function(){
         $(".le_dist_add").focus();
     });
 
@@ -66,11 +70,11 @@ $(function(){
         if(int_add){
             var age = $("#age").val();
             var le_dist_sph = $(".le_dist_sph").val();
-            if(age < 52 && re_dist_add > 0 && le_dist_sph){
-                var int_sph = (parseFloat(int_add)) ? parseFloat(int_add)+parseFloat(le_dist_sph): int_sph;
+            if(age < 52){
+                var int_sph = (parseFloat(int_add)) ? parseFloat(int_add)+parseFloat(le_dist_sph)+0.75: 0.75;
                 $(".le_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '');
-            }else if(age > 52 && re_dist_add > 0 && le_dist_sph){
-                var int_sph = (parseFloat(int_add)) ? parseFloat(int_add)+parseFloat(le_dist_sph) : int_sph;
+            }else if(age > 52){
+                var int_sph = (parseFloat(int_add)) ? parseFloat(int_add)+parseFloat(le_dist_sph)+1.25 : 1.25;
                 $(".le_int_sph").val((int_sph > 0) ? '+' + int_sph.toFixed(2) : (int_sph) ? int_sph.toFixed(2) : '');
             }
         }else{
@@ -109,11 +113,15 @@ $(function(){
     });
 
     $(".spectacle .re_int_add").change(function(){
-        $(".le_int_add").val($(this).val());
+        //$(".le_int_add").val($(this).val());
+    });
+
+    $(".spectacle .re_dist_va").focusout(function(){
+        $(".re_near_va").focus();
     });
 
     $(".spectacle .re_near_va").focusout(function(){
-        $(".le_dist_sph").focus();
+        $(".re_dist_add").focus();
     });
 
     $(".chkREtoLE").click(function(){

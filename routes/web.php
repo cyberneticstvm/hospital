@@ -377,6 +377,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     // Patient Payments //
     Route::get('/patient-payment/', 'App\Http\Controllers\PatientPaymentController@index')->name('patient-payment.index');
+    Route::get('/patient-payment/fetch/', 'App\Http\Controllers\PatientPaymentController@show')->name('patient-payment.index');
     Route::post('/patient-payment/fetch/', 'App\Http\Controllers\PatientPaymentController@show')->name('patient-payment.show');
     Route::post('/patient-payment/create/', 'App\Http\Controllers\PatientPaymentController@store')->name('patient-payment.save');
     Route::get('/patient-payment/list/', 'App\Http\Controllers\PatientPaymentController@index')->name('patient-payment.list');
@@ -386,8 +387,9 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     
     Route::get('/paypharma/', 'App\Http\Controllers\PharmacyPaymentController@index')->name('paypharma.index');
+    Route::get('/paypharmafetch/', 'App\Http\Controllers\PharmacyPaymentController@index')->name('paypharma.index');
     Route::post('/paypharmafetch/', 'App\Http\Controllers\PharmacyPaymentController@create')->name('paypharma.fetch');
-    Route::post('/paypharmasave/', 'App\Http\Controllers\PharmacyPaymentController@store')->name('paypharma.save');        
+    Route::post('/paypharmasave/', 'App\Http\Controllers\PharmacyPaymentController@store')->name('paypharma.save');         
     Route::get('/paypharmaedit/{id}/', 'App\Http\Controllers\PharmacyPaymentController@edit')->name('paypharma.edit');
     Route::put('/paypharmaedit/{id}/', 'App\Http\Controllers\PharmacyPaymentController@update')->name('paypharma.update');
     Route::delete('/paypharmadelete/{id}/', 'App\Http\Controllers\PharmacyPaymentController@destroy')->name('paypharma.delete');
