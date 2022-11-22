@@ -70,8 +70,8 @@
                                 </div>
                             </div>
                             @if($purchase_details->isEmpty())
-                            <div class="row mt-3">
-                                <div class="col-sm-3">
+                            <div class="row mt-3 purchase">
+                                <div class="col-sm-2">
                                     <label class="form-label">Product<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2 selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
                                     <option value="">Select</option>
@@ -90,23 +90,31 @@
                                 </div>
                                 <div class="col-sm-1">
                                     <label class="form-label">Qty<sup class="text-danger">*</sup></label>
-                                    <input type="number" name="qty[]" class="form-control form-control-md" placeholder="0" required='required'>
+                                    <input type="number" name="qty[]" class="form-control form-control-md calcTot qty" placeholder="0" required='required'>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="form-label">Purch.Price</label>
+                                    <input type="number" name="purchase_price[]" step="any" class="form-control form-control-md calcTot purchasePrice" placeholder="0.00">
                                 </div>
                                 <div class="col-sm-1">
                                     <label class="form-label">MRP<sup class="text-danger">*</sup></label>
-                                    <input type="number" name="mrp[]" class="form-control form-control-md" placeholder="0.00" required='required'>
+                                    <input type="number" name="mrp[]" class="form-control form-control-md calcTot" placeholder="0.00" required='required'>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-1">
                                     <label class="form-label" title="Selling Price">Price<sup class="text-danger">*</sup></label>
-                                    <input type="number" name="price[]" class="form-control form-control-md" placeholder="0.00" required='required'>
+                                    <input type="number" name="price[]" class="form-control form-control-md calcTot" placeholder="0.00" required='required'>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="form-label" title="Adjustment">Adjust.</label>
+                                    <input type="number" name="adjustment[]" step="any" class="form-control form-control-md adjust calcTot" placeholder="0.00">
                                 </div>
                             </div>
                             @else
                                 @php $c = 0; @endphp
                                 @foreach($purchase_details as $purchase)
                                 @php $c++; @endphp
-                                <div class="row mt-3">
-                                    <div class="col-sm-4">
+                                <div class="row mt-3 purchase">
+                                    <div class="col-sm-2">
                                         @if($c == 1)<label class="form-label">Product<sup class="text-danger">*</sup></label>@endif
                                         <select class="form-control form-control-md show-tick ms select2 selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
                                         <option value="">Select</option>
@@ -128,6 +136,10 @@
                                         <input type="number" name="qty[]" class="form-control form-control-md" placeholder="0" value="{{ $purchase->qty }}" required='required'>
                                     </div>
                                     <div class="col-sm-1">
+                                        @if($c == 1)<label class="form-label">Purch.Price</label>@endif
+                                        <input type="number" name="purchase_price[]" step="any" value="{{ $purchase->purchase_price }}" class="form-control form-control-md" placeholder="0.00">
+                                    </div>
+                                    <div class="col-sm-1">
                                         @if($c == 1)<label class="form-label">MRP<sup class="text-danger">*</sup></label>@endif
                                         <input type="number" name="mrp[]" value="{{ $purchase->mrp }}" class="form-control form-control-md" placeholder="0.00" step="any" required='required'>
                                     </div>
@@ -135,11 +147,18 @@
                                         @if($c == 1)<label class="form-label" title="Selling Price">Price<sup class="text-danger">*</sup></label>@endif
                                         <input type="number" name="price[]" class="form-control form-control-md" placeholder="0.00" value="{{ $purchase->price }}" step="any" required='required'>
                                     </div>
-                                    <div class="col-sm-1">@if($c > 1)<i class="fa fa-trash text-danger" style="cursor:pointer" onClick="$(this).parent().parent().remove();">@endif</i></div>
+                                    <div class="col-sm-1">
+                                        @if($c == 1)<label class="form-label" title="Adjustment">Adjust.</label>@endif
+                                        <input type="number" name="adjustment[]" step="any" value="{{ $purchase->adjustment }}" class="form-control form-control-md" placeholder="0.00">
+                                    </div>
+                                    <div class="col-sm-1">@if($c > 1)<i class="fa fa-trash text-danger calcTot" style="cursor:pointer" onClick="$(this).parent().parent().remove();">@endif</i></div>
                                 </div>
                                 @endforeach
                             @endif
-                            <div class="purchaseRow"></div>
+                            <div class="purchaseRow purchase"></div>
+                            <div class="row mt-3">
+                                <div class="col-sm-12 text-end">Total: <span class="purchase_total text-primary fw-bold">{{ $purchase->total }}</span></div>
+                            </div>
                             <div class="row mt-3">
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>

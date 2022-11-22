@@ -62,24 +62,36 @@ class PurchaseController extends Controller
         $input['order_date'] = (!empty($request->order_date)) ? Carbon::createFromFormat('d/M/Y', $input['order_date'])->format('Y-m-d') : NULL;
         $input['delivery_date'] = (!empty($request->delivery_date)) ? Carbon::createFromFormat('d/M/Y', $input['delivery_date'])->format('Y-m-d') : NULL;
         $input['created_by'] = $request->user()->id;
-        $purchase = Purchase::create($input);
-        if($input['product']):
-            for($i=0; $i<count($input['product']); $i++):
-                if($input['product'][$i] > 0):
-                    //$edate = (!empty($input['expiry_date'][$i])) ? Carbon::createFromFormat('d/M/Y', $input['expiry_date'][$i])->format('Y-m-d') : NULL;
-                    DB::table('purchase_details')->insert([
-                        'purchase_id' => $purchase->id,
-                        'product' => $input['product'][$i],
-                        'batch_number' => $input['batch_number'][$i],
-                        'expiry_date' => $input['expiry_date'][$i],
-                        'qty' => $input['qty'][$i],
-                        'mrp' => $input['mrp'][$i],
-                        'price' => $input['price'][$i],
-                        'total' => $input['qty'][$i]*$input['price'][$i],
-                    ]);
+        try{
+            DB::transaction(function() use ($input) {
+                $purchase = Purchase::create($input);
+                if($input['product']):
+                    for($i=0; $i<count($input['product']); $i++):
+                        if($input['product'][$i] > 0):
+                            $tot = ($input['purchase_price'][$i] > 0 ) ? $input['qty'][$i]*$input['purchase_price'][$i] : 0.00;
+                            $tot = $tot+$input['adjustment'][$i];
+                            $data[] = [
+                                'purchase_id' => $purchase->id,
+                                'product' => $input['product'][$i],
+                                'batch_number' => $input['batch_number'][$i],
+                                'expiry_date' => $input['expiry_date'][$i],
+                                'qty' => $input['qty'][$i],
+                                'purchase_price' => $input['purchase_price'][$i],
+                                'mrp' => $input['mrp'][$i],
+                                'price' => $input['price'][$i],
+                                'adjustment' => $input['adjustment'][$i],
+                                'total' => $tot,
+                                'created_at' => $purchase->created_at,
+                                'updated_at' => $purchase->updated_at,
+                            ];
+                        endif;
+                    endfor;
+                    DB::table('purchase_details')->insert($data);            
                 endif;
-            endfor;
-        endif;
+            });
+        }catch(Exception $e){
+            throw $e;
+        }        
         return redirect()->route('purchase.index')->with('success','Purchase recorded successfully');
     }
 
@@ -129,25 +141,34 @@ class PurchaseController extends Controller
         $input['delivery_date'] = (!empty($request->delivery_date)) ? Carbon::createFromFormat('d/M/Y', $input['delivery_date'])->format('Y-m-d') : NULL;
         $purchase = Purchase::find($id);
         $input['created_by'] = $purchase->getOriginal('created_by');
-        $purchase->update($input);
-        DB::table("purchase_details")->where('purchase_id', $purchase->id)->delete();
-        if($input['product']):
-            for($i=0; $i<count($input['product']); $i++):
-                if($input['product'][$i] > 0):
-                    //$edate = (!empty($input['expiry_date'][$i])) ? Carbon::createFromFormat('d/M/Y', $input['expiry_date'][$i])->format('Y-m-d') : NULL;
-                    DB::table('purchase_details')->insert([
-                        'purchase_id' => $purchase->id,
-                        'product' => $input['product'][$i],
-                        'batch_number' => $input['batch_number'][$i],
-                        'expiry_date' => $input['expiry_date'][$i],
-                        'qty' => $input['qty'][$i],
-                        'mrp' => $input['mrp'][$i],
-                        'price' => $input['price'][$i],
-                        'total' => $input['qty'][$i]*$input['price'][$i],
-                    ]);
-                endif;
-            endfor;
-        endif;
+        DB::transaction(function() use ($input, $purchase, $id) {
+            $purchase->update($input);
+            DB::table("purchase_details")->where('purchase_id', $purchase->id)->delete();
+            if($input['product']):
+                for($i=0; $i<count($input['product']); $i++):
+                    if($input['product'][$i] > 0):
+                        $tot = ($input['purchase_price'][$i] > 0 ) ? $input['qty'][$i]*$input['purchase_price'][$i] : 0.00;
+                        $tot = $tot+$input['adjustment'][$i];
+                        $data[] = [
+                            'purchase_id' => $purchase->id,
+                            'product' => $input['product'][$i],
+                            'batch_number' => $input['batch_number'][$i],
+                            'expiry_date' => $input['expiry_date'][$i],
+                            'qty' => $input['qty'][$i],
+                            'purchase_price' => $input['purchase_price'][$i],
+                            'mrp' => $input['mrp'][$i],
+                            'price' => $input['price'][$i],
+                            'adjustment' => $input['adjustment'][$i],
+                            'total' => $tot,
+                            'created_at' => $purchase->created_at,
+                            'updated_at' => Carbon::now(),
+                        ];
+                    endif;
+                endfor;
+                DB::table('purchase_details')->insert($data);
+            endif;
+        });
+        
         return redirect()->route('purchase.index')->with('success','Purchase record updated successfully');
     }
 

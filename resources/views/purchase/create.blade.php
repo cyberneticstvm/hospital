@@ -68,8 +68,8 @@
                                     <p class= "text-right my-3"><a href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success addPurchaseRow"></i></a></p>
                                 </div>
                             </div>
-                            <div class="row mt-3">
-                                <div class="col-sm-4">
+                            <div class="row mt-3 purchase">
+                                <div class="col-sm-2">
                                     <label class="form-label">Product<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2 selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
                                     <option value="">Select</option>
@@ -88,18 +88,29 @@
                                 </div>
                                 <div class="col-sm-1">
                                     <label class="form-label">Qty<sup class="text-danger">*</sup></label>
-                                    <input type="number" name="qty[]" class="form-control form-control-md" placeholder="0" required='required'>
+                                    <input type="number" name="qty[]" class="form-control form-control-md calcTot qty" placeholder="0" required='required'>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="form-label">Purch.Price</label>
+                                    <input type="number" name="purchase_price[]" step="any" class="form-control form-control-md calcTot purchasePrice" placeholder="0.00">
                                 </div>
                                 <div class="col-sm-1">
                                     <label class="form-label">MRP<sup class="text-danger">*</sup></label>
-                                    <input type="number" name="mrp[]" step="any" class="form-control form-control-md" placeholder="0.00" required='required'>
+                                    <input type="number" name="mrp[]" step="any" class="form-control form-control-md calcTot" placeholder="0.00" required='required'>
                                 </div>
                                 <div class="col-sm-1">
                                     <label class="form-label" title="Selling Price">Price<sup class="text-danger">*</sup></label>
-                                    <input type="number" name="price[]" step="any" class="form-control form-control-md" placeholder="0.00" required='required'>
+                                    <input type="number" name="price[]" step="any" class="form-control form-control-md calcTot" placeholder="0.00" required='required'>
+                                </div>
+                                <div class="col-sm-1">
+                                    <label class="form-label" title="Adjustment">Adjust.</label>
+                                    <input type="number" name="adjustment[]" step="any" class="form-control form-control-md adjust calcTot" placeholder="0.00">
                                 </div>
                             </div>
-                            <div class="purchaseRow"></div>
+                            <div class="purchaseRow purchase"></div>
+                            <div class="row mt-3">
+                                <div class="col-sm-12 text-end">Total: <span class="purchase_total text-primary fw-bold">0.00</span></div>
+                            </div>
                             <div class="row mt-3">
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
