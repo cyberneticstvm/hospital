@@ -24,7 +24,7 @@
                             <div class="row g-4">
                                 <div class="col-sm-3">
                                     <label class="form-label">From Branch<sup class="text-danger">*</sup></label>
-                                    <select class="form-control form-control-md" data-placeholder="Select" name="from_branch" required='required'>
+                                    <select class="form-control form-control-md selFromBranch" data-placeholder="Select" name="from_branch" required='required'>
                                     <option value="0">Master Stock</option>
                                     @foreach($branches as $branch)
                                         <option value="{{ $branch->id }}" {{ old('from_branch') == $branch->id ? 'selected' : '' }}>{{ $branch->branch_name }}</option>
@@ -84,7 +84,9 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Batch Number<sup class="text-danger">*</sup></label>
-                                    <input type="text" name="batch_number[]" class="form-control form-control-md" placeholder="Batch Number" required='required'>
+                                    <select name="batch_number[]" class="form-control form-control-md bno" required='required'>
+                                        <option value="">Select</option>
+                                    </select>
                                 </div>
                                 <div class="col-sm-1">
                                     <label class="form-label">Qty<sup class="text-danger">*</sup></label>

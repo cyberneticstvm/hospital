@@ -57,7 +57,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="fw-bold">ADD</td><td><!--<input type="text" class="form-control form-control-md re_dist_add" name="re_dist_add" value="{{ $spectacle->re_dist_add }}" placeholder="0"/>-->
-                                                <select class="form-control select2 re_dist_add" name="re_dist_add">
+                                                <select class="form-control re_dist_add" name="re_dist_add">
                                                     <option value="">Select</option>
                                                 @foreach($reading_adds as $key => $radd)
                                                     <option value="{{ $radd->value }}" {{ ($radd->value == $spectacle->re_dist_add) ? 'selected': '' }}>{{ $radd->value }}</option>
@@ -98,7 +98,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="fw-bold">ADD</td><td><!--<input type="text" class="form-control form-control-md le_dist_add" name="le_dist_add" value="{{ $spectacle->le_dist_add }}" placeholder="0"/>-->
-                                                <select class="form-control select2 le_dist_add" name="le_dist_add">
+                                                <select class="form-control le_dist_add" name="le_dist_add">
                                                     <option value="">Select</option>
                                                 @foreach($reading_adds as $key => $radd)
                                                     <option value="{{ $radd->value }}" {{ ($radd->value == $spectacle->le_dist_add) ? 'selected': '' }}>{{ $radd->value }}</option>

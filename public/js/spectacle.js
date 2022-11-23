@@ -112,10 +112,6 @@ $(function(){
         $(".le_near_va").focus();
     });
 
-    $(".spectacle .re_int_add").change(function(){
-        //$(".le_int_add").val($(this).val());
-    });
-
     $(".spectacle .re_dist_va").focusout(function(){
         $(".re_near_va").focus();
     });

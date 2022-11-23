@@ -108,7 +108,7 @@ $(function() {
     });
 
     $(".addStockTransferRow").click(function(){
-        $(".stockTransferRow").append("<div class='row mt-3'><div class='col-sm-5'><select class='form-control form-control-md show-tick ms select2 selProductForTransfer' data-placeholder='Select' name='product[]' required='required'></select></div><div class='col-sm-3'><input type='text' name='batch_number[]' class='form-control form-control-md' placeholder='Batch Number' required='required'></div><div class='col-sm-1'><input type='number' name='qty[]' class='form-control form-control-md' placeholder='0' required='required'></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger '></i></a></div></div>");
+        $(".stockTransferRow").append("<div class='row mt-3'><div class='col-sm-5'><select class='form-control form-control-md show-tick ms select2 selProductForTransfer' data-placeholder='Select' name='product[]' required='required'></select></div><div class='col-sm-3'><select name='batch_number[]' class='form-control form-control-md bno' required='required'><option value=''>Select</option></select></div><div class='col-sm-1'><input type='number' name='qty[]' class='form-control form-control-md' placeholder='0' required='required'></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger '></i></a></div></div>");
         $('.selProductForTransfer').select2();
         bindDDL('medicine', 'selProductForTransfer');
     });
@@ -118,6 +118,29 @@ $(function() {
         $(".labtestRow").append("<div class='row mt-3'><div class='col-sm-3'><select class='form-control form-control-md show-tick ms select2 selLabTest' data-placeholder='Select' name='test_id[]' required='required'></select></div><div class='col-sm-5'><input type='text' name='notes[]' class='form-control' placeholder='Notes' /></div><div class='col-sm-3'><select class='form-control form-control-md show-tick ms select2' data-placeholder='Select' name='tested_from[]' required='required'><option value='1'>Own Laboratory</option><option value='0'>Outside Laboratory</option></select></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");
         $('.selLabTest').select2();
         bindDDL(type, 'selLabTest');
+    });
+
+    $(".selFromBranch").change(function(){
+        $('.selProductForTransfer').val(0);
+        bindDDL('medicine', 'selProductForTransfer');
+    });
+
+    $(document).on("change", ".selProductForTransfer", function(){
+        var batch = $(this).parent().parent().find(".bno");
+        var branch = $(".selFromBranch").val();
+        var product = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: '/helper/getproductfortransfer/',
+            data: {'product': product, 'branch': branch},
+            success: function(data){
+                batch.html(data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                console.log(XMLHttpRequest);
+            }
+        });
+        return false;
     });
 
     $(".vEModal").click(function(){

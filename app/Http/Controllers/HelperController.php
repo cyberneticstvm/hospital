@@ -12,6 +12,22 @@ class HelperController extends Controller
         $data = DB::table('medicine_types as m')->leftJoin('products as p', 'm.id', '=', 'p.medicine_type')->select('m.id', 'm.name', 'm.default_qty', 'm.default_dosage')->where('p.id', $mid)->first();
         return response()->json($data);
     }
+    public function getProductForTransfer(Request $request){
+        if($request->branch == 0):
+            $inventory = DB::select("SELECT tbl1.product, tbl1.batch_number AS batch_number, tbl1.purchased AS purchased, SUM(CASE WHEN tbl1.batch_number = t.batch_number THEN t.qty ELSE 0 END) AS transferred, tbl1.purchased-SUM(CASE WHEN tbl1.batch_number = t.batch_number THEN t.qty ELSE 0 END) AS balance_qty FROM (SELECT p.id, p.product, SUM(p.qty) AS purchased, p.batch_number FROM purchase_details p WHERE p.product = ? GROUP BY p.batch_number) AS tbl1 JOIN product_transfer_details t ON tbl1.product = t.product LEFT JOIN product_transfers pt ON pt.id=t.transfer_id WHERE pt.from_branch = ? GROUP BY tbl1.id HAVING balance_qty > 0", [$request->product, $request->branch]);
+        else:
+            $inventory = DB::select("SELECT tbl3.product, tbl3.batch_number, tbl3.received-(tbl3.transferred+tbl3.medqty+tbl3.pharmaqty) AS balance_qty FROM (SELECT tbl2.*, IFNULL(SUM(CASE WHEN tbl2.batch_number = p.batch_number AND ph.branch = ? THEN p.qty END), 0) AS pharmaqty FROM (SELECT TBL1.*, IFNULL(SUM(CASE WHEN tbl1.batch_number = m.batch_number AND pmr.branch = ? AND m.status = 1 THEN m.qty END), 0) AS medqty FROM (SELECT td.product, td.batch_number, SUM(CASE WHEN pt.to_branch = ? THEN td.qty END) AS received, IFNULL(SUM(CASE WHEN pt.from_branch = ? THEN td.qty END), 0) AS transferred FROM product_transfer_details td LEFT JOIN product_transfers pt ON pt.id = td.transfer_id WHERE product = ? GROUP BY td.batch_number) AS tbl1 JOIN patient_medicine_records m ON m.medicine = tbl1.product LEFT JOIN patient_medical_records pmr ON pmr.id = m.medical_record_id GROUP BY tbl1.batch_number) AS tbl2 LEFT JOIN pharmacy_records p ON p.product = tbl2.product LEFT JOIN pharmacies ph ON ph.id = p.pharmacy_id GROUP BY tbl2.batch_number) AS tbl3 HAVING balance_qty > 0", [$request->branch, $request->branch, $request->branch, $request->branch, $request->product]);
+        endif;
+        $op = "<option value=''>Select</option>";
+        if($inventory):
+            foreach($inventory as $key => $inv):
+                $op .= "<option value='".$inv->batch_number."'>".$inv->batch_number."  (".$inv->balance_qty." Qty in Hand)</option>";
+            endforeach;
+        else:
+            $op .= "<option value=''>No records found</option>";
+        endif;
+        echo $op;
+    }
     public function getDayBookDetailed(Request $request){
         $html = "";
         $fdate = Carbon::createFromFormat('d/M/Y', $request->fdate)->startOfDay();
