@@ -8,6 +8,8 @@ use App\Http\Controllers\OperationNoteController;
 use App\Http\Controllers\LetterheadController;
 use App\Http\Controllers\MedicalFitnessController;
 use App\Http\Controllers\PharmacyPaymentController;
+use App\Http\Controllers\PostOperativeMedicineController;
+use App\Http\Controllers\SurgeryMedicineController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SearchController;
@@ -205,6 +207,24 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::delete('/extras/pharmacy/delete/{id}/', 'App\Http\Controllers\PharmacyController@destroy')->name('pharmacy.delete');
     Route::delete('/extras/pharmacy/medicinesingle/delete/{id}/', 'App\Http\Controllers\PharmacyController@remove')->name('pharmacysingle.delete');    
     // End Pharmacy //
+
+    // Postop Medicine //
+    Route::get('/postop/medicine/', [PostOperativeMedicineController::class, 'index'])->name('postop.medicine.index');
+    Route::get('/postop/medicine/{id}/', [PostOperativeMedicineController::class, 'create'])->name('postop.medicine.create');
+    Route::post('/postop/medicine/create/', [PostOperativeMedicineController::class, 'store'])->name('postop.medicine.save');
+    Route::get('/postop/medicine/edit/{id}/', [PostOperativeMedicineController::class, 'edit'])->name('postop.medicine.edit');
+    Route::put('/postop/medicine/edit/{id}/', [PostOperativeMedicineController::class, 'update'])->name('postop.medicine.update');
+    Route::delete('/postop/medicine/edit/{id}/',  [PostOperativeMedicineController::class, 'destroy'])->name('surgery.medicine.delete');
+    // End Postop Medicine//
+
+    // Surgery Medicine //
+    Route::get('/surgery/medicine/', [SurgeryMedicineController::class, 'index'])->name('surgery.medicine.index');
+    Route::get('/surgery/medicine/{id}/', [SurgeryMedicineController::class, 'create'])->name('surgery.medicine.create');
+    Route::post('/surgery/medicine/create/', [SurgeryMedicineController::class, 'store'])->name('surgery.medicine.save');
+    Route::get('/surgery/medicine/edit/{id}/', [SurgeryMedicineController::class, 'edit'])->name('surgery.medicine.edit');
+    Route::put('/surgery/medicine/edit/{id}/', [SurgeryMedicineController::class, 'update'])->name('surgery.medicine.update');
+    Route::delete('/surgery/medicine/edit/{id}/',  [SurgeryMedicineController::class, 'destroy'])->name('surgery.medicine.delete');
+    // End Surgery Medicine //
 
     // supplier //
     Route::get('/supplier/', 'App\Http\Controllers\SupplierController@index')->name('supplier.index');

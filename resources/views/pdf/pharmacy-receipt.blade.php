@@ -24,8 +24,9 @@
 <body>
     <center>
         <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%"/><br/>
-            {{ $branch->address }}, Phone:
-            {{ $branch->contact_number }}
+        Registered Office: Maithanam, Varkala, Thiruvananthapuram. Phone: {{ $branch->contact_number }}<br>
+        Branch: Thekkumbagom, Paravur, Kollam.<br>
+        DL Number: {{ $branch->drug_license_number }}
     </center>
     <br/>
     <table width="100%" border="1" cellspacing="0" cellpadding="0">

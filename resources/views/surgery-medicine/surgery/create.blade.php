@@ -6,30 +6,24 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">Pharmacy</h5>
+                        <h5 class="mb-0">Create Surgery Medicine</h5>
                         <span class="text-muted"></span>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('pharmacy.create') }}" method="post">
+                        <div class="row g-4 mb-3">
+                            <div class="col-sm-3">MR.ID: <h5 class="text-primary">{{ $surgery->medical_record_id }}</h5></div>
+                            <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ ($patient) ? $patient->patient_name : '' }}</h5></div>
+                            <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ ($patient) ? $patient->patient_id : '' }}</h5></div>
+                        </div>
+                        <form action="{{ route('surgery.medicine.save') }}" method="post">
                             @csrf
-                            <div class="row g-4">
-                                <div class="col-sm-4">
-                                    <label class="form-label">Patient Name / MR.ID / Patient ID<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ old('patient_name') }}" name="patient_name" class="form-control form-control-md" placeholder="Patient Name / MR.ID / Patient ID">
-                                    @error('patient_name')
-                                    <small class="text-danger">{{ $errors->first('patient_name') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-8">
-                                    <label class="form-label">Age / Address / Phone number If any.</label>
-                                    <input type="text" value="{{ old('other_info') }}" name="other_info" class="form-control form-control-md" placeholder="Age / Address / Phone number If any.">
-                                    @error('other_info')
-                                    <small class="text-danger">{{ $errors->first('other_info') }}</small>
-                                    @enderror
-                                </div>
-                            </div>
+                            <input type="hidden" name="surgery_id" value="{{ $surgery->id }}" />
+                            <input type="hidden" name="medical_record_id" value="{{ $surgery->medical_record_id }}" />
+                            <input type="hidden" name="branch" class="selFromBranch" value="{{ $surgery->branch }}" />
+                            <input type="hidden" name="patient" value="{{ $surgery->patient_id }}" />
+                            <input type="hidden" name="type" value="surgery" />
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-12 table-responsive">
                                     <table class="table table-bordered table-sm">
@@ -37,14 +31,14 @@
                                         <tbody class="tblPharmacy">
                                             <tr>
                                                 <td>
-                                                    <select class="form-control form-control-sm show-tick ms select2 selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
+                                                    <select class="form-control form-control-sm show-tick ms select2 selProductForPurchase selProductForTransfer" data-placeholder="Select" name="product[]" required='required'>
                                                     <option value="">Select</option>
                                                     @foreach($products as $product)
                                                         <option value="{{ $product->id }}" {{ old('product') == $product->id ? 'selected' : '' }}>{{ $product->product_name }}</option>
                                                     @endforeach
                                                     </select>
                                                 </td>
-                                                <td><input type="text" class="form-control form-control-sm" name="batch_number[]" placeholder="Batch No." required='required'/></td>
+                                                <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'><option value=''>Select</option></select></td>
                                                 <td><input type="number" class="form-control form-control-sm text-end qty" step="any" min="1" name="qty[]" placeholder="0" required='required'/></td>
                                                 <td><input type='text' class='form-control form-control-sm' name='dosage[]' placeholder='Dosage'/></td>
                                                 <td><input type="number" class="form-control form-control-sm text-end price" step="any" name="price[]" placeholder="0.00" required='required'/></td>
@@ -56,9 +50,16 @@
                                             </tr>
                                         </tbody>
                                         <tfoot>
-                                        <tr><td colspan="8" class="text-end">Total</td><td class="text-end">0.00</td></tr>
-                                        <tr><td colspan="9" class="text-center"><a class="btn btn-info text-white addPharmacyRow">ADD MORE</a></td></tr></tfoot>
+                                            <tr><td colspan="8" class="text-end">Total</td><td class="text-end">0.00</td></tr>
+                                            <tr><td colspan="9" class="text-center"><a class="btn btn-info text-white addPharmacyRow">ADD MORE</a></td></tr>
+                                        </tfoot>
                                     </table>
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-3">
+                                <div class="col-sm-6">
+                                    <label class="form-label">Notes</label>
+                                    <textarea name="notes" class="form-control form-control-md" rows="5" placeholder="Notes"></textarea>
                                 </div>
                             </div>
                             <div class="row g-4 mt-3">
