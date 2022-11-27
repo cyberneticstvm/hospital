@@ -27,7 +27,7 @@
                     <td>{{ $surgery->sname }}</td>
                     <td>{{ $surgery->remarks }}</td>
                     <td class="text-center"><a href="/patient-history/{{ $surgery->pid }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
-                    <td class="text-center"><a href="/operation-theatre/medicine/{{ $surgery->id }}/"><i class="fa fa-plus text-primary"></i></a></td>
+                    <td class="text-center"><a href="/postop/medicine/{{ $surgery->id }}/"><i class="fa fa-plus text-primary"></i></a></td>
                 </tr>
             @endforeach
         </tbody></table>
