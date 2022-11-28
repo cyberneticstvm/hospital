@@ -26,7 +26,7 @@
         <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%"/><br/>
         Registered Office: Maithanam, Varkala, Thiruvananthapuram. Phone: {{ $branch->contact_number }}<br>
         Branch: Thekkumbagom, Paravur, Kollam.<br>
-        DL Number: {{ $branch->drug_license_number }}
+        DL Number: RLF21KL2022000540, RLF20KL2022000543
     </center>
     <br/>
     <table width="100%" border="1" cellspacing="0" cellpadding="0">
