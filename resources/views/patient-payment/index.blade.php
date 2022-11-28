@@ -38,7 +38,7 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Amount</th><th>Payment Mode</th><th>Notes</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Amount</th><th>Payment Mode</th><th>Branch</th><th>Notes</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @foreach($incomes as $income)
                             <tr>
@@ -48,15 +48,16 @@
                                 <td>{{ $income->patient_id }}</td>
                                 <td class="text-right">{{ $income->amount }}</td>
                                 <td>{{ $income->name }}</td>
+                                <td>{{ $income->branch_name }}</td>
                                 <td>{{ $income->notes }}</td>
                                 <td><a class='btn btn-link' href="{{ route('patient-payment.edit', $income->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
-                                <!--<td>
+                                <td>
                                     <form method="post" action="{{ route('patient-payment.delete', $income->id) }}">
                                         @csrf 
                                         @method("DELETE")
                                         <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Record?');"><i class="fa fa-trash text-danger"></i></button>
                                     </form>
-                                </td>-->
+                                </td>
                             </tr>
                         @endforeach
                         </tbody></table>
