@@ -133,7 +133,7 @@ $(function() {
             type: 'GET',
             url: '/helper/getproductfortransfer/',
             data: {'product': product, 'branch': branch},
-            success: function(data){alert(data)
+            success: function(data){alert(branch); alert(product);
                 batch.html(data);
                 batch.select2();
             },
