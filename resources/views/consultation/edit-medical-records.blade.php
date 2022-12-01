@@ -1197,6 +1197,7 @@
                                                 <option value="B">Both</option>
                                                 <option value="R">RE</option>
                                                 <option value="L">LE</option>
+                                                <option value="O">Oral</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-1">
@@ -1259,6 +1260,7 @@
                                                 <option value="B" {{ ($pmr->eye == 'B') ? 'selected' : '' }}>Both</option>
                                                 <option value="R" {{ ($pmr->eye == 'R') ? 'selected' : '' }}>RE</option>
                                                 <option value="L" {{ ($pmr->eye == 'L') ? 'selected' : '' }}>LE</option>
+                                                <option value="L" {{ ($pmr->eye == 'O') ? 'selected' : '' }}>Oral</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-1">
