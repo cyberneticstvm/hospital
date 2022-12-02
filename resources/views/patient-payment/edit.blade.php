@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">Amount<sup class="text-danger">*</sup></label>
-                                    <input type="number" name="amount" class="form-control form-control-md" value="{{ $payment->amount }}">
+                                    <input type="number" name="amount" step="any" class="form-control form-control-md" value="{{ $payment->amount }}">
                                     @error('amount')
                                     <small class="text-danger">{{ $errors->first('amount') }}</small>
                                     @enderror
