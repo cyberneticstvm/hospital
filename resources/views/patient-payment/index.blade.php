@@ -26,15 +26,19 @@
                                     <label class="form-label">&nbsp;</label>
                                     <button type="submit" class="btn btn-primary btn-submit w-100">Fetch</button>
                                 </div>
-                            </div>
-                            @if (Session::has('error'))
-                            <div class="text-danger mt-2">{{ Session::get('error') }} 
-                            </div>
-                            @endif
+                            </div>                            
                         </form>
                     </div>
                 </div>
                 <h5 class="mb-3 mt-3">Patient Payments Register</h5>
+                <div class="">
+                    @if (Session::has('error'))
+                    <div class="text-danger text-center mt-2"><h5>{{ Session::get('error') }}</h5></div>
+                    @endif
+                    @if (Session::has('success'))
+                    <div class="text-success text-center mt-2"><h5>{{ Session::get('success') }}</h5></div>
+                    @endif
+                </div>
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
