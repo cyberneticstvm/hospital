@@ -20,6 +20,7 @@ class ProductTransferController extends Controller
          $this->middleware('permission:product-transfer-create', ['only' => ['create','store']]);
          $this->middleware('permission:product-transfer-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:product-transfer-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:stock-in-hand', ['only' => ['fetch']]);
          $this->branch = session()->get('branch');
     }
     /**
@@ -90,9 +91,16 @@ class ProductTransferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $branches = DB::table('branches')->get();
+        $products = DB::table('products')->orderBy('product_name')->get();
+        $inventory = []; $input = [];
+        return view('product-transfer.stock-in-hand', compact('branches', 'products', 'inventory', 'input'));
+    }
+
+    public function fetch(Request $request){
+        
     }
 
     /**

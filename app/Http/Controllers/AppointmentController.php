@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helper;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Carbon\Carbon;
@@ -85,8 +87,11 @@ class AppointmentController extends Controller
         $input['updated_by'] = $request->user()->id;
         $input['appointment_date'] = (!empty($request->appointment_date)) ? Carbon::createFromFormat('d/M/Y', $request->appointment_date)->format('Y-m-d') : NULL;
         $input['appointment_time'] = Carbon::createFromFormat('h:i A', $request->appointment_time)->format('H:i:s');
+        Config::set('myconfig.sms.number', $request->mobile_number);
+        Config::set('myconfig.sms.message', "Dear ".$request->patient_name.", Your appointment has been scheduled on ".$request->appointment_date." ".$request->appointment_time.", for enquiry please Call 9995050149. Thank You, Devi Eye Hospital.");
         try{
             $apo = Appointment::create($input);
+            $code = Helper::sendSms(Config::get('myconfig.sms'));
         }catch(Exception $e){
             throw $e;
         }

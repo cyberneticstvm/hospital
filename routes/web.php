@@ -251,6 +251,8 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/product-transfer/edit/{id}/', 'App\Http\Controllers\ProductTransferController@edit')->name('product-transfer.edit');
     Route::put('/product-transfer/edit/{id}/', 'App\Http\Controllers\ProductTransferController@update')->name('product-transfer.update');
     Route::delete('/product-transfer/delete/{id}/', 'App\Http\Controllers\ProductTransferController@destroy')->name('product-transfer.delete');
+    Route::get('/stock-in-hand/', 'App\Http\Controllers\ProductTransferController@show')->name('stock-in-hand.show');
+    Route::post('/stock-in-hand/', 'App\Http\Controllers\ProductTransferController@fetch')->name('stock-in-hand.fetch');
     // End purchase //
 
     // spectacles //
