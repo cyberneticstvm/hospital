@@ -19,7 +19,7 @@
                                     <label class="form-label">Branch<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md select2" name="branch">
                                         <option value="">Select</option>
-                                        <option value="0">Main Branch</option>
+                                        <option value="0" {{ ($input && $input[0] == 0) ? 'selected' : '' }}>Main Branch</option>
                                         @forelse($branches as $key => $branch)
                                             <option value="{{ $branch->id }}" {{ ($input && $input[0] == $branch->id) ? 'selected' : '' }}>{{ $branch->branch_name }}</option>
                                         @empty
@@ -33,7 +33,7 @@
                                     <label class="form-label">Product<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md select2" name="product">
                                         <option value="">Select</option>
-                                        <option value="0">All Products</option>
+                                        <option value="0" {{ ($input && $input[1] == 0) ? 'selected' : '' }}>All Products</option>
                                         @forelse($products as $key => $product)
                                             <option value="{{ $product->id }}" {{ ($input && $input[1] == $product->id) ? 'selected' : '' }}>{{ $product->product_name }}</option>
                                         @empty
@@ -55,17 +55,18 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>Branch</th><th>Product</th><th>Batch No.</th><th>Purchased</th><th>Transferred</th><th>Balance</th></tr></thead><tbody>
-                        @php $i = 0; @endphp
+                        <thead><tr><th>SL No.</th><th>Branch</th><th>Product</th><th>Pid</th><th>Batch No.</th><th>Stock In</th><th>Stock Out</th><th>Balance</th></tr></thead><tbody>
+                        @php $i = 1; @endphp
                         @forelse($inventory as $key => $stock)
                             <tr>
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $stock->branch }}</td>
+                                <td>{{ $stock->product_name }}</td>
                                 <td>{{ $stock->product }}</td>
-                                <td>{{ $stock->batch }}</td>
+                                <td>{{ $stock->batch_number }}</td>
                                 <td>{{ $stock->purchased }}</td>
                                 <td>{{ $stock->transferred }}</td>
-                                <td>{{ $stock->balance }}</td>
+                                <td>{{ $stock->balance_qty }}</td>
                             </tr>
                         @empty
                         @endforelse
