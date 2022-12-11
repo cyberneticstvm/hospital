@@ -10,6 +10,7 @@ use App\Http\Controllers\MedicalFitnessController;
 use App\Http\Controllers\PharmacyPaymentController;
 use App\Http\Controllers\PostOperativeMedicineController;
 use App\Http\Controllers\SurgeryMedicineController;
+use App\Http\Controllers\PachymetryController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SearchController;
@@ -267,6 +268,15 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::delete('/spectacle/delete/{id}/', 'App\Http\Controllers\SpectacleController@destroy')->name('spectacle.delete');
     // end spectacles //
 
+    // Pachymetry //
+    Route::get('/pachymetry/', [PachymetryController::class, 'index'])->name('pachymetry.index');
+    Route::post('/pachymetry/show/', [PachymetryController::class, 'show'])->name('pachymetry.show');
+    Route::post('/pachymetry/create/', [PachymetryController::class, 'store'])->name('pachymetry.save');
+    Route::get('/pachymetry/edit/{id}/', [PachymetryController::class, 'edit'])->name('pachymetry.edit');
+    Route::put('/pachymetry/edit/{id}/', [PachymetryController::class, 'update'])->name('pachymetry.update');
+    Route::delete('/pachymetry/delete/{id}/', [PachymetryController::class, 'destroy'])->name('pachymetry.delete');
+    // end Pachymetry //
+
     // keratometry //
     Route::get('/keratometry/', 'App\Http\Controllers\KeratometryController@index')->name('keratometry.index');
     Route::post('/keratometry/show/', 'App\Http\Controllers\KeratometryController@show')->name('keratometry.show');
@@ -521,6 +531,8 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/vision-receipt/{id}/', [PDFController::class, 'visionreceipt']);
     Route::get('/printletterhead/{id}/', [PDFController::class, 'printletterhead']);
     Route::get('/medical-fitness/print/{id}/', [PDFController::class, 'printmfit']);
+    Route::get('/pachymetry/receipt/{id}/', [PDFController::class, 'pachymetryreceipt']);
+    Route::get('/pachymetry/report/{id}/', [PDFController::class, 'pachymetryreport']);
     // End PDFs //
 
     // Settings //

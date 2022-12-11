@@ -234,6 +234,19 @@ $(function() {
         var tot = calculatePurchaseTotal();
         $(".purchase_total").text(tot.toFixed(2));
     });
+
+    $(".pachy").change(function(e){
+        e.preventDefault();
+        var file = $(this).get(0).files[0];
+        var cls = $(this).attr('name');
+        if(file){
+            var reader = new FileReader();
+            reader.onload = function(){
+                $("."+cls).attr("src", reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
 });
 
 /*$(window).on('load', function () {

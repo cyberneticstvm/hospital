@@ -62,6 +62,7 @@
         $keratometry = DB::table('keratometries')->where('medical_record_id', $mrecord->id)->first();
         $ascan = DB::table('ascans')->where('medical_record_id', $mrecord->id)->first();
         $onotes = DB::table('operation_notes')->where('medical_record_id', $mrecord->id)->first();
+        $pachymetry = DB::table('pachymetries')->where('medical_record_id', $mrecord->id)->first();
 
         $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.product_name', 'm.qty', 'm.dosage', 'm.duration', 'm.notes', 't.name', DB::raw("CASE WHEN m.eye='L' THEN 'Left Eye Only' WHEN m.eye='R' THEN 'Right Eye Only' WHEN m.eye='B' THEN 'Both Eyes' ELSE 'Oral' END AS eye"))->where('m.medical_record_id', $mrecord->id)->get();
         
@@ -249,6 +250,36 @@
             </tbody>
         </table>
         <br>
+    @endif
+    @if($pachymetry)
+    <div>
+        <p>Pachymetry</p>
+        <table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td width="50%">
+                        <img src="./storage/{{ $pachymetry->img1 }}" width="100%" /><br/>
+                        {{ $pachymetry->img1_value }}        
+                    </td>
+                    <td>
+                    <img src="./storage/{{ $pachymetry->img2 }}" width="100%" /><br/>
+                        {{ $pachymetry->img2_value }}
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%">
+                        <img src="./storage/{{ $pachymetry->img3 }}" width="100%" /><br/>
+                        {{ $pachymetry->img3_value }}        
+                    </td>
+                    <td>
+                    <img src="./storage/{{ $pachymetry->img4 }}" width="100%" /><br/>
+                        {{ $pachymetry->img4_value }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
     @endif
     @if($v_od_1 != 'Na' || $v_os_1 != 'Na')
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
