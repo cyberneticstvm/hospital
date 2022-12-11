@@ -87,6 +87,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/appointment/edit/{id}/', [AppointmentController::class, 'edit'])->name('appointment.edit');
     Route::put('/appointment/edit/{id}/', [AppointmentController::class, 'update'])->name('appointment.update');
     Route::delete('/appointment/delete/{id}/', [AppointmentController::class, 'destroy'])->name('appointment.delete');
+    Route::get('/appointment/list/', [AppointmentController::class, 'activelist'])->name('appointment.list');
     // End Appointments //
 
     // Patient Registration //

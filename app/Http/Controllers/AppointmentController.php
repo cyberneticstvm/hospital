@@ -23,6 +23,7 @@ class AppointmentController extends Controller
         $this->middleware('permission:appointment-create', ['only' => ['create','store']]);
         $this->middleware('permission:appointment-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:appointment-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:appointment-active-list', ['only' => ['activelist ']]);
 
         $this->branch = session()->get('branch');
         $this->doctors = DB::table('doctors')->get();
@@ -188,5 +189,10 @@ class AppointmentController extends Controller
         $ascan = Appointment::find($id)->delete();
         return redirect()->route('appointment.index')
                         ->with('success','Record deleted successfully');
+    }
+
+    public function activelist(){
+        $appointments = Appointment::leftJoin('doctors as d', 'd.id', '=', 'appointments.doctor')->leftJoin('branches as b', 'b.id', '=', 'appointments.branch')->select('appointments.*', DB::raw("DATE_FORMAT(appointments.appointment_date, '%d/%b/%Y') AS adate"), 'b.branch_name', 'd.doctor_name', DB::raw("TIME_FORMAT(appointment_time, '%h:%i %p') AS atime"))->where('appointments.status', 1)->where('appointments.medical_record_id', 0)->orderByDesc('appointments.appointment_date')->get();
+        return view('appointment.list', compact('appointments'));
     }
 }
