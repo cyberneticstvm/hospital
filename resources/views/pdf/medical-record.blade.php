@@ -200,7 +200,7 @@
             <tbody>
                 <tr>
                     <td width="50%">
-                        <img src="{{ $pachymetry->img1 }}" width="100%" /><br/>
+                        <img src="./public/storage/{{ $pachymetry->img1 }}" width="100%" /><br/>
                         {{ $pachymetry->img1_value }}        
                     </td>
                     <td>
