@@ -200,7 +200,7 @@
             <tbody>
                 <tr>
                     <td width="50%">
-                        <img src="./public/storage/{{ $pachymetry->img1 }}" width="100%" /><br/>
+                        <img src="https://hospital.speczone.net/public/storage/{{ $pachymetry->img1 }}" width="50%" /><br/>
                         {{ $pachymetry->img1_value }}        
                     </td>
                     <td>
