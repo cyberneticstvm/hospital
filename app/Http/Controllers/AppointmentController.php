@@ -23,7 +23,7 @@ class AppointmentController extends Controller
         $this->middleware('permission:appointment-create', ['only' => ['create','store']]);
         $this->middleware('permission:appointment-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:appointment-delete', ['only' => ['destroy']]);
-        $this->middleware('permission:appointment-active-list', ['only' => ['activelist ']]);
+        $this->middleware('permission:appointment-active-list', ['only' => ['activelist']]);
 
         $this->branch = session()->get('branch');
         $this->doctors = DB::table('doctors')->get();
