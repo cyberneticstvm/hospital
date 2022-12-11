@@ -43,21 +43,21 @@
         <tbody>
             <tr>
                 <td width="50%">
-                    <img src="./storage/{{ $pachymetry->img1 }}" width="100%" /><br/>
+                    <img src="{{ ($pachymetry->img1) ? './storage/'.$pachymetry->img1 : '' }}" width="100%" /><br/>
                     {{ $pachymetry->img1_value }}        
                 </td>
                 <td>
-                <img src="./storage/{{ $pachymetry->img2 }}" width="100%" /><br/>
+                    <img src="{{ ($pachymetry->img2) ? './storage/'.$pachymetry->img2 : '' }}" width="100%" /><br/>
                     {{ $pachymetry->img2_value }}
                 </td>
             </tr>
             <tr>
                 <td width="50%">
-                    <img src="./storage/{{ $pachymetry->img3 }}" width="100%" /><br/>
+                    <img src="{{ ($pachymetry->img3) ? './storage/'.$pachymetry->img3 : '' }}" width="100%" /><br/>
                     {{ $pachymetry->img3_value }}        
                 </td>
                 <td>
-                <img src="./storage/{{ $pachymetry->img4 }}" width="100%" /><br/>
+                    <img src="{{ ($pachymetry->img4) ? './storage/'.$pachymetry->img4 : '' }}" width="100%" /><br/>
                     {{ $pachymetry->img4_value }}
                 </td>
             </tr>
