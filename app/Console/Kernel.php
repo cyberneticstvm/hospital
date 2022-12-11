@@ -5,6 +5,8 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+use Illuminate\Support\Facades\Config;
+use App\Helper\Helper;
 use Carbon\Carbon;
 use DB;
 
@@ -29,6 +31,15 @@ class Kernel extends ConsoleKernel
                 );
             endforeach;
         })->dailyAt('23:30')->emailOutputOnFailure('cybernetics.me@outlook.com');
+
+        $schedule->call(function(){
+            $aps = DB::table('appointments')->whereDate('appointment_date', Carbon::today())->get();
+            foreach($aps as $key => $app):
+                Config::set('myconfig.sms.number', $app->mobile_number);
+                Config::set('myconfig.sms.message', "Dear ".$app->patient_name.", Your appointment has been scheduled on ".$app->appointment_date." ".$app->appointment_time.", for enquiry please Call 9995050149. Thank You, Devi Eye Hospital.");
+                Helper::sendSms(Config::get('myconfig.sms'));
+            endforeach;
+        })->dailyAt('09:00')->emailOutputOnFailure('cybernetics.me@outlook.com');
     }
 
     private function getClosingBalance($branch){
