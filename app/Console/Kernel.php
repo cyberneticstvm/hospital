@@ -41,7 +41,7 @@ class Kernel extends ConsoleKernel
                     Helper::sendSms(Config::get('myconfig.sms'));
                 endforeach;
             endif;
-        })->dailyAt('09:30');
+        })->dailyAt('08:30');
     }
 
     private function getClosingBalance($branch){
