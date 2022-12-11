@@ -16,11 +16,13 @@ class ReportController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:report-daybook-show|report-daybook-fetch|report-income-expense-show|report-income-expense-fetch', ['only' => ['showdaybook','fetchdaybook','showincomeexpense','fetchincomeexpense']]);
+        $this->middleware('permission:report-daybook-show|report-daybook-fetch|report-income-expense-show|report-income-expense-fetch|report-patient-payments-show|report-patient-payments-fetch', ['only' => ['showdaybook','fetchdaybook','showincomeexpense','fetchincomeexpense','showpayment','fetchpayment']]);
         $this->middleware('permission:report-daybook-show', ['only' => ['showdaybook']]);
         $this->middleware('permission:report-daybook-fetch', ['only' => ['fetchdaybook']]);
         $this->middleware('permission:report-income-expense-show', ['only' => ['showincomeexpense']]);
         $this->middleware('permission:report-income-expense-fetch', ['only' => ['fetchincomeexpense']]);
+        $this->middleware('permission:report-patient-payments-show', ['only' => ['showpayment']]);
+        $this->middleware('permission:report-patient-payments-fetch', ['only' => ['fetchpayment']]);
 
         $this->branch = session()->get('branch');
     }
