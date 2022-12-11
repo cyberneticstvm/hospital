@@ -34,11 +34,13 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function(){
             $aps = DB::table('appointments')->selectRaw("patient_name, mobile_number, DATE_FORMAT(appointment_date, '%d/%b/%Y') AS adate, TIME_FORMAT(appointment_time, '%h:%i %p') AS atime")->whereDate('appointment_date', Carbon::today())->get();
-            foreach($aps as $key => $app):
-                Config::set('myconfig.sms.number', $app->mobile_number);
-                Config::set('myconfig.sms.message', "Dear ".$app->patient_name.", Your appointment has been scheduled on ".$app->adate." ".$app->atime.", for enquiry please Call 9995050149. Thank You, Devi Eye Hospital.");
-                Helper::sendSms(Config::get('myconfig.sms'));
-            endforeach;
+            if($aps->isNotEmpty()):
+                foreach($aps as $key => $app):
+                    Config::set('myconfig.sms.number', $app->mobile_number);
+                    Config::set('myconfig.sms.message', "Dear ".$app->patient_name.", Your appointment has been scheduled on ".$app->adate." ".$app->atime.", for enquiry please Call 9995050149. Thank You, Devi Eye Hospital.");
+                    Helper::sendSms(Config::get('myconfig.sms'));
+                endforeach;
+            endif;
         })->dailyAt('09:30');
     }
 
