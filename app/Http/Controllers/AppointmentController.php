@@ -19,7 +19,7 @@ class AppointmentController extends Controller
     private $branch, $doctors, $branches, $settings;
 
     function __construct(){
-        $this->middleware('permission:appointment-list|appointment-create|appointment-edit|appointment-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:appointment-list|appointment-create|appointment-edit|appointment-delete|appointment-active-list', ['only' => ['index','store']]);
         $this->middleware('permission:appointment-create', ['only' => ['create','store']]);
         $this->middleware('permission:appointment-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:appointment-delete', ['only' => ['destroy']]);
