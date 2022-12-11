@@ -30,16 +30,16 @@ class Kernel extends ConsoleKernel
                     ['date' => Carbon::today(), 'closing_balance' => $closing_balance, 'branch' => $branch->id, 'closed_by' => 0, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]
                 );
             endforeach;
-        })->dailyAt('23:30')->emailOutputOnFailure('cybernetics.me@outlook.com');
+        })->dailyAt('23:30');
 
         $schedule->call(function(){
-            $aps = DB::table('appointments')->whereDate('appointment_date', Carbon::today())->get();
+            $aps = DB::table('appointments')->selectRaw("patient_name, mobile_number, DATE_FORMAT(appointment_date, '%d/%b/%Y') AS adate, TIME_FORMAT(appointment_time, '%h:%i %p') AS atime")->whereDate('appointment_date', Carbon::today())->get();
             foreach($aps as $key => $app):
                 Config::set('myconfig.sms.number', $app->mobile_number);
-                Config::set('myconfig.sms.message', "Dear ".$app->patient_name.", Your appointment has been scheduled on ".$app->appointment_date." ".$app->appointment_time.", for enquiry please Call 9995050149. Thank You, Devi Eye Hospital.");
+                Config::set('myconfig.sms.message', "Dear ".$app->patient_name.", Your appointment has been scheduled on ".$app->adate." ".$app->atime.", for enquiry please Call 9995050149. Thank You, Devi Eye Hospital.");
                 Helper::sendSms(Config::get('myconfig.sms'));
             endforeach;
-        })->dailyAt('09:00')->emailOutputOnFailure('cybernetics.me@outlook.com');
+        })->dailyAt('09:30');
     }
 
     private function getClosingBalance($branch){
