@@ -480,6 +480,8 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::post('/reports/daybook/', 'App\Http\Controllers\ReportController@fetchdaybook')->name('reports.fetchdaybook');
     Route::get('/reports/income-expense/', 'App\Http\Controllers\ReportController@showincomeexpense')->name('reports.showincomeexpense');
     Route::post('/reports/income-expense/', 'App\Http\Controllers\ReportController@fetchincomeexpense')->name('reports.fetchincomeexpense');
+    Route::get('/reports/payments/', 'App\Http\Controllers\ReportController@showpayment')->name('reports.showpayment');
+    Route::post('/reports/payments/', 'App\Http\Controllers\ReportController@fetchpayment')->name('reports.fetchpayment');
     // End Reports //
 
     // Helper //

@@ -132,4 +132,31 @@ class ReportController extends Controller
         endif;
         return view('reports.income-expense', compact('branches', 'records', 'inputs', 'heads'));
     }
+
+    public function showpayment(){
+        if($this->isAdmin()):
+            $branches = DB::table('branches')->get();
+        else:
+            $branches = $this->getBranches($this->branch);
+        endif;
+        $records = []; $inputs = []; 
+        return view('reports.patient-payments', compact('branches', 'records', 'inputs'));
+    }
+    public function fetchpayment(Request $request){
+        $this->validate($request, [
+            'fromdate' => 'required',
+            'todate' => 'required',
+            'branch' => 'required',
+        ]);
+        if($this->isAdmin()):
+            $branches = DB::table('branches')->get();
+        else:
+            $branches = $this->getBranches($this->branch);
+        endif;
+        $inputs = array($request->fromdate, $request->todate, $request->branch);
+        $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
+        $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
+        $records = DB::table('patient_payments as pp')->leftJoin('patient_registrations as pr', 'pp.patient_id', '=', 'pr.id')->leftJoin('branches as b', 'b.id', 'pp.branch')->leftJoin('users as u', 'u.id', '=', 'pp.created_by')->selectRaw("pr.patient_name, pr.patient_id, pp.medical_record_id, b.branch_name, u.name as uname, DATE_FORMAT(pp.created_at, '%d/%b/%Y %h:%i %p') AS pdate, pp.amount")->whereBetween('pp.created_at', [$startDate, $endDate])->where('pp.branch', $request->branch)->orderByDesc('pp.created_at')->get();
+        return view('reports.patient-payments', compact('branches', 'records', 'inputs'));
+    }
 }
