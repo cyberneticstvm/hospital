@@ -1,5 +1,9 @@
 $(function() {
     "use strict";
+    setInterval(function(){
+        checkNewAppointments();
+    }, 10000);
+
     var branch = $("#branch_selector").val();
     $(".visionModal").modal({backdrop: 'static'});
     $(".visionModal").modal({keyboard: false});
@@ -286,4 +290,19 @@ function calculatePurchaseTotal(){
         tot += (qty*price)+adjust;
     });
     return (tot >= 0) ? tot : 0;
+}
+
+function checkNewAppointments(){
+    $.ajax({
+        url : "/appointment/check/",
+        type: "GET",
+        data : {},
+        success: function(response){
+            if(response.trim() == '1'){
+                var audio = new Audio('../audio/new-app.mp3');
+                audio.play();
+                $('.toast').toast('show');
+            }            
+        }
+    });
 }

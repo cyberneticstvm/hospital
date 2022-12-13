@@ -192,7 +192,21 @@ class AppointmentController extends Controller
     }
 
     public function activelist(){
-        $appointments = Appointment::leftJoin('doctors as d', 'd.id', '=', 'appointments.doctor')->leftJoin('branches as b', 'b.id', '=', 'appointments.branch')->select('appointments.*', DB::raw("DATE_FORMAT(appointments.appointment_date, '%d/%b/%Y') AS adate"), 'b.branch_name', 'd.doctor_name', DB::raw("TIME_FORMAT(appointment_time, '%h:%i %p') AS atime"))->where('appointments.status', 1)->where('appointments.medical_record_id', 0)->orderByDesc('appointments.appointment_date')->get();
+        $appointments = Appointment::leftJoin('doctors as d', 'd.id', '=', 'appointments.doctor')->leftJoin('branches as b', 'b.id', '=', 'appointments.branch')->leftJoin('users as u', 'u.id', '=', 'appointments.created_by')->select('appointments.*', DB::raw("DATE_FORMAT(appointments.appointment_date, '%d/%b/%Y') AS adate"), 'b.branch_name', 'd.doctor_name', DB::raw("TIME_FORMAT(appointment_time, '%h:%i %p') AS atime"), 'u.name AS uname')->where('appointments.status', 1)->where('appointments.medical_record_id', 0)->orderByDesc('appointments.appointment_date')->get();
         return view('appointment.list', compact('appointments'));
+    }
+    public function listdestroy($id)
+    {
+        $ascan = Appointment::find($id)->delete();
+        return redirect()->route('appointment.list')
+                        ->with('success','Record deleted successfully');
+    }
+
+    public function check(){
+        $app = Appointment::where('notification', 'N')->get();
+        if($app->isNotEmpty()):            
+            Appointment::where('notification', 'N')->update(['notification' => 'Y']);
+            echo '1';
+        endif;
     }
 }

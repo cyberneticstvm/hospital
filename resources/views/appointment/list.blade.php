@@ -8,7 +8,7 @@
                 <div class="card">                    
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>Patient Name</th><th>Age</th><th>Contact Number</th><th>Address</th><th>Date</th><th>Time</th><th>Branch</th><th>Notes</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>Patient Name</th><th>Age</th><th>Contact Number</th><th>Address</th><th>Date</th><th>Time</th><th>Branch</th><th>Notes</th><th>User</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @forelse($appointments as $key => $ap)
                             <tr>
@@ -25,9 +25,10 @@
                                 <td>{{ $ap->atime }}</td>
                                 <td>{{ $ap->branch_name }}</td>
                                 <td>{{ $ap->notes }}</td>
+                                <td>{{ $ap->uname }}</td>
                                 <td><a class='btn btn-link' href="{{ route('appointment.edit', $ap->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                 <td>
-                                    <form method="post" action="{{ route('appointment.delete', $ap->id) }}">
+                                    <form method="post" action="{{ route('appointment.list.delete', $ap->id) }}">
                                         @csrf 
                                         @method("DELETE")
                                         <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this record?');"><i class="fa fa-trash text-danger"></i></button>

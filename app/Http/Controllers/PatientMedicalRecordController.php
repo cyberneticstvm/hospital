@@ -332,6 +332,10 @@ class PatientMedicalRecordController extends Controller
             $input['vision_os_img4'] = $img8;
             $record->update($input);
             //print_r($odospoints);
+            /*if($input['review_date']):
+                $patient = DB::table('patient_registrations')->find($request->patient_id);
+                DB::table('appointments')->upsert(['patient_id' => $patient->id, 'patient_name' => $patient->patient_name, 'gender' => $patient->gender, 'age' => $patient->age, 'mobile_number' => $patient->mobile_number, 'address' => $patient->address, 'branch' => $this->branch, 'doctor' => $request->doctor_id, 'appointment_date' => $input['review_date'], 'appointment_time' => '10:00:00', 'status' => 1, 'notes' => 'REVIEW BOOKING', 'medical_record_id' => 0, 'created_by' => $request->user()->id, 'updated_by' => $request->user()->id, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], ['patient_id', 'appointment_date', 'branch']);
+            endif;*/
             echo "success";
         }catch(Exception $e){
             throw $e;
