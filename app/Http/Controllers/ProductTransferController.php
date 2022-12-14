@@ -129,7 +129,7 @@ class ProductTransferController extends Controller
         $transfer = ProductTransfer::find($id);
         $branches = DB::table('branches')->get();
         $products = DB::table('products')->get();
-        $transfer_details = DB::table('product_transfer_details')->get();
+        $transfer_details = DB::table('product_transfer_details')->where('transfer_id', $transfer->id)->get();
         return view('product-transfer.edit', compact('transfer','branches', 'products', 'transfer_details'));
     }
 
