@@ -23,27 +23,48 @@
                             <input type="hidden" name="medical_record_id" value="{{ $mrecord->id }}" />
                             <input type="hidden" name="patient_id" value="{{ ($patient) ? $patient->id : 0 }}" />
                             <input type="hidden" name="branch" value="{{ $mrecord->branch }}" />
+                            <div class="row g-4">
+                                <div class="col-sm-12 table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr><th class="text-center" colspan="4">OD</th><th class="text-center" colspan="3">OS</th></tr>
+                                            <tr><th></th><th>IOP</th><th>CCT</th><th>CIOP</th><th>IOP</th><th>CCT</th><th>CIOP</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>AVG</td>
+                                                <td><input type="text" name="od_iop" class="form-control" value="{{ $pachymetry->od_iop }}" placeholder="OD-IOP"></td>
+                                                <td><input type="text" name="od_cct" class="form-control" value="{{ $pachymetry->od_cct }}" placeholder="OD-CCT"></td>
+                                                <td><input type="text" name="od_ciop" class="form-control" value="{{ $pachymetry->od_ciop }}" placeholder="OD-CIOP"></td>
+                                                <td><input type="text" name="os_iop" class="form-control" value="{{ $pachymetry->os_iop }}" placeholder="OS-IOP"></td>
+                                                <td><input type="text" name="os_cct" class="form-control" value="{{ $pachymetry->os_cct }}" placeholder="OS-CCT"></td>
+                                                <td><input type="text" name="os_ciop" class="form-control" value="{{ $pachymetry->os_ciop }}" placeholder="OS-CIOP"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                             <div class="row g-4">                                
                                 <div class="col-sm-6">
-                                    <label class="form-label">Image</label>
+                                    <label class="form-label">PCY (OD)</label>
                                     <input type="file" name="img1" class="form-control form-control-md pachy" />
                                     <input type="text" name="img1_value" placeholder="Description" value="{{ $pachymetry->img1_value }}" class="form-control form-control-md" />
                                     <div class="container"><img src="{{ ($pachymetry->img1) ? public_path().'/storage/'.$pachymetry->img1 : '' }}" class="img1 img-fluid"/></div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label class="form-label">Image</label>
+                                    <label class="form-label">PCY (OS)</label>
                                     <input type="file" name="img2" class="form-control form-control-md pachy" />
                                     <input type="text" name="img2_value" placeholder="Description" value="{{ $pachymetry->img2_value }}" class="form-control form-control-md" />
                                     <div class="container"><img src="{{ ($pachymetry->img2) ? public_path().'/storage/'.$pachymetry->img2 : '' }}" class="img2 img-fluid"/></div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label class="form-label">Image</label>
+                                    <label class="form-label">ACA (OD)</label>
                                     <input type="file" name="img3" class="form-control form-control-md pachy" />
                                     <input type="text" name="img3_value" placeholder="Description" value="{{ $pachymetry->img3_value }}" class="form-control form-control-md" />
                                     <div class="container"><img src="{{ ($pachymetry->img3) ? public_path().'/storage/'.$pachymetry->img3 : '' }}" class="img3 img-fluid"/></div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label class="form-label">Image</label>
+                                    <label class="form-label">ACA (OS)</label>
                                     <input type="file" name="img4" class="form-control form-control-md pachy" />
                                     <input type="text" name="img4_value" placeholder="Description" value="{{ $pachymetry->img4_value }}" class="form-control form-control-md" />
                                     <div class="container"><img src="{{ ($pachymetry->img4) ? public_path().'/storage/'.$pachymetry->img4 : '' }}" class="img4 img-fluid"/></div>
