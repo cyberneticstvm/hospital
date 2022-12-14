@@ -19,7 +19,7 @@
                     <td>{{ $tr->to_branch }}</td>
                     <td>{{ date('d/M/Y', strtotime($tr->tdate)) }}</td>
                     <td>{{ $tr->tnote }}</td>
-                    <td><a class='btn btn-link' href="/product-transfer/bill/{{$tr->id}}/"><i class="fa fa-file-o text-info"></i></a></td>
+                    <td><a class='btn btn-link' target="_blank" href="/product-transfer/bill/{{$tr->id}}/"><i class="fa fa-file-o text-info"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('product-transfer.edit', $tr->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <!--<td>
                         <form method="post" action="{{ route('product-transfer.delete', $tr->id) }}">
