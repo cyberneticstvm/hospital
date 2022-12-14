@@ -54,6 +54,7 @@
     <p>{{ $mfit->head }}</p>
     <p class='desc'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $madvice->fitness_advice }}</p>
     <p>{!! nl2br($mfit->notes) !!}</p>
+    <div class="text-end">Thanking You</div><br><br>
     <div class="text-end">{{ $doctor->doctor_name }}</div>
     <div class="text-end">{{ $doctor->designation }}</div>
     <div class="text-end">Reg No: {{ $doctor->reg_no }}</div>

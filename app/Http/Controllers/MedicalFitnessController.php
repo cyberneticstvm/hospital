@@ -115,7 +115,7 @@ class MedicalFitnessController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'notes' => 'required',
+            'head' => 'required',
             'fitness_advice' => 'required',
         ]);
         $input = $request->all();
