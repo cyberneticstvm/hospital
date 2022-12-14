@@ -10,7 +10,7 @@
     <div class="card-body">
         <p class= "text-right my-3"><a href="/product-transfer/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>From Branch</th><th>To Branch</th><th>Transfer Date</th><th>Transfer Note</th><th>View</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>From Branch</th><th>To Branch</th><th>Transfer Date</th><th>Transfer Note</th><th>Print</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($transfers as $tr)
                 <tr>
@@ -19,7 +19,7 @@
                     <td>{{ $tr->to_branch }}</td>
                     <td>{{ date('d/M/Y', strtotime($tr->tdate)) }}</td>
                     <td>{{ $tr->tnote }}</td>
-                    <td><a class='btn btn-link' href="/"><i class="fa fa-eye text-warning"></i></a></td>
+                    <td><a class='btn btn-link' href="/product-transfer/bill/{{$tr->id}}/"><i class="fa fa-file-o text-info"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('product-transfer.edit', $tr->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <!--<td>
                         <form method="post" action="{{ route('product-transfer.delete', $tr->id) }}">
