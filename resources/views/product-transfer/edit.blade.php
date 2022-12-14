@@ -99,7 +99,9 @@
                                     </div>
                                     <div class="col-sm-3">
                                         @if($c == 1)<label class="form-label">Batch Number<sup class="text-danger">*</sup></label>@endif
-                                        <input type="text" name="batch_number[]" class="form-control form-control-md" placeholder="Batch Number" value="{{ $transfer->batch_number }}" required='required'>
+                                        <select name="batch_number[]" class="form-control form-control-md bno" required='required'>
+                                            <option value="{{ $transfer->batch_number }}">{{ $transfer->batch_number }}</option>
+                                        </select>
                                     </div>
                                     <div class="col-sm-1">
                                         @if($c == 1)<label class="form-label">Qty<sup class="text-danger">*</sup></label>@endif
