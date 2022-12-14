@@ -21,6 +21,9 @@
         .text-end{
             text-align: right;
         }
+        .desc{
+            line-height: 25px;
+        }
     </style>
 </head>
 <body>    
@@ -44,10 +47,12 @@
             <td>Address</td><td>{{ strtoupper($patient->address) }}</td><td class='text-blue'>{{ strtoupper($doctor->designation) }}</td>
         </tr>
     </table><br>
-    <center><h3>Medical Fitness Advise</h3></center>
+    <center><h3>Medical Fitness Request</h3></center>
     <p class='text-end'>Date: {{ date('d/M/Y', strtotime($mfit->created_at)) }}</p>
+    <br><br>
+    <p>To,</p>
     <p>{{ $mfit->head }}</p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $madvice->fitness_advice }}</p>
+    <p class='desc'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $madvice->fitness_advice }}</p>
     <p>{!! nl2br($mfit->notes) !!}</p>
     <div class="text-end">{{ $doctor->doctor_name }}</div>
     <div class="text-end">{{ $doctor->designation }}</div>
