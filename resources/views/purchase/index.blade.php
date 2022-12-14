@@ -10,7 +10,7 @@
     <div class="card-body">
         <p class= "text-right my-3"><a href="/purchase/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         <table id="dataTbl" class="table display dataTable table-striped table-sm table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>Supplier</th><th>Invoice Number</th><th>Order On</th><th>Delivery On</th><th>View</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>Supplier</th><th>Invoice Number</th><th>Order On</th><th>Delivery On</th><th>Bill</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($purchases as $purchase)
                 <tr>
@@ -19,7 +19,7 @@
                     <td>{{ $purchase->invoice_number }}</td>
                     <td>{{ ($purchase->order_date) ? date('d/M/Y', strtotime($purchase->order_date)) : '' }}</td>
                     <td>{{ ($purchase->delivery_date) ? date('d/M/Y', strtotime($purchase->delivery_date)) : '' }}</td>
-                    <td><a class='btn btn-link' href="/"><i class="fa fa-eye text-warning"></i></a></td>
+                    <td><a class='btn btn-link' href="/purchase/bill/{{ $purchase->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('purchase.edit', $purchase->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <!--<td>
                         <form method="post" action="{{ route('purchase.delete', $purchase->id) }}">

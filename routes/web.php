@@ -535,6 +535,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/medical-fitness/print/{id}/', [PDFController::class, 'printmfit']);
     Route::get('/pachymetry/receipt/{id}/', [PDFController::class, 'pachymetryreceipt']);
     Route::get('/pachymetry/report/{id}/', [PDFController::class, 'pachymetryreport']);
+    Route::get('/purchase/bill/{id}/', [PDFController::class, 'purchasebill']);
     // End PDFs //
 
     // Settings //

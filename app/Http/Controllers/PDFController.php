@@ -399,4 +399,12 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/pachymetry/report', compact('qrcode', 'pachymetry', 'patient', 'branch'));    
         return $pdf->stream('pachymetry.pdf', array("Attachment"=>0));
     }
+    public function purchasebill($id){
+        $purchase = DB::table('purchases')->find($id);
+        $purchases = DB::table('purchase_details as pd')->leftJoin('products as p', 'p.id', '=', 'pd.product')->selectRaw("pd.*, p.product_name")->where('purchase_id', $purchase->id)->get();
+        $tot = $purchases->sum('total');
+        $supplier = DB::table('suppliers')->find($purchase->supplier);
+        $pdf = PDF::loadView('/pdf/purchase-bill', compact('purchase', 'purchases', 'supplier', 'tot'));    
+        return $pdf->stream('invoice.pdf', array("Attachment"=>0));
+    }
 }
