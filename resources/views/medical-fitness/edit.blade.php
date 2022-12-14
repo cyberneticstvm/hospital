@@ -25,6 +25,19 @@
                             <input type="hidden" name="patient" value="{{ ($patient) ? $patient->id : 0 }}" />
                             <input type="hidden" name="branch" value="{{ $mrecord->branch }}" />
                             <div class="row g-4">
+                                <div class="col-sm-3">
+                                    <label class="form-label">To Head<sup class="text-danger">*</sup></label>
+                                    <select class="form-control" name="head" required>
+                                        <option value="">Select</option>
+                                        @forelse($heads as $key => $head)
+                                            <option value="{{ $head->name }}" {{ ($head->name == $mfit->head) ? 'selected' : '' }}>{{ $head->name }}</option>
+                                        @empty
+                                        @endforelse
+                                    </select>
+                                    @error('head')
+                                    <small class="text-danger">{{ $errors->first('head') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Fitness Advice<sup class="text-danger">*</sup></label>
                                     <select class="form-control" name="fitness_advice">
@@ -39,7 +52,7 @@
                                     @enderror
                                 </div>                                
                                 <div class="col-sm-12">
-                                    <label class="form-label">Notes<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Notes</label>
                                     <textarea name="notes" class="form-control" rows="5" placeholder="Notes">{{ $mfit->notes }}</textarea>
                                     @error('notes')
                                     <small class="text-danger">{{ $errors->first('notes') }}</small>

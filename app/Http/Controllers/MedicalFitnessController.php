@@ -50,7 +50,7 @@ class MedicalFitnessController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'notes' => 'required',
+            'head' => 'required',
             'fitness_advice' => 'required',
         ]);
         $input = $request->all();
@@ -79,9 +79,10 @@ class MedicalFitnessController extends Controller
         if($mrecord):
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $branch = DB::table('branches')->find($mrecord->branch);
+            $heads = DB::table('medical_fitness_heads')->get();
             $surgery = DB::table('surgeries as s')->leftJoin('surgery_types as st', 'st.id', '=', 's.surgery_type')->select('st.fitness_advice')->where('s.medical_record_id', $request->medical_record_id)->latest('s.id')->first();
             $stypes = DB::table('surgery_types')->get();
-            return view('medical-fitness.create', compact('mrecord', 'patient', 'branch', 'surgery', 'stypes'));
+            return view('medical-fitness.create', compact('mrecord', 'patient', 'branch', 'surgery', 'stypes', 'heads'));
         else:
             return redirect("/medical-fitness/")->withErrors('No records found.');
         endif;
@@ -100,7 +101,8 @@ class MedicalFitnessController extends Controller
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $branch = DB::table('branches')->find($mrecord->branch);
         $stypes = DB::table('surgery_types')->get();
-        return view('medical-fitness.edit', compact('mrecord', 'patient', 'branch', 'mfit', 'stypes'));
+        $heads = DB::table('medical_fitness_heads')->get();
+        return view('medical-fitness.edit', compact('mrecord', 'patient', 'branch', 'mfit', 'stypes', 'heads'));
     }
 
     /**

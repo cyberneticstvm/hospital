@@ -13,6 +13,7 @@ class MedicalFitness extends Model
         'medical_record_id',
         'patient',
         'branch',
+        'head',
         'fitness_advice',
         'notes',
         'created_by',
