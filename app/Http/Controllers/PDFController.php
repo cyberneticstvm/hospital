@@ -409,7 +409,7 @@ class PDFController extends Controller
     }
     public function producttransferbill($id){
         $transfer = DB::table('product_transfers as pt')->leftJoin('branches as bf', 'pt.from_branch', '=', 'bf.id')->leftjoin('branches as bt', 'pt.to_branch', '=', 'bt.id')->selectRaw("pt.id, DATE_FORMAT(pt.transfer_date, '%d/%b/%Y') AS tdate, pt.transfer_note, CASE WHEN pt.from_branch = 0 THEN 'Main Branch' ELSE bf.branch_name END AS from_branch, CASE WHEN pt.to_branch = 0 THEN 'Main Branch' ELSE bt.branch_name END AS to_branch")->where('pt.id', $id)->get()->first();
-        $tdetails = DB::table('transfer_details as td')->leftJoin('products as p', 'p.id', '=', 'td.product')->selectRaw("td.*, p.product_name")->where('transfer_id', $transfer->id)->get();
+        $tdetails = DB::table('product_transfer_details as td')->leftJoin('products as p', 'p.id', '=', 'td.product')->selectRaw("td.*, p.product_name")->where('transfer_id', $transfer->id)->get();
         $pdf = PDF::loadView('/pdf/product-transfer-bill', compact('transfer', 'tdetails'));    
         return $pdf->stream('bill.pdf', array("Attachment"=>0));
     }
