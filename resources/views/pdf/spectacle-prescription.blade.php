@@ -60,9 +60,12 @@
     </table>
     <center><p>EYE GLASS PRESCRIPTION</p></center>
     <div class="row">
+        <table width="100%" class="bordered" cellspacing="0" cellpadding="0"><tr><td width="50%">OD UCV: {{ ($spectacle->vbr) ? $spectacle->vbr : '--' }}</td><td>OS UCV: {{ ($spectacle->vbl) ? $spectacle->vbl : '--' }}</td></tr></table>
+    </div>
+    <div class="row">
         <div class="col">
             <table width="100%" class="bordered" cellspacing="0" cellpadding="0">
-                <tr><td>RIGHT</td><td>SPH</td><td>CYL</td><td>AXIS</td><td>VA</td><td>PRISM</td></tr>
+                <tr><td>RIGHT</td><td>SPH</td><td>CYL</td><td>AXIS</td><td>BCV</td><td>PRISM</td></tr>
                 <tr><td>DIST.</td><td>{{ ($spectacle->re_dist_sph) ? $spectacle->re_dist_sph : '0.00' }}</td><td>{{ ($spectacle->re_dist_cyl) ? $spectacle->re_dist_cyl : '0.00' }}</td><td>{{ ($spectacle->re_dist_axis) ? $spectacle->re_dist_axis: '0.00' }}</td><td>{{ ($spectacle->re_dist_va) ? $spectacle->re_dist_va : '--' }}</td><td>{{ ($spectacle->re_dist_prism) ? $spectacle->re_dist_prism : '--' }}</td></tr>
                 <tr><td>INT.</td><td>{{ ($spectacle->re_int_sph) ? $spectacle->re_int_sph : '0.00' }}</td><td>{{ ($spectacle->re_int_cyl) ? $spectacle->re_int_cyl : '0.00' }}</td><td>{{ ($spectacle->re_int_axis) ? $spectacle->re_int_axis : '0.00' }}</td><td>{{ ($spectacle->re_int_va) ? $spectacle->re_int_va : '--' }}</td><td>{{ ($spectacle->re_int_prism) ? $spectacle->re_int_prism : '--' }}</td></tr>
                 <tr><td>NEAR.</td><td>{{ ($spectacle->re_near_sph) ? $spectacle->re_near_sph : '0.00' }}</td><td>{{ ($spectacle->re_near_cyl) ? $spectacle->re_near_cyl : '0.00' }}</td><td>{{ ($spectacle->re_near_axis) ? $spectacle->re_near_axis : '0.00' }}</td><td>{{ ($spectacle->re_near_va) ? $spectacle->re_near_va : '--' }}</td><td>{{ ($spectacle->re_near_prism) ? $spectacle->re_near_prism : '--' }}</td></tr>
@@ -71,7 +74,7 @@
         </div>
         <div class="col">
             <table width="100%" class="bordered" cellspacing="0" cellpadding="0">
-                <tr><td>LEFT</td><td>SPH</td><td>CYL</td><td>AXIS</td><td>VA</td><td>PRISM</td></tr>
+                <tr><td>LEFT</td><td>SPH</td><td>CYL</td><td>AXIS</td><td>BCV</td><td>PRISM</td></tr>
                 <tr><td>DIST.</td><td>{{ ($spectacle->le_dist_sph) ? $spectacle->le_dist_sph : '0.00' }}</td><td>{{ ($spectacle->le_dist_cyl) ? $spectacle->le_dist_cyl : '0.00' }}</td><td>{{ ($spectacle->le_dist_axis) ? $spectacle->le_dist_axis : '0.00' }}</td><td>{{ ($spectacle->le_dist_va) ? $spectacle->le_dist_va : '--' }}</td><td>{{ ($spectacle->le_dist_prism) ? $spectacle->le_dist_prism : '--' }}</td></tr>
                 <tr><td>INT.</td><td>{{ ($spectacle->le_int_sph) ? $spectacle->le_int_sph : '0.00' }}</td><td>{{ ($spectacle->le_int_cyl) ? $spectacle->le_int_cyl : '0.00' }}</td><td>{{ ($spectacle->le_int_axis) ? $spectacle->le_int_axis : '0.00' }}</td><td>{{ ($spectacle->le_int_va) ? $spectacle->le_int_va : '--' }}</td><td>{{ ($spectacle->le_int_prism) ? $spectacle->le_int_prism : '--' }}</td></tr>
                 <tr><td>NEAR.</td><td>{{ ($spectacle->le_near_sph) ? $spectacle->le_near_sph : '0.00' }}</td><td>{{ ($spectacle->le_near_cyl) ? $spectacle->le_near_cyl : '0.00' }}</td><td>{{ $spectacle->le_near_axis ? $spectacle->le_near_axis : '0.00' }}</td><td>{{ ($spectacle->le_near_va) ? $spectacle->le_near_va : '--' }}</td><td>{{ ($spectacle->le_near_prism) ? $spectacle->le_near_prism : '--' }}</td></tr>
@@ -82,8 +85,8 @@
     <pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre />
     <div class="row">
         <table width="100%" class="bordered text-center" cellspacing="0" cellpadding="0">
-            <tr><td>OD-BC</td><td>OS-BC</td><td>VD</td><td>IPD</td><td>NPD</td><td>RPD</td><td>LPD</td></tr>
-            <tr><td>{{ ($spectacle->vbr) ? $spectacle->vbr : '--' }}</td><td>{{ ($spectacle->vbl) ? $spectacle->vbl : '--' }}</td><td>{{ ($spectacle->vd) ? $spectacle->vd : '--' }}</td><td>{{ ($spectacle->ipd) ? $spectacle->ipd : '--' }}</td><td>{{ ($spectacle->npd) ? $spectacle->npd : '--' }}</td><td>{{ ($spectacle->rpd) ? $spectacle->rpd : '--' }}</td><td>{{ ($spectacle->lpd) ? $spectacle->lpd : '--' }}</td></tr>
+            <tr><td>VD</td><td>IPD</td><td>NPD</td><td>RPD</td><td>LPD</td></tr>
+            <tr><td>{{ ($spectacle->vd) ? $spectacle->vd : '--' }}</td><td>{{ ($spectacle->ipd) ? $spectacle->ipd : '--' }}</td><td>{{ ($spectacle->npd) ? $spectacle->npd : '--' }}</td><td>{{ ($spectacle->rpd) ? $spectacle->rpd : '--' }}</td><td>{{ ($spectacle->lpd) ? $spectacle->lpd : '--' }}</td></tr>
         </table>
     </div>
     <br />    

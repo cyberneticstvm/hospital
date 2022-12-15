@@ -26,10 +26,16 @@
                             </div>
                             <div class="row mt-3">
                                 <p class="fw-bold">EYE GLASS PRESCRIPTION</p>
+                                <div class="col-sm-6 table-responsive mb-3">
+                                    <table><thead><tr><th colspan="4">OD - Uncorrected Visual Acuty</th><th colspan="2"><input type="text" class="form-control form-control-md" name="vbr" placeholder="0"/></th></tr></thead></table>
+                                </div>
+                                <div class="col-sm-6 table-responsive mb-3">
+                                    <table><thead><tr><th colspan="4">OS - Uncorrected Visual Acuty</th><th colspan="2"><input type="text" class="form-control form-control-md" name="vbl" placeholder="0"/></th></tr></thead></table>
+                                </div>
                                 <div class="col-sm-6 table-responsive">
                                     <table class="table spectacle">
-                                        <thead><tr><th>RE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>VA</th><th>PRISM</th></tr></thead>
-                                        <tbody class="tbodyre">
+                                        <thead><tr><th>RE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>BCV</th><th>PRISM</th></tr></thead>
+                                        <tbody class="tbodyre">                                            
                                             <tr>
                                                 <td>DIST.</td>
                                                 <td><input type="text" class="form-control form-control-md re_dist_sph" name="re_dist_sph" placeholder="0"/></td>
@@ -69,7 +75,7 @@
                                 </div>
                                 <div class="col-sm-6 table-responsive">
                                     <table class="table spectacle">
-                                        <thead><tr><th>LE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>VA</th><th>PRISM</th></tr></thead>
+                                        <thead><tr><th>LE</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>BCV</th><th>PRISM</th></tr></thead>
                                         <tbody class="tbodyle">
                                             <tr>
                                                 <td>DIST.</td>
@@ -110,11 +116,9 @@
                                 </div>
                                 <div class="col-sm-12 table-responsive">
                                     <table class="table spectacle">
-                                        <thead><tr><th>OD-BC</th><th>OS-BC</th><th>VD</th><th>IPD</th><th>NPD</th><th>RPD</th><th>LPD</th></tr></thead>
+                                        <thead><tr><th>VD</th><th>IPD</th><th>NPD</th><th>RPD</th><th>LPD</th></tr></thead>
                                         <tbody>
-                                            <tr>
-                                                <td><input type="text" class="form-control form-control-md" name="vbr" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="vbl" placeholder="0"/></td>
+                                            <tr>                                                
                                                 <td><input type="text" class="form-control form-control-md" name="vd" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md ipd" name="ipd" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md npd" name="npd" placeholder="0"/></td>
