@@ -27,10 +27,10 @@
                             <div class="row mt-3">
                                 <p class="fw-bold">EYE GLASS PRESCRIPTION</p>
                                 <div class="col-sm-6 table-responsive mb-3">
-                                    <table><thead><tr><th colspan="4">OD - Uncorrected Visual Acuty</th><th colspan="2"><input type="text" class="form-control form-control-md" name="vbr" placeholder="0"/></th></tr></thead></table>
+                                    <table><thead><tr><th colspan="4">OD - Uncorrected Visual Acuity</th><th colspan="2"><input type="text" class="form-control form-control-md" name="vbr" placeholder="0"/></th></tr></thead></table>
                                 </div>
                                 <div class="col-sm-6 table-responsive mb-3">
-                                    <table><thead><tr><th colspan="4">OS - Uncorrected Visual Acuty</th><th colspan="2"><input type="text" class="form-control form-control-md" name="vbl" placeholder="0"/></th></tr></thead></table>
+                                    <table><thead><tr><th colspan="4">OS - Uncorrected Visual Acuity</th><th colspan="2"><input type="text" class="form-control form-control-md" name="vbl" placeholder="0"/></th></tr></thead></table>
                                 </div>
                                 <div class="col-sm-6 table-responsive">
                                     <table class="table spectacle">
