@@ -28,7 +28,7 @@
                                         <thead><tr><th width='30%'>Product</th><th>Batch No.</th><th>Dosage</th><th>Duration</th><th>Qty</th><th>Price</th><th>Discount</th><th>Tax%</th><th>Tax Amount</th><th>Total</th><th>Remove</th></tr></thead>
                                         <tbody>
                                             @foreach($medicines as $medicine)
-                                            @php $bnos = App\Http\Controllers\HelperController::getProductForTransferForEdit($medicine->medicine, 1); @endphp
+                                            @php $bnos = App\Http\Controllers\HelperController::getProductForTransferForEdit($medicine->medicine, Session::get('branch')); @endphp
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}"/>
                                             <input type='hidden' name='eye[]' value="{{ $medicine->eye }}"/>
                                             <input type='hidden' name='medicine_type[]' value="{{ $medicine->medicine_type }}"/>

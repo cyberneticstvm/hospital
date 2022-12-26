@@ -37,14 +37,14 @@
                                         <tbody class="tblPharmacy">
                                             <tr>
                                                 <td>
-                                                    <select class="form-control form-control-sm show-tick ms select2 selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
+                                                    <select class="form-control form-control-sm show-tick ms select2 selProductForTransfer selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
                                                     <option value="">Select</option>
                                                     @foreach($products as $product)
                                                         <option value="{{ $product->id }}" {{ old('product') == $product->id ? 'selected' : '' }}>{{ $product->product_name }}</option>
                                                     @endforeach
                                                     </select>
                                                 </td>
-                                                <td><input type="text" class="form-control form-control-sm" name="batch_number[]" placeholder="Batch No." required='required'/></td>
+                                                <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'><option value="">Select</option></select></td>
                                                 <td><input type="number" class="form-control form-control-sm text-end qty" step="any" min="1" name="qty[]" placeholder="0" required='required'/></td>
                                                 <td><input type='text' class='form-control form-control-sm' name='dosage[]' placeholder='Dosage'/></td>
                                                 <td><input type="number" class="form-control form-control-sm text-end price" step="any" name="price[]" placeholder="0.00" required='required'/></td>

@@ -38,16 +38,24 @@
                                         <tbody class="tblPharmacy">
                                             @php $c = 1; @endphp
                                             @forelse($records as $key => $record)
+                                            @php $bnos = App\Http\Controllers\HelperController::getProductForTransferForEdit($record->product, Session::get('branch')); @endphp
                                             <tr>
                                                 <td>
-                                                    <select class="form-control form-control-sm show-tick ms select2 selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
+                                                    <select class="form-control form-control-sm show-tick ms select2 selProductForTransfer selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
                                                     <option value="">Select</option>
                                                     @foreach($products as $product)
                                                         <option value="{{ $product->id }}" {{ $record->product == $product->id ? 'selected' : '' }}>{{ $product->product_name }}</option>
                                                     @endforeach
                                                     </select>
                                                 </td>
-                                                <td><input type="text" class="form-control form-control-sm" name="batch_number[]" placeholder="Batch No." value="{{ $record->batch_number  }}" required='required'/></td>
+                                                <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'>
+                                                    <option value="">Select</option>
+                                                    @forelse($bnos as $key => $bno)
+                                                    <option value="{{ $bno->batch_number }}" {{ $medicine->batch_number == $bno->batch_number ? 'selected' : '' }}>{{ $bno->batch_number .' ('.$bno->balance_qty.')' }}</option>
+                                                    @empty
+                                                    <option value="NRF">No Batch Number</option>
+                                                    @endforelse
+                                                </select></td>
                                                 <td><input type="number" class="form-control form-control-sm text-end qty" step="any" min="1" name="qty[]" placeholder="0" value="{{ $record->qty  }}" required='required'/></td>
                                                 <td><input type='text' class='form-control form-control-sm' name='dosage[]' value="{{ $record->dosage  }}" placeholder='Dosage'/></td>
                                                 <td><input type="number" class="form-control form-control-sm text-end price" step="any" name="price[]" placeholder="0.00" value="{{ $record->price  }}" required='required'/></td>
