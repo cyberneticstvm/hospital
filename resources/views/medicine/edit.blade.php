@@ -30,7 +30,7 @@
                                             @php use App\Http\Controllers\HelperController; @endphp
                                             @foreach($medicines as $medicine)
                                             @php
-                                                $bnos = HelperController::getProductForTransferForEdit($medicine->medicine, Session::get('branch')); 
+                                                $bnos = getProductForTransferForEdit($medicine->medicine, Session::get('branch')); 
                                             @endphp
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}"/>
                                             <input type='hidden' name='eye[]' value="{{ $medicine->eye }}"/>
