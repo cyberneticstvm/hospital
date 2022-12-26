@@ -15,6 +15,8 @@ class LabType extends Model
         'lab_type_name',
         'description',
         'fee',
+        'surgery_type',
+        'tested_from',
         'created_by'
     ];
 }

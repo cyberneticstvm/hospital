@@ -37,7 +37,8 @@ class LabTypeController extends Controller
     public function create()
     {
         $categories = DB::table('lab_categories')->get();
-        return view('lab.lab-type-create', compact('categories'));
+        $surgery_types = DB::table('surgery_types')->get();
+        return view('lab.lab-type-create', compact('categories', 'surgery_types'));
     }
 
     /**
@@ -80,7 +81,8 @@ class LabTypeController extends Controller
     {
         $categories = DB::table('lab_categories')->get();
         $ltype = LabType::find($id);
-        return view('lab.lab-type-edit', compact('categories', 'ltype'));
+        $surgery_types = DB::table('surgery_types')->get();
+        return view('lab.lab-type-edit', compact('categories', 'ltype', 'surgery_types'));
     }
 
     /**

@@ -48,6 +48,26 @@
                                     <small class="text-danger">{{ $errors->first('fee') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Surgery Type </label>
+                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="surgery_type" >
+                                        <option value="0">Select</option>
+                                        @foreach($surgery_types as $stype)
+                                        <option value="{{ $stype->id }}" {{ (old('surgery_type') == $stype->id) ? 'selected' : '' }}>{{ $stype->surgery_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Test From<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="tested_from" required>
+                                    <option value="">Select</option>
+                                        <option value="1">Own Laboratory</option>
+                                        <option value="0">Outside Laboratory</option>
+                                    </select>
+                                    @error('tested_from')
+                                    <small class="text-danger">{{ $errors->first('tested_from') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
