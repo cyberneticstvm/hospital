@@ -28,7 +28,7 @@
                                         <thead><tr><th width='30%'>Product</th><th>Batch No.</th><th>Dosage</th><th>Duration</th><th>Qty</th><th>Price</th><th>Discount</th><th>Tax%</th><th>Tax Amount</th><th>Total</th><th>Remove</th></tr></thead>
                                         <tbody>
                                             @foreach($medicines as $medicine)
-                                            @php $bno = App\Http\Controllers\HelperController::getProductForTransferForEdit($medicine->medicine, 1); @endphp
+                                            @php $bnos = App\Http\Controllers\HelperController::getProductForTransferForEdit($medicine->medicine, 1); @endphp
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}"/>
                                             <input type='hidden' name='eye[]' value="{{ $medicine->eye }}"/>
                                             <input type='hidden' name='medicine_type[]' value="{{ $medicine->medicine_type }}"/>
@@ -41,7 +41,14 @@
                                                 @endforeach
                                                 </select>
                                                 </td>
-                                                <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'>{!! $bno !!}</select></td>
+                                                <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'>
+                                                    <option value="">Select</option>
+                                                    @forelse($bnos as $key => $bno)
+                                                    <option value="{{ $bno->batch_number }}">{{ $bno->batch_number .'('.$bno->balance_qty.')' }}</option>
+                                                    @empty
+                                                    <option value="NRF">No Batch Number</option>
+                                                    @endforelse
+                                                </select></td>
                                                 <!--<td>
                                                     <input type="text" class="form-control form-control-md" placeholder="Batch Number" name="batch_number[]" value="{{ $medicine->batch_number }}" />
                                                 </td>-->
