@@ -35,7 +35,7 @@
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}"/>
                                             <input type='hidden' name='eye[]' value="{{ $medicine->eye }}"/>
                                             <input type='hidden' name='medicine_type[]' value="{{ $medicine->medicine_type }}"/>
-                                            <input type='hidden' name='bnos[]' value="{{ $medicine->medicine }}"/>
+                                            <input type='hidden' name='bnos[]' value="{{ Session::get('branch') }}"/>
                                             <tr>
                                                 <td>
                                                 <select class="form-control form-control-md select2 selProductForTransfer" data-placeholder="Select" name="medicine[]" required='required'>
