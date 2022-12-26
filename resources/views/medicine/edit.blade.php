@@ -27,10 +27,10 @@
                                     <table class="tblMedicine table table-bordered">
                                         <thead><tr><th width='30%'>Product</th><th>Batch No.</th><th>Dosage</th><th>Duration</th><th>Qty</th><th>Price</th><th>Discount</th><th>Tax%</th><th>Tax Amount</th><th>Total</th><th>Remove</th></tr></thead>
                                         <tbody>
+                                            @php use App\Http\Controllers\HelperController; @endphp
                                             @foreach($medicines as $medicine)
-                                            @php 
-                                                $bnos = 0;
-                                                $bnos = App\Http\Controllers\HelperController::getProductForTransferForEdit($medicine->medicine, Session::get('branch')); 
+                                            @php
+                                                $bnos = HelperController::getProductForTransferForEdit($medicine->medicine, Session::get('branch')); 
                                             @endphp
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}"/>
                                             <input type='hidden' name='eye[]' value="{{ $medicine->eye }}"/>
