@@ -251,6 +251,23 @@ $(function() {
             reader.readAsDataURL(file);
         }
     });
+
+    $(document).on("change", ".bno", function(){
+        var bno = $(this).val();
+        var pdct = $(this).parent().parent().find(".selProductForTransfer").val();
+        var price = $(this).parent().parent().find(".price");
+        $.ajax({
+            type: 'GET',
+            url: '/helper/getPdctPrice/',
+            data: {'product': pdct, 'batch_number': bno},
+            success: function(response){
+                price.val(response);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                console.log(XMLHttpRequest);
+            }
+        });
+    });
 });
 
 /*$(window).on('load', function () {
@@ -305,4 +322,8 @@ function checkNewAppointments(){
             }            
         }
     });
+}
+
+function calculateMedicineTotal(){
+
 }

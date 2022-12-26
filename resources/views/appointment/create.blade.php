@@ -28,9 +28,9 @@
                                     <label class="form-label">Gender<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" data-placeholder="Select" name="gender">
                                         <option value="">Select</option>
-                                        <option value="male" {{ ($patient && $patient->gender) == 'male' ? 'selected' : '' }}>Male</option>
-                                        <option value="female" {{ ($patient && $patient->gender) == 'female' ? 'selected' : '' }}>Female</option>
-                                        <option value="other" {{ ($patient && $patient->gender) == 'other' ? 'selected' : '' }}>Other</option>
+                                        <option value="male" {{ ($patient && $patient->gender == 'male') ? 'selected' : '' }}>Male</option>
+                                        <option value="female" {{ ($patient && $patient->gender == 'female') ? 'selected' : '' }}>Female</option>
+                                        <option value="other" {{ ($patient && $patient->gender == 'other') ? 'selected' : '' }}>Other</option>
                                     </select>
                                     @error('gender')
                                     <small class="text-danger">{{ $errors->first('gender') }}</small>

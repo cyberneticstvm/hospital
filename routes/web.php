@@ -510,6 +510,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/helper/getmedicinetype/{mid}', 'App\Http\Controllers\HelperController@getMedicineType');
     Route::get('/helper/daybook/', 'App\Http\Controllers\HelperController@getDayBookDetailed');
     Route::get('/helper/getproductfortransfer/', [HelperController::class, 'getProductForTransfer']);
+    Route::get('/helper/getPdctPrice/', [HelperController::class, 'getProductPrice']);
     // End Helper //
 
     // PDFs //

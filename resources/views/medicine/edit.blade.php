@@ -28,32 +28,34 @@
                                         <thead><tr><th width='30%'>Product</th><th>Batch No.</th><th>Dosage</th><th>Duration</th><th>Qty</th><th>Price</th><th>Discount</th><th>Tax%</th><th>Tax Amount</th><th>Total</th><th>Remove</th></tr></thead>
                                         <tbody>
                                             @foreach($medicines as $medicine)
+                                            @php $bno = App\Http\Controllers\HelperController::getProductForTransferForEdit($medicine->medicine, 1); @endphp
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}"/>
                                             <input type='hidden' name='eye[]' value="{{ $medicine->eye }}"/>
                                             <input type='hidden' name='medicine_type[]' value="{{ $medicine->medicine_type }}"/>
                                             <tr>
                                                 <td>
-                                                <select class="form-control form-control-md select2" data-placeholder="Select" name="medicine[]" required='required'>
+                                                <select class="form-control form-control-md select2 selProductForTransfer" data-placeholder="Select" name="medicine[]" required='required'>
                                                 <option value="">Select</option>
                                                 @foreach($products as $prod)
                                                     <option value="{{ $prod->id }}" {{ $medicine->medicine == $prod->id ? 'selected' : '' }}>{{ $prod->product_name }}</option>
                                                 @endforeach
                                                 </select>
                                                 </td>
-                                                <td>
+                                                <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'>{!! $bno !!}</select></td>
+                                                <!--<td>
                                                     <input type="text" class="form-control form-control-md" placeholder="Batch Number" name="batch_number[]" value="{{ $medicine->batch_number }}" />
-                                                </td>
+                                                </td>-->
                                                 <td>
                                                     <input type="text" class="form-control form-control-md" placeholder="Dosage" name="dosage[]" value="{{ $medicine->dosage }}" />
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control form-control-md" placeholder="Dosage" name="duration[]" value="{{ $medicine->duration }}" />
+                                                    <input type="text" class="form-control form-control-md" placeholder="Duration" name="duration[]" value="{{ $medicine->duration }}" />
                                                 </td>
                                                 <td>
                                                     <input type="number" class="form-control form-control-md text-right" placeholder="0" name="qty[]" value="{{ $medicine->qty }}" required='required' />
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="price[]" step="any" value="{{ $medicine->price }}" required='required' />
+                                                    <input type="number" class="form-control form-control-md text-right price" placeholder="0" name="price[]" step="any" value="{{ $medicine->price }}" required='required' />
                                                 </td>
                                                 <td>
                                                     <input type="number" step="any" class="form-control form-control-md text-right" placeholder="0" name="discount[]" value="{{ $medicine->discount }}" />
@@ -65,7 +67,7 @@
                                                     <input type="number" step="any" class="form-control form-control-md text-right" placeholder="0" name="tax_amount[]" value="{{ $medicine->tax_amount }}" required='required' />
                                                 </td>
                                                 <td>
-                                                    <input type="number" step="any" class="form-control form-control-md text-right" placeholder="0" name="total[]" value="{{ $medicine->total }}" required='required' />
+                                                    <input type="number" step="any" class="form-control form-control-md text-right total" placeholder="0" name="total[]" value="{{ $medicine->total }}" required='required' />
                                                 </td>
                                                 <td>
                                                     <button class="btn btn-link dlt" data-url="/consultation/medicinesingle/delete/{{ $medicine->id }}/" onclick="javascript: return confirm('Are you sure want to delete this Medicine?');"><i class="fa fa-trash text-danger"></i></button>

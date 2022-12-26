@@ -30,7 +30,7 @@
                                     <table class="table table-bordered table-sm">
                                         <thead class="text-center"><tr><th width="20%">Product</th><th>Batch No.</th><th>Qty</th><th>Dosage</th><th>Price</th><th>Discount</th><th>Tax%</th><th>Tax Amount</th><th>total</th><th></th></tr></thead>
                                         <tbody class="tblPharmacy">
-                                            @forelse($medicines as $key => $med)
+                                            @forelse($medicines as $key => $med)                                            
                                             <tr>
                                                 <td>
                                                     <select class="form-control form-control-sm show-tick ms select2 selProductForPurchase selProductForTransfer" data-placeholder="Select" name="product[]" required='required'>

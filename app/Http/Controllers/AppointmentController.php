@@ -52,7 +52,7 @@ class AppointmentController extends Controller
         $params = $this->settings; $today = Carbon::today(); $op = "<option value=''>Select</option>";
         $start = number_format(date('H', strtotime($params->from_time)), 0);
         $end = number_format(date('H', strtotime($params->to_time)), 0);
-        $start = ($date > $today) ? $start : number_format(date('H'), 0);
+        $start = ($date > $today) ? $start : number_format(date('H', strtotime('+1 hours')), 0);
         for($i=$start; $i<=$end; $i++):
             for($j=0; $j<=60-$params->ti; $j+=$params->ti):
                 $val = $i.':'.$j; $val = date("h:i A", strtotime($val));
