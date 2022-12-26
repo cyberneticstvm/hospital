@@ -30,7 +30,7 @@
                                             @php use App\Http\Controllers\HelperController; @endphp
                                             @foreach($medicines as $medicine)
                                             @php
-                                                $bnos.'_'.$medicine->medicine = HelperController::getProductForTransferForEdit($medicine->medicine, Session::get('branch')); 
+                                                $bnos = HelperController::getProductForTransferForEdit($medicine->medicine, Session::get('branch')); 
                                             @endphp
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}"/>
                                             <input type='hidden' name='eye[]' value="{{ $medicine->eye }}"/>
@@ -46,7 +46,7 @@
                                                 </td>
                                                 <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'>
                                                     <option value="">Select</option>
-                                                    @forelse($bnos.'_'.$medicine->medicine as $key => $bno)
+                                                    @forelse($bnos as $key => $bno)
                                                     <option value="{{ $bno->batch_number }}" {{ $medicine->batch_number == $bno->batch_number ? 'selected' : '' }}>{{ $bno->batch_number .' ('.$bno->balance_qty.' Qty in Hand)' }}</option>
                                                     @empty
                                                     <option value="NRF">No Batch Number</option>
