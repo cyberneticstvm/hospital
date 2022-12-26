@@ -50,7 +50,7 @@
     $test = DB::table('lab_types')->find($lab->lab_type_id);
     $user = DB::table('users')->find($lab->updated_by);
     @endphp
-    <p>{{ $c }}. {{ $test->lab_type_name }} - {{ $lab->lab_result }}, Lab Technician: {{ ($lab->tested_from == 1) ? $user->name : 'NA' }}, Date: {{ date('d/M/Y', strtotime($lab->result_date)) }}, Report From: {{ ($lab->tested_from == 1) ? 'Outside' : '' }}</p>
+    <p>{{ $c }}. {{ $test->lab_type_name }} - {{ $lab->lab_result }}, Lab Technician: {{ ($lab->tested_from == 1) ? $user->name : 'NA' }}, Date: {{ ($lab->result_date) ? date('d/M/Y', strtotime($lab->result_date)) : 'Na' }}, Report From: {{ ($lab->tested_from == 1) ? 'Outside' : '' }}</p>
         @php $c++ @endphp
     @endforeach
     <p class='text-right'>Printed On: {{ date('d/M/Y H:i:A') }}</p>
