@@ -44,7 +44,7 @@
                                                 <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'>
                                                     <option value="">Select</option>
                                                     @forelse($bnos as $key => $bno)
-                                                    <option value="{{ $bno->batch_number }}" {{ $medicine->batch_number == $bno->batch_number ? 'selected' : '' }}>{{ $bno->batch_number .'('.$bno->balance_qty.')' }}</option>
+                                                    <option value="{{ $bno->batch_number }}" {{ $medicine->batch_number == $bno->batch_number ? 'selected' : '' }}>{{ $bno->batch_number .' ('.$bno->balance_qty.')' }}</option>
                                                     @empty
                                                     <option value="NRF">No Batch Number</option>
                                                     @endforelse
