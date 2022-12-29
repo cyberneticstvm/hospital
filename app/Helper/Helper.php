@@ -28,7 +28,8 @@ class Helper{
 		);
 		$result = curl_exec($ch);
 		$res = json_decode($result, true);
-		return ($res['code'] == 200) ? 200 : $res['code'];
+		//return ($res['code'] == 200) ? 200 : $res['code'];
+        return $res;
     }
 }
 
