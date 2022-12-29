@@ -26,7 +26,8 @@ class DashboardController extends Controller
                     Config::set('myconfig.sms1.message', "Dear ".$patient->patient_name." We are warm-heartedly thankful for consulting with ".$patient->doctor_name.". We would love your feedback, Post a review to our profile. ".$branch->review_link." Devi Eye Hospital. ".$branch->branch_name);
                     if($patient->mobile_number == '9188848860'):
                         $code = Helper::sendSms(Config::get('myconfig.sms1'));
-                        echo "sms sent to: ".$patient->mobile_number." with return ".$code."<br>";
+                        //echo "sms sent to: ".$patient->mobile_number." with return ".$code."<br>";
+                        print_r($code);
                     endif;
                 endforeach;                
             endif;
