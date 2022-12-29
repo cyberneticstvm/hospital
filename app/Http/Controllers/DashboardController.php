@@ -17,7 +17,7 @@ class DashboardController extends Controller
     }
 
     public function test(){
-        try{
+        /*try{
             $patients = DB::table('patient_references as pr')->leftjoin('patient_registrations as p', 'p.id', '=', 'pr.patient_id')->leftJoin('doctors as d', 'd.id', '=', 'pr.doctor_id')->selectRaw("p.patient_name, p.mobile_number, pr.branch, d.doctor_name")->whereDate('pr.created_at', Carbon::today())->where('pr.status', 1)->get();
             if($patients->isNotEmpty()):
                 foreach($patients as $key => $patient):
@@ -33,8 +33,8 @@ class DashboardController extends Controller
             endif;
         }catch(Exception $e){
             throw $e;
-        }
-        
+        }*/
+        echo "test";
     }
 
     public function userlogin(Request $request)
