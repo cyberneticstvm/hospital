@@ -29,6 +29,8 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
+Route::get('/test', [DashboardController::class, 'test'])->name('test');
+
 Route::get('/', function () {
     return view('/login');
 })->name('login');

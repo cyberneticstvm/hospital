@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Helper\Helper;
 use Carbon\Carbon;
 use DB;
 
@@ -12,6 +14,23 @@ class DashboardController extends Controller
     protected $branch;
     function __construct(){
         $this->branch = session()->get('branch');
+    }
+
+    public function test(){
+        /*try{
+            $patients = DB::table('patient_references as pr')->leftjoin('patient_registrations as p', 'p.id', '=', 'pr.patient_id')->leftJoin('doctors as d', 'd.id', '=', 'pr.doctor_id')->selectRaw("p.patient_name, p.mobile_number, pr.branch, d.doctor_name")->whereDate('pr.created_at', Carbon::today())->where('pr.status', 1)->get();
+            if($patients->isNotEmpty()):
+                foreach($patients as $key => $patient):
+                    $branch = DB::table('branches')->find($patient->branch);
+                    Config::set('myconfig.sms1.number', $patient->mobile_number);
+                    Config::set('myconfig.sms1.message', "Dear ".$patient->patient_name." We are warm-heartedly thankful for consulting with ".$patient->doctor_name.". We would love your feedback, Post a review to our profile. ".$branch->review_link." Devi Eye Hospital. ".$branch->branch_name);
+                    Helper::sendSms(Config::get('myconfig.sms1'));
+                endforeach;
+            endif;
+        }catch(Exception $e){
+            throw $e;
+        }*/
+        echo "success";
     }
 
     public function userlogin(Request $request)
