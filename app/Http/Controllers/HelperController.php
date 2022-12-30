@@ -314,8 +314,12 @@ class HelperController extends Controller
             endforeach;
         else:
             $op = "";
-        endif;
-        
+        endif;        
         echo $op;
+    }
+
+    public function updatesmsstatus(Request $request){
+        $mrid = $request->mrid; $chk = $request->chk;
+        DB::table('patient_references')->where('id', $mrid)->update(['sms' => $chk]);
     }
 }

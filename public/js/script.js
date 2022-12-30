@@ -283,6 +283,23 @@ $(function() {
             }
         });
     });
+    $(document).on("click", ".chkSms", function(){
+        var chk = 0; var mrid = parseInt($(this).closest('tr').find(".mrid").text());
+        if($(this).is(":checked")){
+            chk = 1;
+        }
+        $.ajax({
+            type: 'GET',
+            url: '/helper/updatesmsstatus/',
+            data: {'mrid': mrid, 'chk': chk},
+            success: function(response){
+                alert("Sms status updated successfully.");
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                console.log(XMLHttpRequest);
+            }
+        });
+    })
 });
 
 /*$(window).on('load', function () {

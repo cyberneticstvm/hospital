@@ -514,6 +514,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/helper/getproductfortransfer/', [HelperController::class, 'getProductForTransfer']);
     Route::get('/helper/getPdctPrice/', [HelperController::class, 'getProductPrice']);
     Route::get('/helper/getlabtests/', [HelperController::class, 'getlabtests']);
+    Route::get('/helper/updatesmsstatus/', [HelperController::class, 'updatesmsstatus']);
     // End Helper //
 
     // PDFs //
