@@ -49,7 +49,7 @@ class Kernel extends ConsoleKernel
                 foreach($patients as $key => $patient):
                     $branch = DB::table('branches')->find($patient->branch);
                     Config::set('myconfig.sms1.number', $patient->mobile_number);
-                    Config::set('myconfig.sms1.message', "Dear ".$patient->patient_name." We are warm-heartedly thankful for consulting with ".$patient->doctor_name.". We would love your feedback, Post a review to our profile. ".$branch->review_link." Devi Eye Hospital. ".$branch->branch_name);
+                    Config::set('myconfig.sms1.message', "Dear ".$patient->patient_name.", We are warm-heartedly thankful for consulting with ".$patient->doctor_name.". We would love your feedback, Post a review to our profile. ".$branch->review_link." Devi Eye Hospital. ".$branch->branch_name.".");
                     Helper::sendSms(Config::get('myconfig.sms1'));
                 endforeach;
             endif;
