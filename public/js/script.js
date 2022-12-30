@@ -268,6 +268,21 @@ $(function() {
             }
         });
     });
+
+    $(document).on("change", ".surgeryTypeForLab", function(){
+        var sid = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: '/helper/getlabtests/',
+            data: {'sid': sid},
+            success: function(response){
+                $(".labtestRow1").html(response);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                console.log(XMLHttpRequest);
+            }
+        });
+    });
 });
 
 /*$(window).on('load', function () {

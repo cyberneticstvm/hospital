@@ -304,4 +304,18 @@ class HelperController extends Controller
         $details = DB::table('patient_certificate_details as pcd')->select(DB::raw("DATE_FORMAT(pcd.created_at, '%d/%b/%Y %h:%i %p') AS created_at"))->where('pcd.patient_certificate_id', $certificate->id)->where('pcd.status', 'I')->first();
         return view('authentication.certificate', compact('certificate', 'details', 'patient', 'doctor', 'branch', 'certs'));
     }
+
+    public function getlabtests(Request $request){
+        $sid = $request->sid; $op = "";
+        $tests = DB::table('lab_types')->selectRaw("id, lab_type_name, tested_from, CASE WHEN tested_from = 0 THEN 'Outside Laboratory' ELSE 'Own Laboratory' END AS lab")->where('surgery_type', $sid)->get();
+        if($tests->isNotEmpty()):
+            foreach($tests as $key => $test):
+                $op .= "<div class='row mt-3'><div class='col-sm-3'><select class='form-control form-control-md show-tick ms select2' data-placeholder='Select' name='test_id[]' required='required'><option value='".$test->id."'>".$test->lab_type_name."</option></select></div><div class='col-sm-5'><input type='text' name='notes[]' class='form-control' placeholder='Notes' /></div><div class='col-sm-3'><select class='form-control form-control-md show-tick ms select2' data-placeholder='Select' name='tested_from[]' required='required'><option value='".$test->tested_from."'>".$test->lab."</option></select></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>";
+            endforeach;
+        else:
+            $op = "";
+        endif;
+        
+        echo $op;
+    }
 }

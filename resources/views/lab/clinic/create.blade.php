@@ -21,6 +21,25 @@
                                 <div class="col-sm-3">Patient Name / Age: <h5 class="text-primary">{{ $patient->patient_name }} / {{ $age }}</h5></div>
                                 <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5></div>
+                            </div>                            
+                            <div class="row mt-3">
+                                <div class="col-sm-3">
+                                    <label class="form-label">Surgery Type</label>
+                                    <select class="form-control form-control-md show-tick ms select2 surgeryTypeForLab" name="stype">
+                                    <option value="-1">Select</option>
+                                        @foreach($stypes as $stype)
+                                            <option value="{{ $stype->id }}" {{ old('stype') == $stype->id ? 'selected' : '' }}>{{ $stype->surgery_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('test_id')
+                                    <small class="text-danger">{{ $errors->first('test_id') }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-12 text-end">
+                                    <a class="addLabTest" data-category="clinic" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i></a>                                    
+                                </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-sm-3">
@@ -53,11 +72,12 @@
                                     <small class="text-danger">{{ $errors->first('tested_from') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-1">
-                                    <a class="addLabTest" data-category="clinic" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i><a>                                    
-                                </div>
-                                <div class="labtestRow"></div>
+                                <div class="col-sm-1 mt-3">
+                                    <a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a>                                    
+                                </div>                                
                             </div>
+                            <div class="labtestRow"></div>
+                            <div class="labtestRow1"></div>
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>

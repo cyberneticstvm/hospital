@@ -96,8 +96,9 @@ class LabClinicController extends Controller
         if($mrecord):
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
+            $stypes = DB::table('surgery_types')->get();
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-            return view('lab.clinic.create', compact('mrecord', 'patient', 'doctor', 'age', 'labtests'));
+            return view('lab.clinic.create', compact('mrecord', 'patient', 'doctor', 'age', 'labtests', 'stypes'));
         else:
             return redirect("/lab/clinic/fetch/")->withErrors('No records found.');
         endif;
