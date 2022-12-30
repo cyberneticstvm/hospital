@@ -23,5 +23,6 @@ class PatientReference extends Model
         'token',
         'status',
         'appointment_id',
+        'sms',
     ];
 }
