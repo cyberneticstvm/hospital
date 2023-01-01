@@ -193,7 +193,7 @@ $(function() {
             });
         });
     });
-    $(".daybook").click(function(){        
+    $(".inventory").click(function(){        
         var modal = $(this).data('modal');
         var title = $(this).data('title');
         var product = $(this).data('product');
