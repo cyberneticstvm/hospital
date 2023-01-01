@@ -222,7 +222,7 @@ class PDFController extends Controller
     }
 
     public function clinicprescription($id){
-        $labs = DB::table('lab_clinics')->where('medical_record_id', $id)->where('tested_from', 0)->get();
+        $labs = DB::table('lab_clinics')->where('medical_record_id', $id)->where('tested_from', 0)->orderBy('order_by')->get();
         $mrecord = DB::table('patient_medical_records')->find($id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
@@ -247,7 +247,7 @@ class PDFController extends Controller
     }
 
     public function clinicreport($id){
-        $labs = DB::table('lab_clinics')->where('medical_record_id', $id)->get();
+        $labs = DB::table('lab_clinics')->where('medical_record_id', $id)->orderBy('order_by')->get();
         $mrecord = DB::table('patient_medical_records')->find($id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);

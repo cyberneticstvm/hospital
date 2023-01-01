@@ -54,7 +54,7 @@
                                     <small class="text-danger">{{ $errors->first('test_id') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-3">
                                     <label class="form-label">Notes</label>
                                     <input type="text" name="notes[]" class="form-control" value="{{ old('notes') }}" placeholder="Notes" />
                                     @error('notes')
@@ -71,6 +71,10 @@
                                     @error('tested_from')
                                     <small class="text-danger">{{ $errors->first('tested_from') }}</small>
                                     @enderror
+                                </div>
+                                <div class='col-sm-2'>
+                                    <label class="form-label">Order<sup class="text-danger">*</sup></label>
+                                    <input type='number' name='order_by[]' class='form-control' placeholder='0' />
                                 </div>
                                 <div class="col-sm-1 mt-3">
                                     <a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a>                                    
