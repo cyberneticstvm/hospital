@@ -86,6 +86,35 @@ class HelperController extends Controller
         endif;
         echo $html;
     }
+    public function getInventoryDetailed(Request $request){
+        $html = ""; $product = $request->product; $batch = $request->batch; $branch = $request->branch;
+        if($request->type == 'stockin'):
+            $html = $this->getStockInDetailed($product, $batch, $branch);
+        endif;
+        echo $html;
+    }
+
+    public function getStockInDetailed($product, $batch, $branch){
+        if($branch == 0):
+            $ins = DB::table('purchase_details as pd')->leftJoin('purchases as p', 'p.id', '=', 'pd.purchase_id')->leftJoin('products as pr', 'pr.id', '=', 'pd.product')->selectRaw("SUM('pd.qty') AS qty, pd.batch_number, pr.product_name, DATE_FORMAT(p.delivery_date, '%d/%b/%Y') AS pdate")->where('pd.product', $product)->groupBy('pd.batch_number')->orderBy('p.delivery_date')->get();
+        else:
+            $ins = DB::table('product_transfer_details as pd')->leftJoin('product_transfers as pt', 'pt.id', '=', 'pd.transfer_id')->leftJoin('products as pr', 'pr.id', '=', 'pd.product')->selectRaw("SUM('pd.qty') AS qty, pd.batch_number, pr.product_name, DATE_FORMAT(pt.transfer_date, '%d/%b/%Y') AS pdate")->where('pt.to_branch', $branch)->where('pd.product', $product)->groupBy('pd.batch_number')->orderBy('pt.transfer_date')->get();
+        endif;
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>Product</th><th>Batch Number</th><th>Purchase Date</th><th>Qty</th></tr></thead><tbody>";
+        $c = 1;
+        foreach($ins as $key => $record):
+            $html .= "<tr>";
+                $html .= "<td>".$c++."</td>";
+                $html .= "<td>".$record->product_name."</td>";
+                $html .= "<td>".$record->batch_number."</td>";
+                $html .= "<td>".$record->pdate."</td>";
+                $html .= "<td class='text-end'>".$record->qty."</td>";
+            $html .= "</tr>";
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='4' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>".number_format($ins->sum('qty'), 2)."</td></tr></tfoot></table>";
+        return $html;
+    }
+
     private function getConsultationDetailed($fdate, $tdate, $branch){
         $consultation = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pr', 'pmr.mrn', '=', 'pr.id')->leftJoin('patient_registrations as preg', 'preg.id', '=', 'pr.patient_id')->select('preg.patient_name', 'preg.patient_id', 'pmr.id as mrid', 'pr.doctor_fee AS fee', DB::raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->whereBetween('pr.created_at', [$fdate, $tdate])->where('pr.branch', $branch)->where('pr.status', 1)->orderByDesc('pmr.id')->get();
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Reg.Date</th><th>Amount</th></tr></thead><tbody>";

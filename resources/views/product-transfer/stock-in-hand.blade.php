@@ -64,7 +64,7 @@
                                 <td>{{ $stock->product_name }}</td>
                                 <td>{{ $stock->product }}</td>
                                 <td>{{ $stock->batch_number }}</td>
-                                <td>{{ $stock->purchased }}</td>
+                                <td><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="stockInModal" data-bs-target="#stockInModal" data-title="Stock In Details" data-branch="{{ ($input) ? $input[0] : 0 }}" data-product="{{ $stock->product }}" data-batchno="{{ $stock->batch_number }}" data-type="stockin">{{ $stock->purchased }}</a></td>
                                 <td>{{ $stock->transferred }}</td>
                                 <td>{{ $stock->balance_qty }}</td>
                             </tr>
@@ -75,6 +75,19 @@
                 </div>
             </div>
         </div> <!-- .row end -->
+    </div>
+</div>
+<div class="modal fade" id="stockInModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row"><div class="col-md-12 table-responsive inventoryDetailed"></div></div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

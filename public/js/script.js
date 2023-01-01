@@ -192,7 +192,29 @@ $(function() {
                 }
             });
         });
-    }); 
+    });
+    $(".daybook").click(function(){        
+        var modal = $(this).data('modal');
+        var title = $(this).data('title');
+        var product = $(this).data('product');
+        var batch = $(this).data('batchno');
+        var branch = $(this).data('branch');
+        var type = $(this).data('type');
+        $("#"+modal).on('shown.bs.modal', function(){
+            $(this).find(".modal-title").html(title);
+            $.ajax({
+                type: 'GET',
+                url: '/helper/inventory/',
+                data: {'product': product, 'batch': batch, 'branch': branch, 'type': type},
+                success: function(data){
+                    $("#"+modal).find(".inventoryDetailed").html(data);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    console.log(XMLHttpRequest);
+                }
+            });
+        });
+    });
     
     $(document).on("change", ".medType", function(){
         var type = parseInt($(this).val());
