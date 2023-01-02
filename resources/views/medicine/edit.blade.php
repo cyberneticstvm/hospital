@@ -17,6 +17,7 @@
                             @method("PUT")
                             <input type="hidden" name="mid" value="{{ $medical_record->id }}"/>
                             <input type="hidden" name="mrn" value="{{ $medical_record->mrn }}"/>
+                            <input type="hidden" name="" class="selFromBranch" value="{{ session()->get('branch') }}" />
                             <div class="row g-4">
                                 <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $medical_record->mrn }}</h5></div>
                                 <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>

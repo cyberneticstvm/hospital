@@ -14,6 +14,7 @@
                     <div class="card-body">
                         <form action="{{ route('pharmacy.create') }}" method="post">
                             @csrf
+                            <input type="hidden" name="" class="selFromBranch" value="{{ session()->get('branch') }}" />
                             <div class="row g-4">
                                 <div class="col-sm-4">
                                     <label class="form-label">Patient Name / MR.ID / Patient ID<sup class="text-danger">*</sup></label>

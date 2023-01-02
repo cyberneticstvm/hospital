@@ -15,6 +15,7 @@
                         <form action="{{ route('pharmacy.update', $pharmacy->id) }}" method="post">
                             @csrf
                             @method("PUT")
+                            <input type="hidden" name="" class="selFromBranch" value="{{ session()->get('branch') }}" />
                             <div class="row g-4">
                                 <div class="col-sm-4">
                                     <label class="form-label">Patient Name / MR.ID / Patient ID<sup class="text-danger">*</sup></label>
