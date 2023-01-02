@@ -363,7 +363,7 @@ class HelperController extends Controller
 
     public function getlabtests(Request $request){
         $sid = $request->sid; $op = "";
-        $tests = DB::table('lab_types')->selectRaw("id, lab_type_name, tested_from, CASE WHEN tested_from = 0 THEN 'Outside Laboratory' ELSE 'Own Laboratory' END AS lab, order_by")->where('surgery_type', $sid)->get();
+        $tests = DB::table('lab_types')->selectRaw("id, lab_type_name, tested_from, CASE WHEN tested_from = 0 THEN 'Outside Laboratory' ELSE 'Own Laboratory' END AS lab, order_by")->where('surgery_type', $sid)->orderBy('order_by')->get();
         if($tests->isNotEmpty()):
             foreach($tests as $key => $test):
                 $op .= "<div class='row mt-3'><div class='col-sm-3'><select class='form-control form-control-md show-tick ms select2' data-placeholder='Select' name='test_id[]' required='required'><option value='".$test->id."'>".$test->lab_type_name."</option></select></div><div class='col-sm-3'><input type='text' name='notes[]' class='form-control' placeholder='Notes' /></div><div class='col-sm-3'><select class='form-control form-control-md show-tick ms select2' data-placeholder='Select' name='tested_from[]' required='required'><option value='".$test->tested_from."'>".$test->lab."</option></select></div><div class='col-sm-2'><input type='number' name='order_by[]' class='form-control' value='".$test->order_by."' /></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>";
