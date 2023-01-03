@@ -26,15 +26,16 @@
                             <input type="hidden" name="branch" value="{{ ($patient) ? $patient->branch : 0 }}" />
                             <table class="table table-sm table-striped table-hover align-middle">
                                 <thead><tr><th>Income Head</th><th>Amount</th></tr></thead>
+                                @php $due = app('\App\Http\Controllers\HelperController')->getPreviousDues($patient->id) @endphp
                                 <tbody>
-                                    <tr><td>Previous Due</td><td class="text-right"><a href="" target="_blank">0.00</a></td></tr>
+                                    <tr><td class="text-danger fw-bold">Total Due</td><td class="text-right text-danger fw-bold">{{ number_format($due, 2) }}</td></tr>
                                     @forelse($heads as $key => $head)
                                         <tr><td>{{ $head->name }}</td><td class="text-right">{{ number_format($fee[$key], 2) }}</td></tr>
                                     @empty
                                     @endforelse
                                 </tbody>
                                 <tfoot>
-                                    <tr><th class="text-end fw-bold">Total</th><th class="text-end fw-bold">{{ number_format($tot, 2) }}</th></tr>
+                                    <tr><th class="text-end fw-bold">Total for the provided MRN</th><th class="text-end fw-bold">{{ number_format($tot, 2) }}</th></tr>
                                 </tfoot>
                             </table>
                             <h5 class="mb-3">Payments received against MR.ID <span class="fw-bold">{{ $medical_record_id }}</span></h5>
@@ -48,10 +49,10 @@
                                     @empty
                                     @endforelse
                                 </tbody>
-                                <tfoot>
-                                    <tr><th colspan="2" class="text-end fw-bold">Received</th><th class="text-end fw-bold">{{ number_format($ptot, 2) }}</th></tr>
-                                    <tr><th colspan="2" class="text-end fw-bold">Balance</th><th class="text-end fw-bold">{{ number_format($tot-$ptot, 2) }}</th></tr>
-                                </tfoot>
+                                <!--<tfoot>
+                                    <tr><th colspan="2" class="text-end fw-bold">Received for the MRN</th><th class="text-end fw-bold">{{ number_format($ptot, 2) }}</th></tr>
+                                    <tr><th colspan="2" class="text-end fw-bold">Balance for the MRN</th><th class="text-end fw-bold">{{ number_format(($tot)-$ptot, 2) }}</th></tr>
+                                </tfoot>-->
                             </table>
                             <div class="row g-4">
                                 <div class="col-sm-3">

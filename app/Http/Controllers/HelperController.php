@@ -340,14 +340,27 @@ class HelperController extends Controller
 
         $vision = DB::table('spectacles')->where('medical_record_id', $mrid)->sum('fee');
 
-        return $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine + $vision;
+        $clinical_lab = DB::table('lab_clinics')->where('medical_record_id', $mrid)->where('tested_from', 1)->sum('fee');
+
+        $radiology_lab = DB::table('lab_radiologies')->where('medical_record_id', $mrid)->where('tested_from', 1)->sum('fee');
+
+        $surgery_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'surgery')->where('m.medical_record_id', $mrid)->sum('d.total'); 
+
+        $postop_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'postop')->where('m.medical_record_id', $mrid)->sum('d.total');
+
+        return $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine + $vision + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine;
     }
     public function getPaidTotal($mrid){
         $paid = DB::table('patient_payments as p')->where('p.medical_record_id', $mrid)->sum('amount');
         return $paid;
     }
     public function getPreviousDues($patient_id){
-        
+        $mrns = DB::table('patient_references')->where('patient_id', $patient_id)->orderByDesc('id')->get();
+        $owed = 0.00; $paid = DB::table('patient_payments')->where('patient_id', $patient_id)->sum('amount');
+        foreach($mrns as $key => $val):
+            $owed += $this->getOwedTotal($val->id);
+        endforeach;
+        return $owed-$paid;
     }
     public function certificateAuthentication($id){
         $patient = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->select('pr.patient_name', 'pr.age', 'pmr.doctor_id', 'pmr.branch', 'pr.address')->where('pmr.id', $id)->first();

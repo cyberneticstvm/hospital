@@ -109,12 +109,18 @@ class PatientPaymentController extends Controller
         $pharmacy = DB::table('patient_medicine_records')->where('medical_record_id', $request->medical_record_id)->sum('total');
         $vision = DB::table('spectacles')->where('medical_record_id', $request->medical_record_id)->sum('fee');
         
-        $clinical_lab = 0.00; $radiology_lab = 0.00; $surgery_medicine = 0.00; $postop_medicine = 0.00;
+        $clinical_lab = DB::table('lab_clinics')->where('medical_record_id', $request->medical_record_id)->where('tested_from', 1)->sum('fee');
+
+        $radiology_lab = DB::table('lab_radiologies')->where('medical_record_id', $request->medical_record_id)->where('tested_from', 1)->sum('fee');
+
+        $surgery_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'surgery')->where('m.medical_record_id', $request->medical_record_id)->sum('d.total'); 
+
+        $postop_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'postop')->where('m.medical_record_id', $request->medical_record_id)->sum('d.total');
 
         $payments = PP::where('medical_record_id', $request->medical_record_id)->leftJoin('payment_modes as p', 'patient_payments.payment_mode', '=', 'p.id')->select('patient_payments.id', 'patient_payments.amount', 'patient_payments.notes', 'p.name')->get();
 
         $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $postop_medicine, $procedure_fee, $radiology_lab, $reg_fee, $surgery_medicine, $vision);
-        $tot = $reg_fee+$consultation_fee+$procedure_fee+$certificate_fee+$pharmacy+$radiology_lab+$clinical_lab+$vision;
+        $tot = $reg_fee+$consultation_fee+$procedure_fee+$certificate_fee+$pharmacy+$radiology_lab+$clinical_lab+$vision+$surgery_medicine+$postop_medicine;
         if($patient):
             return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments'));
         else:
