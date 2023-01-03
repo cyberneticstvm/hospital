@@ -63,7 +63,7 @@
                                                     <input type="text" class="form-control form-control-md" placeholder="Duration" name="duration[]" value="{{ $medicine->duration }}" />
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control form-control-md text-right" placeholder="0" name="qty[]" value="{{ $medicine->qty }}" required='required' />
+                                                    <input type="number" class="form-control form-control-md text-right qty" placeholder="0" name="qty[]" value="{{ $medicine->qty }}" required='required' />
                                                 </td>
                                                 <td>
                                                     <input type="number" class="form-control form-control-md text-right price" placeholder="0" name="price[]" step="any" value="{{ $medicine->price }}" required='required' />
@@ -86,26 +86,12 @@
                                             </tr>
                                             @endforeach
                                         </tbody>
-                                        <!--<tfoot>
+                                        <tfoot>
                                             <tr>
-                                                <td colspan="6" class="text-right fw-bold"></td>
-                                                <td class="text-right fw-bold">Advance</td>
-                                                <td>
-                                                    <select class="form-control form-control-sm select2" data-placeholder="Select" name="payment_mode" required='required'>
-                                                    <option value="">Select</option>
-                                                    @foreach($pmodes as $pmode)
-                                                        <option value="{{ $pmode->id }}">{{ $pmode->name }}</option>
-                                                    @endforeach
-                                                    </select>
-                                                </td>
-                                                <td class="text-right fw-bold"><input type="number" step="any" class="form-control form-control-sm text-right" placeholder="0.00" name="advance" /></td>
+                                                <td colspan="9" class="text-right">Total</td>
+                                                <td class="text-right fw-bold gtot">{{ number_format($medicines->sum('total'), 2) }}</td>                                                
                                             </tr>
-                                            <tr>
-                                                <td colspan="7" class="text-right fw-bold"></td>
-                                                <td class="text-right fw-bold">Balance</td>                                                
-                                                <td class="text-right fw-bold"><input type="number" step="any" class="form-control form-control-sm text-right" placeholder="0.00" name="advance" /></td>
-                                            </tr>
-                                        </tfoot>-->
+                                        </tfoot>
                                     </table>
                                 </div>
                                 <div class="col-sm-12 text-right">

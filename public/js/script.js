@@ -278,18 +278,31 @@ $(function() {
         var bno = $(this).val();
         var pdct = $(this).parent().parent().find(".selProductForTransfer").val();
         var price = $(this).parent().parent().find(".price");
+        var total = $(this).parent().parent().find(".total");
+        var qty = parseInt($(this).parent().parent().find(".qty").val());
         $.ajax({
             type: 'GET',
             url: '/helper/getPdctPrice/',
             data: {'product': pdct, 'batch_number': bno},
             success: function(response){
+                var cost = parseFloat(response).toFixed(2);
                 price.val(response);
+                total.val(cost*qty);
+                calculateTotal();
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
                 console.log(XMLHttpRequest);
             }
         });
     });
+
+    $(document).on("blur", ".qty", function(){
+        var qty = parseInt($(this).val());
+        var total = $(this).parent().parent().find(".total");
+        var price = parseFloat($(this).parent().parent().find(".price").val());
+        total.val(qty*price);
+        calculateTotal();
+    })
 
     $(document).on("change", ".surgeryTypeForLab", function(){
         var sid = $(this).val();
@@ -378,6 +391,11 @@ function checkNewAppointments(){
     });
 }
 
-function calculateMedicineTotal(){
-
+function calculateTotal(){
+    var total = 0;
+    $(".total").each(function(){
+        var tot = parseFloat($(this).val());
+        total = total + tot;
+    });
+    $(".gtot").text((total > 0) ? total.toFixed(2) : '0.00' );
 }
