@@ -347,7 +347,7 @@ class HelperController extends Controller
         return $paid;
     }
     public function getPreviousDues($patient_id){
-
+        
     }
     public function certificateAuthentication($id){
         $patient = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->select('pr.patient_name', 'pr.age', 'pmr.doctor_id', 'pmr.branch', 'pr.address')->where('pmr.id', $id)->first();

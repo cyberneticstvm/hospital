@@ -109,12 +109,11 @@ class PatientPaymentController extends Controller
         $pharmacy = DB::table('patient_medicine_records')->where('medical_record_id', $request->medical_record_id)->sum('total');
         $vision = DB::table('spectacles')->where('medical_record_id', $request->medical_record_id)->sum('fee');
         
-        $clinical_lab = 0.00;
-        $radiology_lab = 0.00;
+        $clinical_lab = 0.00; $radiology_lab = 0.00; $surgery_medicine = 0.00; $postop_medicine = 0.00;
 
         $payments = PP::where('medical_record_id', $request->medical_record_id)->leftJoin('payment_modes as p', 'patient_payments.payment_mode', '=', 'p.id')->select('patient_payments.id', 'patient_payments.amount', 'patient_payments.notes', 'p.name')->get();
 
-        $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $procedure_fee, $reg_fee, $vision);
+        $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $postop_medicine, $procedure_fee, $radiology_lab, $reg_fee, $surgery_medicine, $vision);
         $tot = $reg_fee+$consultation_fee+$procedure_fee+$certificate_fee+$pharmacy+$radiology_lab+$clinical_lab+$vision;
         if($patient):
             return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments'));
