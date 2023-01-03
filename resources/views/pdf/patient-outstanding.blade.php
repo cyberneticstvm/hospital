@@ -27,6 +27,8 @@
 <body>
     <center>
         <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%"/><br/>
+            {{ $branch->address }}, Phone:
+            {{ $branch->contact_number }}
     </center>
     <br/>
     <table width="100%" class="bordered" cellpadding="0" cellspacing="0">
@@ -49,7 +51,7 @@
     <br><br>
     <table width="100%" class="bordered" cellpadding="0" cellspacing="0">
         <thead><th>SL No.</th><th>Particulars</th><th>Amount</th></thead><tbody>
-        <tr><td>1</td><td>Outstanding Payment</td><td>{{ $payment->amount }}</td></tr>
+        <tr><td>1</td><td>Outstanding Payment</td><td class="text-right">{{ $payment->amount }}</td></tr>
         <tr><td colspan="2" class="text-right fw-bold">Total</td><td class="text-right fw-bold">{{ $payment->amount }}</td>        
     </tbody></table>
 </body>

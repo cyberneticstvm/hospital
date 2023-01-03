@@ -416,7 +416,8 @@ class PDFController extends Controller
     public function patientpaymentbill($id){
         $payment = DB::table('patient_payments')->find($id);
         $patient = DB::table('patient_registrations')->find($payment->patient_id);
-        $pdf = PDF::loadView('/pdf/patient-outstanding', compact('payment', 'patient'));    
+        $branch = DB::table('branches')->find($payment->branch);
+        $pdf = PDF::loadView('/pdf/patient-outstanding', compact('payment', 'patient', 'branch'));    
         return $pdf->stream('Payment.pdf', array("Attachment"=>0));
     }
 }
