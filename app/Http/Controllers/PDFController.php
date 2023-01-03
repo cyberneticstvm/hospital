@@ -413,4 +413,10 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/product-transfer-bill', compact('transfer', 'tdetails'));    
         return $pdf->stream('bill.pdf', array("Attachment"=>0));
     }
+    public function patientpaymentbill($id){
+        $payment = DB::table('patient_payments')->find($id);
+        $patient = DB::table('patient_registrations')->find($payment->patient_id);
+        $pdf = PDF::loadView('/pdf/patient-outstanding', compact('payment', 'patient'));    
+        return $pdf->stream('Payment.pdf', array("Attachment"=>0));
+    }
 }

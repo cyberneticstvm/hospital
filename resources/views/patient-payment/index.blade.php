@@ -42,7 +42,7 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Amount</th><th>Payment Mode</th><th>Branch</th><th>Notes</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Amount</th><th>Payment Mode</th><th>Branch</th><th>Notes</th><th>Receipt</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @foreach($incomes as $income)
                             <tr>
@@ -54,6 +54,11 @@
                                 <td>{{ $income->name }}</td>
                                 <td>{{ $income->branch_name }}</td>
                                 <td>{{ $income->notes }}</td>
+                                @if($income->payment_mode == 8):
+                                    <td class="text-center"><a href="/patient/payments/bill/{{ $income->id }}/"><i class="fa fa-pdf-o text-primary"></i></a></td>
+                                @else
+                                    <td></td>
+                                @endif
                                 <td><a class='btn btn-link' href="{{ route('patient-payment.edit', $income->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                 <td>
                                     <form method="post" action="{{ route('patient-payment.delete', $income->id) }}">
