@@ -94,7 +94,8 @@ class PatientPaymentController extends Controller
             'medical_record_id' => 'required',
         ]);
         $heads = DB::table('income_expense_heads')->where('type', 'I')->where('category', 'patient')->orderBy('name')->get();
-        $pmodes = DB::table('payment_modes')->orderBy('name')->get();
+        $pmodes = DB::table('payment_modes')->where('id', '!=', 8)->orderBy('name')->get();
+        $types = DB::table('payment_modes')->where('id', '=', 8)->orderBy('name')->get();
         $medical_record_id = $request->medical_record_id;
         $patient = DB::table('patient_registrations as pr')->leftJoin('patient_medical_records as pmr', 'pmr.patient_id', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->select('pr.id', 'pr.patient_name', 'pr.patient_id', 'pmr.branch', DB::raw("DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS cdate"))->first();
 
@@ -122,7 +123,7 @@ class PatientPaymentController extends Controller
         $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $postop_medicine, $procedure_fee, $radiology_lab, $reg_fee, $surgery_medicine, $vision);
         $tot = $reg_fee+$consultation_fee+$procedure_fee+$certificate_fee+$pharmacy+$radiology_lab+$clinical_lab+$vision+$surgery_medicine+$postop_medicine;
         if($patient):
-            return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments'));
+            return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments', 'types'));
         else:
             return redirect()->back()->with('error', 'No records found.');
         endif;
@@ -137,9 +138,10 @@ class PatientPaymentController extends Controller
     public function edit($id)
     {
         $payment = PP::find($id);
-        $pmodes = DB::table('payment_modes')->orderBy('name')->get();
+        $pmodes = DB::table('payment_modes')->where('id', '!=', 8)->orderBy('name')->get();
+        $types = DB::table('payment_modes')->where('id', '=', 8)->orderBy('name')->get();
         $patient = DB::table('patient_registrations')->find($payment->patient_id);
-        return view('patient-payment.edit', compact('payment', 'pmodes', 'patient'));
+        return view('patient-payment.edit', compact('payment', 'pmodes', 'patient', 'types'));
     }
 
     /**

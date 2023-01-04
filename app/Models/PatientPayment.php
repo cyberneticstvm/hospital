@@ -16,6 +16,7 @@ class PatientPayment extends Model
         'branch',
         'amount',
         'payment_mode',
+        'type',
         'notes',
         'created_by',
     ];

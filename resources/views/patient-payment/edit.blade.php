@@ -46,7 +46,7 @@
                                     <small class="text-danger">{{ $errors->first('amount') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label class="form-label">Payment Mode<sup class="text-danger">*</sup></label>
                                     <select class="form-control select2" name="payment_mode">
                                         <option value="">Select</option>
@@ -59,7 +59,20 @@
                                     <small class="text-danger">{{ $errors->first('payment_mode') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-2">
+                                    <label class="form-label">Payment Type</label>
+                                    <select class="form-control select2" name="type">
+                                        <option value="0">Select</option>
+                                        @forelse($types as $key => $type)
+                                            <option value="{{ $type->id }}" {{ ($type->id == $payment->type) ? 'selected': '' }}>{{ $type->name }}</option>
+                                        @empty
+                                        @endforelse
+                                    </select>
+                                    @error('type')
+                                    <small class="text-danger">{{ $errors->first('type') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3">
                                     <label class="form-label">Notes</label>
                                     <input type="text" name="notes" class="form-control form-control-md" value="{{ $payment->notes }}">
                                 </div>

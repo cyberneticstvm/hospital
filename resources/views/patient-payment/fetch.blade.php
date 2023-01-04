@@ -55,14 +55,14 @@
                                 </tfoot>-->
                             </table>
                             <div class="row g-4">
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label class="form-label">Amount<sup class="text-danger">*</sup></label>
                                     <input type="number" name="amount" step="any" class="form-control form-control-md" placeholder="0.00">
                                     @error('amount')
                                     <small class="text-danger">{{ $errors->first('amount') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label class="form-label">Payment Mode<sup class="text-danger">*</sup></label>
                                     <select class="form-control select2" name="payment_mode">
                                         <option value="">Select</option>
@@ -73,6 +73,19 @@
                                     </select>
                                     @error('payment_mode')
                                     <small class="text-danger">{{ $errors->first('payment_mode') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Payment Type</label>
+                                    <select class="form-control select2" name="type">
+                                        <option value="0">Select</option>
+                                        @forelse($types as $key => $type)
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @empty
+                                        @endforelse
+                                    </select>
+                                    @error('type')
+                                    <small class="text-danger">{{ $errors->first('type') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-3">
