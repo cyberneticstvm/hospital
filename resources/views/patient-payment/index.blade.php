@@ -54,7 +54,7 @@
                                 <td>{{ $income->name }}</td>
                                 <td>{{ $income->branch_name }}</td>
                                 <td>{{ $income->notes }}</td>
-                                @if($income->payment_mode == 8):
+                                @if($income->type == 8):
                                     <td class="text-center"><a href="/patient/payments/bill/{{ $income->id }}/"><i class="fa fa-pdf-o text-primary"></i></a></td>
                                 @else
                                     <td></td>

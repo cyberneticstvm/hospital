@@ -28,7 +28,7 @@ class PatientPaymentController extends Controller
     }
     public function index()
     {
-        $incomes = PP::leftJoin('patient_medical_records as pmr', 'patient_payments.medical_record_id', '=', 'pmr.id')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('payment_modes as pm', 'pm.id', '=', 'patient_payments.payment_mode')->leftJoin('branches as b', 'b.id', 'patient_payments.branch')->select("b.branch_name", "patient_payments.id", "patient_payments.amount", "patient_payments.medical_record_id", "patient_payments.notes", "pm.name", "pr.patient_name", "pr.patient_id")->where('patient_payments.branch', $this->branch)->where('patient_payments.medical_record_id', '>', 0)->whereDate('patient_payments.created_at', Carbon::today())->orderByDesc("patient_payments.id")->get();
+        $incomes = PP::leftJoin('patient_medical_records as pmr', 'patient_payments.medical_record_id', '=', 'pmr.id')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('payment_modes as pm', 'pm.id', '=', 'patient_payments.payment_mode')->leftJoin('branches as b', 'b.id', 'patient_payments.branch')->select("b.branch_name", "patient_payments.id", "patient_payments.amount", "patient_payments.medical_record_id", "patient_payments.notes", "pm.name", "pr.patient_name", "pr.patient_id", "patient_payments.type")->where('patient_payments.branch', $this->branch)->where('patient_payments.medical_record_id', '>', 0)->whereDate('patient_payments.created_at', Carbon::today())->orderByDesc("patient_payments.id")->get();
         return view('patient-payment.index', compact('incomes'));
     }
 
