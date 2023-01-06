@@ -66,7 +66,7 @@
                         </form>
                     </div>
                 </div>
-                @php $rtot = $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision; @endphp
+                @php $rtot = $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine; @endphp
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
@@ -95,8 +95,12 @@
                             <tr>
                                 <td>8</td><td>Income from Vision</td><td class="text-end text-danger">{{ number_format($vision, 2) }}</td><td class="text-right text-danger"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="visionModal" data-bs-target="#visionModal" data-title="Vision Income Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="vision">{{ number_format($vision, 2) }}</a></td>       
                             </tr>
+                            <tr><td>9</td><td>Income from Clinical Lab</td><td class="text-end">{{ number_format($clinical_lab, 2) }}</td><td class="text-end">{{ number_format($clinical_lab, 2) }}</td></tr>
+                            <tr><td>10</td><td>Income from Radiology Lab</td><td class="text-end">{{ number_format($radiology_lab, 2) }}</td><td class="text-end">{{ number_format($radiology_lab, 2) }}</td></tr>
+                            <tr><td>11</td><td>Income from Surgery Medicine</td><td class="text-end">{{ number_format($surgery_medicine, 2) }}</td><td class="text-end">{{ number_format($surgery_medicine, 2) }}</td></tr>
+                            <tr><td>12</td><td>Income from PostOp Medicine</td><td class="text-end">{{ number_format($postop_medicine, 2) }}</td><td class="text-end">{{ number_format($postop_medicine, 2) }}</td></tr>
                             <tr>
-                                <td>9</td><td>Income from Other Sources</td><td class="text-end text-primary">{{ number_format($income, 2) }}</td><td></td>       
+                                <td>13</td><td>Income from Other Sources</td><td class="text-end text-primary">{{ number_format($income, 2) }}</td><td></td>       
                             </tr>
                             <tr>
                                 <td colspan="2" class="text-end fw-bold">Grand Total</td><td class="text-end fw-bold">{{ number_format($income_total, 2) }}</td><td class="text-end text-danger">{{ number_format($rtot, 2) }}</td>       
@@ -119,14 +123,14 @@
                                 <td colspan="2" class="text-end fw-bold">Payments received (Cheque/Card)</td><td class="text-end fw-bold">{{ number_format($income_received_card, 2) }}</td><td class="text-end"><a class="daybook text-primary" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomeCardModal" data-bs-target="#incomeCardModal" data-title="Payments received through Card/Cheque" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomecard">{{ number_format($income_received_card, 2) }}</a></td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Payments received (Staff)</td><td class="text-end fw-bold">{{ number_format($income_received_staff, 2) }}</td><td class="text-end">{{ number_format($income_received_staff, 2) }}</td>       
+                                <td colspan="2" class="text-end fw-bold">Payments received (Staff)</td><td class="text-end fw-bold">{{ number_format($income_received_staff, 2) }}</td><td class="text-end">0.00</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Patient Outstanding</td><td class="text-end fw-bold">{{ number_format($outstanding, 2) }}</td><td class="text-end">{{ number_format($outstanding, 2) }}</td>       
+                                <td colspan="2" class="text-end fw-bold">Patient Outstanding</td><td class="text-end fw-bold">{{ number_format($outstanding, 2) }}</td><td class="text-end">0.00</td>       
                             </tr>
                             <tr><td colspan="4" class="bg-primary"></td></tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Balance</td><td class="text-end fw-bold">{{ number_format($income_total-($income_received_upi + $income_received_card + $expense), 2) }}</td><td class="text-end text-danger"><a class="daybook text-primary" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomePendingdModal" data-bs-target="#incomePendingdModal" data-title="Pending Payments" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomepending">{{ number_format(($rtot+$outstanding)-($income_received_cash + $income_received_upi + $income_received_card + $income_received_staff), 2) }}</a></td>       
+                                <td colspan="2" class="text-end fw-bold">Balance</td><td class="text-end fw-bold">{{ number_format($income_total+$outstanding-($income_received_upi + $income_received_card + $expense), 2) }}</td><td class="text-end text-danger"><a class="daybook text-primary" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomePendingdModal" data-bs-target="#incomePendingdModal" data-title="Pending Payments" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomepending">{{ number_format(($rtot)-($income_received_cash + $income_received_upi + $income_received_card + $income_received_staff), 2) }}</a></td>       
                             </tr>             
                             </tbody>
                         </table>
