@@ -50,7 +50,7 @@
                                                     @forelse($bnos as $key => $bno)
                                                     <option value="{{ $bno->batch_number }}" {{ $medicine->batch_number == $bno->batch_number ? 'selected' : '' }}>{{ $bno->batch_number .' ('.$bno->balance_qty.' Qty in Hand)' }}</option>
                                                     @empty
-                                                    <option value="NRF">No Batch Number</option>
+                                                    <option value="{{ $medicine->batch_number }}">{{ $medicine->batch_number }}</option>
                                                     @endforelse
                                                 </select></td>
                                                 <!--<td>
