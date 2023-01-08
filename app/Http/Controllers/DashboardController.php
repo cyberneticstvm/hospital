@@ -74,13 +74,13 @@ class DashboardController extends Controller
 
         $vision = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->whereIn('r.consultation_type', [5])->whereDate('r.created_at', Carbon::today())->count('r.id');
 
-        $day_tot_exp = DB::table('expenses')->where('branch', $branch_id)->whereDate('created_at', Carbon::today())->sum('amount');
+        $day_tot_exp = DB::table('expenses')->where('branch', $branch_id)->where('head', '!=', 22)->whereDate('created_at', Carbon::today())->sum('amount');
 
         $day_tot_income = $this->getDayTotal();
 
         $income_monthly = DB::table('patient_payments')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->sum('amount');
 
-        $expense_monthly = DB::table('expenses')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->sum('amount');
+        $expense_monthly = DB::table('expenses')->where('head', '!=', 22)->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->sum('amount');
 
         if(Auth::user()->roles->first()->name == 'Admin'):
             return view('dash', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));

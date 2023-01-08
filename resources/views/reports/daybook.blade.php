@@ -106,7 +106,7 @@
                                 <td colspan="2" class="text-end fw-bold">Grand Total</td><td class="text-end fw-bold">{{ number_format($income_total, 2) }}</td><td class="text-end text-danger">{{ number_format($rtot, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Expenses</td><td class="text-end fw-bold">{{ number_format($expense, 2) }}</td><td class="text-end text-warning"></td>       
+                                <td colspan="2" class="text-end fw-bold">Expenses including Patient Outstanding</td><td class="text-end fw-bold">{{ number_format($expense, 2) }}</td><td class="text-end text-warning"></td>       
                             </tr>
                             <tr><td colspan="4" class="bg-primary"></td></tr>
                             <tr>
@@ -126,7 +126,7 @@
                                 <td colspan="2" class="text-end fw-bold">Payments received (Staff)</td><td class="text-end fw-bold">{{ number_format($income_received_staff, 2) }}</td><td class="text-end">0.00</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Patient Outstanding</td><td class="text-end fw-bold">{{ number_format($outstanding, 2) }}</td><td class="text-end">0.00</td>       
+                                <td colspan="2" class="text-end fw-bold">Patient Outstanding Recieved</td><td class="text-end fw-bold">{{ number_format($outstanding, 2) }}</td><td class="text-end">0.00</td>       
                             </tr>
                             <tr><td colspan="4" class="bg-primary"></td></tr>
                             <tr>
