@@ -19,7 +19,7 @@
                     <td>{{ $patient->pno }}</td>
                     <td>{{ $patient->doctor_name }}</td>
                     <td>{{ $patient->rdate }}</td>
-                    <td class="text-center"><input type="checkbox" class="form-check-input chkSms" /></td>
+                    <td class="text-center"><input type="checkbox" class="form-check-input chkSms" {{ ($patient->sms == 1) ? 'checked' : '' }}/></td>
                     <td><a href='/generate-token/{{ $patient->reference_id }}/' target='_blank'><i class="fa fa-file text-info"></i></a></td>                    
                     <td><a href='/generate-prescription/{{ $patient->reference_id }}/' target='_blank'><i class="fa fa-file text-primary"></i></a></td>
                     <td><a href='/generate-receipt/{{ $patient->reference_id }}/' target="_blank"><i class="fa fa-file text-success"></i></a></td>
