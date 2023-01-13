@@ -12,6 +12,7 @@ use App\Http\Controllers\PharmacyPaymentController;
 use App\Http\Controllers\PostOperativeMedicineController;
 use App\Http\Controllers\SurgeryMedicineController;
 use App\Http\Controllers\PachymetryController;
+use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SearchController;
@@ -241,6 +242,15 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::put('/supplier/edit/{id}/', 'App\Http\Controllers\SupplierController@update')->name('supplier.update');
     Route::delete('/supplier/delete/{id}/', 'App\Http\Controllers\SupplierController@destroy')->name('supplier.delete');
     // End supplier //
+
+    // manufacturer //
+    Route::get('/manufacturer/', [ManufacturerController::class, 'index'])->name('manufacturer.index');
+    Route::get('/manufacturer/create/', [ManufacturerController::class, 'create'])->name('manufacturer.create');
+    Route::post('/manufacturer/create/', [ManufacturerController::class, 'store'])->name('manufacturer.save');
+    Route::get('/manufacturer/edit/{id}/', [ManufacturerController::class, 'edit'])->name('manufacturer.edit');
+    Route::put('/manufacturer/edit/{id}/', [ManufacturerController::class, 'update'])->name('manufacturer.update');
+    Route::delete('/manufacturer/delete/{id}/', [ManufacturerController::class, 'destroy'])->name('manufacturer.delete');
+    // End manufacturer //
 
     // purchase //
     Route::get('/purchase/', 'App\Http\Controllers\PurchaseController@index')->name('purchase.index');

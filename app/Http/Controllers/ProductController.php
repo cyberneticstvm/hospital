@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\Product;
+use App\Models\Manufacturer;
 use Carbon\Carbon;
 use DB;
 
@@ -25,7 +26,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = DB::table('products as p')->leftJoin('product_categories as c', 'p.category_id', '=', 'c.id')->select('p.id', 'p.product_name', 'p.hsn', 'p.tax_percentage', 'c.category_name')->get();
+        $products = DB::table('products as p')->leftJoin('product_categories as c', 'p.category_id', '=', 'c.id')->select('p.id', 'p.product_name', 'p.hsn', 'p.tax_percentage', 'c.category_name')->get();        
         return view('product.index', compact('products'));
     }
 
@@ -39,7 +40,8 @@ class ProductController extends Controller
         $med_types = DB::table('medicine_types')->get();
         $categories = DB::table('product_categories')->get();
         $taxes = DB::table('tax')->get();
-        return view('product.create', compact('categories', 'taxes', 'med_types'));
+        $mans = Manufacturer::all();
+        return view('product.create', compact('categories', 'taxes', 'med_types', 'mans'));
     }
 
     /**
@@ -54,7 +56,8 @@ class ProductController extends Controller
             'product_name' => 'required',
             'medicine_type' => 'required',
             'category_id' => 'required',
-            'tax_percentage' => 'required'
+            'tax_percentage' => 'required',
+            'manufacturer' => 'required',
         ]);
         $input = $request->all();
         $input['available_for_consultation'] = ($request->has('available_for_consultation')) ? 1 : 0;
@@ -85,7 +88,8 @@ class ProductController extends Controller
         $categories = DB::table('product_categories')->get();
         $taxes = DB::table('tax')->get();
         $med_types = DB::table('medicine_types')->get();
-        return view('product.edit', compact('product','categories', 'taxes', 'med_types'));
+        $mans = Manufacturer::all();
+        return view('product.edit', compact('product','categories', 'taxes', 'med_types', 'mans'));
     }
 
     /**
@@ -101,7 +105,8 @@ class ProductController extends Controller
             'product_name' => 'required',
             'medicine_type' => 'required',
             'category_id' => 'required',
-            'tax_percentage' => 'required'
+            'tax_percentage' => 'required', 
+            'manufacturer' => 'required',
         ]);
         $input = $request->all();
         $input['available_for_consultation'] = ($request->has('available_for_consultation')) ? 1 : 0;

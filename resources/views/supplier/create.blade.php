@@ -43,6 +43,13 @@
                                     <small class="text-danger">{{ $errors->first('address') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Expiry Notification (In Days)</label>
+                                    <input type="number" value="{{ old('exapiry_notification') }}" name="exapiry_notification" class="form-control form-control-md" placeholder="0 Days">
+                                    @error('exapiry_notification')
+                                    <small class="text-danger">{{ $errors->first('exapiry_notification') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>

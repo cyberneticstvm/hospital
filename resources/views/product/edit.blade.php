@@ -35,7 +35,7 @@
                                     <small class="text-danger">{{ $errors->first('category_id') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label class="form-label">Type<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" data-placeholder="Select" name="medicine_type">
                                     @foreach($med_types as $type)
@@ -44,6 +44,18 @@
                                     </select>
                                     @error('medicine_type')
                                     <small class="text-danger">{{ $errors->first('medicine_type') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Manufacturer<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md" data-placeholder="Select" name="manufacturer">
+                                    <option value="">Select</option>
+                                    @foreach($mans as $man)
+                                        <option value="{{ $man->id }}" {{ $product->manufacturer == $man->id ? 'selected' : '' }}>{{ $man->name }}</option>
+                                    @endforeach
+                                    </select>
+                                    @error('manufacturer')
+                                    <small class="text-danger">{{ $errors->first('manufacturer') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-2">
