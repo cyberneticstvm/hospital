@@ -143,10 +143,10 @@
         {{ ($mrecord->allergic_drugs) ? $mrecord->allergic_drugs : '' }}
     <br>
     @endif
-    @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $mrecord->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $mrecord->va_os))
+    @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $mrecord->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $mrecord->va_os || $spectacle->vbr || $spectacle->vbl))
     <p>Vision</p>
     <table width="100%" class="table-bordered" cellspacing="0" cellpadding="0">
-        <thead class=""><tr><th>&nbsp;</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th></th><th>VA</th><th></th></tr></thead>
+        <thead class=""><tr><th>&nbsp;</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th></th><th>VA</th><th></th><th>UCV</th></tr></thead>
         <tbody>
             <tr>
                 <td class="">RE/OD</td>                                            
@@ -157,6 +157,7 @@
                 <td>{{ ($spectacle) ? $spectacle->re_near_va : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->re_dist_va : '--' }}</td>
                 <td>{{ ($mrecord->va_od) ? $mrecord->va_od : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->vbr : '--' }}</td>
             </tr>
             <tr>
                 <td class="">LE/OS</td>                                            
@@ -167,6 +168,7 @@
                 <td>{{ ($spectacle) ? $spectacle->le_near_va : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->le_dist_va : '--' }}</td>
                 <td>{{ ($mrecord->va_os) ? $mrecord->va_os : '--' }}</td>
+                <td>{{ ($spectacle) ? $spectacle->vbl : '--' }}</td>
             </tr>
         </tbody>
     </table>
