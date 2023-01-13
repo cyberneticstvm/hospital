@@ -13,6 +13,7 @@ use App\Http\Controllers\PostOperativeMedicineController;
 use App\Http\Controllers\SurgeryMedicineController;
 use App\Http\Controllers\PachymetryController;
 use App\Http\Controllers\ManufacturerController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SearchController;
@@ -510,7 +511,11 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     // end Medical Fitness Head//
 
     // Documents //
-    Route::get('/documents/', [DocumentsController::class, 'index'])->name('documents.index');
+    Route::get('/documents/', [DocumentController::class, 'index'])->name('documents.index');
+    Route::post('/documents/', [DocumentController::class, 'show'])->name('documents.show');
+    Route::get('/documents/create/{id}/', [DocumentController::class, 'edit'])->name('documents.edit');
+    Route::post('/documents/create/', [DocumentController::class, 'store'])->name('documents.save');
+
     // End Documents //
 
     // Reports //

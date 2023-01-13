@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 250)->nullable();
+            $table->text('description')->nullable();
+            $table->string('type')->nullable();
+            $table->unsignedBigInteger('medical_record_id')->references('id')->on('patient_references');
+            $table->unsignedBigInteger('patient_id')->references('id')->on('patient_registrations');
+            $table->unsignedBigInteger('created_by')->references('id')->on('users');
             $table->timestamps();
         });
     }
