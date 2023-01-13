@@ -153,6 +153,7 @@ class PatientMedicalRecordController extends Controller
         $diagnosis = DB::table('diagnosis')->get();
         $medicines = DB::table('products')->get();
         $mtypes = DB::table('medicine_types')->get();
+        $mrns = DB::table('patient_references')->where('patient_id', $patient->id)->get();
         //$medicines = DB::table('products as p')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.id', DB::raw("CONCAT_WS(' - ', p.product_name, t.name) AS product_name"))->get();
         $dosages = DB::table('dosages')->get();
         $doctor = DB::table('doctors')->find($record->doctor_id);
@@ -163,7 +164,7 @@ class PatientMedicalRecordController extends Controller
         $retina_os = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'os')->get();
         $vision = DB::table('patient_medical_records_vision')->where('medical_record_id', $id)->get();
         $vextras = DB::table('vision_extras')->where('cat_id', '>', 0)->get();
-        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision', 'vextras', 'mtypes'));
+        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision', 'vextras', 'mtypes', 'mrns'));
     }
 
     /**

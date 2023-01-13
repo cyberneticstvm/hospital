@@ -30,6 +30,12 @@
                                 <div class="col-sm-12 text-center">
                                     <p><a href="{{ route('patienthistory', $patient->id) }}" target="_blank">VIEW PATIENT MEDICAL HISTORY</a></p>
                                 </div>
+                                <div class="row">
+                                    @forelse($mrns as $key=> $mrn)
+                                        <div class="col"><a href="">{{ $mrn->id }}</a></div>
+                                    @empty
+                                    @endforelse
+                                </div>
                                 <div class="col-sm-11">
                                     @php $olds = explode(',', $record->symptoms); @endphp
                                     <label class="form-label">Symptoms<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
