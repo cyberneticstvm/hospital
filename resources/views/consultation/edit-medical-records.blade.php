@@ -33,7 +33,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">Medical Record IDs</div>
                                     @forelse($mrns as $key=> $mrn)
-                                        <div class="col"><a href="{{ route('medical-records.edit', $mrn->id) }}" target="_blank">{{ $mrn->id }}</a></div>
+                                        <div class="col-sm-1"><a href="{{ route('medical-records.edit', $mrn->id) }}" target="_blank">{{ $mrn->id }}</a></div>
                                     @empty
                                     @endforelse
                                 </div>
