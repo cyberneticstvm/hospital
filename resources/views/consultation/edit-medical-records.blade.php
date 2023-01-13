@@ -31,8 +31,8 @@
                                     <p><a href="{{ route('patienthistory', $patient->id) }}" target="_blank">VIEW PATIENT MEDICAL HISTORY</a></p>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12">Previous Medical Record IDs</div>
                                         <div class="col-sm-12 text-center">
+                                            <p class="text-center">Previous Medical Record IDs</p>
                                             @forelse($mrns as $key=> $mrn)
                                                 <a href="{{ route('medical-records.edit', $mrn->id) }}" target="_blank">{{ $mrn->id }}</a> |
                                             @empty
