@@ -86,7 +86,7 @@
     @if($spectacle && ($spectacle->re_dist_sph || $spectacle->re_dist_cyl || $spectacle->re_dist_axis || $spectacle->re_dist_add || $spectacle->vbr || $spectacle->re_near_va || $record->va_od || $spectacle->le_dist_sph || $spectacle->le_dist_cyl || $spectacle->le_dist_axis || $spectacle->le_dist_add || $spectacle->vbl || $spectacle->le_near_va || $record->va_os))
     <p>Vision</p>
     <table width="100%" cellspacing="0" cellpadding="0">
-        <thead class=""><tr><th>&nbsp;</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th></th><th>VA</th><th></th></tr></thead>
+        <thead class=""><tr><th>&nbsp;</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th><th></th><th>VA</th><th></th><th>UCV</th></tr></thead>
         <tbody>
             <tr>
                 <td class="text-center fw-bold">RE/OD</td>                                            
@@ -97,6 +97,7 @@
                 <td>{{ ($spectacle) ? $spectacle->re_near_va : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->re_dist_va : '--' }}</td>
                 <td>{{ ($record->va_od) ? $record->va_od : '--' }}</td>
+                <td>{{ ($record->vbr) ? $record->vbr : '--' }}</td>
             </tr>
             <tr>
                 <td class="text-center fw-bold">LE/OS</td>                                            
@@ -107,6 +108,7 @@
                 <td>{{ ($spectacle) ? $spectacle->le_near_va : '--' }}</td>
                 <td>{{ ($spectacle) ? $spectacle->le_dist_va : '--' }}</td>
                 <td>{{ ($record->va_os) ? $record->va_os : '--' }}</td>
+                <td>{{ ($record->vbl) ? $record->vbl : '--' }}</td>
             </tr>
         </tbody>
     </table>
