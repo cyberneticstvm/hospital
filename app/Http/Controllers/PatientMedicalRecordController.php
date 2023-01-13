@@ -153,7 +153,7 @@ class PatientMedicalRecordController extends Controller
         $diagnosis = DB::table('diagnosis')->get();
         $medicines = DB::table('products')->get();
         $mtypes = DB::table('medicine_types')->get();
-        $mrns = DB::table('patient_references')->where('patient_id', $patient->id)->get();
+        $mrns = DB::table('patient_references')->where('patient_id', $patient->id)->orderByDesc('id')->get();
         //$medicines = DB::table('products as p')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.id', DB::raw("CONCAT_WS(' - ', p.product_name, t.name) AS product_name"))->get();
         $dosages = DB::table('dosages')->get();
         $doctor = DB::table('doctors')->find($record->doctor_id);
