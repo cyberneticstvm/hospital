@@ -32,10 +32,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">Previous Medical Record IDs</div>
-                                    @forelse($mrns as $key=> $mrn)
-                                        <div class="col-sm-1"><a href="{{ route('medical-records.edit', $mrn->id) }}" target="_blank">{{ $mrn->id }}</a></div>
-                                    @empty
-                                    @endforelse
+                                        <div class="col-sm-12 text-center">
+                                            @forelse($mrns as $key=> $mrn)
+                                                <a href="{{ route('medical-records.edit', $mrn->id) }}" target="_blank">{{ $mrn->id }}</a> |
+                                            @empty
+                                            @endforelse
+                                        </div>
                                 </div>
                                 <div class="col-sm-11">
                                     @php $olds = explode(',', $record->symptoms); @endphp

@@ -509,6 +509,10 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::delete('/medical-fitness-head/delete/{id}/', [MedicalFitnessHeadController::class, 'destroy'])->name('mfithead.delete');
     // end Medical Fitness Head//
 
+    // Documents //
+    Route::get('/documents/', [DocumentsController::class, 'index'])->name('documents.index');
+    // End Documents //
+
     // Reports //
     Route::get('/reports/daybook/', 'App\Http\Controllers\ReportController@showdaybook')->name('reports.showdaybook');
     Route::post('/reports/daybook/', 'App\Http\Controllers\ReportController@fetchdaybook')->name('reports.fetchdaybook');
