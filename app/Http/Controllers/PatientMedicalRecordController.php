@@ -27,9 +27,8 @@ class PatientMedicalRecordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(PMRecord $precord)
+    public function index()
     {
-        $this->authorize('view', $precord);
         $medical_records = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('doctors as doc', 'pmr.doctor_id', '=', 'doc.id')->leftJoin('patient_references as pref', 'pref.id', '=', 'pmr.mrn')->leftJoin('consultation_types as c', 'c.id', '=', 'pref.consultation_type')->select('pmr.id', 'pmr.mrn', DB::raw("CASE WHEN pref.consultation_type = 4 THEN CONCAT_WS(' ', pr.patient_name, '- (Camp)') WHEN (pref.consultation_type = 2 OR pref.consultation_type = 3) THEN CONCAT_WS(' ', pr.patient_name, '- (Cert)') ELSE pr.patient_name END AS patient_name"), 'pr.patient_id', 'pr.age', 'doc.doctor_name', 'pmr.status', 'pmr.diagnosis', DB::Raw("DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS rdate, IFNULL(DATE_FORMAT(pmr.review_date, '%d/%b/%Y'), '--') AS review_date"), DB::raw("CASE WHEN pmr.updated_at IS NULL THEN 'no' ELSE 'yes' END AS cstatus"))->where('pmr.branch', $this->branch)->whereDate('pmr.created_at', Carbon::today())->whereIn('pref.consultation_type', [1,3,7,4])->orderByDesc('pmr.id')->get();
         $ccount = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pref', 'pref.id', '=', 'pmr.mrn')->where('pmr.branch', $this->branch)->whereDate('pmr.created_at', Carbon::today())->whereIn('pref.consultation_type', [1,3,7,4])->whereNull('pmr.updated_at')->count();
         $ccount1 = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pref', 'pref.id', '=', 'pmr.mrn')->where('pmr.branch', $this->branch)->whereDate('pmr.created_at', Carbon::today())->whereIn('pref.consultation_type', [1,3,7,4])->whereNotNull('pmr.updated_at')->count();
@@ -146,8 +145,9 @@ class PatientMedicalRecordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(PMRecord $precord, $id)
     {
+        $this->authorize('update', $precord);
         $record = PMRecord::find($id);
         $patient = DB::table('patient_registrations')->find($record->patient_id);
         $symptoms = DB::table('symptoms')->get();
