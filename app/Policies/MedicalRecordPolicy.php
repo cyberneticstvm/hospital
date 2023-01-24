@@ -30,7 +30,8 @@ class MedicalRecordPolicy
      */
     public function view(User $user, PatientMedicalRecord $patientMedicalRecord)
     {
-        return $user->id === $patientMedicalRecord->doctor_id;
+        
+        return ($user->id === $patientMedicalRecord->doctor_id || Auth::user()->roles->first()->name == 'Admin') ? true : false;
     }
 
     /**
