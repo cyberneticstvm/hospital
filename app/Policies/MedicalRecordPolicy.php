@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\PatientMedicalRecord;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
