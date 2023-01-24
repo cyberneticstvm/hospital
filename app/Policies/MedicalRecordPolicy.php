@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use Illuminate\Support\Facades\Auth;
 use App\Models\PatientMedicalRecord;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -32,7 +31,7 @@ class MedicalRecordPolicy
     public function view(User $user, PatientMedicalRecord $patientMedicalRecord)
     {
         
-        return ($user->id === $patientMedicalRecord->doctor_id || $user->roles->first()->name == 'Admin') ? true : false;
+        return $user->id === $patientMedicalRecord->doctor_id;
     }
 
     /**
