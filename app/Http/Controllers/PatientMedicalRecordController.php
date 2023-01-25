@@ -151,7 +151,7 @@ class PatientMedicalRecordController extends Controller
      */
     public function edit(PMRecord $precord, $id)
     {
-        if(Auth::user()->roles->first()->name != 'Admin') $this->authorize('update', $precord);
+        //if(Auth::user()->roles->first()->name != 'Admin') $this->authorize('update', $precord);
         $record = PMRecord::find($id);
         $patient = DB::table('patient_registrations')->find($record->patient_id);
         $symptoms = DB::table('symptoms')->get();
