@@ -160,10 +160,11 @@ class PatientMedicalRecordController extends Controller
     public function edit(PMRecord $precord, $id)
     {
         $record = PMRecord::find($id);
-      
-        if(!Auth::user()->roles->first()->name == 'Admin' || !Gate::allows('update-medical-record', $record)){
-            abort(403, 'Oops.. You are not allowed to perform this action!');
-        }     
+        if(!Auth::user()->roles->first()->name == 'Admin'):
+            if(!Gate::allows('update-medical-record', $record)){
+                abort(403, 'Oops.. You are not allowed to perform this action!');
+            }     
+        endif;
         $patient = DB::table('patient_registrations')->find($record->patient_id);
         $symptoms = DB::table('symptoms')->get();
         $diagnosis = DB::table('diagnosis')->get();
