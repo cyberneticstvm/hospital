@@ -47,5 +47,13 @@ class Handler extends ExceptionHandler
             }
             return parent::render($request, $exception);
         });
+        $this->renderable(function ($request, Exception $exception) {
+            if ($this->isHttpException($exception)) {
+                if ($exception->getStatusCode() == 403) {
+                    return response()->view('errors.' . '403', ['exception' => $e], 403);
+                }
+            }
+            return parent::render($request, $exception);
+        });
     }
 }

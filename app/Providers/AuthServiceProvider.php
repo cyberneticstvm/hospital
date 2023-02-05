@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-        PatientMedicalRecord::class => MedicalRecordPolicy::class,
+        //  PatientMedicalRecord::class => MedicalRecordPolicy::class,
     ];
 
     /**
@@ -26,6 +26,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('update-medical-record', function ($user, $record) {
+            return $user->doctor_id === $record->doctor_id;
+        });
     }
 }

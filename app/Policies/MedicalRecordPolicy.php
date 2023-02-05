@@ -51,9 +51,8 @@ class MedicalRecordPolicy
      * @param  \App\Models\PatientMedicalRecord  $patientMedicalRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, PatientMedicalRecord $patientMedicalRecord)
-    {
-        return $user->id === $patientMedicalRecord->doctor_id;
+    public function update(User $user, PatientMedicalRecord $patientMedicalRecord){
+        return $user->doctor_id === $patientMedicalRecord->doctor_id;
     }
 
     /**
