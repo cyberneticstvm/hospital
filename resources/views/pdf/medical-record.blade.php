@@ -54,7 +54,7 @@
             <tr>
                 <td>Patient Name</td><td>{{ $patient->patient_name }}</td>
                 <td>Patient ID</td><td>{{ $patient->patient_id }}</td>
-                <td>AGE / SEX</td><td>{{ $patient->age }} / {{ $patient->gender }}</td>
+                <td>AGE / SEX</td><td>{{ $patient->age }} {{ ($patient->new_born_baby == 1) ? 'Months' : '' }} / {{ $patient->gender }}</td>
             </tr>
             <tr><td>Address</td><td colspan="5">{{ $patient->address }}</td></tr>
             <tr>

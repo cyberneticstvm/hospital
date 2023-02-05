@@ -19,6 +19,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TestAdvisedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,13 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/permission/not-authorized/', function () {
         return view('permission');
     })->name('notauth');
+
+    // Tests Advised //
+    Route::get('/tests-advised', [TestAdvisedController::class, 'index'])->name('tests.advised');
+    Route::get('/tests-advised/edit/{id}', [TestAdvisedController::class, 'edit'])->name('tests.advised.edit');
+    Route::put('/tests-advised/edit/{id}', [TestAdvisedController::class, 'update'])->name('tests.advised.update');
+
+    // End Tests Advised // 
 
     // User Route //
     Route::get('/user/', 'App\Http\Controllers\AuthController@index')->name('user.index');

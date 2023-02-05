@@ -1323,6 +1323,21 @@
                                     <small class="text-danger">{{ $errors->first('review_date') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-5 mt-3">
+                                    <label class="form-label">Tests Advised <small class="text-info">(Multiple selection enabled)</small></label>
+                                    <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="tests_advised[]" id="tests_advised">
+                                    <option value="">Select</option>
+                                    @foreach($tests as $test)
+                                        @php $selected = ''; @endphp
+                                        @foreach($tests_advised as $key => $value)
+                                            @if($test->id == $value->test)
+                                                {{ $selected = 'selected' }}
+                                            @endif
+                                        @endforeach
+                                        <option value="{{ $test->id }}" {{ $selected }}>{{ $test->name }}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="row mt-3">                            
                                 <div class="col-sm-12 text-right">

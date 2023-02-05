@@ -165,6 +165,8 @@ class PatientMedicalRecordController extends Controller
                 abort(403, 'Oops.. You are not allowed to perform this action!');
             }     
         endif;
+        $tests = DB::table('tests')->orderBy('name')->get();
+        $tests_advised = DB::table('tests_advised')->where('medical_record_id', $id)->get();
         $patient = DB::table('patient_registrations')->find($record->patient_id);
         $symptoms = DB::table('symptoms')->get();
         $diagnosis = DB::table('diagnosis')->get();
@@ -181,7 +183,7 @@ class PatientMedicalRecordController extends Controller
         $retina_os = DB::table('patient_medical_records_retina')->where('medical_record_id', $id)->where('retina_type', 'os')->get();
         $vision = DB::table('patient_medical_records_vision')->where('medical_record_id', $id)->get();
         $vextras = DB::table('vision_extras')->where('cat_id', '>', 0)->get();
-        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision', 'vextras', 'mtypes', 'mrns'));
+        return view('consultation.edit-medical-records', compact('record', 'patient', 'symptoms', 'doctor', 'diagnosis', 'medicines', 'dosages', 'medicine_record', 'spectacle', 'retina_od', 'retina_os', 'vision', 'vextras', 'mtypes', 'mrns', 'tests', 'tests_advised'));
     }
 
     /**
@@ -354,6 +356,30 @@ class PatientMedicalRecordController extends Controller
                 $patient = DB::table('patient_registrations')->find($request->patient_id);
                 DB::table('appointments')->upsert(['patient_id' => $patient->id, 'patient_name' => $patient->patient_name, 'gender' => $patient->gender, 'age' => $patient->age, 'mobile_number' => $patient->mobile_number, 'address' => $patient->address, 'branch' => $this->branch, 'doctor' => $request->doctor_id, 'appointment_date' => $input['review_date'], 'appointment_time' => '10:00:00', 'status' => 1, 'notes' => 'REVIEW BOOKING', 'medical_record_id' => 0, 'created_by' => $request->user()->id, 'updated_by' => $request->user()->id, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], ['patient_id', 'appointment_date', 'branch']);
             endif;*/
+            $tadvised = (isset($request->tests_advised) && $request->tests_advised) ? $request->tests_advised : NULL;
+            $data = [];
+            if($tadvised):
+                foreach($tadvised as $key => $test):
+                    $data [] = [
+                        'medical_record_id' => $record->id,
+                        'patient_id' => $record->patient_id,
+                        'doctor_id' => $record->doctor_id,
+                        'branch' => $record->branch,
+                        'test' => $tadvised[$key],
+                        'notes' => NULL,
+                        'status' => 'Pending',
+                        'created_by' => Auth::user()->id,
+                        'updated_by' => Auth::user()->id,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+            endif;
+            DB::transaction(function() use ($data, $record) {
+                DB::table('tests_advised')->where('medical_record_id', $record->id)->delete();
+                DB::table('tests_advised')->insert($data);
+            });
+
             echo "success";
         }catch(Exception $e){
             throw $e;

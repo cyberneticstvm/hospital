@@ -31,7 +31,7 @@
 <br/>
 <center><h5>PATIENT MEDICAL HISTORY</h5></center>
 <table width="100%">
-    <tr><td>Patient Name: {{ strtoupper($patient->patient_name) }}</td><td>Patient ID: {{ $patient->patient_id }}</td><td class="text-right">Age / Sex: {{ $patient->age }} / {{ strtoupper($patient->gender) }}</td></tr>
+    <tr><td>Patient Name: {{ strtoupper($patient->patient_name) }}</td><td>Patient ID: {{ $patient->patient_id }}</td><td class="text-right">Age / Sex: {{ $patient->age }} {{ ($patient->new_born_baby == 1) ? 'Months' : '' }} / {{ strtoupper($patient->gender) }}</td></tr>
 </table>
 <hr>
 @foreach($references as $reference)

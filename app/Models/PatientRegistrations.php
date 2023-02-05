@@ -29,4 +29,8 @@ class PatientRegistrations extends Model
         'branch',
         'registration_fee',
     ];
+
+    public function testsadvised(){
+        return $this->hasMany(TestsAdvised::class);
+    }
 }
