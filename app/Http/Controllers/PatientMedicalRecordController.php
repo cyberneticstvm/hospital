@@ -164,7 +164,7 @@ class PatientMedicalRecordController extends Controller
             }     
         endif;*/
         $tests = DB::table('tests')->orderBy('name')->get();
-        $tests_advised = DB::table('tests_advised')->where('medical_record_id', $id)->get();
+        $tests_advised = DB::table('tests_adviseds')->where('medical_record_id', $id)->get();
         $patient = DB::table('patient_registrations')->find($record->patient_id);
         $symptoms = DB::table('symptoms')->get();
         $diagnosis = DB::table('diagnosis')->get();
@@ -374,8 +374,8 @@ class PatientMedicalRecordController extends Controller
                 endforeach;
             endif;
             DB::transaction(function() use ($data, $record) {
-                DB::table('tests_advised')->where('medical_record_id', $record->id)->delete();
-                DB::table('tests_advised')->insert($data);
+                DB::table('tests_adviseds')->where('medical_record_id', $record->id)->delete();
+                DB::table('tests_adviseds')->insert($data);
             });
 
             echo "success";
