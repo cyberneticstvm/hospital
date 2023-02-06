@@ -373,7 +373,7 @@ class PatientMedicalRecordController extends Controller
                     ];
                 endforeach;
             endif;
-            DB::transaction(function() use ($data, $record) {
+            DB::transaction(function() use ($data, $record){
                 DB::table('tests_adviseds')->where('medical_record_id', $record->id)->delete();
                 DB::table('tests_adviseds')->insert($data);
             });
