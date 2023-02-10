@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PatientReference as PRef;
 use App\Models\LabClinic;
+use App\Models\Spectacle;
 use QrCode;
 use PDF;
 use DB;
@@ -112,7 +113,7 @@ class PDFController extends Controller
         $diag = explode(',', $record->diagnosis);
         $symptoms = DB::table('symptoms')->whereIn('id', $sympt)->get();
         $diagnosis = DB::table('diagnosis')->whereIn('id', $diag)->get();
-        $spectacle = DB::table('spectacles')->where('medical_record_id', $id)->first();
+        $spectacle = Spectacle::where('medical_record_id', $id)->first();
         $tonometry = DB::table('tonometries')->where('medical_record_id', $id)->first();
         $keratometry = DB::table('keratometries')->where('medical_record_id', $id)->first();
         $ascan = DB::table('ascans')->where('medical_record_id', $id)->first();
@@ -173,7 +174,7 @@ class PDFController extends Controller
     }
 
     public function spectacleprescription($id){
-        $spectacle = DB::table('spectacles')->find($id);
+        $spectacle = Spectacle::find($id);
         $mrecord = DB::table('patient_medical_records')->find($spectacle->medical_record_id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);

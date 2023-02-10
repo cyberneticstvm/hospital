@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Spectacle;
 use Carbon\Carbon;
 use DB;
@@ -60,10 +61,11 @@ class SpectacleController extends Controller
         $input = $request->all();
         $input['review_date'] = (!empty($request->review_date)) ? Carbon::createFromFormat('d/M/Y', $request->review_date)->format('Y-m-d') : NULL;
         $input['created_by'] = $request->user()->id;
+        $input['updated_by'] = $request->user()->id;
         $input['fee'] = 0.00;
         if($request->ctype == 5):
             $input['fee'] = DB::table('branches')->where('id', $this->branch)->value('fee_vision');
-        endif;
+        endif;        
         $spectacle = Spectacle::create($input);
         return redirect()->route('spectacle.index')->with('success','Record created successfully');
     }
@@ -123,13 +125,18 @@ class SpectacleController extends Controller
             'medical_record_id' => 'required',
         ]);
         $input = $request->all();
-        $input['review_date'] = (!empty($request->review_date)) ? Carbon::createFromFormat('d/M/Y', $request->review_date)->format('Y-m-d') : NULL;
-        $input['created_by'] = $request->user()->id;
+        $input['review_date'] = (!empty($request->review_date)) ? Carbon::createFromFormat('d/M/Y', $request->review_date)->format('Y-m-d') : NULL;        
         $input['fee'] = 0.00;
         if($request->ctype == 5):
             $input['fee'] = DB::table('branches')->where('id', $this->branch)->value('fee_vision');
         endif;
         $spectacle = Spectacle::find($id);
+        $input['created_by'] = $spectacle->getOriginal('created_by');
+        if(Auth::user()->roles->first()->name == 'Admin'):
+            $input['updated_by'] = $spectacle->getOriginal('updated_by');
+        else:
+            $input['updated_by'] = $request->user()->id;
+        endif;
         $spectacle->update($input);
         return redirect()->route('spectacle.index')->with('success','Record updated successfully');
     }

@@ -56,7 +56,10 @@
                 <td>Patient ID</td><td>{{ $patient->patient_id }}</td>
                 <td>AGE / SEX</td><td>{{ $patient->age }} {{ ($patient->new_born_baby == 1) ? 'Months' : '' }} / {{ $patient->gender }}</td>
             </tr>
-            <tr><td>Address</td><td colspan="5">{{ $patient->address }}</td></tr>
+            <tr>
+                <td>Address</td><td colspan="3">{{ $patient->address }}</td>
+                <td>Optometrist</td><td>{{ ($spectacle) ? $spectacle->updateduser->name : '' }}</td>
+            </tr>
             <tr>
                 <td>Doctor Name</td><td>{{ $doctor->doctor_name }}</td>
                 <td>Medical Record Number</td><td>{{ $record->id }}</td>

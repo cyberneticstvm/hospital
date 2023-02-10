@@ -125,5 +125,10 @@ class Spectacle extends Model
         'fee',
         'review_date',
         'created_by',
+        'updated_by',
     ];
+
+    public function updateduser(){
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }
