@@ -58,7 +58,7 @@
             </tr>
             <tr>
                 <td>Address</td><td colspan="3">{{ $patient->address }}</td>
-                <td>Optometrist</td><td>{{ ($spectacle) ? $spectacle->updateduser->name : '' }}</td>
+                <td>Optometrist</td><td>{{ ($spectacle && $spectacle->updateduser->name) ? $spectacle->updateduser->name : '' }}</td>
             </tr>
             <tr>
                 <td>Doctor Name</td><td>{{ $doctor->doctor_name }}</td>

@@ -56,7 +56,7 @@
                 <td>ENTRY DATE</td>
                 <td>{{ ($spectacle->created_at) ? date('d/M/Y h:i:A', strtotime($spectacle->created_at)) : '' }}</td>
             </tr>
-            <tr><td colspan="3">OPTOMETRIST: {{ ($spectacle) ? $spectacle->updateduser->name : '' }}</td></tr>
+            <tr><td colspan="3">OPTOMETRIST: {{ ($spectacle && $spectacle->updateduser->name) ? $spectacle->updateduser->name : '' }}</td></tr>
         </tbody>
     </table>
     <center><p>EYE GLASS PRESCRIPTION</p></center>
