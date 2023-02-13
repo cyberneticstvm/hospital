@@ -81,7 +81,7 @@
                                                     <input type="number" step="any" class="form-control form-control-md text-right total" placeholder="0" name="total[]" value="{{ $medicine->total }}" required='required' />
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-link dlt" data-url="/consultation/medicinesingle/delete/{{ $medicine->id }}/" onclick="javascript: return confirm('Are you sure want to delete this Medicine?');"><i class="fa fa-trash text-danger"></i></button>
+                                                    <!--<button class="btn btn-link dlt" data-url="/consultation/medicinesingle/delete/{{ $medicine->id }}/" onclick="javascript: return confirm('Are you sure want to delete this Medicine?');"><i class="fa fa-trash text-danger"></i></button>-->
                                                 </td>
                                             </tr>
                                             @endforeach

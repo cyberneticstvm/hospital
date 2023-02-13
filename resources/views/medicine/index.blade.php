@@ -9,7 +9,7 @@
 <div class="card mb-4 border-0">
     <div class="card-body">
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Prescription</th><th>Receipt</th><!--<th>Edit</th><th>Remove</th>--></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Doctor</th><th>Prescription</th><th>Receipt</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($medicines as $med)
                 <tr>
@@ -24,8 +24,8 @@
                             <a href='/generate-pharmacy-bill/{{ $med->medical_record_id }}/' target='_blank'><i class="fa fa-file text-info"></i></a>
                         @endif
                     </td>
-                    <!--<td><a class='btn btn-link' href="{{ route('medicine.edit', $med->medical_record_id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
-                    <td>
+                    <td><a class='btn btn-link' href="{{ route('medicine.edit', $med->medical_record_id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
+                    <!--<td>
                         <form method="post" action="{{ route('medicine.delete', $med->medical_record_id) }}">
                             @csrf 
                             @method("DELETE")
