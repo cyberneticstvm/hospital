@@ -138,8 +138,8 @@ class MedicineController extends Controller
                         ->with('success','Record deleted successfully');
     }
 
-    public function remove($id){
+    /*public function remove($id){
         DB::table('patient_medicine_records')->where('id', $id)->delete();
         echo "Medicine Deleted successfully.";
-    }
+    }*/
 }
