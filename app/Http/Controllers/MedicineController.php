@@ -17,7 +17,7 @@ class MedicineController extends Controller
          $this->middleware('permission:patient-medicine-record-list|patient-medicine-record-create|patient-medicine-record-edit|patient-medicine-record-delete', ['only' => ['index','store']]);
          $this->middleware('permission:patient-medicine-record-create', ['only' => ['create','store']]);
          $this->middleware('permission:patient-medicine-record-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:patient-medicine-record-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:patient-medicine-record-delete', ['only' => ['destroy', 'remove']]);
          $this->branch = session()->get('branch');
     }
     /**
