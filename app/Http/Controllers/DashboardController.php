@@ -51,7 +51,7 @@ class DashboardController extends Controller
             if(Auth::user()->mobile_device == 0 && $this->is_mobile()):
                 Session::flush();
                 Auth::logout();  
-                return Redirect('/')->with("error", "User not allowed to login to this device");
+                return Redirect('/')->withErrors("User not allowed to login to this device");
             endif;
             $branches = DB::table('branches')->leftJoin('user_branches', 'branches.id', '=', 'user_branches.branch_id')->select('branches.id', 'branches.branch_name')->where('user_branches.user_id', '=', $user_id)->get();
             $branch_id = 0; $new_patients_count = 0; $review_count = 0; $cancelled = 0; $consultation = 0; $certificate = 0; $camp = 0; $vision = 0; $tot_patients = 0; $day_tot_income = 0; $day_tot_exp = 0; $income_monthly = 0.00; $expense_monthly = 0.00;
