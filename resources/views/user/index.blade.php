@@ -10,7 +10,7 @@
     <div class="card-body">
         <p class= "text-right my-3"><a href="/user/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>Name</th><th>Username</th><th>Email</th><th>Roles</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
+            <thead><tr><th>SL No.</th><th>Name</th><th>Username</th><th>Email</th><th>Roles</th><th>Mobile Access</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
             @php $i = 0; @endphp
             @foreach($users as $user)
                 <tr>
@@ -25,6 +25,7 @@
                         @endforeach
                     @endif
                     </td>
+                    <td class="text-center">{!! ($user->mobile_device == '0') ? "<i class='fa fa-times text-danger'></i>" : "<i class='fa fa-check text-primary'></i>" !!}</td>
                     <td><a class='btn btn-link' href="{{ route('user.edit', $user->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <!--<td>
                         <form method="post" action="{{ route('user.delete', $user->id) }}">
