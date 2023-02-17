@@ -168,7 +168,8 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email,'.$id,
             'roles' => 'required',
             'branch_id' => 'required',
-            'doctor_id' => 'required_if:roles,==,2'
+            'doctor_id' => 'required_if:roles,==,2',
+            'mobile_device' => 'required',
         ]);
     
         $input = $request->all();

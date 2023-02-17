@@ -80,6 +80,17 @@
                                     <small class="text-danger">{{ $errors->first('branch_id') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Allow Mobile Devices<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md" data-placeholder="Select" name="mobile_device">
+                                    <option value="">Select</option>
+                                        <option value="0" {{ $user->mobile_device === 0 ? 'selected' : '' }}>No</option>
+                                        <option value="1" {{ $user->mobile_device === 1 ? 'selected' : '' }}>Yes</option>
+                                    </select>
+                                    @error('mobile_device')
+                                    <small class="text-danger">{{ $errors->first('mobile_device') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
