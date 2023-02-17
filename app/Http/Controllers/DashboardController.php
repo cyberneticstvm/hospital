@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Helper\Helper;
 use Carbon\Carbon;
+use Session;
 use DB;
 
 class DashboardController extends Controller
@@ -45,8 +46,13 @@ class DashboardController extends Controller
         ]);
    
         $credentials = $request->only('username', 'password');
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)){
             $user_id = Auth::user()->id;
+            if(Auth::user()->mobile_device == 0 && $this->is_mobile()):
+                Session::flush();
+                Auth::logout();  
+                return Redirect('/')->with("error", "User not allowed to login to this device");
+            endif;
             $branches = DB::table('branches')->leftJoin('user_branches', 'branches.id', '=', 'user_branches.branch_id')->select('branches.id', 'branches.branch_name')->where('user_branches.user_id', '=', $user_id)->get();
             $branch_id = 0; $new_patients_count = 0; $review_count = 0; $cancelled = 0; $consultation = 0; $certificate = 0; $camp = 0; $vision = 0; $tot_patients = 0; $day_tot_income = 0; $day_tot_exp = 0; $income_monthly = 0.00; $expense_monthly = 0.00;
             return view('dash', compact('branches', 'branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
@@ -144,5 +150,23 @@ class DashboardController extends Controller
         //$records = DB::select("SELECT tbl1.day, tbl1.income, tbl1.cdate, SUM(e.amount) AS expense FROM (SELECT DATE(i.created_at) AS cdate, DATE_FORMAT(i.created_at, '%d/%b') AS day, SUM(i.amount) AS income FROM patient_payments i WHERE MONTH(i.created_at) = MONTH(NOW()) AND YEAR(i.created_at) = YEAR(NOW()) GROUP BY DATE(i.created_at) ORDER BY i.id DESC) AS tbl1 JOIN expenses e ON DATE(e.created_at) = tbl1.cdate GROUP BY tbl1.cdate ORDER BY tbl1.cdate DESC");
         $records = DB::select("SELECT tbl1.*, IFNULL(SUM(e.amount), 0) AS expense FROM (SELECT DATE(i.created_at) AS cdate, DATE_FORMAT(i.created_at, '%d/%b') AS day, SUM(i.amount) AS income FROM patient_payments i WHERE MONTH(i.created_at) = MONTH(NOW()) AND YEAR(i.created_at) = YEAR(NOW()) GROUP BY DATE(i.created_at) ORDER BY i.id DESC) AS tbl1 LEFT JOIN expenses e ON tbl1.cdate = e.date GROUP BY tbl1.cdate ORDER BY tbl1.cdate DESC");
         return json_encode($records);
+    }
+
+    public function is_mobile() {
+        if (empty($_SERVER['HTTP_USER_AGENT'])) {
+            $is_mobile = false;
+        } else if (strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false
+            // many mobile devices (all iPhone, iPad, etc.)
+            || strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false
+            || strpos($_SERVER['HTTP_USER_AGENT'], 'Silk/') !== false
+            || strpos($_SERVER['HTTP_USER_AGENT'], 'Kindle') !== false
+            || strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry') !== false
+            || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false
+            || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mobi') !== false) {
+            $is_mobile = true;
+        } else {
+            $is_mobile = false;
+        }
+        return $is_mobile;
     }
 }
