@@ -84,8 +84,8 @@
                                     <label class="form-label">Allow Mobile Devices<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" data-placeholder="Select" name="mobile_device">
                                     <option value="">Select</option>
-                                        <option value="0" {{ $user->mobile_device === 0 ? 'selected' : '' }}>No</option>
-                                        <option value="1" {{ $user->mobile_device === 1 ? 'selected' : '' }}>Yes</option>
+                                        <option value="0" {{ ($user->mobile_device == 0) ? 'selected' : '' }}>No</option>
+                                        <option value="1" {{ ($user->mobile_device == 1) ? 'selected' : '' }}>Yes</option>
                                     </select>
                                     @error('mobile_device')
                                     <small class="text-danger">{{ $errors->first('mobile_device') }}</small>
