@@ -92,9 +92,9 @@
                                     <small class="text-danger">{{ $errors->first('status') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-12">
                                     <label class="form-label">Notes / Remarks </label>
-                                    <input type="text" value="{{ $surgery->remarks }}" name="remarks" class="form-control form-control-md" placeholder="Remarks">
+                                    <textarea name="remarks" class="form-control form-control-md" placeholder="Remarks">{{ $surgery->remarks }}</textarea>
                                     @error('remarks')
                                     <small class="text-danger">{{ $errors->first('remarks') }}</small>
                                     @enderror
