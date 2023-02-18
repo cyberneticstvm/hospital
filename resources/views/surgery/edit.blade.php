@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Notes / Remarks </label>
-                                    <textarea name="remarks" class="form-control form-control-md" placeholder="Remarks">{{ $surgery->remarks }}</textarea>
+                                    <textarea name="remarks" class="form-control form-control-md" placeholder="Remarks" rows="5">{{ $surgery->remarks }}</textarea>
                                     @error('remarks')
                                     <small class="text-danger">{{ $errors->first('remarks') }}</small>
                                     @enderror
