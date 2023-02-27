@@ -15,6 +15,7 @@ class TestsAdvised extends Model
         'doctor_id',
         'branch',
         'test',
+        'proposed_date',
         'notes',
         'attachment',
         'status',

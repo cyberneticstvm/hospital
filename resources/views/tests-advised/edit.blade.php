@@ -41,9 +41,13 @@
                                     <small class="text-danger">{{ $errors->first('status') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <label class="form-label">Notes</label>
                                     <textarea name="notes" class="form-control form-control-md">{{ $test->notes }}</textarea>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Proposed Date</label>
+                                    <input type="date" name="proposed_date" class="form-control" value="{{ ($test->proposed_date) ? $test->proposed_date : '' }}" />
                                 </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
