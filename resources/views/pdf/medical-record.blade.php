@@ -456,7 +456,7 @@
     @endif
     @if($onotes && $onotes->notes)
         <p>Operation Notes</p>
-        {!! $onotes->notes !!}
+        {{ nl2br($onotes->notes) }}
     <br>
     @endif
     @if($record->doctor_recommondations)
