@@ -421,4 +421,12 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/patient-outstanding', compact('payment', 'patient', 'branch'));    
         return $pdf->stream('Payment.pdf', array("Attachment"=>0));
     }
+
+    public function printonote($id){
+        $onote = DB::table('operation_notes')->find();
+        $patient = DB::table('patient_registrations')->find($onote->patient_id);
+        $branch = DB::table('branches')->find($onote->branch);
+        $pdf = PDF::loadView('/pdf/onote', compact('onote', 'patient', 'branch'));    
+        return $pdf->stream('onote.pdf', array("Attachment"=>0));
+    }
 }

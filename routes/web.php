@@ -581,6 +581,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/purchase/bill/{id}/', [PDFController::class, 'purchasebill']);
     Route::get('/product-transfer/bill/{id}/', [PDFController::class, 'producttransferbill']);
     Route::get('/patient/payments/bill/{id}/', [PDFController::class, 'patientpaymentbill']);
+    Route::get('/onote/report/{id}/', [PDFController::class, 'printonote']);
     // End PDFs //
 
     // Settings //
