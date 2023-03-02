@@ -423,7 +423,7 @@ class PDFController extends Controller
     }
 
     public function printonote($id){
-        $onote = DB::table('operation_notes')->find();
+        $onote = DB::table('operation_notes')->find($id);
         $patient = DB::table('patient_registrations')->find($onote->patient_id);
         $branch = DB::table('branches')->find($onote->branch);
         $pdf = PDF::loadView('/pdf/onote', compact('onote', 'patient', 'branch'));    
