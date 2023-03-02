@@ -425,8 +425,10 @@ class PDFController extends Controller
     public function printonote($id){
         $onote = DB::table('operation_notes')->find($id);
         $patient = DB::table('patient_registrations')->find($onote->patient_id);
+        $pref = DB::table('patient_references')->find($onote->medical_record_id);
         $branch = DB::table('branches')->find($onote->branch);
-        $pdf = PDF::loadView('/pdf/onote', compact('onote', 'patient', 'branch'));    
+        $doctor = DB::table('doctors')->find($pref->doctor_id);
+        $pdf = PDF::loadView('/pdf/onote', compact('onote', 'patient', 'branch', 'doctor'));    
         return $pdf->stream('onote.pdf', array("Attachment"=>0));
     }
 }

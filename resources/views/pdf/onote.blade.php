@@ -44,8 +44,12 @@
                 <td>{{ $onote->medical_record_id }}</td>
             </tr>
             <tr>
+                <td>PATIENT ADDRESS</td>
+                <td colspan="3">{{ $patient->address }}</td>
+            </tr>
+            <tr>
                 <td>DOCTOR NAME</td>
-                <td></td>
+                <td>{{ $doctor->doctor_name }}</td>
                 <td>DATE</td>
                 <td>{{ ($onote->created_at) ? date('d/M/Y h:i:A', strtotime($onote->created_at)) : '' }}</td>
             </tr>
