@@ -19,6 +19,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InhouseCampController;
 use App\Http\Controllers\TestAdvisedController;
 
 /*
@@ -481,6 +482,15 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::put('/campmaster/edit/{id}/', [CampMasterController::class, 'update'])->name('campmaster.update');
     Route::delete('/campmaster/delete/{id}/', [CampMasterController::class, 'destroy'])->name('campmaster.delete');
     // End Camp Master //
+
+    // Inhouse Camp Master //
+    Route::get('/inhousecamp', [InhouseCampController::class, 'index'])->name('inhousecamp.index');
+    Route::get('/inhousecamp/create', [InhouseCampController::class, 'create'])->name('inhousecamp.create');
+    Route::post('/inhousecamp/create', [InhouseCampController::class, 'store'])->name('inhousecamp.save');
+    Route::get('/inhousecamp/edit/{id}', [InhouseCampController::class, 'edit'])->name('inhousecamp.edit');
+    Route::put('/inhousecamp/edit/{id}', [InhouseCampController::class, 'update'])->name('inhousecamp.update');
+    Route::delete('/inhousecamp/delete/{id}', [InhouseCampController::class, 'destroy'])->name('inhousecamp.delete');
+    // End Inhouse Camp Master //
 
     // Operation Notes //
     Route::get('/operation-notes/', [OperationNoteController::class, 'index'])->name('onote.index');

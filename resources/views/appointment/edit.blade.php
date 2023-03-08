@@ -108,13 +108,23 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
+                                    <label class="form-label">Camp</label>
+                                    <select class="form-control select2" name="camp_id">
+                                        <option value="">Select</option>
+                                        @forelse($camps as $key => $camp)
+                                        <option value="{{ $camp->id }}" {{ ($camp->id == $appointment->camp_id) ? 'selected' : '' }}>{{ $camp->name }}</option>
+                                        @empty
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
                                     <label class="form-label">Status<sup class="text-danger">*</sup></label>
                                     <select class="form-control select2" name="status">
                                         <option value="1" {{ ($appointment->status == 1) ? 'selected' : '' }}>Active</option>
                                         <option value="0" {{ ($appointment->status == 0) ? 'selected' : '' }}>Cancel</option>
                                     </select>
                                 </div>
-                                <div class="col-sm-7">
+                                <div class="col-sm-4">
                                     <label class="form-label">Notes </label>
                                     <input type="text" value="{{ $appointment->notes }}" name="notes" class="form-control form-control-md" placeholder="Notes">
                                 </div>

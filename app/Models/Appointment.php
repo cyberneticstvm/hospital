@@ -22,6 +22,7 @@ class Appointment extends Model
         'appointment_time',
         'status',
         'notes',
+        'camp_id',
         'created_by',
         'updated_by',
     ];

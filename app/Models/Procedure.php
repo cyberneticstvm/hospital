@@ -14,4 +14,8 @@ class Procedure extends Model
         'type',
         'fee',
     ];
+
+    public function inhouseprocedures(){
+        return $this->hasMany(InhouseCampProcedure::class, 'procedure');
+    }
 }

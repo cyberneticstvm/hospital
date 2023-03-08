@@ -6,6 +6,8 @@ use App\Helper\Helper;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Models\Branch;
+use App\Models\InhouseCamp;
 use Carbon\Carbon;
 use DB;
 
@@ -16,7 +18,7 @@ class AppointmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $branch, $doctors, $branches, $settings;
+    private $branch, $doctors, $branches, $settings, $camps;
 
     function __construct(){
         $this->middleware('permission:appointment-list|appointment-create|appointment-edit|appointment-delete|appointment-active-list', ['only' => ['index','store']]);
@@ -29,10 +31,11 @@ class AppointmentController extends Controller
         $this->doctors = DB::table('doctors')->get();
         $this->branches = DB::table('branches')->get();
         $this->settings = DB::table('settings')->selectRaw("TIME_FORMAT(appointment_from_time, '%h:%i %p') AS from_time, TIME_FORMAT(appointment_to_time, '%h:%i %p') AS to_time, appointment_interval AS ti")->where('id', 1)->first();
+        $this->camps = InhouseCamp::where('status', 1)->get();
     }
     public function index()
     {
-        $appointments = Appointment::leftJoin('doctors as d', 'd.id', '=', 'appointments.doctor')->select('appointments.*', DB::RAW("DATE_FORMAT(appointments.appointment_date, '%d/%b/%Y') AS adate"), 'd.doctor_name')->where('appointments.branch', $this->branch)->where('appointments.appointment_date', '=', Carbon::today())->where('appointments.status', 1)->where('appointments.medical_record_id', 0)->orderByDesc('appointments.appointment_date')->get();
+        $appointments = Appointment::leftJoin('doctors as d', 'd.id', '=', 'appointments.doctor')->select('appointments.*', DB::RAW("DATE_FORMAT(appointments.appointment_date, '%d/%b/%Y') AS adate"), 'd.doctor_name')->where('appointments.branch', $this->branch)->where('appointments.appointment_date', '=', Carbon::today())->where('appointments.status', 1)->where('appointments.medical_record_id', 0)->orderByDesc('appointments.appointment_date')->get();        
         return view('appointment.index', compact('appointments'));
     }
 
@@ -44,8 +47,8 @@ class AppointmentController extends Controller
     public function create()
     {
         $patient = [];
-        $doctors = $this->doctors; $branches = $this->branches;
-        return view('appointment.create', compact('patient', 'doctors', 'branches'));
+        $doctors = $this->doctors; $branches = $this->branches; $camps = $this->camps;
+        return view('appointment.create', compact('patient', 'doctors', 'branches', 'camps'));
     }
 
     public function gettime($date, $branch, $doctor){
@@ -84,6 +87,7 @@ class AppointmentController extends Controller
             'doctor' => 'required',
         ]);
         $input = $request->all();
+        $br = Branch::find($request->branch);
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         $input['appointment_date'] = (!empty($request->appointment_date)) ? Carbon::createFromFormat('d/M/Y', $request->appointment_date)->format('Y-m-d') : NULL;
@@ -91,6 +95,12 @@ class AppointmentController extends Controller
         Config::set('myconfig.sms.number', $request->mobile_number);
         Config::set('myconfig.sms.message', "Dear ".$request->patient_name.", Your appointment has been scheduled on ".$request->appointment_date." ".$request->appointment_time.", for enquiry please Call 9995050149. Thank You, Devi Eye Hospital.");
         try{
+            $rcount = Appointment::where('branch', $request->branch)->whereDate('appointment_date', $input['appointment_date'])->count('id');
+            if($request->camp_id > 0):
+                if($rcount >= $br->inhouse_camp_limit):
+                    return redirect()->back()->with('error','Daily patient registration exceeded for provided date/branch/camp.')->withInput();
+                endif;
+            endif;
             $apo = Appointment::create($input);
             $code = Helper::sendSms(Config::get('myconfig.sms'));
         }catch(Exception $e){
@@ -129,13 +139,14 @@ class AppointmentController extends Controller
     public function edit($id)
     {
         $appointment = Appointment::find($id);
+        $camps = $this->camps;
         $date = date('d/M/Y', strtotime($appointment->appointment_date));
         $params = $this->settings; $today = Carbon::today();
         $start = number_format(date('H', strtotime($params->from_time)), 0);
         $end = number_format(date('H', strtotime($params->to_time)), 0);
         //$start = ($date > $today) ? $start : number_format(date('H'), 0);
         $doctors = $this->doctors; $branches = $this->branches;
-        return view('appointment.edit', compact('appointment', 'doctors', 'branches', 'start', 'end', 'params'));
+        return view('appointment.edit', compact('appointment', 'doctors', 'branches', 'start', 'end', 'params', 'camps'));
     }
 
     /**
@@ -158,10 +169,17 @@ class AppointmentController extends Controller
             'doctor' => 'required',
         ]);
         $input = $request->all();
+        $br = Branch::find($request->branch);
         $input['updated_by'] = $request->user()->id;
         $input['appointment_date'] = (!empty($request->appointment_date)) ? Carbon::createFromFormat('d/M/Y', $request->appointment_date)->format('Y-m-d') : NULL;
         $input['appointment_time'] = ($request->status == 1) ? Carbon::createFromFormat('h:i A', $request->appointment_time)->format('H:i:s') : NULL;
         try{
+            $rcount = Appointment::where('branch', $request->branch)->whereDate('appointment_date', $input['appointment_date'])->where('id', '!=', $id)->count('id');
+            if($request->camp_id > 0):
+                if($rcount >= $br->inhouse_camp_limit):
+                    return redirect()->back()->with('error','Daily patient registration exceeded for provided date/branch/camp.')->withInput();
+                endif;
+            endif;
             $apo = Appointment::find($id);
             $apo->update($input);
         }catch(Exception $e){

@@ -12,6 +12,11 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
+                        @if(session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session()->get('error') }}
+                        </div>
+                        @endif
                         <form action="{{ route('appointment.create') }}" method="post">
                             @csrf
                             <input type="hidden" name="patient_id" value="{{ ($patient && $patient->id) ? $patient->id : 0 }}" />
@@ -96,6 +101,16 @@
                                     <label class="form-label">Time<sup class="text-danger">*</sup></label>
                                     <select class="form-control select2 atime" name="appointment_time">
                                         <option value="">Select</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Camp</label>
+                                    <select class="form-control select2" name="camp_id">
+                                        <option value="">Select</option>
+                                        @forelse($camps as $key => $camp)
+                                        <option value="{{ $camp->id }}">{{ $camp->name }}</option>
+                                        @empty
+                                        @endforelse
                                     </select>
                                 </div>
                                 <div class="col-sm-5">

@@ -51,6 +51,10 @@
                                     <small class="text-danger">{{ $errors->first('fee_vision') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Inhouse Camp Reg. Limit</label>
+                                    <input type="number" name="inhouse_camp_limit" value="{{ $branch->inhouse_camp_limit }}" class="form-control form-control-md" placeholder="0">
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>

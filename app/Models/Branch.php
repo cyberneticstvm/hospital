@@ -16,6 +16,7 @@ class Branch extends Model
         'address',
         'registration_fee',
         'fee_vision',
+        'inhouse_camp_limit',
     ];
 
     public function getUserBranches(){
