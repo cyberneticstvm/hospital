@@ -50,11 +50,18 @@
                                     <small class="text-danger">{{ $errors->first('to') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <label class="form-label">Camp Name<sup class="text-danger">*</sup></label>
                                     <input type="text" value="{{ old('name') }}" name="name" class="form-control form-control-md" placeholder="Camp Name">
                                     @error('name')
                                     <small class="text-danger">{{ $errors->first('name') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Proc. Valididty in Days<sup class="text-danger">*</sup></label>
+                                    <input type="text" value="{{ old('validity') }}" name="validity" class="form-control form-control-md" placeholder="0 Days">
+                                    @error('validity')
+                                    <small class="text-danger">{{ $errors->first('validity') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-2">

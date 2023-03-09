@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helper\Helper;
 use App\Models\Procedure;
 use Carbon\Carbon;
 use DB;
@@ -152,13 +153,13 @@ class ProcedureController extends Controller
             if($input['procedure']):
                 for($i=0; $i<count($input['procedure']); $i++):
                     if($input['procedure'][$i] > 0):
-                        $proc = Procedure::find($input['procedure'][$i]);
+                        $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                         DB::table('patient_procedures')->insert([
                             'medical_record_id' => $request->medical_record_id,
                             'patient_id' => $request->patient_id,
                             'branch' => $this->branch,
                             'procedure' => $input['procedure'][$i],
-                            'fee' => $proc->fee,
+                            'fee' => $fee,
                             'created_by' => $request->user()->id,
                             'created_at' => Carbon::now()->toDateTimeString(),
                             'updated_at' => Carbon::now()->toDateTimeString(),
@@ -195,13 +196,13 @@ class ProcedureController extends Controller
             if($input['procedure']):
                 for($i=0; $i<count($input['procedure']); $i++):
                     if($input['procedure'][$i] > 0):
-                        $proc = Procedure::find($input['procedure'][$i]);
+                        $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                         DB::table('patient_procedures')->insert([
                             'medical_record_id' => $request->medical_record_id,
                             'patient_id' => $request->patient_id,
                             'branch' => $this->branch,
                             'procedure' => $input['procedure'][$i],
-                            'fee' => $proc->fee,
+                            'fee' => $fee,
                             'created_by' => $request->user()->id,
                             'created_at' => Carbon::now()->toDateTimeString(),
                             'updated_at' => Carbon::now()->toDateTimeString(),

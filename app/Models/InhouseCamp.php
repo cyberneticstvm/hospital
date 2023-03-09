@@ -13,6 +13,7 @@ class InhouseCamp extends Model
         'name',
         'from_date',
         'to_date',
+        'validity',
         'status',
         'created_by',
         'updated_by',

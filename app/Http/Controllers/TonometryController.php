@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helper;
 use Illuminate\Http\Request;
 use App\Models\Tonometry;
 use Carbon\Carbon;
@@ -58,13 +59,13 @@ class TonometryController extends Controller
             $tonometry = Tonometry::create($input);
             if(!empty($input['procedure'])):
                 for($i=0; $i<count($request->procedure); $i++):
-                    $proc = DB::table('procedures')->find($input['procedure'][$i]);
+                    $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                     $data[] = [
                         'medical_record_id' => $request->medical_record_id,
                         'patient_id' => $request->patient_id,
                         'branch' => $request->branch,
-                        'procedure' => $proc->id,
-                        'fee' => $proc->fee,
+                        'procedure' => $input['procedure'][$i],
+                        'fee' => $fee,
                         'type' => 'T',
                         'created_by' => $request->user()->id,
                         'created_at' => Carbon::now(),
@@ -143,13 +144,13 @@ class TonometryController extends Controller
             $to->update($input);
             if(!empty($input['procedure'])):
                 for($i=0; $i<count($request->procedure); $i++):
-                    $proc = DB::table('procedures')->find($input['procedure'][$i]);
+                    $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                     $data[] = [
                         'medical_record_id' => $request->medical_record_id,
                         'patient_id' => $request->patient_id,
                         'branch' => $request->branch,
-                        'procedure' => $proc->id,
-                        'fee' => $proc->fee,
+                        'procedure' => $input['procedure'][$i],
+                        'fee' => $fee,
                         'type' => 'T',
                         'created_by' => $request->user()->id,
                         'created_at' => Carbon::now(),

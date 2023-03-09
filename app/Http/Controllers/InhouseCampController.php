@@ -53,6 +53,7 @@ class InhouseCampController extends Controller
             'from_date' => 'required',
             'to_date' => 'required',
             'name' => 'required|unique:inhouse_camps,name',
+            'validity' => 'required',
             'status' => 'required',
             'procedure' => 'present|array',
         ]);
@@ -116,6 +117,7 @@ class InhouseCampController extends Controller
             'from_date' => 'required',
             'to_date' => 'required',
             'name' => 'required|unique:inhouse_camps,name,'.$id,
+            'validity' => 'required',
             'status' => 'required',
             'procedure' => 'present|array',
         ]);
