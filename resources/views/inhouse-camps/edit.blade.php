@@ -83,7 +83,7 @@
                                     <div class="col">
                                         @forelse($procedures as $key => $proc)
                                         <div class="col-sm-2 form-check form-check-inline">
-                                                <label class="form-check-label" for="flexCheckDefault">{{ $proc->name }}</label>{{ Form::checkbox('procedure[]', $proc->id, in_array($proc->id, $proc->inhouseprocedures->pluck('procedure')->all()) ? true : false, array('class' => 'name, form-check-input')) }}
+                                                <label class="form-check-label" for="flexCheckDefault">{{ $proc->name }}</label>{{ Form::checkbox('procedure[]', $proc->id, in_array($proc->id, $proc->inhouseprocedures->where('camp_id', $camp->id)->pluck('procedure')->all()) ? true : false, array('class' => 'name, form-check-input')) }}
                                         </div>
                                         @empty
                                         @endforelse;
