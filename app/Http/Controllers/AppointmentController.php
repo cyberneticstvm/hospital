@@ -123,7 +123,7 @@ class AppointmentController extends Controller
         $input = $request->all();
         $patient = DB::table('patient_registrations as p')->select('p.*', DB::raw("DATE_FORMAT(p.dob, '%d/%b/%Y') AS bdate"))->where('id', $request->patient_id)->first();
         if($patient):
-            $doctors = $this->doctors; $branches = $this->branches; $camps = collect();
+            $doctors = $this->doctors; $branches = $this->branches; $camps = $this->camps;
             return view('appointment.create', compact('patient', 'doctors', 'branches', 'camps'));
         else:
             return redirect("/appointment/")->withErrors('No records found.');
