@@ -59,7 +59,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-2">
-                                    <label class="form-label">Proc. Valididty in Days<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Proc. Validity in Days<sup class="text-danger">*</sup></label>
                                     <input type="number" value="{{ $camp->validity }}" name="validity" class="form-control form-control-md" placeholder="0 Days">
                                     @error('validity')
                                     <small class="text-danger">{{ $errors->first('validity') }}</small>
