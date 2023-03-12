@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Branch;
 use App\Models\IncomeExpenseHead as Head;
+use App\Models\LoginLog;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
@@ -16,7 +17,7 @@ class ReportController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:report-daybook-show|report-daybook-fetch|report-income-expense-show|report-income-expense-fetch|report-patient-payments-show|report-patient-payments-fetch|report-active-users-show', ['only' => ['showdaybook','fetchdaybook','showincomeexpense','fetchincomeexpense','showpayment','fetchpayment','activeusers']]);
+        $this->middleware('permission:report-daybook-show|report-daybook-fetch|report-income-expense-show|report-income-expense-fetch|report-patient-payments-show|report-patient-payments-fetch|report-active-users-show|report-loginlog-show|report-loginlog-fetch', ['only' => ['showdaybook','fetchdaybook','showincomeexpense','fetchincomeexpense','showpayment','fetchpayment','activeusers','showloginlog','fetchloginlog']]);
         $this->middleware('permission:report-daybook-show', ['only' => ['showdaybook']]);
         $this->middleware('permission:report-daybook-fetch', ['only' => ['fetchdaybook']]);
         $this->middleware('permission:report-income-expense-show', ['only' => ['showincomeexpense']]);
@@ -24,6 +25,8 @@ class ReportController extends Controller
         $this->middleware('permission:report-patient-payments-show', ['only' => ['showpayment']]);
         $this->middleware('permission:report-patient-payments-fetch', ['only' => ['fetchpayment']]);
         $this->middleware('permission:report-active-users-show', ['only' => ['activeusers']]);
+        $this->middleware('permission:report-loginlog-show', ['only' => ['showloginlog']]);
+        $this->middleware('permission:report-loginlog-fetch', ['only' => ['fetchloginlog']]);
 
         $this->branch = session()->get('branch');
     }
@@ -178,5 +181,22 @@ class ReportController extends Controller
     public function activeusers(){
         $users = User::whereNotNull('session_id')->get();
         return view('reports.active-users', compact('users'));
+    }
+
+    public function showloginlog(){
+        $users = User::all();
+        $records = []; $inputs = [];
+        return view('reports.login-log', compact('users', 'records', 'inputs'));
+    }
+
+    public function fetchloginlog(Request $request){
+        $users = User::all();
+        $inputs = array($request->fromdate, $request->todate, $request->user);
+        $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
+        $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
+        $records = LoginLog::whereBetween('logged_in', [$startDate, $endDate])->when($request->user > 0, function($query) use($request) {
+            return $query->where('user_id', $request->user);
+        })->get();
+        return view('reports.login-log', compact('users', 'records', 'inputs'));
     }
 }
