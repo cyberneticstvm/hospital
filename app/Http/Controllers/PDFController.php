@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
+use App\Models\InhouseCamp;
 use Illuminate\Http\Request;
 use App\Models\PatientReference as PRef;
 use App\Models\LabClinic;
@@ -25,7 +27,7 @@ class PDFController extends Controller
     }
 
     public function prescription($id){
-        $reference = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pr.consultation_type', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at')->first();
+        $reference = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pr.consultation_type', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at', 'pr.appointment_id')->first();
         $patient = DB::table('patient_registrations')->find($reference->patient_id);     
         $doctor = DB::table('doctors')->find($reference->doctor_id);
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));     
@@ -33,6 +35,14 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/prescription', compact('reference', 'patient', 'doctor', 'qrcode'));    
         //return $pdf->download('token.pdf');
         if($reference->consultation_type == 4):
+            $txt = 'CAMP';
+            if($reference->appointment_id > 0):
+                $app = Appointment::find($reference->appointment_id);
+                if($app->camp_id > 0):
+                    $camp = InhouseCamp::find($app->camp_id);
+                    $txt = strtoupper($camp->name);
+                endif;
+            endif;
             $pdf->output();
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
@@ -40,7 +50,7 @@ class PDFController extends Controller
             $canvas->set_opacity(.2,"Multiply");
             $canvas->set_opacity(.2);
             //$canvas->page_text($x, $y, $text, $font, 40,$color = array(255,0,0),$word_space = 0.0, $char_space = 0.0, $angle = 20.0);
-            $canvas->page_text($width/2.5, $height/2, 'CAMP', null, 40, array(0,0,0),2,2,-40);
+            $canvas->page_text($width/2.5, $height/2, $txt, null, 40, array(0,0,0),2,2,-40);
         endif;
         return $pdf->stream('prescription.pdf', array("Attachment"=>0));
     }
