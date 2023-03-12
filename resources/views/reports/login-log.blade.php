@@ -77,7 +77,7 @@
                                 <td>{{ $c++ }}</td>
                                 <td>{{ $row->user->name }}</td>
                                 <td>{{ $row->device }}</td>
-                                <td>{{ $row->city_name }}</td>
+                                <td>{{ $row->city_name.','.$row->region_name }}</td>
                                 <td>{{ $row->ip }}</td>
                                 <td>{{ ($row->logged_in) ? date('d/M/Y h:i a', strtotime($row->logged_in)) : '' }}</td>
                                 <td>{{ ($row->logged_out) ? date('d/M/Y h:i a', strtotime($row->logged_out)) : '' }}</td>
