@@ -543,6 +543,8 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::post('/reports/income-expense/', 'App\Http\Controllers\ReportController@fetchincomeexpense')->name('reports.fetchincomeexpense');
     Route::get('/reports/payments/', 'App\Http\Controllers\ReportController@showpayment')->name('reports.showpayment');
     Route::post('/reports/payments/', 'App\Http\Controllers\ReportController@fetchpayment')->name('reports.fetchpayment');
+
+    Route::get('/reports/active-users', 'App\Http\Controllers\ReportController@activeusers')->name('reports.activeusers');
     // End Reports //
 
     // Helper //

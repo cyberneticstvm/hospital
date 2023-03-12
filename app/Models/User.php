@@ -54,7 +54,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function logs(){
-        return $this->hasMany(LoginLog::class, 'session_id');
+    public function loginlog(){
+        return $this->hasMany(LoginLog::class, 'user_id');
     }
 }

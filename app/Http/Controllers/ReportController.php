@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Branch;
 use App\Models\IncomeExpenseHead as Head;
-
+use App\Models\User;
 use Carbon\Carbon;
 use DB;
 
@@ -16,13 +16,14 @@ class ReportController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:report-daybook-show|report-daybook-fetch|report-income-expense-show|report-income-expense-fetch|report-patient-payments-show|report-patient-payments-fetch', ['only' => ['showdaybook','fetchdaybook','showincomeexpense','fetchincomeexpense','showpayment','fetchpayment']]);
+        $this->middleware('permission:report-daybook-show|report-daybook-fetch|report-income-expense-show|report-income-expense-fetch|report-patient-payments-show|report-patient-payments-fetch|report-active-users-show', ['only' => ['showdaybook','fetchdaybook','showincomeexpense','fetchincomeexpense','showpayment','fetchpayment','activeusers']]);
         $this->middleware('permission:report-daybook-show', ['only' => ['showdaybook']]);
         $this->middleware('permission:report-daybook-fetch', ['only' => ['fetchdaybook']]);
         $this->middleware('permission:report-income-expense-show', ['only' => ['showincomeexpense']]);
         $this->middleware('permission:report-income-expense-fetch', ['only' => ['fetchincomeexpense']]);
         $this->middleware('permission:report-patient-payments-show', ['only' => ['showpayment']]);
         $this->middleware('permission:report-patient-payments-fetch', ['only' => ['fetchpayment']]);
+        $this->middleware('permission:report-active-users-show', ['only' => ['activeusers']]);
 
         $this->branch = session()->get('branch');
     }
@@ -172,5 +173,10 @@ class ReportController extends Controller
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
         $records = DB::table('patient_payments as pp')->leftJoin('patient_registrations as pr', 'pp.patient_id', '=', 'pr.id')->leftJoin('branches as b', 'b.id', 'pp.branch')->leftJoin('users as u', 'u.id', '=', 'pp.created_by')->selectRaw("pr.patient_name, pr.patient_id, pp.medical_record_id, b.branch_name, u.name as uname, DATE_FORMAT(pp.created_at, '%d/%b/%Y %h:%i %p') AS pdate, pp.amount")->whereBetween('pp.created_at', [$startDate, $endDate])->where('pp.branch', $request->branch)->orderByDesc('pp.created_at')->get();
         return view('reports.patient-payments', compact('branches', 'records', 'inputs'));
+    }
+
+    public function activeusers(){
+        $users = User::whereNotNull('session_id')->get();
+        return view('reports.active-users', compact('users'));
     }
 }
