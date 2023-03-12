@@ -48,7 +48,7 @@ class DashboardController extends Controller
             'username' => 'required',
             'password' => 'required|min:6',
         ]);
-        $ip = $request->ip();
+        $ip = ($request->ip() == '127.0.0.1') ? '59.89.235.2' : $request->ip();
         $data = file_get_contents("https://ipinfo.io/$ip?token=38fa67afac8600");
         $obj = json_decode($data); $coordinates = explode(",", $obj->loc);
         $credentials = $request->only('username', 'password');
@@ -59,10 +59,11 @@ class DashboardController extends Controller
                 Auth::logout();  
                 return Redirect('/')->withErrors("User not allowed to login to this device");
             endif;
+            $device = ($this->is_mobile()) ? 'Mobile' : 'Computer';
             $branches = DB::table('branches')->leftJoin('user_branches', 'branches.id', '=', 'user_branches.branch_id')->select('branches.id', 'branches.branch_name')->where('user_branches.user_id', '=', $user_id)->get();
             $sid = Str::random(25);
             User::where('id', $user_id)->update(['session_id' => $sid]);
-            LoginLog::insert(['user_id' => $user_id, 'session_id' => $sid, 'ip' => $request->ip(), 'city_name' => $obj->city, 'region_name' => $obj->region, 'country_name' => $obj->country, 'zip_code' => $obj->postal, 'latitude' => $coordinates[0], 'longitude' => $coordinates[1], 'logged_in' => Carbon::now()]);
+            LoginLog::insert(['user_id' => $user_id, 'session_id' => $sid, 'ip' => $request->ip(), 'city_name' => $obj->city, 'region_name' => $obj->region, 'country_name' => $obj->country, 'zip_code' => $obj->postal, 'device' => $device, 'latitude' => $coordinates[0], 'longitude' => $coordinates[1], 'logged_in' => Carbon::now()]);
             $branch_id = 0; $new_patients_count = 0; $review_count = 0; $cancelled = 0; $consultation = 0; $certificate = 0; $camp = 0; $vision = 0; $tot_patients = 0; $day_tot_income = 0; $day_tot_exp = 0; $income_monthly = 0.00; $expense_monthly = 0.00;
             return view('dash', compact('branches', 'branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
             //return redirect()->route('dash')->with(['branches' => $branches]);
