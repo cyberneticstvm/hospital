@@ -35,7 +35,8 @@ class DashboardController extends Controller
         }catch(Exception $e){
             throw $e;
         }*/
-        echo "test";
+
+        echo request()->ip();
     }
 
     public function userlogin(Request $request)
@@ -54,6 +55,7 @@ class DashboardController extends Controller
                 return Redirect('/')->withErrors("User not allowed to login to this device");
             endif;
             $branches = DB::table('branches')->leftJoin('user_branches', 'branches.id', '=', 'user_branches.branch_id')->select('branches.id', 'branches.branch_name')->where('user_branches.user_id', '=', $user_id)->get();
+
             $branch_id = 0; $new_patients_count = 0; $review_count = 0; $cancelled = 0; $consultation = 0; $certificate = 0; $camp = 0; $vision = 0; $tot_patients = 0; $day_tot_income = 0; $day_tot_exp = 0; $income_monthly = 0.00; $expense_monthly = 0.00;
             return view('dash', compact('branches', 'branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
             //return redirect()->route('dash')->with(['branches' => $branches]);
