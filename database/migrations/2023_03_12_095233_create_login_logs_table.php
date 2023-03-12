@@ -19,7 +19,12 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->references('id')->on('users');
             $table->string('device', 50)->nullable();
             $table->string('ip', 25)->nullable();
-            $table->string('location', 100)->nullable();
+            $table->string('country_name', 100)->nullable();
+            $table->string('region_name', 100)->nullable();
+            $table->string('city_name', 100)->nullable();
+            $table->string('zip_code', 100)->nullable();
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
             $table->dateTime('logged_in')->nullable();
             $table->dateTime('logged_out')->nullable();
         });
