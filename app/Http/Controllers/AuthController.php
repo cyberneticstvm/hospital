@@ -9,6 +9,8 @@ use Session;
 use App\Models\User;
 use App\Models\Branch;
 use App\Models\doctor;
+use App\Models\LoginLog;
+use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -129,6 +131,8 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function userlogout() {
+        DB::table('login_logs')->where('session_id', Auth::user()->session_id)->update(['logged_out' => Carbon::now()]);
+        DB::table('users')->where('id', Auth::user()->id)->update(['session_id' => null]);
         Session::flush();
         Auth::logout();  
         return Redirect('/');

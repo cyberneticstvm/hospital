@@ -53,4 +53,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function logs(){
+        return $this->hasMany(LoginLog::class, 'session_id');
+    }
 }
