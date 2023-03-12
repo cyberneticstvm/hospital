@@ -106,7 +106,7 @@
                                 <div class="col-sm-3">
                                     <label class="form-label">Camp</label>
                                     <select class="form-control select2" name="camp_id">
-                                        <option value="">Select</option>
+                                        <option value="0">Select</option>
                                         @forelse($camps as $key => $camp)
                                         <option value="{{ $camp->id }}">{{ $camp->name }}</option>
                                         @empty

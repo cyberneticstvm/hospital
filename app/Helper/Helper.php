@@ -48,7 +48,7 @@ class Helper{
             $appointment = Appointment::find($pref->appointment_id);
             if($appointment->camp_id > 0):
                 $camp = InhouseCamp::find($appointment->camp_id);
-                $valid_to = Carbon::parse($appointment->date)->addDays($camp->validity)->format('Y-m-d');                
+                $valid_to = Carbon::parse($appointment->appointment_date)->addDays($camp->validity)->format('Y-m-d');                
                 $camps = InhouseCampProcedure::where('camp_id', $camp->id)->pluck('procedure')->all();
                 $fee = (in_array($procedure, $camps) && $valid_to >= Carbon::today()) ? 0 : $proc->fee;
             endif;
