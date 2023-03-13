@@ -23,7 +23,7 @@ class HelperController extends Controller
         $op = "<option value=''>Select</option>";
         if($inventory):
             foreach($inventory as $key => $inv):
-                $op .= "<option value='".$inv->batch_number."'>".$inv->batch_number."  (".$inv->balance_qty." Qtys in Hand)</option>";
+                $op .= "<option value='".$inv->batch_number."'>".$inv->batch_number."  (".$inv->balance_qty." Qty in Hand)</option>";
             endforeach;
         else:
             $op .= "<option value='NRF'>No records found</option>";
