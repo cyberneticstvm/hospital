@@ -319,7 +319,7 @@ class PDFController extends Controller
         $tonometry = DB::table('tonometries')->find($id);
         $patient = DB::table('patient_registrations')->find($tonometry->patient_id);
         $branch = DB::table('branches')->find($tonometry->branch);
-        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'p.fee')->where('pp.medical_record_id', $tonometry->medical_record_id)->where('pp.type', 'T')->get();
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'pp.fee')->where('pp.medical_record_id', $tonometry->medical_record_id)->where('pp.type', 'T')->get();
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
         $pdf = PDF::loadView('/pdf/tonometry/receipt', compact('qrcode', 'tonometry', 'patient', 'branch', 'procedures'));    
         return $pdf->stream('tonometry.pdf', array("Attachment"=>0));
@@ -336,7 +336,7 @@ class PDFController extends Controller
         $keratometry = DB::table('keratometries')->find($id);
         $patient = DB::table('patient_registrations')->find($keratometry->patient_id);
         $branch = DB::table('branches')->find($keratometry->branch);
-        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'p.fee')->where('pp.medical_record_id', $keratometry->medical_record_id)->where('pp.type', 'K')->get();
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'pp.fee')->where('pp.medical_record_id', $keratometry->medical_record_id)->where('pp.type', 'K')->get();
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
         $pdf = PDF::loadView('/pdf/keratometry/receipt', compact('qrcode', 'keratometry', 'patient', 'branch', 'procedures'));    
         return $pdf->stream('tonometry.pdf', array("Attachment"=>0));
@@ -353,7 +353,7 @@ class PDFController extends Controller
         $ascan = DB::table('ascans')->find($id);
         $patient = DB::table('patient_registrations')->find($ascan->patient_id);
         $branch = DB::table('branches')->find($ascan->branch);
-        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'p.fee')->where('pp.medical_record_id', $ascan->medical_record_id)->where('pp.type', 'A')->get();
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'pp.fee')->where('pp.medical_record_id', $ascan->medical_record_id)->where('pp.type', 'A')->get();
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
         $pdf = PDF::loadView('/pdf/ascan/receipt', compact('qrcode', 'ascan', 'patient', 'branch', 'procedures'));    
         return $pdf->stream('tonometry.pdf', array("Attachment"=>0));
