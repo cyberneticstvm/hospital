@@ -397,7 +397,7 @@ class PDFController extends Controller
         $pachymetry = DB::table('pachymetries')->find($id);
         $patient = DB::table('patient_registrations')->find($pachymetry->patient_id);
         $branch = DB::table('branches')->find($pachymetry->branch);
-        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'p.fee')->where('pp.medical_record_id', $pachymetry->medical_record_id)->where('pp.type', 'P')->get();
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'pp.fee')->where('pp.medical_record_id', $pachymetry->medical_record_id)->where('pp.type', 'P')->get();
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
         $pdf = PDF::loadView('/pdf/pachymetry/receipt', compact('qrcode', 'pachymetry', 'patient', 'branch', 'procedures'));    
         return $pdf->stream('pachymetry.pdf', array("Attachment"=>0));
