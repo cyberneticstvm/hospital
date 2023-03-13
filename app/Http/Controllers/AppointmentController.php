@@ -87,13 +87,13 @@ class AppointmentController extends Controller
             'doctor' => 'required',
         ]);
         $input = $request->all();
-        $br = Branch::find($request->branch);
+        $br = Branch::find($request->branch); $var = $request->appointment_time.'-'.$br->short_name;
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         $input['appointment_date'] = (!empty($request->appointment_date)) ? Carbon::createFromFormat('d/M/Y', $request->appointment_date)->format('Y-m-d') : NULL;
         $input['appointment_time'] = Carbon::createFromFormat('h:i A', $request->appointment_time)->format('H:i:s');
         Config::set('myconfig.sms.number', $request->mobile_number);
-        Config::set('myconfig.sms.message', "Dear ".$request->patient_name.", Your appointment has been scheduled on ".$request->appointment_date." ".$request->appointment_time.", for enquiry please Call 9995050149. Thank You, Devi Eye Hospital. ".$br->short_name);
+        Config::set('myconfig.sms.message', "Dear ".$request->patient_name.", Your appointment has been scheduled on ".$request->appointment_date." ".$var.", for enquiry please Call 9995050149. Thank You, Devi Eye Hospital. ");
         try{
             $rcount = Appointment::where('branch', $request->branch)->whereDate('appointment_date', $input['appointment_date'])->count('id');
             if($request->camp_id > 0):
