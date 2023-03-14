@@ -41,7 +41,7 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Report</th><th>Receipt</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Report</th><th>Receipt</th><th>Created By</th><th>Time</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @foreach($ascans as $asc)
                             <tr>
@@ -51,6 +51,8 @@
                                 <td>{{ $asc->patient_id }}</td>
                                 <td><a href="/ascan/report/{{ $asc->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                                 <td><a href="/ascan/receipt/{{ $asc->id }}/" target="_blank"><i class="fa fa-file-o text-danger"></i></a></td>
+                                <td>{{ $asc->user->name }}</td>
+                                <td>{{ $asc->created_at->format('h:i a') }}</td>
                                 <td><a class='btn btn-link' href="{{ route('ascan.edit', $asc->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                 <td>
                                     <form method="post" action="{{ route('ascan.delete', $asc->id) }}">
