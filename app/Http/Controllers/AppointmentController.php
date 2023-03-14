@@ -87,7 +87,7 @@ class AppointmentController extends Controller
             'doctor' => 'required',
         ]);
         $input = $request->all();
-        $br = Branch::find($request->branch); $var = $request->appointment_time.'-'.$br->short_name;
+        $br = Branch::find($request->branch); $var = $request->appointment_time.' at '.$br->short_name.' Br.';
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         $input['appointment_date'] = (!empty($request->appointment_date)) ? Carbon::createFromFormat('d/M/Y', $request->appointment_date)->format('Y-m-d') : NULL;
