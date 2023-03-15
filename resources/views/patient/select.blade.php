@@ -24,7 +24,8 @@
                 </tr>
             @endforeach
         </tbody></table>
-        <div class="text-center"><button type="submit" class="btn btn-primary btn-submit">Proceed</button></div>
+        <div class="text-center textprimary">If you want to register as a new patient, clikc proceed button without selecting any patient from above table.</div>
+        <div class="text-center mt-3"><button type="submit" class="btn btn-primary btn-submit">Proceed</button></div>
         </form>
     </div>
 </div>
