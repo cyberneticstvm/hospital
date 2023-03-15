@@ -2,7 +2,7 @@
 @section("content")
 <div class="d-flex flex-wrap justify-content-between align-items-end">
     <div class="mb-3">
-        <h5 class="mb-0">Patient(s) Data Found</h5>
+        <h5 class="mb-0">Patient Data Found</h5>
         <span class="text-muted">Following patients are found in the system with the same mobile number.</span>
     </div>
 </div>
@@ -24,7 +24,7 @@
                 </tr>
             @endforeach
         </tbody></table>
-        <div class="text-center textprimary">If you want to register as a new patient, clikc proceed button without selecting any patient from above table.</div>
+        <div class="text-center text-primary fw-bold">If you want to register as a new patient, clikc proceed button without selecting any patient from above table.</div>
         <div class="text-center mt-3"><button type="submit" class="btn btn-primary btn-submit">Proceed</button></div>
         </form>
     </div>
