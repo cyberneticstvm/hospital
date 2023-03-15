@@ -77,10 +77,31 @@ class PatientRegistrationController extends Controller
         $input['created_by'] = $request->user()->id;
         $input['branch'] = $this->branch;
         $input['registration_fee'] = 0;
-
-        $patient = PatientRegistrations::create($input);
-        
+        $patients = PatientRegistrations::where('mobile_number', $request->mobile_number)->get();
+        if($patients->isEmpty()):
+            $patient = PatientRegistrations::create($input);
+        else:
+            $request->session()->put('old_patient', $input);
+            return view('patient.select', compact('patients'));
+        endif;        
         return redirect()->route('patient.index')->with('success','Patient created successfully');
+    }
+
+    public function proceed(Request $request){
+        $pid = $request->rad;
+        if($pid > 0):
+            $patient = PatientRegistrations::find($pid);
+            $doctors = DB::table('doctors')->get();   
+            $departments = DB::table('departments')->get();
+            $ctypes = DB::table('consultation_types')->get();
+            $review = 'yes'; $appid = $patient->appointment_id;
+            return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid'));
+        else:
+            $input = $request->session()->get('old_patient');
+            $patient = PatientRegistrations::create($input);
+            $request->session()->forget('old_patient');
+            return redirect()->route('patient.index')->with('success','Patient created successfully');
+        endif;
     }
 
     /**
