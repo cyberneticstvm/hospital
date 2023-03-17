@@ -9,6 +9,7 @@ use App\Models\PatientReference as PRef;
 use App\Models\PatientRegistrations as PReg;
 use App\Models\Appointment;
 use App\Models\doctor;
+use App\Models\InhouseCamp;
 use Carbon\Carbon;
 use DB;
 
@@ -69,8 +70,9 @@ class PatientReferenceController extends Controller
         $doctors = DB::table('doctors')->get();   
         $departments = DB::table('departments')->get();
         $ctypes = DB::table('consultation_types')->get();
-        $review = 'no'; $appid = $patient->appointment_id;
-        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid'));
+        $review = 'no'; $appid = $patient->appointment_id; $camps = InhouseCamp::where('status', 1)->get(); $campid = 0;
+        $campid = ($appid > 0 ) ? Appointment::where('id', $appid)->value('camp_id') : 0;
+        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid'));
     }
 
     public function reopen($id, $appid){
@@ -78,8 +80,9 @@ class PatientReferenceController extends Controller
         $doctors = DB::table('doctors')->get();   
         $departments = DB::table('departments')->get();
         $ctypes = DB::table('consultation_types')->get();
-        $review = 'yes';
-        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid'));
+        $review = 'yes'; $camps = InhouseCamp::where('status', 1)->get();
+        $campid = ($appid > 0 ) ? Appointment::where('id', $appid)->value('camp_id') : 0;
+        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid'));
     }
 
     /**
@@ -144,7 +147,8 @@ class PatientReferenceController extends Controller
         $reference = PRef::find($id);
         $patient = PReg::find($reference->patient_id);
         $ctypes = DB::table('consultation_types')->get();
-        return view('consultation.edit-patient-reference', compact('doctors', 'departments', 'reference', 'patient', 'ctypes'));
+        $camps = InhouseCamp::where('status', 1)->get();
+        return view('consultation.edit-patient-reference', compact('doctors', 'departments', 'reference', 'patient', 'ctypes', 'camps'));
     }
 
     /**

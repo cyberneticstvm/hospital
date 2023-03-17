@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\PatientRegistrations;
+use App\Models\InhouseCamp;
 use Carbon\Carbon;
 use DB;
 
@@ -95,7 +96,8 @@ class PatientRegistrationController extends Controller
             $departments = DB::table('departments')->get();
             $ctypes = DB::table('consultation_types')->get();
             $review = 'yes'; $appid = $patient->appointment_id;
-            return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid'));
+            $camps = InhouseCamp::where('status', 1)->get(); $campid = 0;
+            return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid'));
         else:
             $input = $request->session()->get('old_patient');
             $patient = PatientRegistrations::create($input);

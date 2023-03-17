@@ -19,7 +19,7 @@
                             <div class="row g-4">
                                 <div class="col-sm-6">Patient Name: <h5 class="text-primary">{{ $patient->patient_name }}</h5></div>
                                 <div class="col-sm-6">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5></div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Department<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="department_id">
                                     <option value="">Select</option>
@@ -28,7 +28,7 @@
                                     @endforeach
                                     </select>
                                 </div>                               
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Doctor<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="doctor_id">
                                     <option value="">Select</option>
@@ -40,7 +40,7 @@
                                     <small class="text-danger">{{ $errors->first('doctor') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Purpose of Visit<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="consultation_type">
                                     <option value="">Select</option>
@@ -51,6 +51,15 @@
                                     @error('consultation_type')
                                     <small class="text-danger">{{ $errors->first('consultation_type') }}</small>
                                     @enderror
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Camp Type<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="camp_id">
+                                    <option value="0">Select</option>
+                                    @foreach($camps as $camp)
+                                        <option value="{{ $camp->id }}" {{ $reference->camp_id == $camp->id ? 'selected' : '' }}>{{ $camp->name }}</option>
+                                    @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Notes</label>

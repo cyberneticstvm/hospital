@@ -44,14 +44,11 @@ class Helper{
         $fee = $proc->fee;
         $mrecord = PatientMedicalRecord::find($medical_record_id);
         $pref = PatientReference::find($mrecord->mrn);
-        if($pref->appointment_id > 0):
-            $appointment = Appointment::find($pref->appointment_id);
-            if($appointment->camp_id > 0):
-                $camp = InhouseCamp::find($appointment->camp_id);
-                $valid_to = Carbon::parse($appointment->appointment_date)->addDays($camp->validity)->format('Y-m-d');                
-                $camps = InhouseCampProcedure::where('camp_id', $camp->id)->pluck('procedure')->all();
-                $fee = (in_array($procedure, $camps) && $valid_to >= Carbon::today()) ? 0 : $proc->fee;
-            endif;
+        if($pref->camp_id > 0):
+            $camp = InhouseCamp::find($pref->camp_id);              
+            $valid_to = Carbon::parse($pref->created_at)->addDays($camp->validity)->format('Y-m-d');       
+            $camps = InhouseCampProcedure::where('camp_id', $camp->id)->pluck('procedure')->all();
+            $fee = (in_array($procedure, $camps) && $valid_to >= Carbon::today()) ? 0 : $proc->fee;
         endif;
         return $fee;
     }
