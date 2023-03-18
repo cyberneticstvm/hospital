@@ -82,7 +82,9 @@ class DashboardController extends Controller
 
         $cancelled = DB::table('patient_references as r')->where('status', 0)->where('r.branch', $branch_id)->whereDate('r.created_at', Carbon::today())->count('r.id');
 
-        $consultation = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->whereIn('r.consultation_type', [1,3])->whereDate('r.created_at', Carbon::today())->count('r.id');
+        $consultation = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->whereIn('r.consultation_type', [1,3])->when(Auth::user()->roles->first()->name = 'Doctor', function($query) use ($branch_id) {
+            $query->where('r.doctor_id', Auth::user()->id);
+        })->whereDate('r.created_at', Carbon::today())->count('r.id');
 
         $certificate = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->whereIn('r.consultation_type', [2,3])->whereDate('r.created_at', Carbon::today())->count('r.id');
 
@@ -102,6 +104,8 @@ class DashboardController extends Controller
             return view('dash', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
         elseif(Auth::user()->roles->first()->name == 'Accounts'):
             return view('dash-accounts', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
+        elseif(Auth::user()->roles->first()->name == 'Doctor'):
+            return view('dash-doctor', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
         else:
             return view('dash-other', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
         endif;
