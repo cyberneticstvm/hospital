@@ -53,7 +53,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <span class="text-uppercase text-primary">Total Consultation</span>
-                                <h4 class="mb-0 mt-2">{{ $new_patients_count+$review_count }}</h4>
+                                <h4 class="mb-0 mt-2">{{ $consultation }}</h4>
                                 <small class="text-muted">All Branches Tot: {{ $consultation_all_br }}</small>
                             </div>
                             <div id="apexspark3"></div>
