@@ -441,4 +441,14 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/onote', compact('onote', 'patient', 'branch', 'doctor'));    
         return $pdf->stream('onote.pdf', array("Attachment"=>0));
     }
+
+    public function hfareceipt($id){
+        $hfa = DB::table('h_f_a_s')->find($id);
+        $patient = DB::table('patient_registrations')->find($hfa->patient_id);
+        $branch = DB::table('branches')->find($hfa->branch);
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'pp.fee')->where('pp.medical_record_id', $hfa->medical_record_id)->where('pp.type', 'H')->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
+        $pdf = PDF::loadView('/pdf/hfa/receipt', compact('qrcode', 'hfa', 'patient', 'branch', 'procedures'));    
+        return $pdf->stream('hfa.pdf', array("Attachment"=>0));
+    }
 }

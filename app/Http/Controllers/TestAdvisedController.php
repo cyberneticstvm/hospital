@@ -10,7 +10,7 @@ use DB;
 class TestAdvisedController extends Controller
 {
     public function index(){
-        $tests = TestsAdvised::orderByDesc('created_at')->get();
+        $tests = TestsAdvised::where('status', 'Pending')->orderByDesc('created_at')->get();
         return view('tests-advised.index', compact('tests'));
     }
 

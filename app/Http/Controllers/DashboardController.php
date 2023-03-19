@@ -64,8 +64,8 @@ class DashboardController extends Controller
             $sid = Str::random(25);
             User::where('id', $user_id)->update(['session_id' => $sid]);
             LoginLog::insert(['user_id' => $user_id, 'session_id' => $sid, 'ip' => $request->ip(), 'city_name' => $obj->city, 'region_name' => $obj->region, 'country_name' => $obj->country, 'zip_code' => $obj->postal, 'device' => $device, 'latitude' => $coordinates[0], 'longitude' => $coordinates[1], 'logged_in' => Carbon::now()]);
-            $branch_id = 0; $new_patients_count = 0; $review_count = 0; $cancelled = 0; $consultation = 0; $certificate = 0; $camp = 0; $vision = 0; $tot_patients = 0; $day_tot_income = 0; $day_tot_exp = 0; $income_monthly = 0.00; $expense_monthly = 0.00;
-            return view('dash', compact('branches', 'branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
+            $branch_id = 0; $new_patients_count = 0; $review_count = 0; $cancelled = 0; $consultation = 0; $certificate = 0; $camp = 0; $vision = 0; $tot_patients = 0; $day_tot_income = 0; $day_tot_exp = 0; $income_monthly = 0.00; $expense_monthly = 0.00; $consultation_all_br = 0;
+            return view('dash', compact('branches', 'branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly', 'consultation_all_br'));
             //return redirect()->route('dash')->with(['branches' => $branches]);
         }  
         return redirect("/")->withErrors('Login details are not valid');
@@ -82,9 +82,11 @@ class DashboardController extends Controller
 
         $cancelled = DB::table('patient_references as r')->where('status', 0)->where('r.branch', $branch_id)->whereDate('r.created_at', Carbon::today())->count('r.id');
 
-        $consultation = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->whereIn('r.consultation_type', [1,3])->when(Auth::user()->roles->first()->name = 'Doctor', function($query) use ($branch_id) {
-            $query->where('r.doctor_id', Auth::user()->id);
+        $consultation = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->whereIn('r.consultation_type', [1,3])->when(Auth::user()->roles->first()->name == 'Doctor', function($query) use ($branch_id) {
+            $query->where('r.doctor_id', Auth::user()->doctor_id);
         })->whereDate('r.created_at', Carbon::today())->count('r.id');
+
+        $consultation_all_br = DB::table('patient_references as r')->where('r.status', 1)->whereIn('r.consultation_type', [1,3])->whereDate('r.created_at', Carbon::today())->count('r.id');
 
         $certificate = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->whereIn('r.consultation_type', [2,3])->whereDate('r.created_at', Carbon::today())->count('r.id');
 
@@ -101,7 +103,7 @@ class DashboardController extends Controller
         $expense_monthly = DB::table('expenses')->where('head', '!=', 22)->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->sum('amount');
 
         if(Auth::user()->roles->first()->name == 'Admin'):
-            return view('dash', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
+            return view('dash', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly', 'consultation_all_br'));
         elseif(Auth::user()->roles->first()->name == 'Accounts'):
             return view('dash-accounts', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
         elseif(Auth::user()->roles->first()->name == 'Doctor'):

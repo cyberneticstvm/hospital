@@ -12,6 +12,7 @@ use App\Http\Controllers\PharmacyPaymentController;
 use App\Http\Controllers\PostOperativeMedicineController;
 use App\Http\Controllers\SurgeryMedicineController;
 use App\Http\Controllers\PachymetryController;
+use App\Http\Controllers\HFAController;
 use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PDFController;
@@ -295,6 +296,15 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::delete('/spectacle/delete/{id}/', 'App\Http\Controllers\SpectacleController@destroy')->name('spectacle.delete');
     // end spectacles //
 
+    // HFA //
+    Route::get('/hfa', [HFAController::class, 'index'])->name('hfa.index');
+    Route::post('/hfa/show/', [HFAController::class, 'show'])->name('hfa.show');
+    Route::post('/hfa/create/', [HFAController::class, 'store'])->name('hfa.save');
+    Route::get('/hfa/edit/{id}/', [HFAController::class, 'edit'])->name('hfa.edit');
+    Route::put('/hfa/edit/{id}/', [HFAController::class, 'update'])->name('hfa.update');
+    Route::delete('/hfa/delete/{id}/', [HFAController::class, 'destroy'])->name('hfa.delete');
+    // End HFA //
+
     // Pachymetry //
     Route::get('/pachymetry/', [PachymetryController::class, 'index'])->name('pachymetry.index');
     Route::post('/pachymetry/show/', [PachymetryController::class, 'show'])->name('pachymetry.show');
@@ -463,10 +473,6 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::delete('/consultation/certificate/delete/{id}/', 'App\Http\Controllers\PatientCertificateController@destroy')->name('certificate.delete');
     // End Certificates //
 
-    // OCT/HFA/FFA //
-    Route::get('/ohf/', 'App\Http\Controllers\OHFController@index')->name('ohf.index');
-    // End OCT/HFA/FFA //
-
     // Camp //
     Route::get('/camp/', [CampController::class, 'index'])->name('camp.index');
     Route::get('/camp/create/{id}/', [CampController::class, 'create'])->name('camp.create');
@@ -599,6 +605,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/product-transfer/bill/{id}/', [PDFController::class, 'producttransferbill']);
     Route::get('/patient/payments/bill/{id}/', [PDFController::class, 'patientpaymentbill']);
     Route::get('/onote/report/{id}/', [PDFController::class, 'printonote']);
+    Route::get('/hfa/receipt/{id}/', [PDFController::class, 'hfareceipt']);
     // End PDFs //
 
     // Settings //

@@ -54,7 +54,7 @@
                             <div class="card-body">
                                 <span class="text-uppercase text-primary">Total Consultation</span>
                                 <h4 class="mb-0 mt-2">{{ $new_patients_count+$review_count }}</h4>
-                                <small class="text-muted">Analytics today</small>
+                                <small class="text-muted">All Branches Tot: {{ $consultation_all_br }}</small>
                             </div>
                             <div id="apexspark3"></div>
                         </div>
@@ -117,7 +117,8 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-fill me-3 text-truncate">
                                                     <div class="text-primary mb-2 text-uppercase">Consultation</div>
-                                                    <h4 class="mb-0">{{ $consultation }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-primary"></i> Nos.</small></div></h4>
+                                                    <h4 class="mb-0">{{ $consultation }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-primary"></i> Nos.</small></div> </h4>
+                                                    <small></small>
                                                 </div>
                                                 <div class="avatar lg rounded-circle no-thumbnail bg-primary text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
                                             </div>
