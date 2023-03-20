@@ -175,7 +175,7 @@ class AppointmentController extends Controller
         $input['appointment_time'] = ($request->status == 1) ? Carbon::createFromFormat('h:i A', $request->appointment_time)->format('H:i:s') : NULL;
         $var = $request->appointment_time.' at '.$br->short_name.' Br.';
         Config::set('myconfig.sms.number', $request->mobile_number);
-        Config::set('myconfig.sms.message', "Dear ".$request->patient_name.", Your appointment has been rescheduled on ".$request->appointment_date." ".$var.", for enquiry please Call 9995050149. Thank You, Devi Eye Hospital.");
+        Config::set('myconfig.sms.message', "Dear ".$request->patient_name.", Your appointment has been scheduled on ".$request->appointment_date." ".$var.", for enquiry please Call 9995050149. Thank You, Devi Eye Hospital.");
         try{
             $rcount = Appointment::where('branch', $request->branch)->whereDate('appointment_date', $input['appointment_date'])->where('id', '!=', $id)->count('id');
             if($request->camp_id > 0):
