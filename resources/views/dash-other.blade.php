@@ -34,7 +34,7 @@
                             </div>
                             <div id="apexspark2"></div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="col-xl-3 col-lg-6 col-md-3 col-sm-6">
                         <div class="card">
                             <div class="card-body">
@@ -45,7 +45,7 @@
                             <div id="apexspark3"></div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-12 col-md-3 col-sm-12">
+                    <!--<div class="col-xl-3 col-lg-12 col-md-3 col-sm-12">
                         <div class="card">
                             <div class="card-body">
                                 <span class="text-uppercase text-danger">Cancelled</span>
