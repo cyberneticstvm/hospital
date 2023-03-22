@@ -15,7 +15,7 @@
         <div class="row g-3 clearfix">
             <div class="col-lg-8 col-md-12">
                 <div class="row g-3 clearfix row-deck">
-                    <div class="col-xl-3 col-lg-6 col-md-3 col-sm-6">
+                    <!--<div class="col-xl-3 col-lg-6 col-md-3 col-sm-6">
                         <div class="card">
                             <div class="card-body">
                                 <span class="text-uppercase text-primary">New Registrations</span>
@@ -54,7 +54,7 @@
                             </div>
                             <div id="apexspark4"></div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header py-3 d-flex flex-wrap  justify-content-between align-items-center bg-transparent border-bottom-0">

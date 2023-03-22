@@ -15,7 +15,7 @@
         <div class="row g-3 clearfix">
             <div class="col-lg-8 col-md-12">
                 <div class="row g-3 clearfix row-deck">
-                    <div class="col-xl-3 col-lg-6 col-md-3 col-sm-6">
+                    <!--<div class="col-xl-3 col-lg-6 col-md-3 col-sm-6">
                         <div class="card">
                             <div class="card-body">
                                 <span class="text-uppercase text-primary">New Registrations</span>
@@ -34,7 +34,7 @@
                             </div>
                             <div id="apexspark2"></div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="col-xl-3 col-lg-6 col-md-3 col-sm-6">
                         <div class="card">
                             <div class="card-body">
@@ -104,7 +104,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-12">
+            <!--<div class="col-lg-4 col-md-12">
                 <div class="row g-3 row-deck">
                     <div class="col-lg-12 col-md-6 col-sm-12">
                         <div class="card">
@@ -155,8 +155,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- .row end -->
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
