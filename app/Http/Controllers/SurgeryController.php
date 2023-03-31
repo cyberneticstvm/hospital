@@ -91,7 +91,6 @@ class SurgeryController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'surgery_date' => 'required',
             'surgery_type' => 'required',
             'surgeon' => 'required',
             'eye' => 'required'
