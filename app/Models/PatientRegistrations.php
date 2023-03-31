@@ -33,4 +33,10 @@ class PatientRegistrations extends Model
     public function testsadvised(){
         return $this->hasMany(TestsAdvised::class);
     }
+
+    public function branches(){
+        return $this->belongsTo(Branch::class, 'branch', 'id');
+    }
+
+    protected $casts = ['created_at' => 'date'];
 }

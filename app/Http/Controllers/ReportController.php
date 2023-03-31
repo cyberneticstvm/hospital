@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Branch;
+use App\Models\doctor;
 use App\Models\IncomeExpenseHead as Head;
 use App\Models\LoginLog;
+use App\Models\PatientRegistrations;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
@@ -17,7 +20,7 @@ class ReportController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:report-daybook-show|report-daybook-fetch|report-income-expense-show|report-income-expense-fetch|report-patient-payments-show|report-patient-payments-fetch|report-active-users-show|report-loginlog-show|report-loginlog-fetch', ['only' => ['showdaybook','fetchdaybook','showincomeexpense','fetchincomeexpense','showpayment','fetchpayment','activeusers','showloginlog','fetchloginlog']]);
+        $this->middleware('permission:report-daybook-show|report-daybook-fetch|report-income-expense-show|report-income-expense-fetch|report-patient-payments-show|report-patient-payments-fetch|report-active-users-show|report-loginlog-show|report-loginlog-fetch|report-appointment-show|report-appointment-fetch|report-patient-show|report-patient-fetch', ['only' => ['showdaybook','fetchdaybook','showincomeexpense','fetchincomeexpense','showpayment','fetchpayment','activeusers','showloginlog','fetchloginlog', 'showappointment', 'fetchappointment', 'showpatient', 'fetchpatient']]);
         $this->middleware('permission:report-daybook-show', ['only' => ['showdaybook']]);
         $this->middleware('permission:report-daybook-fetch', ['only' => ['fetchdaybook']]);
         $this->middleware('permission:report-income-expense-show', ['only' => ['showincomeexpense']]);
@@ -27,6 +30,10 @@ class ReportController extends Controller
         $this->middleware('permission:report-active-users-show', ['only' => ['activeusers']]);
         $this->middleware('permission:report-loginlog-show', ['only' => ['showloginlog']]);
         $this->middleware('permission:report-loginlog-fetch', ['only' => ['fetchloginlog']]);
+        $this->middleware('permission:report-appointment-show', ['only' => ['showappointment']]);
+        $this->middleware('permission:report-appointment-fetch', ['only' => ['fetchappointment']]);
+        $this->middleware('permission:report-patient-show', ['only' => ['showpatient']]);
+        $this->middleware('permission:report-patient-fetch', ['only' => ['fetchpatient']]);
 
         $this->branch = session()->get('branch');
     }
@@ -198,5 +205,51 @@ class ReportController extends Controller
             return $query->where('user_id', $request->user);
         })->get();
         return view('reports.login-log', compact('users', 'records', 'inputs'));
+    }
+
+    public function showappointment(){
+        $branches = $this->getBranches($this->branch);
+        $doctors = doctor::all();
+        $records = []; $inputs = []; 
+        return view('reports.appointment', compact('branches', 'records', 'inputs', 'doctors'));
+    }
+    public function fetchappointment(Request $request){
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+        ]);
+        $branches = $this->getBranches($this->branch);
+        $doctors = doctor::all();
+        $inputs = array($request->fromdate, $request->todate, $request->status, $request->branch, $request->doctor);
+        $startDate = Carbon::parse($request->from_date)->startOfDay();
+        $endDate = Carbon::parse($request->to_date)->endOfDay();
+        $records = Appointment::whereBetween('appointment_date', [$startDate, $endDate])->when($request->doctor > 0, function($query) use ($request){
+            return $query->where('doctor', $request->doctor);
+        })->when($request->branch > 0, function($query) use ($request){
+            return $query->where('branch', $request->branch);
+        })->when($request->status <> 0 , function($query) use ($request){
+            return $query->where('medical_record_id', $request->status, 0);
+        })->get();
+        return view('reports.appointment', compact('branches', 'records', 'inputs', 'doctors'));
+    }
+
+    public function showpatient(){
+        $branches = $this->getBranches($this->branch);
+        $records = []; $inputs = []; 
+        return view('reports.patient', compact('branches', 'records', 'inputs'));
+    }
+    public function fetchpatient(Request $request){
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+        ]);
+        $branches = $this->getBranches($this->branch);
+        $inputs = array($request->fromdate, $request->todate, $request->branch);
+        $startDate = Carbon::parse($request->from_date)->startOfDay();
+        $endDate = Carbon::parse($request->to_date)->endOfDay();
+        $records = PatientRegistrations::whereBetween('created_at', [$startDate, $endDate])->when($request->branch > 0, function($query) use ($request){
+            return $query->where('branch', $request->branch);
+        })->get();
+        return view('reports.patient', compact('branches', 'records', 'inputs'));
     }
 }

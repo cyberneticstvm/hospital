@@ -556,6 +556,13 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     Route::get('/reports/login-log', 'App\Http\Controllers\ReportController@showloginlog')->name('reports.showloginlog');
     Route::post('/reports/login-log', 'App\Http\Controllers\ReportController@fetchloginlog')->name('reports.fetchloginlog');
+
+    Route::get('/reports/appointments/', 'App\Http\Controllers\ReportController@showappointment')->name('reports.appointment.show');
+    Route::post('/reports/appointments/', 'App\Http\Controllers\ReportController@fetchappointment')->name('reports.appointment.fetch');
+
+    Route::get('/reports/patient/', 'App\Http\Controllers\ReportController@showpatient')->name('reports.patient.show');
+    Route::post('/reports/patient/', 'App\Http\Controllers\ReportController@fetchpatient')->name('reports.patient.fetch');
+
     // End Reports //
 
     // Helper //

@@ -26,4 +26,14 @@ class Appointment extends Model
         'created_by',
         'updated_by',
     ];
+
+    public function branches(){
+        return $this->belongsTo(Branch::class, 'branch', 'id');
+    }
+
+    public function doctors(){
+        return $this->belongsTo(doctor::class, 'doctor', 'id');
+    }
+
+    protected $casts = ['appointment_date' => 'date'];
 }

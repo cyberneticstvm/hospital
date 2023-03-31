@@ -15,6 +15,14 @@ $(function() {
     $('#dataTbl').dataTable({
         responsive: true
     });
+    $('#dTblApp').dataTable({
+        responsive: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'excel'
+        ]
+    });
+    $(".dt-buttons button").addClass('btn btn-success');
 
     $(".alert").show().delay(5000).fadeOut();
 
