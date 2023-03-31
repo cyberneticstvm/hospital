@@ -35,7 +35,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-3">
-                                    <label class="form-label">Surgery Date <sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Surgery Date</label>
                                     <fieldset class="form-icon-group left-icon position-relative">
                                         <input type="text" value="{{ ($surgery->surgery_date) ? date('d/M/Y', strtotime($surgery->surgery_date)) : '' }}" name="surgery_date" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy">
                                         <div class="form-icon position-absolute">
@@ -62,7 +62,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-2">
-                                    <label class="form-label">Eye <sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Eye</label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="eye" >
                                         <option value="NA" {{ ($surgery->eye == 'NA') ? 'selected' : '' }}>Select</option>
                                         <option value="right" {{ ($surgery->eye == 'right') ? 'selected' : '' }}>Right</option>

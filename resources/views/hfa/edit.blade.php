@@ -53,6 +53,18 @@
                                     <small class="text-danger">{{ $errors->first('procedure') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Test Status <sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="status" >
+                                        <option value="">Select</option>
+                                        @foreach($status as $st)
+                                        <option value="{{ $st->id }}" {{ ($st->id == $hfa->status) ? 'selected' : '' }}>{{ $st->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('status')
+                                    <small class="text-danger">{{ $errors->first('status') }}</small>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-12 text-end">

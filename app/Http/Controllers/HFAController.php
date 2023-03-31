@@ -28,7 +28,7 @@ class HFAController extends Controller
 
     public function index()
     {
-        $hfas = HFA::leftJoin('patient_medical_records AS m', 'h_f_a_s.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'h_f_a_s.patient_id', '=', 'p.id')->selectRaw("h_f_a_s.*, p.patient_name, p.patient_id, h_f_a_s.medical_record_id")->where('h_f_a_s.branch', $this->branch)->whereDate('h_f_a_s.created_at', Carbon::today())->orderByDesc("h_f_a_s.id")->get();
+        $hfas = HFA::leftJoin('patient_medical_records AS m', 'h_f_a_s.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'h_f_a_s.patient_id', '=', 'p.id')->selectRaw("h_f_a_s.*, p.patient_name, p.patient_id, h_f_a_s.medical_record_id")->where('h_f_a_s.branch', $this->branch)->whereIn('h_f_a_s.status', [1,2])->whereDate('h_f_a_s.created_at', Carbon::today())->orderByDesc("h_f_a_s.id")->get();
         return view('hfa.index', compact('hfas'));
     }
 
@@ -117,8 +117,9 @@ class HFAController extends Controller
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
         $procedures = DB::table('procedures')->where('type', 'H')->get();
+        $status = DB::table('types')->where('category', 'surgery')->get();
         $advised = DB::table('patient_procedures')->where('medical_record_id', $hfa->medical_record_id)->where('type', 'H')->get();
-        return view('hfa.edit', compact('mrecord', 'patient', 'doctor', 'hfa', 'procedures', 'advised'));
+        return view('hfa.edit', compact('mrecord', 'patient', 'doctor', 'hfa', 'procedures', 'advised', 'status'));
     }
 
     /**
@@ -130,6 +131,9 @@ class HFAController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'status' => 'required',
+        ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
         if($request->document):

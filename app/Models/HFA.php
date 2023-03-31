@@ -15,6 +15,7 @@ class HFA extends Model
         'branch',
         'document',
         'notes',
+        'status',
         'created_by',
         'updated_by',
     ];
