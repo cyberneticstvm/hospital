@@ -66,7 +66,7 @@
                         </form>
                     </div>
                 </div>
-                @php $rtot = $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine; @endphp
+                @php $rtot = $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables; @endphp
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
@@ -100,7 +100,10 @@
                             <tr><td>11</td><td>Income from Surgery Medicine</td><td class="text-end">{{ number_format($surgery_medicine, 2) }}</td><td class="text-end">{{ number_format($surgery_medicine, 2) }}</td></tr>
                             <tr><td>12</td><td>Income from PostOp Medicine</td><td class="text-end">{{ number_format($postop_medicine, 2) }}</td><td class="text-end">{{ number_format($postop_medicine, 2) }}</td></tr>
                             <tr>
-                                <td>13</td><td>Income from Other Sources</td><td class="text-end text-primary">{{ number_format($income, 2) }}</td><td></td>       
+                                <td>13</td><td>Income from Surgery Consumables</td><td class="text-end text-primary">{{ number_format($surgery_consumables, 2) }}</td><td></td>       
+                            </tr>
+                            <tr>
+                                <td>14</td><td>Income from Other Sources</td><td class="text-end text-primary">{{ number_format($income, 2) }}</td><td></td>       
                             </tr>
                             <tr>
                                 <td colspan="2" class="text-end fw-bold">Grand Total</td><td class="text-end fw-bold">{{ number_format($income_total, 2) }}</td><td class="text-end text-danger">{{ number_format($rtot, 2) }}</td>       

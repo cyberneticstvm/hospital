@@ -69,8 +69,8 @@ class ReportController extends Controller
     public function showdaybook(){
         $branches = $this->getBranches($this->branch);
         $is_admin = $this->isAdmin(); $is_accounts = $this->isAccounts(); $isCEO = $this->isCEO();
-        $records = []; $inputs = []; $reg_fee_total = 0.00; $consultation_fee_total = 0.00; $procedure_fee_total = 0.00; $certificate_fee_total = 0.00; $pharmacy = 0.00; $medicine = 0.00; $income = 0.00; $expense = 0.00; $income_total = 0.00; $income_received_cash = 0.00; $income_received_upi = 0.00; $income_received_card = 0.00; $income_received_staff = 0.00; $opening_balance = 0.00; $vision = 0.00; $outstanding = 0.00; $clinical_lab = 0.00;  $radiology_lab = 0.00; $surgery_medicine = 0.00; $postop_medicine = 0.00; $patient_outstanding = 0.00;
-        return view('reports.daybook', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'patient_outstanding', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine'));
+        $records = []; $inputs = []; $reg_fee_total = 0.00; $consultation_fee_total = 0.00; $procedure_fee_total = 0.00; $certificate_fee_total = 0.00; $pharmacy = 0.00; $medicine = 0.00; $income = 0.00; $expense = 0.00; $income_total = 0.00; $income_received_cash = 0.00; $income_received_upi = 0.00; $income_received_card = 0.00; $income_received_staff = 0.00; $opening_balance = 0.00; $vision = 0.00; $outstanding = 0.00; $clinical_lab = 0.00;  $radiology_lab = 0.00; $surgery_medicine = 0.00; $postop_medicine = 0.00; $patient_outstanding = 0.00; $surgery_consumables = 0.00;
+        return view('reports.daybook', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'patient_outstanding', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables'));
     }
     public function fetchdaybook(Request $request){
         $this->validate($request, [
@@ -109,6 +109,8 @@ class ReportController extends Controller
 
         $postop_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'postop')->whereBetween('d.created_at', [$startDate, $endDate])->where('m.branch', $request->branch)->sum('d.total');
 
+        $surgery_consumables = DB::table('patient_surgery_consumable_lists as l')->leftJoin('patient_surgery_consumables as c', 'l.psc_id', '=', 'c.id')->whereBetween('c.created_at', [$startDate, $endDate])->sum('l.total');
+
         $income = DB::table('incomes')->where('branch', $request->branch)->whereBetween('date', [$startDate, $endDate])->sum('amount');
         $expense = DB::table('expenses')->where('branch', $request->branch)->whereBetween('date', [$startDate, $endDate])->sum('amount');
 
@@ -124,9 +126,9 @@ class ReportController extends Controller
 
         $patient_outstanding = DB::table('expenses')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->where('head', 22)->sum('amount');
 
-        $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $income + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine;
+        $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $income + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
 
-        return view('reports.daybook', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'patient_outstanding', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine'));
+        return view('reports.daybook', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'patient_outstanding', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables'));
     }
     public function showincomeexpense(){
         $branches = $this->getBranches($this->branch);
