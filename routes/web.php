@@ -21,6 +21,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InhouseCampController;
+use App\Http\Controllers\SurgeryConsumableController;
 use App\Http\Controllers\TestAdvisedController;
 
 /*
@@ -544,6 +545,30 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     // End Documents //
 
+    // Surgery Consumables //
+    Route::get('/inventory/surgery-consumables', [SurgeryConsumableController::class, 'index'])->name('surgery.consumable.index');
+    Route::get('/inventory/surgery-consumables/create', [SurgeryConsumableController::class, 'create'])->name('surgery.consumable.create');
+    Route::post('/inventory/surgery-consumables/create', [SurgeryConsumableController::class, 'store'])->name('surgery.consumable.save');
+    Route::get('/inventory/surgery-consumables/edit/{id}', [SurgeryConsumableController::class, 'edit'])->name('surgery.consumable.edit');
+    Route::put('/inventory/surgery-consumables/edit/{id}', [SurgeryConsumableController::class, 'update'])->name('surgery.consumable.update');
+    Route::delete('/inventory/surgery-consumables/delete/{id}', [SurgeryConsumableController::class, 'destroy'])->name('surgery.consumable.delete');
+
+    Route::get('/manage-surgery-consumables', [SurgeryConsumableController::class, 'showsurgeryconsumable'])->name('surgery.consumable.surgey');
+    Route::post('/manage-surgery-consumables', [SurgeryConsumableController::class, 'savesurgeryconsumable'])->name('surgery.consumable.surgey.save');
+    Route::get('/manage-surgery-consumables/edit/{id}', [SurgeryConsumableController::class, 'editsurgeryconsumable'])->name('surgery.consumable.surgey.edit');
+    Route::put('/manage-surgery-consumables/edit/{id}', [SurgeryConsumableController::class, 'updatesurgeryconsumable'])->name('surgery.consumable.surgey.update');
+    Route::delete('/manage-surgery-consumables/delete/{id}', [SurgeryConsumableController::class, 'deletesurgeryconsumable'])->name('surgery.consumable.surgey.delete');
+
+    Route::get('/patient/surgery/consumable', [SurgeryConsumableController::class, 'patientsurgeryconsumablelist'])->name('patient.surgey.consumable');
+    Route::get('/patient/surgery/consumable/create', [SurgeryConsumableController::class, 'patientsurgeryconsumablecreate'])->name('patient.surgey.consumable.create');
+    Route::post('/patient/surgery/consumable/create', [SurgeryConsumableController::class, 'patientsurgeryconsumablefetch'])->name('patient.surgey.consumable.fetch');
+    Route::get('/patient/surgery/consumable/show', [SurgeryConsumableController::class, 'patientsurgeryconsumablelistshow'])->name('patient.surgey.consumable.show');
+    Route::post('/patient/surgery/consumable/show', [SurgeryConsumableController::class, 'patientsurgeryconsumablelistsave'])->name('patient.surgey.consumable.save');
+    Route::get('/patient/surgery/consumable/edit/{id}', [SurgeryConsumableController::class, 'patientsurgeryconsumablelistedit'])->name('patient.surgey.consumable.edit');
+    Route::put('/patient/surgery/consumable/edit/{id}', [SurgeryConsumableController::class, 'patientsurgeryconsumablelistupdate'])->name('patient.surgey.consumable.update');
+    Route::delete('/patient/surgery/consumable/delete/{id}', [SurgeryConsumableController::class, 'patientsurgeryconsumablelistdelete'])->name('patient.surgey.consumable.delete');
+    // End Surgery Consumables //
+
     // Reports //
     Route::get('/reports/daybook/', 'App\Http\Controllers\ReportController@showdaybook')->name('reports.showdaybook');
     Route::post('/reports/daybook/', 'App\Http\Controllers\ReportController@fetchdaybook')->name('reports.fetchdaybook');
@@ -573,6 +598,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/helper/getPdctPrice/', [HelperController::class, 'getProductPrice']);
     Route::get('/helper/getlabtests/', [HelperController::class, 'getlabtests']);
     Route::get('/helper/updatesmsstatus/', [HelperController::class, 'updatesmsstatus']);
+    Route::get('/helper/getsurgeryconsumables/', [HelperController::class, 'getsurgeryconsumables']);
     // End Helper //
 
     // PDFs //
@@ -613,6 +639,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/patient/payments/bill/{id}/', [PDFController::class, 'patientpaymentbill']);
     Route::get('/onote/report/{id}/', [PDFController::class, 'printonote']);
     Route::get('/hfa/receipt/{id}/', [PDFController::class, 'hfareceipt']);
+    Route::get('/surgery/consumable/receipt/{id}/', [PDFController::class, 'surgeryconsumablereceipt']);
     // End PDFs //
 
     // Settings //

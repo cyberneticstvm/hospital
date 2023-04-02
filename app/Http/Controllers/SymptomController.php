@@ -44,6 +44,9 @@ class SymptomController extends Controller
         if($type == 'clinic'){
             $data = DB::table('lab_types')->where('category_id', 1)->select('id', 'lab_type_name as name')->get();
         }
+        if($type == 'consumable'){
+            $data = DB::table('surgery_consumables')->select('id', 'name')->get();
+        }
         if(array_key_exists($type, $this->vision_extras)){
             $data = DB::table('vision_extras')->where('cat_id', $this->vision_extras[$type])->select('id', 'name')->get();
         }

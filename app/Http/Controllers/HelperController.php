@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SurgeryConsumableItem;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
@@ -394,5 +395,16 @@ class HelperController extends Controller
     public function updatesmsstatus(Request $request){
         $mrid = $request->mrid; $chk = $request->chk;
         DB::table('patient_references')->where('id', $mrid)->update(['sms' => $chk]);
+    }
+
+    public function getsurgeryconsumables(Request $request){
+        $sid = $request->sid; $op = "";
+        $consumables = SurgeryConsumableItem::where('surgery_id', $sid)->get();
+        if($consumables->isNotEmpty()):
+            foreach($consumables as $key => $co):
+                $op .= "<div class='row mt-3'><div class='col-sm-3'><select class='form-control form-control-md show-tick ms select2' data-placeholder='Select' name='consumable_id[]' required='required'><option value='".$co->consumable_id."'>".$co->consumable->name."</option></select></div><div class='col-sm-2'><input type='number' name='qty[]' class='form-control' value='".$co->default_qty."' placeholder='Qty'/></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>";
+            endforeach;
+        endif;
+        echo $op;
     }
 }

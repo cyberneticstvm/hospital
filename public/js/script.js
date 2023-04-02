@@ -132,6 +132,13 @@ $(function() {
         bindDDL(type, 'selLabTest');
     });
 
+    $(".addSurgeryConsumable").click(function(){
+        var type = $(this).data('category');
+        $(".consumablesRow1").append("<div class='row mt-3'><div class='col-sm-3'><select class='form-control form-control-md show-tick ms select2 selConsumable' data-placeholder='Select' name='consumable_id[]' required='required'><option value=''></option></select></div><div class='col-sm-2'><input type='number' name='qty[]' class='form-control' value='1' placeholder='Qty' required/></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");
+        $('.selConsumable').select2();
+        bindDDL(type, 'selConsumable');
+    });
+
     $(".selFromBranch").change(function(){
         $('.selProductForTransfer').val(0);
         bindDDL('medicine', 'selProductForTransfer');
@@ -320,6 +327,20 @@ $(function() {
             data: {'sid': sid},
             success: function(response){
                 $(".labtestRow1").html(response);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                console.log(XMLHttpRequest);
+            }
+        });
+    });
+    $(document).on("change", ".surgeryConsumable", function(){
+        var sid = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: '/helper/getsurgeryconsumables/',
+            data: {'sid': sid},
+            success: function(response){
+                $(".consumablesRow").html(response);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
                 console.log(XMLHttpRequest);

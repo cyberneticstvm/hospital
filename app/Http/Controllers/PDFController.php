@@ -7,6 +7,7 @@ use App\Models\InhouseCamp;
 use Illuminate\Http\Request;
 use App\Models\PatientReference as PRef;
 use App\Models\LabClinic;
+use App\Models\PatientSurgeryConsumable;
 use App\Models\Spectacle;
 use QrCode;
 use PDF;
@@ -450,5 +451,11 @@ class PDFController extends Controller
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));         
         $pdf = PDF::loadView('/pdf/hfa/receipt', compact('qrcode', 'hfa', 'patient', 'branch', 'procedures'));    
         return $pdf->stream('hfa.pdf', array("Attachment"=>0));
+    }
+
+    public function surgeryconsumablereceipt($id){
+        $psc = PatientSurgeryConsumable::find($id);
+        $pdf = PDF::loadView('/pdf/surgery-consumable-receipt', compact('psc'));    
+        return $pdf->stream('suregry-consumables-receipt.pdf', array("Attachment"=>0));
     }
 }
