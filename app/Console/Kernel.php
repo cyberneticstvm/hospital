@@ -7,6 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 use Illuminate\Support\Facades\Config;
 use App\Helper\Helper;
+use App\Models\PatientSurgeryConsumable;
 use Carbon\Carbon;
 use DB;
 
@@ -93,7 +94,9 @@ class Kernel extends ConsoleKernel
 
         $postop_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'postop')->whereBetween('d.created_at', [$startDate, $endDate])->where('m.branch', $branch)->sum('d.total');
 
-        $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $income + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine;
+        $surgery_consumables = DB::table('patient_surgery_consumable_lists as l')->leftJoin('patient_surgery_consumables as c', 'l.psc_id', '=', 'c.id')->whereBetween('c.created_at', [$startDate, $endDate])->sum('l.total');
+
+        $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $income + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
 
         $closing_balance = $income_total-($income_received_other + $expense);
 

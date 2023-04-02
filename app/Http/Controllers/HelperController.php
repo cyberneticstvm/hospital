@@ -353,7 +353,9 @@ class HelperController extends Controller
 
         $postop_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'postop')->where('m.medical_record_id', $mrid)->sum('d.total');
 
-        return $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine + $vision + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine;
+        $surgery_consumables = DB::table('patient_surgery_consumable_lists as l')->leftJoin('patient_surgery_consumables as c', 'l.psc_id', '=', 'c.id')->where('c.medical_record_id', $mrid)->sum('l.total');
+
+        return $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine + $vision + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
     }
     public function getPaidTotal($mrid){
         $paid = DB::table('patient_payments as p')->where('p.medical_record_id', $mrid)->sum('amount');

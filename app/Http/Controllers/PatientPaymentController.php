@@ -118,9 +118,11 @@ class PatientPaymentController extends Controller
 
         $postop_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'postop')->where('m.medical_record_id', $request->medical_record_id)->sum('d.total');
 
+        $surgery_consumables = DB::table('patient_surgery_consumable_lists as l')->leftJoin('patient_surgery_consumables as c', 'l.psc_id', '=', 'c.id')->where('c.medical_record_id', $request->medical_record_id)->sum('l.total');
+
         $payments = PP::where('medical_record_id', $request->medical_record_id)->leftJoin('payment_modes as p', 'patient_payments.payment_mode', '=', 'p.id')->select('patient_payments.id', 'patient_payments.amount', 'patient_payments.notes', 'p.name')->get();
 
-        $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $postop_medicine, $procedure_fee, $radiology_lab, $reg_fee, $surgery_medicine, $vision);
+        $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $postop_medicine, $procedure_fee, $radiology_lab, $reg_fee, $surgery_medicine, $vision, $surgery_consumables);
         $tot = $reg_fee+$consultation_fee+$procedure_fee+$certificate_fee+$pharmacy+$radiology_lab+$clinical_lab+$vision+$surgery_medicine+$postop_medicine;
         if($patient):
             return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments', 'types'));
