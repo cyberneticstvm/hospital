@@ -100,7 +100,7 @@
                             <tr><td>11</td><td>Income from Surgery Medicine</td><td class="text-end">{{ number_format($surgery_medicine, 2) }}</td><td class="text-end">{{ number_format($surgery_medicine, 2) }}</td></tr>
                             <tr><td>12</td><td>Income from PostOp Medicine</td><td class="text-end">{{ number_format($postop_medicine, 2) }}</td><td class="text-end">{{ number_format($postop_medicine, 2) }}</td></tr>
                             <tr>
-                                <td>13</td><td>Income from Surgery Consumables</td><td class="text-end text-primary">{{ number_format($surgery_consumables, 2) }}</td><td></td>       
+                                <td>13</td><td>Income from Surgery Consumables</td><td class="text-end text-primary">{{ number_format($surgery_consumables, 2) }}</td><td>{{ number_format($surgery_consumables, 2) }}</td>       
                             </tr>
                             <tr>
                                 <td>14</td><td>Income from Other Sources</td><td class="text-end text-primary">{{ number_format($income, 2) }}</td><td></td>       
