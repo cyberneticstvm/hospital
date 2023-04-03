@@ -28,6 +28,9 @@
         .fw-bold{
             font-weight: bold;
         }
+        .text-center{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -35,7 +38,7 @@
     <img src="./images/assets/Devi-Logo-Transparent.jpg" height='75' width='115'/>
     <p>{{ $psc->branches->branch_name }}, {{ $psc->branches->address }}, {{ $psc->branches->contact_number }}</p>
     <p>DL Number: RLF21KL2022000540, RLF20KL2022000543</p>
-    <h3>Surgery Consumables Bill</h3>
+    <h3>Surgery Bill</h3>
     </center>
     <table width="100%" cellpadding='0' cellspacing='0' class="text-large bordered">
         <tr>
@@ -50,7 +53,7 @@
     <br>
     <table width="100%" border="1" cellpadding='1' cellspacing='0' class="text-large">
     <tr>
-        <th width="10%">SL No</th><th width="70%">Consumable Name</th><th>Qty</th><th>Price</th><th>Total</th>
+        <th width="10%">SL No</th><th width="70%">Consumable Name</th><th class="text-center">Qty</th><th>Price</th><th>Total</th>
     </tr>
     @php $c = 1; @endphp
     @foreach($psc->psclist as $key => $val)
@@ -61,5 +64,6 @@
     <tr><td colspan="4" class="text-right fw-bold">Total</td><td class="text-right fw-bold">{{ $psc->psclist()->sum('total') }}</td></tr>
     </table>
     <p class='text-right'>Printed On: {{ date('d/M/Y H:i:A') }}</p>
+    <p class='text-right'>Authorized Signatory</p>
 </body>
 </html>
