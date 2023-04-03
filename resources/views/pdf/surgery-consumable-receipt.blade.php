@@ -63,7 +63,7 @@
     @endforeach
     <tr><td colspan="4" class="text-right fw-bold">Total</td><td class="text-right fw-bold">{{ $psc->psclist()->sum('total') }}</td></tr>
     </table>
-    <p class='text-right'>Printed On: {{ date('d/M/Y H:i:A') }}</p>
+    <p class='text-right'>Printed at: {{ date('d/M/Y H:i:A') }}</p>
     <p class='text-right'>Authorized Signatory</p>
 </body>
 </html>
