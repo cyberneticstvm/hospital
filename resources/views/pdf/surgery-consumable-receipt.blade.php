@@ -58,7 +58,7 @@
     @php $c = 1; @endphp
     @foreach($psc->psclist as $key => $val)
     <tr>
-        <td>{{ $c++ }}</th><td>{{ $val->consumable->name }}</td><td class="text-right">{{ $val->qty }}</td><td class="text-right">{{ $val->cost }}</td><td class="text-right">{{ $val->total }}</td>
+        <td>{{ $c++ }}</th><td>{{ $val->consumable->name }}</td><td class="text-center">{{ $val->qty }}</td><td class="text-right">{{ $val->cost }}</td><td class="text-right">{{ $val->total }}</td>
     </tr>
     @endforeach
     <tr><td colspan="4" class="text-right fw-bold">Total</td><td class="text-right fw-bold">{{ $psc->psclist()->sum('total') }}</td></tr>
