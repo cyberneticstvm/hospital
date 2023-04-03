@@ -35,7 +35,7 @@
 </head>
 <body>
     <center>
-    <img src="./images/assets/Devi-Logo-Transparent.jpg" height='75' width='115'/>
+    <img src="./images/assets/Devi-Logo-Transparent.jpg" height='100' width='115'/>
     <p>{{ $psc->branches->branch_name }}, {{ $psc->branches->address }}, {{ $psc->branches->contact_number }}</p>
     <p>DL Number: RLF21KL2022000540, RLF20KL2022000543</p>
     <h3>Surgery Bill</h3>
