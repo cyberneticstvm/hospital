@@ -47,7 +47,7 @@
             <td>Name/Age/Gender</td><td>{{ $psc->patient->patient_name }} / {{ $psc->patient->age }} / {{ $psc->patient->gender }}</td>
         </tr>
         <tr>
-            <td>Address</td><td colspan="2">{{ $psc->patient->address }}</td><td></td><td colspan="2"></td>
+            <td>Address</td><td colspan="2">{{ $psc->patient->address }}</td><td>Bill Number</td><td colspan="2">{{ $psc->bill_number }}</td>
         </tr>
     </table>
     <br>
