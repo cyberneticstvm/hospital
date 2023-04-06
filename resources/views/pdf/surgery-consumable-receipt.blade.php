@@ -62,7 +62,7 @@
     </tr>
     @endforeach
     <tr><td colspan="4" class="text-right fw-bold"></td><td class="text-right fw-bold">{{ $psc->psclist()->sum('total') }}</td></tr>
-    <tr><td colspan="4" class="text-right fw-bold">Discount</td><td class="text-right fw-bold">{{ $psc->discount }}</td></tr>
+    <tr><td colspan="4" class="text-right fw-bold">Discount / Insurance / Others</td><td class="text-right fw-bold">{{ $psc->discount }}</td></tr>
     <tr><td colspan="4" class="text-right fw-bold">Total</td><td class="text-right fw-bold">{{ $psc->total_after_discount }}</td></tr>
     </table>
     <p class="">Notes: {{ $psc->notes }}</p>
