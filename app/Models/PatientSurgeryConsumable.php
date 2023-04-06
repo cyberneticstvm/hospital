@@ -10,10 +10,15 @@ class PatientSurgeryConsumable extends Model
     use HasFactory;
 
     protected $fillable = [
+        'bill_number',
         'patient_id',
         'medical_record_id',
         'branch',
         'surgery_id',
+        'notes',
+        'total',
+        'discount',
+        'total_after_discount',
         'created_by',
         'updated_by',
     ];

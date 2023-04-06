@@ -61,8 +61,11 @@
         <td>{{ $c++ }}</th><td>{{ $val->consumable->name }}</td><td class="text-center">{{ $val->qty }}</td><td class="text-right">{{ $val->cost }}</td><td class="text-right">{{ $val->total }}</td>
     </tr>
     @endforeach
-    <tr><td colspan="4" class="text-right fw-bold">Total</td><td class="text-right fw-bold">{{ $psc->psclist()->sum('total') }}</td></tr>
+    <tr><td colspan="4" class="text-right fw-bold"></td><td class="text-right fw-bold">{{ $psc->psclist()->sum('total') }}</td></tr>
+    <tr><td colspan="4" class="text-right fw-bold">Discount</td><td class="text-right fw-bold">{{ $psc->discount }}</td></tr>
+    <tr><td colspan="4" class="text-right fw-bold">Total</td><td class="text-right fw-bold">{{ $psc->total_after_discount }}</td></tr>
     </table>
+    <p class="">Notes: {{ $psc->notes }}</p>
     <p class='text-right'>Printed at: {{ date('d/M/Y H:i:A') }}</p>
     <p class='text-right'>Authorized Signatory</p>
 </body>

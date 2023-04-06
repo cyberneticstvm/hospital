@@ -67,6 +67,16 @@
                             </div>
                             <div class="consumablesRow"></div>
                             <div class="consumablesRow1"></div>
+                            <div class="row mt-5">
+                                <div class="col-sm-8">
+                                    <label class="form-label">Notes / Remarks</label>
+                                    <input class="form-control" type="text" name="notes" value="" placeholder="Notes / Remarks">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Discount if any</label>
+                                    <input class="form-control" type="number" name="discount" placeholder="0.00" >
+                                </div>
+                            </div>
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>

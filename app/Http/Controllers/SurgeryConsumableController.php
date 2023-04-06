@@ -198,6 +198,15 @@ class SurgeryConsumableController extends Controller
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
+
+        $input['bill_number'] = PatientSurgeryConsumable::latest()->first()->bill_number + 1;
+        $tot = 0;
+        foreach($request->consumable_id as $key => $val):
+            $item = SurgeryConsumable::find($val);
+            $tot += $item->price*$request->qty[$key];
+        endforeach;
+        $input['total'] = $tot;
+        $input['total_after_discount'] = $tot - $request->discount;
         try{
             DB::transaction(function() use ($request, $input) {
                 $psc = PatientSurgeryConsumable::create($input);
@@ -237,6 +246,15 @@ class SurgeryConsumableController extends Controller
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
+        
+        $tot = 0;
+        foreach($request->consumable_id as $key => $val):
+            $item = SurgeryConsumable::find($val);
+            $tot += $item->price*$request->qty[$key];
+        endforeach;
+        $input['total'] = $tot;
+        $input['total_after_discount'] = $tot - $request->discount;
+
         try{
             DB::transaction(function() use ($request, $input, $id) {
                 $psc = PatientSurgeryConsumable::find($id);

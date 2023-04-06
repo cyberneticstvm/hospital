@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\PatientPayment as PP;
 use App\Models\PatientReference as PR;
+use App\Models\PatientSurgeryConsumable;
 use Carbon\Carbon;
 use DB;
 
@@ -118,7 +119,7 @@ class PatientPaymentController extends Controller
 
         $postop_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'postop')->where('m.medical_record_id', $request->medical_record_id)->sum('d.total');
 
-        $surgery_consumables = DB::table('patient_surgery_consumable_lists as l')->leftJoin('patient_surgery_consumables as c', 'l.psc_id', '=', 'c.id')->where('c.medical_record_id', $request->medical_record_id)->sum('l.total');
+        $surgery_consumables = PatientSurgeryConsumable::where('medical_record_id', $request->medical_record_id)->sum('total_after_discount');
 
         $payments = PP::where('medical_record_id', $request->medical_record_id)->leftJoin('payment_modes as p', 'patient_payments.payment_mode', '=', 'p.id')->select('patient_payments.id', 'patient_payments.amount', 'patient_payments.notes', 'p.name')->get();
 
