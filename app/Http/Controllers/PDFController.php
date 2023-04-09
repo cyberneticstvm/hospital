@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Diagnosis;
+use App\Models\DischargeSummary;
+use App\Models\DischargeSummaryDiagnosis;
 use App\Models\InhouseCamp;
 use Illuminate\Http\Request;
 use App\Models\PatientReference as PRef;
 use App\Models\LabClinic;
 use App\Models\PatientSurgeryConsumable;
+use App\Models\Procedure;
 use App\Models\Spectacle;
 use QrCode;
 use PDF;
@@ -457,5 +461,13 @@ class PDFController extends Controller
         $psc = PatientSurgeryConsumable::find($id);
         $pdf = PDF::loadView('/pdf/surgery-consumable-receipt', compact('psc'));    
         return $pdf->stream('suregry-consumables-receipt.pdf', array("Attachment"=>0));
+    }
+
+    public function dsummary($id){
+        $ds = DischargeSummary::find($id); 
+        $diagnosis = DischargeSummaryDiagnosis::leftJoin('diagnosis as d', 'd.id', '=', 'discharge_summary_diagnoses.diagnosis')->pluck('d.diagnosis_name')->implode(', ');
+        $procedure = Procedure::all();
+        $pdf = PDF::loadView('/pdf/dsummary', compact('ds', 'diagnosis', 'procedure'));    
+        return $pdf->stream('discharge-summary.pdf', array("Attachment"=>0));
     }
 }

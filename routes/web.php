@@ -20,9 +20,11 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DischargeSummaryController;
 use App\Http\Controllers\InhouseCampController;
 use App\Http\Controllers\SurgeryConsumableController;
 use App\Http\Controllers\TestAdvisedController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -569,6 +571,16 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::delete('/patient/surgery/consumable/delete/{id}', [SurgeryConsumableController::class, 'patientsurgeryconsumablelistdelete'])->name('patient.surgey.consumable.delete');
     // End Surgery Consumables //
 
+    // Discharge Summary //
+    Route::get('/discharge-summary', [DischargeSummaryController::class, 'index'])->name('dsummary.index');
+    Route::post('/discharge-summary', [DischargeSummaryController::class, 'show'])->name('dsummary.show');
+    Route::get('/discharge-summary/create/', [DischargeSummaryController::class, 'create'])->name('dsummary.create');
+    Route::post('/discharge-summary/create/', [DischargeSummaryController::class, 'store'])->name('dsummary.save');
+    Route::get('/discharge-summary/edit/{id}/', [DischargeSummaryController::class, 'edit'])->name('dsummary.edit');
+    Route::put('/discharge-summary/edit/{id}/', [DischargeSummaryController::class, 'update'])->name('dsummary.update');
+    Route::delete('/discharge-summary/delete/{id}/', [DischargeSummaryController::class, 'destroy'])->name('dsummary.delete');
+    // End Discharge Summary //
+
     // Reports //
     Route::get('/reports/daybook/', 'App\Http\Controllers\ReportController@showdaybook')->name('reports.showdaybook');
     Route::post('/reports/daybook/', 'App\Http\Controllers\ReportController@fetchdaybook')->name('reports.fetchdaybook');
@@ -640,6 +652,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/onote/report/{id}/', [PDFController::class, 'printonote']);
     Route::get('/hfa/receipt/{id}/', [PDFController::class, 'hfareceipt']);
     Route::get('/surgery/consumable/receipt/{id}/', [PDFController::class, 'surgeryconsumablereceipt']);
+    Route::get('/dsummary/report/{id}', [PDFController::class, 'dsummary']);
     // End PDFs //
 
     // Settings //

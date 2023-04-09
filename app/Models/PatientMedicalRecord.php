@@ -12,6 +12,7 @@ class PatientMedicalRecord extends Model
 
     protected $fillable = [
         'mrn',
+        'branch',
         'patient_id',
         'doctor_id',
         'symptoms',
@@ -86,4 +87,12 @@ class PatientMedicalRecord extends Model
         'is_patient_admission',
         'is_patient_surgery',
     ];
+
+    public function branches(){
+        return $this->belongsTo(Branch::class, 'branch', 'id');
+    }
+
+    public function procedures(){
+        return $this->hasMany(PatientProcedure::class, 'medical_record_id', 'id');
+    }
 }

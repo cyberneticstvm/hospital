@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Devi Eye Clinic & Opticians</title>
+    <style>
+        .text-blue{
+            color: blue;
+        }
+        .text-medium{
+            font-size: 12px;
+        }
+        .text-small{
+            font-size: 10px;
+        }
+        .text-large{
+            font-size: 15px;
+        }
+        table tr td{
+            height: 25px;
+            padding-left: 5px;
+        }
+        .bordered th, .bordered td{
+            border: 1px solid #000;
+        }
+        .text-right{
+            text-align: right;
+        }
+        .fw-bold{
+            font-weight: bold;
+        }
+        .text-center{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <center>
+    <img src="./images/assets/Devi-Logo-Transparent.jpg" height='100' width='115'/>
+    <p>{{ $ds->branches->branch_name }}, {{ $ds->branches->address }}, {{ $ds->branches->contact_number }}</p>
+    <h3>Discharge Summary</h3>
+    </center>
+    <table width="100%" cellpadding='0' cellspacing='0' class="text-large bordered">
+        <tr>
+            <td>Medical Record No</td><td>{{ $ds->medical_record_id }}</td>
+            <td>Patient ID</td><td>{{ $ds->patient->patient_id }}</td>
+            <td>Name/Age/Gender</td><td>{{ $ds->patient->patient_name }} / {{ $ds->patient->age }} / {{ $ds->patient->gender }}</td>
+        </tr>
+        <tr>
+            <td>Address</td><td colspan="5">{{ $ds->patient->address }}</td>
+        </tr>
+        <tr>
+            <td>D.O.A</td><td>{{ $ds->doa->format('d.m.Y') }}</td>
+            <td>D.O.S</td><td>{{ $ds->dos->format('d.m.Y') }}</td>
+            <td>D.O.D</td><td>{{ $ds->dod->format('d.m.Y') }}</td>
+        </tr>
+        <tr>
+            <td>Reason for Admission</td><td colspan="5">{{ $ds->reason_for_admission }}</td>
+        </tr>
+        <tr>
+            <td>Findings</td><td colspan="5">{{ $ds->findings }}</td>
+        </tr>
+        <tr>
+            <td>Investigation Results</td><td colspan="5">{{ $ds->investigation_result }}</td>
+        </tr>
+        <tr>
+            <td>General Examination</td><td colspan="5">{{ $ds->general_examination }}</td>
+        </tr>
+        <tr>
+            <td>Diagnosis</td><td colspan="5">{{ $diagnosis }}</td>
+        </tr>
+        <tr>
+            <td>Procedure</td><td colspan="5">{{ $procedure->whereIn('id', $ds->procedures()->pluck('procedure')->toArray())->pluck('name')->implode(', ') }}</td>
+        </tr>
+        <tr>
+            <td>Condition at Discharge</td><td colspan="5">{{ $ds->discharge_condition }}</td>
+        </tr>
+        <tr>
+            <td>Medication</td><td colspan="5">{{ $ds->medication }}</td>
+        </tr>
+        <tr>
+            <td></td><td colspan="5">
+                @forelse($ds->medicines as $key => $value)
+                    {{ $value->product->product_name.' - '.$value->notes }}
+                    <br>
+                @empty
+                @endforelse
+            </td>
+        </tr>
+        <tr>
+            <td>Post-operative Instruction</td><td colspan="5">
+                @forelse($ds->instructions as $key => $value)
+                    {{ $value->instruction->name }}
+                    <br>
+                @empty
+                @endforelse
+            </td>
+        </tr>
+        <tr>
+        <td>Reviews</td><td colspan="5">
+                @forelse($ds->reviews as $key => $value)
+                    {{ $key.' Review Date' }}
+                    {{ $value->review_date->format('d.m.Y') }}
+                    {{ $key.' Review time' }}
+                    {{ $value->review_time }}
+                    <br>
+                @empty
+                @endforelse
+            </td>
+        </tr>
+        <tr>
+            <td>Special Instruction</td><td colspan="5">{{ $ds->special_instruction }}</td>
+        </tr>
+        <tr>
+            <td colspan="6">For emergency please contact: +91 9188836222</td>
+        </tr>
+    </table>
+</body>
+</html>

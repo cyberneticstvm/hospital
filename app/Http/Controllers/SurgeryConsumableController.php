@@ -28,9 +28,11 @@ class SurgeryConsumableController extends Controller
          $this->middleware('permission:surgery-consumable-create', ['only' => ['create','store']]);
          $this->middleware('permission:surgery-consumable-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:surgery-consumable-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:surgery-consumable-surgery-list', ['only' => ['showsurgeryconsumable']]);
          $this->middleware('permission:surgery-consumable-surgery-create', ['only' => ['savesurgeryconsumable']]);
          $this->middleware('permission:surgery-consumable-surgery-edit', ['only' => ['editsurgeryconsumable', 'updatesurgeryconsumable']]);
          $this->middleware('permission:surgery-consumable-surgery-delete', ['only' => ['deletesurgeryconsumable']]);
+         $this->middleware('permission:patient-surgery-consumable-list', ['only' => ['patientsurgeryconsumablelist']]);
          $this->middleware('permission:patient-surgery-consumable-create', ['only' => ['patientsurgeryconsumablefetch', 'patientsurgeryconsumablecreate', 'patientsurgeryconsumablelistshow', 'patientsurgeryconsumablelistsave']]);
          $this->middleware('permission:patient-surgery-consumable-edit', ['only' => ['patientsurgeryconsumablelistedit', 'patientsurgeryconsumablelistupdate']]);
          $this->middleware('permission:patient-surgery-consumable-delete', ['only' => ['patientsurgeryconsumablelistdelete']]);
