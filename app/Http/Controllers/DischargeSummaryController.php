@@ -22,13 +22,13 @@ class DischargeSummaryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*function __construct()
+    function __construct()
     {
          $this->middleware('permission:discharge-summary-list|discharge-summary-create|discharge-summary-edit|discharge-summary-delete', ['only' => ['index','store']]);
          $this->middleware('permission:discharge-summary-create', ['only' => ['create','store']]);
          $this->middleware('permission:discharge-summary-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:discharge-summary-delete', ['only' => ['destroy']]);
-    }*/
+    }
 
     public function index()
     {
