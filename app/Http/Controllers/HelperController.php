@@ -104,22 +104,17 @@ class HelperController extends Controller
         echo $html;
     }
     public function getStockOutDetailed($product, $batch, $branch){
-        $outs = collect();
-        if($branch == 0):
-            $outs = DB::table('product_transfer_details as pd')->leftJoin('product_transfers as pt', 'pt.id', '=', 'pd.transfer_id')->leftJoin('products as pr', 'pr.id', '=', 'pd.product')->leftJoin('branches as b', 'b.id', '=', 'to_branch')->selectRaw("'Transfer' AS type, pd.qty, pd.batch_number, pr.product_name, DATE_FORMAT(pt.transfer_date, '%d/%b/%Y') AS pdate, b.branch_name")->where('pt.from_branch', $branch)->where('pd.product', $product)->where('pd.batch_number', $batch)->orderBy('pt.transfer_date')->get();
-        else:
+        $outs = DB::table('product_transfer_details as pd')->leftJoin('product_transfers as pt', 'pt.id', '=', 'pd.transfer_id')->leftJoin('products as pr', 'pr.id', '=', 'pd.product')->leftJoin('branches as b', 'b.id', '=', 'to_branch')->selectRaw("'Transfer' AS type, pd.qty, pd.batch_number, pr.product_name, DATE_FORMAT(pt.transfer_date, '%d/%b/%Y') AS pdate, b.branch_name")->where('pt.from_branch', $branch)->where('pd.product', $product)->where('pd.batch_number', $batch)->orderBy('pt.transfer_date');
 
-        endif;
-
-        /*$meds = DB::table("patient_medicine_records as m")->leftjoin('patient_medical_records as pmr', 'pmr.id', '=', 'm.medical_record_id')->leftJoin('products as pr', 'pr.id', '=', 'm.medicine')->selectRaw("'Medicine' AS type, m.qty, m.batch_number, pr.product_name, DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS pdate, m.medical_record_id AS branch_name")->where('pmr.branch', $branch)->where('m.medicine', $product)->where('m.batch_number', $batch)->unionAll($outs);
+        $meds = DB::table("patient_medicine_records as m")->leftjoin('patient_medical_records as pmr', 'pmr.id', '=', 'm.medical_record_id')->leftJoin('products as pr', 'pr.id', '=', 'm.medicine')->selectRaw("'Medicine' AS type, m.qty, m.batch_number, pr.product_name, DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS pdate, m.medical_record_id AS branch_name")->where('pmr.branch', $branch)->where('m.medicine', $product)->where('m.batch_number', $batch)->unionAll($outs);
 
         $pharmacy = DB::table("pharmacy_records as pr")->leftjoin('pharmacies as p', 'p.id', '=', 'pr.pharmacy_id')->leftJoin('products as pro', 'pro.id', '=', 'pr.product')->selectRaw("'Med Out' AS type, pr.qty, pr.batch_number, pro.product_name, DATE_FORMAT(p.created_at, '%d/%b/%Y') AS pdate, p.patient_name AS branch_name")->where('p.branch', $branch)->where('pr.product', $product)->where('pr.batch_number', $batch)->unionAll($meds);
 
-        $surgery = DB::table("post_operative_medicine_details as pd")->leftJoin("post_operative_medicines as pm", 'pm.id', '=', 'pd.pom_id')->leftJoin('products as pro', 'pro.id', '=', 'pd.product')->selectRaw("pm.type, pd.qty, pd.batch_number, pro.product_name, DATE_FORMAT(pm.created_at, '%d/%b/%Y') AS pdate, pm.medical_record_id AS branch_name")->where('pm.branch', $branch)->where('pd.product', $product)->where('pd.batch_number', $batch)->where('pm.bill_generated', 1)->unionAll($pharmacy)->get();*/
+        $surgery = DB::table("post_operative_medicine_details as pd")->leftJoin("post_operative_medicines as pm", 'pm.id', '=', 'pd.pom_id')->leftJoin('products as pro', 'pro.id', '=', 'pd.product')->selectRaw("pm.type, pd.qty, pd.batch_number, pro.product_name, DATE_FORMAT(pm.created_at, '%d/%b/%Y') AS pdate, pm.medical_record_id AS branch_name")->where('pm.branch', $branch)->where('pd.product', $product)->where('pd.batch_number', $batch)->where('pm.bill_generated', 1)->unionAll($pharmacy)->get();
 
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>Product</th><th>Batch Number</th><th>Transfer Date</th><th>Trans. To</th><th>Type</th><th>Qty</th></tr></thead><tbody>";
         $c = 1;
-        foreach($outs as $key => $record):
+        foreach($surgery as $key => $record):
             $html .= "<tr>";
                 $html .= "<td>".$c++."</td>";
                 $html .= "<td>".$record->product_name."</td>";
