@@ -104,8 +104,9 @@ class HelperController extends Controller
         echo $html;
     }
     public function getStockOutDetailed($product, $batch, $branch){
+        $outs = collect();
         if($branch == 0):
-            $outs = DB::table('product_transfer_details as pd')->leftJoin('product_transfers as pt', 'pt.id', '=', 'pd.transfer_id')->leftJoin('products as pr', 'pr.id', '=', 'pd.product')->leftJoin('branches as b', 'b.id', '=', 'to_branch')->selectRaw("'Transfer' AS type, pd.qty, pd.batch_number, pr.product_name, DATE_FORMAT(pt.transfer_date, '%d/%b/%Y') AS pdate, b.branch_name")->where('pt.from_branch', $branch)->where('pd.product', $product)->where('pd.batch_number', $batch)->orderBy('pt.transfer_date');
+            $outs = DB::table('product_transfer_details as pd')->leftJoin('product_transfers as pt', 'pt.id', '=', 'pd.transfer_id')->leftJoin('products as pr', 'pr.id', '=', 'pd.product')->leftJoin('branches as b', 'b.id', '=', 'to_branch')->selectRaw("'Transfer' AS type, pd.qty, pd.batch_number, pr.product_name, DATE_FORMAT(pt.transfer_date, '%d/%b/%Y') AS pdate, b.branch_name")->where('pt.from_branch', $branch)->where('pd.product', $product)->where('pd.batch_number', $batch)->orderBy('pt.transfer_date')->get();
         else:
 
         endif;
