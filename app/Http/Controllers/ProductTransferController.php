@@ -30,7 +30,7 @@ class ProductTransferController extends Controller
      */
     public function index()
     {
-        $transfers = DB::table('product_transfers AS t')->leftJoin('branches AS b', 't.from_branch', '=', 'b.id')->leftJoin('branches AS b1', 't.to_branch', '=', 'b1.id')->where('t.from_branch', $this->branch)->select('t.id', 't.transfer_note AS tnote', DB::raw("CASE WHEN t.from_branch = 0 THEN 'Main Stock' ELSE b.branch_name END AS from_branch"), DB::raw("CASE WHEN t.to_branch = 0 THEN 'Main Stock' ELSE b1.branch_name END AS to_branch"), 't.transfer_date AS tdate')->orderBy('t.transfer_date','DESC')->get();
+        $transfers = DB::table('product_transfers AS t')->leftJoin('branches AS b', 't.from_branch', '=', 'b.id')->leftJoin('branches AS b1', 't.to_branch', '=', 'b1.id')->where('t.from_branch', 0)->select('t.id', 't.transfer_note AS tnote', DB::raw("CASE WHEN t.from_branch = 0 THEN 'Main Stock' ELSE b.branch_name END AS from_branch"), DB::raw("CASE WHEN t.to_branch = 0 THEN 'Main Stock' ELSE b1.branch_name END AS to_branch"), 't.transfer_date AS tdate')->orderBy('t.transfer_date','DESC')->get();
         return view('product-transfer.index', compact('transfers'));
     }
 
