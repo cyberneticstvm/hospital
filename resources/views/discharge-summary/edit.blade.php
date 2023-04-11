@@ -59,13 +59,16 @@
                                     <label class="form-label">General Examination</label>
                                     <input class="form-control" type="text" value="{{ $ds->general_examination }}" name="general_examination" placeholder="General Examination"/>
                                 </div>                              
-                                <div class="col-sm-12">
+                                <div class="col-sm-11">
                                     @php $olds = explode(',', $mrecord->diagnosis); @endphp
                                     <label class="form-label">Diagnosis<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
-                                    {!! Form::select('diagnosis[]', $diagnosis,  $ds->diagnosis()->pluck('diagnosis')->toArray(), ['class' => 'form-control select2', 'multiple']) !!}
+                                    {!! Form::select('diagnosis[]', $diagnosis,  $ds->diagnosis()->pluck('diagnosis')->toArray(), ['class' => 'form-control select2', 'multiple', 'id' => 'diagnosisSelect']) !!}
                                     @error('diagnosis')
                                     <small class="text-danger">{{ $errors->first('diagnosis') }}</small>
                                     @enderror
+                                </div>
+                                <div class="col-sm-1">
+                                    <a data-bs-toggle="modal" href="#diagnosisModal"><i class="fa fa-plus fa-lg text-success"></i></a>
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Procedures<sup class="text-danger">*</sup><small class="text-info">(Multiple selection enabled)</small></label>
@@ -98,12 +101,12 @@
                                 @forelse($ds->medicines as $key => $value)
                                 <div class="row mt-3">
                                     <div class="col-sm-4">
-                                        <label class="form-label">Medication</label>
+                                        @if($key == 0)<label class="form-label">Medication</label>@endif
                                         {!! Form::select('product_id[]', $medicines,  $value->id, ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => 'required']) !!}
                                     </div>
                                     <div class="col-sm-7">
-                                        <label class="form-label">Notes</label>
-                                        <input type="text" class="form-control" placeholder="Notes" value="{{ $value->notes }}" name="notes[]" required/>
+                                        @if($key == 0)<label class="form-label">Dosage</label>@endif
+                                        <input type="text" class="form-control" placeholder="Dosage" value="{{ $value->notes }}" name="notes[]" required/>
                                     </div>
                                     <div class='col-sm-1'><a href='javascript:void(0)' onClick="$(this).parent().parent().remove()"><i class='fa fa-trash text-danger'></i></a></div>
                                 </div>
@@ -121,7 +124,7 @@
                                 @forelse($ds->reviews as $key => $value)
                                 <div class="col-sm-3">
                                     <label class="form-label">{{ $key+1 }} Review Date</label>
-                                    <input type="date" name="review_date[]" value="{{ $value->review_date }}" class="form-control">
+                                    <input type="date" name="review_date[]" value="{{ $value->review_date->format('Y-m-d') }}" class="form-control">
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">{{ $key+1 }} Review Time</label>
@@ -133,6 +136,10 @@
                                     <label class="form-label">Special Instructions</label>
                                     <textarea class="form-control" name="special_instruction" rows="10">{{ $ds->special_instruction }}
                                     </textarea>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Doctor</label>
+                                    {!! Form::select('doctor', $doctors->pluck('doctor_name', 'id'),  $ds->doctor, ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => 'required']) !!}
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
@@ -147,6 +154,33 @@
                 </div>
             </div>
         </div> <!-- .row end -->
+    </div>
+</div>
+<div class="modal fade" id="diagnosisModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form name="frm-diagnosis" id="frm-diagnosis" action="/symptom/create/">
+                <input type="hidden" class="ddl" value="diagnosisSelect" />
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="exampleModalLiveLabel">Add Diagnosis</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <div class="col">
+                            <label class="form-label">Diagnosis Name<sup class="text-danger">*</sup></label>
+                            <input type="text" class="form-control form-control-md" name="diagnosis_name" placeholder="Diagnosis Name"/>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col message text-success"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ajax-submit btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 @endsection

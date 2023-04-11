@@ -62,7 +62,6 @@ class ProcedureController extends Controller
             'fee' => 'required',
         ]);
         $input = $request->all();
-        $input['type'] = 'P';
         $proc = Procedure::create($input);
         return redirect()->route('procedure.index')
                         ->with('success','Procedure created successfully');
@@ -118,7 +117,6 @@ class ProcedureController extends Controller
             'fee' => 'required',
         ]);
         $input = $request->all();
-        $input['type'] = 'P';
         $proc = Procedure::find($id);
         $proc->update($input);
         return redirect()->route('procedure.index')

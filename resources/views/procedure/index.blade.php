@@ -22,7 +22,14 @@
                                     @error('name')
                                     <small class="text-danger">{{ $errors->first('name') }}</small>
                                     @enderror
-                                </div>                                
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Type</label>
+                                    <select class="form-control" name="type">
+                                        <option value="P" {{ ($proc && $proc->type == 'P') ? 'selected' : '' }}>Select</option>
+                                        <option value="S" {{ ($proc && $proc->type == 'S') ? 'selected' : '' }}>Surgery</option>
+                                    </select>
+                                </div>                               
                                 <div class="col-sm-2">
                                     <label class="form-label">Fee<sup class="text-danger">*</sup></label>
                                     <input type="number" value="{{ ($proc) ? $proc->fee : old('fee') }}" name="fee" class="form-control form-control-md" step="any" placeholder="0.00">

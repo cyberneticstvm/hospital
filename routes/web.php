@@ -23,8 +23,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DischargeSummaryController;
 use App\Http\Controllers\InhouseCampController;
 use App\Http\Controllers\SurgeryConsumableController;
-use App\Http\Controllers\TestAdvisedController;
-
+use App\Http\Controllers\PostOperativeInstructionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -570,6 +569,15 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::put('/patient/surgery/consumable/edit/{id}', [SurgeryConsumableController::class, 'patientsurgeryconsumablelistupdate'])->name('patient.surgey.consumable.update');
     Route::delete('/patient/surgery/consumable/delete/{id}', [SurgeryConsumableController::class, 'patientsurgeryconsumablelistdelete'])->name('patient.surgey.consumable.delete');
     // End Surgery Consumables //
+
+    // Post-operative Instructions //
+    Route::get('/post-oprerative-instruction', [PostOperativeInstructionController::class, 'index'])->name('poi.index');
+    Route::get('/post-oprerative-instruction/create', [PostOperativeInstructionController::class, 'create'])->name('poi.show');
+    Route::post('/post-oprerative-instruction/create', [PostOperativeInstructionController::class, 'store'])->name('poi.save');
+    Route::get('/post-oprerative-instruction/edit/{id}', [PostOperativeInstructionController::class, 'edit'])->name('poi.edit');
+    Route::put('/post-oprerative-instruction/edit/{id}', [PostOperativeInstructionController::class, 'update'])->name('poi.update');
+    Route::delete('/post-oprerative-instruction/delete/{id}', [PostOperativeInstructionController::class, 'destroy'])->name('poi.delete');
+    // End post-operative instructions //
 
     // Discharge Summary //
     Route::get('/discharge-summary', [DischargeSummaryController::class, 'index'])->name('dsummary.index');

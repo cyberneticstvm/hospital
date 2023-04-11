@@ -46,12 +46,12 @@
             <td>Name/Age/Gender</td><td>{{ $ds->patient->patient_name }} / {{ $ds->patient->age }} / {{ $ds->patient->gender }}</td>
         </tr>
         <tr>
-            <td>Address</td><td colspan="5">{{ $ds->patient->address }}</td>
+            <td>Address</td><td colspan="3">{{ $ds->patient->address }}</td><td>Hospital ID</td><td>HOSP32P155802</td>
         </tr>
         <tr>
-            <td>D.O.A</td><td>{{ $ds->doa->format('d.m.Y') }}</td>
-            <td>D.O.S</td><td>{{ $ds->dos->format('d.m.Y') }}</td>
-            <td>D.O.D</td><td>{{ $ds->dod->format('d.m.Y') }}</td>
+            <td>D.O.A</td><td>{{ ($ds->doa) ? $ds->doa->format('d.m.Y') : '' }}</td>
+            <td>D.O.S</td><td>{{ ($ds->dos) ? $ds->dos->format('d.m.Y') : '' }}</td>
+            <td>D.O.D</td><td>{{ ($ds->dod) ? $ds->dod->format('d.m.Y') : '' }}</td>
         </tr>
         <tr>
             <td>Reason for Admission</td><td colspan="5">{{ $ds->reason_for_admission }}</td>
@@ -98,11 +98,18 @@
         <tr>
         <td>Reviews</td><td colspan="5">
                 @forelse($ds->reviews as $key => $value)
-                    {{ $key.' Review Date' }}
-                    {{ $value->review_date->format('d.m.Y') }}
-                    {{ $key.' Review time' }}
-                    {{ $value->review_time }}
-                    <br>
+                    @php
+                        $times = 'First';
+                        if($key == 1):
+                            $times = 'Second';
+                        elseif($key == 2):
+                            $times = 'Third';
+                        endif;
+                    @endphp
+                    <table width="100%" cellpadding='0' cellspacing='0' class="text-large"><tr><td>{{ $times.' Review Date' }}</td>
+                    <td>{{ ($value && $value->review_date) ? $value->review_date->format('d.m.Y') : '' }}</td>
+                    <td>{{ $times.' Review time' }}</td>
+                    <td>{{ $value->review_time }}</td></tr></table>
                 @empty
                 @endforelse
             </td>
@@ -114,5 +121,11 @@
             <td colspan="6">For emergency please contact: +91 9188836222</td>
         </tr>
     </table>
+    <br><br>
+    <div class="text-right">
+        {{ $ds->doctors->doctor_name }}<br>
+        {{ $ds->doctors->designation }}<br>
+        Reg. No: {{ $ds->doctors->reg_no }}<br>
+    </div>
 </body>
 </html>

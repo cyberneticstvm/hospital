@@ -24,6 +24,7 @@ class DischargeSummary extends Model
         'general_examination',
         'discharge_condition',
         'special_instruction',
+        'doctor',
         'created_by',
         'updated_by',
     ];
@@ -54,6 +55,10 @@ class DischargeSummary extends Model
 
     public function reviews(){
         return $this->hasMany(DischargeSummaryReview::class, 'summary_id', 'id');
+    }
+
+    public function doctors(){
+        return $this->hasOne(doctor::class, 'id', 'doctor');
     }
 
     protected $casts = ['doa' => 'date', 'dos' => 'date', 'dod' => 'date'];

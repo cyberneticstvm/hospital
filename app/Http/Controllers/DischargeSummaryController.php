@@ -8,6 +8,7 @@ use App\Models\DischargeSummaryInstruction;
 use App\Models\DischargeSummaryMedication;
 use App\Models\DischargeSummaryProcedure;
 use App\Models\DischargeSummaryReview;
+use App\Models\doctor;
 use App\Models\PatientMedicalRecord;
 use App\Models\PostOperativeInstruction;
 use Illuminate\Http\Request;
@@ -124,10 +125,11 @@ class DischargeSummaryController extends Controller
         if($mrecord):
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $diagnosis = DB::table('diagnosis')->pluck('diagnosis_name', 'id')->all();
-            $procedures = DB::table('procedures')->pluck('name', 'id')->all();
+            $procedures = DB::table('procedures')->where('type', 'S')->pluck('name', 'id')->all();
             $medicines = DB::table('products')->pluck('product_name', 'id')->all();
             $postinstructions = PostOperativeInstruction::all();
-            return view('discharge-summary.create', compact('mrecord', 'patient', 'diagnosis', 'procedures', 'medicines', 'postinstructions'));
+            $doctors = doctor::all();
+            return view('discharge-summary.create', compact('mrecord', 'patient', 'diagnosis', 'procedures', 'medicines', 'postinstructions', 'doctors'));
         else:
             return redirect()->back()->withErrors("No records found")->withInput($request->all());
         endif;
@@ -145,10 +147,11 @@ class DischargeSummaryController extends Controller
         $mrecord = PatientMedicalRecord::find($ds->medical_record_id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $diagnosis = DB::table('diagnosis')->pluck('diagnosis_name', 'id')->all();
-        $procedures = DB::table('procedures')->pluck('name', 'id')->all();
+        $procedures = DB::table('procedures')->where('type', 'S')->pluck('name', 'id')->all();
         $medicines = DB::table('products')->pluck('product_name', 'id')->all();
         $postinstructions = PostOperativeInstruction::all();
-        return view('discharge-summary.edit', compact('mrecord', 'patient', 'diagnosis', 'procedures', 'medicines', 'postinstructions', 'ds'));
+        $doctors = doctor::all();
+        return view('discharge-summary.edit', compact('mrecord', 'patient', 'diagnosis', 'procedures', 'medicines', 'postinstructions', 'ds', 'doctors'));
     }
 
     /**

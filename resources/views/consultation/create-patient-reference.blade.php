@@ -57,7 +57,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-3">
-                                    <label class="form-label">Camp Type {{ $appid }}<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Camp Type<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="camp_id">
                                     <option value="0">Select</option>
                                     @foreach($camps as $camp)
