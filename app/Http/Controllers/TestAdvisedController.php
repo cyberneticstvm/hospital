@@ -9,6 +9,14 @@ use DB;
 
 class TestAdvisedController extends Controller
 {
+    /*function __construct(){
+        $this->middleware('permission:tests-advised-list|tonometry-create|tonometry-edit|tonometry-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:tonometry-create', ['only' => ['create','store']]);
+        $this->middleware('permission:tonometry-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:tonometry-delete', ['only' => ['destroy']]);
+        $this->branch = session()->get('branch');
+    }*/
+
     public function index(){
         $tests = TestsAdvised::where('status', 'Pending')->orderByDesc('created_at')->get();
         return view('tests-advised.index', compact('tests'));

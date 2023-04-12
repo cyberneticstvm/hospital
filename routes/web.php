@@ -24,6 +24,7 @@ use App\Http\Controllers\DischargeSummaryController;
 use App\Http\Controllers\InhouseCampController;
 use App\Http\Controllers\SurgeryConsumableController;
 use App\Http\Controllers\PostOperativeInstructionController;
+use App\Http\Controllers\TestAdvisedController;
 
 /*
 |--------------------------------------------------------------------------
