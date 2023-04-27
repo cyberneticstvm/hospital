@@ -46,7 +46,7 @@
             <td>Name/Age/Gender</td><td>{{ $ds->patient->patient_name }} / {{ $ds->patient->age }} / {{ $ds->patient->gender }}</td>
         </tr>
         <tr>
-            <td>Address</td><td colspan="3">{{ $ds->patient->address }}</td><td>Hospital ID</td><td>HOSP32P155802</td>
+            <td>Address</td><td>{{ $ds->patient->address }}</td><td>Hospital ID</td><td>HOSP32P155802</td><td>Date</td><td>{{ $ds->created_at->format('d-m-Y') }}</td>
         </tr>
         <tr>
             <td>D.O.A</td><td>{{ ($ds->doa) ? $ds->doa->format('d.m.Y') : '' }}</td>
@@ -123,9 +123,9 @@
     </table>
     <br><br>
     <div class="text-right">
-        {{ $ds->doctors->doctor_name }}<br>
-        {{ $ds->doctors->designation }}<br>
-        Reg. No: {{ $ds->doctors->reg_no }}<br>
+        {{ ($ds->doctors) ? $ds->doctors->doctor_name : '' }}<br>
+        {{ ($ds->doctors) ? $ds->doctors->designation : '' }}<br>
+        Reg. No: {{ ($ds->doctors) ? $ds->doctors->reg_no : '' }}<br>
     </div>
 </body>
 </html>
