@@ -113,7 +113,7 @@
                                         <input type="text" class="form-control" placeholder="Dosage" value="{{ $value->notes }}" name="notes[]" required/>
                                     </div>
                                     <div class="col-sm-2">
-                                        @if($key == 0)<label class="form-label">Notes<sup class="text-danger">*</sup></label>@endif
+                                        @if($key == 0)<label class="form-label">Notes</label>@endif
                                         <input type="text" class="form-control" placeholder="Notes" name="qty[]" value="{{ $value->qty }}" required/>
                                     </div>
                                     <div class='col-sm-1'><a href='javascript:void(0)' onClick="$(this).parent().parent().remove()"><i class='fa fa-trash text-danger'></i></a></div>

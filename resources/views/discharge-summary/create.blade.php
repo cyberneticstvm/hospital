@@ -110,7 +110,7 @@
                                     <input type="text" class="form-control" placeholder="Dosage" name="notes[]" required/>
                                 </div>
                                 <div class="col-sm-2">
-                                    <label class="form-label">Notes<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Notes</label>
                                     <input type="text" class="form-control" placeholder="Notes" name="qty[]" required/>
                                 </div>
                             </div>
