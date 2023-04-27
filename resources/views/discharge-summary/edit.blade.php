@@ -61,7 +61,7 @@
                                 </div>                              
                                 <div class="col-sm-11">
                                     @php $olds = explode(',', $mrecord->diagnosis); @endphp
-                                    <label class="form-label">Diagnosis<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
+                                    <label class="form-label">Diagnosis<small class="text-info">(Multiple selection enabled)</small></label>
                                     {!! Form::select('diagnosis[]', $diagnosis,  $ds->diagnosis()->pluck('diagnosis')->toArray(), ['class' => 'form-control select2', 'multiple', 'id' => 'diagnosisSelect']) !!}
                                     @error('diagnosis')
                                     <small class="text-danger">{{ $errors->first('diagnosis') }}</small>
@@ -71,7 +71,7 @@
                                     <a data-bs-toggle="modal" href="#diagnosisModal"><i class="fa fa-plus fa-lg text-success"></i></a>
                                 </div>
                                 <div class="col-sm-12">
-                                    <label class="form-label">Procedures<sup class="text-danger">*</sup><small class="text-info">(Multiple selection enabled)</small></label>
+                                    <label class="form-label">Procedures<small class="text-info">(Multiple selection enabled)</small></label>
                                     {!! Form::select('procedures[]', $procedures,  $ds->procedures()->pluck('procedure')->toArray(), ['class' => 'form-control select2', 'multiple']) !!}
                                     @error('procedures')
                                     <small class="text-danger">{{ $errors->first('procedures') }}</small>
@@ -82,7 +82,7 @@
                                     <input class="form-control" type="text" value="{{ $ds->discharge_condition }}" name="discharge_condition" placeholder="Condition at Discharge"/>
                                 </div>
                                 <div class="col-sm-9">
-                                    <label class="form-label">Medication</label>
+                                    <label class="form-label">Medication<sup class="text-danger">*</sup></label>
                                     <select class="form-control" name="medication" required>
                                         <option value="">Select</option>
                                         <option value="Left Eye Only" {{ ($ds->medication == 'Left Eye Only') ? 'selected' : '' }}>Left Eye Only</option>
@@ -101,11 +101,11 @@
                                 @forelse($ds->medicines as $key => $value)
                                 <div class="row mt-3">
                                     <div class="col-sm-4">
-                                        @if($key == 0)<label class="form-label">Medication</label>@endif
+                                        @if($key == 0)<label class="form-label">Medication<sup class="text-danger">*</sup></label>@endif
                                         {!! Form::select('product_id[]', $medicines,  $value->id, ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => 'required']) !!}
                                     </div>
                                     <div class="col-sm-7">
-                                        @if($key == 0)<label class="form-label">Dosage</label>@endif
+                                        @if($key == 0)<label class="form-label">Dosage<sup class="text-danger">*</sup></label>@endif
                                         <input type="text" class="form-control" placeholder="Dosage" value="{{ $value->notes }}" name="notes[]" required/>
                                     </div>
                                     <div class='col-sm-1'><a href='javascript:void(0)' onClick="$(this).parent().parent().remove()"><i class='fa fa-trash text-danger'></i></a></div>
@@ -124,7 +124,7 @@
                                 @forelse($ds->reviews as $key => $value)
                                 <div class="col-sm-3">
                                     <label class="form-label">{{ $key+1 }} Review Date</label>
-                                    <input type="date" name="review_date[]" value="{{ $value->review_date->format('Y-m-d') }}" class="form-control">
+                                    <input type="date" name="review_date[]" value="{{ ($value && $value->review_date) ? $value->review_date->format('Y-m-d') : '' }}" class="form-control">
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">{{ $key+1 }} Review Time</label>
@@ -138,7 +138,7 @@
                                     </textarea>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label class="form-label">Doctor</label>
+                                    <label class="form-label">Doctor<sup class="text-danger">*</sup></label>
                                     {!! Form::select('doctor', $doctors->pluck('doctor_name', 'id'),  $ds->doctor, ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => 'required']) !!}
                                 </div>
                             </div>

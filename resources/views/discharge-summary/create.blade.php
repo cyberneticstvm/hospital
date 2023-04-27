@@ -60,7 +60,7 @@
                                 </div>                              
                                 <div class="col-sm-11">
                                     @php $olds = explode(',', $mrecord->diagnosis); @endphp
-                                    <label class="form-label">Diagnosis<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
+                                    <label class="form-label">Diagnosis<small class="text-info">(Multiple selection enabled)</small></label>
                                     {!! Form::select('diagnosis[]', $diagnosis,  $olds, ['class' => 'form-control select2', 'multiple', 'id' => 'diagnosisSelect']) !!}
                                     @error('diagnosis')
                                     <small class="text-danger">{{ $errors->first('diagnosis') }}</small>
@@ -70,7 +70,7 @@
                                     <a data-bs-toggle="modal" href="#diagnosisModal"><i class="fa fa-plus fa-lg text-success"></i></a>
                                 </div>
                                 <div class="col-sm-12">
-                                    <label class="form-label">Procedures<sup class="text-danger">*</sup><small class="text-info">(Multiple selection enabled)</small></label>
+                                    <label class="form-label">Procedures<small class="text-info">(Multiple selection enabled)</small></label>
                                     {!! Form::select('procedures[]', $procedures,  $mrecord->procedures()->pluck('procedure')->toArray(), ['class' => 'form-control select2', 'multiple']) !!}
                                     @error('procedures')
                                     <small class="text-danger">{{ $errors->first('procedures') }}</small>
@@ -81,7 +81,7 @@
                                     <input class="form-control" type="text" name="discharge_condition" placeholder="Condition at Discharge"/>
                                 </div>
                                 <div class="col-sm-9">
-                                    <label class="form-label">Medication</label>
+                                    <label class="form-label">Medication<sup class="text-danger">*</sup></label>
                                     <select class="form-control" name="medication" required>
                                         <option value="">Select</option>
                                         <option value="Left Eye Only">Left Eye Only</option>
@@ -98,11 +98,11 @@
                             </div>
                             <div class="row g-4 mt-1 medication">
                                 <div class="col-sm-4">
-                                    <label class="form-label">Medication</label>
+                                    <label class="form-label"><sup class="text-danger">*</sup>Medication</label>
                                     {!! Form::select('product_id[]', $medicines,  '', ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => 'required']) !!}
                                 </div>
                                 <div class="col-sm-7">
-                                    <label class="form-label">Dosage</label>
+                                    <label class="form-label">Dosage<sup class="text-danger">*</sup></label>
                                     <input type="text" class="form-control" placeholder="Dosage" name="notes[]" required/>
                                 </div> 
                             </div>
@@ -144,8 +144,8 @@
                                     </textarea>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label class="form-label">Doctor</label>
-                                    {!! Form::select('doctor[]', $doctors->pluck('doctor_name', 'id'),  '', ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => 'required']) !!}
+                                    <label class="form-label">Doctor<sup class="text-danger">*</sup></label>
+                                    {!! Form::select('doctor', $doctors->pluck('doctor_name', 'id'),  '', ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => 'required']) !!}
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">

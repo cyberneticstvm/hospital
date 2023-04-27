@@ -41,12 +41,15 @@
     </center>
     <table width="100%" cellpadding='0' cellspacing='0' class="text-large bordered">
         <tr>
-            <td>Medical Record No</td><td>{{ $ds->medical_record_id }}</td>
-            <td>Patient ID</td><td>{{ $ds->patient->patient_id }}</td>
-            <td>Name/Age/Gender</td><td>{{ $ds->patient->patient_name }} / {{ $ds->patient->age }} / {{ $ds->patient->gender }}</td>
+            <td>Medical Record No</td><td colspan="3">{{ $ds->medical_record_id }}</td>
+            <td>Patient ID</td><td>{{ $ds->patient->patient_id }}</td>            
         </tr>
         <tr>
-            <td>Address</td><td>{{ $ds->patient->address }}</td><td>Hospital ID</td><td>HOSP32P155802</td><td>Date</td><td>{{ $ds->created_at->format('d-m-Y') }}</td>
+            <td>Name/Age/Gender</td><td colspan="3">{{ $ds->patient->patient_name }} / {{ $ds->patient->age }} / {{ $ds->patient->gender }}</td>
+            <td>Date</td><td>{{ $ds->created_at->format('d-m-Y') }}</td>
+        </tr>
+        <tr>
+            <td>Address</td><td colspan="3">{{ $ds->patient->address }}</td><td>Hospital ID</td><td>HOSP32P155802</td>
         </tr>
         <tr>
             <td>D.O.A</td><td>{{ ($ds->doa) ? $ds->doa->format('d.m.Y') : '' }}</td>
