@@ -107,14 +107,14 @@
                                     <div class="col-sm-3">
                                         @if($key == 0)<label class="form-label">Medicine<sup class="text-danger">*</sup></label>@endif
                                         {!! Form::select('product_id[]', $medicines,  $value->medicine, ['class' => 'form-control select2 medAdvised', 'placeholder' => 'Select', 'required' => 'required']) !!}
-                                    </div>
-                                    <div class="col-sm-2">
-                                        @if($key == 0)<label class="form-label">Qty<sup class="text-danger">*</sup></label>@endif
-                                        <input type="number" class="form-control" placeholder="0" step='any' name="qty[]" value="{{ $value->qty }}" required/>
-                                    </div>
+                                    </div>                                    
                                     <div class="col-sm-3">
                                         @if($key == 0)<label class="form-label">Dosage<sup class="text-danger">*</sup></label>@endif
                                         <input type="text" class="form-control" placeholder="Dosage" value="{{ $value->notes }}" name="notes[]" required/>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @if($key == 0)<label class="form-label">Notes<sup class="text-danger">*</sup></label>@endif
+                                        <input type="text" class="form-control" placeholder="Notes" name="qty[]" value="{{ $value->qty }}" required/>
                                     </div>
                                     <div class='col-sm-1'><a href='javascript:void(0)' onClick="$(this).parent().parent().remove()"><i class='fa fa-trash text-danger'></i></a></div>
                                 </div>

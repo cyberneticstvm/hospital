@@ -84,7 +84,7 @@
             <td></td><td colspan="5">
                 @forelse($ds->medicines as $key => $value)
                     @php $type = DB::table('medicine_types')->where('id', $value->type)->first(); @endphp
-                    {{ $type->name.' - '.$value->product->product_name.' - '.$value->qty.' - '.$value->notes }}
+                    {{ $type->name.' - '.$value->product->product_name.' - '.$value->notes.' - '.$value->qty }}
                     <br>
                 @empty
                 @endforelse
