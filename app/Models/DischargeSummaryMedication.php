@@ -12,6 +12,8 @@ class DischargeSummaryMedication extends Model
     protected $fillable = [
         'summary_id',
         'medicine',
+        'type',
+        'qty',
         'notes',
     ];
 

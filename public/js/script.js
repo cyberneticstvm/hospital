@@ -140,9 +140,9 @@ $(function() {
     });
 
     $(".addMedication").click(function(){
-        $(".medication").append("<div class='row mt-3'><div class='col-sm-4'><select class='form-control form-control-md select2 selMedicine' data-placeholder='Select' name='product_id[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-7'><input type='text' class='form-control' name='notes[]' placeholder='Dosage' required></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");
-        $('.selMedicine').select2();
-        bindDDL('medicine', 'selMedicine');
+        $(".medication").append("<div class='row mt-3'><div class='col-sm-3'><select class='form-control form-control-md select2 medType' data-placeholder='Select' name='medicine_type[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-3'><select class='form-control form-control-md select2 medAdvised' data-placeholder='Select' name='product_id[]' required='required'><option value=''>Select</option></select></div><div class='col-md-2'><input type='number' class='form-control' placeholder='0' name='qty[]' step='any' required/></div><div class='col-sm-3'><input type='text' class='form-control' name='notes[]' placeholder='Dosage' required></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></div></div>");
+        $('.medAdvised').select2(); $('.medType').select2();
+        bindDDL('medtype', 'medType');
     });
 
     $(".selFromBranch").change(function(){

@@ -97,11 +97,19 @@
                                 </div>
                             </div>
                             <div class="row g-4 mt-1 medication">
-                                <div class="col-sm-4">
-                                    <label class="form-label"><sup class="text-danger">*</sup>Medication</label>
-                                    {!! Form::select('product_id[]', $medicines,  '', ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => 'required']) !!}
+                                <div class="col-sm-3">
+                                    <label class="form-label"><sup class="text-danger">*</sup>Medicine Type</label>
+                                    {!! Form::select('medicine_type[]', $types,  '', ['class' => 'form-control select2 medType', 'placeholder' => 'Select', 'required' => 'required']) !!}
                                 </div>
-                                <div class="col-sm-7">
+                                <div class="col-sm-3">
+                                    <label class="form-label"><sup class="text-danger">*</sup>Medicine</label>
+                                    {!! Form::select('product_id[]', $medicines,  '', ['class' => 'form-control select2 medAdvised', 'placeholder' => 'Select', 'required' => 'required']) !!}
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Qty<sup class="text-danger">*</sup></label>
+                                    <input type="number" class="form-control" placeholder="0" step='any' name="qty[]" required/>
+                                </div>
+                                <div class="col-sm-3">
                                     <label class="form-label">Dosage<sup class="text-danger">*</sup></label>
                                     <input type="text" class="form-control" placeholder="Dosage" name="notes[]" required/>
                                 </div> 

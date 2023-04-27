@@ -86,6 +86,8 @@ class DischargeSummaryController extends Controller
                     $medicines [] = [
                         'summary_id' => $ds->id,
                         'medicine' => $val,
+                        'type' => $request->medicine_type[$key],
+                        'qty' => $request->qty[$key],
                         'notes' => $request->notes[$key],
                     ];
                 endforeach;
@@ -131,9 +133,10 @@ class DischargeSummaryController extends Controller
             $diagnosis = DB::table('diagnosis')->pluck('diagnosis_name', 'id')->all();
             $procedures = DB::table('procedures')->where('type', 'S')->pluck('name', 'id')->all();
             $medicines = DB::table('products')->pluck('product_name', 'id')->all();
+            $types = DB::table('medicine_types')->pluck('name', 'id')->all();
             $postinstructions = PostOperativeInstruction::all();
             $doctors = doctor::all();
-            return view('discharge-summary.create', compact('mrecord', 'patient', 'diagnosis', 'procedures', 'medicines', 'postinstructions', 'doctors'));
+            return view('discharge-summary.create', compact('mrecord', 'patient', 'diagnosis', 'procedures', 'medicines', 'postinstructions', 'doctors', 'types'));
         else:
             return redirect()->back()->withErrors("No records found")->withInput($request->all());
         endif;
@@ -154,8 +157,8 @@ class DischargeSummaryController extends Controller
         $procedures = DB::table('procedures')->where('type', 'S')->pluck('name', 'id')->all();
         $medicines = DB::table('products')->pluck('product_name', 'id')->all();
         $postinstructions = PostOperativeInstruction::all();
-        $doctors = doctor::all();
-        return view('discharge-summary.edit', compact('mrecord', 'patient', 'diagnosis', 'procedures', 'medicines', 'postinstructions', 'ds', 'doctors'));
+        $doctors = doctor::all(); $types = DB::table('medicine_types')->pluck('name', 'id')->all();
+        return view('discharge-summary.edit', compact('mrecord', 'patient', 'diagnosis', 'procedures', 'medicines', 'postinstructions', 'ds', 'doctors', 'types'));
     }
 
     /**
@@ -203,6 +206,8 @@ class DischargeSummaryController extends Controller
                     $medicines [] = [
                         'summary_id' => $ds->id,
                         'medicine' => $val,
+                        'type' => $request->medicine_type[$key],
+                        'qty' => $request->qty[$key],
                         'notes' => $request->notes[$key],
                     ];
                 endforeach;
