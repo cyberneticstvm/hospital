@@ -128,8 +128,7 @@
     <br><br>
     <div class="text-right">
         {{ ($ds->doctors) ? $ds->doctors->doctor_name : '' }}<br>
-        {{ ($ds->doctors) ? $ds->doctors->designation : '' }}<br>
-        Reg. No: {{ ($ds->doctors) ? $ds->doctors->reg_no : '' }}<br>
+        {{ ($ds->doctors) ? $ds->doctors->designation : '' }}
     </div>
 </body>
 </html>
