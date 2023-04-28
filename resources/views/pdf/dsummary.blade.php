@@ -110,10 +110,10 @@
                             $times = 'Third';
                         endif;
                     @endphp
-                    <table width="100%" cellpadding='0' cellspacing='0' class="text-large"><tr><td>{{ $times.' Review Date' }}</td>
-                    <td>{{ ($value && $value->review_date) ? $value->review_date->format('d.m.Y') : '' }}</td>
-                    <td>{{ $times.' Review time' }}</td>
-                    <td>{{ $value->review_time }}</td></tr></table>
+                    <table width="100%" cellpadding='0' cellspacing='0' class="text-large"><tr><td width="30%">{{ $times.' Review Date' }}</td>
+                    <td width="20%">{{ ($value && $value->review_date) ? $value->review_date->format('d.m.Y') : '' }}</td>
+                    <td width="30%">{{ $times.' Review time' }}</td>
+                    <td width="20%">{{ $value->review_time }}</td></tr></table>
                 @empty
                 @endforelse
             </td>
