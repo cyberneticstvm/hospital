@@ -366,7 +366,7 @@ class HelperController extends Controller
     }
     public function getPreviousDues($patient_id){
         $mrns = DB::table('patient_references')->where('patient_id', $patient_id)->orderByDesc('id')->get();
-        $owed = 0.00; $paid = DB::table('patient_payments')->where('patient_id', $patient_id)->sum('amount');
+        $owed = 0.00; $paid = DB::table('patient_payments')->where('type', '!=', 8)->where('patient_id', $patient_id)->sum('amount');
         foreach($mrns as $key => $val):
             $owed += $this->getOwedTotal($val->id);
         endforeach;
