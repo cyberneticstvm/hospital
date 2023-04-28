@@ -84,7 +84,7 @@
             <td></td><td colspan="5">
                 <table width="100%" cellpadding='0' cellspacing='0'>
                     <tbody>
-                        @php $c = 0; @endphp
+                        @php $c = 1; @endphp
                         @forelse($ds->medicines as $key => $value)
                             @php $type = DB::table('medicine_types')->where('id', $value->type)->first(); @endphp
                             <tr>
