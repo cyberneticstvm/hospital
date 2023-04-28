@@ -84,8 +84,9 @@
             <td></td><td colspan="5">
                 <table width="100%" cellpadding='0' cellspacing='0'>
                     <tbody>
+                        @php $c = 0; @endphp
                         @forelse($ds->medicines as $key => $value)
-                            @php $type = DB::table('medicine_types')->where('id', $value->type)->first(); $c = 1;@endphp
+                            @php $type = DB::table('medicine_types')->where('id', $value->type)->first(); @endphp
                             <tr>
                                 <td width="5%">{{ ($value->product->product_name != 'Repeat') ? $c++ : '' }}</td>
                                 <td width="20%">{{ ($value->product->product_name != 'Repeat') ? $type->name : '' }}</td>
