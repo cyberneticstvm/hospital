@@ -88,8 +88,8 @@
                             @php $type = DB::table('medicine_types')->where('id', $value->type)->first(); @endphp
                             <tr>
                                 <td width="20%">{{ ($value->product->product_name != 'Repeat') ? $type->name : '' }}</td>
-                                <td width="30%">{{ ($value->product->product_name != 'Repeat') ? $value->product->product_name : '' }}</td>
-                                <td width="30%">{{ $value->notes }}</td>
+                                <td width="20%">{{ ($value->product->product_name != 'Repeat') ? $value->product->product_name : '' }}</td>
+                                <td width="40%">{{ $value->notes }}</td>
                                 <td width="20%">{{ ($value->qty) ? $value->qty : '' }}</td>
                             </tr>
                         @empty
