@@ -82,12 +82,20 @@
         </tr>
         <tr>
             <td></td><td colspan="5">
-                @forelse($ds->medicines as $key => $value)
-                    @php $type = DB::table('medicine_types')->where('id', $value->type)->first(); @endphp
-                    {{ $type->name.' - '.$value->product->product_name.' - '.$value->notes.' - '.$value->qty }}
-                    <br>
-                @empty
-                @endforelse
+                <table>
+                    <tbody>
+                        @forelse($ds->medicines as $key => $value)
+                            @php $type = DB::table('medicine_types')->where('id', $value->type)->first(); @endphp
+                            <tr>
+                                <td width="20%">{{ ($value->product->product_name != 'Repeat') ? $type->name : '' }}</td>
+                                <td width="30%">{{ ($value->product->product_name != 'Repeat') ? $value->product->product_name : '' }}</td>
+                                <td width="30%">{{ $value->notes }}</td>
+                                <td width="20%">{{ ($value->qty) ? $value->qty : '' }}</td>
+                            </tr>
+                        @empty
+                        @endforelse
+                    </tbody>
+                </table>
             </td>
         </tr>
         <tr>
