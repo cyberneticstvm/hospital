@@ -85,10 +85,11 @@
                 <table width="100%" cellpadding='0' cellspacing='0'>
                     <tbody>
                         @forelse($ds->medicines as $key => $value)
-                            @php $type = DB::table('medicine_types')->where('id', $value->type)->first(); @endphp
+                            @php $type = DB::table('medicine_types')->where('id', $value->type)->first(); $c = 1;@endphp
                             <tr>
+                                <td width="5%">{{ ($value->product->product_name != 'Repeat') ? $c++ : '' }}</td>
                                 <td width="20%">{{ ($value->product->product_name != 'Repeat') ? $type->name : '' }}</td>
-                                <td width="20%">{{ ($value->product->product_name != 'Repeat') ? $value->product->product_name : '' }}</td>
+                                <td width="15%">{{ ($value->product->product_name != 'Repeat') ? $value->product->product_name : '' }}</td>
                                 <td width="40%">{{ $value->notes }}</td>
                                 <td width="20%">{{ ($value->qty) ? $value->qty : '' }}</td>
                             </tr>
