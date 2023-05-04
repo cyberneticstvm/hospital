@@ -95,8 +95,8 @@ class PatientPaymentController extends Controller
             'medical_record_id' => 'required',
         ]);
         $heads = DB::table('income_expense_heads')->where('type', 'I')->where('category', 'patient')->orderBy('name')->get();
-        $pmodes = DB::table('payment_modes')->where('id', '!=', 8)->orderBy('name')->get();
-        $types = DB::table('payment_modes')->where('id', '=', 8)->orderBy('name')->get();
+        $pmodes = DB::table('payment_modes')->whereIn('id', [1,2,3,4,5,6,7])->orderBy('name')->get();
+        $types = DB::table('payment_modes')->whereIn('id', [8,9])->orderBy('name')->get();
         $medical_record_id = $request->medical_record_id;
         $patient = DB::table('patient_registrations as pr')->leftJoin('patient_medical_records as pmr', 'pmr.patient_id', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->select('pr.id', 'pr.patient_name', 'pr.patient_id', 'pmr.branch', DB::raw("DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS cdate"))->first();
 
@@ -141,8 +141,8 @@ class PatientPaymentController extends Controller
     public function edit($id)
     {
         $payment = PP::find($id);
-        $pmodes = DB::table('payment_modes')->where('id', '!=', 8)->orderBy('name')->get();
-        $types = DB::table('payment_modes')->where('id', '=', 8)->orderBy('name')->get();
+        $pmodes = DB::table('payment_modes')->whereIn('id', [1,2,3,4,5,6,7])->orderBy('name')->get();
+        $types = DB::table('payment_modes')->whereIn('id', [8,9])->orderBy('name')->get();
         $patient = DB::table('patient_registrations')->find($payment->patient_id);
         return view('patient-payment.edit', compact('payment', 'pmodes', 'patient', 'types'));
     }
