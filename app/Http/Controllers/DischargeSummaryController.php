@@ -65,8 +65,8 @@ class DischargeSummaryController extends Controller
         try{
             DB::transaction(function() use ($input, $request) {
                 $ds = DischargeSummary::create($input);
-                $diagnosis = []; $procedures = []; $medicines = []; $instructions = []; $reviews = [];
-                if($request->diagnosis):            
+                /*$diagnosis = []; $procedures = [];*/ $medicines = []; $instructions = []; $reviews = [];
+                /*if($request->diagnosis):            
                     foreach($request->diagnosis as $key => $val):
                         $diagnosis [] = [
                             'summary_id' => $ds->id,
@@ -81,7 +81,7 @@ class DischargeSummaryController extends Controller
                             'procedure' => $val,
                         ];
                     endforeach;
-                endif;
+                endif;*/
                 foreach($request->product_id as $key => $val):
                     $medicines [] = [
                         'summary_id' => $ds->id,
@@ -104,8 +104,8 @@ class DischargeSummaryController extends Controller
                         'review_time' => $request->review_time[$key],
                     ];
                 endforeach;
-                if(!empty($diagnosis)) DischargeSummaryDiagnosis::insert($diagnosis);
-                if(!empty($procedures)) DischargeSummaryProcedure::insert($procedures);
+                /*if(!empty($diagnosis)) DischargeSummaryDiagnosis::insert($diagnosis);
+                if(!empty($procedures)) DischargeSummaryProcedure::insert($procedures);*/
                 DischargeSummaryMedication::insert($medicines);
                 DischargeSummaryInstruction::insert($instructions);
                 DischargeSummaryReview::insert($reviews);
@@ -181,8 +181,8 @@ class DischargeSummaryController extends Controller
             DB::transaction(function() use ($input, $request, $id) {
                 $ds = DischargeSummary::find($id);
                 $ds->update($input);
-                $diagnosis = []; $procedures = []; $medicines = []; $instructions = []; $reviews = [];
-                if($request->diagnosis):           
+                /*$diagnosis = []; $procedures = [];*/ $medicines = []; $instructions = []; $reviews = [];
+                /*if($request->diagnosis):           
                     foreach($request->diagnosis as $key => $val):
                         if($val):
                             $diagnosis [] = [
@@ -201,7 +201,7 @@ class DischargeSummaryController extends Controller
                             ];
                         endif;
                     endforeach;
-                endif;
+                endif;*/
                 foreach($request->product_id as $key => $val):
                     $medicines [] = [
                         'summary_id' => $ds->id,
@@ -224,13 +224,13 @@ class DischargeSummaryController extends Controller
                         'review_time' => $request->review_time[$key],
                     ];
                 endforeach;
-                DischargeSummaryDiagnosis::where('summary_id', $id)->delete();
-                DischargeSummaryProcedure::where('summary_id', $id)->delete();
+                /*DischargeSummaryDiagnosis::where('summary_id', $id)->delete();
+                DischargeSummaryProcedure::where('summary_id', $id)->delete();*/
                 DischargeSummaryMedication::where('summary_id', $id)->delete();
                 DischargeSummaryInstruction::where('summary_id', $id)->delete();
                 DischargeSummaryReview::where('summary_id', $id)->delete();
-                if(!empty($diagnosis)) DischargeSummaryDiagnosis::insert($diagnosis);
-                if(!empty($procedures)) DischargeSummaryProcedure::insert($procedures);
+                /*if(!empty($diagnosis)) DischargeSummaryDiagnosis::insert($diagnosis);
+                if(!empty($procedures)) DischargeSummaryProcedure::insert($procedures);*/
                 DischargeSummaryMedication::insert($medicines);
                 DischargeSummaryInstruction::insert($instructions);
                 DischargeSummaryReview::insert($reviews);

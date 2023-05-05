@@ -69,10 +69,10 @@
             <td>General Examination</td><td colspan="5">{{ $ds->general_examination }}</td>
         </tr>
         <tr>
-            <td>Diagnosis</td><td colspan="5">{{ $diagnosis }}</td>
+            <td>Diagnosis</td><td colspan="5">{{ $ds->diagnosis }}</td>
         </tr>
         <tr>
-            <td>Procedure</td><td colspan="5">{{ $procedure->whereIn('id', $ds->procedures()->pluck('procedure')->toArray())->pluck('name')->implode(', ') }}</td>
+            <td>Procedure</td><td colspan="5">{{ $ds->procedure }}</td>
         </tr>
         <tr>
             <td>Condition at Discharge</td><td colspan="5">{{ $ds->discharge_condition }}</td>

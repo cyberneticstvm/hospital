@@ -22,6 +22,8 @@ class DischargeSummary extends Model
         'medication',
         'investigation_result',
         'general_examination',
+        'diagnosis',
+        'procedure',
         'discharge_condition',
         'special_instruction',
         'doctor',

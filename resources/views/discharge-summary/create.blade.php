@@ -58,23 +58,13 @@
                                     <label class="form-label">General Examination</label>
                                     <input class="form-control" type="text" name="general_examination" placeholder="General Examination"/>
                                 </div>                              
-                                <div class="col-sm-11">
-                                    @php $olds = explode(',', $mrecord->diagnosis); @endphp
-                                    <label class="form-label">Diagnosis<small class="text-info">(Multiple selection enabled)</small></label>
-                                    {!! Form::select('diagnosis[]', $diagnosis,  $olds, ['class' => 'form-control select2', 'multiple', 'id' => 'diagnosisSelect']) !!}
-                                    @error('diagnosis')
-                                    <small class="text-danger">{{ $errors->first('diagnosis') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-1">
-                                    <a data-bs-toggle="modal" href="#diagnosisModal"><i class="fa fa-plus fa-lg text-success"></i></a>
+                                <div class="col-sm-12">
+                                    <label class="form-label">Diagnosis</label>
+                                    <input class="form-control" type="text" name="diagnosis" value="{{ old('diagnosis') }}" placeholder="Diagnosis"/>
                                 </div>
                                 <div class="col-sm-12">
-                                    <label class="form-label">Procedures<small class="text-info">(Multiple selection enabled)</small></label>
-                                    {!! Form::select('procedures[]', $procedures,  $mrecord->procedures()->pluck('procedure')->toArray(), ['class' => 'form-control select2', 'multiple']) !!}
-                                    @error('procedures')
-                                    <small class="text-danger">{{ $errors->first('procedures') }}</small>
-                                    @enderror
+                                    <label class="form-label">Procedures</label>
+                                    <input class="form-control" type="text" name="procedure" value="{{ old('procedure') }}" placeholder="Procedures"/>
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Condition at Discharge</label>
@@ -97,22 +87,33 @@
                                 </div>
                             </div>
                             <div class="row g-4 mt-1 medication">
-                                <div class="col-sm-3">
-                                    <label class="form-label"><sup class="text-danger">*</sup>Medicine Type</label>
-                                    {!! Form::select('medicine_type[]', $types,  '', ['class' => 'form-control select2 medType', 'placeholder' => 'Select', 'required' => 'required']) !!}
+                                @php 
+                                $i = 0; 
+                                $product_array = array(0 => 4, 1 => 142, 2 => 19, 3 => 142, 4 => 142, 5 => 142, 6 => 142, 7 => 142, 8 => 142, 9 => 20, 10 => 39); 
+                                $type_array = array(0 => 2, 1 => 0, 2 => 2, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0, 8 => 0, 9 => 20, 10 => 39); 
+                                $dosage_array = array(0 => '6 times daily for 1 week', 1 => '4 times daily for 5 week', 2 => '2 hourly daily for 2 days', 3 => '6 times daily for 5 days', 4 => '5 times daily for 1 week', 5 => '4 times daily for 1 week', 6 => '3 times daily for 1 week', 7 => '2 times daily for 1 week', 8 => '1 times daily for 1 week', 9 => '2 times daily for 2 months', 10 => '4 times daily for 2 months');
+                                @endphp
+                                @for($i; $i<=10; $i++)
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="form-label"><sup class="text-danger">*</sup>Medicine Type</label>
+                                        {!! Form::select('medicine_type[]', $types,  $type_array[$i], ['class' => 'form-control select2 medType', 'placeholder' => 'Select', 'required' => 'required']) !!}
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="form-label"><sup class="text-danger">*</sup>Medicine</label>
+                                        {!! Form::select('product_id[]', $medicines,  $product_array[$i], ['class' => 'form-control select2 medAdvised', 'placeholder' => 'Select', 'required' => 'required']) !!}
+                                    </div>                                
+                                    <div class="col-sm-3">
+                                        <label class="form-label">Dosage<sup class="text-danger">*</sup></label>
+                                        <input type="text" class="form-control" placeholder="Dosage" value="{{ $dosage_array[$i] }}" name="notes[]" required/>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label class="form-label">Notes</label>
+                                        <input type="text" class="form-control" placeholder="Notes" name="qty[]"/>
+                                    </div>
+                                    <div class='col-sm-1'><a href='javascript:void(0)' onClick="$(this).parent().parent().remove()"><i class='fa fa-trash text-danger'></i></a></div>
                                 </div>
-                                <div class="col-sm-3">
-                                    <label class="form-label"><sup class="text-danger">*</sup>Medicine</label>
-                                    {!! Form::select('product_id[]', $medicines,  '', ['class' => 'form-control select2 medAdvised', 'placeholder' => 'Select', 'required' => 'required']) !!}
-                                </div>                                
-                                <div class="col-sm-3">
-                                    <label class="form-label">Dosage<sup class="text-danger">*</sup></label>
-                                    <input type="text" class="form-control" placeholder="Dosage" name="notes[]" required/>
-                                </div>
-                                <div class="col-sm-2">
-                                    <label class="form-label">Notes</label>
-                                    <input type="text" class="form-control" placeholder="Notes" name="qty[]" required/>
-                                </div>
+                                @endfor
                             </div>
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-12">

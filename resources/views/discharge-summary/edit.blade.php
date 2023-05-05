@@ -59,23 +59,13 @@
                                     <label class="form-label">General Examination</label>
                                     <input class="form-control" type="text" value="{{ $ds->general_examination }}" name="general_examination" placeholder="General Examination"/>
                                 </div>                              
-                                <div class="col-sm-11">
-                                    @php $olds = explode(',', $mrecord->diagnosis); @endphp
-                                    <label class="form-label">Diagnosis<small class="text-info">(Multiple selection enabled)</small></label>
-                                    {!! Form::select('diagnosis[]', $diagnosis,  $ds->diagnosis()->pluck('diagnosis')->toArray(), ['class' => 'form-control select2', 'multiple', 'id' => 'diagnosisSelect']) !!}
-                                    @error('diagnosis')
-                                    <small class="text-danger">{{ $errors->first('diagnosis') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-1">
-                                    <a data-bs-toggle="modal" href="#diagnosisModal"><i class="fa fa-plus fa-lg text-success"></i></a>
+                                <div class="col-sm-12">
+                                    <label class="form-label">Diagnosis</label>
+                                    <input class="form-control" type="text" name="diagnosis" value="{{ $ds->diagnosis }}" placeholder="Diagnosis"/>
                                 </div>
                                 <div class="col-sm-12">
-                                    <label class="form-label">Procedures<small class="text-info">(Multiple selection enabled)</small></label>
-                                    {!! Form::select('procedures[]', $procedures,  $ds->procedures()->pluck('procedure')->toArray(), ['class' => 'form-control select2', 'multiple']) !!}
-                                    @error('procedures')
-                                    <small class="text-danger">{{ $errors->first('procedures') }}</small>
-                                    @enderror
+                                    <label class="form-label">Procedures</label>
+                                    <input class="form-control" type="text" name="procedure" value="{{ $ds->procedure }}" placeholder="Procedures"/>
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Condition at Discharge</label>
@@ -114,7 +104,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                         @if($key == 0)<label class="form-label">Notes</label>@endif
-                                        <input type="text" class="form-control" placeholder="Notes" name="qty[]" value="{{ $value->qty }}" required/>
+                                        <input type="text" class="form-control" placeholder="Notes" name="qty[]" value="{{ ($value->qty != 0) ? $value->qty : '' }}"/>
                                     </div>
                                     <div class='col-sm-1'><a href='javascript:void(0)' onClick="$(this).parent().parent().remove()"><i class='fa fa-trash text-danger'></i></a></div>
                                 </div>
