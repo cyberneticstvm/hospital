@@ -153,7 +153,7 @@ class AscanController extends Controller
                         'fee' => $fee,
                         'type' => 'A',
                         'created_by' => $request->user()->id,
-                        'created_at' => Carbon::now(),
+                        'created_at' => $asc->created_at,
                         'updated_at' => Carbon::now(),
                     ];
                 endfor;

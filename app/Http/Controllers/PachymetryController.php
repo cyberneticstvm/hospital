@@ -176,7 +176,7 @@ class PachymetryController extends Controller
                         'fee' => $fee,
                         'type' => 'P',
                         'created_by' => $request->user()->id,
-                        'created_at' => Carbon::now(),
+                        'created_at' => $p->created_at,
                         'updated_at' => Carbon::now(),
                     ];
                 endfor;

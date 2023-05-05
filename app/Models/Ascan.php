@@ -23,6 +23,7 @@ class Ascan extends Model
         'os_lens',
         'os_a_constant',
         'os_iol_power',
+        'eye',
         'created_by',
         'updated_by',
     ];

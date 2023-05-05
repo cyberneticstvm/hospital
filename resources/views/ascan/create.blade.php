@@ -48,7 +48,11 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="row g-4">                                
+                            <div class="row g-4">
+                                <div class="col-sm-2">
+                                    <label class="form-label">Eye</label>
+                                    <input type="text" name="eye" class="form-control" placeholder="Eye" />
+                                </div>                                
                                 <div class="col-sm-6">
                                     <label class="form-label">Procedures<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
                                     <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="procedure[]" required="required">

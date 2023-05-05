@@ -153,7 +153,7 @@ class TonometryController extends Controller
                         'fee' => $fee,
                         'type' => 'T',
                         'created_by' => $request->user()->id,
-                        'created_at' => Carbon::now(),
+                        'created_at' => $to->created_at,
                         'updated_at' => Carbon::now(),
                     ];
                 endfor;

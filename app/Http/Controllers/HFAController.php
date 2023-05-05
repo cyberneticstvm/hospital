@@ -155,7 +155,7 @@ class HFAController extends Controller
                         'fee' => $fee,
                         'type' => 'H',
                         'created_by' => $request->user()->id,
-                        'created_at' => Carbon::now(),
+                        'created_at' => $hfa->created_at,
                         'updated_at' => Carbon::now(),
                     ];
                 endfor;
