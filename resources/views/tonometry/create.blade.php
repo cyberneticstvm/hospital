@@ -33,7 +33,7 @@
                                                 <td>
                                                     <select class="form-control form-control-sm select2" name="nct_od">
                                                         <option value="">Sel</option>
-                                                        @forelse($powers as $key => $power)
+                                                        @forelse($powers_nct as $key => $power)
                                                         <option value="{{ $power->value }}">{{ $power->value }}</option>
                                                         @empty
                                                         @endforelse
@@ -42,7 +42,7 @@
                                                 <td>
                                                     <select class="form-control form-control-sm select2" name="at_od">
                                                         <option value="">Sel</option>
-                                                        @forelse($powers as $key => $power)
+                                                        @forelse($powers_at as $key => $power)
                                                         <option value="{{ $power->value }}">{{ $power->value }}</option>
                                                         @empty
                                                         @endforelse
@@ -54,7 +54,7 @@
                                                 <td>
                                                     <select class="form-control form-control-sm select2" name="nct_os">
                                                         <option value="">Sel</option>
-                                                        @forelse($powers as $key => $power)
+                                                        @forelse($powers_nct as $key => $power)
                                                         <option value="{{ $power->value }}">{{ $power->value }}</option>
                                                         @empty
                                                         @endforelse
@@ -63,7 +63,7 @@
                                                 <td>
                                                     <select class="form-control form-control-sm select2" name="at_os">
                                                         <option value="">Sel</option>
-                                                        @forelse($powers as $key => $power)
+                                                        @forelse($powers_at as $key => $power)
                                                         <option value="{{ $power->value }}">{{ $power->value }}</option>
                                                         @empty
                                                         @endforelse
