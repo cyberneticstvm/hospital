@@ -35,7 +35,7 @@
             <td>Patient ID</td><td>{{ $patient->patient_id }}</td>
         </tr>
         <tr>
-            <td width='20%'>Age</td><td>{{ $patient->age }} / {{ $patient->gender }}</td><td class='text-blue'>{{ strtoupper($doctor->doctor_name) }}</td>
+            <td width='20%'>Age</td><td>{{ $patient->age }} {{ ($patient->new_born_baby == 1) ? 'Months' : '' }} / {{ $patient->gender }}</td><td class='text-blue'>{{ strtoupper($doctor->doctor_name) }}</td>
         </tr>
         <tr>
             <td>Address</td><td>{{ strtoupper($patient->address) }}</td><td class='text-blue'>{{ strtoupper($doctor->designation) }}</td>

@@ -40,7 +40,7 @@
             </tr>
             <tr>
                 <td>Gender:</td><td>{{ $patient->gender }}</td>
-                <td>Age</td><td>{{ $patient->age }}</td>
+                <td>Age</td><td>{{ $patient->age }} {{ ($patient->new_born_baby == 1) ? 'Months' : '' }}</td>
             </tr>
             <tr>
                 <td>Doctor</td><td>{{ $doctor->doctor_name }}</td>
