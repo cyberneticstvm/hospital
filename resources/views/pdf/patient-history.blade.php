@@ -33,9 +33,9 @@
         .br{
             margin: 10px 0px;
         }
-        .signs th, .signs.td{
-            /*border: 1px solid #000;*/
-        }
+        /*.signs th, .signs.td{
+            border: 1px solid #000;
+        }*/
     </style>
 </head>
 <body>

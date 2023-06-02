@@ -69,5 +69,36 @@
             </tr>
         </tbody>
     </table>
+    <h5>A-CONST & IOL</h5>
+    <table class="bordered" width="100%" cellspacing="0" cellpadding="0">
+        <thead class="text-center">
+            <tr><th colspan="2">A.CONST</th><th colspan="2">IOL</th></tr>
+            <tr><th>OD</th><th>OS</th><th>OD</th><th>OS</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ $ascan->aconst_od1 }}</td>
+                <td>{{ $ascan->aconst_os1 }}</td>
+                <td>{{ $ascan->iol_od1 }}</td>
+                <td>{{ $ascan->iol_os1 }}</td>
+            </tr>
+            <tr>
+                <td>{{ $ascan->aconst_od2 }}</td>
+                <td>{{ $ascan->aconst_os2 }}</td>
+                <td>{{ $ascan->iol_od2 }}</td>
+                <td>{{ $ascan->iol_os2 }}</td>
+            </tr>
+            <tr>
+                <td>{{ $ascan->aconst_od3 }}</td>
+                <td>{{ $ascan->aconst_os3 }}</td>
+                <td>{{ $ascan->iol_od3 }}</td>
+                <td>{{ $ascan->iol_os3 }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    Eye: {{ $ascan->eye }}
+    <br><br>
+    Procedures: {{ $procs->whereIn('id', $procedures->pluck('procedure'))->pluck('name')->implode(',') }}
 </body>
 </html>

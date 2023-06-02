@@ -47,6 +47,34 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="col-sm-12 table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead class="text-center">
+                                            <tr><th colspan="2">A.CONST</th><th colspan="2">IOL</th></tr>
+                                            <tr><th>OD</th><th>OS</th><th>OD</th><th>OS</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="text" name="aconst_od1" class="form-control" placeholder="OD" /></td>
+                                                <td><input type="text" name="aconst_os1" class="form-control" placeholder="OS" /></td>
+                                                <td><input type="text" name="iol_od1" class="form-control" placeholder="OD" /></td>
+                                                <td><input type="text" name="iol_os1" class="form-control" placeholder="OS" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" name="aconst_od2" class="form-control" placeholder="OD" /></td>
+                                                <td><input type="text" name="aconst_os2" class="form-control" placeholder="OS" /></td>
+                                                <td><input type="text" name="iol_od2" class="form-control" placeholder="OD" /></td>
+                                                <td><input type="text" name="iol_os2" class="form-control" placeholder="OS" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" name="aconst_od3" class="form-control" placeholder="OD" /></td>
+                                                <td><input type="text" name="aconst_os3" class="form-control" placeholder="OS" /></td>
+                                                <td><input type="text" name="iol_od3" class="form-control" placeholder="OD" /></td>
+                                                <td><input type="text" name="iol_os3" class="form-control" placeholder="OS" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div class="row g-4">
                                 <div class="col-sm-2">
