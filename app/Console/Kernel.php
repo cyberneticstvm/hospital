@@ -96,9 +96,11 @@ class Kernel extends ConsoleKernel
 
         $surgery_consumables = PatientSurgeryConsumable::whereBetween('created_at', [$startDate, $endDate])->where('branch', $branch)->sum('total_after_discount');
 
+        $outstanding_received = DB::table('patient_payments')->where('branch', $branch)->whereBetween('created_at', [$startDate, $endDate])->where('type', 9)->sum('amount');
+
         $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $income + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
 
-        $closing_balance = $income_total-($income_received_other + $expense);
+        $closing_balance = $income_total-($income_received_other + $outstanding_received + $expense);
 
         return $closing_balance;
     }
