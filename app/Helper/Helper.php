@@ -98,7 +98,7 @@ class Helper{
 
         $closing_balance = $income_total-($income_received_other + $outstanding_received + $expense);
 
-        return $closing_balance;
+        return view('test', compact('closing_balance'));
     }
 }
 
