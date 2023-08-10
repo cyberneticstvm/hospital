@@ -109,7 +109,7 @@
                                 <td colspan="2" class="text-end fw-bold">Grand Total</td><td class="text-end fw-bold">{{ number_format($income_total, 2) }}</td><td class="text-end text-danger">{{ number_format($rtot, 2) }}</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Expenses including Patient Outstanding</td><td class="text-end fw-bold">{{ number_format($expense, 2) }}</td><td class="text-end text-warning"></td>       
+                                <td colspan="2" class="text-end fw-bold">Expenses</td><td class="text-end fw-bold">{{ number_format($expense, 2) }}</td><td class="text-end text-warning"></td>       
                             </tr>
                             <tr><td colspan="4" class="bg-primary"></td></tr>
                             <tr>
@@ -129,11 +129,16 @@
                                 <td colspan="2" class="text-end fw-bold">Payments received (Staff)</td><td class="text-end fw-bold">{{ number_format($income_received_staff, 2) }}</td><td class="text-end">0.00</td>       
                             </tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Patient Outstanding Recieved</td><td class="text-end fw-bold">{{ number_format($outstanding, 2) }}</td><td class="text-end">0.00</td>       
+                                <td colspan="2" class="text-end fw-bold">Patient Outstanding Due</td><td class="text-end fw-bold">{{ number_format($outstanding, 2) }}</td><td class="text-end">0.00</td>       
                             </tr>
+
+                            <tr>
+                                <td colspan="2" class="text-end fw-bold">Patient Outstanding Received</td><td class="text-end fw-bold">{{ number_format($outstanding_received, 2) }}</td><td class="text-end"><a class="daybook text-primary" href="javascript:void(0)" data-bs-toggle="modal" data-modal="outstandingReceivedCardModal" data-bs-target="#outstandingReceivedCardModal" data-title="Outstanding Payments Received" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="outstandingReceived">{{ number_format($outstanding_received, 2) }}</a></td>       
+                            </tr>
+
                             <tr><td colspan="4" class="bg-primary"></td></tr>
                             <tr>
-                                <td colspan="2" class="text-end fw-bold">Balance</td><td class="text-end fw-bold">{{ number_format($income_total+$outstanding-($income_received_upi + $income_received_card + $expense), 2) }}</td><td class="text-end text-danger"><a class="daybook text-primary" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomePendingdModal" data-bs-target="#incomePendingdModal" data-title="Pending Payments" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomepending">{{ number_format(($rtot)-($income_received_cash + $income_received_upi + $income_received_card + $income_received_staff), 2) }}</a></td>       
+                                <td colspan="2" class="text-end fw-bold">Balance</td><td class="text-end fw-bold">{{ number_format($income_total+$outstanding-($income_received_upi + $income_received_card + $expense), 2) }}</td><td class="text-end text-danger"><a class="daybook text-primary" href="javascript:void(0)" data-bs-toggle="modal" data-modal="incomePendingdModal" data-bs-target="#incomePendingdModal" data-title="Pending Payments" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="incomepending">{{ number_format(($rtot)-($income_received_cash + $income_received_upi + $income_received_card + $income_received_staff + $outstanding_received), 2) }}</a></td>       
                             </tr>             
                             </tbody>
                         </table>
@@ -141,6 +146,19 @@
                 </div>
             </div>
         </div> <!-- .row end -->
+    </div>
+</div>
+<div class="modal fade" id="outstandingReceivedCardModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row"><div class="col-md-12 table-responsive dayBookDetailed"></div></div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal fade" id="consultationModal" tabindex="-1">

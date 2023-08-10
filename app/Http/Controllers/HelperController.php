@@ -88,7 +88,29 @@ class HelperController extends Controller
         if($request->type == 'incomepending'):
             $html = $this->getIncomePendingDetailed($fdate, $tdate, $branch);
         endif;
+        if($request->type == 'outstandingReceived'):
+            $html = $this->getOutstandingReceived($fdate, $tdate, $branch);
+        endif;
         echo $html;
+    }
+
+    public function getOutstandingReceived($fdate, $tdate, $branch){
+        $income = DB::table('patient_payments as pp')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'pp.medical_record_id')->leftJoin('patient_registrations as pr', 'pr.id', '=', 'pmr.patient_id')->selectRaw("pp.medical_record_id, pr.patient_name, pr.patient_id, DATE_FORMAT(pp.created_at, '%d/%b/%Y') AS cdate, pp.amount")->where('pp.branch', $branch)->whereBetween('pp.created_at', [$fdate, $tdate])->where('pp.type', 9)->get();
+        $c = 1; $tot = 0;
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Date</th><th>Amount</th></tr></thead><tbody>";
+        foreach($income as $key => $record):
+            $html .= "<tr>";
+                $html .= "<td>".$c++."</td>";
+                $html .= "<td>".$record->medical_record_id."</td>";
+                $html .= "<td>".$record->patient_name."</td>";
+                $html .= "<td>".$record->patient_id."</td>";
+                $html .= "<td>".$record->cdate."</td>";
+                $html .= "<td class='text-end'>".$record->amount."</td>";
+            $html .= "</tr>";
+            $tot += $record->amount;
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='5' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>".number_format($tot, 2)."</td></tr></tfoot></table>";
+        return $html;
     }
     public function getInventoryDetailed(Request $request){
         $html = ""; $product = $request->product; $batch = $request->batch; $branch = $request->branch;
