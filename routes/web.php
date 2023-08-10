@@ -65,7 +65,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('store_branch_session', 'App\Http\Controllers\AuthController@store_branch_session')->name('store_branch_session');
 });
 
-Route::group(['middleware' => ['auth', 'branch']], function(){    
+Route::group(['middleware' => ['auth', 'branch']], function(){   
+    
+    Route::get('/test/{branch}', 'App\Http\Controllers\HelperController@getClosingBalance');
 
     Route::get('/permission/not-authorized/', function () {
         return view('permission');
