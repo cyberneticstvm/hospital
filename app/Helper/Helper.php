@@ -53,7 +53,7 @@ class Helper{
         return $fee;
     }
 
-    public function getClosingBalance($branch){
+    public static function getClosingBalance($branch){
 
         $prev_day = Carbon::today()->subDays(1);
         $startDate = Carbon::now()->startOfDay();
