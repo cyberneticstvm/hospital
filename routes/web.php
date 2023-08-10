@@ -67,7 +67,7 @@ Route::group(['middleware' => ['auth']], function(){
 
 Route::group(['middleware' => ['auth', 'branch']], function(){   
     
-    Route::get('/test/{branch}', 'App\Http\Controllers\HelperController@getClosingBalance');
+    Route::get('/test/{branch}', 'App\Http\Controllers\ReportController@getClosingBalance');
 
     Route::get('/permission/not-authorized/', function () {
         return view('permission');
