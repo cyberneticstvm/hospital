@@ -33,6 +33,22 @@ class AppointmentController extends Controller
         $this->settings = DB::table('settings')->selectRaw("TIME_FORMAT(appointment_from_time, '%h:%i %p') AS from_time, TIME_FORMAT(appointment_to_time, '%h:%i %p') AS to_time, appointment_interval AS ti")->where('id', 1)->first();
         $this->camps = InhouseCamp::where('status', 1)->get();
     }
+
+    public function testsmsapi(){
+        return view('tests.sms');
+    }
+
+    public function testsmsapisend(Request $request){
+        $this->validate($request, [
+            'mobile' => 'required|numeric|digits:10',
+            'otp' => 'required|numeric',
+        ]);
+        Config::set('myconfig.sms2.number', $request->mobile);
+        Config::set('myconfig.sms2.message', "Dear User, Your OTP for login to Devi Eye Hospital Portal is ".$request->otp." valid for 15 minutes. Please do not share this OTP. Regards Devi Eye Hospitals.");
+        $sms = Helper::sendSms(Config::get('myconfig.sms2'));
+        return back()->with("success", "Success".$sms['code']);
+    }
+
     public function index()
     {
         $appointments = Appointment::leftJoin('doctors as d', 'd.id', '=', 'appointments.doctor')->select('appointments.*', DB::RAW("DATE_FORMAT(appointments.appointment_date, '%d/%b/%Y') AS adate"), 'd.doctor_name')->where('appointments.branch', $this->branch)->where('appointments.appointment_date', '=', Carbon::today())->where('appointments.status', 1)->where('appointments.medical_record_id', 0)->orderByDesc('appointments.appointment_date')->get();        

@@ -39,6 +39,9 @@ use App\Http\Controllers\TestAdvisedController;
 
 Route::get('/test', [DashboardController::class, 'test'])->name('test');
 
+Route::get('/testsmsapi', [AppointmentController::class, 'testsmsapi'])->name('testsmsapi');
+Route::post('/testsmsapi', [AppointmentController::class, 'testsmsapisend'])->name('testsmsapisend');
+
 Route::get('/', function () {
     return view('/login');
 })->name('login');
