@@ -8,7 +8,7 @@
                 <div class="card">                    
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>Patient Name</th><th>Age</th><th>Contact Number</th><th>Address</th><th>Date</th><th>Time</th><th>Branch</th><th>Notes</th><th>User</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
+                        <thead><tr><th>SL No.</th><th>Patient Name</th><th>Age</th><th>Contact Number</th><th>Address</th><th>Date</th><th>Time</th><th>Branch</th><th>Notes</th><th>Type</th><th>User</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
                         @php $i = 0; @endphp
                         @forelse($appointments as $key => $ap)
                             <tr>
@@ -25,6 +25,7 @@
                                 <td>{{ $ap->atime }}</td>
                                 <td>{{ $ap->branch_name }}</td>
                                 <td>{{ $ap->notes }}</td>
+                                <td title="If type is web, created by hospital. If type is app created by patient using app">{{ $ap->type }}</td>
                                 <td>{{ $ap->uname }}</td>
                                 <td><a class='btn btn-link' href="{{ route('appointment.edit', $ap->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                 <td>
