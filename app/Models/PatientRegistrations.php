@@ -28,6 +28,7 @@ class PatientRegistrations extends Model
         'created_by',
         'branch',
         'registration_fee',
+        'otp',
     ];
 
     public function testsadvised(){
