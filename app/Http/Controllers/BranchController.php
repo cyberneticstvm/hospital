@@ -55,6 +55,7 @@ class BranchController extends Controller
             'fee_vision' => 'required',
         ]);
         $input = $request->all();
+        $input['booking_available'] = ($request->booking_available) ? 1 : 0;
         $branch = Branch::create($input);
         return redirect()->route('branch.index')
                         ->with('success','Branch created successfully');
@@ -101,6 +102,7 @@ class BranchController extends Controller
             'fee_vision' => 'required',
         ]);
         $input = $request->all();
+        $input['booking_available'] = ($request->booking_available) ? 1 : 0;
         $branch = Branch::find($id);
         $branch->update($input);
         return redirect()->route('branch.index')

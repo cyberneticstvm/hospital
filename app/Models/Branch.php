@@ -18,6 +18,7 @@ class Branch extends Model
         'registration_fee',
         'fee_vision',
         'inhouse_camp_limit',
+        'booking_available',
     ];
 
     public function getUserBranches(){
