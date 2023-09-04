@@ -55,6 +55,10 @@ class Kernel extends ConsoleKernel
                 endforeach;
             endif;
         })->dailyAt('19:30');
+
+        $schedule->call(function () {
+            DB::table('appointments')->whereDate('appointment_date', '<=', Carbon::now()->subDays(7))->where('patient_id', 0)->where('medical_record_id', 0)->delete();
+        })->dailyAt('23:30');
     }
 
     private function getClosingBalance($branch){
