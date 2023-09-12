@@ -44,7 +44,7 @@
             </tr>
             <tr>
                 <td>Doctor</td><td>{{ $doctor->doctor_name }}</td>
-                <td>Date</td><td>{{ date('d/M/Y h:i:a', strtotime($reference->created_at)) }}</td>
+                <td>Date</td><td>{{ date('d/M/Y h:i a', strtotime($reference->created_at)) }}</td>
             </tr>
         </tbody>
     </table>
