@@ -45,7 +45,7 @@
     <pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre />
     <pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre /><pre />
     <img src="data:image/png;base64, {!! $qrcode !!}">
-    <p class="text-small">To book an appointment, scan this QR code and and install our Vrtual Token App.</p>
+    <p class="text-small">To book an appointment, scan this QR code and install our Vrtual Token App.</p>
     <hr>
     <center>
         <p class='text-medium'>VARKALA | PARIPPALLY | POTHENCODE | PARAVOOR | CHIRAYINKEEZHU | KADAKKAL | ATTINGAL | OONNINMOODU | EDAVA | NADAYARA</p>
