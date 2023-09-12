@@ -48,7 +48,7 @@
     <hr>
     <center>
         <p class='text-medium'>VARKALA | PARIPPALLY | POTHENCODE | PARAVOOR | CHIRAYINKEEZHU | KADAKKAL | ATTINGAL | OONNINMOODU | EDAVA | NADAYARA</p>
-        <p class="text-small">Ph: +91 9388611622</p>
+        <p class="text-small">Ph: +91 9388611622, {{ $branch->contact_number }}</p>
     </center>
 </body>
 </html>

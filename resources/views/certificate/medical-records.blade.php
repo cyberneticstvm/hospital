@@ -126,7 +126,7 @@
                             <div class="row g-4 mt-1">
                                 <div class="col-sm-6">
                                     <label class="form-label">OD</label>
-                                    <img id="imgreye" src="/storage/assets/images/eye-re.jpg" class="d-none">
+                                    <img id="imgreye" src="{{ public_path().'/storage/assets/images/eye-re.jpg' }}" class="d-none">
                                     <canvas id="re_eye" style="border: 1px solid #000;"></canvas>
                                     <div class="odpoints"></div>
                                     <a href="javascript:void(0)" id='odclear' class="btn btn-secondary mt-1">Clear</a>
@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">OS</label>
-                                    <img id="imgleye" src="/storage/assets/images/eye-le.jpg" class="d-none">
+                                    <img id="imgleye" src="{{ public_path().'/storage/assets/images/eye-le.jpg' }}" class="d-none">
                                     <canvas id="le_eye" style="border: 1px solid #000;"></canvas>
                                     <div class="ospoints"></div>
                                     <a href="javascript:void(0)" id='osclear' class="btn btn-secondary mt-1">Clear</a>

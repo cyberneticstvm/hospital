@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Branch;
 use App\Models\Diagnosis;
 use App\Models\DischargeSummary;
 use App\Models\DischargeSummaryDiagnosis;
@@ -34,11 +35,12 @@ class PDFController extends Controller
 
     public function prescription($id){
         $reference = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pr.consultation_type', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at', 'pr.appointment_id')->first();
-        $patient = DB::table('patient_registrations')->find($reference->patient_id);     
+        $patient = DB::table('patient_registrations')->find($reference->patient_id);
+        $branch = Branch::findOrFail($reference->branch);     
         $doctor = DB::table('doctors')->find($reference->doctor_id);
-        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));     
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://play.google.com/store/apps/details?id=com.devieh.virtualtoken'));     
         //view()->share('patient', $reference);     
-        $pdf = PDF::loadView('/pdf/prescription', compact('reference', 'patient', 'doctor', 'qrcode'));    
+        $pdf = PDF::loadView('/pdf/prescription', compact('reference', 'patient', 'doctor', 'qrcode', 'branch'));    
         //return $pdf->download('token.pdf');
         if($reference->consultation_type == 4):
             $txt = 'CAMP';
