@@ -119,23 +119,13 @@
         </table>
     </div>
     <br />
-    <div class="row">
-        <p>Biometry</p>
-        <table width="100%" class="bordered text-center" cellspacing="0" cellpadding="0">
-            <thead class="bordered">
-                <tr><td></td><td>K1(A)</td><td>K2(A)</td><td>K1(M)</td><td>K2(M)</td><td>AXL</td><td>ACD</td><td>LENS</td><td>K-VALUE(Avg)</td><td>IOL Power</td></tr>
-            </thead>
-            <tbody>
-                <tr><td>OD</td><td>{{ ($spectacle->bm_k1_od_a) ? $spectacle->bm_k1_od_a  : '--' }}</td><td>{{ ($spectacle->bm_k2_od_a) ? $spectacle->bm_k2_od_a : '--' }}</td><td>{{ ($spectacle->bm_k1_od_m) ? $spectacle->bm_k1_od_m : '--' }}</td><td>{{ ($spectacle->bm_k2_od_m) ? $spectacle->bm_k2_od_m : '--' }}</td><td>{{ ($spectacle->bm_od_axl) ? $spectacle->bm_od_axl : '--' }}</td><td>{{ ($spectacle->bm_od_acd) ? $spectacle->bm_od_acd : '--' }}</td><td>{{ ($spectacle->bm_od_lens) ? $spectacle->bm_od_lens : '--' }}</td><td>{{ ($spectacle->bm_od_kvalue_a) ? $spectacle->bm_od_kvalue_a  : '--' }}</td><td>{{ ($spectacle->bm_od_iol) ? $spectacle->bm_od_iol : '--' }}</td></tr>
-
-                <tr><td>OS</td><td>{{ ($spectacle->bm_k1_os_a) ? $spectacle->bm_k1_os_a : '--' }}</td><td>{{ ($spectacle->bm_k2_os_a) ? $spectacle->bm_k2_os_a : '--' }}</td><td>{{ ($spectacle->bm_k1_os_m) ? $spectacle->bm_k1_os_m : '--' }}</td><td>{{ ($spectacle->bm_k2_os_m) ? $spectacle->bm_k2_os_m : '--' }}</td><td>{{ ($spectacle->bm_os_axl) ? $spectacle->bm_os_axl : '--' }}</td><td>{{ ($spectacle->bm_os_acd) ? $spectacle->bm_os_acd : '--' }}</td><td>{{ ($spectacle->bm_os_lens) ? $spectacle->bm_os_lens : '--' }}</td><td>{{ ($spectacle->bm_os_kvalue_a) ? $spectacle->bm_os_kvalue_a : '--' }}</td><td>{{ ($spectacle->bm_os_iol) ? $spectacle->bm_os_iol : '--' }}</td></tr>
-            </tbody>
-        </table>
-    </div>
     <p>Remarks: {{ $spectacle->remarks }}
     <p>Advice: {{ $spectacle->advice }}
     @if($spectacle->review_date)
     <p>Advised a further examination not later: {{ ($spectacle->review_date) ? date('d/M/Y', strtotime($spectacle->review_date)) : '' }}
     @endif
+    <pre />
+    <img src="data:image/png;base64, {!! $qrcode !!}">
+    <p class="text-small">To book an appointment, scan this QR code.</p>
 </body>
 </html>
