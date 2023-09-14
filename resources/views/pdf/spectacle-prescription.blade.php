@@ -124,8 +124,9 @@
     @if($spectacle->review_date)
     <p>Advised a further examination not later: {{ ($spectacle->review_date) ? date('d/M/Y', strtotime($spectacle->review_date)) : '' }}
     @endif
-    <pre />
-    <img src="data:image/png;base64, {!! $qrcode !!}">
-    <p class="text-small">To book an appointment, scan this QR code.</p>
+    <div class="text-right">
+        <img src="data:image/png;base64, {!! $qrcode !!}">
+        <p class="text-small">To book an appointment, scan this QR code.</p>
+    </div>
 </body>
 </html>
