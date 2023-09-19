@@ -76,6 +76,7 @@ class PatientRegistrationController extends Controller
         $next = DB::table('patient_registrations')->selectRaw("CONCAT_WS('-', 'P', LPAD(IFNULL(max(id)+1, 1), 6, '0')) AS id")->first();
         $input['patient_id'] = $next->id;
         $input['created_by'] = $request->user()->id;
+        $input['updated_by'] = $request->user()->id;
         $input['branch'] = $this->branch;
         $input['registration_fee'] = 0;
         $patients = PatientRegistrations::where('mobile_number', $request->mobile_number)->get();
@@ -202,6 +203,7 @@ class PatientRegistrationController extends Controller
         $patient = PatientRegistrations::find($id);
         $input['patient_id'] = $patient->getOriginal('patient_id');
         $input['created_by'] = $patient->getOriginal('created_by');
+        $input['updated_by'] = $request->user()->id;
         $input['branch'] = $patient->getOriginal('branch');
         $input['registration_fee'] = 0;
         $patient->update($input);

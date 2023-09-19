@@ -26,6 +26,7 @@ class PatientRegistrations extends Model
         'country',
         'appointment_id',
         'created_by',
+        'updated_by',
         'branch',
         'registration_fee',
         'otp',
