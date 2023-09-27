@@ -88,7 +88,8 @@ class SpectacleController extends Controller
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-            return view('spectacle.create', compact('mrecord', 'patient', 'doctor', 'age', 'reading_adds', 'pref'));
+            $previous = Spectacle::where('patient_id', $mrecord->patient_id)->orderByDesc('id')->first();
+            return view('spectacle.create', compact('mrecord', 'patient', 'doctor', 'age', 'reading_adds', 'pref', 'previous'));
         else:
             return redirect("/spectacle/fetch/")->withErrors('No records found.');
         endif;
