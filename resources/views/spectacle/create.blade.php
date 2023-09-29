@@ -185,8 +185,8 @@
                                                 <td><input type="text" class="form-control form-control-md" name="pgp_od_cyl" value="{{ $previous?->re_dist_cyl }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="pgp_od_axis" value="{{ $previous?->re_dist_axis }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md text-uppercase" name="pgp_od_add" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="pgp_od_vision" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="pgp_od_nv" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_od_vision" value="{{ $previous?->re_dist_va }}" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_od_nv" value="{{ $previous?->re_near_va }}" placeholder="0"/></td>
                                             </tr>
                                             <tr>
                                                 <td>OS</td>
@@ -194,8 +194,8 @@
                                                 <td><input type="text" class="form-control form-control-md" name="pgp_os_cyl" value="{{ $previous?->le_dist_cyl }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md" name="pgp_os_axis" value="{{ $previous?->le_dist_axis }}" placeholder="0"/></td>
                                                 <td><input type="text" class="form-control form-control-md text-uppercase" name="pgp_os_add" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="pgp_os_vision" placeholder="0"/></td>
-                                                <td><input type="text" class="form-control form-control-md" name="pgp_os_nv" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_os_vision" value="{{ $previous?->le_dist_va }}" placeholder="0"/></td>
+                                                <td><input type="text" class="form-control form-control-md" name="pgp_os_nv" value="{{ $previous?->le_near_va }}" placeholder="0"/></td>
                                             </tr>
                                         </tbody>
                                     </table>
