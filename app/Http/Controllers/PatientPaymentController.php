@@ -163,7 +163,7 @@ class PatientPaymentController extends Controller
         ]);
         $input = $request->all();
         $created_at = (!empty($request->created_at)) ? Carbon::createFromFormat('d/M/Y', $input['created_at'])->format('Y-m-d H:i:s') : Carbon::now();
-        $pp = PP::where('id', $id)->update(['amount' => $request->amount, 'payment_mode' => $request->payment_mode, 'notes' => $request->notes, 'created_at' => $created_at]);
+        $pp = PP::where('id', $id)->update(['amount' => $request->amount, 'payment_mode' => $request->payment_mode, 'type' => $request->type, 'notes' => $request->notes, 'created_at' => $created_at]);
         return redirect()->route('patient-payment.index')->with('success','Payment updated successfully');
     }
 
