@@ -282,7 +282,7 @@ class HelperController extends Controller
         return $html;
     }
     private function getIncomeCashDetailed($fdate, $tdate, $branch){
-        $income = DB::table('patient_payments as p')->leftjoin('patient_registrations as preg', 'preg.id', '=', 'p.patient_id')->select('preg.patient_name', 'preg.patient_id', 'p.medical_record_id as mrid', 'p.amount as fee', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate"))->where('p.branch', $branch)->whereBetween('p.created_at', [$fdate, $tdate])->where('p.payment_mode', 1)->where('p.type', '!=', 9)->get();
+        $income = DB::table('patient_payments as p')->leftjoin('patient_registrations as preg', 'preg.id', '=', 'p.patient_id')->select('preg.patient_name', 'preg.patient_id', 'p.medical_record_id as mrid', 'p.amount as fee', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate"))->where('p.branch', $branch)->whereBetween('p.created_at', [$fdate, $tdate])->where('p.payment_mode', 1)->where('p.type', '!=', 9)->where('p.type', '!=', 8)->get();
         $c = 1; $tot = 0;
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Date</th><th>Amount</th></tr></thead><tbody>";
         foreach($income as $key => $record):
@@ -300,7 +300,7 @@ class HelperController extends Controller
         return $html;
     }
     private function getIncomeUpiDetailed($fdate, $tdate, $branch){
-        $income = DB::table('patient_payments as p')->leftjoin('patient_registrations as preg', 'preg.id', '=', 'p.patient_id')->select('preg.patient_name', 'preg.patient_id', 'p.medical_record_id as mrid', 'p.amount as fee', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate"))->where('p.branch', $branch)->whereBetween('p.created_at', [$fdate, $tdate])->whereIn('p.payment_mode', [3,4])->where('p.type', '!=', 9)->get();
+        $income = DB::table('patient_payments as p')->leftjoin('patient_registrations as preg', 'preg.id', '=', 'p.patient_id')->select('preg.patient_name', 'preg.patient_id', 'p.medical_record_id as mrid', 'p.amount as fee', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate"))->where('p.branch', $branch)->whereBetween('p.created_at', [$fdate, $tdate])->whereIn('p.payment_mode', [3,4])->where('p.type', '!=', 9)->where('p.type', '!=', 8)->get();
         $c = 1; $tot = 0;
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Date</th><th>Amount</th></tr></thead><tbody>";
         foreach($income as $key => $record):
