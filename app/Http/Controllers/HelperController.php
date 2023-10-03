@@ -383,7 +383,7 @@ class HelperController extends Controller
         return $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine + $vision + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
     }
     public function getPaidTotal($mrid){
-        $paid = DB::table('patient_payments as p')->where('p.medical_record_id', $mrid)->where('type', '!=', 9)->sum('amount');
+        $paid = DB::table('patient_payments as p')->where('p.medical_record_id', $mrid)->where('type', '!=', 9)->where('type', '!=', 8)->sum('amount');
         return $paid;
     }
     public function getPreviousDues($patient_id){
