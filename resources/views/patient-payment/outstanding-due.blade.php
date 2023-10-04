@@ -38,21 +38,24 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>Total Due</th><th>Recieved</th><th>Balance</th></tr></thead><tbody>
-                        @php $i = 0; @endphp
-                        @forelse($outstandings as $key => $outstanding)
-                            <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $outstanding->patient?->patient_name }}</td>                               
-                                <td>{{ $outstanding->patient?->patient_id }}</td>
-                                <td>{{ $outstanding->due }}</td>                               
-                                <td>{{ $outstanding->received }}</td>                               
-                                <td>{{ $outstanding->balance }}</td>                               
-                            </tr>
-                        @empty
-                        <tr><td colspan="6"><p class="text-danger text-center">No records found</p></td></tr>
-                        @endforelse
-                        </tbody></table>
+                            <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>Total Due</th><th>Recieved</th><th>Balance</th></tr></thead><tbody>
+                            @php $tot = 0; @endphp
+                            @forelse($outstandings as $key => $outstanding)
+                                $tot += $outstanding->due - $outstanding->received;
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $outstanding->patient?->patient_name }}</td>                               
+                                    <td>{{ $outstanding->patient?->patient_id }}</td>
+                                    <td>{{ number_format($outstanding->due, 2) }}</td>                               
+                                    <td>{{ number_format($outstanding->received, 2) }}</td>                               
+                                    <td>{{ number_format($outstanding->balance, 2) }}</td>                               
+                                </tr>
+                            @empty
+                            <tr><td colspan="6"><p class="text-danger text-center">No records found</p></td></tr>
+                            @endforelse
+                            </tbody>
+                            <tfoot><tr><td colspan="5" class="fw-bold">Total</td class="fw-bold text-danger"><td>{{ number_format($tot, 2) }}</td></tr></tfoot>
+                        </table>
                     </div>
                 </div>
             </div>
