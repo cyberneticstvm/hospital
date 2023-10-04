@@ -39,19 +39,26 @@
                             <div class="col-6"><h5 class="text-primary">Patient ID: {{ (!empty($patient) && $patient->patient_id) ? $patient->patient_id : '' }}</h5></div>
                         </div>
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
-                            <thead><tr><th>SL No.</th><th>MRN</th><th class="text-end">Consumed</th><th class="text-end">Recieved</th><th class="text-end">Balance</th></tr></thead>
+                            <thead><tr><th>SL No.</th><th>MRN</th><th class="text-end">Consumed</th><th class="text-end">Paid</th><th class="text-end">Balance</th></tr></thead>
                             <tbody>
                                 @forelse($mrns as $key => $mrn)
+                                    @php
+                                        $owedtot = 0; $baltot = 0; $paidtot = 0;
+                                        $owed = App\Helper\Helper::getOwedTotal($mrn->id);
+                                        $paid = App\Helper\Helper::getPaidTotal($mrn->id);
+                                        $owedtot += $owed; $paidtot += $paid; $baltot += $owedtot - $paidtot;
+                                    @endphp
                                     <tr>
                                         <td>{{ $key + 1}}</td>
                                         <td>{{ $mrn->id }}</td>
-                                        <td class="text-end">{{  number_format(App\Helper\Helper::getOwedTotal($mrn->id), 2) }}</td>
-                                        <td class="text-end">{{  number_format(App\Helper\Helper::getPaidTotal($mrn->id), 2) }}</td>
-                                        <td class="text-end">{{ number_format(App\Helper\Helper::getOwedTotal($mrn->id) - App\Helper\Helper::getPaidTotal($mrn->id), 2) }}</td>
+                                        <td class="text-end">{{  number_format($owed, 2) }}</td>
+                                        <td class="text-end">{{  number_format($paid, 2) }}</td>
+                                        <td class="text-end">{{ number_format($owed-$paid, 2) }}</td>
                                     </tr>
                                 @empty
                                 @endforelse
                             </tbody>
+                            <tfoot><tr><td colspan="2" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{  number_format($owedtot, 2) }}</td><td class="text-end fw-bold">{{ number_format($paidtot, 2) }}</td><td class="text-end fw-bold text-danger">{{  number_format($baltot, 2) }}</td></tr></tfoot>
                         </table>
                     </div>
                     @else
