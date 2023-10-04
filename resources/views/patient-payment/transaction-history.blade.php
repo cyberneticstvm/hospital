@@ -41,9 +41,9 @@
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
                             <thead><tr><th>SL No.</th><th>MRN</th><th class="text-end">Consumed</th><th class="text-end">Paid</th><th class="text-end">Balance</th></tr></thead>
                             <tbody>
+                                @php $owedtot = 0; $baltot = 0; $paidtot = 0; @endphp
                                 @forelse($mrns as $key => $mrn)
                                     @php
-                                        $owedtot = 0; $baltot = 0; $paidtot = 0;
                                         $owed = App\Helper\Helper::getOwedTotal($mrn->id);
                                         $paid = App\Helper\Helper::getPaidTotal($mrn->id);
                                         $owedtot += $owed; $paidtot += $paid; $baltot += $owedtot - $paidtot;
