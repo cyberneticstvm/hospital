@@ -58,7 +58,7 @@
                             <tr><td colspan="6"><p class="text-danger text-center">No records found</p></td></tr>
                             @endforelse
                             </tbody>
-                            <tfoot><tr><td colspan="3" class="fw-bold">Total</td><td class="fw-bold text-danger text-end">{{ number_format($duetot, 2) }}</td><td class="fw-bold text-danger text-end">{{ number_format($paidtot, 2) }}</td><td class="fw-bold text-danger text-end">{{ number_format($tot, 2) }}</td></tr></tfoot>
+                            <tfoot><tr><td colspan="3" class="fw-bold">Total</td><td class="fw-bold text-end">{{ number_format($duetot, 2) }}</td><td class="fw-bold text-end">{{ number_format($paidtot, 2) }}</td><td class="fw-bold text-danger text-end">{{ number_format($tot, 2) }}</td></tr></tfoot>
                         </table>
                     </div>
                 </div>
