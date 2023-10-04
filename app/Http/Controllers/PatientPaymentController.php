@@ -191,7 +191,7 @@ class PatientPaymentController extends Controller
 
     public function oustandingDueFetch(Request $request){
         $branches = Branch::all(); $brn = $request->branch;
-        $outstandings = PatientPayment::selectRaw("SUM(CASE WHEN type = 8 THEN amount END) AS due, SUM(CASE WHEN type = 9 THEN amount END) AS received, SUM(CASE WHEN type = 8 THEN amount - CASE WHEN type = 9 THEN amount) END AS balance, patient_id")->where('branch', $brn)->groupBy('patient_id')->having('balance', '>', 0)->get();
+        $outstandings = PatientPayment::selectRaw("SUM(CASE WHEN type = 8 THEN amount END) AS due, SUM(CASE WHEN type = 9 THEN amount END) AS received, patient_id")->where('branch', $brn)->groupBy('patient_id')->get();
         return view('patient-payment.outstanding-due', compact('branches', 'outstandings', 'brn'));
     }
 }
