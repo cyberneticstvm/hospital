@@ -41,7 +41,7 @@
                             <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>Total Due</th><th>Recieved</th><th>Balance</th></tr></thead><tbody>
                             @php $tot = 0; @endphp
                             @forelse($outstandings as $key => $outstanding)
-                                $tot += $outstanding->due - $outstanding->received;
+                                @php $tot += $outstanding->balance; @endphp
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $outstanding->patient?->patient_name }}</td>                               
