@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\PatientPayment as PP;
 use App\Models\PatientPayment;
 use App\Models\PatientReference as PR;
+use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
 use Carbon\Carbon;
 use DB;
@@ -200,10 +201,16 @@ class PatientPaymentController extends Controller
     }
 
     public function transactionHistory(){
-
-    }
+        $mrns = collect(); $patient = [];
+        return view('patient-payment.transaction-history', compact('mrns', 'patient'));
+    }   
 
     public function transactionHistoryFetch(Request $request){
-
+        $this->validate($request, [
+            'patient_id' => 'required',
+        ]);
+        $patient = PatientRegistrations::findOrFail($request->patient_id);
+        $mrns = PR::where('patient_id', $request->patient_id)->latest()->get();
+        return view('patient-payment.transaction-history', compact('mrns', 'patient'));
     }
 }
