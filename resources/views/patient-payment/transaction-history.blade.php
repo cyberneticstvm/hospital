@@ -46,7 +46,7 @@
                                     @php
                                         $owed = App\Helper\Helper::getOwedTotal($mrn->id);
                                         $paid = App\Helper\Helper::getPaidTotal($mrn->id);
-                                        $owedtot += $owed; $paidtot += $paid; $baltot += $owedtot - $paidtot;
+                                        $owedtot += $owed; $paidtot += $paid; $baltot += $owed - $paid;
                                     @endphp
                                     <tr>
                                         <td>{{ $key + 1}}</td>
