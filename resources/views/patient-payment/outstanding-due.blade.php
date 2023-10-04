@@ -38,23 +38,27 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                            <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>Total Due</th><th>Recieved</th><th>Balance</th></tr></thead><tbody>
-                            @php $tot = 0; @endphp
+                            <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th class="text-end">Total Due</th><th class="text-end">Recieved</th><th class="text-end">Balance</th></tr></thead><tbody>
+                            @php $tot = 0;  $duetot = 0; $paidtot = 0 @endphp
                             @forelse($outstandings as $key => $outstanding)
-                                @php $tot += $outstanding->balance; @endphp
+                                @php 
+                                $tot += $outstanding->balance; 
+                                $duetot += $outstanding->due;
+                                $paidtot += $outstanding->received;
+                                @endphp
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $outstanding->patient?->patient_name }}</td>                               
                                     <td>{{ $outstanding->patient?->patient_id }}</td>
-                                    <td>{{ number_format($outstanding->due, 2) }}</td>                               
-                                    <td>{{ number_format($outstanding->received, 2) }}</td>                               
-                                    <td>{{ number_format($outstanding->balance, 2) }}</td>                               
+                                    <td class="text-end">{{ number_format($outstanding->due, 2) }}</td>                               
+                                    <td class="text-end">{{ number_format($outstanding->received, 2) }}</td>                               
+                                    <td class="text-end">{{ number_format($outstanding->balance, 2) }}</td>                               
                                 </tr>
                             @empty
                             <tr><td colspan="6"><p class="text-danger text-center">No records found</p></td></tr>
                             @endforelse
                             </tbody>
-                            <tfoot><tr><td colspan="5" class="fw-bold">Total</td class="fw-bold text-danger"><td>{{ number_format($tot, 2) }}</td></tr></tfoot>
+                            <tfoot><tr><td colspan="3" class="fw-bold">Total</td><td class="fw-bold text-danger text-end">{{ number_format($duetot, 2) }}</td><td class="fw-bold text-danger text-end">{{ number_format($paidtot, 2) }}</td><td class="fw-bold text-danger text-end">{{ number_format($tot, 2) }}</td></tr></tfoot>
                         </table>
                     </div>
                 </div>
