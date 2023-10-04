@@ -28,6 +28,7 @@ class PatientPaymentController extends Controller
          $this->middleware('permission:patient-payments-edit', ['only' => ['edit', 'update']]);
          $this->middleware('permission:patient-payments-delete', ['only' => ['destroy']]);
          $this->middleware('permission:patient-outstanding-register', ['only' => ['oustandingDue', 'oustandingDueFetch']]);
+         $this->middleware('permission:patient-transaction-history', ['only' => ['transactionHistory', 'transactionHistoryFetch']]);
 
          $this->branch = session()->get('branch');
     }
@@ -190,8 +191,19 @@ class PatientPaymentController extends Controller
     }
 
     public function oustandingDueFetch(Request $request){
+        $this->validate($request, [
+            'branch' => 'required',
+        ]);
         $branches = Branch::all(); $brn = $request->branch;
         $outstandings = PatientPayment::selectRaw("SUM(CASE WHEN type = 8 THEN amount END) AS due, SUM(CASE WHEN type = 9 THEN amount END) AS received, SUM(IF(type=8, amount, 0))-SUM(IF(type=9, amount, 0)) AS balance, patient_id")->where('branch', $brn)->groupBy('patient_id')->having('balance', '>', 0)->get();
         return view('patient-payment.outstanding-due', compact('branches', 'outstandings', 'brn'));
+    }
+
+    public function transactionHistory(){
+
+    }
+
+    public function transactionHistoryFetch(Request $request){
+
     }
 }

@@ -466,6 +466,9 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/outstanding/due', 'App\Http\Controllers\PatientPaymentController@oustandingDue')->name('patient.outstanding.due');
     Route::post('/outstanding/due', 'App\Http\Controllers\PatientPaymentController@oustandingDueFetch')->name('patient.outstanding.due.fetch');
 
+    Route::get('/transaction/history', 'App\Http\Controllers\PatientPaymentController@transactionHistory')->name('patient.transaction.history');
+    Route::post('/transaction/history', 'App\Http\Controllers\PatientPaymentController@transactionHistoryFetch')->name('patient.transaction.history.fetch');
+
     
     Route::get('/paypharma/', 'App\Http\Controllers\PharmacyPaymentController@index')->name('paypharma.index');
     //Route::get('/paypharmafetch/', 'App\Http\Controllers\PharmacyPaymentController@index')->name('paypharma.index');
