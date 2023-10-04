@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\PatientPayment as PP;
+use App\Models\PatientPayment;
 use App\Models\PatientReference as PR;
 use App\Models\PatientSurgeryConsumable;
 use Carbon\Carbon;
@@ -25,6 +27,8 @@ class PatientPaymentController extends Controller
          $this->middleware('permission:patient-payments-create', ['only' => ['store']]);
          $this->middleware('permission:patient-payments-edit', ['only' => ['edit', 'update']]);
          $this->middleware('permission:patient-payments-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:patient-outstanding-register', ['only' => ['oustandingDue', 'oustandingDueFetch']]);
+
          $this->branch = session()->get('branch');
     }
     public function index()
@@ -178,5 +182,16 @@ class PatientPaymentController extends Controller
         PP::find($id)->delete();
         return redirect()->route('patient-payment.list')
                         ->with('success','Payment deleted successfully');
+    }
+
+    public function oustandingDue(){
+        $branches = Branch::all(); $outstandings = collect(); $brn = 0;
+        return view('patient-payment.outstanding-due', compact('branches', 'outstandings', 'brn'));
+    }
+
+    public function oustandingDueFetch(Request $request){
+        $branches = Branch::all(); $brn = $request->branch;
+        $outstandings = PatientPayment::selectRaw("SUM(CASE WHEN type = 8 THEN amount END) AS due, SUM(CASE WHEN type = 9 THEN amount END) AS received, SUM(CASE WHEN type = 8 THEN amount END) - SUM(CASE WHEN type = 9 THEN amount END) AS balance, patient_id")->where('branch', $brn)->groupBy('patient_id')->having('balance', '>', 0)->get();
+        return view('patient-payment.outstanding-due', compact('branches', 'outstandings', 'brn'));
     }
 }

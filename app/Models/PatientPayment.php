@@ -20,4 +20,8 @@ class PatientPayment extends Model
         'notes',
         'created_by',
     ];
+
+    public function patient(){
+        return $this->belongsTo(PatientRegistrations::class, 'patient_id', 'id');
+    }
 }

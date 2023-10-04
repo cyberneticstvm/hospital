@@ -463,6 +463,9 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::put('/patient-payment/edit/{id}/', 'App\Http\Controllers\PatientPaymentController@update')->name('patient-payment.update');
     Route::delete('/patient-payment/delete/{id}/', 'App\Http\Controllers\PatientPaymentController@destroy')->name('patient-payment.delete');
 
+    Route::get('/outstanding/due', 'App\Http\Controllers\PatientPaymentController@oustandingDue')->name('patient.outstanding.due');
+    Route::post('/outstanding/due', 'App\Http\Controllers\PatientPaymentController@oustandingDueFetch')->name('patient.outstanding.due.fetch');
+
     
     Route::get('/paypharma/', 'App\Http\Controllers\PharmacyPaymentController@index')->name('paypharma.index');
     //Route::get('/paypharmafetch/', 'App\Http\Controllers\PharmacyPaymentController@index')->name('paypharma.index');
