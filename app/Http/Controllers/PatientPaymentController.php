@@ -189,7 +189,7 @@ class PatientPaymentController extends Controller
     }
 
     public function oustandingDue(){
-        $branches = Branch::all(); $outstandings = collect(); $brn = 0; $inputs = [];
+        $branches = Branch::all(); $outstandings = []; $brn = 0; $inputs = [];
         return view('patient-payment.outstanding-due', compact('branches', 'outstandings', 'brn', 'inputs'));
     }
 
