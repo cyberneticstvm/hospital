@@ -12,6 +12,14 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
+                        <div class="">
+                            @if (Session::has('error'))
+                            <div class="text-danger text-center mt-2"><h5>{{ Session::get('error') }}</h5></div>
+                            @endif
+                            @if (Session::has('success'))
+                            <div class="text-success text-center mt-2"><h5>{{ Session::get('success') }}</h5></div>
+                            @endif
+                        </div>
                         <form action="{{ route('patient.outstanding.due.fetch') }}" method="post">
                             @csrf
                             @php $today = date('d/M/Y') @endphp

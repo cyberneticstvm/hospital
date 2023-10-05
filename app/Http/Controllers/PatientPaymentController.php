@@ -204,22 +204,24 @@ class PatientPaymentController extends Controller
 
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
-
-        $refs = PatientReference::where('branch', $brn)->whereBetween('created_at', [$startDate, $endDate])->get();
-
-        foreach($refs as $key => $val):
-            $owed = Helper::getOwedTotal($val->id);
-            $paid = Helper::getPaidTotal($val->id);
-            if($owed-$paid > 0):
-                $outstandings [] = [
-                    'due' => $owed,
-                    'received' => $paid,
-                    'balance' => $owed-$paid,
-                    'patient_name' => $val->patient->patient_name,
-                    'patient_id' => $val->patient_id,
-                ];
-            endif;
-        endforeach;
+        if($startDate->diffInDays($endDate) <= 62):
+            $refs = PatientReference::where('branch', $brn)->whereBetween('created_at', [$startDate, $endDate])->get();
+            foreach($refs as $key => $val):
+                $owed = Helper::getOwedTotal($val->id);
+                $paid = Helper::getPaidTotal($val->id);
+                if($owed-$paid > 0):
+                    $outstandings [] = [
+                        'due' => $owed,
+                        'received' => $paid,
+                        'balance' => $owed-$paid,
+                        'patient_name' => $val->patient->patient_name,
+                        'patient_id' => $val->patient_id,
+                    ];
+                endif;
+            endforeach;
+        else:
+            return redirect()->back()->with('error', 'Date range should not be more than 62 days.');
+        endif;
         //$outstandings = PatientPayment::selectRaw("SUM(CASE WHEN type = 8 THEN amount END) AS due, SUM(CASE WHEN type = 9 THEN amount END) AS received, SUM(IF(type=8, amount, 0))-SUM(IF(type=9, amount, 0)) AS balance, patient_id")->where('branch', $brn)->groupBy('patient_id')->having('balance', '>', 0)->get();
         return view('patient-payment.outstanding-due', compact('branches', 'outstandings', 'brn', 'inputs'));
     }
