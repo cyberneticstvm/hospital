@@ -189,16 +189,24 @@ class PatientPaymentController extends Controller
     }
 
     public function oustandingDue(){
-        $branches = Branch::all(); $outstandings = collect(); $brn = 0;
-        return view('patient-payment.outstanding-due', compact('branches', 'outstandings', 'brn'));
+        $branches = Branch::all(); $outstandings = collect(); $brn = 0; $inputs = [];
+        return view('patient-payment.outstanding-due', compact('branches', 'outstandings', 'brn', 'inputs'));
     }
 
     public function oustandingDueFetch(Request $request){
         $this->validate($request, [
+            'fromdate' => 'required',
+            'todate' => 'required',
             'branch' => 'required',
         ]);
         $branches = Branch::all(); $brn = $request->branch; $outstandings = [];
-        $refs = PatientReference::where('branch', $brn)->get();
+        $inputs = array($request->fromdate, $request->todate);
+
+        $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
+        $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
+
+        $refs = PatientReference::where('branch', $brn)->whereBetween('created_at', [$startDate, $endDate])->get();
+
         foreach($refs as $key => $val):
             $owed = Helper::getOwedTotal($val->id);
             $paid = Helper::getPaidTotal($val->id);
@@ -213,7 +221,7 @@ class PatientPaymentController extends Controller
             endif;
         endforeach;
         //$outstandings = PatientPayment::selectRaw("SUM(CASE WHEN type = 8 THEN amount END) AS due, SUM(CASE WHEN type = 9 THEN amount END) AS received, SUM(IF(type=8, amount, 0))-SUM(IF(type=9, amount, 0)) AS balance, patient_id")->where('branch', $brn)->groupBy('patient_id')->having('balance', '>', 0)->get();
-        return view('patient-payment.outstanding-due', compact('branches', 'outstandings', 'brn'));
+        return view('patient-payment.outstanding-due', compact('branches', 'outstandings', 'brn', 'inputs'));
     }
 
     public function transactionHistory(){
