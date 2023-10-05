@@ -42,17 +42,17 @@
                             @php $tot = 0;  $duetot = 0; $paidtot = 0 @endphp
                             @forelse($outstandings as $key => $outstanding)
                                 @php 
-                                $tot += $outstanding->balance; 
-                                $duetot += $outstanding->due;
-                                $paidtot += $outstanding->received;
+                                $tot += $outstanding['balance']; 
+                                $duetot += $outstanding['due'];
+                                $paidtot += $outstanding['received'];
                                 @endphp
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $outstanding->patient?->patient_name }}</td>                               
-                                    <td>{{ $outstanding->patient?->patient_id }}</td>
-                                    <td class="text-end">{{ number_format($outstanding->due, 2) }}</td>                               
-                                    <td class="text-end">{{ number_format($outstanding->received, 2) }}</td>                               
-                                    <td class="text-end">{{ number_format($outstanding->balance, 2) }}</td>                               
+                                    <td><a href="{{ route('patient.transaction.history.fetch1', $outstanding['patient_id']) }}">{{ $outstanding['patient_name'] }}</a></td>                               
+                                    <td>{{ $outstanding['patient_id'] }}</td>
+                                    <td class="text-end">{{ number_format($outstanding['due'], 2) }}</td>                               
+                                    <td class="text-end">{{ number_format($outstanding['received'], 2) }}</td>                               
+                                    <td class="text-end">{{ number_format($outstanding['balance'], 2) }}</td>                               
                                 </tr>
                             @empty
                             <tr><td colspan="6"><p class="text-danger text-center">No records found</p></td></tr>

@@ -26,4 +26,8 @@ class PatientReference extends Model
         'camp_id',
         'sms',
     ];
+
+    public function patient(){
+        return $this->belongsTo(PatientRegistrations::class, 'patient_id', 'id');
+    }
 }

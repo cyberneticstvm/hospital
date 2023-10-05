@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Helper\Helper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\PatientPayment as PP;
 use App\Models\PatientPayment;
 use App\Models\PatientReference as PR;
+use App\Models\PatientReference;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
 use Carbon\Carbon;
@@ -195,8 +197,22 @@ class PatientPaymentController extends Controller
         $this->validate($request, [
             'branch' => 'required',
         ]);
-        $branches = Branch::all(); $brn = $request->branch;
-        $outstandings = PatientPayment::selectRaw("SUM(CASE WHEN type = 8 THEN amount END) AS due, SUM(CASE WHEN type = 9 THEN amount END) AS received, SUM(IF(type=8, amount, 0))-SUM(IF(type=9, amount, 0)) AS balance, patient_id")->where('branch', $brn)->groupBy('patient_id')->having('balance', '>', 0)->get();
+        $branches = Branch::all(); $brn = $request->branch; $outstandings = [];
+        $refs = PatientReference::where('branch', $brn)->get();
+        foreach($refs as $key => $val):
+            $owed = Helper::getOwedTotal($val->id);
+            $paid = Helper::getPaidTotal($val->id);
+            if($owed-$paid > 0):
+                $outstandings [] = [
+                    'due' => $owed,
+                    'received' => $paid,
+                    'balance' => $owed-$paid,
+                    'patient_name' => $val->patient->patient_name,
+                    'patient_id' => $val->patient_id,
+                ];
+            endif;
+        endforeach;
+        //$outstandings = PatientPayment::selectRaw("SUM(CASE WHEN type = 8 THEN amount END) AS due, SUM(CASE WHEN type = 9 THEN amount END) AS received, SUM(IF(type=8, amount, 0))-SUM(IF(type=9, amount, 0)) AS balance, patient_id")->where('branch', $brn)->groupBy('patient_id')->having('balance', '>', 0)->get();
         return view('patient-payment.outstanding-due', compact('branches', 'outstandings', 'brn'));
     }
 
@@ -211,6 +227,12 @@ class PatientPaymentController extends Controller
         ]);
         $patient = PatientRegistrations::findOrFail($request->patient_id);
         $mrns = PR::where('patient_id', $request->patient_id)->latest()->get();
+        return view('patient-payment.transaction-history', compact('mrns', 'patient'));
+    }
+
+    public function patientTransactionHistoryFetch($id){
+        $patient = PatientRegistrations::findOrFail($id);
+        $mrns = PR::where('patient_id', $id)->latest()->get();
         return view('patient-payment.transaction-history', compact('mrns', 'patient'));
     }
 }
