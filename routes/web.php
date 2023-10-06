@@ -468,7 +468,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     Route::get('/transaction/history', 'App\Http\Controllers\PatientPaymentController@transactionHistory')->name('patient.transaction.history');
     Route::post('/transaction/history', 'App\Http\Controllers\PatientPaymentController@transactionHistoryFetch')->name('patient.transaction.history.fetch');
-    Route::get('/patient/transaction/history/{id}', 'App\Http\Controllers\PatientPaymentController@patientTransactionHistoryFetch')->name('patient.transaction.history.fetch1');
+    //Route::get('/patient/transaction/history/{id}', 'App\Http\Controllers\PatientPaymentController@patientTransactionHistoryFetch')->name('patient.transaction.history.fetch1');
 
     
     Route::get('/paypharma/', 'App\Http\Controllers\PharmacyPaymentController@index')->name('paypharma.index');
