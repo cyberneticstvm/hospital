@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PatientPayment;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\SurgeryConsumableItem;
 use Illuminate\Http\Request;
@@ -337,12 +338,13 @@ class HelperController extends Controller
     }
     private function getIncomePendingDetailed($fdate, $tdate, $branch){
         $records = DB::table('patient_medical_records as p')->leftJoin('patient_registrations as preg', 'p.patient_id', '=', 'preg.id')->where('p.branch', $branch)->whereBetween('p.created_at', [$fdate, $tdate])->select('p.id as mrid', 'preg.patient_name', 'preg.patient_id')->get();
-        $c = 1; $owed_tot = 0; $paid_tot = 0; $tot = 0; $cls = '';
+        $c = 1; $owed_tot = 0; $paid_tot = 0; $tot = 0; $cls = ''; $outstanding = 0;
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Owed</th><th>Paid</th><th>Due</th></tr></thead><tbody>";
         foreach($records as $row):
             $html .= "<tr>";
                 $owed = $this->getOwedTotal($row->mrid);
                 $paid = $this->getPaidTotal($row->mrid);
+                $outstanding += PatientPayment::where('medical_record_id', $row->mrid)->where('type', 8)->sum('amount');
                 $cls = ($owed - $paid > 0) ? 'text-danger' : '';
                 $html .= "<td>".$c++."</td>";
                 $html .= "<td>".$row->mrid."</td>";
@@ -354,7 +356,9 @@ class HelperController extends Controller
             $html .= "</tr>";
             $paid_tot += $paid; $owed_tot += $owed; $tot += $owed - $paid;
         endforeach;
-        $html .= "</tbody><tfoot><tr><td colspan='4' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>".number_format($owed_tot, 2)."</td><td class='text-end fw-bold'>".number_format($paid_tot, 2)."</td><td class='text-end fw-bold ".$cls."'>".number_format($tot, 2)."</td></tr></tfoot></table>";
+        $html .= "</tbody><tfoot><tr><td colspan='4' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>".number_format($owed_tot, 2)."</td><td class='text-end fw-bold'>".number_format($paid_tot, 2)."</td><td class='text-end fw-bold ".$cls."'>".number_format($tot, 2)."</td></tr></tfoot>";
+        $html .= "<tfoot><tr><td class='text-end fw-bold' colspan='6'>Outsanding</td><td class='fw-bold text-end'>".number_format($outstanding, 2)."</td></tr></tfoot></table>";
+        $html .= "<tfoot><tr><td class='text-end fw-bold' colspan='6'>Balance</td><td class='fw-bold text-end'>".number_format($tot - $outstanding, 2)."</td></tr></tfoot></table>";
         return $html;
     }
     public function getOwedTotal($mrid){
