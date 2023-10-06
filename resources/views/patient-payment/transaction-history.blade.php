@@ -39,7 +39,7 @@
                             <div class="col-6"><h5 class="text-primary">Patient ID: {{ (!empty($patient) && $patient->patient_id) ? $patient->patient_id : '' }}</h5></div>
                         </div>
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
-                            <thead><tr><th>SL No.</th><th>MRN</th><th class="text-end">Consumed</th><th class="text-end">Paid</th><th class="text-end">Balance</th></tr></thead>
+                            <thead><tr><th>SL No.</th><th>MRN</th><th>Date</th><th class="text-end">Consumed</th><th class="text-end">Paid</th><th class="text-end">Balance</th></tr></thead>
                             <tbody>
                                 @php $owedtot = 0; $baltot = 0; $paidtot = 0; @endphp
                                 @forelse($mrns as $key => $mrn)
@@ -51,6 +51,7 @@
                                     <tr>
                                         <td>{{ $key + 1}}</td>
                                         <td>{{ $mrn->id }}</td>
+                                        <td>{{ $mrn->created_at->format('d/M/Y') }}</td>
                                         <td class="text-end">{{  number_format($owed, 2) }}</td>
                                         <td class="text-end">{{  number_format($paid, 2) }}</td>
                                         <td class="text-end">{{ number_format($owed-$paid, 2) }}</td>
@@ -58,8 +59,11 @@
                                 @empty
                                 @endforelse
                             </tbody>
-                            <tfoot><tr><td colspan="2" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{  number_format($owedtot, 2) }}</td><td class="text-end fw-bold">{{ number_format($paidtot, 2) }}</td><td class="text-end fw-bold text-danger">{{  number_format($baltot, 2) }}</td></tr></tfoot>
+                            <tfoot><tr><td colspan="3" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{  number_format($owedtot, 2) }}</td><td class="text-end fw-bold">{{ number_format($paidtot, 2) }}</td><td class="text-end fw-bold text-danger">{{  number_format($baltot, 2) }}</td></tr></tfoot>
                         </table>
+                        @if($patient)
+                        <div class="text-center mt-3"><a href="{{ route('patient.transaction.history.pdf', ($patient) ? $patient?->id : 0) }}" class="btn btn-info" target="_blank">Print Statement</a></div>
+                        @endif
                     </div>
                     @else
                         <p class="text-danger">No records found!</p>

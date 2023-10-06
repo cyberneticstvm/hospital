@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Models\PatientReference as PRef;
 use App\Models\LabClinic;
 use App\Models\PatientProcedure;
+use App\Models\PatientReference;
+use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\Procedure;
 use App\Models\Spectacle;
@@ -474,5 +476,13 @@ class PDFController extends Controller
         $procedure = Procedure::all();
         $pdf = PDF::loadView('/pdf/dsummary', compact('ds', 'diagnosis', 'procedure'));    
         return $pdf->stream('discharge-summary.pdf', array("Attachment"=>0));
+    }
+
+    public function patientTransactionHistory($id){
+        $patient = PatientRegistrations::findOrFail($id);
+        $mrns = PatientReference::where('patient_id', $id)->latest()->get();
+        $branch = DB::table('branches')->find($patient->branch);
+        $pdf = PDF::loadView('/pdf/patient-transaction-history', compact('patient', 'mrns', 'branch'));            
+        return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
     }
 }
