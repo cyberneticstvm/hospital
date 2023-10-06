@@ -468,7 +468,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     Route::get('/transaction/history', 'App\Http\Controllers\PatientPaymentController@transactionHistory')->name('patient.transaction.history');
     Route::post('/transaction/history', 'App\Http\Controllers\PatientPaymentController@transactionHistoryFetch')->name('patient.transaction.history.fetch');
-    //Route::get('/patient/transaction/history/{id}', 'App\Http\Controllers\PatientPaymentController@patientTransactionHistoryFetch')->name('patient.transaction.history.fetch1');
+    Route::get('/patient/transaction/history/{id}', 'App\Http\Controllers\PatientPaymentController@patientTransactionHistoryFetch')->name('patient.transaction.history.fetch1');
 
     
     Route::get('/paypharma/', 'App\Http\Controllers\PharmacyPaymentController@index')->name('paypharma.index');
@@ -674,8 +674,8 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/hfa/receipt/{id}/', [PDFController::class, 'hfareceipt']);
     Route::get('/surgery/consumable/receipt/{id}/', [PDFController::class, 'surgeryconsumablereceipt']);
     Route::get('/dsummary/report/{id}', [PDFController::class, 'dsummary']);
-    Route::get('/patient/transaction/history/{id}', [PDFController::class, 'patientTransactionHistory'])->name('patient.transaction.history.pdf');
-    Route::get('/patient/transaction/history/mrn/{id}', [PDFController::class, 'patientTransactionHistoryMrn'])->name('patient.transaction.history.mrn.pdf');
+    Route::get('/patient/owed/history/{id}', [PDFController::class, 'patientTransactionHistory'])->name('patient.transaction.history.pdf');
+    Route::get('/patient/owed/history/mrn/{id}', [PDFController::class, 'patientTransactionHistoryMrn'])->name('patient.transaction.history.mrn.pdf');
     // End PDFs //
 
     // Settings //
