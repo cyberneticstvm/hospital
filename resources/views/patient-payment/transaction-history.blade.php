@@ -50,7 +50,7 @@
                                     @endphp
                                     <tr>
                                         <td>{{ $key + 1}}</td>
-                                        <td>{{ $mrn->id }}</td>
+                                        <td><a href="{{ route('patient.transaction.history.mrn.pdf', $mrn->id) }}" target="_blank">{{ $mrn->id }}</a></td>
                                         <td>{{ $mrn->created_at->format('d/M/Y') }}</td>
                                         <td class="text-end">{{  number_format($owed, 2) }}</td>
                                         <td class="text-end">{{  number_format($paid, 2) }}</td>

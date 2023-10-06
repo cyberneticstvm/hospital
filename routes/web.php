@@ -675,6 +675,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/surgery/consumable/receipt/{id}/', [PDFController::class, 'surgeryconsumablereceipt']);
     Route::get('/dsummary/report/{id}', [PDFController::class, 'dsummary']);
     Route::get('/patient/transaction/history/{id}', [PDFController::class, 'patientTransactionHistory'])->name('patient.transaction.history.pdf');
+    Route::get('/patient/transaction/history/mrn/{id}', [PDFController::class, 'patientTransactionHistoryMrn'])->name('patient.transaction.history.mrn.pdf');
     // End PDFs //
 
     // Settings //

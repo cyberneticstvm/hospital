@@ -485,4 +485,12 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/patient-transaction-history', compact('patient', 'mrns', 'branch'));            
         return $pdf->stream($patient->patient_id.'.pdf', array("Attachment"=>0));
     }
+
+    public function patientTransactionHistoryMrn($id){
+        $mrn = PatientReference::findOrFail($id);
+        $patient = PatientRegistrations::findOrFail($mrn->patient_id);
+        $branch = Branch::findOrFail($mrn->branch);
+        $pdf = PDF::loadView('/pdf/patient-transaction-history-mrn', compact('patient', 'mrn', 'branch'));            
+        return $pdf->stream($mrn->id.'.pdf', array("Attachment"=>0));
+    }
 }
