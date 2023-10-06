@@ -61,7 +61,7 @@
                 <th width="10%">SLNo.</th>
                 <th width="30%">Medical Record No.</th>
                 <th width="15%">Date</th>
-                <th width="15%">Amount Consumed</th>
+                <th width="15%">Amount Charged</th>
                 <th width="15%">Amount Paid</th>
                 <th width="15%">Balance</th>
             </tr>
