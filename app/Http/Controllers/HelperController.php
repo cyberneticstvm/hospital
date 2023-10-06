@@ -356,9 +356,8 @@ class HelperController extends Controller
             $html .= "</tr>";
             $paid_tot += $paid; $owed_tot += $owed; $tot += $owed - $paid;
         endforeach;
-        $html .= "</tbody><tfoot><tr><td colspan='4' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>".number_format($owed_tot, 2)."</td><td class='text-end fw-bold'>".number_format($paid_tot, 2)."</td><td class='text-end fw-bold ".$cls."'>".number_format($tot, 2)."</td></tr></tfoot>";
+        $html .= "</tbody><tfoot><tr><td colspan='4' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>".number_format($owed_tot, 2)."</td><td class='text-end fw-bold'>".number_format($paid_tot + $outstanding, 2)."</td><td class='text-end fw-bold ".$cls."'>".number_format($tot - $outstanding, 2)."</td></tr></tfoot>";
         $html .= "<tfoot><tr><td class='text-end fw-bold' colspan='6'>Outstanding Due</td><td class='fw-bold text-end'>".number_format($outstanding, 2)."</td></tr></tfoot>";
-        $html .= "<tfoot><tr><td class='text-end fw-bold' colspan='6'>Balance</td><td class='fw-bold text-end'>".number_format($tot - $outstanding, 2)."</td></tr></tfoot></table>";
         return $html;
     }
     public function getOwedTotal($mrid){
