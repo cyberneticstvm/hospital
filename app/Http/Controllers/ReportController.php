@@ -324,7 +324,7 @@ class ReportController extends Controller
         $inputs = array($request->fromdate, $request->todate, $request->branch);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
-        $records = PatientSurgeryConsumable::with('patient')->whereBetween('created_at', [$startDate, $endDate])->latest()->get();
+        $records = PatientSurgeryConsumable::with('patient')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->latest()->get();
         return view('reports.surgery-payments', compact('branches', 'records', 'inputs'));
     }
 
