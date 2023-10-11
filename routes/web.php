@@ -620,6 +620,7 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
 
     Route::get('/reports/patient/', 'App\Http\Controllers\ReportController@showpatient')->name('reports.patient.show');
     Route::post('/reports/patient/', 'App\Http\Controllers\ReportController@fetchpatient')->name('reports.patient.fetch');
+    Route::get('/reports/patient/surgery/payments', 'App\Http\Controllers\ReportController@surgeryPayments')->name('reports.patient.surgery.payments');
     Route::post('/reports/patient/surgery/payments', 'App\Http\Controllers\ReportController@fetchSurgeryPayments')->name('reports.patient.surgery.payments.fetch');
 
     // End Reports //

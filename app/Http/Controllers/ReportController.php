@@ -305,6 +305,14 @@ class ReportController extends Controller
         return view('reports.patient', compact('branches', 'records', 'inputs'));
     }
 
+    public function surgeryPayments()
+    {
+        $branches = $this->getBranches($this->branch);
+        $records = [];
+        $inputs = [];
+        return view('reports.suregery-payments', compact('branches', 'records', 'inputs'));
+    }
+
     public function fetchSurgeryPayments(Request $request)
     {
         $this->validate($request, [
