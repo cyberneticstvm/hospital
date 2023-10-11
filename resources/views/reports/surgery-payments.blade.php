@@ -94,9 +94,6 @@
                                     <td class="text-end">{{ number_format($row->discount, 2) }}</td>
                                     <td class="text-end">{{ number_format($row->total_after_discount, 2) }}</td>
                                 </tr>
-                                @php
-                                $tot += $row->amount;
-                                @endphp
                                 @empty
                                 @endforelse
                                 <tr>
