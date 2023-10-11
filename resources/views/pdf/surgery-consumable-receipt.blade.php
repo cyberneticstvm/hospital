@@ -64,7 +64,7 @@
             <td>Address</td>
             <td colspan="3">{{ $psc->patient->address }}</td>
             <td>Bill Number / Date</td>
-            <td>{{ $psc->bill_number }} / {{ $psc->created_at->format('d/M/Y h:i a') }}</td>
+            <td>{{ $psc->bill_number }} / {{ $psc->created_at->format('d, M Y h:i a') }}</td>
         </tr>
     </table>
     <br>
