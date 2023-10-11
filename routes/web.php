@@ -55,7 +55,7 @@ Route::get('/errors/error/', function () {
     return view('errors.error');
 })->name('error');
 
-Route::group(['middleware' => ['auth']], function(){
+Route::group(['middleware' => ['auth']], function () {
     /*Route::get('/dash/', function () {
         return view('dash');
     })->name('dash');*/
@@ -68,8 +68,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('store_branch_session', 'App\Http\Controllers\AuthController@store_branch_session')->name('store_branch_session');
 });
 
-Route::group(['middleware' => ['auth', 'branch']], function(){   
-    
+Route::group(['middleware' => ['auth', 'branch']], function () {
+
     Route::get('/test/{branch}', 'App\Http\Controllers\ReportController@getClosingBalance');
 
     Route::get('/permission/not-authorized/', function () {
@@ -234,7 +234,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::get('/extras/pharmacy/edit/{id}/', 'App\Http\Controllers\PharmacyController@edit')->name('pharmacy.edit');
     Route::put('/extras/pharmacy/edit/{id}/', 'App\Http\Controllers\PharmacyController@update')->name('pharmacy.update');
     Route::delete('/extras/pharmacy/delete/{id}/', 'App\Http\Controllers\PharmacyController@destroy')->name('pharmacy.delete');
-    Route::delete('/extras/pharmacy/medicinesingle/delete/{id}/', 'App\Http\Controllers\PharmacyController@remove')->name('pharmacysingle.delete');    
+    Route::delete('/extras/pharmacy/medicinesingle/delete/{id}/', 'App\Http\Controllers\PharmacyController@remove')->name('pharmacysingle.delete');
     // End Pharmacy //
 
     // Postop Medicine //
@@ -470,15 +470,15 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::post('/transaction/history', 'App\Http\Controllers\PatientPaymentController@transactionHistoryFetch')->name('patient.transaction.history.fetch');
     Route::get('/patient/transaction/history/{id}', 'App\Http\Controllers\PatientPaymentController@patientTransactionHistoryFetch')->name('patient.transaction.history.fetch1');
 
-    
+
     Route::get('/paypharma/', 'App\Http\Controllers\PharmacyPaymentController@index')->name('paypharma.index');
     //Route::get('/paypharmafetch/', 'App\Http\Controllers\PharmacyPaymentController@index')->name('paypharma.index');
     Route::post('/paypharmafetch/', 'App\Http\Controllers\PharmacyPaymentController@create')->name('paypharma.fetch');
-    Route::post('/paypharmasave/', 'App\Http\Controllers\PharmacyPaymentController@store')->name('paypharma.save');         
+    Route::post('/paypharmasave/', 'App\Http\Controllers\PharmacyPaymentController@store')->name('paypharma.save');
     Route::get('/paypharmaedit/{id}/', 'App\Http\Controllers\PharmacyPaymentController@edit')->name('paypharma.edit');
     Route::put('/paypharmaedit/{id}/', 'App\Http\Controllers\PharmacyPaymentController@update')->name('paypharma.update');
     Route::delete('/paypharmadelete/{id}/', 'App\Http\Controllers\PharmacyPaymentController@destroy')->name('paypharma.delete');
-    
+
     // End Patient Payments //
 
     // Certificates //
@@ -620,6 +620,7 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
 
     Route::get('/reports/patient/', 'App\Http\Controllers\ReportController@showpatient')->name('reports.patient.show');
     Route::post('/reports/patient/', 'App\Http\Controllers\ReportController@fetchpatient')->name('reports.patient.fetch');
+    Route::post('/reports/patient/surgery/payments', 'App\Http\Controllers\ReportController@fetchSurgeryPayments')->name('reports.patient.surgery.payments.fetch');
 
     // End Reports //
 
@@ -690,4 +691,3 @@ Route::group(['middleware' => ['auth', 'branch']], function(){
     Route::put('/settings/appointment/', [SettingsController::class, 'updateAppointment'])->name('settings.appointment.update');
     // End Settings //
 });
-

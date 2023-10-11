@@ -21,7 +21,7 @@ class ReportController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:report-daybook-show|report-daybook-fetch|report-income-expense-show|report-income-expense-fetch|report-patient-payments-show|report-patient-payments-fetch|report-active-users-show|report-loginlog-show|report-loginlog-fetch|report-appointment-show|report-appointment-fetch|report-patient-show|report-patient-fetch', ['only' => ['showdaybook','fetchdaybook','showincomeexpense','fetchincomeexpense','showpayment','fetchpayment','activeusers','showloginlog','fetchloginlog', 'showappointment', 'fetchappointment', 'showpatient', 'fetchpatient']]);
+        $this->middleware('permission:report-daybook-show|report-daybook-fetch|report-income-expense-show|report-income-expense-fetch|report-patient-payments-show|report-patient-payments-fetch|report-active-users-show|report-loginlog-show|report-loginlog-fetch|report-appointment-show|report-appointment-fetch|report-patient-show|report-patient-fetch', ['only' => ['showdaybook', 'fetchdaybook', 'showincomeexpense', 'fetchincomeexpense', 'showpayment', 'fetchpayment', 'activeusers', 'showloginlog', 'fetchloginlog', 'showappointment', 'fetchappointment', 'showpatient', 'fetchpatient']]);
         $this->middleware('permission:report-daybook-show', ['only' => ['showdaybook']]);
         $this->middleware('permission:report-daybook-fetch', ['only' => ['fetchdaybook']]);
         $this->middleware('permission:report-income-expense-show', ['only' => ['showincomeexpense']]);
@@ -39,48 +39,81 @@ class ReportController extends Controller
         $this->branch = session()->get('branch');
     }
 
-    private function getBranches($branch){
-        if(Auth::user()->roles->first()->name == 'Admin'):
+    private function getBranches($branch)
+    {
+        if (Auth::user()->roles->first()->name == 'Admin') :
             $branches = Branch::all();
-        else:
+        else :
             $branches = Branch::where('id', $branch)->get();
         endif;
         return $branches;
     }
 
-    private function isAdmin(){
-        if(Auth::user()->roles->first()->name == 'Admin'):
+    private function isAdmin()
+    {
+        if (Auth::user()->roles->first()->name == 'Admin') :
             return true;
         endif;
         return false;
     }
-    private function isAccounts(){
-        if(Auth::user()->roles->first()->name == 'Accounts'):
+    private function isAccounts()
+    {
+        if (Auth::user()->roles->first()->name == 'Accounts') :
             return true;
         endif;
         return false;
     }
-    private function isCEO(){
-        if(Auth::user()->roles->first()->name == 'CEO'):
+    private function isCEO()
+    {
+        if (Auth::user()->roles->first()->name == 'CEO') :
             return true;
         endif;
         return false;
     }
 
-    public function showdaybook(){
+    public function showdaybook()
+    {
         $branches = $this->getBranches($this->branch);
-        $is_admin = $this->isAdmin(); $is_accounts = $this->isAccounts(); $isCEO = $this->isCEO();
-        $records = []; $inputs = []; $reg_fee_total = 0.00; $consultation_fee_total = 0.00; $procedure_fee_total = 0.00; $certificate_fee_total = 0.00; $pharmacy = 0.00; $medicine = 0.00; $income = 0.00; $expense = 0.00; $income_total = 0.00; $income_received_cash = 0.00; $income_received_upi = 0.00; $income_received_card = 0.00; $income_received_staff = 0.00; $opening_balance = 0.00; $vision = 0.00; $outstanding = 0.00; $clinical_lab = 0.00;  $radiology_lab = 0.00; $surgery_medicine = 0.00; $postop_medicine = 0.00; $surgery_consumables = 0.00; $outstanding_received = 0.00;
+        $is_admin = $this->isAdmin();
+        $is_accounts = $this->isAccounts();
+        $isCEO = $this->isCEO();
+        $records = [];
+        $inputs = [];
+        $reg_fee_total = 0.00;
+        $consultation_fee_total = 0.00;
+        $procedure_fee_total = 0.00;
+        $certificate_fee_total = 0.00;
+        $pharmacy = 0.00;
+        $medicine = 0.00;
+        $income = 0.00;
+        $expense = 0.00;
+        $income_total = 0.00;
+        $income_received_cash = 0.00;
+        $income_received_upi = 0.00;
+        $income_received_card = 0.00;
+        $income_received_staff = 0.00;
+        $opening_balance = 0.00;
+        $vision = 0.00;
+        $outstanding = 0.00;
+        $clinical_lab = 0.00;
+        $radiology_lab = 0.00;
+        $surgery_medicine = 0.00;
+        $postop_medicine = 0.00;
+        $surgery_consumables = 0.00;
+        $outstanding_received = 0.00;
         return view('reports.daybook', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables'));
     }
-    public function fetchdaybook(Request $request){
+    public function fetchdaybook(Request $request)
+    {
         $this->validate($request, [
             'fromdate' => 'required',
             'todate' => 'required',
             'branch' => 'required',
         ]);
-        $branches = $this->getBranches($this->branch); 
-        $is_admin = $this->isAdmin(); $is_accounts = $this->isAccounts(); $isCEO = $this->isCEO();
+        $branches = $this->getBranches($this->branch);
+        $is_admin = $this->isAdmin();
+        $is_accounts = $this->isAccounts();
+        $isCEO = $this->isCEO();
         $inputs = array($request->fromdate, $request->todate, $request->branch);
         $prev_day = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay()->subDays(1);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
@@ -94,7 +127,7 @@ class ReportController extends Controller
 
         $procedure_fee_total = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->whereBetween('pp.created_at', [$startDate, $endDate])->where('pp.branch', $request->branch)->sum('fee');
 
-        $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->whereBetween('pc.created_at', [$startDate, $endDate])->where('pc.branch_id', $request->branch)->where('pcd.status', 'I')->sum('pcd.fee');        
+        $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->whereBetween('pc.created_at', [$startDate, $endDate])->where('pc.branch_id', $request->branch)->where('pcd.status', 'I')->sum('pcd.fee');
 
         $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $request->branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
 
@@ -106,7 +139,7 @@ class ReportController extends Controller
 
         $radiology_lab = DB::table('lab_radiologies as l')->leftJoin('patient_medical_records as m', 'm.id', '=', 'l.medical_record_id')->whereBetween('l.created_at', [$startDate, $endDate])->where('l.tested_from', 1)->where('m.branch', $request->branch)->sum('l.fee');
 
-        $surgery_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'surgery')->whereBetween('d.created_at', [$startDate, $endDate])->where('m.branch', $request->branch)->sum('d.total'); 
+        $surgery_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'surgery')->whereBetween('d.created_at', [$startDate, $endDate])->where('m.branch', $request->branch)->sum('d.total');
 
         $postop_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'postop')->whereBetween('d.created_at', [$startDate, $endDate])->where('m.branch', $request->branch)->sum('d.total');
 
@@ -117,9 +150,9 @@ class ReportController extends Controller
 
         $income_received_cash = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->where('payment_mode', 1)->where('type', '!=', 9)->where('type', '!=', 8)->sum('amount');
 
-        $income_received_upi = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [3,4])->where('type', '!=', 9)->where('type', '!=', 8)->sum('amount');
+        $income_received_upi = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [3, 4])->where('type', '!=', 9)->where('type', '!=', 8)->sum('amount');
 
-        $income_received_card = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [2,5,7])->where('type', '!=', 9)->where('type', '!=', 8)->sum('amount');
+        $income_received_card = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [2, 5, 7])->where('type', '!=', 9)->where('type', '!=', 8)->sum('amount');
 
         $income_received_staff = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [6])->where('type', '!=', 9)->where('type', '!=', 8)->sum('amount');
 
@@ -131,13 +164,16 @@ class ReportController extends Controller
 
         return view('reports.daybook', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables'));
     }
-    public function showincomeexpense(){
+    public function showincomeexpense()
+    {
         $branches = $this->getBranches($this->branch);
         $heads = Head::all();
-        $records = []; $inputs = []; 
+        $records = [];
+        $inputs = [];
         return view('reports.income-expense', compact('branches', 'records', 'inputs', 'heads'));
     }
-    public function fetchincomeexpense(Request $request){
+    public function fetchincomeexpense(Request $request)
+    {
         $this->validate($request, [
             'fromdate' => 'required',
             'todate' => 'required',
@@ -149,36 +185,39 @@ class ReportController extends Controller
         $inputs = array($request->fromdate, $request->todate, $request->branch, $request->type, $request->head);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
-        if($request->type == 'I'):
-            $records = DB::table('incomes as i')->leftJoin('income_expense_heads as h', 'i.head', '=', 'h.id')->leftJoin('branches as b', 'i.branch', '=', 'b.id')->select('i.id', DB::raw("DATE_FORMAT(i.created_at, '%d/%b/%Y') AS cdate"), 'i.description', 'i.amount', DB::raw("'Income' AS type"), 'b.branch_name', 'h.name')->whereBetween('i.created_at', [$startDate, $endDate])->when($request->head > 0, function($query) use ($request){
+        if ($request->type == 'I') :
+            $records = DB::table('incomes as i')->leftJoin('income_expense_heads as h', 'i.head', '=', 'h.id')->leftJoin('branches as b', 'i.branch', '=', 'b.id')->select('i.id', DB::raw("DATE_FORMAT(i.created_at, '%d/%b/%Y') AS cdate"), 'i.description', 'i.amount', DB::raw("'Income' AS type"), 'b.branch_name', 'h.name')->whereBetween('i.created_at', [$startDate, $endDate])->when($request->head > 0, function ($query) use ($request) {
                 return $query->where('i.head', $request->head);
             })->where('i.branch', $request->branch)->orderBy('i.created_at')->get();
-        else:
-            $records = DB::table('expenses as e')->leftJoin('income_expense_heads as h', 'e.head', '=', 'h.id')->leftJoin('branches as b', 'e.branch', '=', 'b.id')->select('e.id', DB::raw("DATE_FORMAT(e.created_at, '%d/%b/%Y') AS cdate"), 'e.description', 'e.amount', DB::raw("'Expense' AS type"), 'b.branch_name', 'h.name')->whereBetween('e.created_at', [$startDate, $endDate])->when($request->head > 0, function($query) use ($request){
+        else :
+            $records = DB::table('expenses as e')->leftJoin('income_expense_heads as h', 'e.head', '=', 'h.id')->leftJoin('branches as b', 'e.branch', '=', 'b.id')->select('e.id', DB::raw("DATE_FORMAT(e.created_at, '%d/%b/%Y') AS cdate"), 'e.description', 'e.amount', DB::raw("'Expense' AS type"), 'b.branch_name', 'h.name')->whereBetween('e.created_at', [$startDate, $endDate])->when($request->head > 0, function ($query) use ($request) {
                 return $query->where('e.head', $request->head);
             })->where('e.branch', $request->branch)->orderBy('e.created_at')->get();
         endif;
         return view('reports.income-expense', compact('branches', 'records', 'inputs', 'heads'));
     }
 
-    public function showpayment(){
-        if($this->isAdmin()):
+    public function showpayment()
+    {
+        if ($this->isAdmin()) :
             $branches = DB::table('branches')->get();
-        else:
+        else :
             $branches = $this->getBranches($this->branch);
         endif;
-        $records = []; $inputs = []; 
+        $records = [];
+        $inputs = [];
         return view('reports.patient-payments', compact('branches', 'records', 'inputs'));
     }
-    public function fetchpayment(Request $request){
+    public function fetchpayment(Request $request)
+    {
         $this->validate($request, [
             'fromdate' => 'required',
             'todate' => 'required',
             'branch' => 'required',
         ]);
-        if($this->isAdmin()):
+        if ($this->isAdmin()) :
             $branches = DB::table('branches')->get();
-        else:
+        else :
             $branches = $this->getBranches($this->branch);
         endif;
         $inputs = array($request->fromdate, $request->todate, $request->branch);
@@ -188,35 +227,42 @@ class ReportController extends Controller
         return view('reports.patient-payments', compact('branches', 'records', 'inputs'));
     }
 
-    public function activeusers(){
+    public function activeusers()
+    {
         $users = User::whereNotNull('session_id')->get();
         return view('reports.active-users', compact('users'));
     }
 
-    public function showloginlog(){
+    public function showloginlog()
+    {
         $users = User::all();
-        $records = []; $inputs = [];
+        $records = [];
+        $inputs = [];
         return view('reports.login-log', compact('users', 'records', 'inputs'));
     }
 
-    public function fetchloginlog(Request $request){
+    public function fetchloginlog(Request $request)
+    {
         $users = User::all();
         $inputs = array($request->fromdate, $request->todate, $request->user);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
-        $records = LoginLog::whereBetween('logged_in', [$startDate, $endDate])->when($request->user > 0, function($query) use($request) {
+        $records = LoginLog::whereBetween('logged_in', [$startDate, $endDate])->when($request->user > 0, function ($query) use ($request) {
             return $query->where('user_id', $request->user);
         })->get();
         return view('reports.login-log', compact('users', 'records', 'inputs'));
     }
 
-    public function showappointment(){
+    public function showappointment()
+    {
         $branches = $this->getBranches($this->branch);
         $doctors = doctor::all();
-        $records = []; $inputs = []; 
+        $records = [];
+        $inputs = [];
         return view('reports.appointment', compact('branches', 'records', 'inputs', 'doctors'));
     }
-    public function fetchappointment(Request $request){
+    public function fetchappointment(Request $request)
+    {
         $this->validate($request, [
             'from_date' => 'required',
             'to_date' => 'required',
@@ -226,22 +272,25 @@ class ReportController extends Controller
         $inputs = array($request->fromdate, $request->todate, $request->status, $request->branch, $request->doctor);
         $startDate = Carbon::parse($request->from_date)->startOfDay();
         $endDate = Carbon::parse($request->to_date)->endOfDay();
-        $records = Appointment::whereBetween('appointment_date', [$startDate, $endDate])->when($request->doctor > 0, function($query) use ($request){
+        $records = Appointment::whereBetween('appointment_date', [$startDate, $endDate])->when($request->doctor > 0, function ($query) use ($request) {
             return $query->where('doctor', $request->doctor);
-        })->when($request->branch > 0, function($query) use ($request){
+        })->when($request->branch > 0, function ($query) use ($request) {
             return $query->where('branch', $request->branch);
-        })->when($request->status <> 0 , function($query) use ($request){
+        })->when($request->status <> 0, function ($query) use ($request) {
             return $query->where('medical_record_id', $request->status, 0);
         })->get();
         return view('reports.appointment', compact('branches', 'records', 'inputs', 'doctors'));
     }
 
-    public function showpatient(){
+    public function showpatient()
+    {
         $branches = $this->getBranches($this->branch);
-        $records = []; $inputs = []; 
+        $records = [];
+        $inputs = [];
         return view('reports.patient', compact('branches', 'records', 'inputs'));
     }
-    public function fetchpatient(Request $request){
+    public function fetchpatient(Request $request)
+    {
         $this->validate($request, [
             'from_date' => 'required',
             'to_date' => 'required',
@@ -250,13 +299,29 @@ class ReportController extends Controller
         $inputs = array($request->fromdate, $request->todate, $request->branch);
         $startDate = Carbon::parse($request->from_date)->startOfDay();
         $endDate = Carbon::parse($request->to_date)->endOfDay();
-        $records = PatientRegistrations::whereBetween('created_at', [$startDate, $endDate])->when($request->branch > 0, function($query) use ($request){
+        $records = PatientRegistrations::whereBetween('created_at', [$startDate, $endDate])->when($request->branch > 0, function ($query) use ($request) {
             return $query->where('branch', $request->branch);
         })->get();
         return view('reports.patient', compact('branches', 'records', 'inputs'));
     }
 
-    public function getClosingBalance($branch){
+    public function fetchSurgeryPayments(Request $request)
+    {
+        $this->validate($request, [
+            'fromdate' => 'required',
+            'todate' => 'required',
+            'branch' => 'required',
+        ]);
+        $branches = $this->getBranches($this->branch);
+        $inputs = array($request->fromdate, $request->todate, $request->branch);
+        $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
+        $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
+        $records = PatientSurgeryConsumable::with('patient')->whereBetween('created_at', [$startDate, $endDate])->latest()->get();
+        return view('reports.suregery-payments', compact('branches', 'records', 'inputs'));
+    }
+
+    public function getClosingBalance($branch)
+    {
 
         $prev_day = Carbon::today()->subDays(1);
         $startDate = Carbon::now()->startOfDay();
@@ -270,7 +335,7 @@ class ReportController extends Controller
 
         $procedure_fee_total = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->whereBetween('pp.created_at', [$startDate, $endDate])->where('pp.branch', $branch)->sum('fee');
 
-        $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->whereBetween('pc.created_at', [$startDate, $endDate])->where('pc.branch_id', $branch)->where('pcd.status', 'I')->sum('pcd.fee');        
+        $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->whereBetween('pc.created_at', [$startDate, $endDate])->where('pc.branch_id', $branch)->where('pcd.status', 'I')->sum('pcd.fee');
 
         $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
 
@@ -283,13 +348,13 @@ class ReportController extends Controller
 
         $income_received_cash = DB::table('patient_payments')->where('branch', $branch)->whereBetween('created_at', [$startDate, $endDate])->where('payment_mode', 1)->where('type', '!=', 9)->sum('amount');
 
-        $income_received_other = DB::table('patient_payments')->where('branch', $branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [2,3,4,5,7])->where('type', '!=', 9)->sum('amount');
+        $income_received_other = DB::table('patient_payments')->where('branch', $branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [2, 3, 4, 5, 7])->where('type', '!=', 9)->sum('amount');
 
         $clinical_lab = DB::table('lab_clinics as l')->leftJoin('patient_medical_records as m', 'm.id', '=', 'l.medical_record_id')->whereBetween('l.created_at', [$startDate, $endDate])->where('l.tested_from', 1)->where('m.branch', $branch)->sum('l.fee');
 
         $radiology_lab = DB::table('lab_radiologies as l')->leftJoin('patient_medical_records as m', 'm.id', '=', 'l.medical_record_id')->whereBetween('l.created_at', [$startDate, $endDate])->where('l.tested_from', 1)->where('m.branch', $branch)->sum('l.fee');
 
-        $surgery_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'surgery')->whereBetween('d.created_at', [$startDate, $endDate])->where('m.branch', $branch)->sum('d.total'); 
+        $surgery_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'surgery')->whereBetween('d.created_at', [$startDate, $endDate])->where('m.branch', $branch)->sum('d.total');
 
         $postop_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'postop')->whereBetween('d.created_at', [$startDate, $endDate])->where('m.branch', $branch)->sum('d.total');
 
@@ -299,7 +364,7 @@ class ReportController extends Controller
 
         $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $income + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
 
-        $closing_balance = $income_total-($income_received_other + $outstanding_received + $expense);
+        $closing_balance = $income_total - ($income_received_other + $outstanding_received + $expense);
 
         return view('test', compact('closing_balance'));
     }
