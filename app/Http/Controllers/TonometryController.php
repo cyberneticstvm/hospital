@@ -116,7 +116,7 @@ class TonometryController extends Controller
     {
         $tonometry = Tonometry::find($id);
         $mrecord = DB::table('patient_medical_records')->find($tonometry->medical_record_id);
-        $powers_nct = DB::table('eye_powers')->where('category', 'tonometry_nct')->orderBy('value')->get();
+        $powers_nct = DB::table('eye_powers')->where('category', 'tonometry_nct')->orderBy('value', 'ASC')->get();
         $powers_at = DB::table('eye_powers')->where('category', 'tonometry_at')->get();
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
