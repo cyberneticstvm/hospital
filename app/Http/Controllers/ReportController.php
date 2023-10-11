@@ -310,7 +310,7 @@ class ReportController extends Controller
         $branches = $this->getBranches($this->branch);
         $records = [];
         $inputs = [];
-        return view('reports.suregery-payments', compact('branches', 'records', 'inputs'));
+        return view('reports.surgery-payments', compact('branches', 'records', 'inputs'));
     }
 
     public function fetchSurgeryPayments(Request $request)
@@ -325,7 +325,7 @@ class ReportController extends Controller
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
         $records = PatientSurgeryConsumable::with('patient')->whereBetween('created_at', [$startDate, $endDate])->latest()->get();
-        return view('reports.suregery-payments', compact('branches', 'records', 'inputs'));
+        return view('reports.surgery-payments', compact('branches', 'records', 'inputs'));
     }
 
     public function getClosingBalance($branch)
