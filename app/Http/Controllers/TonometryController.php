@@ -17,10 +17,11 @@ class TonometryController extends Controller
      */
     private $branch;
 
-    function __construct(){
-        $this->middleware('permission:tonometry-list|tonometry-create|tonometry-edit|tonometry-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:tonometry-create', ['only' => ['create','store']]);
-        $this->middleware('permission:tonometry-edit', ['only' => ['edit','update']]);
+    function __construct()
+    {
+        $this->middleware('permission:tonometry-list|tonometry-create|tonometry-edit|tonometry-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:tonometry-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:tonometry-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:tonometry-delete', ['only' => ['destroy']]);
         $this->branch = session()->get('branch');
     }
@@ -55,10 +56,10 @@ class TonometryController extends Controller
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
-        try{
+        try {
             $tonometry = Tonometry::create($input);
-            if(!empty($input['procedure'])):
-                for($i=0; $i<count($request->procedure); $i++):
+            if (!empty($input['procedure'])) :
+                for ($i = 0; $i < count($request->procedure); $i++) :
                     $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                     $data[] = [
                         'medical_record_id' => $request->medical_record_id,
@@ -74,10 +75,10 @@ class TonometryController extends Controller
                 endfor;
                 DB::table('patient_procedures')->insert($data);
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
-        return redirect()->route('tonometry.index')->with('success','Record created successfully');
+        return redirect()->route('tonometry.index')->with('success', 'Record created successfully');
     }
 
     /**
@@ -92,7 +93,7 @@ class TonometryController extends Controller
             'medical_record_id' => 'required',
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
-        if($mrecord):
+        if ($mrecord) :
             $procedures = DB::table('procedures')->where('type', 'T')->get();
             $powers_nct = DB::table('eye_powers')->where('category', 'tonometry_nct')->get();
             $powers_at = DB::table('eye_powers')->where('category', 'tonometry_at')->get();
@@ -100,7 +101,7 @@ class TonometryController extends Controller
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
             return view('tonometry.create', compact('mrecord', 'patient', 'doctor', 'age', 'powers_nct', 'powers_at', 'procedures'));
-        else:
+        else :
             return redirect("/tonometry/")->withErrors('No records found.');
         endif;
     }
@@ -115,7 +116,7 @@ class TonometryController extends Controller
     {
         $tonometry = Tonometry::find($id);
         $mrecord = DB::table('patient_medical_records')->find($tonometry->medical_record_id);
-        $powers_nct = DB::table('eye_powers')->where('category', 'tonometry_nct')->get();
+        $powers_nct = DB::table('eye_powers')->where('category', 'tonometry_nct')->orderBy('value')->get();
         $powers_at = DB::table('eye_powers')->where('category', 'tonometry_at')->get();
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
@@ -141,11 +142,11 @@ class TonometryController extends Controller
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
         $to = Tonometry::find($id);
-        try{
+        try {
             DB::table('patient_procedures')->where('medical_record_id', $request->medical_record_id)->where('type', 'T')->delete();
             $to->update($input);
-            if(!empty($input['procedure'])):
-                for($i=0; $i<count($request->procedure); $i++):
+            if (!empty($input['procedure'])) :
+                for ($i = 0; $i < count($request->procedure); $i++) :
                     $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                     $data[] = [
                         'medical_record_id' => $request->medical_record_id,
@@ -161,10 +162,10 @@ class TonometryController extends Controller
                 endfor;
                 DB::table('patient_procedures')->insert($data);
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
-        return redirect()->route('tonometry.index')->with('success','Record updated successfully');
+        return redirect()->route('tonometry.index')->with('success', 'Record updated successfully');
     }
 
     /**
@@ -179,6 +180,6 @@ class TonometryController extends Controller
         DB::table('patient_procedures')->where('medical_record_id', $tonometry->medical_record_id)->where('type', 'T')->delete();
         $tonometry->delete();
         return redirect()->route('tonometry.index')
-                        ->with('success','Record deleted successfully');
+            ->with('success', 'Record deleted successfully');
     }
 }
