@@ -99,9 +99,9 @@
                                 @endforelse
                                 <tr>
                                     <td colspan="5" class="text-end fw-bold">Total</td>
-                                    <td class="text-end fw-bold">{{ number_format($row->sum(total), 2) }}</td>
-                                    <td class="text-end fw-bold">{{ number_format($row->sum(discount), 2) }}</td>
-                                    <td class="text-end fw-bold">{{ number_format($row->sum(total_after_discount), 2) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($row->sum('total'), 2) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($row->sum('discount'), 2) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($row->sum('total_after_discount'), 2) }}</td>
                                 </tr>
                                 @endif
                             </tbody>
