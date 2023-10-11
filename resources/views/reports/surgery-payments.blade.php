@@ -83,6 +83,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if($records)
                                 @forelse($records as $key => $row)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
@@ -102,6 +103,7 @@
                                     <td class="text-end fw-bold">{{ number_format($row->sum(discount), 2) }}</td>
                                     <td class="text-end fw-bold">{{ number_format($row->sum(total_after_discount), 2) }}</td>
                                 </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
