@@ -213,7 +213,12 @@
                                 <tr>
                                     <td colspan="2" class="text-end fw-bold">Patient Outstanding Received (UPI/Card/Transfer)</td>
                                     <td class="text-end fw-bold">{{ number_format($outstanding_received_other, 2) }}</td>
-                                    <td class="text-end"><a class="daybook text-primary" href="javascript:void(0)" data-bs-toggle="modal" data-modal="outstandingReceivedCardModal" data-bs-target="#outstandingReceivedCardModal" data-title="Outstanding Payments Received" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="outstandingReceived">{{ number_format($outstanding_received, 2) }}</a></td>
+                                    <td class="text-end"><a class="daybook text-primary" href="javascript:void(0)" data-bs-toggle="modal" data-modal="outstandingReceivedCardModal" data-bs-target="#outstandingReceivedCardModal" data-title="Outstanding Payments Received" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="outstandingReceived">{{ number_format($outstanding_received_other, 2) }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-end fw-bold">Patient Outstanding Received (Cash)</td>
+                                    <td class="text-end fw-bold">{{ number_format($outstanding_received, 2) }}</td>
+                                    <td class="text-end">{{ number_format($outstanding_received, 2) }}</td>
                                 </tr>
 
                                 <tr>
