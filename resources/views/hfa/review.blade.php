@@ -16,6 +16,7 @@
                                     <th>Patient ID</th>
                                     <th>Receipt</th>
                                     <th>Created By</th>
+                                    <th>Date</th>
                                     <th>Time</th>
                                     <th>Edit</th>
                                     <th>Remove</th>
@@ -31,6 +32,7 @@
                                     <td>{{ $hfa->patient_id }}</td>
                                     <td><a href="/hfa/receipt/{{ $hfa->id }}/" target="_blank"><i class="fa fa-file-o text-danger"></i></a></td>
                                     <td>{{ $hfa->user->name }}</td>
+                                    <td>{{ $hfa->created_at->format('d/M/Y') }}</td>
                                     <td>{{ $hfa->created_at->format('h:i a') }}</td>
                                     <td><a class='btn btn-link' href="{{ route('hfa.edit', $hfa->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                     <td>
