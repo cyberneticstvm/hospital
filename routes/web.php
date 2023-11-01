@@ -305,6 +305,7 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     // end spectacles //
 
     // HFA //
+    Route::get('/review/hfa', [HFAController::class, 'review'])->name('hfa.review');
     Route::get('/hfa', [HFAController::class, 'index'])->name('hfa.index');
     Route::post('/hfa/show/', [HFAController::class, 'show'])->name('hfa.show');
     Route::post('/hfa/create/', [HFAController::class, 'store'])->name('hfa.save');

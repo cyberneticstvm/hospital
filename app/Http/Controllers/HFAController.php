@@ -18,18 +18,25 @@ class HFAController extends Controller
      */
     private $branch;
 
-    function __construct(){
-        $this->middleware('permission:hfa-list|hfa-create|hfa-edit|hfa-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:hfa-create', ['only' => ['create','store']]);
-        $this->middleware('permission:hfa-edit', ['only' => ['edit','update']]);
+    function __construct()
+    {
+        $this->middleware('permission:hfa-list|hfa-create|hfa-edit|hfa-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:hfa-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:hfa-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:hfa-delete', ['only' => ['destroy']]);
         $this->branch = session()->get('branch');
     }
 
     public function index()
     {
-        $hfas = HFA::leftJoin('patient_medical_records AS m', 'h_f_a_s.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'h_f_a_s.patient_id', '=', 'p.id')->selectRaw("h_f_a_s.*, p.patient_name, p.patient_id, h_f_a_s.medical_record_id")->where('h_f_a_s.branch', $this->branch)->whereIn('h_f_a_s.status', [1,2])->orderByDesc("h_f_a_s.id")->get();
+        $hfas = HFA::leftJoin('patient_medical_records AS m', 'h_f_a_s.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'h_f_a_s.patient_id', '=', 'p.id')->selectRaw("h_f_a_s.*, p.patient_name, p.patient_id, h_f_a_s.medical_record_id")->where('h_f_a_s.branch', $this->branch)->whereIn('h_f_a_s.status', [1, 2])->orderByDesc("h_f_a_s.id")->get();
         return view('hfa.index', compact('hfas'));
+    }
+
+    public function review()
+    {
+        $hfas = HFA::leftJoin('patient_medical_records AS m', 'h_f_a_s.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'h_f_a_s.patient_id', '=', 'p.id')->selectRaw("h_f_a_s.*, p.patient_name, p.patient_id, h_f_a_s.medical_record_id")->where('h_f_a_s.branch', $this->branch)->whereIn('h_f_a_s.status', [1, 2])->orderByDesc("h_f_a_s.id")->where('h_f_a_s.status', 4)->latest()->get();
+        return view('hfa.review', compact('hfas'));
     }
 
     /**
@@ -53,14 +60,14 @@ class HFAController extends Controller
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
-        if($request->document):
-            $fpath = 'hfa/'.$request->medical_record_id;
+        if ($request->document) :
+            $fpath = 'hfa/' . $request->medical_record_id;
             $input['document'] = Storage::disk('public')->putFile($fpath, $request->document);
         endif;
-        try{
+        try {
             $hfa = HFA::create($input);
-            if(!empty($input['procedure'])):
-                for($i=0; $i<count($request->procedure); $i++):
+            if (!empty($input['procedure'])) :
+                for ($i = 0; $i < count($request->procedure); $i++) :
                     $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                     $data[] = [
                         'medical_record_id' => $request->medical_record_id,
@@ -76,10 +83,10 @@ class HFAController extends Controller
                 endfor;
                 DB::table('patient_procedures')->insert($data);
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
-        return redirect()->route('hfa.index')->with('success','Record created successfully');
+        return redirect()->route('hfa.index')->with('success', 'Record created successfully');
     }
 
     /**
@@ -94,12 +101,12 @@ class HFAController extends Controller
             'medical_record_id' => 'required',
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
-        if($mrecord):
+        if ($mrecord) :
             $procedures = DB::table('procedures')->where('type', 'H')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             return view('hfa.create', compact('mrecord', 'patient', 'doctor', 'procedures'));
-        else:
+        else :
             return redirect("/hfa")->withErrors('No records found.');
         endif;
     }
@@ -136,16 +143,16 @@ class HFAController extends Controller
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
-        if($request->document):
-            $fpath = 'hfa/'.$request->medical_record_id;
+        if ($request->document) :
+            $fpath = 'hfa/' . $request->medical_record_id;
             $input['document'] = Storage::disk('public')->putFile($fpath, $request->document);
         endif;
-        try{
+        try {
             DB::table('patient_procedures')->where('medical_record_id', $request->medical_record_id)->where('type', 'H')->delete();
             $hfa = HFA::find($id);
             $hfa->update($input);
-            if(!empty($input['procedure'])):
-                for($i=0; $i<count($request->procedure); $i++):
+            if (!empty($input['procedure'])) :
+                for ($i = 0; $i < count($request->procedure); $i++) :
                     $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                     $data[] = [
                         'medical_record_id' => $request->medical_record_id,
@@ -161,10 +168,10 @@ class HFAController extends Controller
                 endfor;
                 DB::table('patient_procedures')->insert($data);
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
-        return redirect()->route('hfa.index')->with('success','Record created successfully');
+        return redirect()->route('hfa.index')->with('success', 'Record created successfully');
     }
 
     /**
@@ -179,6 +186,6 @@ class HFAController extends Controller
         DB::table('patient_procedures')->where('medical_record_id', $hfa->medical_record_id)->where('type', 'H')->delete();
         $hfa->delete();
         return redirect()->route('hfa.index')
-                        ->with('success','Record deleted successfully');
+            ->with('success', 'Record deleted successfully');
     }
 }
