@@ -37,7 +37,7 @@ class HFAController extends Controller
     {
         $from_date = Carbon::now()->subDays(180)->startOfDay();
         $to_date = Carbon::now()->subDays(150)->endOfDay();
-        $hfas = HFA::leftJoin('patient_medical_records AS m', 'h_f_a_s.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'h_f_a_s.patient_id', '=', 'p.id')->selectRaw("h_f_a_s.*, p.patient_name, p.patient_id, h_f_a_s.medical_record_id")->where('h_f_a_s.branch', $this->branch)->orderByDesc("h_f_a_s.id")->where('h_f_a_s.status', 4)->whereBetween('created_at', [$from_date, $to_date])->latest()->get();
+        $hfas = HFA::leftJoin('patient_medical_records AS m', 'h_f_a_s.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'h_f_a_s.patient_id', '=', 'p.id')->selectRaw("h_f_a_s.*, p.patient_name, p.patient_id, h_f_a_s.medical_record_id")->where('h_f_a_s.branch', $this->branch)->orderByDesc("h_f_a_s.id")->where('h_f_a_s.status', 4)->whereBetween('h_f_a_s.created_at', [$from_date, $to_date])->latest()->get();
         return view('hfa.review', compact('hfas'));
     }
 
