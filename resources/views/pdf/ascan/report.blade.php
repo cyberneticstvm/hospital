@@ -169,8 +169,8 @@
     </table>
     <br>
     Procedures: {{ $procs->whereIn('id', $procedures->pluck('procedure'))->pluck('name')->implode(',') }}
-    <br><br>
-    <h5>Sx Eye: {{ $ascan->eye }}</h5>
+    <br>
+    <h3>Sx Eye: {{ $ascan->eye }}</h3>
 </body>
 
 </html>
