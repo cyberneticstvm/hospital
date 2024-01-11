@@ -103,7 +103,7 @@ class DashboardController extends Controller
         $consultation = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->when(Auth::user()->roles->first()->name == 'Doctor', function ($query) use ($branch_id) {
             $query->where('r.doctor_id', Auth::user()->doctor_id);
         })->when(Auth::user()->roles->first()->name == 'Optometriest', function ($query) use ($doc) {
-            $query->where('r.doctor_id', $doc->doctor_id);
+            $query->where('r.doctor_id', 0);
         })->whereDate('r.created_at', Carbon::today())->count('r.id');
 
         $consultation_all_br = DB::table('patient_references as r')->where('r.status', 1)->whereDate('r.created_at', Carbon::today())->count('r.id');
