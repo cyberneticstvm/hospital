@@ -9,7 +9,9 @@ use App\Models\PatientReference as PRef;
 use App\Models\PatientRegistrations as PReg;
 use App\Models\Appointment;
 use App\Models\doctor;
+use App\Models\DoctorOptometrist;
 use App\Models\InhouseCamp;
+use App\Models\User;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -58,10 +60,11 @@ class PatientReferenceController extends Controller
     }
     public function index()
     {
+        $doc = DoctorOptometrist::where('optometrist_id', Auth::id())->whereDate('created_at', Carbon::today())->latest()->first();
         $patients = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->select('pr.id as reference_id', 'pr.sms', 'pr.status', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.patient_id as pno', 'doctors.doctor_name', DB::Raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->where('pr.branch', $this->branch)->whereDate('pr.created_at', Carbon::today())->orderByDesc('pmr.id')->when(Auth::user()->roles->first()->name == 'Doctor', function ($query) {
             return $query->where('pmr.doctor_id', Auth::user()->doctor_id);
-        })->when(Auth::user()->roles->first()->name == 'Optometriest', function ($query) {
-            return $query->where('pmr.doctor_id', Auth::user()->doctor_id);
+        })->when(Auth::user()->roles->first()->name == 'Optometriest', function ($query) use ($doc) {
+            return $query->where('pmr.doctor_id', $doc->doctor_id);
         })->get();
         return view('consultation.patient-reference', compact('patients'));
     }
@@ -212,5 +215,30 @@ class PatientReferenceController extends Controller
         PRef::find($id)->delete();
         return redirect()->route('consultation.patient-reference')
             ->with('success', 'Record deleted successfully');
+    }
+
+    public function optoToDoc()
+    {
+        $doctors = DB::table('doctors')->get();
+        $optos = User::role('Optometriest')->get();
+        $data = DoctorOptometrist::whereDate('created_at', Carbon::today())->where('branch_id', $this->branch)->get();
+        return view('consultation.doctor-optometrist', compact('doctors', 'optos', 'data'));
+    }
+
+    public function optoToDocUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'doctor_id' => 'required',
+            'optometrist_id' => 'required',
+        ]);
+        DoctorOptometrist::create([
+            'branch_id' => $this->branch,
+            'doctor_id' => $request->doctor_id,
+            'optometrist_id' => $request->optometrist_id,
+            'created_by' => Auth::id(),
+            'updated_by' => Auth::id(),
+        ]);
+        return redirect()->route('doc.opto')
+            ->with('success', 'Optometrist assigned successfully');
     }
 }

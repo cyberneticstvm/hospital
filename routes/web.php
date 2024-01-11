@@ -8,7 +8,7 @@ use App\Http\Controllers\OperationNoteController;
 use App\Http\Controllers\LetterheadController;
 use App\Http\Controllers\MedicalFitnessController;
 use App\Http\Controllers\MedicalFitnessHeadController;
-use App\Http\Controllers\PharmacyPaymentController;
+use App\Http\Controllers\PatientReferenceController;
 use App\Http\Controllers\PostOperativeMedicineController;
 use App\Http\Controllers\SurgeryMedicineController;
 use App\Http\Controllers\PachymetryController;
@@ -169,6 +169,12 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::get('/consultation/edit-patient-reference/{id}/', 'App\Http\Controllers\PatientReferenceController@edit')->name('patient_reference.edit');
     Route::put('/consultation/edit-patient-reference/{id}/', 'App\Http\Controllers\PatientReferenceController@update')->name('patient_reference.update');
     Route::delete('/consultation/edit-patient-reference/{id}/', 'App\Http\Controllers\PatientReferenceController@destroy')->name('patient_reference.delete');
+
+    Route::controller(PatientReferenceController::class)->group(function () {
+        Route::get('/consultation/opto-to-doc', 'optoToDoc')->name('doc.opto');
+        Route::post('/consultation/opto-to-doc', 'optoToDocUpdate')->name('doc.opto.assign');
+    });
+
     // End Patient Reference //
 
     // Branch Registration //

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Helper\Helper;
+use App\Models\DoctorOptometrist;
 use App\Models\User;
 use App\Models\LoginLog;
 use Carbon\Carbon;
@@ -16,11 +17,13 @@ use DB;
 class DashboardController extends Controller
 {
     protected $branch;
-    function __construct(){
+    function __construct()
+    {
         $this->branch = session()->get('branch');
     }
 
-    public function test(){
+    public function test()
+    {
         /*try{
             $patients = DB::table('patient_references as pr')->leftjoin('patient_registrations as p', 'p.id', '=', 'pr.patient_id')->leftJoin('doctors as d', 'd.id', '=', 'pr.doctor_id')->selectRaw("p.patient_name, p.mobile_number, pr.branch, d.doctor_name")->whereDate('pr.created_at', Carbon::today())->where('pr.status', 1)->get();
             if($patients->isNotEmpty()):
@@ -50,13 +53,14 @@ class DashboardController extends Controller
         ]);
         $ip = ($request->ip() == '127.0.0.1') ? '59.89.235.2' : $request->ip();
         $data = file_get_contents("https://ipinfo.io/$ip?token=38fa67afac8600");
-        $obj = json_decode($data); $coordinates = explode(",", $obj->loc);
+        $obj = json_decode($data);
+        $coordinates = explode(",", $obj->loc);
         $credentials = $request->only('username', 'password');
-        if (Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             $user_id = Auth::user()->id;
-            if(Auth::user()->mobile_device == 0 && $this->is_mobile()):
+            if (Auth::user()->mobile_device == 0 && $this->is_mobile()) :
                 Session::flush();
-                Auth::logout();  
+                Auth::logout();
                 return Redirect('/')->withErrors("User not allowed to login to this device");
             endif;
             $device = ($this->is_mobile()) ? 'Mobile' : 'Computer';
@@ -64,16 +68,30 @@ class DashboardController extends Controller
             $sid = Str::random(25);
             User::where('id', $user_id)->update(['session_id' => $sid]);
             LoginLog::insert(['user_id' => $user_id, 'session_id' => $sid, 'ip' => $request->ip(), 'city_name' => $obj->city, 'region_name' => $obj->region, 'country_name' => $obj->country, 'zip_code' => $obj->postal, 'device' => $device, 'latitude' => $coordinates[0], 'longitude' => $coordinates[1], 'logged_in' => Carbon::now()]);
-            $branch_id = 0; $new_patients_count = 0; $review_count = 0; $cancelled = 0; $consultation = 0; $certificate = 0; $camp = 0; $vision = 0; $tot_patients = 0; $day_tot_income = 0; $day_tot_exp = 0; $income_monthly = 0.00; $expense_monthly = 0.00; $consultation_all_br = 0;
+            $branch_id = 0;
+            $new_patients_count = 0;
+            $review_count = 0;
+            $cancelled = 0;
+            $consultation = 0;
+            $certificate = 0;
+            $camp = 0;
+            $vision = 0;
+            $tot_patients = 0;
+            $day_tot_income = 0;
+            $day_tot_exp = 0;
+            $income_monthly = 0.00;
+            $expense_monthly = 0.00;
+            $consultation_all_br = 0;
             return view('dash', compact('branches', 'branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly', 'consultation_all_br'));
             //return redirect()->route('dash')->with(['branches' => $branches]);
-        }  
+        }
         return redirect("/")->withErrors('Login details are not valid');
     }
 
-    public function index(){
+    public function index()
+    {
         $branch_id = $this->branch;
-
+        $doc = DoctorOptometrist::where('optometrist_id', Auth::id())->whereDate('created_at', Carbon::today())->latest()->first();
         $tot_patients = DB::table('patient_registrations')->count('id');
 
         $new_patients_count = DB::table('patient_registrations')->where('branch', $branch_id)->whereDate('created_at', Carbon::today())->count('id');
@@ -82,13 +100,15 @@ class DashboardController extends Controller
 
         $cancelled = DB::table('patient_references as r')->where('status', 0)->where('r.branch', $branch_id)->whereDate('r.created_at', Carbon::today())->count('r.id');
 
-        $consultation = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->when(Auth::user()->roles->first()->name == 'Doctor', function($query) use ($branch_id) {
+        $consultation = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->when(Auth::user()->roles->first()->name == 'Doctor', function ($query) use ($branch_id) {
             $query->where('r.doctor_id', Auth::user()->doctor_id);
+        })->when(Auth::user()->roles->first()->name == 'Optometriest', function ($query) use ($doc) {
+            $query->where('r.doctor_id', $doc->doctor_id);
         })->whereDate('r.created_at', Carbon::today())->count('r.id');
 
         $consultation_all_br = DB::table('patient_references as r')->where('r.status', 1)->whereDate('r.created_at', Carbon::today())->count('r.id');
 
-        $certificate = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->whereIn('r.consultation_type', [2,3])->whereDate('r.created_at', Carbon::today())->count('r.id');
+        $certificate = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->whereIn('r.consultation_type', [2, 3])->whereDate('r.created_at', Carbon::today())->count('r.id');
 
         $camp = DB::table('patient_references as r')->where('r.status', 1)->where('r.branch', $branch_id)->whereIn('r.consultation_type', [4])->whereDate('r.created_at', Carbon::today())->count('r.id');
 
@@ -102,18 +122,19 @@ class DashboardController extends Controller
 
         $expense_monthly = DB::table('expenses')->where('head', '!=', 22)->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->sum('amount');
 
-        if(Auth::user()->roles->first()->name == 'Admin'):
+        if (Auth::user()->roles->first()->name == 'Admin') :
             return view('dash', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly', 'consultation_all_br'));
-        elseif(Auth::user()->roles->first()->name == 'Accounts'):
+        elseif (Auth::user()->roles->first()->name == 'Accounts') :
             return view('dash-accounts', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
-        elseif(Auth::user()->roles->first()->name == 'Doctor'):
+        elseif (Auth::user()->roles->first()->name == 'Doctor') :
             return view('dash-doctor', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
-        else:
+        else :
             return view('dash-other', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly'));
         endif;
     }
 
-    private function getDayTotal(){
+    private function getDayTotal()
+    {
         $reg_fee_total = DB::table('patient_registrations as pr')->leftJoin('patient_references as pref', 'pref.patient_id', 'pr.id')->where('pref.review', 'no')->whereDate('pref.created_at', Carbon::today())->where('pr.branch', $this->branch)->sum('pr.registration_fee');
 
         $consultation_fee_total = DB::table('patient_references as pr')->whereDate('pr.created_at', Carbon::today())->where('pr.branch', $this->branch)->where('pr.status', 1)->sum('pr.doctor_fee');
@@ -132,7 +153,8 @@ class DashboardController extends Controller
         return $tot;
     }
 
-    public function patientOverview(){
+    public function patientOverview()
+    {
         $patients = DB::select("SELECT date, CONCAT_WS('-', SUBSTRING(MONTHNAME(date), 1, 3), DATE_FORMAT(date, '%y')) AS mname, COUNT(p.id) AS ptot FROM (
 		    SELECT LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL 1 MONTH AS date UNION ALL
 		    SELECT LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL 2 MONTH UNION ALL
@@ -151,34 +173,40 @@ class DashboardController extends Controller
         return json_encode($patients);
     }
 
-    public function patientMonth(){
+    public function patientMonth()
+    {
         $patients = DB::table('patient_registrations')->selectRaw("COUNT(id) AS pcount, DATE_FORMAT(created_at, '%d/%b') AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->groupBy('day')->orderByDesc('id')->get();
         return json_encode($patients);
     }
 
-    public function reviewMonth(){
+    public function reviewMonth()
+    {
         $patients = DB::table('patient_references')->selectRaw("COUNT(id) AS pcount, DATE_FORMAT(created_at, '%d/%b') AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->where('review', 'yes')->where('status', 1)->groupBy('day')->orderByDesc('id')->get();
         return json_encode($patients);
     }
 
-    public function incomeExpense(){
+    public function incomeExpense()
+    {
         //$income = DB::select("select u.*, (select u.closing_balance - u2.closing_balance from daily_closing u2 where u2.branch = u.branch and u2.id < u.id order by u2.id desc limit 1 ) as diff from daily_closing u WHERE u.date BETWEEN LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY AND LAST_DAY(NOW()) AND u.branch = $branch")->get();
         //$records = DB::select("SELECT tbl1.day, tbl1.income, tbl1.cdate, SUM(e.amount) AS expense FROM (SELECT DATE(i.created_at) AS cdate, DATE_FORMAT(i.created_at, '%d/%b') AS day, SUM(i.amount) AS income FROM patient_payments i WHERE MONTH(i.created_at) = MONTH(NOW()) AND YEAR(i.created_at) = YEAR(NOW()) GROUP BY DATE(i.created_at) ORDER BY i.id DESC) AS tbl1 JOIN expenses e ON DATE(e.created_at) = tbl1.cdate GROUP BY tbl1.cdate ORDER BY tbl1.cdate DESC");
         $records = DB::select("SELECT tbl1.*, IFNULL(SUM(e.amount), 0) AS expense FROM (SELECT DATE(i.created_at) AS cdate, DATE_FORMAT(i.created_at, '%d/%b') AS day, SUM(i.amount) AS income FROM patient_payments i WHERE MONTH(i.created_at) = MONTH(NOW()) AND YEAR(i.created_at) = YEAR(NOW()) GROUP BY DATE(i.created_at) ORDER BY i.id DESC) AS tbl1 LEFT JOIN expenses e ON tbl1.cdate = e.date GROUP BY tbl1.cdate ORDER BY tbl1.cdate DESC");
         return json_encode($records);
     }
 
-    public function is_mobile() {
+    public function is_mobile()
+    {
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
             $is_mobile = false;
-        } else if (strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false
+        } else if (
+            strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false
             // many mobile devices (all iPhone, iPad, etc.)
             || strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false
             || strpos($_SERVER['HTTP_USER_AGENT'], 'Silk/') !== false
             || strpos($_SERVER['HTTP_USER_AGENT'], 'Kindle') !== false
             || strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry') !== false
             || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false
-            || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mobi') !== false) {
+            || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mobi') !== false
+        ) {
             $is_mobile = true;
         } else {
             $is_mobile = false;
