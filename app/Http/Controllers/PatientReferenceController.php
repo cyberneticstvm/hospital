@@ -64,7 +64,7 @@ class PatientReferenceController extends Controller
         $patients = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->select('pr.id as reference_id', 'pr.sms', 'pr.status', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.patient_id as pno', 'doctors.doctor_name', DB::Raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->where('pr.branch', $this->branch)->whereDate('pr.created_at', Carbon::today())->orderByDesc('pmr.id')->when(Auth::user()->roles->first()->name == 'Doctor', function ($query) {
             return $query->where('pmr.doctor_id', Auth::user()->doctor_id);
         })->when(Auth::user()->roles->first()->name == 'Optometriest', function ($query) use ($doc) {
-            return $query->where('pmr.doctor_id', 0);
+            return $query->where('pmr.doctor_id', $doc?->doctor_id ?? 0);
         })->get();
         return view('consultation.patient-reference', compact('patients'));
     }
