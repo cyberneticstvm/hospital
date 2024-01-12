@@ -26,6 +26,9 @@ class HFAController extends Controller
         $this->middleware('permission:hfa-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:hfa-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:hfa-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:hfa-review-view', ['only' => ['review']]);
+        $this->middleware('permission:hfa-completed-view', ['only' => ['completed']]);
+        $this->middleware('permission:hfa-direct-view', ['only' => ['direct']]);
         $this->branch = session()->get('branch');
     }
 
