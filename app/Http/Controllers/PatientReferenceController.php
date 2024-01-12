@@ -25,6 +25,8 @@ class PatientReferenceController extends Controller
         $this->middleware('permission:patient-reference-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:patient-reference-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:patient-reference-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:doctor-optometrist-view', ['only' => ['optoToDoc']]);
+        $this->middleware('permission:doctor-optometrist-create', ['only' => ['optoToDoc', 'optoToDocUpdate']]);
         $this->branch = session()->get('branch');
     }
     /**

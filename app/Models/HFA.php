@@ -20,7 +20,13 @@ class HFA extends Model
         'updated_by',
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function mrecord()
+    {
+        return $this->belongsTo(PatientMedicalRecord::class, 'medical_record_id', 'id');
     }
 }
