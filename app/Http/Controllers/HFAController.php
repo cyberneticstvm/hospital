@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use App\Helper\Helper;
+use App\Models\doctor;
 use App\Models\HFA;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -30,7 +31,8 @@ class HFAController extends Controller
     public function index()
     {
         $hfas = HFA::leftJoin('patient_medical_records AS m', 'h_f_a_s.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'h_f_a_s.patient_id', '=', 'p.id')->selectRaw("h_f_a_s.*, p.patient_name, p.patient_id, h_f_a_s.medical_record_id")->where('h_f_a_s.branch', $this->branch)->whereIn('h_f_a_s.status', [1, 2])->orderByDesc("h_f_a_s.id")->get();
-        return view('hfa.index', compact('hfas'));
+        $doctors = doctor::all();
+        return view('hfa.index', compact('hfas', 'doctors'));
     }
 
     public function review()
