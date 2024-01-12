@@ -312,6 +312,8 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
 
     // HFA //
     Route::get('/review/hfa', [HFAController::class, 'review'])->name('hfa.review');
+    Route::get('/completed/hfa', [HFAController::class, 'completed'])->name('hfa.completed');
+    Route::get('/direct/hfa', [HFAController::class, 'direct'])->name('hfa.direct');
     Route::get('/hfa', [HFAController::class, 'index'])->name('hfa.index');
     Route::post('/hfa/show/', [HFAController::class, 'show'])->name('hfa.show');
     Route::post('/hfa/create/', [HFAController::class, 'store'])->name('hfa.save');
