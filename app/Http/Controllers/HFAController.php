@@ -48,8 +48,8 @@ class HFAController extends Controller
     {
         $doctors = doctor::all();
         $hfas = HFA::leftJoin('patient_medical_records AS m', 'h_f_a_s.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'h_f_a_s.patient_id', '=', 'p.id')->leftJoin('doctors as d', 'd.id', 'm.doctor_id')->selectRaw("h_f_a_s.*, p.patient_name, p.patient_id, h_f_a_s.medical_record_id")->where('h_f_a_s.branch', $this->branch)->when(Auth::user()->roles->first()->id > 0, function ($q) {
-            return $q;
-        })->orderByDesc("h_f_a_s.id")->where('h_f_a_s.status', 4)->latest()->get();
+            return $q->where('d.id', 9);
+        })->orderByDesc("h_f_a_s.id")->latest()->get();
         return view('hfa.direct', compact('hfas', 'doctors'));
     }
 
