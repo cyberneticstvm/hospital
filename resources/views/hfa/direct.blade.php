@@ -18,6 +18,8 @@
                                     <th>Created By</th>
                                     <th>Date</th>
                                     <th>Time</th>
+                                    <th>Advised By</th>
+                                    <th>Advised On</th>
                                     <th>Edit</th>
                                     <th>Remove</th>
                                 </tr>
@@ -34,6 +36,8 @@
                                     <td>{{ $hfa->user->name }}</td>
                                     <td>{{ $hfa->created_at->format('d/M/Y') }}</td>
                                     <td>{{ $hfa->created_at->format('h:i a') }}</td>
+                                    <td>{{ $doctors->find($hfa->mrecord?->doctor_id ?? 0)?->doctor_name }}</td>
+                                    <td>{{ $hfa->mrecord?->created_at?->format('d/M/Y') }}</td>
                                     <td><a class='btn btn-link' href="{{ route('hfa.edit', $hfa->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                     <td>
                                         <form method="post" action="{{ route('hfa.delete', $hfa->id) }}">
