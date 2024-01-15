@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('reports.fetchpayment') }}" method="post">
+                        <form action="{{ route('reports.patient.pharmacy.fetch') }}" method="post">
                             @csrf
                             @php $today = date('d/M/Y') @endphp
                             <div class="row g-4">
