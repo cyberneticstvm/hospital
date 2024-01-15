@@ -335,7 +335,8 @@ class ReportController extends Controller
     {
         $inputs = array(date('d/M/Y'), date('d/M/Y'), $this->branch);
         $branches = $this->getBranches($this->branch);
-        return view('reports.pharmacy', compact('inputs', 'branches'));
+        $records = [];
+        return view('reports.pharmacy', compact('inputs', 'branches', 'records'));
     }
 
     public function fetchPharmacy(Request $request)

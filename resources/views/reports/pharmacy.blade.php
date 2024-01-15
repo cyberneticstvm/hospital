@@ -66,34 +66,35 @@
                         </form>
                     </div>
                     <div class="card-body">
-                        <table id="dataTbl" class="table table-sm dataTable table-striped table-hover align-middle">
+                        <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>SL No.</th>
+                                    <th>MR.ID</th>
                                     <th>Patient Name</th>
                                     <th>Patient ID</th>
-                                    <th>MR ID</th>
-                                    <th>Branch</th>
-                                    <th>User</th>
-                                    <th>Payment Date</th>
-                                    <th class="text-end">Amount</th>
+                                    <th>Doctor</th>
+                                    <th>Prescription</th>
+                                    <th>Receipt</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @php $c = 1; @endphp
-                                @forelse($records as $key => $row)
+                                @php $i = 0; @endphp
+                                @foreach($records as $med)
                                 <tr>
-                                    <td>{{ $c++ }}</td>
-                                    <td>{{ $row->patient_name }}</td>
-                                    <td>{{ $row->patient_id }}</td>
-                                    <td>{{ $row->medical_record_id }}</td>
-                                    <td>{{ $row->branch_name }}</td>
-                                    <td>{{ $row->uname }}</td>
-                                    <td>{{ $row->pdate }}</td>
-                                    <td class="text-end">{{ $row->amount }}</td>
+                                    <td>{{ ++$i }}</td>
+                                    <td>{{ $med->medical_record_id }}</td>
+                                    <td>{{ $med->patient_name }}</td>
+                                    <td>{{ $med->patient_id }}</td>
+                                    <td>{{ $med->doctor_name }}</td>
+                                    <td class="text-center"><a href="/generate-pharmacy-out/{{ $med->medical_record_id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
+                                    <td class="text-center">
+                                        @if($med->status == 1)
+                                        <a href='/generate-pharmacy-bill/{{ $med->medical_record_id }}/' target='_blank'><i class="fa fa-file text-info"></i></a>
+                                        @endif
+                                    </td>
                                 </tr>
-                                @empty
-                                @endforelse
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
