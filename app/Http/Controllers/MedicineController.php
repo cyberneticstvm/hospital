@@ -14,11 +14,11 @@ class MedicineController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:patient-medicine-record-list|patient-medicine-record-create|patient-medicine-record-edit|patient-medicine-record-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:patient-medicine-record-create', ['only' => ['create','store']]);
-         $this->middleware('permission:patient-medicine-record-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:patient-medicine-record-delete', ['only' => ['destroy', 'remove']]);
-         $this->branch = session()->get('branch');
+        $this->middleware('permission:patient-medicine-record-list|patient-medicine-record-create|patient-medicine-record-edit|patient-medicine-record-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:patient-medicine-record-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:patient-medicine-record-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:patient-medicine-record-delete', ['only' => ['destroy', 'remove']]);
+        $this->branch = session()->get('branch');
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class MedicineController extends Controller
      */
     public function index()
     {
-        $medicines = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->where('pmr1.branch', $this->branch)->select('pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->orderByDesc("pmr.id")->get();
+        $medicines = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->where('pmr1.branch', $this->branch)->select('pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->orderByDesc("pmr.id")->whereDate('pmr1.created_at', Carbon::today())->get();
         //whereDate('pmr1.created_at', Carbon::today())->
         return view('medicine.index', compact('medicines'));
     }
@@ -94,9 +94,9 @@ class MedicineController extends Controller
         $input = $request->all();
         $mrn = $input['mrn'];
         DB::table("patient_medicine_records")->where('medical_record_id', $id)->delete();
-        if($input['medicine']):
-            for($i=0; $i<count($input['medicine']); $i++):
-                if($input['medicine'][$i] > 0):
+        if ($input['medicine']) :
+            for ($i = 0; $i < count($input['medicine']); $i++) :
+                if ($input['medicine'][$i] > 0) :
                     $product = DB::table('products')->find($input['medicine'][$i]);
                     DB::table('patient_medicine_records')->insert([
                         'medical_record_id' => $id,
@@ -122,7 +122,7 @@ class MedicineController extends Controller
             endfor;
         endif;
         return redirect()->route('medicine.index')
-                        ->with('success','Record updated successfully');
+            ->with('success', 'Record updated successfully');
     }
 
     /**
@@ -135,7 +135,7 @@ class MedicineController extends Controller
     {
         DB::table('patient_medicine_records')->where('medical_record_id', $id)->delete();
         return redirect()->route('medicine.index')
-                        ->with('success','Record deleted successfully');
+            ->with('success', 'Record deleted successfully');
     }
 
     /*public function remove($id){
