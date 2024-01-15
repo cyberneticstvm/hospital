@@ -350,7 +350,7 @@ class ReportController extends Controller
         $inputs = array($request->fromdate, $request->todate, $request->branch);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
-        $records = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->where('pmr1.branch', $request->branch)->select('pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->orderByDesc("pmr.id")->whereBetween('pmr1.created_at', [$startDate, $endDate])->get();
+        $records = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->where('pmr1.branch', $request->branch)->select('pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->orderByDesc("pmr.id")->whereBetween('pmr.created_at', [$startDate, $endDate])->get();
         return view('reports.pharmacy', compact('branches', 'records', 'inputs'));
     }
 
