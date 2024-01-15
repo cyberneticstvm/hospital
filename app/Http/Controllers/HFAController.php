@@ -34,7 +34,9 @@ class HFAController extends Controller
 
     public function index()
     {
-        $hfas = HFA::leftJoin('patient_medical_records AS m', 'h_f_a_s.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'h_f_a_s.patient_id', '=', 'p.id')->selectRaw("h_f_a_s.*, p.patient_name, p.patient_id, h_f_a_s.medical_record_id")->where('h_f_a_s.branch', $this->branch)->whereIn('h_f_a_s.status', [1, 2])->orderByDesc("h_f_a_s.id")->get();
+        $hfas = HFA::leftJoin('patient_medical_records AS m', 'h_f_a_s.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'h_f_a_s.patient_id', '=', 'p.id')->selectRaw("h_f_a_s.*, p.patient_name, p.patient_id, h_f_a_s.medical_record_id")->when(Auth::user()->roles->first()->name == 'Doctor', function ($q) {
+            return $q->where('m.doctor_id', Auth::user()->doctor_id);
+        })->where('h_f_a_s.branch', $this->branch)->whereIn('h_f_a_s.status', [1, 2])->orderByDesc("h_f_a_s.id")->get();
         $doctors = doctor::all();
         return view('hfa.index', compact('hfas', 'doctors'));
     }
