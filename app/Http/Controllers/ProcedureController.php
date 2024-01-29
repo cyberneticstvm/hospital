@@ -19,17 +19,17 @@ class ProcedureController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:procedure-list|procedure-create|procedure-edit|procedure-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:procedure-create', ['only' => ['create','store']]);
-         $this->middleware('permission:procedure-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:procedure-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:procedure-list|procedure-create|procedure-edit|procedure-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:procedure-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:procedure-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:procedure-delete', ['only' => ['destroy']]);
 
-         $this->middleware('permission:procedure-advise-list|procedure-advise-create|procedure-advise-edit|procedure-advise-delete', ['only' => ['fetch','saveadvise']]);
-         $this->middleware('permission:procedure-advise-create', ['only' => ['show','saveadvise']]);
-         $this->middleware('permission:procedure-advise-edit', ['only' => ['editadvise','updateadvise']]);
-         $this->middleware('permission:procedure-advise-delete', ['only' => ['destroyadvise']]);
+        $this->middleware('permission:procedure-advise-list|procedure-advise-create|procedure-advise-edit|procedure-advise-delete', ['only' => ['fetch', 'saveadvise']]);
+        $this->middleware('permission:procedure-advise-create', ['only' => ['show', 'saveadvise']]);
+        $this->middleware('permission:procedure-advise-edit', ['only' => ['editadvise', 'updateadvise']]);
+        $this->middleware('permission:procedure-advise-delete', ['only' => ['destroyadvise']]);
 
-         $this->branch = session()->get('branch');
+        $this->branch = session()->get('branch');
     }
 
     public function index()
@@ -64,7 +64,7 @@ class ProcedureController extends Controller
         $input = $request->all();
         $proc = Procedure::create($input);
         return redirect()->route('procedure.index')
-                        ->with('success','Procedure created successfully');
+            ->with('success', 'Procedure created successfully');
     }
 
     /**
@@ -79,13 +79,13 @@ class ProcedureController extends Controller
             'medical_record_number' => 'required',
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_number);
-        if($mrecord):
+        if ($mrecord) :
             $procedures = Procedure::where('type', 'P')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
             return view('procedure.create', compact('mrecord', 'patient', 'doctor', 'age', 'procedures'));
-        else:
+        else :
             return redirect("/consultation/procedure/")->withErrors('No records found.');
         endif;
     }
@@ -113,14 +113,16 @@ class ProcedureController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|unique:procedures,name,'.$id,
+            'name' => 'required|unique:procedures,name,' . $id,
             'fee' => 'required',
         ]);
         $input = $request->all();
         $proc = Procedure::find($id);
         $proc->update($input);
+        if ($id == 16) DB::table('certificate_types')->where('id', 2)->update(['fee' => $request->fee]);
+        if ($id == 17) DB::table('certificate_types')->where('id', 1)->update(['fee' => $request->fee]);
         return redirect()->route('procedure.index')
-                        ->with('success','Procedure updated successfully');
+            ->with('success', 'Procedure updated successfully');
     }
 
     /**
@@ -133,24 +135,26 @@ class ProcedureController extends Controller
     {
         Procedure::find($id)->delete();
         return redirect()->route('procedure.index')
-                        ->with('success','Procedure deleted successfully');
+            ->with('success', 'Procedure deleted successfully');
     }
 
-    public function fetch(){
+    public function fetch()
+    {
         $procedures = Procedure::where('type', 'P')->get();
         $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'pp.medical_record_id')->leftJoin('patient_registrations as pr', 'pr.id', '=', 'pmr.patient_id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', 'pr.patient_name', 'pr.patient_id', DB::raw("SUM(pp.fee) as 'fee'"))->whereNull('pp.type')->where('pp.branch', $this->branch)->whereDate('pp.created_at', Carbon::today())->groupBy('pp.medical_record_id')->orderByDesc('pp.id')->get();
         return view('procedure.fetch', compact('procedures', 'procs'));
     }
 
-    public function saveadvise(Request $request){
+    public function saveadvise(Request $request)
+    {
         $this->validate($request, [
             'procedure' => 'required',
         ]);
         $input = $request->all();
-        try{
-            if($input['procedure']):
-                for($i=0; $i<count($input['procedure']); $i++):
-                    if($input['procedure'][$i] > 0):
+        try {
+            if ($input['procedure']) :
+                for ($i = 0; $i < count($input['procedure']); $i++) :
+                    if ($input['procedure'][$i] > 0) :
                         $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                         DB::table('patient_procedures')->insert([
                             'medical_record_id' => $request->medical_record_id,
@@ -165,16 +169,17 @@ class ProcedureController extends Controller
                     endif;
                 endfor;
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
         $procedures = Procedure::where('type', 'P')->get();
         $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', DB::raw("SUM(pp.fee) as 'fee'"))->groupBy('pp.medical_record_id')->get();
         return redirect()->route('procedure.fetch', compact('procs', 'procedures'))
-                        ->with('success','Procedure created successfully');
+            ->with('success', 'Procedure created successfully');
     }
 
-    public function editadvise($id){
+    public function editadvise($id)
+    {
         $mrecord = DB::table('patient_medical_records')->find($id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
@@ -184,16 +189,17 @@ class ProcedureController extends Controller
         return view('procedure.edit', compact('mrecord', 'patient', 'doctor', 'age', 'procedures', 'advised'));
     }
 
-    public function updateadvise(Request $request, $id){
+    public function updateadvise(Request $request, $id)
+    {
         $this->validate($request, [
             'procedure' => 'required',
         ]);
         $input = $request->all();
-        try{
+        try {
             DB::table('patient_procedures')->where('medical_record_id', $id)->delete();
-            if($input['procedure']):
-                for($i=0; $i<count($input['procedure']); $i++):
-                    if($input['procedure'][$i] > 0):
+            if ($input['procedure']) :
+                for ($i = 0; $i < count($input['procedure']); $i++) :
+                    if ($input['procedure'][$i] > 0) :
                         $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                         DB::table('patient_procedures')->insert([
                             'medical_record_id' => $request->medical_record_id,
@@ -208,20 +214,21 @@ class ProcedureController extends Controller
                     endif;
                 endfor;
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
         $procedures = Procedure::where('type', 'P')->get();
         $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', DB::raw("SUM(pp.fee) as 'fee'"))->groupBy('pp.medical_record_id')->get();
         return redirect()->route('procedure.fetch', compact('procs', 'procedures'))
-                        ->with('success','Procedure updated successfully');
+            ->with('success', 'Procedure updated successfully');
     }
 
-    public function destroyadvise($id){
+    public function destroyadvise($id)
+    {
         DB::table('patient_procedures')->where('medical_record_id', $id)->delete();
         $procedures = Procedure::where('type', 'P')->get();
         $procs = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id', DB::raw("SUM(pp.fee) as 'fee'"))->groupBy('pp.medical_record_id')->get();
         return redirect()->route('procedure.fetch', compact('procs', 'procedures'))
-                        ->with('success','Procedure deleted successfully');
+            ->with('success', 'Procedure deleted successfully');
     }
 }
