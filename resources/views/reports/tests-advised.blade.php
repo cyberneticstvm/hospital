@@ -38,6 +38,15 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Status </label>
+                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="status">
+                                        <option value="0">Select</option>
+                                        <option value="Pending" {{ ($input[3] == 'Pending') ? 'selected' : '' }}>Pending</option>
+                                        <option value="Completed" {{ ($input[3] == 'Completed') ? 'selected' : '' }}>Completed</option>
+                                        <option value="Cancelled" {{ ($input[3] == 'Cancelled') ? 'selected' : '' }}>Cancelled</option>
+                                    </select>
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
@@ -53,12 +62,28 @@
                             <thead>
                                 <tr>
                                     <th>SL No.</th>
+                                    <th>MR Id</th>
+                                    <th>Patient Name</th>
+                                    <th>Patient ID</th>
+                                    <th>Branch</th>
+                                    <th>Doctor</th>
+                                    <th>Test Name</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($records as $key => $row)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
+                                    <td>{{ $row->medical_record_id }}</td>
+                                    <td>{{ $row->patient->patient_name }}</td>
+                                    <td>{{ $row->patient->patient_id }}</td>
+                                    <td>{{ $row->branchdetails->branch_name }}</td>
+                                    <td>{{ $row->doctor->doctor_name }}</td>
+                                    <td>{{ $row->test()->find($test->test)->name }}</td>
+                                    <td>{{ $row->status }}</td>
+                                    <td>{{ $row->created_at->format('d/M/Y') }}</td>
                                 </tr>
                                 @empty
                                 @endforelse

@@ -22,15 +22,23 @@ class TestsAdvised extends Model
         'updated_by',
     ];
 
-    public function patient(){
+    public function patient()
+    {
         return $this->belongsTo(PatientRegistrations::class, 'patient_id');
     }
 
-    public function doctor(){
+    public function doctor()
+    {
         return $this->belongsTo(doctor::class, 'doctor_id');
     }
 
-    public function test(){
+    public function branchdetails()
+    {
+        return $this->belongsTo(Branch::class, 'branch', 'id');
+    }
+
+    public function test()
+    {
         return $this->belongsTo(Test::class, 'test');
     }
 }
