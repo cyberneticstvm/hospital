@@ -14,6 +14,7 @@ use App\Models\PatientMedicalRecord;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\Surgery;
+use App\Models\TestsAdvised;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
@@ -458,7 +459,11 @@ class ReportController extends Controller
         $endDate = Carbon::parse($request->to_date)->endOfDay();
         $branches = $this->getBranches($this->branch);
         $inputs = array($request->from_date, $request->to_date, $request->branch);
-        $records = [];
+        $records = TestsAdvised::whereBetween('created_at', [$startDate, $endDate])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('branch', $request->branch);
+        })->when($request->status, function ($q) use ($request) {
+            return $q->where('status', $request->status);
+        })->get();
         return view('reports.tests-advised', compact('branches', 'records', 'inputs'));
     }
 
