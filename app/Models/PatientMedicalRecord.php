@@ -107,4 +107,9 @@ class PatientMedicalRecord extends Model
     {
         return $this->belongsTo(doctor::class, 'doctor_id', 'id');
     }
+
+    public function branchdetails()
+    {
+        return $this->belongsTo(Branch::class, 'branch', 'id');
+    }
 }
