@@ -42,9 +42,9 @@
                                     <label class="form-label">Status </label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="status">
                                         <option value="">Select</option>
-                                        <option value="Pending" {{ ($input[3] == 'Pending') ? 'selected' : '' }}>Pending</option>
-                                        <option value="Completed" {{ ($input[3] == 'Completed') ? 'selected' : '' }}>Completed</option>
-                                        <option value="Cancelled" {{ ($input[3] == 'Cancelled') ? 'selected' : '' }}>Cancelled</option>
+                                        <option value="Pending" {{ ($inputs[3] == 'Pending') ? 'selected' : '' }}>Pending</option>
+                                        <option value="Completed" {{ ($inputs[3] == 'Completed') ? 'selected' : '' }}>Completed</option>
+                                        <option value="Cancelled" {{ ($inputs[3] == 'Cancelled') ? 'selected' : '' }}>Cancelled</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-12 text-right">
