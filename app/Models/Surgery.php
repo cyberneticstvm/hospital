@@ -44,4 +44,9 @@ class Surgery extends Model
     {
         return $this->belongsTo(SurgeryType::class, 'surgery_type', 'id');
     }
+
+    public function surgeondetails()
+    {
+        return $this->belongsTo(doctor::class, 'surgeon', 'id');
+    }
 }
