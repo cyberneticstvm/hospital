@@ -63,13 +63,16 @@
                             </thead>
                             <tbody>
                                 @forelse($records as $key => $row)
+                                @php
+                                $symptoms = explode(',', $row->symptoms);
+                                @endphp
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $row->patient->patient_name }}</td>
                                     <td>{{ $row->patient->patient_id }}</td>
                                     <td>{{ $row->branchdetails->branch_name }}</td>
                                     <td>{{ $row->doctor->doctor_name }}</td>
-                                    <td></td>
+                                    <td>{{ DB::table('symptoms')->select(DB::raw("IFNULL(group_concat(symptom_name), 'Na') as names"))->whereIn('id', $symptoms)->value('names'); }}</td>
                                     <td>{{ $row->created_at->format('d/M/Y') }}</td>
                                 </tr>
                                 @empty
