@@ -58,17 +58,19 @@
                                     <th>Branch</th>
                                     <th>Doctor</th>
                                     <th>Symptoms</th>
+                                    <th>Date</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($records as $key => $row)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
+                                    <td>{{ $row->patient->patient_name }}</td>
+                                    <td>{{ $row->patient->patient_id }}</td>
+                                    <td>{{ $row->branch->branch_name }}</td>
+                                    <td>{{ $row->doctor->doctor_name }}</td>
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $row->created_at->format('d/M/Y') }}</td>
                                 </tr>
                                 @empty
                                 @endforelse
