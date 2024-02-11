@@ -385,7 +385,7 @@ class ReportController extends Controller
         $startDate = Carbon::parse($request->from_date)->startOfDay();
         $endDate = Carbon::parse($request->to_date)->endOfDay();
         $branches = $this->getBranches($this->branch);
-        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $inputs = array($request->from_date, $request->to_date, $this->branch);
         $records = PatientMedicalRecord::whereBetween('created_at', [$startDate, $endDate])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('branch', $request->branch);
         })->get();
@@ -409,7 +409,7 @@ class ReportController extends Controller
         $startDate = Carbon::parse($request->from_date)->startOfDay();
         $endDate = Carbon::parse($request->to_date)->endOfDay();
         $branches = $this->getBranches($this->branch);
-        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $inputs = array($request->from_date, $request->to_date, $this->branch);
         $records = Surgery::leftJoin('patient_medical_records as pmr', 'surgeries.medical_record_id', 'pmr.id')->select('surgeries.id', 'surgeries.doctor_id', 'surgeries.patient_id', 'surgeries.branch', 'surgeries.surgery_type', 'pmr.created_at')->whereBetween('pmr.created_at', [$startDate, $endDate])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('surgeries.branch', $request->branch);
         })->get();
@@ -433,7 +433,7 @@ class ReportController extends Controller
         $startDate = Carbon::parse($request->from_date)->startOfDay();
         $endDate = Carbon::parse($request->to_date)->endOfDay();
         $branches = $this->getBranches($this->branch);
-        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $inputs = array($request->from_date, $request->to_date, $this->branch);
         $records = Surgery::leftJoin('patient_medical_records as pmr', 'surgeries.medical_record_id', 'pmr.id')->select('surgeries.id', 'surgeries.doctor_id', 'surgeries.patient_id', 'surgeries.branch', 'surgeries.surgery_type', 'surgeries.remarks', 'surgeries.surgeon', 'surgeries.surgery_date')->whereBetween('surgeries.updated_at', [$startDate, $endDate])->whereIn('surgeries.status', [4])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('surgeries.branch', $request->branch);
         })->get();
@@ -457,7 +457,7 @@ class ReportController extends Controller
         $startDate = Carbon::parse($request->from_date)->startOfDay();
         $endDate = Carbon::parse($request->to_date)->endOfDay();
         $branches = $this->getBranches($this->branch);
-        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $inputs = array($request->from_date, $request->to_date, $this->branch);
         $records = [];
         return view('reports.tests-advised', compact('branches', 'records', 'inputs'));
     }
@@ -480,7 +480,7 @@ class ReportController extends Controller
         $startDate = Carbon::parse($request->from_date)->startOfDay();
         $endDate = Carbon::parse($request->to_date)->endOfDay();
         $branches = $this->getBranches($this->branch);
-        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch, $request->status);
+        $inputs = array($request->from_date, $request->to_date, $this->branch, $request->status);
         $status = DB::table('types')->where('category', 'surgery')->get();
         $records = HFA::whereBetween('created_at', [$startDate, $endDate])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('branch', $request->branch);
