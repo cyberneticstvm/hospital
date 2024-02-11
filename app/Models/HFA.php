@@ -29,4 +29,14 @@ class HFA extends Model
     {
         return $this->belongsTo(PatientMedicalRecord::class, 'medical_record_id', 'id');
     }
+
+    public function patient()
+    {
+        return $this->belongsTo(PatientRegistrations::class, 'patient_id', 'id');
+    }
+
+    public function branchdetails()
+    {
+        return $this->belongsTo(Branch::class, 'branch', 'id');
+    }
 }
