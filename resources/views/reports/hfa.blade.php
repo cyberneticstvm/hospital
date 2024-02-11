@@ -38,6 +38,15 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Status </label>
+                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="status">
+                                        <option value="0">Select</option>
+                                        @foreach($status as $key => $st)
+                                        <option value="{{ $st->id }}" {{ ($inputs[3] == $st->id) ? 'selected'  : '' }}>{{ $st->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>

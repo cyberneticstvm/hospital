@@ -465,9 +465,10 @@ class ReportController extends Controller
     public function showHfa()
     {
         $branches = $this->getBranches($this->branch);
+        $status = DB::table('types')->where('category', 'surgery')->get();
         $records = [];
-        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
-        return view('reports.hfa', compact('branches', 'records', 'inputs'));
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch, 4);
+        return view('reports.hfa', compact('branches', 'records', 'inputs', 'status'));
     }
 
     public function fetchHfa(Request $request)
@@ -479,11 +480,14 @@ class ReportController extends Controller
         $startDate = Carbon::parse($request->from_date)->startOfDay();
         $endDate = Carbon::parse($request->to_date)->endOfDay();
         $branches = $this->getBranches($this->branch);
-        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
-        $records = HFA::whereBetween('created_at', [$startDate, $endDate])->where('status', 4)->when($request->branch > 0, function ($q) use ($request) {
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch, $request->status);
+        $status = DB::table('types')->where('category', 'surgery')->get();
+        $records = HFA::whereBetween('created_at', [$startDate, $endDate])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('branch', $request->branch);
+        })->when($request->status > 0, function ($q) use ($request) {
+            return $q->where('status', $request->status);
         })->get();
-        return view('reports.hfa', compact('branches', 'records', 'inputs'));
+        return view('reports.hfa', compact('branches', 'records', 'inputs', 'status'));
     }
 
     public function getClosingBalance($branch)
