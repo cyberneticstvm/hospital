@@ -69,7 +69,7 @@
                                     <td>{{ $row->patient->patient_id }}</td>
                                     <td>{{ $row->branchdetails->branch_name }}</td>
                                     <td>{{ $row->doctor->doctor_name }}</td>
-                                    <td>{{ $row->stype->surgery_name }}</td>
+                                    <td>{{ $row->stype?->surgery_name }}</td>
                                     <td>{{ $row->created_at->format('d/M/Y') }}</td>
                                 </tr>
                                 @empty
