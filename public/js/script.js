@@ -19,7 +19,8 @@ $(function () {
         responsive: true,
         dom: 'Bfrtip',
         buttons: [
-            'excel'
+            'excel',
+            'pdf',
         ]
     });
     $(".dt-buttons button").addClass('btn btn-success');
