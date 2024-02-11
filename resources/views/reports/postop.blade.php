@@ -71,7 +71,7 @@
                                     <td>{{ $row->branchdetails->branch_name }}</td>
                                     <td>{{ $row->surgeondetails->doctor_name }}</td>
                                     <td>{{ $row->stype?->surgery_name }}</td>
-                                    <td>{{ $row->created_at->format('d/M/Y') }}</td>
+                                    <td>{{ $row->surgery_date->format('d/M/Y') }}</td>
                                     <td>{{ $row->remarks }}</td>
                                 </tr>
                                 @empty
