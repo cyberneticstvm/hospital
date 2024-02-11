@@ -12,6 +12,7 @@ use App\Models\LoginLog;
 use App\Models\PatientMedicalRecord;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
+use App\Models\Surgery;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
@@ -408,7 +409,9 @@ class ReportController extends Controller
         $endDate = Carbon::parse($request->to_date)->endOfDay();
         $branches = $this->getBranches($this->branch);
         $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
-        $records = [];
+        $records = Surgery::leftJoin('patient_medical_records as pmr', 'surgeries.medical_record_id', 'pmr.id')->select('surgeries.id', 'surgeries.doctor_id', 'surgeries.patient_id', 'surgeries.branch', 'surgeries.surgery_type')->whereBetween('pmr.created_at', [$startDate, $endDate])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('surgeries.branch', $request->branch);
+        })->get();
         return view('reports.surgery', compact('branches', 'records', 'inputs'));
     }
 

@@ -53,12 +53,24 @@
                             <thead>
                                 <tr>
                                     <th>SL No.</th>
+                                    <th>Patient Name</th>
+                                    <th>Patient ID</th>
+                                    <th>Branch</th>
+                                    <th>Doctor</th>
+                                    <th>Surgery Type</th>
+                                    <th>Reg.Date</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($records as $key => $row)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
+                                    <td>{{ $row->patient->patient_name }}</td>
+                                    <td>{{ $row->patient->patient_id }}</td>
+                                    <td>{{ $row->branchdetails->branch_name }}</td>
+                                    <td>{{ $row->doctor->doctor_name }}</td>
+                                    <td>{{ $row->stype->surgery_name }}</td>
+                                    <td>{{ $row->created_at->format('d/M/Y') }}</td>
                                 </tr>
                                 @empty
                                 @endforelse

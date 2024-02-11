@@ -24,4 +24,24 @@ class Surgery extends Model
         'surgery_fee',
         'updated_by'
     ];
+
+    public function patient()
+    {
+        return $this->belongsTo(PatientRegistrations::class, 'patient_id', 'id');
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(doctor::class, 'doctor_id', 'id');
+    }
+
+    public function branchdetails()
+    {
+        return $this->belongsTo(Branch::class, 'branch', 'id');
+    }
+
+    public function stype()
+    {
+        return $this->belongsTo(SurgeryType::class, 'surgery_type', 'id');
+    }
 }
