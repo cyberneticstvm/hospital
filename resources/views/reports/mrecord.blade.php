@@ -53,12 +53,22 @@
                             <thead>
                                 <tr>
                                     <th>SL No.</th>
+                                    <th>Patient Name</th>
+                                    <th>Patient ID</th>
+                                    <th>Branch</th>
+                                    <th>Doctor</th>
+                                    <th>Symptoms</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($records as $key => $row)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 @empty
                                 @endforelse

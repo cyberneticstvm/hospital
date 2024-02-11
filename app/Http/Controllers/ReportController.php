@@ -384,7 +384,7 @@ class ReportController extends Controller
         $endDate = Carbon::parse($request->to_date)->endOfDay();
         $branches = $this->getBranches($this->branch);
         $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
-        $records = PatientMedicalRecord::whereBetween('created_at', [$startDate, $endDate])->when($request->branch, function ($q) use ($request) {
+        $records = PatientMedicalRecord::whereBetween('created_at', [$startDate, $endDate])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('branch', $request->branch);
         })->get();
         return view('reports.mrecord', compact('branches', 'records', 'inputs'));
