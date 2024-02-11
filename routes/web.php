@@ -635,6 +635,21 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::get('/reports/patient/pharmacy', 'App\Http\Controllers\ReportController@pharmacy')->name('reports.patient.pharmacy');
     Route::post('/reports/patient/pharmacy', 'App\Http\Controllers\ReportController@fetchPharmacy')->name('reports.patient.pharmacy.fetch');
 
+    Route::get('/reports/mrecord/', 'App\Http\Controllers\ReportController@showmRecord')->name('reports.mrecord.show');
+    Route::post('/reports/mrecord/', 'App\Http\Controllers\ReportController@fetchmRecord')->name('reports.mrecord.fetch');
+
+    Route::get('/reports/surgeyregister/', 'App\Http\Controllers\ReportController@showSurgery')->name('reports.surgeyregister.show');
+    Route::post('/reports/surgeyregister/', 'App\Http\Controllers\ReportController@fetchSurgery')->name('reports.surgeyregister.fetch');
+
+    Route::get('/reports/postop/', 'App\Http\Controllers\ReportController@showPostOp')->name('reports.postop.show');
+    Route::post('/reports/postop/', 'App\Http\Controllers\ReportController@fetchPostOp')->name('reports.postop.fetch');
+
+    Route::get('/reports/testsadvised/', 'App\Http\Controllers\ReportController@showtAdvised')->name('reports.tadvised.show');
+    Route::post('/reports/testsadvised/', 'App\Http\Controllers\ReportController@fetchtAdvised')->name('reports.tadvised.fetch');
+
+    Route::get('/reports/hfa/', 'App\Http\Controllers\ReportController@showHfa')->name('reports.hfa.show');
+    Route::post('/reports/hfa/', 'App\Http\Controllers\ReportController@fetchHfa')->name('reports.hfa.fetch');
+
     // End Reports //
 
     // Helper //

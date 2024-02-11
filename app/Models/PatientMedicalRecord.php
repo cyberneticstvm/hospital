@@ -88,11 +88,23 @@ class PatientMedicalRecord extends Model
         'is_patient_surgery',
     ];
 
-    public function branches(){
+    public function branches()
+    {
         return $this->belongsTo(Branch::class, 'branch', 'id');
     }
 
-    public function procedures(){
+    public function procedures()
+    {
         return $this->hasMany(PatientProcedure::class, 'medical_record_id', 'id');
+    }
+
+    public function patient()
+    {
+        return $this->belongsTo(PatientRegistrations::class, 'patient_id', 'id');
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(doctor::class, 'doctor_id', 'id');
     }
 }

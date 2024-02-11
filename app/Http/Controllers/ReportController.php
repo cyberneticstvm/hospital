@@ -9,6 +9,7 @@ use App\Models\Branch;
 use App\Models\doctor;
 use App\Models\IncomeExpenseHead as Head;
 use App\Models\LoginLog;
+use App\Models\PatientMedicalRecord;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\User;
@@ -35,6 +36,17 @@ class ReportController extends Controller
         $this->middleware('permission:report-appointment-fetch', ['only' => ['fetchappointment']]);
         $this->middleware('permission:report-patient-show', ['only' => ['showpatient']]);
         $this->middleware('permission:report-patient-fetch', ['only' => ['fetchpatient']]);
+
+        $this->middleware('permission:report-medical-record-show', ['only' => ['showmRecord']]);
+        $this->middleware('permission:report-medical-record-fetch', ['only' => ['fetchmRecord']]);
+        $this->middleware('permission:report-surgery-show', ['only' => ['showSurgery']]);
+        $this->middleware('permission:report-surgery-fetch', ['only' => ['fetchSurgery']]);
+        $this->middleware('permission:report-postop-show', ['only' => ['showPostOp']]);
+        $this->middleware('permission:report-postop-fetch', ['only' => ['fetchPostOp']]);
+        $this->middleware('permission:report-tests-advised-show', ['only' => ['showtAdvised']]);
+        $this->middleware('permission:report-tests-advised-fetch', ['only' => ['fetchtAdvised']]);
+        $this->middleware('permission:report-hfa-show', ['only' => ['showHfa']]);
+        $this->middleware('permission:report-hfa-fetch', ['only' => ['fetchHfa']]);
 
         $this->branch = session()->get('branch');
     }
@@ -352,6 +364,118 @@ class ReportController extends Controller
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
         $records = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->whereBetween('pmr1.created_at', [$startDate, $endDate])->where('pmr1.branch', $request->branch)->select('pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->get();
         return view('reports.pharmacy', compact('branches', 'records', 'inputs'));
+    }
+
+    public function showmRecord()
+    {
+        $branches = $this->getBranches($this->branch);
+        $records = [];
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        return view('reports.mrecord', compact('branches', 'records', 'inputs'));
+    }
+
+    public function fetchmRecord(Request $request)
+    {
+        $this->validate($request, [
+            'fromdate' => 'required',
+            'todate' => 'required',
+        ]);
+        $startDate = Carbon::parse($request->from_date)->startOfDay();
+        $endDate = Carbon::parse($request->to_date)->endOfDay();
+        $branches = $this->getBranches($this->branch);
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $records = PatientMedicalRecord::whereBetween('created_at', [$startDate, $endDate])->when($request->branch, function ($q) use ($request) {
+            return $q->where('branch', $request->branch);
+        })->get();
+        return view('reports.mrecord', compact('branches', 'records', 'inputs'));
+    }
+
+    public function showSurgery()
+    {
+        $branches = $this->getBranches($this->branch);
+        $records = [];
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        return view('reports.surgery', compact('branches', 'records', 'inputs'));
+    }
+
+    public function fetchSurgery(Request $request)
+    {
+        $this->validate($request, [
+            'fromdate' => 'required',
+            'todate' => 'required',
+        ]);
+        $startDate = Carbon::parse($request->from_date)->startOfDay();
+        $endDate = Carbon::parse($request->to_date)->endOfDay();
+        $branches = $this->getBranches($this->branch);
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $records = [];
+        return view('reports.surgery', compact('branches', 'records', 'inputs'));
+    }
+
+    public function showPostOp()
+    {
+        $branches = $this->getBranches($this->branch);
+        $records = [];
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        return view('reports.postop', compact('branches', 'records', 'inputs'));
+    }
+
+    public function fetchPostOp(Request $request)
+    {
+        $this->validate($request, [
+            'fromdate' => 'required',
+            'todate' => 'required',
+        ]);
+        $startDate = Carbon::parse($request->from_date)->startOfDay();
+        $endDate = Carbon::parse($request->to_date)->endOfDay();
+        $branches = $this->getBranches($this->branch);
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $records = [];
+        return view('reports.postop', compact('branches', 'records', 'inputs'));
+    }
+
+    public function showtAdvised()
+    {
+        $branches = $this->getBranches($this->branch);
+        $records = [];
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        return view('reports.tests-advised', compact('branches', 'records', 'inputs'));
+    }
+
+    public function fetchtAdvised(Request $request)
+    {
+        $this->validate($request, [
+            'fromdate' => 'required',
+            'todate' => 'required',
+        ]);
+        $startDate = Carbon::parse($request->from_date)->startOfDay();
+        $endDate = Carbon::parse($request->to_date)->endOfDay();
+        $branches = $this->getBranches($this->branch);
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $records = [];
+        return view('reports.tests-advised', compact('branches', 'records', 'inputs'));
+    }
+
+    public function showHfa()
+    {
+        $branches = $this->getBranches($this->branch);
+        $records = [];
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        return view('reports.hfa', compact('branches', 'records', 'inputs'));
+    }
+
+    public function fetchHfa(Request $request)
+    {
+        $this->validate($request, [
+            'fromdate' => 'required',
+            'todate' => 'required',
+        ]);
+        $startDate = Carbon::parse($request->from_date)->startOfDay();
+        $endDate = Carbon::parse($request->to_date)->endOfDay();
+        $branches = $this->getBranches($this->branch);
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $records = [];
+        return view('reports.hfa', compact('branches', 'records', 'inputs'));
     }
 
     public function getClosingBalance($branch)
