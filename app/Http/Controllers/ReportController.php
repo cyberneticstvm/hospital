@@ -445,7 +445,7 @@ class ReportController extends Controller
     {
         $branches = $this->getBranches($this->branch);
         $records = [];
-        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch, '');
         return view('reports.tests-advised', compact('branches', 'records', 'inputs'));
     }
 
@@ -458,7 +458,7 @@ class ReportController extends Controller
         $startDate = Carbon::parse($request->from_date)->startOfDay();
         $endDate = Carbon::parse($request->to_date)->endOfDay();
         $branches = $this->getBranches($this->branch);
-        $inputs = array($request->from_date, $request->to_date, $request->branch);
+        $inputs = array($request->from_date, $request->to_date, $request->branch, $request->status);
         $records = TestsAdvised::whereBetween('created_at', [$startDate, $endDate])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('branch', $request->branch);
         })->when($request->status, function ($q) use ($request) {
