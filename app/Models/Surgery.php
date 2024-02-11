@@ -10,6 +10,8 @@ class Surgery extends Model
 {
     use HasFactory, HasRoles;
 
+    protected $casts = ['surgery_date' => 'datetime'];
+
     protected $fillable = [
         'medical_record_id',
         'doctor_id',
