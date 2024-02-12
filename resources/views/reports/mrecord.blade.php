@@ -57,14 +57,14 @@
                                     <th>Patient ID</th>
                                     <th>Branch</th>
                                     <th>Doctor</th>
-                                    <th>Symptoms</th>
+                                    <th>Diagnosis</th>
                                     <th>Date</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($records as $key => $row)
                                 @php
-                                $symptoms = explode(',', $row->symptoms);
+                                $diagnosis = explode(',', $record->diagnosis);
                                 @endphp
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
@@ -72,7 +72,7 @@
                                     <td>{{ $row->patient->patient_id }}</td>
                                     <td>{{ $row->branchdetails->branch_name }}</td>
                                     <td>{{ $row->doctor->doctor_name }}</td>
-                                    <td>{{ DB::table('symptoms')->select(DB::raw("IFNULL(group_concat(symptom_name), 'Na') as names"))->whereIn('id', $symptoms)->value('names'); }}</td>
+                                    <td>{{ DB::table('diagnosis')->select(DB::raw("IFNULL(group_concat(diagnosis_name), 'Na') as names"))->whereIn('id', $diagnosis)->value('names'); }}</td>
                                     <td>{{ $row->created_at->format('d/M/Y') }}</td>
                                 </tr>
                                 @empty
