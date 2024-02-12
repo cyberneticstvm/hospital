@@ -64,7 +64,7 @@
                             <tbody>
                                 @forelse($records as $key => $row)
                                 @php
-                                $diagnosis = explode(',', $record->diagnosis);
+                                $diagnosis = explode(',', $row->diagnosis);
                                 @endphp
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
