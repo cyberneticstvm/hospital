@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Power;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -14,12 +15,13 @@ class SpectacleController extends Controller
 {
     private $branch;
 
-    function __construct(){
-         $this->middleware('permission:spectacle-list|spectacle-create|spectacle-edit|spectacle-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:spectacle-create', ['only' => ['create','store']]);
-         $this->middleware('permission:spectacle-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:spectacle-delete', ['only' => ['destroy']]);
-         $this->branch = session()->get('branch');
+    function __construct()
+    {
+        $this->middleware('permission:spectacle-list|spectacle-create|spectacle-edit|spectacle-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:spectacle-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:spectacle-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:spectacle-delete', ['only' => ['destroy']]);
+        $this->branch = session()->get('branch');
     }
     /**
      * Display a listing of the resource.
@@ -39,12 +41,14 @@ class SpectacleController extends Controller
      */
     public function create()
     {
-        
     }
 
-    public function fetch(){
-        $medical_record = []; $reading_adds = DB::table('eye_powers')->where('category', 'reading_add')->get();
-        return view('spectacle.fetch', compact('medical_record', 'reading_adds'));
+    public function fetch()
+    {
+        $powers = Power::all();
+        $medical_record = [];
+        $reading_adds = DB::table('eye_powers')->where('category', 'reading_add')->get();
+        return view('spectacle.fetch', compact('medical_record', 'reading_adds', 'powers'));
     }
 
     /**
@@ -63,11 +67,11 @@ class SpectacleController extends Controller
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         $input['fee'] = 0.00;
-        if($request->ctype == 5):
+        if ($request->ctype == 5) :
             $input['fee'] = DB::table('branches')->where('id', $this->branch)->value('fee_vision');
-        endif;        
+        endif;
         $spectacle = Spectacle::create($input);
-        return redirect()->route('spectacle.index')->with('success','Record created successfully');
+        return redirect()->route('spectacle.index')->with('success', 'Record created successfully');
     }
 
     /**
@@ -81,16 +85,17 @@ class SpectacleController extends Controller
         $this->validate($request, [
             'medical_record_number' => 'required',
         ]);
-        $mrecord = DB::table('patient_medical_records')->find($request->medical_record_number);        
-        if($mrecord):
+        $mrecord = DB::table('patient_medical_records')->find($request->medical_record_number);
+        if ($mrecord) :
             $pref = DB::table('patient_references')->where('id', $mrecord->mrn)->first();
             $reading_adds = DB::table('eye_powers')->where('category', 'reading_add')->get();
+            $powers = Power::all();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
             $previous = Spectacle::where('patient_id', $mrecord->patient_id)->orderByDesc('id')->first();
-            return view('spectacle.create', compact('mrecord', 'patient', 'doctor', 'age', 'reading_adds', 'pref', 'previous'));
-        else:
+            return view('spectacle.create', compact('mrecord', 'patient', 'doctor', 'age', 'reading_adds', 'pref', 'previous', 'powers'));
+        else :
             return redirect("/spectacle/fetch/")->withErrors('No records found.');
         endif;
     }
@@ -105,12 +110,13 @@ class SpectacleController extends Controller
     {
         $spectacle = Spectacle::find($id);
         $reading_adds = DB::table('eye_powers')->where('category', 'reading_add')->get();
+        $powers = Power::all();
         $mrecord = DB::table('patient_medical_records')->find($spectacle->medical_record_id);
         $pref = DB::table('patient_references')->where('id', $mrecord->mrn)->first();
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
         $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-        return view('spectacle.edit', compact('mrecord', 'patient', 'doctor', 'spectacle', 'age', 'reading_adds', 'pref'));
+        return view('spectacle.edit', compact('mrecord', 'patient', 'doctor', 'spectacle', 'age', 'reading_adds', 'pref', 'powers'));
     }
 
     /**
@@ -126,20 +132,20 @@ class SpectacleController extends Controller
             'medical_record_id' => 'required',
         ]);
         $input = $request->all();
-        $input['review_date'] = (!empty($request->review_date)) ? Carbon::createFromFormat('d/M/Y', $request->review_date)->format('Y-m-d') : NULL;        
+        $input['review_date'] = (!empty($request->review_date)) ? Carbon::createFromFormat('d/M/Y', $request->review_date)->format('Y-m-d') : NULL;
         $input['fee'] = 0.00;
-        if($request->ctype == 5):
+        if ($request->ctype == 5) :
             $input['fee'] = DB::table('branches')->where('id', $this->branch)->value('fee_vision');
         endif;
         $spectacle = Spectacle::find($id);
         $input['created_by'] = $spectacle->getOriginal('created_by');
-        if(Auth::user()->roles->first()->name == 'Admin'):
+        if (Auth::user()->roles->first()->name == 'Admin') :
             $input['updated_by'] = $spectacle->getOriginal('updated_by');
-        else:
+        else :
             $input['updated_by'] = $request->user()->id;
         endif;
         $spectacle->update($input);
-        return redirect()->route('spectacle.index')->with('success','Record updated successfully');
+        return redirect()->route('spectacle.index')->with('success', 'Record updated successfully');
     }
 
     /**
@@ -152,6 +158,6 @@ class SpectacleController extends Controller
     {
         Spectacle::find($id)->delete();
         return redirect()->route('spectacle.index')
-                        ->with('success','Record deleted successfully');
+            ->with('success', 'Record deleted successfully');
     }
 }
