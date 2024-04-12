@@ -67,7 +67,9 @@
                                     <th>Patient ID</th>
                                     <th>Branch</th>
                                     <th>Test Name</th>
-                                    <th>Fee</th>
+                                    <th>Fee Procedure</th>
+                                    <th>Fee Collected</th>
+                                    <th>Fee Diff.</th>
                                     <th>Date</th>
                                 </tr>
                             </thead>
@@ -80,6 +82,9 @@
                                     <td>{{ $row->patient->patient_id }}</td>
                                     <td>{{ $row->branches->branch_name }}</td>
                                     <td>{{ $row->procedures->name }}</td>
+                                    <td>{{ $row->procedures->fee }}</td>
+                                    <td>{{ $row->fee }}</td>
+                                    <td>{{ number_format($row->procedures->fee - $row->fee, 2) }}</td>
                                     <td>{{ $row->fee }}</td>
                                     <td>{{ $row->created_at->format('d/M/Y') }}</td>
                                 </tr>
