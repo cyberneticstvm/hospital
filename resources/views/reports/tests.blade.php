@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('reports.tadvised.fetch') }}" method="post">
+                        <form action="{{ route('reports.tests.fetch') }}" method="post">
                             @csrf
                             <div class="row g-4">
                                 <div class="col-sm-3">
