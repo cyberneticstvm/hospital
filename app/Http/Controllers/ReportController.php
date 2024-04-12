@@ -513,6 +513,8 @@ class ReportController extends Controller
         $inputs = array($request->from_date, $request->to_date, $request->branch, $request->procedure);
         $records = PatientProcedure::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('branch', $request->branch);
+        })->when($request->procedure > 0, function ($q) use ($request) {
+            return $q->where('procedure', $request->procedure);
         })->get();
         return view('reports.tests', compact('branches', 'records', 'inputs', 'procs'));
     }
