@@ -650,6 +650,9 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::get('/reports/hfa/', 'App\Http\Controllers\ReportController@showHfa')->name('reports.hfa.show');
     Route::post('/reports/hfa/', 'App\Http\Controllers\ReportController@fetchHfa')->name('reports.hfa.fetch');
 
+    Route::get('/reports/tests/', 'App\Http\Controllers\ReportController@showTests')->name('reports.tests.show');
+    Route::post('/reports/tests/', 'App\Http\Controllers\ReportController@fetchTests')->name('reports.tests.fetch');
+
     // End Reports //
 
     // Helper //

@@ -11,8 +11,10 @@ use App\Models\HFA;
 use App\Models\IncomeExpenseHead as Head;
 use App\Models\LoginLog;
 use App\Models\PatientMedicalRecord;
+use App\Models\PatientProcedure;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
+use App\Models\Procedure;
 use App\Models\Surgery;
 use App\Models\TestsAdvised;
 use App\Models\User;
@@ -493,6 +495,26 @@ class ReportController extends Controller
             return $q->where('status', $request->status);
         })->get();
         return view('reports.hfa', compact('branches', 'records', 'inputs', 'status'));
+    }
+
+    public function showTests()
+    {
+        $branches = $this->getBranches($this->branch);
+        $procs = Procedure::orderBy('name')->get();
+        $records = [];
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch, 0);
+        return view('reports.tests', compact('branches', 'records', 'inputs', 'procs'));
+    }
+
+    public function fetchTests(Request $request)
+    {
+        $branches = $this->getBranches($this->branch);
+        $procs = Procedure::orderBy('name')->get();
+        $inputs = array($request->from_date, $request->to_date, $request->branch, $request->procedure);
+        $records = PatientProcedure::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('branch', $request->branch);
+        })->get();
+        return view('reports.tests', compact('branches', 'records', 'inputs', 'procs'));
     }
 
     public function getClosingBalance($branch)
