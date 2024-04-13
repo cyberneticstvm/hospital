@@ -97,9 +97,9 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="7" class="text-end">Total</td>
-                                    <td class="text-end">{{ number_format($tot1, 2) }}</td>
-                                    <td class="text-end">{{ number_format($tot2, 2) }}</td>
-                                    <td class="text-end">{{ number_format($tot1 - $tot2, 2) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($tot1, 2) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($tot2, 2) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($tot1 - $tot2, 2) }}</td>
                                 </tr>
                             </tfoot>
                         </table>
