@@ -74,6 +74,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php($tot1=0; $tot2=0;)
                                 @forelse($records as $key => $row)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
@@ -87,15 +88,16 @@
                                     <td class="text-end">{{ $row->fee }}</td>
                                     <td class="text-end">{{ number_format($row->procedures->fee - $row->fee, 2) }}</td>
                                 </tr>
+                                @php $tot1 += $row->procedures->fee; $tot2 += $row->fee; @endphp
                                 @empty
                                 @endforelse
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="7" class="text-end">Total</td>
-                                    <td class="text-end">{{ $row->procedures->sum('fee') }}</td>
-                                    <td class="text-end">{{ $row->sum('fee') }}</td>
-                                    <td class="text-end">{{ number_format($row->procedures->sum('fee') - $row->sum('fee'), 2) }}</td>
+                                    <td class="text-end">{{ number_format($tot1, 2) }}</td>
+                                    <td class="text-end">{{ number_format($tot2, 2) }}</td>
+                                    <td class="text-end">{{ number_format($tot1 - $tot2, 2) }}</td>
                                 </tr>
                             </tfoot>
                         </table>
