@@ -67,10 +67,10 @@
                                     <th>Patient ID</th>
                                     <th>Branch</th>
                                     <th>Test Name</th>
+                                    <th>Date</th>
                                     <th>Fee Procedure</th>
                                     <th>Fee Collected</th>
                                     <th>Fee Diff.</th>
-                                    <th>Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,14 +82,22 @@
                                     <td>{{ $row->patient->patient_id }}</td>
                                     <td>{{ $row->branches->branch_name }}</td>
                                     <td>{{ $row->procedures->name }}</td>
-                                    <td>{{ $row->procedures->fee }}</td>
-                                    <td>{{ $row->fee }}</td>
-                                    <td>{{ number_format($row->procedures->fee - $row->fee, 2) }}</td>
                                     <td>{{ $row->created_at->format('d/M/Y') }}</td>
+                                    <td class="text-end">{{ $row->procedures->fee }}</td>
+                                    <td class="text-end">{{ $row->fee }}</td>
+                                    <td class="text-end">{{ number_format($row->procedures->fee - $row->fee, 2) }}</td>
                                 </tr>
                                 @empty
                                 @endforelse
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="7" class="text-end">Total</td>
+                                    <td class="text-end">{{ $row->procedures->sum('fee') }}</td>
+                                    <td class="text-end">{{ $row->sum('fee') }}</td>
+                                    <td class="text-end">{{ number_format($row->procedures->sum('fee') - $row->sum('fee'), 2) }}</td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

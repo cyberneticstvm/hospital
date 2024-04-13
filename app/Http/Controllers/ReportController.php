@@ -52,6 +52,7 @@ class ReportController extends Controller
         $this->middleware('permission:report-tests-advised-fetch', ['only' => ['fetchtAdvised']]);
         $this->middleware('permission:report-hfa-show', ['only' => ['showHfa']]);
         $this->middleware('permission:report-hfa-fetch', ['only' => ['fetchHfa']]);
+        $this->middleware('permission:report-tests-procedure', ['only' => ['showTests', 'fetchTests']]);
 
         $this->branch = session()->get('branch');
     }
