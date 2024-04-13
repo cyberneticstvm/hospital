@@ -74,7 +74,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php($tot1=0, $tot2=0)
+                                @php
+                                $tot1=0; $tot2=0;
+                                @endphp
                                 @forelse($records as $key => $row)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
