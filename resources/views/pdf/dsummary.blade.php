@@ -174,7 +174,7 @@
     </table>
     <br><br>
     <div class="text-right">
-        Name: {{ ($ds->doctors) ? $ds->doctors->doctor_name : '' }}<br>
+        Doctor Name: {{ ($ds->doctors) ? $ds->doctors->doctor_name : '' }}<br>
         Designation: {{ ($ds->doctors) ? $ds->doctors->designation : '' }}<br>
         Reg ID: {{ ($ds->doctors) ? $ds->doctors->reg_no : '' }}
     </div>
