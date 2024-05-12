@@ -64,9 +64,9 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Hospital ID</label>
-                                    <input type="number" name="hospital_id" class="form-control form-control-md" value="{{ $branch->hospital_id }}>
+                                    <input type="number" name="hospital_id" class="form-control form-control-md" value="{{ $branch->hospital_id }}">
                                 </div>
-                                <div class=" col-sm-3">
+                                <div class="col-sm-3">
                                     <label class="form-check-label" for="flexCheckDefault">Booking available &nbsp;</label><input class="form-check-input" name="booking_available" type="checkbox" value="1" {{ ($branch->booking_available == 1) ? 'checked' : ''}}>
                                 </div>
                                 <div class="col-sm-12 text-right">
