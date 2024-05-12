@@ -71,11 +71,11 @@
         </tr>
         <tr>
             <td>D.O.A</td>
-            <td>{{ ($ds->doa) ? $ds->doa->format('d.m.Y') : '' }}</td>
+            <td>{{ ($ds->doa) ? $ds->doa->format('d.m.Y') : '' }} / {{ $ds->doa_time }}</td>
             <td>D.O.S</td>
-            <td>{{ ($ds->dos) ? $ds->dos->format('d.m.Y') : '' }}</td>
+            <td>{{ ($ds->dos) ? $ds->dos->format('d.m.Y') : '' }} / {{ $ds->dos_time }}</td>
             <td>D.O.D</td>
-            <td>{{ ($ds->dod) ? $ds->dod->format('d.m.Y') : '' }}</td>
+            <td>{{ ($ds->dod) ? $ds->dod->format('d.m.Y') : '' }} / {{ $ds->dod_time }}</td>
         </tr>
         <tr>
             <td>Reason for Admission</td>
