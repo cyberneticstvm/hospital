@@ -16,6 +16,9 @@ class DischargeSummary extends Model
         'doa',
         'dos',
         'dod',
+        'doa_time',
+        'dos_time',
+        'dod_time',
         'branch',
         'reason_for_admission',
         'findings',
@@ -31,35 +34,43 @@ class DischargeSummary extends Model
         'updated_by',
     ];
 
-    public function patient(){
+    public function patient()
+    {
         return $this->belongsTo(PatientRegistrations::class, 'patient_id', 'id');
     }
 
-    public function branches(){
+    public function branches()
+    {
         return $this->belongsTo(Branch::class, 'branch', 'id');
     }
 
-    public function diagnosis(){
+    public function diagnosis()
+    {
         return $this->hasMany(DischargeSummaryDiagnosis::class, 'summary_id', 'id');
     }
 
-    public function procedures(){
+    public function procedures()
+    {
         return $this->hasMany(DischargeSummaryProcedure::class, 'summary_id', 'id');
     }
 
-    public function medicines(){
+    public function medicines()
+    {
         return $this->hasMany(DischargeSummaryMedication::class, 'summary_id', 'id');
     }
 
-    public function instructions(){
+    public function instructions()
+    {
         return $this->hasMany(DischargeSummaryInstruction::class, 'summary_id', 'id');
     }
 
-    public function reviews(){
+    public function reviews()
+    {
         return $this->hasMany(DischargeSummaryReview::class, 'summary_id', 'id');
     }
 
-    public function doctors(){
+    public function doctors()
+    {
         return $this->hasOne(doctor::class, 'id', 'doctor');
     }
 

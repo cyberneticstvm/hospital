@@ -1,7 +1,7 @@
 @extends("templates.base")
 @section("content")
 <div class="body d-flex">
-    <div class="container">        
+    <div class="container">
         <div class="row g-4">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
@@ -21,31 +21,43 @@
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-4">
                                     <label class="form-label">Name</label>
-                                    <input class="form-control" type="text" value="{{ $patient->patient_name }}" readonly/>
+                                    <input class="form-control" type="text" value="{{ $patient->patient_name }}" readonly />
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">Age / Gender</label>
-                                    <input class="form-control" type="text" value="{{ $patient->age.' / '.$patient->gender }}" readonly/>
+                                    <input class="form-control" type="text" value="{{ $patient->age.' / '.$patient->gender }}" readonly />
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">D.O.A</label>
-                                    <input class="form-control" type="date" name="doa" value="{{ $ds->doa->format('Y-m-d') }}"/>
+                                    <input class="form-control" type="date" name="doa" value="{{ $ds->doa->format('Y-m-d') }}" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">D.O.A Time</label>
+                                    <input class="form-control" type="text" name="doa_time" maxlength="10" value="{{ $ds->doa_time }}" />
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">D.O.S</label>
-                                    <input class="form-control" type="date" name="dos" value="{{ $ds->dos->format('Y-m-d') }}"/>
+                                    <input class="form-control" type="date" name="dos" value="{{ $ds->dos->format('Y-m-d') }}" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">D.O.S Time</label>
+                                    <input class="form-control" type="text" name="dos_time" maxlength="10" value="{{ $ds->dos_time }}" />
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">D.O.D</label>
-                                    <input class="form-control" type="date" name="dod" value="{{ $ds->dod->format('Y-m-d') }}"/>
+                                    <input class="form-control" type="date" name="dod" value="{{ $ds->dod->format('Y-m-d') }}" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">D.O.D Time</label>
+                                    <input class="form-control" type="text" name="dod_time" maxlength="10" value="{{ $ds->dod_time }}" />
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Branch</label>
-                                    <input class="form-control" type="text" value="{{ $mrecord->branches->branch_name }}" readonly/>
-                                </div>  
+                                    <input class="form-control" type="text" value="{{ $mrecord->branches->branch_name }}" readonly />
+                                </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">Reason for Admission</label>
-                                    <input class="form-control" type="text" value="{{ $ds->reason_for_admission }}" name="reason_for_admission" placeholder="Reason for Admission"/>
+                                    <input class="form-control" type="text" value="{{ $ds->reason_for_admission }}" name="reason_for_admission" placeholder="Reason for Admission" />
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">Findings</label>
@@ -57,19 +69,19 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">General Examination</label>
-                                    <input class="form-control" type="text" value="{{ $ds->general_examination }}" name="general_examination" placeholder="General Examination"/>
-                                </div>                              
+                                    <input class="form-control" type="text" value="{{ $ds->general_examination }}" name="general_examination" placeholder="General Examination" />
+                                </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Diagnosis</label>
-                                    <input class="form-control" type="text" name="diagnosis" value="{{ $ds->diagnosis }}" placeholder="Diagnosis"/>
+                                    <input class="form-control" type="text" name="diagnosis" value="{{ $ds->diagnosis }}" placeholder="Diagnosis" />
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Procedures</label>
-                                    <input class="form-control" type="text" name="procedure" value="{{ $ds->procedure }}" placeholder="Procedures"/>
+                                    <input class="form-control" type="text" name="procedure" value="{{ $ds->procedure }}" placeholder="Procedures" />
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Condition at Discharge</label>
-                                    <input class="form-control" type="text" value="{{ $ds->discharge_condition }}" name="discharge_condition" placeholder="Condition at Discharge"/>
+                                    <input class="form-control" type="text" value="{{ $ds->discharge_condition }}" name="discharge_condition" placeholder="Condition at Discharge" />
                                 </div>
                                 <div class="col-sm-9">
                                     <label class="form-label">Medication<sup class="text-danger">*</sup></label>
@@ -92,29 +104,29 @@
                                 <div class="row mt-3">
                                     <div class="col-sm-3">
                                         @if($key == 0)<label class="form-label">Type<sup class="text-danger">*</sup></label>@endif
-                                        {!! Form::select('medicine_type[]', $types,  $value->type, ['class' => 'form-control select2 medType', 'placeholder' => 'Select', 'required' => 'required']) !!}
+                                        {!! Form::select('medicine_type[]', $types, $value->type, ['class' => 'form-control select2 medType', 'placeholder' => 'Select', 'required' => 'required']) !!}
                                     </div>
                                     <div class="col-sm-3">
                                         @if($key == 0)<label class="form-label">Medicine<sup class="text-danger">*</sup></label>@endif
-                                        {!! Form::select('product_id[]', $medicines,  $value->medicine, ['class' => 'form-control select2 medAdvised', 'placeholder' => 'Select', 'required' => 'required']) !!}
-                                    </div>                                    
+                                        {!! Form::select('product_id[]', $medicines, $value->medicine, ['class' => 'form-control select2 medAdvised', 'placeholder' => 'Select', 'required' => 'required']) !!}
+                                    </div>
                                     <div class="col-sm-3">
                                         @if($key == 0)<label class="form-label">Dosage<sup class="text-danger">*</sup></label>@endif
-                                        <input type="text" class="form-control" placeholder="Dosage" value="{{ $value->notes }}" name="notes[]" required/>
+                                        <input type="text" class="form-control" placeholder="Dosage" value="{{ $value->notes }}" name="notes[]" required />
                                     </div>
                                     <div class="col-sm-2">
                                         @if($key == 0)<label class="form-label">Notes</label>@endif
-                                        <input type="text" class="form-control" placeholder="Notes" name="qty[]" value="{{ ($value->qty != 0) ? $value->qty : '' }}"/>
+                                        <input type="text" class="form-control" placeholder="Notes" name="qty[]" value="{{ ($value->qty != 0) ? $value->qty : '' }}" />
                                     </div>
                                     <div class='col-sm-1'><a href='javascript:void(0)' onClick="$(this).parent().parent().remove()"><i class='fa fa-trash text-danger'></i></a></div>
                                 </div>
                                 @empty
-                                @endforelse 
+                                @endforelse
                             </div>
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-12">
                                     <label class="form-label">Post-operative Instruction<small class="text-info">(Multiple selection enabled)</small></label>
-                                    {!! Form::select('instructions[]', $postinstructions->pluck('name', 'id'),  $ds->instructions()->pluck('instruction_id')->toArray(), ['class' => 'form-control select2', 'multiple']) !!}
+                                    {!! Form::select('instructions[]', $postinstructions->pluck('name', 'id'), $ds->instructions()->pluck('instruction_id')->toArray(), ['class' => 'form-control select2', 'multiple']) !!}
                                     @error('post')
                                     <small class="text-danger">{{ $errors->first('post') }}</small>
                                     @enderror
@@ -137,12 +149,12 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="form-label">Doctor<sup class="text-danger">*</sup></label>
-                                    {!! Form::select('doctor', $doctors->pluck('doctor_name', 'id'),  $ds->doctor, ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => 'required']) !!}
+                                    {!! Form::select('doctor', $doctors->pluck('doctor_name', 'id'), $ds->doctor, ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => 'required']) !!}
                                 </div>
                             </div>
                             <div class="row g-4 mt-1">
                                 <div class="col-sm-12 text-end">
-                                    <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
+                                    <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
                                     <button type="submit" class="btn btn-primary btn-submit">Update</button>
                                 </div>
@@ -167,7 +179,7 @@
                     <div class="row g-4">
                         <div class="col">
                             <label class="form-label">Diagnosis Name<sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control form-control-md" name="diagnosis_name" placeholder="Diagnosis Name"/>
+                            <input type="text" class="form-control form-control-md" name="diagnosis_name" placeholder="Diagnosis Name" />
                         </div>
                     </div>
                     <div class="row mt-3">

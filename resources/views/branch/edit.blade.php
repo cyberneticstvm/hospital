@@ -1,7 +1,7 @@
 @extends("templates.base")
 @section("content")
 <div class="body d-flex">
-    <div class="container">        
+    <div class="container">
         <div class="row g-4">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
@@ -63,10 +63,14 @@
                                     <input type="number" name="inhouse_camp_limit" value="{{ $branch->inhouse_camp_limit }}" class="form-control form-control-md" placeholder="0">
                                 </div>
                                 <div class="col-sm-3">
+                                    <label class="form-label">Hospital ID</label>
+                                    <input type="number" name="hospital_id" class="form-control form-control-md" value="{{ $branch->hospital_id }}>
+                                </div>
+                                <div class=" col-sm-3">
                                     <label class="form-check-label" for="flexCheckDefault">Booking available &nbsp;</label><input class="form-check-input" name="booking_available" type="checkbox" value="1" {{ ($branch->booking_available == 1) ? 'checked' : ''}}>
                                 </div>
                                 <div class="col-sm-12 text-right">
-                                    <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
+                                    <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
                                     <button type="submit" class="btn btn-primary btn-submit">Update</button>
                                 </div>

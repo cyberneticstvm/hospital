@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::table('branches', function (Blueprint $table) {
             $table->boolean('booking_available')->after('inhouse_camp_limit')->comment('1-yes, 0-no')->default(1);
+            $table->string('hospital_id', 50)->nullable();
         });
     }
 

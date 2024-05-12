@@ -21,6 +21,9 @@ return new class extends Migration
             $table->date('doa')->nullable();
             $table->date('dos')->nullable();
             $table->date('dod')->nullable();
+            $table->string('doa_time', 10)->nullable();
+            $table->string('dos_time', 10)->nullable();
+            $table->string('dod_time', 10)->nullable();
             $table->text('reason_for_admission')->nullable();
             $table->text('findings')->nullable();
             $table->text('investigation_result')->nullable();

@@ -19,9 +19,11 @@ class Branch extends Model
         'fee_vision',
         'inhouse_camp_limit',
         'booking_available',
+        'hospital_id',
     ];
 
-    public function getUserBranches(){
+    public function getUserBranches()
+    {
         return $this->hasMany(UserBranch::class);
     }
 }
