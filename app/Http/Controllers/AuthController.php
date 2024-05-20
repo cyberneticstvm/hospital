@@ -22,36 +22,37 @@ class AuthController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */    
+     */
 
     function __construct()
     {
-         $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store','show']]);
-         $this->middleware('permission:user-create', ['only' => ['create','store']]);
-         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index', 'store', 'show']]);
+        $this->middleware('permission:user-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:user-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
 
     public function create()
     {
         $permission = Permission::get();
-        return view('user.create',compact('permission'));
+        return view('user.create', compact('permission'));
     }
 
     public function index()
     {
-        $users = User::orderBy('name','DESC')->get();
+        $users = User::withTrashed()->orderBy('name', 'DESC')->get();
         return view('user.index', compact('users'));
     }
 
-    public function store_branch_session(Request $request){
+    public function store_branch_session(Request $request)
+    {
         $this->validate($request, [
             'branch_id' => 'required',
         ]);
         $request->session()->put('branch', $request->branch_id);
         $branches = DB::table('branches')->get();
         $br = DB::table('branches')->find($request->branch_id);
-        
+
         return redirect()->route('dash.index')->with(['branch_id' => $request->branch_id]);
         //return view('dash', compact('branches'));
     }
@@ -73,7 +74,7 @@ class AuthController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $items = $request->get('branch_id');
         $this->validate($request, [
             'name' => 'required',
@@ -83,24 +84,24 @@ class AuthController extends Controller
             'roles' => 'required',
             'branch_id' => 'required',
             'doctor_id' => 'required_if:roles,==,2'
-        ]);       
-    
+        ]);
+
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
-    
+
         $user = User::create($input);
 
-        foreach($items as $key => $value):
+        foreach ($items as $key => $value) :
             DB::table('user_branches')->insert([
                 'user_id' => $user->id,
                 'branch_id' => $value
             ]);
         endforeach;
-       
+
         $user->assignRole($request->input('roles'));
-    
+
         return redirect()->route('user.index')
-                        ->with('success','User created successfully');
+            ->with('success', 'User created successfully');
     }
     /*public function create_user(array $data)
     {
@@ -110,18 +111,18 @@ class AuthController extends Controller
         'username' => $data['username'],
         'password' => Hash::make($data['password'])
       ]);
-    }*/    
-    
+    }*/
+
 
     public function show()
     {
         $branches = Branch::get();
- 
-        $doctors = DB::table('doctors')->whereNotIn('id', function($query) {
+
+        $doctors = DB::table('doctors')->whereNotIn('id', function ($query) {
             $query->select('doctor_id')->from('users');
         })->get();
 
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::pluck('name', 'name')->all();
         return view('user.create', compact('roles', 'branches', 'doctors'));
     }
     /**
@@ -130,11 +131,12 @@ class AuthController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function userlogout() {
+    public function userlogout()
+    {
         DB::table('login_logs')->where('session_id', Auth::user()->session_id)->update(['logged_out' => Carbon::now()]);
         DB::table('users')->where('id', Auth::user()->id)->update(['session_id' => null]);
         Session::flush();
-        Auth::logout();  
+        Auth::logout();
         return Redirect('/');
     }
     /**
@@ -146,14 +148,14 @@ class AuthController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
+        $roles = Role::pluck('name', 'name')->all();
+        $userRole = $user->roles->pluck('name', 'name')->all();
         $branches = Branch::get();
-        $doctors = DB::table('doctors')->whereIn('id', function($query) use ($id){
+        $doctors = DB::table('doctors')->whereIn('id', function ($query) use ($id) {
             $query->select('doctor_id')->from('users')->where('id', '=', $id);
         })->get();
-    
-        return view('user.edit',compact('user','roles','userRole', 'branches', 'doctors'));
+
+        return view('user.edit', compact('user', 'roles', 'userRole', 'branches', 'doctors'));
     }
 
     /**
@@ -169,37 +171,37 @@ class AuthController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'username' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,' . $id,
             'roles' => 'required',
             'branch_id' => 'required',
             'doctor_id' => 'required_if:roles,==,2',
             'mobile_device' => 'required',
         ]);
-    
+
         $input = $request->all();
-        if(!empty($input['password'])){ 
+        if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));    
+        } else {
+            $input = Arr::except($input, array('password'));
         }
-    
+
         $user = User::find($id);
         $user->update($input);
 
         DB::table("user_branches")->where('user_id', $id)->delete();
-        foreach($items as $key => $value):
+        foreach ($items as $key => $value) :
             DB::table('user_branches')->insert([
                 'user_id' => $id,
                 'branch_id' => $value
             ]);
-        endforeach;        
+        endforeach;
 
         DB::table('model_has_roles')->where('model_id', $id)->delete();
-    
+
         $user->assignRole($request->input('roles'));
-    
+
         return redirect()->route('user.index')
-                        ->with('success','User updated successfully');
+            ->with('success', 'User updated successfully');
     }
 
     /**
@@ -212,6 +214,6 @@ class AuthController extends Controller
     {
         User::find($id)->delete();
         return redirect()->route('user.index')
-                        ->with('success','User deleted successfully');
+            ->with('success', 'User deleted successfully');
     }
 }
