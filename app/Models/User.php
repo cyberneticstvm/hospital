@@ -8,16 +8,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
-    public function getUserBranches(){
+    public function getUserBranches()
+    {
         return $this->hasMany(UserBranch::class);
     }
 
-    public function labClinics(): HasMany {
+    public function labClinics(): HasMany
+    {
         return $this->hasMany(LabClinic::class, 'updated_by', 'id');
     }
 
@@ -54,7 +57,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function loginlog(){
+    public function loginlog()
+    {
         return $this->hasMany(LoginLog::class, 'user_id');
     }
 }
