@@ -80,7 +80,7 @@ class SearchController extends Controller
     {
         $patients = [];
         $inputs = [];
-        if (in_array(Auth::user()->roles->first()->name, ['Administrator'])) :
+        if (in_array(Auth::user()->roles->first()->name, ['Admin'])) :
             $branches = Branch::all();
         else :
             $branches = Branch::where('id', $this->branch)->get();
