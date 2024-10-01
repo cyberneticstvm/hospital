@@ -54,7 +54,7 @@ class PDFController extends Controller
                 $app = Appointment::find($reference->appointment_id);
                 if ($app->camp_id > 0) :
                     $camp = InhouseCamp::find($app->camp_id);
-                    $txt = strtoupper($camp->name);
+                    $txt = strtoupper($camp?->name);
                 endif;
             endif;
             $pdf->output();
