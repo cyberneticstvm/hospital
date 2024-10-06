@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use ErrorException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -32,7 +34,8 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
-    public function register(){
+    public function register()
+    {
         $this->reportable(function (Throwable $e) {
             //
         });
@@ -55,5 +58,16 @@ class Handler extends ExceptionHandler
             }
             return parent::render($request, $exception);
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof ModelNotFoundException) {
+            return redirect()->back()->with('error', 'Requested record not found / deleted!');
+        }
+        if ($e instanceof ErrorException) {
+            return response()->view('backend.errors.error', ['exception' => $e]);
+        }
+        return parent::render($request, $e);
     }
 }

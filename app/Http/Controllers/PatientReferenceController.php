@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helper;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -14,6 +15,7 @@ use App\Models\InhouseCamp;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class PatientReferenceController extends Controller
@@ -115,21 +117,41 @@ class PatientReferenceController extends Controller
             'department_id' => 'required',
             'consultation_type' => 'required'
         ]);
-        $input = $request->all();
-        $doctor = doctor::find($request->doctor_id);
-        $input['patient_id'] = $request->get('pid');
-        $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
-        $input['created_by'] = $request->user()->id;
-        $input['status'] = 1; //active
-        $reg_fee = $this->getRegistrationFee($this->branch, $request->consultation_type);
-        $input['branch'] = $this->branch;
-        $token = PRef::where('department_id', $request->department_id)->where('branch', $this->branch)->whereDate('created_at', Carbon::today())->max('token');
-        $input['token'] = ($token > 0) ? $token + 1 : 1;
-        DB::transaction(function () use ($input, $request, $reg_fee) {
-            $reference = PRef::create($input);
-            PReg::where(['id' => $request->pid])->update(['is_doctor_assigned' => 1, 'registration_fee' => $reg_fee]);
-            Appointment::where(['id' => $request->appointment_id])->update(['medical_record_id' => $reference->id]);
-        });
+        try {
+            $secret = Helper::apiSecret();
+            $vcode = $request->rc_number;
+            if ($vcode && $request->rc_type == 2):
+                $url = "https://order.speczone.net/api/vehicle/$vcode/$secret";
+                $json = file_get_contents($url);
+                $vehicle = json_decode($json);
+                if ($vehicle->status):
+                    if ($vehicle->vstatus == 'Inactive'):
+                        exit("Provided vehicle is inactive or does not exists");
+                    else:
+                        $input['rc_type'] = $request->rc_type;
+                        $input['rc_number'] = $request->rc_number;
+                    endif;
+                endif;
+            endif;
+            $input = $request->all();
+            $doctor = doctor::find($request->doctor_id);
+            $input['patient_id'] = $request->get('pid');
+            $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
+            $input['created_by'] = $request->user()->id;
+            $input['status'] = 1; //active
+            $reg_fee = $this->getRegistrationFee($this->branch, $request->consultation_type);
+            $input['branch'] = $this->branch;
+            $token = PRef::where('department_id', $request->department_id)->where('branch', $this->branch)->whereDate('created_at', Carbon::today())->max('token');
+            $input['token'] = ($token > 0) ? $token + 1 : 1;
+            DB::transaction(function () use ($input, $request, $reg_fee) {
+                $reference = PRef::create($input);
+                PReg::where(['id' => $request->pid])->update(['is_doctor_assigned' => 1, 'registration_fee' => $reg_fee]);
+                Appointment::where(['id' => $request->appointment_id])->update(['medical_record_id' => $reference->id]);
+            });
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", "Royalty Card information not found!")->withInput($request->all());
+        }
+
         return redirect()->route('consultation.patient-reference')->with('success', 'Doctor Assigned successfully');
     }
 
@@ -182,25 +204,44 @@ class PatientReferenceController extends Controller
             'department_id' => 'required',
             'consultation_type' => 'required'
         ]);
-        $input = $request->all();
-        $doctor = doctor::find($request->doctor_id);
-        $input['patient_id'] = $request->get('pid');
-        $reference = PRef::find($id);
-        //if($reference->getOriginal('doctor_id') == $request->doctor_id):
-        //$input['doctor_fee'] = $reference->getOriginal('doctor_fee');
-        //else:
-        $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
-        //endif;
-        $input['created_by'] = $reference->getOriginal('created_by');
-        $input['branch'] = $reference->getOriginal('branch');
-        $input['review'] = $reference->getOriginal('review');
-        $input['appointment_id'] = $reference->getOriginal('appointment_id');
-        $input['status'] = ($request->status) ? 0 : 1;
-        $reg_fee = $this->getRegistrationFee($reference->getOriginal('branch'), $request->consultation_type);
-        $token = $reference->getOriginal('token'); //PRef::where('department_id', $request->department_id)->where('branch', $request->session()->get('branch'))->whereDate('created_at', Carbon::today())->max('token');
-        //$input['token'] = ($token > 0) ? $token+1 : 1;
-        $reference->update($input);
-        DB::table('patient_medical_records')->where('mrn', $id)->update(['status' => $input['status']]);
+        try {
+            $input = $request->all();
+            $secret = Helper::apiSecret();
+            $vcode = $request->rc_number;
+            if ($vcode && $request->rc_type == 2):
+                $url = "https://order.speczone.net/api/vehicle/$vcode/$secret";
+                $json = file_get_contents($url);
+                $vehicle = json_decode($json);
+                if ($vehicle->status):
+                    if ($vehicle->vstatus == 'Inactive'):
+                        throw new Exception("Provided vehicle is inactive or does not exists");
+                    else:
+                        $input['rc_type'] = $request->rc_type;
+                        $input['rc_number'] = $request->rc_number;
+                    endif;
+                endif;
+            endif;
+            $doctor = doctor::find($request->doctor_id);
+            $input['patient_id'] = $request->get('pid');
+            $reference = PRef::find($id);
+            //if($reference->getOriginal('doctor_id') == $request->doctor_id):
+            //$input['doctor_fee'] = $reference->getOriginal('doctor_fee');
+            //else:
+            $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
+            //endif;
+            $input['created_by'] = $reference->getOriginal('created_by');
+            $input['branch'] = $reference->getOriginal('branch');
+            $input['review'] = $reference->getOriginal('review');
+            $input['appointment_id'] = $reference->getOriginal('appointment_id');
+            $input['status'] = ($request->status) ? 0 : 1;
+            $reg_fee = $this->getRegistrationFee($reference->getOriginal('branch'), $request->consultation_type);
+            $token = $reference->getOriginal('token'); //PRef::where('department_id', $request->department_id)->where('branch', $request->session()->get('branch'))->whereDate('created_at', Carbon::today())->max('token');
+            //$input['token'] = ($token > 0) ? $token+1 : 1;
+            $reference->update($input);
+            DB::table('patient_medical_records')->where('mrn', $id)->update(['status' => $input['status']]);
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", "Royalty Card information not found!")->withInput($request->all());
+        }
         return redirect()->route('consultation.patient-reference')->with('success', 'Record Updated successfully');
     }
 

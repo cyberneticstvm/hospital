@@ -23,6 +23,8 @@ return new class extends Migration
             $table->foreign('patient_id')->references('id')->on('patient_registrations');
             $table->foreign('doctor_id')->references('id')->on('doctors');
             $table->foreign('department_id')->references('id')->on('departments');
+            $table->integer('rc_type')->nullable();
+            $table->string('rc_number', 15)->nullable();
             $table->foreign('created_by')->references('id')->on('users');
             $table->timestamps();
         });

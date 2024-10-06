@@ -20,6 +20,8 @@ class PatientReference extends Model
         'branch',
         'consultation_type',
         'review',
+        'rc_type',
+        'rc_number',
         'token',
         'status',
         'appointment_id',
@@ -27,7 +29,8 @@ class PatientReference extends Model
         'sms',
     ];
 
-    public function patient(){
+    public function patient()
+    {
         return $this->belongsTo(PatientRegistrations::class, 'patient_id', 'id');
     }
 }
