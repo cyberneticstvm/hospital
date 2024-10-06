@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\PatientReferenceController;
+use App\Http\Controllers\APIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('/mrecord')->controller(APIController::class)->group(function () {
+    Route::get('/{id}/{secret}', 'getMrecord')->name('get.mrecord');
+});
+Route::prefix('/prescription')->controller(APIController::class)->group(function () {
+    Route::get('/{id}/{secret}', 'getPrescription')->name('get.prescription');
+});
+Route::prefix('/customer')->controller(APIController::class)->group(function () {
+    Route::get('/{val}/{secret}', 'getCustomer')->name('get.customer');
 });

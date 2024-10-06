@@ -13,7 +13,10 @@ use DB;
 
 class Helper
 {
-
+    public static function api_url()
+    {
+        return "https://order.speczone.net";
+    }
     public static function apiSecret()
     {
         return 'fdjsvsgdf4dhgf687f4bg54g4hf787';
