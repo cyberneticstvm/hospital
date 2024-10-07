@@ -24,10 +24,10 @@ class APIController extends Controller
             $prescription = Spectacle::selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();
             return response()->json([
                 'status' => true,
-                'mrecord' => $mrecord ?? NULL,
-                'mrns' => $mrns ?? NULL,
-                'patient' => $patient ?? NULL,
-                'prescription' => $prescription ?? NULL,
+                'mrecord' => $mrecord ?? '',
+                'mrns' => $mrns ?? '',
+                'patient' => $patient ?? '',
+                'prescription' => $prescription ?? '',
             ], 200);
         else :
             return response()->json([
