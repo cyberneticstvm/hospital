@@ -20,14 +20,14 @@ class APIController extends Controller
         if ($secret == $this->secret) :
             $mrecord = PatientMedicalRecord::where('id', $id)->first();
             $mrns = PatientMedicalRecord::where('patient_id', $mrecord->patient_id ?? 0)->pluck('id');
-            $prescription = Spectacle::selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();
             $patient = PatientRegistrations::where('id', $mrecord->patient_id)->first();
+            $prescription = Spectacle::selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();
             return response()->json([
                 'status' => true,
                 'mrecord' => $mrecord,
                 'mrns' => $mrns,
-                'prescription' => $prescription,
                 'patient' => $patient,
+                'prescription' => $prescription,
             ], 200);
         else :
             return response()->json([
@@ -58,7 +58,7 @@ class APIController extends Controller
         if ($secret == $this->secret) :
             $mrecord = PatientMedicalRecord::where('id', $qstring)->first();
             $patient = PatientRegistrations::where('id', $mrecord->patient_id)->first();
-            $spectacle = Spectacle::where('medical_record_id', $mrecord->id)->first();
+            $spectacle = Spectacle::where('medical_record_id', $qstring)->first();
             return response()->json([
                 'status' => true,
                 'mrecord' => $mrecord,
