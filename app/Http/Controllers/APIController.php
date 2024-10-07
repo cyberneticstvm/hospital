@@ -19,13 +19,13 @@ class APIController extends Controller
     {
         if ($secret == $this->secret) :
             $mrecord = PatientMedicalRecord::where('id', $id ?? 0)->first();
-            $mrns = PatientMedicalRecord::where('patient_id', $mrecord->patient_id ?? 0);
+            $mrns = PatientMedicalRecord::where('patient_id', $mrecord->patient_id ?? 0)->pluck('id');
             $patient = PatientRegistrations::where('id', $mrecord->patient_id ?? 0)->first();
             $prescription = Spectacle::selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();
             return response()->json([
                 'status' => true,
                 'mrecord' => $mrecord,
-                'mrns' => $mrns?->pluck('id'),
+                'mrns' => $mrns,
                 'patient' => $patient,
                 'prescription' => $prescription,
             ], 200);
