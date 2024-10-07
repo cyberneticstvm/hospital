@@ -56,9 +56,9 @@ class APIController extends Controller
     function getCustomer($qstring, $secret)
     {
         if ($secret == $this->secret) :
-            $mrecord = PatientMedicalRecord::where('id', $qstring)->first();
-            $patient = PatientRegistrations::where('id', $mrecord->patient_id)->first();
-            $spectacle = Spectacle::where('medical_record_id', $qstring)->first();
+            $mrecord = PatientMedicalRecord::where('id', $qstring ?? 0)->first();
+            $patient = PatientRegistrations::where('id', $mrecord->patient_id ?? 0)->first();
+            $spectacle = Spectacle::where('medical_record_id', $qstring ?? 0)->first();
             return response()->json([
                 'status' => true,
                 'mrecord' => $mrecord,
