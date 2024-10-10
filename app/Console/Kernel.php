@@ -44,7 +44,7 @@ class Kernel extends ConsoleKernel
             endif;
         })->dailyAt('08:30');
 
-        $schedule->call(function () {
+        /*$schedule->call(function () {
             $patients = DB::table('patient_references as pr')->leftjoin('patient_registrations as p', 'p.id', '=', 'pr.patient_id')->leftJoin('doctors as d', 'd.id', '=', 'pr.doctor_id')->selectRaw("p.patient_name, p.mobile_number, pr.branch, d.doctor_name")->whereDate('pr.created_at', Carbon::today())->where('pr.status', 1)->where('pr.sms', 1)->get();
             if ($patients->isNotEmpty()) :
                 foreach ($patients as $key => $patient) :
@@ -54,7 +54,7 @@ class Kernel extends ConsoleKernel
                     Helper::sendSms(Config::get('myconfig.sms1'));
                 endforeach;
             endif;
-        })->dailyAt('19:30');
+        })->dailyAt('19:30');*/
 
         $schedule->call(function () {
             DB::table('appointments')->whereDate('appointment_date', '<=', Carbon::now()->subDays(7))->where('patient_id', 0)->where('medical_record_id', 0)->delete();
