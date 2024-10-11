@@ -124,11 +124,13 @@ class Spectacle extends Model
         'advice',
         'fee',
         'review_date',
+        'glasses_prescribed',
         'created_by',
         'updated_by',
     ];
 
-    public function updateduser(){
+    public function updateduser()
+    {
         return $this->belongsTo(User::class, 'updated_by');
     }
 }

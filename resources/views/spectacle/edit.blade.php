@@ -427,13 +427,27 @@
                                 </div>                                
                             </div>-->
                             <div class="row g-4">
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Remarks</label>
-                                    <input type="text" value="{{ $spectacle->remarks }}" name="remarks" class="form-control form-control-md" placeholder="Remarks">
+                                    <select class="form-control form-control-md" name="remarks">
+                                        <option value="">Select</option>
+                                        <option value="BIFOCAL/PROGRESSIVE LENSES" {{ ($spectacle->remarks == 'BIFOCAL/PROGRESSIVE LENSES') ? 'selected' : '' }}>BIFOCAL/PROGRESSIVE LENSES</option>
+                                        <option value="FOR CONSTSNT USE" {{ ($spectacle->remarks == 'FOR CONSTSNT USE') ? 'selected' : '' }}>FOR CONSTSNT USE</option>
+                                        <option value="FOR DV ONLY" {{ ($spectacle->remarks == 'FOR DV ONLY') ? 'selected' : '' }}>FOR DV ONLY</option>
+                                        <option value="FOR NV ONLY" {{ ($spectacle->remarks == 'FOR NV ONLY') ? 'selected' : '' }}>FOR NV ONLY</option>
+                                        <option value="SAME AS PG" {{ ($spectacle->remarks == 'SAME AS PG') ? 'selected' : '' }}>SAME AS PG</option>
+                                    </select>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Advice</label>
                                     <input type="text" value="{{ $spectacle->advice }}" name="advice" class="form-control form-control-md" placeholder="Advice">
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Glasses Prescribed?</label>
+                                    <select class="form-control form-control-md" name="glasses_prescribed" required>
+                                        <option value="yes" {{ ($spectacle->glasses_prescribed == 'yes') ? 'selected' : '' }}>Glasses Prescribed</option>
+                                        <option value="no" {{ ($spectacle->glasses_prescribed == 'no') ? 'selected' : '' }}>Glasses Not recommended</option>
+                                    </select>
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Advised a further examination not later</label>

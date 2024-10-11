@@ -74,6 +74,7 @@ return new class extends Migration
             $table->text('remarks')->nullable();
             $table->text('advice')->nullable();
             $table->date('review_date')->nullable();
+            $table->string('glasses_prescribed', 5)->nullable();
             $table->unsignedBigInteger('created_by')->references('id')->on('users');
             $table->foreign('medical_record_id')->references('id')->on('patient_medical_records')->onDelete('cascade');
             $table->timestamps();
