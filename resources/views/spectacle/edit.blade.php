@@ -432,7 +432,7 @@
                                     <select class="form-control form-control-md" name="remarks">
                                         <option value="">Select</option>
                                         <option value="BIFOCAL/PROGRESSIVE LENSES" {{ ($spectacle->remarks == 'BIFOCAL/PROGRESSIVE LENSES') ? 'selected' : '' }}>BIFOCAL/PROGRESSIVE LENSES</option>
-                                        <option value="FOR CONSTSNT USE" {{ ($spectacle->remarks == 'FOR CONSTSNT USE') ? 'selected' : '' }}>FOR CONSTSNT USE</option>
+                                        <option value="FOR CONSTANT USE" {{ ($spectacle->remarks == 'FOR CONSTANT USE') ? 'selected' : '' }}>FOR CONSTANT USE</option>
                                         <option value="FOR DV ONLY" {{ ($spectacle->remarks == 'FOR DV ONLY') ? 'selected' : '' }}>FOR DV ONLY</option>
                                         <option value="FOR NV ONLY" {{ ($spectacle->remarks == 'FOR NV ONLY') ? 'selected' : '' }}>FOR NV ONLY</option>
                                         <option value="SAME AS PG" {{ ($spectacle->remarks == 'SAME AS PG') ? 'selected' : '' }}>SAME AS PG</option>

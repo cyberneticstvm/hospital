@@ -431,7 +431,7 @@
                                     <select class="form-control form-control-md" name="remarks">
                                         <option value="">Select</option>
                                         <option value="BIFOCAL/PROGRESSIVE LENSES" {{ (old('remarks') == 'BIFOCAL/PROGRESSIVE LENSES') ? 'selected' : '' }}>BIFOCAL/PROGRESSIVE LENSES</option>
-                                        <option value="FOR CONSTSNT USE" {{ (old('remarks') == 'FOR CONSTSNT USE') ? 'selected' : '' }}>FOR CONSTSNT USE</option>
+                                        <option value="FOR CONSTANT USE" {{ (old('remarks') == 'FOR CONSTANT USE') ? 'selected' : '' }}>FOR CONSTANT USE</option>
                                         <option value="FOR DV ONLY" {{ (old('remarks') == 'FOR DV ONLY') ? 'selected' : '' }}>FOR DV ONLY</option>
                                         <option value="FOR NV ONLY" {{ (old('remarks') == 'FOR NV ONLY') ? 'selected' : '' }}>FOR NV ONLY</option>
                                         <option value="SAME AS PG" {{ (old('remarks') == 'SAME AS PG') ? 'selected' : '' }}>SAME AS PG</option>
