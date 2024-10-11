@@ -39,9 +39,7 @@ class SpectacleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-    }
+    public function create() {}
 
     public function fetch()
     {
@@ -61,6 +59,7 @@ class SpectacleController extends Controller
     {
         $this->validate($request, [
             'medical_record_id' => 'required',
+            'glasses_prescribed' => 'required',
         ]);
         $input = $request->all();
         $input['review_date'] = (!empty($request->review_date)) ? Carbon::createFromFormat('d/M/Y', $request->review_date)->format('Y-m-d') : NULL;
@@ -130,6 +129,7 @@ class SpectacleController extends Controller
     {
         $this->validate($request, [
             'medical_record_id' => 'required',
+            'glasses_prescribed' => 'required',
         ]);
         $input = $request->all();
         $input['review_date'] = (!empty($request->review_date)) ? Carbon::createFromFormat('d/M/Y', $request->review_date)->format('Y-m-d') : NULL;

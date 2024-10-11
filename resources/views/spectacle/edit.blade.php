@@ -443,8 +443,9 @@
                                     <input type="text" value="{{ $spectacle->advice }}" name="advice" class="form-control form-control-md" placeholder="Advice">
                                 </div>
                                 <div class="col-sm-3">
-                                    <label class="form-label">Glasses Prescribed?</label>
+                                    <label class="form-label">Glasses Prescribed? <sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" name="glasses_prescribed" required>
+                                        <option value="">Select</option>
                                         <option value="yes" {{ ($spectacle->glasses_prescribed == 'yes') ? 'selected' : '' }}>Glasses Prescribed</option>
                                         <option value="no" {{ ($spectacle->glasses_prescribed == 'no') ? 'selected' : '' }}>Glasses Not recommended</option>
                                     </select>
