@@ -24,6 +24,7 @@ use App\Http\Controllers\DischargeSummaryController;
 use App\Http\Controllers\InhouseCampController;
 use App\Http\Controllers\SurgeryConsumableController;
 use App\Http\Controllers\PostOperativeInstructionController;
+use App\Http\Controllers\RoyaltyCardProcedure;
 use App\Http\Controllers\TestAdvisedController;
 
 /*
@@ -523,6 +524,12 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::put('/inhousecamp/edit/{id}', [InhouseCampController::class, 'update'])->name('inhousecamp.update');
     Route::delete('/inhousecamp/delete/{id}', [InhouseCampController::class, 'destroy'])->name('inhousecamp.delete');
     // End Inhouse Camp Master //
+
+    // Royalty Card Procedure Management //
+    Route::get('/royalty-cards', [RoyaltyCardProcedure::class, 'index'])->name('rcard.proc.index');
+    Route::get('/royalty-card-procs/{id}', [RoyaltyCardProcedure::class, 'show'])->name('rcard.proc.show');
+    Route::post('/royalty-card-procs/{id}', [RoyaltyCardProcedure::class, 'store'])->name('rcard.proc.save');
+    // End Royalty Card Procedure Management //
 
     // Operation Notes //
     Route::get('/operation-notes/', [OperationNoteController::class, 'index'])->name('onote.index');
