@@ -12,7 +12,7 @@ class RoyaltyCardProcedure extends Controller
 {
     function __construct()
     {
-        //
+        $this->middleware('permission:royalty-card-procedure-management', ['only' => ['index', 'show', 'store']]);
     }
 
     public function index()
