@@ -12,6 +12,7 @@ use App\Models\Appointment;
 use App\Models\doctor;
 use App\Models\DoctorOptometrist;
 use App\Models\InhouseCamp;
+use App\Models\RoyaltyCard;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
@@ -89,7 +90,8 @@ class PatientReferenceController extends Controller
         $camps = InhouseCamp::where('status', 1)->get();
         $campid = 0;
         $campid = ($appid > 0) ? Appointment::where('id', $appid)->value('camp_id') : 0;
-        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid'));
+        $rcards = RoyaltyCard::all();
+        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid', 'rcards'));
     }
 
     public function reopen($id, $appid)
@@ -101,7 +103,8 @@ class PatientReferenceController extends Controller
         $review = 'yes';
         $camps = InhouseCamp::where('status', 1)->get();
         $campid = ($appid > 0) ? Appointment::where('id', $appid)->value('camp_id') : 0;
-        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid'));
+        $rcards = RoyaltyCard::all();
+        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid', 'rcards'));
     }
 
     /**
@@ -187,7 +190,8 @@ class PatientReferenceController extends Controller
         $patient = PReg::find($reference->patient_id);
         $ctypes = DB::table('consultation_types')->get();
         $camps = InhouseCamp::where('status', 1)->get();
-        return view('consultation.edit-patient-reference', compact('doctors', 'departments', 'reference', 'patient', 'ctypes', 'camps'));
+        $rcards = RoyaltyCard::all();
+        return view('consultation.edit-patient-reference', compact('doctors', 'departments', 'reference', 'patient', 'ctypes', 'camps', 'rcards'));
     }
 
     /**

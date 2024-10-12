@@ -15,6 +15,7 @@ use App\Models\PatientProcedure;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\Procedure;
+use App\Models\Spectacle;
 use App\Models\Surgery;
 use App\Models\TestsAdvised;
 use App\Models\User;
@@ -53,6 +54,7 @@ class ReportController extends Controller
         $this->middleware('permission:report-hfa-show', ['only' => ['showHfa']]);
         $this->middleware('permission:report-hfa-fetch', ['only' => ['fetchHfa']]);
         $this->middleware('permission:report-tests-procedure', ['only' => ['showTests', 'fetchTests']]);
+        $this->middleware('permission:report-glasses-prescribed', ['only' => ['glassesPrescribed', 'fetchGlassesPrescribed']]);
 
         $this->branch = session()->get('branch');
     }
@@ -518,6 +520,29 @@ class ReportController extends Controller
             return $q->where('procedure', $request->procedure);
         })->get();
         return view('reports.tests', compact('branches', 'records', 'inputs', 'procs'));
+    }
+
+    public function glassesPrescribed()
+    {
+        $branches = $this->getBranches($this->branch);
+        $records = collect();
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch, 'yes');
+        return view('reports.glasses-prescribed', compact('branches', 'records', 'inputs'));
+    }
+
+    public function fetchGlassesPrescribed(Request $request)
+    {
+        $this->validate($request, [
+            'fromdate' => 'required',
+            'todate' => 'required',
+            'branch' => 'required',
+        ]);
+        $inputs = array($request->fromdate, $request->todate, $request->branch, $request->status);
+        $branches = $this->getBranches($this->branch);
+        $records = Spectacle::leftJoin('patient_references as p', 'p.id', 'spectacles.medical_record_id')->whereBetween('spectacles.created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->where('p.branch', $request->branch)->when($request->status != 'all', function ($q) use ($request) {
+            return $q->where('spectacles.glasses_prescribed', $request->status);
+        })->get();
+        return view('reports.glasses-prescribed', compact('branches', 'records', 'inputs'));
     }
 
     public function getClosingBalance($branch)

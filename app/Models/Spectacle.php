@@ -133,4 +133,9 @@ class Spectacle extends Model
     {
         return $this->belongsTo(User::class, 'updated_by');
     }
+
+    public function patient()
+    {
+        return $this->belongsTo(PatientRegistrations::class, 'patient_id', 'id');
+    }
 }

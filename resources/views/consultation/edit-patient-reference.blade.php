@@ -72,8 +72,9 @@
                                     <label class="form-label">Royalty Card Type</label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="rc_type">
                                         <option value="">Select</option>
-                                        <option value="1" {{ $reference->rc_type == 1 ? 'selected' : '' }}>Customer</option>
-                                        <option value="2" {{ $reference->rc_type == 2 ? 'selected' : '' }}>Vehicle</option>
+                                        @foreach($rcards as $card)
+                                        <option value="{{ $card->id }}" {{ ($card->id == $reference->rc_type) ? 'selected' : '' }}>{{ $card->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
