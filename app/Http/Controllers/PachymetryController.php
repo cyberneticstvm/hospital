@@ -19,10 +19,11 @@ class PachymetryController extends Controller
      */
     private $branch;
 
-    function __construct(){
-        $this->middleware('permission:pachymetry-list|pachymetry-create|pachymetry-edit|pachymetry-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:pachymetry-create', ['only' => ['create','store']]);
-        $this->middleware('permission:pachymetry-edit', ['only' => ['edit','update']]);
+    function __construct()
+    {
+        $this->middleware('permission:pachymetry-list|pachymetry-create|pachymetry-edit|pachymetry-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:pachymetry-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:pachymetry-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:pachymetry-delete', ['only' => ['destroy']]);
         $this->branch = session()->get('branch');
     }
@@ -54,33 +55,36 @@ class PachymetryController extends Controller
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
-        if($request->img1):
-            $fpath = 'assets/pachymetry/'.$request->medical_record_id;
+        if ($request->img1):
+            $fpath = 'assets/pachymetry/' . $request->medical_record_id;
             $input['img1'] = Storage::disk('public')->putFile($fpath, $request->img1);
         endif;
-        if($request->img2):
-            $fpath = 'assets/pachymetry/'.$request->medical_record_id;
+        if ($request->img2):
+            $fpath = 'assets/pachymetry/' . $request->medical_record_id;
             $input['img2'] = Storage::disk('public')->putFile($fpath, $request->img2);
         endif;
-        if($request->img3):
-            $fpath = 'assets/pachymetry/'.$request->medical_record_id;
+        if ($request->img3):
+            $fpath = 'assets/pachymetry/' . $request->medical_record_id;
             $input['img3'] = Storage::disk('public')->putFile($fpath, $request->img3);
         endif;
-        if($request->img4):
-            $fpath = 'assets/pachymetry/'.$request->medical_record_id;
+        if ($request->img4):
+            $fpath = 'assets/pachymetry/' . $request->medical_record_id;
             $input['img4'] = Storage::disk('public')->putFile($fpath, $request->img4);
         endif;
-        try{
+        try {
             $pachymetry = Pachymetry::create($input);
-            if(!empty($input['procedure'])):
-                for($i=0; $i<count($request->procedure); $i++):
+            if (!empty($input['procedure'])):
+                for ($i = 0; $i < count($request->procedure); $i++):
                     $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                     $data[] = [
                         'medical_record_id' => $request->medical_record_id,
                         'patient_id' => $request->patient_id,
                         'branch' => $request->branch,
                         'procedure' => $input['procedure'][$i],
-                        'fee' => $fee,
+                        'fee' => $fee[0],
+                        'discount' => $fee[1],
+                        'discount_category' => $fee[2],
+                        'discount_category_id' => $fee[3],
                         'type' => 'P',
                         'created_by' => $request->user()->id,
                         'created_at' => Carbon::now(),
@@ -89,10 +93,10 @@ class PachymetryController extends Controller
                 endfor;
                 DB::table('patient_procedures')->insert($data);
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
-        return redirect()->route('pachymetry.index')->with('success','Record created successfully');
+        return redirect()->route('pachymetry.index')->with('success', 'Record created successfully');
     }
 
     /**
@@ -107,7 +111,7 @@ class PachymetryController extends Controller
             'medical_record_id' => 'required',
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
-        if($mrecord):
+        if ($mrecord):
             $procedures = DB::table('procedures')->where('type', 'C')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
@@ -145,35 +149,38 @@ class PachymetryController extends Controller
     {
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
-        if($request->img1):
-            $fpath = 'assets/pachymetry/'.$request->medical_record_id;
+        if ($request->img1):
+            $fpath = 'assets/pachymetry/' . $request->medical_record_id;
             $input['img1'] = Storage::disk('public')->putFile($fpath, $request->img1);
         endif;
-        if($request->img2):
-            $fpath = 'assets/pachymetry/'.$request->medical_record_id;
+        if ($request->img2):
+            $fpath = 'assets/pachymetry/' . $request->medical_record_id;
             $input['img2'] = Storage::disk('public')->putFile($fpath, $request->img2);
         endif;
-        if($request->img3):
-            $fpath = 'assets/pachymetry/'.$request->medical_record_id;
+        if ($request->img3):
+            $fpath = 'assets/pachymetry/' . $request->medical_record_id;
             $input['img3'] = Storage::disk('public')->putFile($fpath, $request->img3);
         endif;
-        if($request->img4):
-            $fpath = 'assets/pachymetry/'.$request->medical_record_id;
+        if ($request->img4):
+            $fpath = 'assets/pachymetry/' . $request->medical_record_id;
             $input['img4'] = Storage::disk('public')->putFile($fpath, $request->img4);
         endif;
-        try{
+        try {
             DB::table('patient_procedures')->where('medical_record_id', $request->medical_record_id)->where('type', 'P')->delete();
             $p = Pachymetry::find($id);
             $p->update($input);
-            if(!empty($input['procedure'])):
-                for($i=0; $i<count($request->procedure); $i++):
+            if (!empty($input['procedure'])):
+                for ($i = 0; $i < count($request->procedure); $i++):
                     $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                     $data[] = [
                         'medical_record_id' => $request->medical_record_id,
                         'patient_id' => $request->patient_id,
                         'branch' => $request->branch,
                         'procedure' => $input['procedure'][$i],
-                        'fee' => $fee,
+                        'fee' => $fee[0],
+                        'discount' => $fee[1],
+                        'discount_category' => $fee[2],
+                        'discount_category_id' => $fee[3],
                         'type' => 'P',
                         'created_by' => $request->user()->id,
                         'created_at' => $p->created_at,
@@ -182,10 +189,10 @@ class PachymetryController extends Controller
                 endfor;
                 DB::table('patient_procedures')->insert($data);
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
-        return redirect()->route('pachymetry.index')->with('success','Record updated successfully');
+        return redirect()->route('pachymetry.index')->with('success', 'Record updated successfully');
     }
 
     /**
@@ -200,6 +207,6 @@ class PachymetryController extends Controller
         DB::table('patient_procedures')->where('medical_record_id', $p->medical_record_id)->where('type', 'P')->delete();
         $p->delete();
         return redirect()->route('pachymetry.index')
-                        ->with('success','Record deleted successfully');
+            ->with('success', 'Record deleted successfully');
     }
 }

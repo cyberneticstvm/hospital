@@ -17,15 +17,17 @@ class KeratometryController extends Controller
      */
     private $branch;
 
-    function __construct(){
-        $this->middleware('permission:keratometry-list|keratometry-create|keratometry-edit|keratometry-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:keratometry-create', ['only' => ['create','store']]);
-        $this->middleware('permission:keratometry-edit', ['only' => ['edit','update']]);
+    function __construct()
+    {
+        $this->middleware('permission:keratometry-list|keratometry-create|keratometry-edit|keratometry-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:keratometry-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:keratometry-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:keratometry-delete', ['only' => ['destroy']]);
         $this->branch = session()->get('branch');
     }
 
-    public function index(){
+    public function index()
+    {
         $keratometries = Keratometry::leftJoin('patient_medical_records AS m', 'keratometries.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'keratometries.patient_id', '=', 'p.id')->selectRaw("keratometries.*, p.patient_name, p.patient_id, keratometries.medical_record_id")->where('keratometries.branch', $this->branch)->whereDate('keratometries.created_at', Carbon::today())->orderByDesc("keratometries.id")->get();
         return view('keratometry.index', compact('keratometries'));
     }
@@ -55,17 +57,20 @@ class KeratometryController extends Controller
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
-        try{
+        try {
             $keratometry = Keratometry::create($input);
-            if(!empty($input['procedure'])):
-                for($i=0; $i<count($request->procedure); $i++):
+            if (!empty($input['procedure'])):
+                for ($i = 0; $i < count($request->procedure); $i++):
                     $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                     $data[] = [
                         'medical_record_id' => $request->medical_record_id,
                         'patient_id' => $request->patient_id,
                         'branch' => $request->branch,
                         'procedure' => $input['procedure'][$i],
-                        'fee' => $fee,
+                        'fee' => $fee[0],
+                        'discount' => $fee[1],
+                        'discount_category' => $fee[2],
+                        'discount_category_id' => $fee[3],
                         'type' => 'K',
                         'created_by' => $request->user()->id,
                         'created_at' => Carbon::now(),
@@ -74,10 +79,10 @@ class KeratometryController extends Controller
                 endfor;
                 DB::table('patient_procedures')->insert($data);
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
-        }        
-        return redirect()->route('keratometry.index')->with('success','Record created successfully');
+        }
+        return redirect()->route('keratometry.index')->with('success', 'Record created successfully');
     }
     /**
      * Display the specified resource.
@@ -91,7 +96,7 @@ class KeratometryController extends Controller
             'medical_record_id' => 'required',
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
-        if($mrecord):
+        if ($mrecord):
             $procedures = DB::table('procedures')->where('type', 'K')->get();
             $powers = DB::table('eye_powers')->where('category', 'keratometry')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
@@ -137,19 +142,22 @@ class KeratometryController extends Controller
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
-        try{
+        try {
             DB::table('patient_procedures')->where('medical_record_id', $request->medical_record_id)->where('type', 'K')->delete();
             $ke = Keratometry::find($id);
             $ke->update($input);
-            if(!empty($input['procedure'])):
-                for($i=0; $i<count($request->procedure); $i++):
+            if (!empty($input['procedure'])):
+                for ($i = 0; $i < count($request->procedure); $i++):
                     $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                     $data[] = [
                         'medical_record_id' => $request->medical_record_id,
                         'patient_id' => $request->patient_id,
                         'branch' => $request->branch,
                         'procedure' => $input['procedure'][$i],
-                        'fee' => $fee,
+                        'fee' => $fee[0],
+                        'discount' => $fee[1],
+                        'discount_category' => $fee[2],
+                        'discount_category_id' => $fee[3],
                         'type' => 'K',
                         'created_by' => $request->user()->id,
                         'created_at' => $ke->created_at,
@@ -158,10 +166,10 @@ class KeratometryController extends Controller
                 endfor;
                 DB::table('patient_procedures')->insert($data);
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
-        return redirect()->route('keratometry.index')->with('success','Record updated successfully');
+        return redirect()->route('keratometry.index')->with('success', 'Record updated successfully');
     }
 
     /**
@@ -176,6 +184,6 @@ class KeratometryController extends Controller
         DB::table('patient_procedures')->where('medical_record_id', $ke->medical_record_id)->where('type', 'K')->delete();
         $ke->delete();
         return redirect()->route('keratometry.index')
-                        ->with('success','Record deleted successfully');
+            ->with('success', 'Record deleted successfully');
     }
 }

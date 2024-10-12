@@ -17,10 +17,11 @@ class AscanController extends Controller
      */
     private $branch;
 
-    function __construct(){
-        $this->middleware('permission:ascan-list|ascan-create|ascan-edit|ascan-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:ascan-create', ['only' => ['create','store']]);
-        $this->middleware('permission:ascan-edit', ['only' => ['edit','update']]);
+    function __construct()
+    {
+        $this->middleware('permission:ascan-list|ascan-create|ascan-edit|ascan-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:ascan-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:ascan-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:ascan-delete', ['only' => ['destroy']]);
 
         $this->branch = session()->get('branch');
@@ -56,17 +57,20 @@ class AscanController extends Controller
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
-        try{
+        try {
             $ascan = Ascan::create($input);
-            if(!empty($input['procedure'])):
-                for($i=0; $i<count($request->procedure); $i++):
+            if (!empty($input['procedure'])):
+                for ($i = 0; $i < count($request->procedure); $i++):
                     $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                     $data[] = [
                         'medical_record_id' => $request->medical_record_id,
                         'patient_id' => $request->patient_id,
                         'branch' => $request->branch,
                         'procedure' => $input['procedure'][$i],
-                        'fee' => $fee,
+                        'fee' => $fee[0],
+                        'discount' => $fee[1],
+                        'discount_category' => $fee[2],
+                        'discount_category_id' => $fee[3],
                         'type' => 'A',
                         'created_by' => $request->user()->id,
                         'created_at' => Carbon::now(),
@@ -75,11 +79,11 @@ class AscanController extends Controller
                 endfor;
                 DB::table('patient_procedures')->insert($data);
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
-        
-        return redirect()->route('ascan.index')->with('success','Record created successfully');
+
+        return redirect()->route('ascan.index')->with('success', 'Record created successfully');
     }
 
     /**
@@ -94,7 +98,7 @@ class AscanController extends Controller
             'medical_record_id' => 'required',
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
-        if($mrecord):
+        if ($mrecord):
             $procedures = DB::table('procedures')->where('type', 'A')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
@@ -139,18 +143,21 @@ class AscanController extends Controller
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
         $asc = Ascan::find($id);
-        try{
+        try {
             DB::table('patient_procedures')->where('medical_record_id', $request->medical_record_id)->where('type', 'A')->delete();
             $asc->update($input);
-            if(!empty($input['procedure'])):
-                for($i=0; $i<count($request->procedure); $i++):
+            if (!empty($input['procedure'])):
+                for ($i = 0; $i < count($request->procedure); $i++):
                     $fee = Helper::getProcedureFee($request->medical_record_id, $input['procedure'][$i]);
                     $data[] = [
                         'medical_record_id' => $request->medical_record_id,
                         'patient_id' => $request->patient_id,
                         'branch' => $request->branch,
                         'procedure' => $input['procedure'][$i],
-                        'fee' => $fee,
+                        'fee' => $fee[0],
+                        'discount' => $fee[1],
+                        'discount_category' => $fee[2],
+                        'discount_category_id' => $fee[3],
                         'type' => 'A',
                         'created_by' => $request->user()->id,
                         'created_at' => $asc->created_at,
@@ -159,10 +166,10 @@ class AscanController extends Controller
                 endfor;
                 DB::table('patient_procedures')->insert($data);
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
-        }        
-        return redirect()->route('ascan.index')->with('success','Record updated successfully');
+        }
+        return redirect()->route('ascan.index')->with('success', 'Record updated successfully');
     }
 
     /**
@@ -177,6 +184,6 @@ class AscanController extends Controller
         DB::table('patient_procedures')->where('medical_record_id', $ascan->medical_record_id)->where('type', 'A')->delete();
         $ascan->delete();
         return redirect()->route('ascan.index')
-                        ->with('success','Record deleted successfully');
+            ->with('success', 'Record deleted successfully');
     }
 }
