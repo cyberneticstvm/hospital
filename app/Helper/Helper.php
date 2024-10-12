@@ -8,6 +8,7 @@ use App\Models\PatientReference;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\InhouseCamp;
 use App\Models\InhouseCampProcedure;
+use App\Models\RoyaltyCardProcedure;
 use Carbon\Carbon;
 use DB;
 
@@ -60,6 +61,9 @@ class Helper
     {
         $proc = Procedure::find($procedure);
         $fee = $proc->fee;
+        $discount = 0;
+        $discount_category = 'Na';
+        $discount_category_id = 0;
         $mrecord = PatientMedicalRecord::find($medical_record_id);
         $pref = PatientReference::find($mrecord->mrn);
         if ($pref->camp_id > 0):
@@ -67,8 +71,20 @@ class Helper
             $valid_to = Carbon::parse($pref->created_at)->addDays($camp->validity)->format('Y-m-d');
             $camps = InhouseCampProcedure::where('camp_id', $camp->id)->pluck('procedure')->all();
             $fee = (in_array($procedure, $camps) && $valid_to >= Carbon::today()) ? 0 : $proc->fee;
+            $discount = ($fee == 0) ? $proc->fee : $discount;
+            $discount_category = ($fee == 0) ? 'camp' : $discount_category;
+            $discount_category_id = ($fee == 0) ? $camp->id : $discount_category_id;
         endif;
-        return $fee;
+        if ($pref->rc_type && $pref->rc_number):
+            $pro = RoyaltyCardProcedure::where('proc_id', $proc->id)->where('royalty_card_id', $pref->rc_type)->first();
+            if ($pro && $pro->discount_percentage > 0):
+                $discount = ($proc->fee * $pro->discount_percentage) / 100;
+                $fee = $proc->fee - $discount;
+                $discount_category = 'royalty-card';
+                $discount_category_id = $pref->rc_type;
+            endif;
+        endif;
+        return array($fee, $discount, $discount_category, $discount_category_id);
     }
 
     public static function getOwedTotal($mrid)

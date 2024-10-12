@@ -16,6 +16,9 @@ class PatientProcedure extends Model
         'procedure',
         'type',
         'fee',
+        'discount',
+        'discount_category',
+        'discount_category_id',
         'created_by',
     ];
 

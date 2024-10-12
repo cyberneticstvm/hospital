@@ -18,6 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('medical_record_id')->references('id')->on('patient_medical_records');
             $table->unsignedBigInteger('procedure')->references('id')->on('procedures');
             $table->decimal('fee', 6, 2)->default(0.00);
+            $table->decimal('discount', 6, 2)->default(0.00);
+            $table->string('discount_category', 25)->nullable();
+            $table->unsignedBigInteger('discount_category_id')->nullable();
             $table->unsignedBigInteger('created_by')->references('id')->on('users');
             $table->timestamps();
         });
