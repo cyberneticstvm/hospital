@@ -101,15 +101,8 @@
                                     <td>{{ $row->medical_record_id }}</td>
                                     <td>{{ $row->remarks }}</td>
                                 </tr>
-                                @php
-                                $tot += $row->amount;
-                                @endphp
                                 @empty
                                 @endforelse
-                                <tr>
-                                    <td colspan="6" class="text-end fw-bold">Total</td>
-                                    <td class="text-end fw-bold">{{ number_format($tot, 2) }}</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
