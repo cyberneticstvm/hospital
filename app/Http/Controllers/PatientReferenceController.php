@@ -213,7 +213,7 @@ class PatientReferenceController extends Controller
             $secret = Helper::apiSecret();
             $vcode = $request->rc_number;
             if ($vcode && $request->rc_type == 2):
-                $url = "https://order.speczone.net/api/vehicle/$vcode/$secret";
+                $url = Helper::api_url() . "/api/vehicle/" . $vcode . "/" . $secret;
                 $json = file_get_contents($url);
                 $vehicle = json_decode($json);
                 if ($vehicle->status):
