@@ -18,7 +18,7 @@
                             <div class="row g-4">
                                 <div class="col-sm-3">
                                     <label class="form-label">From Date</label>
-                                    <input type="text" value="{{ $inputs[0] }}" name="fromdate" class="form-control form-control-md">
+                                    <input type="date" value="{{ $inputs[0] }}" name="fromdate" class="form-control form-control-md">
                                     @error('fromdate')
                                     <small class="text-danger">{{ $errors->first('fromdate') }}</small>
                                     @enderror
