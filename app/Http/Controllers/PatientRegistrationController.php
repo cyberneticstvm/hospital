@@ -7,6 +7,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\PatientRegistrations;
 use App\Models\InhouseCamp;
+use App\Models\RoyaltyCard;
 use Carbon\Carbon;
 use DB;
 
@@ -16,16 +17,15 @@ class PatientRegistrationController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:patient-list|patient-create|patient-edit|patient-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:patient-create', ['only' => ['create','store']]);
-         $this->middleware('permission:patient-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:patient-delete', ['only' => ['destroy']]);
-         $this->middleware('permission:patient-search', ['only' => ['fetch']]);
-         $this->middleware('permission:consultation-search', ['only' => ['fetchconsultation']]);
-         $this->middleware('permission:medical-record-search', ['only' => ['fetchmedicalrecord']]);
+        $this->middleware('permission:patient-list|patient-create|patient-edit|patient-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:patient-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:patient-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:patient-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:patient-search', ['only' => ['fetch']]);
+        $this->middleware('permission:consultation-search', ['only' => ['fetchconsultation']]);
+        $this->middleware('permission:medical-record-search', ['only' => ['fetchmedicalrecord']]);
 
-         $this->branch = session()->get('branch');
-         
+        $this->branch = session()->get('branch');
     }
     /**
      * Display a listing of the resource.
@@ -47,9 +47,9 @@ class PatientRegistrationController extends Controller
     public function create()
     {
         $patient = [];
-        $cities = DB::table('city')->get();   
-        $states = DB::table('state')->get();    
-        $countries = DB::table('country')->get();    
+        $cities = DB::table('city')->get();
+        $states = DB::table('state')->get();
+        $countries = DB::table('country')->get();
         return view('patient.create', compact('cities', 'states', 'countries', 'patient'));
     }
 
@@ -80,30 +80,34 @@ class PatientRegistrationController extends Controller
         $input['branch'] = $this->branch;
         $input['registration_fee'] = 0;
         $patients = PatientRegistrations::where('mobile_number', $request->mobile_number)->get();
-        if($patients->isEmpty()):
+        if ($patients->isEmpty()):
             $patient = PatientRegistrations::create($input);
         else:
             $request->session()->put('old_patient', $input);
             return view('patient.select', compact('patients'));
-        endif;        
-        return redirect()->route('patient.index')->with('success','Patient created successfully');
+        endif;
+        return redirect()->route('patient.index')->with('success', 'Patient created successfully');
     }
 
-    public function proceed(Request $request){
+    public function proceed(Request $request)
+    {
         $pid = $request->rad;
-        if($pid > 0):
+        if ($pid > 0):
+            $rcards = RoyaltyCard::all();
             $patient = PatientRegistrations::find($pid);
-            $doctors = DB::table('doctors')->get();   
+            $doctors = DB::table('doctors')->get();
             $departments = DB::table('departments')->get();
             $ctypes = DB::table('consultation_types')->get();
-            $review = 'yes'; $appid = $patient->appointment_id;
-            $camps = InhouseCamp::where('status', 1)->get(); $campid = 0;
-            return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid'));
+            $review = 'yes';
+            $appid = $patient->appointment_id;
+            $camps = InhouseCamp::where('status', 1)->get();
+            $campid = 0;
+            return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid', 'rcards'));
         else:
             $input = $request->session()->get('old_patient');
             $patient = PatientRegistrations::create($input);
             $request->session()->forget('old_patient');
-            return redirect()->route('patient.index')->with('success','Patient created successfully');
+            return redirect()->route('patient.index')->with('success', 'Patient created successfully');
         endif;
     }
 
@@ -120,19 +124,26 @@ class PatientRegistrationController extends Controller
         return view('patient.history', compact('patient', 'mrecords'));
     }
 
-    public function search(){
-        $records = []; $search_term = '';
+    public function search()
+    {
+        $records = [];
+        $search_term = '';
         return view('patient.search', compact('records', 'search_term'));
     }
-    public function searchc(){
-        $records = []; $search_term = '';
+    public function searchc()
+    {
+        $records = [];
+        $search_term = '';
         return view('patient.search-consultation', compact('records', 'search_term'));
     }
-    public function searchm(){
-        $records = []; $search_term = '';
+    public function searchm()
+    {
+        $records = [];
+        $search_term = '';
         return view('patient.search-medical-record', compact('records', 'search_term'));
     }
-    public function fetch(Request $request){
+    public function fetch(Request $request)
+    {
         $this->validate($request, [
             'search_term' => 'required',
         ]);
@@ -143,7 +154,8 @@ class PatientRegistrationController extends Controller
 
         return view('patient.search', compact('records', 'search_term'));
     }
-    public function fetchconsultation(Request $request){
+    public function fetchconsultation(Request $request)
+    {
         $this->validate($request, [
             'search_term' => 'required',
         ]);
@@ -153,7 +165,8 @@ class PatientRegistrationController extends Controller
 
         return view('patient.search-consultation', compact('records', 'search_term'));
     }
-    public function fetchmedicalrecord(Request $request){
+    public function fetchmedicalrecord(Request $request)
+    {
         $this->validate($request, [
             'search_term' => 'required',
         ]);
@@ -172,11 +185,11 @@ class PatientRegistrationController extends Controller
     public function edit($id)
     {
         $patient = PatientRegistrations::find($id);
-        $cities = DB::table('city')->get();   
-        $states = DB::table('state')->get();    
+        $cities = DB::table('city')->get();
+        $states = DB::table('state')->get();
         $countries = DB::table('country')->get();
-    
-        return view('patient.edit',compact('patient','cities','states', 'countries'));
+
+        return view('patient.edit', compact('patient', 'cities', 'states', 'countries'));
     }
 
     /**
@@ -207,8 +220,8 @@ class PatientRegistrationController extends Controller
         $input['branch'] = $patient->getOriginal('branch');
         $input['registration_fee'] = 0;
         $patient->update($input);
-        
-        return redirect()->route('patient.index')->with('success','Patient updated successfully');
+
+        return redirect()->route('patient.index')->with('success', 'Patient updated successfully');
     }
 
     /**
@@ -221,6 +234,6 @@ class PatientRegistrationController extends Controller
     {
         PatientRegistrations::find($id)->delete();
         return redirect()->route('patient.index')
-                        ->with('success','Patient deleted successfully');
+            ->with('success', 'Patient deleted successfully');
     }
 }
