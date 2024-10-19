@@ -68,6 +68,7 @@
                                     <th>Branch</th>
                                     <th>Test Name</th>
                                     <th>Date</th>
+                                    <th>Created By</th>
                                     <th>Fee Procedure</th>
                                     <th>Fee Collected</th>
                                     <th>Fee Diff.</th>
@@ -86,6 +87,7 @@
                                     <td>{{ $row->branches->branch_name }}</td>
                                     <td>{{ $row->procedures->name }}</td>
                                     <td>{{ $row->created_at->format('d/M/Y') }}</td>
+                                    <td>{{ $row->created_by->name }}</td>
                                     <td class="text-end">{{ $row->procedures->fee }}</td>
                                     <td class="text-end">{{ $row->fee }}</td>
                                     <td class="text-end">{{ number_format($row->procedures->fee - $row->fee, 2) }}</td>
@@ -96,7 +98,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="7" class="text-end">Total</td>
+                                    <td colspan="8" class="text-end">Total</td>
                                     <td class="text-end fw-bold">{{ number_format($tot1, 2) }}</td>
                                     <td class="text-end fw-bold">{{ number_format($tot2, 2) }}</td>
                                     <td class="text-end fw-bold">{{ number_format($tot1 - $tot2, 2) }}</td>

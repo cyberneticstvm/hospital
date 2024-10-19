@@ -36,4 +36,9 @@ class PatientProcedure extends Model
     {
         return $this->belongsTo(PatientRegistrations::class, 'patient_id', 'id');
     }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
 }
