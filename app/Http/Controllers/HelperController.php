@@ -220,7 +220,7 @@ class HelperController extends Controller
             $html .= "<td>" . $record->patient_id . "</td>";
             $html .= "<td>" . $record->procs . "</td>";
             $html .= "<td>" . $record->cdate . "</td>";
-            $html .= "<td>" . $record->createdBy->name . "</td>";
+            $html .= "<td>" . $record->created_by . "</td>";
             $html .= "<td class='text-end'>" . $record->fee . "</td>";
             $html .= "</tr>";
             $tot += $record->fee;
