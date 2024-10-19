@@ -211,7 +211,7 @@ class HelperController extends Controller
         $procedure = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'pp.medical_record_id')->leftJoin('patient_registrations as pr', 'pr.id', '=', 'pmr.patient_id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id as mrid', 'pr.patient_name', 'pr.patient_id', DB::raw("SUM(pp.fee) as fee, DATE_FORMAT(pp.created_at, '%d/%b/%Y') AS cdate"))->whereBetween('pp.created_at', [$fdate, $tdate])->where('pp.branch', $branch)->groupBy('pp.medical_record_id')->orderByDesc('pmr.id')->get();
         $c = 1;
         $tot = 0;
-        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Procedures</th><th>Date</th><th>Amount</th></tr></thead><tbody>";
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Procedures</th><th>Date</th><th>Created By</th></th><th>Amount</th></tr></thead><tbody>";
         foreach ($procedure as $key => $record) :
             $html .= "<tr>";
             $html .= "<td>" . $c++ . "</td>";
@@ -220,11 +220,12 @@ class HelperController extends Controller
             $html .= "<td>" . $record->patient_id . "</td>";
             $html .= "<td>" . $record->procs . "</td>";
             $html .= "<td>" . $record->cdate . "</td>";
+            $html .= "<td>" . $record->createdBy->name . "</td>";
             $html .= "<td class='text-end'>" . $record->fee . "</td>";
             $html .= "</tr>";
             $tot += $record->fee;
         endforeach;
-        $html .= "</tbody><tfoot><tr><td colspan='6' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($tot, 2) . "</td></tr></tfoot></table>";
+        $html .= "</tbody><tfoot><tr><td colspan='7' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($tot, 2) . "</td></tr></tfoot></table>";
         return $html;
     }
     private function getCertificateDetailed($fdate, $tdate, $branch)
