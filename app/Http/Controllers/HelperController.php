@@ -208,7 +208,7 @@ class HelperController extends Controller
     }
     private function getProcedureDetailed($fdate, $tdate, $branch)
     {
-        $procedure = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'pp.medical_record_id')->leftJoin('patient_registrations as pr', 'pr.id', '=', 'pmr.patient_id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id as mrid', 'pr.patient_name', 'pr.patient_id', DB::raw("SUM(pp.fee) as fee, DATE_FORMAT(pp.created_at, '%d/%b/%Y') AS cdate"))->whereBetween('pp.created_at', [$fdate, $tdate])->where('pp.branch', $branch)->groupBy('pp.medical_record_id')->orderByDesc('pmr.id')->get();
+        $procedure = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'pp.medical_record_id')->leftJoin('patient_registrations as pr', 'pr.id', '=', 'pmr.patient_id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id as mrid', 'pr.patient_name', 'pr.patient_id', DB::raw("SUM(pp.fee) as fee, DATE_FORMAT(pp.created_at, '%d/%b/%Y') AS cdate, pp.created_by"))->whereBetween('pp.created_at', [$fdate, $tdate])->where('pp.branch', $branch)->groupBy('pp.medical_record_id')->orderByDesc('pmr.id')->get();
         $c = 1;
         $tot = 0;
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Procedures</th><th>Date</th><th>Created By</th></th><th>Amount</th></tr></thead><tbody>";
