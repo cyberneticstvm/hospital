@@ -92,7 +92,7 @@ class MedicineController extends Controller
         //return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         //}
 
-        return redirect()->route('medicine.index')
+        return redirect()->route('consultation.index')
             ->with('success', 'Record updated successfully');
     }
 
