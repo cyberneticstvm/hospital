@@ -21,6 +21,7 @@ return new class extends Migration
             $table->String('medicine');
             $table->text('dosage');
             $table->String('dosage1');
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
     }
