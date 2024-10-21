@@ -45,7 +45,8 @@ class MedicineController extends Controller
         $doctor = DB::table('doctors')->find($medical_record->doctor_id);
         $products = DB::table('products')->get();
         $pmodes = DB::table('payment_modes')->get();
-        return view('medicine.create', compact('medicines', 'medical_record', 'patient', 'doctor', 'products', 'pmodes'));
+        $mtypes = DB::table('medicine_types')->get();
+        return view('medicine.create', compact('medicines', 'medical_record', 'patient', 'doctor', 'products', 'pmodes', 'mtypes'));
     }
 
     /**
