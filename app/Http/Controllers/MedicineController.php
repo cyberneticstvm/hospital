@@ -59,37 +59,37 @@ class MedicineController extends Controller
      */
     public function store(Request $request, $id)
     {
-        try {
-            $record = PMRecord::find($id);
-            $input['medicine'] = $request->medicine_id;
-            if ($input['medicine']):
-                for ($i = 0; $i < count($input['medicine']); $i++):
-                    if ($input['medicine'][$i] > 0):
-                        DB::table('patient_medicine_records')->insert([
-                            'medical_record_id' => $record->id,
-                            'mrn' => $request->mrn,
-                            'medicine_type' => $input['medicine_type'][$i],
-                            'eye' => $input['eye'][$i],
-                            'medicine' => $input['medicine'][$i],
-                            'dosage' => $input['dosage'][$i],
-                            'duration' => $input['duration'][$i],
-                            'qty' => $input['qty'][$i],
-                            'price' => $input['price'][$i],
-                            'discount' => $input['discount'][$i],
-                            'tax_amount' => $input['tax_amount'][$i],
-                            'tax_percentage' => $input['tax_percentage'][$i],
-                            'total' => $input['total'][$i],
-                            'notes' => $input['notes'][$i],
-                            'status' => ($input['price'][$i] > 0) ? 1 : 0,
-                            'created_by' => $request->user()->id,
-                            'created_at' => Carbon::now(),
-                        ]);
-                    endif;
-                endfor;
-            endif;
-        } catch (Exception $e) {
-            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
-        }
+        //try {
+        $record = PMRecord::find($id);
+        $input['medicine'] = $request->medicine_id;
+        if ($input['medicine']):
+            for ($i = 0; $i < count($input['medicine']); $i++):
+                if ($input['medicine'][$i] > 0):
+                    DB::table('patient_medicine_records')->insert([
+                        'medical_record_id' => $record->id,
+                        'mrn' => $request->mrn,
+                        'medicine_type' => $input['medicine_type'][$i],
+                        'eye' => $input['eye'][$i],
+                        'medicine' => $input['medicine'][$i],
+                        'dosage' => $input['dosage'][$i],
+                        'duration' => $input['duration'][$i],
+                        'qty' => $input['qty'][$i],
+                        'price' => $input['price'][$i],
+                        'discount' => $input['discount'][$i],
+                        'tax_amount' => $input['tax_amount'][$i],
+                        'tax_percentage' => $input['tax_percentage'][$i],
+                        'total' => $input['total'][$i],
+                        'notes' => $input['notes'][$i],
+                        'status' => ($input['price'][$i] > 0) ? 1 : 0,
+                        'created_by' => $request->user()->id,
+                        'created_at' => Carbon::now(),
+                    ]);
+                endif;
+            endfor;
+        endif;
+        //} catch (Exception $e) {
+        //return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        //}
 
         return redirect()->route('medicine.index')
             ->with('success', 'Record updated successfully');
