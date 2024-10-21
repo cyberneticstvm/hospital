@@ -19,11 +19,11 @@ class PatientMedicalRecordController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:patient-medical-record-list|patient-medical-record-create|patient-medical-record-edit|patient-medical-record-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:patient-medical-record-create', ['only' => ['create','store']]);
-         $this->middleware('permission:patient-medical-record-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:patient-medical-record-delete', ['only' => ['destroy']]);
-         $this->branch = session()->get('branch');
+        $this->middleware('permission:patient-medical-record-list|patient-medical-record-create|patient-medical-record-edit|patient-medical-record-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:patient-medical-record-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:patient-medical-record-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:patient-medical-record-delete', ['only' => ['destroy']]);
+        $this->branch = session()->get('branch');
     }
     /**
      * Display a listing of the resource.
@@ -32,13 +32,13 @@ class PatientMedicalRecordController extends Controller
      */
     public function index()
     {
-        $medical_records = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('doctors as doc', 'pmr.doctor_id', '=', 'doc.id')->leftJoin('patient_references as pref', 'pref.id', '=', 'pmr.mrn')->leftJoin('consultation_types as c', 'c.id', '=', 'pref.consultation_type')->leftJoin('appointments as a', 'pref.appointment_id', '=', 'a.id')->leftJoin('inhouse_camps as ic', 'a.camp_id', '=', 'ic.id')->select('pmr.id', 'pmr.mrn', DB::raw("CASE WHEN (a.camp_id > 0 AND pref.consultation_type = 4) THEN CONCAT_WS('', pr.patient_name, '- (', ic.name, ')') WHEN pref.consultation_type = 4 THEN CONCAT_WS(' ', pr.patient_name, '- (Camp)') WHEN (pref.consultation_type = 2 OR pref.consultation_type = 3) THEN CONCAT_WS(' ', pr.patient_name, '- (Cert)') ELSE pr.patient_name END AS patient_name"), 'pr.patient_id', 'pr.age', 'doc.doctor_name', 'pmr.status', 'ic.name as campname', 'pmr.diagnosis', DB::Raw("DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS rdate, IFNULL(DATE_FORMAT(pmr.review_date, '%d/%b/%Y'), '--') AS review_date"), DB::raw("CASE WHEN pmr.updated_at IS NULL THEN 'no' ELSE 'yes' END AS cstatus"))->where('pmr.branch', $this->branch)->whereDate('pmr.created_at', Carbon::today())->whereIn('pref.consultation_type', [1,3,7,4])->when(Auth::user()->roles->first()->name != 'Admin', function($query){
+        $medical_records = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('doctors as doc', 'pmr.doctor_id', '=', 'doc.id')->leftJoin('patient_references as pref', 'pref.id', '=', 'pmr.mrn')->leftJoin('consultation_types as c', 'c.id', '=', 'pref.consultation_type')->leftJoin('appointments as a', 'pref.appointment_id', '=', 'a.id')->leftJoin('inhouse_camps as ic', 'a.camp_id', '=', 'ic.id')->select('pmr.id', 'pmr.mrn', DB::raw("CASE WHEN (a.camp_id > 0 AND pref.consultation_type = 4) THEN CONCAT_WS('', pr.patient_name, '- (', ic.name, ')') WHEN pref.consultation_type = 4 THEN CONCAT_WS(' ', pr.patient_name, '- (Camp)') WHEN (pref.consultation_type = 2 OR pref.consultation_type = 3) THEN CONCAT_WS(' ', pr.patient_name, '- (Cert)') ELSE pr.patient_name END AS patient_name"), 'pr.patient_id', 'pr.age', 'doc.doctor_name', 'pmr.status', 'ic.name as campname', 'pmr.diagnosis', DB::Raw("DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS rdate, IFNULL(DATE_FORMAT(pmr.review_date, '%d/%b/%Y'), '--') AS review_date"), DB::raw("CASE WHEN pmr.updated_at IS NULL THEN 'no' ELSE 'yes' END AS cstatus"))->where('pmr.branch', $this->branch)->whereDate('pmr.created_at', Carbon::today())->whereIn('pref.consultation_type', [1, 3, 7, 4])->when(Auth::user()->roles->first()->name != 'Admin', function ($query) {
             return $query->where('pmr.doctor_id', Auth::user()->doctor_id);
         })->orderByDesc('pmr.id')->get();
-        $ccount = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pref', 'pref.id', '=', 'pmr.mrn')->where('pmr.branch', $this->branch)->whereDate('pmr.created_at', Carbon::today())->whereIn('pref.consultation_type', [1,3,7,4])->whereNull('pmr.updated_at')->when(Auth::user()->roles->first()->name != 'Admin', function($query){
+        $ccount = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pref', 'pref.id', '=', 'pmr.mrn')->where('pmr.branch', $this->branch)->whereDate('pmr.created_at', Carbon::today())->whereIn('pref.consultation_type', [1, 3, 7, 4])->whereNull('pmr.updated_at')->when(Auth::user()->roles->first()->name != 'Admin', function ($query) {
             return $query->where('pmr.doctor_id', Auth::user()->doctor_id);
         })->count();
-        $ccount1 = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pref', 'pref.id', '=', 'pmr.mrn')->where('pmr.branch', $this->branch)->whereDate('pmr.created_at', Carbon::today())->whereIn('pref.consultation_type', [1,3,7,4])->when(Auth::user()->roles->first()->name != 'Admin', function($query){
+        $ccount1 = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pref', 'pref.id', '=', 'pmr.mrn')->where('pmr.branch', $this->branch)->whereDate('pmr.created_at', Carbon::today())->whereIn('pref.consultation_type', [1, 3, 7, 4])->when(Auth::user()->roles->first()->name != 'Admin', function ($query) {
             return $query->where('pmr.doctor_id', Auth::user()->doctor_id);
         })->whereNotNull('pmr.updated_at')->count();
         return view('consultation.index', compact('medical_records', 'ccount', 'ccount1'));
@@ -62,25 +62,25 @@ class PatientMedicalRecordController extends Controller
      */
     public function store(Request $request)
     {
-        if(!$request->symptom_id){
+        if (!$request->symptom_id) {
             echo "Please choose symptom";
             die;
         }
-        if(!$request->diagnosis_id){
+        if (!$request->diagnosis_id) {
             echo "Please choose diagnosis";
             die;
         }
-        if(!$request->doctor_recommondations){
+        if (!$request->doctor_recommondations) {
             echo "Please enter doctor recommondations";
             die;
         }
-        $input = $request->all();        
+        $input = $request->all();
         $odospoints = json_decode(stripslashes($input['odospoints']), true);
 
         $input['review_date'] = ($input['review_date']) ? Carbon::createFromFormat('d/M/Y', $request['review_date'])->format('Y-m-d') : NULL;
         $input['symptoms'] = implode(',', $request->symptom_id);
         $input['diagnosis'] = implode(',', $request->diagnosis_id);
-        $input['created_by'] = $request->user()->id;        
+        $input['created_by'] = $request->user()->id;
 
         $input['medicine'] = $request->medicine_id;
         $input['dosage'] = $request->dosage;
@@ -88,12 +88,12 @@ class PatientMedicalRecordController extends Controller
 
         //$input['is_admission'] = $request->is_admission;
 
-        try{
+        try {
             $record = PMRecord::create($input);
 
-            if($input['medicine']):
-                for($i=0; $i<count($input['medicine']); $i++):
-                    if($input['medicine'][$i] > 0):
+            if ($input['medicine']):
+                for ($i = 0; $i < count($input['medicine']); $i++):
+                    if ($input['medicine'][$i] > 0):
                         $product = DB::table('products')->find($input['medicine'][$i]);
                         DB::table('patient_medicine_records')->insert([
                             'medical_record_id' => $record->id,
@@ -109,8 +109,8 @@ class PatientMedicalRecordController extends Controller
                     endif;
                 endfor;
             endif;
-            if($odospoints):
-                foreach($odospoints as $value):
+            if ($odospoints):
+                foreach ($odospoints as $value):
                     DB::table('patient_medical_records_vision')->insert([
                         'medical_record_id' => $record->id,
                         'description' => $value['description'],
@@ -119,8 +119,8 @@ class PatientMedicalRecordController extends Controller
                     ]);
                 endforeach;
             endif;
-            if(isset($input['retina_img'])):
-                for($i=0; $i<count($input['retina_img']); $i++):
+            if (isset($input['retina_img'])):
+                for ($i = 0; $i < count($input['retina_img']); $i++):
                     DB::table('patient_medical_records_retina')->insert([
                         'medical_record_id' => $record->id,
                         'retina_img' => $input['retina_img'][$i],
@@ -130,10 +130,10 @@ class PatientMedicalRecordController extends Controller
                 endfor;
             endif;
             echo "success";
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
-        
+
         //return redirect()->route('consultation.index')->with('success','Medical Record created successfully');
     }
 
@@ -157,10 +157,10 @@ class PatientMedicalRecordController extends Controller
     public function edit(PMRecord $precord, $id)
     {
         $record = PMRecord::find($id);
-        if(Auth::user()->roles->first()->name != 'Admin'):
-            if(!Gate::allows('update-medical-record', $record)){
+        if (Auth::user()->roles->first()->name != 'Admin'):
+            if (!Gate::allows('update-medical-record', $record)) {
                 abort(403, 'Oops.. You are not allowed to perform this action!');
-            }     
+            }
         endif;
         $tests = DB::table('tests')->orderBy('name')->get();
         $tests_advised = DB::table('tests_adviseds')->where('medical_record_id', $id)->get();
@@ -204,7 +204,14 @@ class PatientMedicalRecordController extends Controller
             echo "Please enter doctor recommondations";
             die;
         }*/
-        $img1 = NULL; $img2 = NULL; $img3 = NULL; $img4 = NULL; $img5 = NULL; $img6 = NULL; $img7 = NULL; $img8 = NULL;
+        $img1 = NULL;
+        $img2 = NULL;
+        $img3 = NULL;
+        $img4 = NULL;
+        $img5 = NULL;
+        $img6 = NULL;
+        $img7 = NULL;
+        $img8 = NULL;
         $input = $request->all();
 
         $odospoints = json_decode(stripslashes($input['odospoints']), true);
@@ -253,7 +260,7 @@ class PatientMedicalRecordController extends Controller
         $input['sel_19_os'] = ($request->sel_19_os) ? implode(',', $request->sel_19_os) : 0;
         $input['sel_20_od'] = ($request->sel_20_od) ? implode(',', $request->sel_20_od) : 0;
         $input['sel_20_os'] = ($request->sel_20_os) ? implode(',', $request->sel_20_os) : 0;
-        
+
         $input['medicine'] = $request->medicine_id;
         $input['dosage'] = $request->dosage;
         $input['dosage1'] = $request->dosage1;
@@ -262,12 +269,12 @@ class PatientMedicalRecordController extends Controller
         $record = PMRecord::find($id);
         $input['created_by'] = $record->getOriginal('created_by');
 
-        try{
+        try {
             //$record->update($input);
-            DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
+            //DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
             DB::table("patient_medical_records_vision")->where('medical_record_id', $record->id)->delete();
             DB::table("patient_medical_records_retina")->where('medical_record_id', $record->id)->delete();
-            if($input['medicine']):
+            /*if($input['medicine']):
                 for($i=0; $i<count($input['medicine']); $i++):
                     if($input['medicine'][$i] > 0):
                         DB::table('patient_medicine_records')->insert([
@@ -290,32 +297,32 @@ class PatientMedicalRecordController extends Controller
                         ]);
                     endif;
                 endfor;
-            endif;
-            
-            if($odospoints):
-                foreach($odospoints as $value):
-                    if($value['type'] == 'vision_od_img1' && !empty($value['description'])):
+            endif;*/
+
+            if ($odospoints):
+                foreach ($odospoints as $value):
+                    if ($value['type'] == 'vision_od_img1' && !empty($value['description'])):
                         $img1 = $input['vision_od_img1'];
                     endif;
-                    if($value['type'] == 'vision_os_img1' && !empty($value['description'])):
+                    if ($value['type'] == 'vision_os_img1' && !empty($value['description'])):
                         $img2 = $input['vision_os_img1'];
                     endif;
-                    if($value['type'] == 'vision_od_img2' && !empty($value['description'])):
+                    if ($value['type'] == 'vision_od_img2' && !empty($value['description'])):
                         $img3 = $input['vision_od_img2'];
                     endif;
-                    if($value['type'] == 'vision_os_img2' && !empty($value['description'])):
+                    if ($value['type'] == 'vision_os_img2' && !empty($value['description'])):
                         $img4 = $input['vision_os_img2'];
                     endif;
-                    if($value['type'] == 'vision_od_img3' && !empty($value['description'])):
+                    if ($value['type'] == 'vision_od_img3' && !empty($value['description'])):
                         $img5 = $input['vision_od_img3'];
                     endif;
-                    if($value['type'] == 'vision_os_img3' && !empty($value['description'])):
+                    if ($value['type'] == 'vision_os_img3' && !empty($value['description'])):
                         $img6 = $input['vision_os_img3'];
                     endif;
-                    if($value['type'] == 'vision_od_img4' && !empty($value['description'])):
+                    if ($value['type'] == 'vision_od_img4' && !empty($value['description'])):
                         $img7 = $input['vision_od_img4'];
                     endif;
-                    if($value['type'] == 'vision_os_img4' && !empty($value['description'])):
+                    if ($value['type'] == 'vision_os_img4' && !empty($value['description'])):
                         $img8 = $input['vision_os_img4'];
                     endif;
                     DB::table('patient_medical_records_vision')->insert([
@@ -327,9 +334,9 @@ class PatientMedicalRecordController extends Controller
                 endforeach;
             endif;
 
-            if(isset($input['retina_img'])):
-                for($i=0; $i<count($input['retina_img']); $i++):
-                    $fpath = 'assets/retina/'.$id.'/file_'.$i.'.png';
+            if (isset($input['retina_img'])):
+                for ($i = 0; $i < count($input['retina_img']); $i++):
+                    $fpath = 'assets/retina/' . $id . '/file_' . $i . '.png';
                     Storage::disk('public')->put($fpath, base64_decode(str_replace(['data:image/jpeg;base64,', 'data:image/png;base64,', ' '], ['', '', '+'], $input['retina_img'][$i])));
                     DB::table('patient_medical_records_retina')->insert([
                         'medical_record_id' => $record->id,
@@ -355,9 +362,9 @@ class PatientMedicalRecordController extends Controller
             endif;*/
             $tadvised = (isset($request->tests_advised) && $request->tests_advised) ? $request->tests_advised : NULL;
             $data = [];
-            if($tadvised):
-                foreach($tadvised as $key => $test):
-                    $data [] = [
+            if ($tadvised):
+                foreach ($tadvised as $key => $test):
+                    $data[] = [
                         'medical_record_id' => $record->id,
                         'patient_id' => $record->patient_id,
                         'doctor_id' => $record->doctor_id,
@@ -372,15 +379,15 @@ class PatientMedicalRecordController extends Controller
                     ];
                 endforeach;
             endif;
-            DB::transaction(function() use ($data, $record){
+            DB::transaction(function () use ($data, $record) {
                 DB::table('tests_adviseds')->where('medical_record_id', $record->id)->delete();
                 DB::table('tests_adviseds')->insert($data);
             });
 
             echo "success";
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
-        }        
+        }
         //return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
 
@@ -394,6 +401,6 @@ class PatientMedicalRecordController extends Controller
     {
         PMRecord::find($id)->delete();
         return redirect()->route('consultation.index')
-                        ->with('success','Medical Record deleted successfully');
+            ->with('success', 'Medical Record deleted successfully');
     }
 }
