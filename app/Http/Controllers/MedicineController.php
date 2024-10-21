@@ -37,7 +37,7 @@ class MedicineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $id)
+    public function create($id)
     {
         $medical_record = DB::table('patient_medical_records')->find(decrypt($id));
         $medicines = DB::table('patient_medicine_records')->where('medical_record_id', decrypt($id))->get();
