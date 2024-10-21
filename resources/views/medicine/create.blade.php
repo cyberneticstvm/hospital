@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('medicine.create') }}" method="post">
+                        <form action="{{ route('medicine.create', $medical_record->id) }}" method="post">
                             @csrf
                             <input type="hidden" name="mid" value="{{ $medical_record->id }}" />
                             <input type="hidden" name="mrn" value="{{ $medical_record->mrn }}" />
