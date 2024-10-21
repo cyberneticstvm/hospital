@@ -39,7 +39,13 @@ class MedicineController extends Controller
      */
     public function create(Request $request, $id)
     {
-        //
+        $medical_record = DB::table('patient_medical_records')->find(decrypt($id));
+        $medicines = DB::table('patient_medicine_records')->where('medical_record_id', decrypt($id))->get();
+        $patient = DB::table('patient_registrations')->find($medical_record->patient_id);
+        $doctor = DB::table('doctors')->find($medical_record->doctor_id);
+        $products = DB::table('products')->get();
+        $pmodes = DB::table('payment_modes')->get();
+        return view('medicine.create', compact('medicines', 'medical_record', 'patient', 'doctor', 'products', 'pmodes'));
     }
 
     /**
