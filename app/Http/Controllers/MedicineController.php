@@ -42,7 +42,7 @@ class MedicineController extends Controller
     public function create($id)
     {
         $medical_record = DB::table('patient_medical_records')->find(decrypt($id));
-        $medicines = DB::table('patient_medicine_records')->where('medical_record_id', decrypt($id))->get();
+        $medicines = DB::table('patient_medicine_records')->where('medical_record_id', decrypt($id));
         $patient = DB::table('patient_registrations')->find($medical_record->patient_id);
         $doctor = DB::table('doctors')->find($medical_record->doctor_id);
         $products = DB::table('products')->get();
