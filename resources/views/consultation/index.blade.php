@@ -53,11 +53,7 @@
                     <td>{{ $record->rdate }}</td>
                     <td>{{ DB::table('diagnosis')->select(DB::raw("IFNULL(group_concat(diagnosis_name), 'Na') as names"))->whereIn('id', $diagnosis)->value('names'); }}</td>
                     <td class="text-center"><a href="/generate-medical-record/{{ $record->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>
-                    @if(!$medicines->exists())
                     <td><a href="{{ route('medicine.create', encrypt($record->id)) }}">Medicine</a></td>
-                    @else
-                    <td></td>
-                    @endif
                     <td>{{ $record->review_date }}</td>
                     <td><i class="{{ ($record->cstatus == 'no') ? 'fa fa-times text-danger' : 'fa fa-check text-primary' }}"></i></td>
                     @if($record->status == 1)
