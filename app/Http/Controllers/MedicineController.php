@@ -60,6 +60,7 @@ class MedicineController extends Controller
     public function store(Request $request, $id)
     {
         //try {
+        $input = $request->all();
         $record = PMRecord::find($id);
         $input['medicine'] = $request->medicine_id;
         if ($input['medicine']):
