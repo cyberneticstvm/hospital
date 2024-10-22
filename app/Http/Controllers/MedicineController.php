@@ -207,8 +207,11 @@ class MedicineController extends Controller
                     DB::table('patient_medicine_records')->insert([
                         'medical_record_id' => $mrecord->id,
                         'mrn' => $mrecord->mrn,
-                        'medicine' => $input['medicine'][$i],
+                        'medicine_type' => $input['medicine_type'][$i],
+                        'medicine' => $input['medicine_id'][$i],
                         'dosage' => $input['dosage'][$i],
+                        'duration' => $input['duration'][$i],
+                        'eye' => $input['eye'][$i],
                         'qty' => $input['qty'][$i],
                         'notes' => $input['notes'][$i],
                         'updated_by' => $request->user()->id,
