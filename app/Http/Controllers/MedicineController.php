@@ -201,9 +201,9 @@ class MedicineController extends Controller
         $mrecord = PatientMedicalRecord::findOrFail($id);
         $input = $request->all();
         DB::table("patient_medicine_records")->where('medical_record_id', $id)->where('status', 0)->delete();
-        if ($input['medicine']):
-            for ($i = 0; $i < count($input['medicine']); $i++):
-                if ($input['medicine'][$i] > 0):
+        if ($input['medicine_id']):
+            for ($i = 0; $i < count($input['medicine_id']); $i++):
+                if ($input['medicine_id'][$i] > 0):
                     DB::table('patient_medicine_records')->insert([
                         'medical_record_id' => $mrecord->id,
                         'mrn' => $mrecord->mrn,
