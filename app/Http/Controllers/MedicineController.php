@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PatientMedicalRecord as PMRecord;
+use App\Models\PatientMedicalRecord;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Carbon\Carbon;
@@ -193,5 +194,30 @@ class MedicineController extends Controller
         $mtypes = DB::table('medicine_types')->get();
         $medicines = DB::table('products')->get();
         return view('medicine.add-update', compact('medicine_record', 'mtypes', 'id', 'medicines'));
+    }
+
+    public function addUpdateSave(Request $request, string $id)
+    {
+        $mrecord = PatientMedicalRecord::findOrFail($id);
+        $input = $request->all();
+        DB::table("patient_medicine_records")->where('medical_record_id', $id)->where('status', 0)->delete();
+        if ($input['medicine']):
+            for ($i = 0; $i < count($input['medicine']); $i++):
+                if ($input['medicine'][$i] > 0):
+                    DB::table('patient_medicine_records')->insert([
+                        'medical_record_id' => $mrecord->id,
+                        'mrn' => $mrecord->mrn,
+                        'medicine' => $input['medicine'][$i],
+                        'dosage' => $input['dosage'][$i],
+                        'qty' => $input['qty'][$i],
+                        'notes' => $input['notes'][$i],
+                        'updated_by' => $request->user()->id,
+                        'updated_at' => Carbon::now(),
+                    ]);
+                endif;
+            endfor;
+        endif;
+        return redirect()->route('consultation.index')
+            ->with('success', 'Medicine updated successfully');
     }
 }
