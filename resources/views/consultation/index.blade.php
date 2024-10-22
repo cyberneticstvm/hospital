@@ -54,7 +54,9 @@
                     <td>{{ DB::table('diagnosis')->select(DB::raw("IFNULL(group_concat(diagnosis_name), 'Na') as names"))->whereIn('id', $diagnosis)->value('names'); }}</td>
                     <td class="text-center"><a href="/generate-medical-record/{{ $record->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>
                     @if(App\Models\PatientMedicineRecord::where('medical_record_id', $record->id)->exists())
-                    <td></td>
+                    <td>
+                        <a href="{{ route('medicine.add.update', encrypt($record->id)) }}">Edit</a>
+                    </td>
                     @else
                     <td><a href="{{ route('medicine.create', encrypt($record->id)) }}">Medicine</a></td>
                     @endif

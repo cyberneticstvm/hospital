@@ -185,4 +185,11 @@ class MedicineController extends Controller
         DB::table('patient_medicine_records')->where('id', $id)->delete();
         echo "Medicine Deleted successfully.";
     }*/
+
+    public function addUpdate(string $id)
+    {
+        $medicine_record = DB::table('patient_medicine_records')->where('medical_record_id', $id)->where('status', 0)->get();
+        $mtypes = DB::table('medicine_types')->get();
+        return view('medicine.add-update', compact('medicine_record', 'mtypes'));
+    }
 }

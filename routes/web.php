@@ -232,6 +232,9 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::put('/consultation/medicine/edit/{id}/', 'App\Http\Controllers\MedicineController@update')->name('medicine.update');
     Route::delete('/consultation/medicine/delete/{id}/', 'App\Http\Controllers\MedicineController@destroy')->name('medicine.delete');
     Route::delete('/consultation/medicinesingle/delete/{id}/', 'App\Http\Controllers\MedicineController@remove')->name('medicinesingle.delete');
+
+    Route::get('/consultation/medicine/update/{id}/', 'App\Http\Controllers\MedicineController@addUpdate')->name('medicine.add.update');
+    Route::put('/consultation/medicine/update/{id}/', 'App\Http\Controllers\MedicineController@create')->name('medicine.add.update.save');
     // End Patient Medicine Records //
 
     // Pharmacy -> for both inside and outside customers //
