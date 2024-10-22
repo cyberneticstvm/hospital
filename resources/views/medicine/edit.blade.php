@@ -28,7 +28,7 @@
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5>
                                 </div>
                                 <div class="col-sm-12">
-                                    <p class="text-right my-3"><a href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success medicineRow"></i></a></p>
+                                    <p class="text-right my-3"><a href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success addPharmacyRow"></i></a></p>
                                     <table class="tblMedicine table table-bordered">
                                         <thead>
                                             <tr>
