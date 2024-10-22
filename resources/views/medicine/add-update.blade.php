@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('medicine.add.update.save', $medical_record->id) }}" method="post">
+                        <form action="{{ route('medicine.add.update.save', $id) }}" method="post">
                             @csrf
                             @method("PUT")
                             @if($medicine_record->isEmpty())

@@ -190,6 +190,6 @@ class MedicineController extends Controller
     {
         $medicine_record = DB::table('patient_medicine_records')->where('medical_record_id', $id)->where('status', 0)->get();
         $mtypes = DB::table('medicine_types')->get();
-        return view('medicine.add-update', compact('medicine_record', 'mtypes'));
+        return view('medicine.add-update', compact('medicine_record', 'mtypes', 'id'));
     }
 }
