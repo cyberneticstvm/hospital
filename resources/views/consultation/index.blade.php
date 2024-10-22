@@ -9,6 +9,11 @@
 <div class="card mb-4 border-0">
     <div class="card-body">
         <div class="row mb-3">
+            @if (session('success'))
+            <div class="alert alert-success" style="margin-top: 0.2rem;">
+                {{ session('success') }}
+            </div>
+            @endif
             <div class="col-md-4">
                 <h5 class="text-primary">Total Consultation: {{ $ccount+$ccount1 }}</h5>
             </div>
