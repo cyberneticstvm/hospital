@@ -539,7 +539,7 @@ class ReportController extends Controller
         ]);
         $inputs = array($request->fromdate, $request->todate, $request->branch, $request->status);
         $branches = $this->getBranches($this->branch);
-        $records = Spectacle::leftJoin('patient_references as p', 'p.id', 'spectacles.medical_record_id')->whereBetween('spectacles.created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->where('p.branch', $request->branch)->selectRaw("spectacles.id', 'spectacles.created_at")->when($request->status != 'all', function ($q) use ($request) {
+        $records = Spectacle::leftJoin('patient_references as p', 'p.id', 'spectacles.medical_record_id')->whereBetween('spectacles.created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->where('p.branch', $request->branch)->selectRaw("spectacles.id, spectacles.created_at")->when($request->status != 'all', function ($q) use ($request) {
             return $q->where('spectacles.glasses_prescribed', $request->status);
         })->get();
         return view('reports.glasses-prescribed', compact('branches', 'records', 'inputs'));
