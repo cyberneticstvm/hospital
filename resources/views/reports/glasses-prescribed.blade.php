@@ -83,7 +83,7 @@
                                     <td>{{ $c++ }}</td>
                                     <td>{{ $row->created_at->format('d.M.Y') }}</td>
                                     <td>{{ $row->patient->patient_id }}</td>
-                                    <td>{{ $row->patient->name }}</td>
+                                    <td>{{ $row->patient->patient_name }}</td>
                                     <td>{{ $row->medical_record_id }}</td>
                                     <td>{{ $row->remarks }}</td>
                                 </tr>
