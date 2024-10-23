@@ -73,6 +73,7 @@
                                     <th>Patient ID</th>
                                     <th>Patient Name</th>
                                     <th>Medical Record ID</th>
+                                    <th>Prescription</th>
                                     <th>Remarks</th>
                                 </tr>
                             </thead>
@@ -85,6 +86,7 @@
                                     <td>{{ $row->patient->patient_id }}</td>
                                     <td>{{ $row->patient->patient_name }}</td>
                                     <td>{{ $row->medical_record_id }}</td>
+                                    <td class="text-center"><a href="/vision-receipt/{{ $row->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>
                                     <td>{{ $row->remarks }}</td>
                                 </tr>
                                 @empty
