@@ -78,7 +78,7 @@ class APIController extends Controller
     function getCamps($secret)
     {
         if ($secret == $this->secret) :
-            $camps = CampMaster::whereDate('to', '>=', Carbon::today())->selectRaw("CONCAT_WS('-', camp_id, venue) AS name, id")->get();
+            $camps = CampMaster::whereDate('to', '>=', Carbon::today())->selectRaw("CONCAT_WS('-', camp_id, venue) AS name, id")->pluck('name', 'id');
             return response()->json([
                 'status' => true,
                 'camps' => collect($camps),
