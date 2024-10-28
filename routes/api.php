@@ -28,3 +28,6 @@ Route::prefix('/prescription')->controller(APIController::class)->group(function
 Route::prefix('/customer')->controller(APIController::class)->group(function () {
     Route::get('/{val}/{secret}', 'getCustomer')->name('get.customer');
 });
+Route::prefix('/camp')->controller(APIController::class)->group(function () {
+    Route::get('/order/{secret}', 'getCamps')->name('get.order.camps');
+});

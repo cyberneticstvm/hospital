@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helper\Helper;
+use App\Models\CampMaster;
 use App\Models\PatientMedicalRecord;
 use App\Models\PatientRegistrations;
 use App\Models\Spectacle;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class APIController extends Controller
@@ -64,6 +66,22 @@ class APIController extends Controller
                 'mrecord' => $mrecord,
                 'patient' => $patient,
                 'spectacle' => $spectacle,
+            ], 200);
+        else :
+            return response()->json([
+                'status' => false,
+                'data' => "No Record Found!"
+            ], 404);
+        endif;
+    }
+
+    function getCamps($secret)
+    {
+        if ($secret == $this->secret) :
+            $camps = CampMaster::whereDate('to', '>=', Carbon::today())->selectRaw("id, CONCAT_WS('-', camp_id, venue) AS name")->get();
+            return response()->json([
+                'status' => true,
+                'camps' => $camps,
             ], 200);
         else :
             return response()->json([
