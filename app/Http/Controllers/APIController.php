@@ -81,7 +81,7 @@ class APIController extends Controller
             $camps = CampMaster::whereDate('to', '>=', Carbon::today())->selectRaw("id, CONCAT_WS('-', camp_id, venue) AS name")->get();
             return response()->json([
                 'status' => true,
-                'camps' => $camps,
+                'camps' => collect($camps),
             ], 200);
         else :
             return response()->json([
