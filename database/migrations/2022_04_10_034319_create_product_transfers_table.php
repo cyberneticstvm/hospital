@@ -22,6 +22,9 @@ return new class extends Migration
             $table->String('batch_number')->nullable();
             $table->text('transfer_note')->nullable();
             $table->date('transfer_date');
+            $table->integer('approved')->nullable();
+            $table->unsignedBigInteger('approved_by')->nullable();
+            $table->dateTime('approved_at')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->timestamps();
         });

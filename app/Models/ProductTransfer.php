@@ -15,6 +15,19 @@ class ProductTransfer extends Model
         'to_branch',
         'transfer_date',
         'transfer_note',
+        'approved',
+        'approved_by',
+        'approved_at',
         'created_by',
     ];
+
+    public function fromBr()
+    {
+        return $this->belongsTo(Branch::class, 'from_branch', 'id');
+    }
+
+    public function toBr()
+    {
+        return $this->belongsTo(Branch::class, 'to_branch', 'id');
+    }
 }

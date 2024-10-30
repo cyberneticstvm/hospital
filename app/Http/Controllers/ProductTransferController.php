@@ -9,6 +9,7 @@ use App\Models\ProductTransfer;
 use Carbon\Carbon;
 use DB;
 use App\Helper\Helper;
+use Illuminate\Support\Facades\Session;
 
 class ProductTransferController extends Controller
 {
@@ -16,12 +17,13 @@ class ProductTransferController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:product-transfer-list|product-transfer-create|product-transfer-edit|product-transfer-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:product-transfer-create', ['only' => ['create','store']]);
-         $this->middleware('permission:product-transfer-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:product-transfer-delete', ['only' => ['destroy']]);
-         $this->middleware('permission:stock-in-hand', ['only' => ['fetch']]);
-         $this->branch = session()->get('branch');
+        $this->middleware('permission:product-transfer-list|product-transfer-create|product-transfer-edit|product-transfer-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:product-transfer-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:product-transfer-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:product-transfer-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:product-transfer-pending-update', ['only' => ['pendingRegister', 'transferPendingEdit', 'transferPendingUpdate']]);
+        $this->middleware('permission:stock-in-hand', ['only' => ['fetch']]);
+        $this->branch = session()->get('branch');
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +32,7 @@ class ProductTransferController extends Controller
      */
     public function index()
     {
-        $transfers = DB::table('product_transfers AS t')->leftJoin('branches AS b', 't.from_branch', '=', 'b.id')->leftJoin('branches AS b1', 't.to_branch', '=', 'b1.id')->where('t.from_branch', 0)->select('t.id', 't.transfer_note AS tnote', DB::raw("CASE WHEN t.from_branch = 0 THEN 'Main Stock' ELSE b.branch_name END AS from_branch"), DB::raw("CASE WHEN t.to_branch = 0 THEN 'Main Stock' ELSE b1.branch_name END AS to_branch"), 't.transfer_date AS tdate')->orderBy('t.transfer_date','DESC')->get();
+        $transfers = DB::table('product_transfers AS t')->leftJoin('branches AS b', 't.from_branch', '=', 'b.id')->leftJoin('branches AS b1', 't.to_branch', '=', 'b1.id')->where('t.from_branch', 0)->select('t.id', 't.transfer_note AS tnote', DB::raw("CASE WHEN t.from_branch = 0 THEN 'Main Stock' ELSE b.branch_name END AS from_branch"), DB::raw("CASE WHEN t.to_branch = 0 THEN 'Main Stock' ELSE b1.branch_name END AS to_branch"), 't.transfer_date AS tdate')->orderBy('t.transfer_date', 'DESC')->get();
         return view('product-transfer.index', compact('transfers'));
     }
 
@@ -60,12 +62,12 @@ class ProductTransferController extends Controller
             'transfer_date' => 'required',
         ]);
         $input = $request->all();
-        $input['transfer_date'] = (!empty($request->transfer_date)) ? Carbon::createFromFormat('d/M/Y', $request['transfer_date'])->format('Y-m-d') : NULL;        
+        $input['transfer_date'] = (!empty($request->transfer_date)) ? Carbon::createFromFormat('d/M/Y', $request['transfer_date'])->format('Y-m-d') : NULL;
         $input['created_by'] = $request->user()->id;
         $transfer = ProductTransfer::create($input);
-        if($input['product']):
-            for($i=0; $i<count($input['product']); $i++):
-                if($input['product'][$i] > 0):
+        if ($input['product']):
+            for ($i = 0; $i < count($input['product']); $i++):
+                if ($input['product'][$i] > 0):
                     DB::table('product_transfer_details')->insert([
                         'transfer_id' => $transfer->id,
                         'product' => $input['product'][$i],
@@ -75,7 +77,7 @@ class ProductTransferController extends Controller
                 endif;
             endfor;
         endif;
-        return redirect()->route('product-transfer.index')->with('success','Product Transferred successfully');
+        return redirect()->route('product-transfer.index')->with('success', 'Product Transferred successfully');
         /*$available_qty = Helper::getAvailableStock($request->product, $request->batch_number, $request->from_branch);
         if($available_qty >= $request->qty):
             $transfer = ProductTransfer::create($input);
@@ -95,11 +97,13 @@ class ProductTransferController extends Controller
     {
         $branches = DB::table('branches')->get();
         $products = DB::table('products')->orderBy('product_name')->get();
-        $inventory = []; $input = [];
+        $inventory = [];
+        $input = [];
         return view('product-transfer.stock-in-hand', compact('branches', 'products', 'inventory', 'input'));
     }
 
-    public function fetch(Request $request){
+    public function fetch(Request $request)
+    {
         $this->validate($request, [
             'branch' => 'required',
             'product' => 'required',
@@ -109,12 +113,12 @@ class ProductTransferController extends Controller
         $products = DB::table('products')->orderBy('product_name')->get();
         $input = array($request->branch, $request->product);
         $product = $request->product;
-        if($request->branch == 0):
+        if ($request->branch == 0):
             /*$inventory = DB::select("SELECT tbl2.* FROM (SELECT 'Main Branch' AS branch, t.transfer_id, tbl1.product, tbl1.product_name, tbl1.batch_number AS batch_number, tbl1.purchased AS purchased, SUM(CASE WHEN tbl1.batch_number = t.batch_number THEN t.qty ELSE 0 END) AS transferred, tbl1.purchased-SUM(CASE WHEN tbl1.batch_number = t.batch_number THEN t.qty ELSE 0 END) AS balance_qty FROM (SELECT p.id, pr.product_name, p.product, SUM(p.qty) AS purchased, p.batch_number FROM purchase_details p LEFT JOIN products pr ON p.product=pr.id WHERE p.product = ? GROUP BY p.batch_number) AS tbl1 LEFT JOIN product_transfer_details t ON tbl1.product = t.product GROUP BY tbl1.batch_number ORDER BY tbl1.product_name) AS tbl2 LEFT JOIN product_transfers pt ON (pt.id=tbl2.transfer_id OR tbl2.transfer_id IS NULL) WHERE pt.from_branch=0 GROUP BY tbl2.batch_number", [$request->product]);*/
             $inventory = DB::select("SELECT 'Main Branch' AS branch, tbl1.id as product, tbl1.product_name, tbl1.batch_number, tbl1.purchased, SUM(CASE WHEN tbl1.batch_number = ptd.batch_number AND t.from_branch = 0 THEN ptd.qty ELSE 0 END) AS transferred, tbl1.purchased-SUM(CASE WHEN tbl1.batch_number = ptd.batch_number AND t.from_branch = 0 THEN ptd.qty ELSE 0 END) AS balance_qty FROM (SELECT p.id, pd.product, p.product_name, pd.batch_number, SUM(pd.qty) AS purchased FROM purchase_details pd LEFT JOIN products p ON p.id = pd.product WHERE IF(? > 0, p.id=?, 1) GROUP BY pd.batch_number) AS tbl1 LEFT JOIN product_transfer_details ptd ON ptd.product = tbl1.id LEFT JOIN product_transfers t ON t.id = ptd.transfer_id GROUP BY tbl1.batch_number", [$request->product, $request->product]);
         else:
             $branch = DB::table('branches')->where('id', $request->branch)->value('branch_name');
-            $inventory = DB::select("SELECT '$branch' AS branch, tbl4.received AS purchased, tbl4.transferred+tbl4.medqty+tbl4.pharmaqty+tbl4.surgery_qty AS transferred, tbl4.product_name, tbl4.product, tbl4.batch_number, tbl4.balance-(tbl4.medqty+tbl4.pharmaqty+tbl4.surgery_qty) AS balance_qty FROM (SELECT tbl3.*, IFNULL(SUM(CASE WHEN tbl3.batch_number = po.batch_number AND pm.branch = ? AND pm.bill_generated = 1 THEN po.qty END), 0) AS surgery_qty FROM (SELECT tbl2.*, IFNULL(SUM(CASE WHEN tbl2.batch_number = p.batch_number AND ph.branch = ? THEN p.qty END), 0) AS pharmaqty FROM (SELECT tbl1.*, IFNULL(SUM(CASE WHEN tbl1.batch_number = m.batch_number AND pmr.branch = ? AND m.status = 1 THEN m.qty END), 0) AS medqty FROM (SELECT tblTrnsf.*, tblTrnsf.received-tblTrnsf.transferred AS balance FROM (SELECT pr.product_name, pd.product, pd.batch_number, IFNULL(SUM(CASE WHEN pt.to_branch = ? THEN pd.qty END), 0) AS received, IFNULL(SUM(CASE WHEN pt.from_branch = ? THEN pd.qty END), 0) AS transferred FROM product_transfer_details pd LEFT JOIN product_transfers pt ON pd.transfer_id = pt.id LEFT JOIN products pr ON pr.id = pd.product GROUP BY pd.batch_number) AS tblTrnsf) AS tbl1 LEFT JOIN patient_medicine_records m ON m.medicine = tbl1.product LEFT JOIN patient_medical_records pmr ON pmr.id = m.medical_record_id GROUP BY tbl1.batch_number) AS tbl2 LEFT JOIN pharmacy_records p ON p.product = tbl2.product LEFT JOIN pharmacies ph ON ph.id = p.pharmacy_id GROUP BY tbl2.batch_number) AS tbl3 LEFT JOIN post_operative_medicine_details po ON po.product = tbl3.product LEFT JOIN post_operative_medicines pm ON pm.id = po.pom_id GROUP BY tbl3.batch_number) AS tbl4 WHERE IF($product > 0, tbl4.product = ?, 1)", [$request->branch, $request->branch, $request->branch, $request->branch, $request->branch, $request->product]);
+            $inventory = DB::select("SELECT '$branch' AS branch, tbl4.received AS purchased, tbl4.transferred+tbl4.medqty+tbl4.pharmaqty+tbl4.surgery_qty AS transferred, tbl4.product_name, tbl4.product, tbl4.batch_number, tbl4.balance-(tbl4.medqty+tbl4.pharmaqty+tbl4.surgery_qty) AS balance_qty FROM (SELECT tbl3.*, IFNULL(SUM(CASE WHEN tbl3.batch_number = po.batch_number AND pm.branch = ? AND pm.bill_generated = 1 THEN po.qty END), 0) AS surgery_qty FROM (SELECT tbl2.*, IFNULL(SUM(CASE WHEN tbl2.batch_number = p.batch_number AND ph.branch = ? THEN p.qty END), 0) AS pharmaqty FROM (SELECT tbl1.*, IFNULL(SUM(CASE WHEN tbl1.batch_number = m.batch_number AND pmr.branch = ? AND m.status = 1 THEN m.qty END), 0) AS medqty FROM (SELECT tblTrnsf.*, tblTrnsf.received-tblTrnsf.transferred AS balance FROM (SELECT pr.product_name, pd.product, pd.batch_number, IFNULL(SUM(CASE WHEN pt.to_branch = ? AND pt.approved = 1 THEN pd.qty END), 0) AS received, IFNULL(SUM(CASE WHEN pt.from_branch = ? AND pt.approved = 1 THEN pd.qty END), 0) AS transferred FROM product_transfer_details pd LEFT JOIN product_transfers pt ON pd.transfer_id = pt.id LEFT JOIN products pr ON pr.id = pd.product GROUP BY pd.batch_number) AS tblTrnsf) AS tbl1 LEFT JOIN patient_medicine_records m ON m.medicine = tbl1.product LEFT JOIN patient_medical_records pmr ON pmr.id = m.medical_record_id GROUP BY tbl1.batch_number) AS tbl2 LEFT JOIN pharmacy_records p ON p.product = tbl2.product LEFT JOIN pharmacies ph ON ph.id = p.pharmacy_id GROUP BY tbl2.batch_number) AS tbl3 LEFT JOIN post_operative_medicine_details po ON po.product = tbl3.product LEFT JOIN post_operative_medicines pm ON pm.id = po.pom_id GROUP BY tbl3.batch_number) AS tbl4 WHERE IF($product > 0, tbl4.product = ?, 1)", [$request->branch, $request->branch, $request->branch, $request->branch, $request->branch, $request->product]);
         endif;
         return view('product-transfer.stock-in-hand', compact('branches', 'products', 'inventory', 'input'));
     }
@@ -131,7 +135,7 @@ class ProductTransferController extends Controller
         $branches = DB::table('branches')->get();
         $products = DB::table('products')->get();
         $transfer_details = DB::table('product_transfer_details')->where('transfer_id', $transfer->id)->get();
-        return view('product-transfer.edit', compact('transfer','branches', 'products', 'transfer_details'));
+        return view('product-transfer.edit', compact('transfer', 'branches', 'products', 'transfer_details'));
     }
 
     /**
@@ -157,9 +161,9 @@ class ProductTransferController extends Controller
 
         DB::table("product_transfer_details")->where('transfer_id', $id)->delete();
 
-        if($input['product']):
-            for($i=0; $i<count($input['product']); $i++):
-                if($input['product'][$i] > 0):
+        if ($input['product']):
+            for ($i = 0; $i < count($input['product']); $i++):
+                if ($input['product'][$i] > 0):
                     DB::table('product_transfer_details')->insert([
                         'transfer_id' => $transfer->id,
                         'product' => $input['product'][$i],
@@ -169,7 +173,7 @@ class ProductTransferController extends Controller
                 endif;
             endfor;
         endif;
-        return redirect()->route('product-transfer.index')->with('success','Product Transfer Updated successfully');
+        return redirect()->route('product-transfer.index')->with('success', 'Product Transfer Updated successfully');
         /*$available_qty = Helper::getAvailableStock($request->product, $request->batch_number, $request->from_branch);
         if($available_qty >= $request->qty):
             $transfer = ProductTransfer::create($input);
@@ -189,6 +193,32 @@ class ProductTransferController extends Controller
     {
         ProductTransfer::find($id)->delete();
         return redirect()->route('product-transfer.index')
-                        ->with('success','Record deleted successfully');
+            ->with('success', 'Record deleted successfully');
+    }
+
+    public function pendingRegister()
+    {
+        $transfers = ProductTransfer::where('to_branch', Session::get('branch'))->whereNull('approved')->get();
+        return view('product-transfer.pending', compact('transfers'));
+    }
+
+    public function transferPendingEdit(string $id)
+    {
+        $transfer = ProductTransfer::where('id', decrypt($id))->whereNull('approved')->firstOrFail();
+        return view('product-transfer.pending-edit', compact('transfer'));
+    }
+
+    public function transferPendingUpdate(Request $request, string $id)
+    {
+        $this->validate($request, [
+            'status' => 'required',
+        ]);
+        ProductTransfer::where('id', $id)->update([
+            'approved' => $request->status,
+            'approved_by' => $request->user()->id,
+            'approved_at' => Carbon::now(),
+            'remarks' => $request->remarks,
+        ]);
+        return redirect()->route('product.transfer.pending.register')->with('success', 'Product transfer status updated successfully');
     }
 }

@@ -292,7 +292,7 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::delete('/purchase/delete/{id}/', 'App\Http\Controllers\PurchaseController@destroy')->name('purchase.delete');
     // End purchase //
 
-    // purchase //
+    // transfer //
     Route::get('/product-transfer/', 'App\Http\Controllers\ProductTransferController@index')->name('product-transfer.index');
     Route::get('/product-transfer/create/', 'App\Http\Controllers\ProductTransferController@create')->name('product-transfer.create');
     Route::post('/product-transfer/create/', 'App\Http\Controllers\ProductTransferController@store')->name('product-transfer.save');
@@ -301,7 +301,11 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::delete('/product-transfer/delete/{id}/', 'App\Http\Controllers\ProductTransferController@destroy')->name('product-transfer.delete');
     Route::get('/stock-in-hand/', 'App\Http\Controllers\ProductTransferController@show')->name('stock-in-hand.show');
     Route::post('/stock-in-hand/', 'App\Http\Controllers\ProductTransferController@fetch')->name('stock-in-hand.fetch');
-    // End purchase //
+
+    Route::get('/product/transfer/pending', 'App\Http\Controllers\ProductTransferController@pendingRegister')->name('product.transfer.pending.register');
+    Route::get('/product/transfer/pending/edit/{id}', 'App\Http\Controllers\ProductTransferController@transferPendingEdit')->name('product.transfer.pending.edit');
+    Route::post('/product/transfer/pending/edit/{id}', 'App\Http\Controllers\ProductTransferController@transferPendingUpdate')->name('product.transfer.pending.update');
+    // End transfer //
 
     // spectacles //
     Route::get('/spectacle/', 'App\Http\Controllers\SpectacleController@index')->name('spectacle.index');
