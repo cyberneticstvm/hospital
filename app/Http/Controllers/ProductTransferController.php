@@ -9,6 +9,7 @@ use App\Models\ProductTransfer;
 use Carbon\Carbon;
 use DB;
 use App\Helper\Helper;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class ProductTransferController extends Controller
@@ -32,7 +33,9 @@ class ProductTransferController extends Controller
      */
     public function index()
     {
-        $transfers = DB::table('product_transfers AS t')->leftJoin('branches AS b', 't.from_branch', '=', 'b.id')->leftJoin('branches AS b1', 't.to_branch', '=', 'b1.id')->where('t.from_branch', 0)->select('t.id', 't.transfer_note AS tnote', DB::raw("CASE WHEN t.from_branch = 0 THEN 'Main Stock' ELSE b.branch_name END AS from_branch"), DB::raw("CASE WHEN t.to_branch = 0 THEN 'Main Stock' ELSE b1.branch_name END AS to_branch"), 't.transfer_date AS tdate')->orderBy('t.transfer_date', 'DESC')->get();
+        $transfers = DB::table('product_transfers AS t')->leftJoin('branches AS b', 't.from_branch', '=', 'b.id')->leftJoin('branches AS b1', 't.to_branch', '=', 'b1.id')->where('t.from_branch', 0)->when(!in_array(Auth::user()->roles->first()->name, ['Admin']), function ($q) {
+            return $q->where('t.from_branch', Session::get('branch'));
+        })->select('t.id', 't.transfer_note AS tnote', DB::raw("CASE WHEN t.from_branch = 0 THEN 'Main Stock' ELSE b.branch_name END AS from_branch"), DB::raw("CASE WHEN t.to_branch = 0 THEN 'Main Stock' ELSE b1.branch_name END AS to_branch"), 't.transfer_date AS tdate')->orderBy('t.transfer_date', 'DESC')->get();
         return view('product-transfer.index', compact('transfers'));
     }
 
