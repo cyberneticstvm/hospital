@@ -20,6 +20,10 @@
             font-size: 10px;
         }
 
+        .text-medium-large {
+            font-size: 14px;
+        }
+
         .text-large {
             font-size: 15px;
         }
@@ -46,7 +50,7 @@
         <tr>
             <td width='20%'>Age</td>
             <td>{{ $patient->age }} {{ ($patient->new_born_baby == 1) ? 'Months' : '' }} / {{ $patient->gender }}</td>
-            <td class='text-blue text-large'>{{ strtoupper($doctor->doctor_name) }}</td>
+            <td class='text-blue text-medium-large'>{{ strtoupper($doctor->doctor_name) }}</td>
         </tr>
         <tr>
             <td>Address</td>
