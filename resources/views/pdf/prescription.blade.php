@@ -55,7 +55,7 @@
         <tr>
             <td>Address</td>
             <td>{{ strtoupper($patient->address) }}</td>
-            <td class='text-blue'>{{ strtoupper($doctor->designation) }}</td>
+            <td class='text-blue text-medium-large'>{{ strtoupper($doctor->designation) }}</td>
         </tr>
     </table>
     <p class='text-right'>Date: {{ date('d/M/Y H:i:A') }}</p>
