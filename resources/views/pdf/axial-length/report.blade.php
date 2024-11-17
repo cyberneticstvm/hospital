@@ -39,7 +39,7 @@
             margin: 0 auto;
             background-image: url('./images/assets/axial-length.png');
             background-repeat: no-repeat;
-            height: 50%;
+            height: 75%;
             width: 50%;
         }
     </style>
@@ -89,12 +89,12 @@
             </tr>
         </tbody>
     </table>
-    <br /><br /><br />
+    <br />
     <center>
-        <div class="axial">
+        <div class="axial" style="margin-top: 50px;">
             <div class="small" style="height:25px; text-align: left; left: 35; top:123; position:relative;">{{ $ax->acd }}</div>
             <div class="small" style="height:25px; text-align: left; left: 75; top:105; position: relative;">{{ $ax->lens }}</div>
-            <div class="small" style="height:25px; text-align: left; left: 150; top:85; position: relative;">{{ ($ax->acd && $ax->lens && $ax->axl) ? ($ax->acd+$ax->lens)-$ax->axl : '' }}</div>
+            <div class="small" style="height:25px; text-align: left; left: 150; top:85; position: relative;">{{ ($ax->acd && $ax->lens && $ax->axl) ? abs(($ax->acd+$ax->lens)-$ax->axl) : '' }}</div>
             <div class="small" style="height:25px; text-align: left; left: 110; top:180; position: relative;">{{ $ax->axl }}</div>
         </div>
     </center>
