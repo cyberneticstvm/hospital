@@ -27,6 +27,10 @@
             text-align: right;
         }
 
+        .text-center {
+            text-align: center;
+        }
+
         .axial {
             margin: 0 auto;
             background-image: url('./images/assets/axial-length.png');
@@ -75,15 +79,20 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{ $ax->axl }}</td>
-                <td>{{ $ax->acd }}</td>
-                <td>{{ $ax->lens }}</td>
+                <td class="text-center">{{ $ax->axl }}</td>
+                <td class="text-center">{{ $ax->acd }}</td>
+                <td class="text-center">{{ $ax->lens }}</td>
             </tr>
         </tbody>
     </table>
     <br />
     <center>
-        <div class="axial"></div>
+        <div class="axial">
+            <div style="height:25px; text-align: left; left: 35; top:123; position:relative;">{{ $ax->acd }}</div>
+            <div style="height:25px; text-align: left; left: 75; top:105; position: relative;">{{ $ax->lens }}</div>
+            <div style="height:25px; text-align: left; left: 150; top:85; position: relative;">{{ ($ax->acd && $ax->lens && $ax->axl) ? ($ax->acd+$ax->lens)-$ax->axl : '' }}</div>
+            <div style="height:25px; text-align: left; left: 110; top:180; position: relative;">{{ $ax->axl }}</div>
+        </div>
     </center>
 </body>
 
