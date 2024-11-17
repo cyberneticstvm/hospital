@@ -9,6 +9,10 @@
             font-size: 12px;
         }
 
+        .small {
+            font-size: 12px;
+        }
+
         thead {
             border-bottom: 1px solid #e6e6e6;
         }
@@ -85,13 +89,13 @@
             </tr>
         </tbody>
     </table>
-    <br />
+    <br /><br /><br />
     <center>
         <div class="axial">
-            <div style="height:25px; text-align: left; left: 35; top:123; position:relative;">{{ $ax->acd }}</div>
-            <div style="height:25px; text-align: left; left: 75; top:105; position: relative;">{{ $ax->lens }}</div>
-            <div style="height:25px; text-align: left; left: 150; top:85; position: relative;">{{ ($ax->acd && $ax->lens && $ax->axl) ? ($ax->acd+$ax->lens)-$ax->axl : '' }}</div>
-            <div style="height:25px; text-align: left; left: 110; top:180; position: relative;">{{ $ax->axl }}</div>
+            <div class="small" style="height:25px; text-align: left; left: 35; top:123; position:relative;">{{ $ax->acd }}</div>
+            <div class="small" style="height:25px; text-align: left; left: 75; top:105; position: relative;">{{ $ax->lens }}</div>
+            <div class="small" style="height:25px; text-align: left; left: 150; top:85; position: relative;">{{ ($ax->acd && $ax->lens && $ax->axl) ? ($ax->acd+$ax->lens)-$ax->axl : '' }}</div>
+            <div class="small" style="height:25px; text-align: left; left: 110; top:180; position: relative;">{{ $ax->axl }}</div>
         </div>
     </center>
 </body>
