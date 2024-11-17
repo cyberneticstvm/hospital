@@ -26,6 +26,14 @@
         .text-right {
             text-align: right;
         }
+
+        .axial {
+            margin: 0 auto;
+            background-image: url('./images/assets/axial-length.png');
+            background-repeat: no-repeat;
+            height: 50%;
+            width: 50%;
+        }
     </style>
 </head>
 
@@ -75,7 +83,7 @@
     </table>
     <br />
     <center>
-        <div style="background-image: url(./images/assets/axial-length.png);"></div>
+        <div class="axial"></div>
     </center>
 </body>
 
