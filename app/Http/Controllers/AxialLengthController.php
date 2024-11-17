@@ -106,7 +106,7 @@ class AxialLengthController extends Controller
                         'discount' => $fee[1],
                         'discount_category' => $fee[2],
                         'discount_category_id' => $fee[3],
-                        'type' => 'P',
+                        'type' => 'L',
                         'created_by' => $request->user()->id,
                         'created_at' => $ax->created_at,
                         'updated_at' => Carbon::now(),
