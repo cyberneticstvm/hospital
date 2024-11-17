@@ -51,7 +51,7 @@
     <table width="100%">
         <thead>
             <tr>
-                <th text-align="center" colspan="4">A-SCAN REPORT</th>
+                <th text-align="center" colspan="4">AXIAL LENGTH REPORT</th>
             </tr>
         </thead>
         <tbody>
