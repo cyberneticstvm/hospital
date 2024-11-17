@@ -73,7 +73,10 @@
             </tr>
         </tbody>
     </table>
-    <p>Procedures: {{ $procs->whereIn('id', $procedures->pluck('procedure'))->pluck('name')->implode(',') }}</p>
+    <br />
+    <center>
+        <img src="./images/assets/axial-length.jpeg" width="15%" /><br />
+    </center>
 </body>
 
 </html>
