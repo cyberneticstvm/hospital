@@ -75,7 +75,7 @@
     </table>
     <br />
     <center>
-        <img src="./images/assets/axial-length.png" width="50%" /><br />
+        <div style="background: url('./images/assets/axial-length.png');"></div>
     </center>
 </body>
 
