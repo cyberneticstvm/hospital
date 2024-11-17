@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\AxialLength;
 use App\Models\Branch;
 use App\Models\Diagnosis;
 use App\Models\DischargeSummary;
@@ -537,5 +538,27 @@ class PDFController extends Controller
         $branch = Branch::findOrFail($mrn->branch);
         $pdf = PDF::loadView('/pdf/patient-transaction-history-mrn', compact('patient', 'mrn', 'branch'));
         return $pdf->stream($mrn->id . '.pdf', array("Attachment" => 0));
+    }
+
+    public function axialLengthReceipt($id)
+    {
+        $ax = AxialLength::find($id);
+        $patient = DB::table('patient_registrations')->find($ax->patient_id);
+        $branch = DB::table('branches')->find($ax->branch_id);
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'pp.fee')->where('pp.medical_record_id', $ax->medical_record_id)->where('pp.type', 'L')->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));
+        $pdf = PDF::loadView('/pdf/axial-length/receipt', compact('qrcode', 'ax', 'patient', 'branch', 'procedures'));
+        return $pdf->stream('axial-length.pdf', array("Attachment" => 0));
+    }
+    public function axialLengthReport($id)
+    {
+        $ax = AxialLength::find($id);
+        $procedures = PatientProcedure::where('type', 'L')->where('medical_record_id', $ax->medical_record_id)->get();
+        $procs = Procedure::all();
+        $patient = DB::table('patient_registrations')->find($ax->patient_id);
+        $branch = DB::table('branches')->find($ax->branch_id);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));
+        $pdf = PDF::loadView('/pdf/axial-length/report', compact('qrcode', 'ax', 'patient', 'branch', 'procs', 'procedures'));
+        return $pdf->stream('axial-length.pdf', array("Attachment" => 0));
     }
 }

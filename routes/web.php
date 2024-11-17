@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\AxialLengthController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampMasterController;
 use App\Http\Controllers\OperationNoteController;
@@ -329,6 +330,15 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::put('/hfa/edit/{id}/', [HFAController::class, 'update'])->name('hfa.update');
     Route::delete('/hfa/delete/{id}/', [HFAController::class, 'destroy'])->name('hfa.delete');
     // End HFA //
+
+    // Axial Length //
+    Route::get('/procedure/axial-length', [AxialLengthController::class, 'index'])->name('procedure.axial.length');
+    Route::post('/procedure/axial-length/show/', [AxialLengthController::class, 'show'])->name('procedure.axial.show');
+    Route::post('/procedure/axial-length/create/', [AxialLengthController::class, 'store'])->name('procedure.axial.save');
+    Route::get('/procedure/axial-length/edit/{id}/', [AxialLengthController::class, 'edit'])->name('procedure.axial.edit');
+    Route::put('/procedure/axial-length/edit/{id}/', [AxialLengthController::class, 'update'])->name('procedure.axial.update');
+    Route::delete('/procedure/axial-length/delete/{id}/', [AxialLengthController::class, 'destroy'])->name('procedure.axial.delete');
+    // End Axial Length //
 
     // Pachymetry //
     Route::get('/pachymetry/', [PachymetryController::class, 'index'])->name('pachymetry.index');
@@ -725,6 +735,9 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::get('/dsummary/report/{id}', [PDFController::class, 'dsummary']);
     Route::get('/patient/owed/history/{id}', [PDFController::class, 'patientTransactionHistory'])->name('patient.transaction.history.pdf');
     Route::get('/patient/owed/history/mrn/{id}', [PDFController::class, 'patientTransactionHistoryMrn'])->name('patient.transaction.history.mrn.pdf');
+
+    Route::get('/axial-length/receipt/{id}/', [PDFController::class, 'axialLengthReceipt'])->name('receipt.axial.length');
+    Route::get('/axial-length/report/{id}/', [PDFController::class, 'axialLengthReport'])->name('report.axial.length');
     // End PDFs //
 
     // Settings //
