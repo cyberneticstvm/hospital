@@ -89,7 +89,7 @@
             </tr>
         </tbody>
     </table>
-    <br /><br /><br />
+    <br /><br /><br /><br /><br />
     <center>
         <div class="axial">
             <div class="small" style="height:25px; text-align: left; left: 35; top:123; position:relative;">{{ $ax->acd }}</div>
