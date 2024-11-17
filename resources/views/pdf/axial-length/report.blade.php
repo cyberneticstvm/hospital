@@ -75,7 +75,7 @@
     </table>
     <br />
     <center>
-        <img src="./images/assets/axial-length.jpeg" width="15%" /><br />
+        <img src="./images/assets/axial-length.jpeg" width="50%" /><br />
     </center>
 </body>
 
