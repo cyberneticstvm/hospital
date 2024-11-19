@@ -12,9 +12,11 @@ use App\Models\IncomeExpenseHead as Head;
 use App\Models\LoginLog;
 use App\Models\PatientMedicalRecord;
 use App\Models\PatientProcedure;
+use App\Models\PatientReference;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\Procedure;
+use App\Models\RoyaltyCard;
 use App\Models\Spectacle;
 use App\Models\Surgery;
 use App\Models\TestsAdvised;
@@ -55,6 +57,7 @@ class ReportController extends Controller
         $this->middleware('permission:report-hfa-fetch', ['only' => ['fetchHfa']]);
         $this->middleware('permission:report-tests-procedure', ['only' => ['showTests', 'fetchTests']]);
         $this->middleware('permission:report-glasses-prescribed', ['only' => ['glassesPrescribed', 'fetchGlassesPrescribed']]);
+        $this->middleware('permission:report-rc-card-usage', ['only' => ['showDiscount', 'fetchDiscount']]);
 
         $this->branch = session()->get('branch');
     }
@@ -543,6 +546,35 @@ class ReportController extends Controller
             return $q->where('spectacles.glasses_prescribed', $request->status);
         })->get();
         return view('reports.glasses-prescribed', compact('branches', 'records', 'inputs'));
+    }
+
+    public function showDiscount()
+    {
+        $rcs = RoyaltyCard::all();
+        $branches = $this->getBranches($this->branch);
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch, 0, 0);
+        $records = collect();
+        return view('reports.rc-card-usage', compact('branches', 'records', 'inputs', 'rcs'));
+    }
+
+    public function fetchDiscount(Request $request)
+    {
+        $this->validate($request, [
+            'fromdate' => 'required',
+            'todate' => 'required',
+            'branch' => 'required',
+            'category' => 'required',
+            'rc' => 'required',
+        ]);
+        if ($request->category == 1):
+            $records = PatientReference::where('rc_type', $request->rc)->where('branch', $request->branch)->where('status', 1)->whereBetween('created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->selectRaw("patient_references.branch, patient_references.patient_id, patient_references.rc_number, doctor_fee AS fee, 0 AS discount, 0 AS mrid, patient_references.created_at")->get();
+        else:
+            $records = PatientReference::leftJoin('patient_medical_records AS pmr', 'pmr.mrn', 'patient_references.id')->leftJoin('patient_procedures AS pp', 'pmr.id', 'pp.medical_record_id')->where('patient_references.rc_type', $request->rc)->where('patient_references.branch', $request->branch)->where('patient_references.status', 1)->whereBetween('patient_references.created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->select('patient_references.branch', 'patient_references.patient_id', 'patient_references.rc_number', 'pp.fee', 'pp.discount', 'pmr.id AS mrid', 'patient_references.created_at')->get();
+        endif;
+        $rcs = RoyaltyCard::all();
+        $branches = $this->getBranches($this->branch);
+        $inputs = array($request->fromdate, $request->todate, $request->branch, $request->rc, $request->category);
+        return view('reports.rc-card-usage', compact('branches', 'records', 'inputs', 'rcs'));
     }
 
     public function getClosingBalance($branch)

@@ -680,6 +680,9 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::get('/reports/glasses/prescribed', 'App\Http\Controllers\ReportController@glassesPrescribed')->name('reports.glasses.prescribed');
     Route::post('/reports/glasses/prescribed', 'App\Http\Controllers\ReportController@fetchGlassesPrescribed')->name('reports.glasses.prescribed.fetch');
 
+    Route::get('/reports/discount/', 'App\Http\Controllers\ReportController@showDiscount')->name('reports.discount.show');
+    Route::post('/reports/discount/', 'App\Http\Controllers\ReportController@fetchDiscount')->name('reports.discount.fetch');
+
     // End Reports //
 
     // Helper //
