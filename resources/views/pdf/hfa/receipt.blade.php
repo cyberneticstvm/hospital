@@ -62,9 +62,11 @@
         <tbody>
             <tr>
                 <td width="5%">SLNo.</td>
-                <td width="80%">PROCEDURE</td>
+                <td width="60%">PROCEDURE</td>
                 <td width="5%">QTY</td>
                 <td width="10%">PRICE</td>
+                <td width="10%">DISCOUNT</td>
+                <td width="10%">TOTAL</td>
             </tr>
             @php $c = 1; $tot = 0.00; @endphp
             @foreach($procedures as $key => $proc)
@@ -72,6 +74,8 @@
                 <td>{{ $c++ }}</td>
                 <td>{{ $proc->name }}</td>
                 <td class="text-right">1</td>
+                <td class="text-right">{{ $proc->fee + $proc->discount }}</td>
+                <td class="text-right">{{ $proc->discount }}</td>
                 <td class="text-right">{{ $proc->fee }}</td>
             </tr>
             @php $tot += $proc->fee @endphp
@@ -79,7 +83,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="3" class="text-right"><strong>Total</strong></td>
+                <td colspan="5" class="text-right"><strong>Total</strong></td>
                 <td class="text-right"><strong>{{ number_format($tot, 2) }}</strong></td>
             </tr>
         </tfoot>
