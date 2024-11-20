@@ -37,7 +37,7 @@
     <br />
     @php
     $reg_fee = ($reference->review == 'no') ? $patient->registration_fee : 0;
-    $doc_fee = ($reference->doctor_fee > 0 && $reference?->rc_type != null && $reference?->rc_number != null) ? 0 : $reference->doctor_fee;
+    $doc_fee = ($reference->doctor_fee > 0 && $reference?->rc_type != '' && $reference?->rc_number != '') ? 0 : $reference->doctor_fee;
     @endphp
     <table width="100%">
         <thead>
