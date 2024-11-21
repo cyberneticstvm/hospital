@@ -68,7 +68,7 @@
                                     <td><a href='/generate-token/{{ $patient->reference_id }}/' target='_blank'><i class="fa fa-file text-info"></i></a></td>
                                     <td><a href='/generate-prescription/{{ $patient->reference_id }}/' target='_blank'><i class="fa fa-file text-primary"></i></a></td>
                                     <td><a href='/generate-receipt/{{ $patient->reference_id }}/' target="_blank"><i class="fa fa-file text-success"></i></a></td>
-                                    <td class="text-center"><a href="/pharmacy/receipt/{{ $patient->pharma_id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
+                                    <td class="text-center"><a href="/generate-pharmacy-bill/{{ $patient->medical_record_id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                                     <td><a class='btn btn-link' href="{{ route('patient_reference.edit', $patient->reference_id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                     <td>
                                         <form method="post" action="{{ route('patient_reference.delete', $patient->reference_id) }}">
