@@ -102,7 +102,7 @@ class PDFController extends Controller
         })->where('m.medical_record_id', $id)->groupBy('p.product_name', 'p.hsn', 'm.batch_number', 'm.qty', 'm.price', 'm.tax_percentage', 'm.total', 'pd.expiry_date')->get();
         $patient = DB::table('patient_registrations')->find($medical_record->patient_id);
         $doctor = DB::table('doctors')->find($medical_record->doctor_id);
-        $branch = DB::table('branches')->find(1);
+        $branch = DB::table('branches')->find($patient->branch);
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
         $pdf = PDF::loadView('/pdf/pharmacy-bill', compact('patient', 'doctor', 'qrcode', 'branch', 'medical_record', 'medicines'));
         return $pdf->stream('pharmacy-bill.pdf', array("Attachment" => 0));
