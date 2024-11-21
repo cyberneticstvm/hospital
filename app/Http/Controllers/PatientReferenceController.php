@@ -139,10 +139,9 @@ class PatientReferenceController extends Controller
             $input = $request->all();
             $doctor = doctor::find($request->doctor_id);
             $input['patient_id'] = $request->get('pid');
+            $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
             if ($input['rc_number']):
-                $input['doctor_fee'] = 0;
-            else:
-                $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
+                $input['discount'] = $input['doctor_fee'];
             endif;
             $input['created_by'] = $request->user()->id;
             $input['status'] = 1; //active
@@ -235,10 +234,9 @@ class PatientReferenceController extends Controller
             //if($reference->getOriginal('doctor_id') == $request->doctor_id):
             //$input['doctor_fee'] = $reference->getOriginal('doctor_fee');
             //else:
+            $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
             if ($input['rc_number']):
-                $input['doctor_fee'] = 0;
-            else:
-                $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
+                $input['discount'] = $input['doctor_fee'];
             endif;
             //endif;
             $input['created_by'] = $reference->getOriginal('created_by');

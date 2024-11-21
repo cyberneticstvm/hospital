@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('doctor_id');
             $table->decimal('doctor_fee', 7, 2);
+            $table->decimal('discount', 7, 2)->default(0);
             $table->unsignedBigInteger('created_by');
             $table->foreign('patient_id')->references('id')->on('patient_registrations');
             $table->foreign('doctor_id')->references('id')->on('doctors');

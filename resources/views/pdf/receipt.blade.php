@@ -37,7 +37,6 @@
     <br />
     @php
     $reg_fee = ($reference->review == 'no') ? $patient->registration_fee : 0;
-    $doc_fee = ($reference->doctor_fee > 0 && $reference?->rc_type != '' && $reference?->rc_number != '') ? 0 : $reference->doctor_fee;
     @endphp
     <table width="100%">
         <thead>
@@ -81,30 +80,30 @@
                 <td>Consultation Fee</td>
                 <td class="text-right">1</td>
                 <td class="text-right">{{ $reference->doctor_fee }}</td>
-                <td class="text-right">{{ $doc_fee > 0 ? 0 : $doc_fee }}</td>
-                <td class="text-right">{{ $doc_fee }}</td>
+                <td class="text-right">{{ $reference->discount }}</td>
+                <td class="text-right">{{ number_format($reference->doctor_fee - $reference->discount, 2) }}</td>
             </tr>
             <tr>
                 <td>2</td>
                 <td>Registration Fee</td>
                 <td class="text-right">1</td>
-                <td class="text-right">{{ $reg_fee }}</td>
+                <td class="text-right">{{ number_format($reg_fee, 2) }}</td>
                 <td class="text-right">0.00</td>
-                <td class="text-right">{{ $reg_fee }}</td>
+                <td class="text-right">{{ number_format($reg_fee, 2) }}</td>
             </tr>
             @if($procedure)
             <tr>
                 <td>3</td>
                 <td>Procedures Fee ({{ $procedure->procs }})</td>
                 <td class="text-right">1</td>
-                <td class="text-right">{{ $procedure->fee + $procedure->discount }}</td>
+                <td class="text-right">{{ number_format($procedure->fee + $procedure->discount, 2) }}</td>
                 <td class="text-right">{{ $procedure->discount }}</td>
                 <td class="text-right">{{ $procedure->fee }}</td>
             </tr>
             @endif
             <tr>
                 <td colspan="5" class="text-right">Total</td>
-                <td class="text-right">{{ number_format($reg_fee + $doc_fee + $procedure->fee, 2) }}</td>
+                <td class="text-right">{{ number_format($reg_fee + $reference->doctor_fee + $procedure->fee - $reference->discount, 2) }}</td>
             </tr>
         </tbody>
     </table>
