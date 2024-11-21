@@ -1,36 +1,47 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Devi Eye Clinic & Opticians</title>
     <style>
-        table{
+        table {
             border: 1px solid #e6e6e6;
             font-size: 12px;
         }
-        thead{
+
+        thead {
             border-bottom: 1px solid #e6e6e6;
         }
-        table thead th, table tbody td{
+
+        table thead th,
+        table tbody td {
             padding: 5px;
         }
-        .bordered td{
+
+        .bordered td {
             border: 1px solid #e6e6e6;
         }
-        .text-right{
+
+        .text-right {
             text-align: right;
         }
     </style>
 </head>
+
 <body>
     <center>
-        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%"/><br/>
-        Registered Office: Maithanam, Varkala, Thiruvananthapuram. Phone: {{ $branch->contact_number }}<br>
+        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+        Registered Office: Maithanam, Varkala, Thiruvananthapuram. Phone: {{ $branch?->contact_number }}<br>
         Branch: Thekkumbagom, Paravur, Kollam.<br>
         DL Number: RLF21KL2022000540, RLF20KL2022000543
     </center>
-    <br/>
+    <br />
     <table width="100%">
-        <thead><tr><th text-align="center" colspan="4">PHARMACY CASH BILL</th></tr></thead>
+        <thead>
+            <tr>
+                <th text-align="center" colspan="4">PHARMACY CASH BILL</th>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td>PATIENT NAME</td>
@@ -70,24 +81,29 @@
             @php $c = 1; $net_total = 0; $tax_total = 0; @endphp
             @foreach($medicines as $medicine)
             @php $tot = $medicine->total + ($medicine->total*$medicine->tax_percentage)/100 @endphp
-                <tr>
-                    <td>{{ $c++ }}</td>
-                    <td>{{ $medicine->product_name }}</td>
-                    <td>{{ $medicine->hsn }}</td>
-                    <td>{{ $medicine->batch_number }}</td>
-                    <td>{{ ($medicine->expiry_date) ? date('d/M/Y', strtotime($medicine->expiry_date)) : '' }}</td>
-                    <td class="text-right">{{ $medicine->qty }}</td>
-                    <td class="text-right">{{ $medicine->tax_percentage / 2 }}%</td>
-                    <td class="text-right">{{ $medicine->tax_percentage / 2 }}%</td>
-                    <td class="text-right">{{ number_format($medicine->price, 2) }}</td>
-                    <td class="text-right">{{ number_format(($medicine->total*$medicine->tax_percentage)/100, 2) }}</td>
-                    <td class="text-right">{{ number_format($tot, 2) }}</td>
-                    {{ $tax_total += ($medicine->total*$medicine->tax_percentage)/100}}
-                    {{ $net_total += $tot }}
-                </tr>
+            <tr>
+                <td>{{ $c++ }}</td>
+                <td>{{ $medicine->product_name }}</td>
+                <td>{{ $medicine->hsn }}</td>
+                <td>{{ $medicine->batch_number }}</td>
+                <td>{{ ($medicine->expiry_date) ? date('d/M/Y', strtotime($medicine->expiry_date)) : '' }}</td>
+                <td class="text-right">{{ $medicine->qty }}</td>
+                <td class="text-right">{{ $medicine->tax_percentage / 2 }}%</td>
+                <td class="text-right">{{ $medicine->tax_percentage / 2 }}%</td>
+                <td class="text-right">{{ number_format($medicine->price, 2) }}</td>
+                <td class="text-right">{{ number_format(($medicine->total*$medicine->tax_percentage)/100, 2) }}</td>
+                <td class="text-right">{{ number_format($tot, 2) }}</td>
+                {{ $tax_total += ($medicine->total*$medicine->tax_percentage)/100}}
+                {{ $net_total += $tot }}
+            </tr>
             @endforeach
-            <tr><td colspan="9" class="text-right">Total</td><td class="text-right">{{ number_format($tax_total, 2) }}</td><td class="text-right">{{ number_format($net_total, 2) }}</td></tr>
+            <tr>
+                <td colspan="9" class="text-right">Total</td>
+                <td class="text-right">{{ number_format($tax_total, 2) }}</td>
+                <td class="text-right">{{ number_format($net_total, 2) }}</td>
+            </tr>
         </tbody>
     </table>
 </body>
+
 </html>
