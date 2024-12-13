@@ -567,7 +567,7 @@ class ReportController extends Controller
             'rc' => 'required',
         ]);
         if ($request->category == 1):
-            $records = PatientReference::where('rc_type', $request->rc)->where('branch', $request->branch)->where('status', 1)->whereBetween('created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->selectRaw("patient_references.branch, patient_references.patient_id, patient_references.rc_number, doctor_fee AS fee, 0 AS discount, 0 AS mrid, patient_references.created_at")->get();
+            $records = PatientReference::where('rc_type', $request->rc)->where('branch', $request->branch)->where('status', 1)->whereBetween('created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->selectRaw("patient_references.branch, patient_references.patient_id, patient_references.rc_number, doctor_fee AS fee, discount, 0 AS mrid, patient_references.created_at")->get();
         else:
             $records = PatientReference::leftJoin('patient_medical_records AS pmr', 'pmr.mrn', 'patient_references.id')->leftJoin('patient_procedures AS pp', 'pmr.id', 'pp.medical_record_id')->where('patient_references.rc_type', $request->rc)->where('patient_references.branch', $request->branch)->where('patient_references.status', 1)->whereBetween('patient_references.created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->select('patient_references.branch', 'patient_references.patient_id', 'patient_references.rc_number', 'pp.fee', 'pp.discount', 'pmr.id AS mrid', 'patient_references.created_at')->get();
         endif;
