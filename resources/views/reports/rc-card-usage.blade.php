@@ -97,7 +97,7 @@
                                     <td>{{ $row->created_at?->format('d.M.Y') }}</td>
                                     <td>{{ $row->patient->patient_id }}</td>
                                     <td>{{ $row->patient->patient_name }}</td>
-                                    <td>{{ $row->mrid }}</td>
+                                    <td>{{ $row->mrecord->id }}</td>
                                     <td>{{ $row->rc_number }}</td>
                                     <td class="text-right">{{ number_format($row->fee, 2) }}</td>
                                     <td class="text-right">{{ number_format($row->discount, 2) }}</td>

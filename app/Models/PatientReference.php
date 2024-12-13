@@ -34,4 +34,9 @@ class PatientReference extends Model
     {
         return $this->belongsTo(PatientRegistrations::class, 'patient_id', 'id');
     }
+
+    public function mrecord()
+    {
+        return $this->hasOne(PatientMedicalRecord::class, 'id', 'mrn');
+    }
 }
