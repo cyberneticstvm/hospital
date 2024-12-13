@@ -109,7 +109,7 @@
                                 <tr>
                                     <td colspan="6" class="text-right fw-bold">Total</td>
                                     <td class="text-right fw-bold">{{ number_format($records->sum('fee'), 2) }}</td>
-                                    <td class="text-right fw-bold">{{ number_format($records->sum('fee') - $records->sum('discount'), 2) }}</td>
+                                    <td class="text-right fw-bold">{{ number_format($records->sum('discount'), 2) }}</td>
                                 </tr>
                             </tfoot>
                         </table>
