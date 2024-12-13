@@ -99,7 +99,7 @@
                                     <td>{{ $row->patient->patient_name }}</td>
                                     <td>{{ $row->mrid }}</td>
                                     <td>{{ $row->rc_number }}</td>
-                                    <td class="text-right">{{ number_format($row->fee + $row->discount, 2) }}</td>
+                                    <td class="text-right">{{ number_format($row->fee, 2) }}</td>
                                     <td class="text-right">{{ number_format($row->discount, 2) }}</td>
                                 </tr>
                                 @empty
@@ -108,8 +108,8 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="6" class="text-right fw-bold">Total</td>
-                                    <td class="text-right fw-bold">{{ number_format($records->sum('fee') + $records->sum('discount'), 2) }}</td>
-                                    <td class="text-right fw-bold">{{ number_format($records->sum('discount'), 2) }}</td>
+                                    <td class="text-right fw-bold">{{ number_format($records->sum('fee'), 2) }}</td>
+                                    <td class="text-right fw-bold">{{ number_format($records->sum('fee') - $records->sum('discount'), 2) }}</td>
                                 </tr>
                             </tfoot>
                         </table>
