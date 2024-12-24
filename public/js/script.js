@@ -419,7 +419,7 @@ function checkNewAppointments() {
         data: {},
         success: function (response) {
             if (response.trim() == '1') {
-                var audio = new Audio('https://hospital.speczone.net/public/audio/new-app.mp3');
+                var audio = new Audio('https://devihospitals.in/public/audio/new-app.mp3');
                 audio.play();
                 $('.toast').toast('show');
             }
