@@ -16,7 +16,7 @@ class Helper
 {
     public static function api_url()
     {
-        return "https://order.speczone.net";
+        return "https://store.devihospitals.in";
     }
     public static function apiSecret()
     {
