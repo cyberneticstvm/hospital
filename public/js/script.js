@@ -215,7 +215,7 @@ $(function () {
             });
         });
     });
-    $(".inventory").click(function () {
+    $(docume).on("click", ".inventory", function () {
         var modal = $(this).data('modal');
         var title = $(this).data('title');
         var product = $(this).data('product');
