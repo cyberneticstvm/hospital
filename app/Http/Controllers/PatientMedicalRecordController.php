@@ -17,14 +17,14 @@ class PatientMedicalRecordController extends Controller
 {
     private $branch;
 
-    /*function __construct()
+    function __construct()
     {
-        $this->middleware('permission:patient-medical-record-list|patient-medical-record-create|patient-medical-record-edit|patient-medical-record-delete', ['only' => ['index', 'store']]);
+        /*$this->middleware('permission:patient-medical-record-list|patient-medical-record-create|patient-medical-record-edit|patient-medical-record-delete', ['only' => ['index', 'store']]);
         $this->middleware('permission:patient-medical-record-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:patient-medical-record-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:patient-medical-record-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:patient-medical-record-delete', ['only' => ['destroy']]);*/
         $this->branch = session()->get('branch');
-    }*/
+    }
     /**
      * Display a listing of the resource.
      *
