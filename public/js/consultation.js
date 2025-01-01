@@ -94,12 +94,12 @@ $(function(){
         //var odospaths = $.merge($.merge(odpoints_paths_array, ospoints_paths_array), $.merge(odpoints1_paths_array, ospoints1_paths_array));
         form_data.push({name: 'odospoints', value: JSON.stringify(odospoints)});
         //form_data.push({name: 'odospaths', value: JSON.stringify(odospaths)});
-        alert(url);
         $.ajax({
             type: 'POST',
             url: url,
             data: form_data,
             success: function(data){
+                alert(data);
                 if(data.trim() == 'success'){
                     console.log(data);
                     alert("Record updated successfully.");
