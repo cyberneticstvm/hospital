@@ -15,7 +15,6 @@
                     <div class="card-body">
                         <form action="{{ route('medical-records.update', $record->id) }}" method="post">
                             @csrf
-                            @method('PUT')
                             <input type="hidden" id="mrid" value="{{ $record->id }}" />
                             <input type="hidden" name="mrn" value="{{ $record->mrn }}" />
                             <input type="hidden" name="patient_id" value="{{ $record->patient_id }}" />
