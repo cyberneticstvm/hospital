@@ -95,8 +95,8 @@ $(function(){
         form_data.push({name: 'odospoints', value: JSON.stringify(odospoints)});
         //form_data.push({name: 'odospaths', value: JSON.stringify(odospaths)});
         $.ajax({
-            type: 'PUT',
-            url: url,
+            type: 'POST',
+            url: 'https://emr.devihospitals.in/consultation/medical-records/edit/56605',
             data: form_data,
             dataType: 'json',
             success: function(data){
