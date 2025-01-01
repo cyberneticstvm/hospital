@@ -80,20 +80,6 @@ $(function(){
         var vision_od_canvas_url3 = vision_od_canvas3.toDataURL();
         var vision_os_canvas_url3 = vision_os_canvas3.toDataURL();
         form_data.push({name: 'vision_od_img1', value: vision_od_canvas_url});
-        form_data.push({name: 'vision_os_img1', value: vision_os_canvas_url});
-        form_data.push({name: 'vision_od_img2', value: vision_od_canvas_url1});
-        form_data.push({name: 'vision_os_img2', value: vision_os_canvas_url1});
-
-        form_data.push({name: 'vision_od_img3', value: vision_od_canvas_url2});
-        form_data.push({name: 'vision_os_img3', value: vision_os_canvas_url2});
-        form_data.push({name: 'vision_od_img4', value: vision_od_canvas_url3});
-        form_data.push({name: 'vision_os_img4', value: vision_os_canvas_url3});
-        var odospoints1 = $.merge($.merge(odpoints, ospoints), $.merge(odpoints1, ospoints1));
-        var odospoints2 = $.merge($.merge(odpoints2, ospoints2), $.merge(odpoints3, ospoints3));
-        var odospoints = $.merge(odospoints1, odospoints2);
-        //var odospaths = $.merge($.merge(odpoints_paths_array, ospoints_paths_array), $.merge(odpoints1_paths_array, ospoints1_paths_array));
-        form_data.push({name: 'odospoints', value: JSON.stringify(odospoints)});
-        //form_data.push({name: 'odospaths', value: JSON.stringify(odospaths)});
         $.ajax({
             type: 'POST',
             url: url,
