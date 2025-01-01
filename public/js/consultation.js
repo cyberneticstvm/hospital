@@ -97,7 +97,7 @@ $(function(){
         $.ajax({
             type: 'POST',
             url: url,
-            data: {'name': 'hello'},
+            data: form_data,
             success: function(data){
                 if(data.trim() == 'success'){
                     console.log(data);
