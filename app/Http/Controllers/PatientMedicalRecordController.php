@@ -354,7 +354,7 @@ class PatientMedicalRecordController extends Controller
             $input['vision_os_img3'] = $img6;
             $input['vision_od_img4'] = $img7;
             $input['vision_os_img4'] = $img8;
-            $record->update($input);
+            //$record->update($input);
             //print_r($odospoints);
             /*if($input['review_date']):
                 $patient = DB::table('patient_registrations')->find($request->patient_id);
