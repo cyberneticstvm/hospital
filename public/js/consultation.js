@@ -58,8 +58,7 @@ $(function(){
         ospoints3.push({description: $(this).text(), color: $(this).data('color'), type: $(this).data('itype')});
     });
 
-    $(document).on('click', '.btn-consultation', function(e){
-        console.log('sdfds');
+    $(document).on('click', '.btn-consultation1', function(e){
         e.preventDefault();
         var form_data = $(this).closest('form').serializeArray();       
         var url = $(this).closest('form').attr('action');
