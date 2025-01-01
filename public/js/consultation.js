@@ -79,8 +79,8 @@ $(function(){
         var vision_os_canvas_url2 = vision_os_canvas2.toDataURL();
         var vision_od_canvas_url3 = vision_od_canvas3.toDataURL();
         var vision_os_canvas_url3 = vision_os_canvas3.toDataURL();
-        form_data.push({name: 'vision_od_img1', value: 'asd'});
-        form_data.push({name: 'vision_os_img1', value: 'asasasa'});
+        form_data.push({name: 'vision_od_img1', value: vision_od_canvas_url});
+        form_data.push({name: 'vision_os_img1', value: vision_os_canvas_url});
         $.ajax({
             type: 'POST',
             url: url,
