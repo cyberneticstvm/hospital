@@ -81,8 +81,6 @@ $(function(){
         var vision_os_canvas_url3 = vision_os_canvas3.toDataURL();
         form_data.push({name: 'vision_od_img1', value: vision_od_canvas_url});
         form_data.push({name: 'vision_os_img1', value: vision_os_canvas_url});
-        form_data.push({name: 'vision_od_img2', value: vision_od_canvas_url1});
-        form_data.push({name: 'vision_os_img2', value: vision_os_canvas_url1});
         $.ajax({
             type: 'POST',
             url: url,
