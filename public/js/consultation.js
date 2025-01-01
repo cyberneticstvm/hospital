@@ -110,7 +110,7 @@ $(function(){
                 }              
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
-                alert(XMLHttpRequest[0])
+                //alert(XMLHttpRequest[0])
                 console.log(XMLHttpRequest)
             },
             beforeSend: function(){
