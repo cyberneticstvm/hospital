@@ -334,7 +334,7 @@ class PatientMedicalRecordController extends Controller
                 endforeach;
             endif;
 
-            if (isset($input['retina_img'])):
+            /*if (isset($input['retina_img'])):
                 for ($i = 0; $i < count($input['retina_img']); $i++):
                     $fpath = 'assets/retina/' . $id . '/file_' . $i . '.png';
                     Storage::disk('public')->put($fpath, base64_decode(str_replace(['data:image/jpeg;base64,', 'data:image/png;base64,', ' '], ['', '', '+'], $input['retina_img'][$i])));
@@ -345,7 +345,7 @@ class PatientMedicalRecordController extends Controller
                         'retina_type' => $input['retina_type'][$i],
                     ]);
                 endfor;
-            endif;
+            endif;*/
             $input['vision_od_img1'] = $img1;
             $input['vision_os_img1'] = $img2;
             $input['vision_od_img2'] = $img3;
@@ -386,7 +386,7 @@ class PatientMedicalRecordController extends Controller
 
             echo "success";
         } catch (Exception $e) {
-            throw $e->getMessage();
+            throw $e;
         }
         //return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
