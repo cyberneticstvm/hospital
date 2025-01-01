@@ -60,7 +60,8 @@ $(function(){
 
     $(document).on('click', '.btn-consultation', function(e){
         e.preventDefault();
-        var form_data = $(this).closest('form').serializeArray();        
+        var form_data = $(this).closest('form').serializeArray();  
+        alert(form_data);      
         var url = $(this).closest('form').attr('action');
         var btn = $("#btn_text").val();
         var vision_od_canvas = document.getElementById('re_eye');
@@ -94,7 +95,7 @@ $(function(){
         //var odospaths = $.merge($.merge(odpoints_paths_array, ospoints_paths_array), $.merge(odpoints1_paths_array, ospoints1_paths_array));
         form_data.push({name: 'odospoints', value: JSON.stringify(odospoints)});
         //form_data.push({name: 'odospaths', value: JSON.stringify(odospaths)});
-        alert(form_data);
+        
         $.ajax({
             type: 'POST',
             url: url,
