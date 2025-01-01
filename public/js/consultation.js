@@ -109,7 +109,6 @@ $(function(){
                 }              
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
-                alert(data)
                 console.log(XMLHttpRequest)
                 console.log(textStatus)
             },
