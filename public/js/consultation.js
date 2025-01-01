@@ -98,6 +98,7 @@ $(function(){
             type: 'POST',
             url: url,
             data: form_data,
+            dataType: 'json',
             success: function(data){
                 if(data.trim() == 'success'){
                     console.log(data);
