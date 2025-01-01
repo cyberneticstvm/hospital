@@ -206,7 +206,7 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::get('/consultation/medical-records/', 'App\Http\Controllers\PatientMedicalRecordController@index')->name('consultation.index');
     Route::post('/consultation/medical-records/create/', 'App\Http\Controllers\PatientMedicalRecordController@store')->name('medical-records.create');
     Route::get('/consultation/medical-records/edit/{id}/', 'App\Http\Controllers\PatientMedicalRecordController@edit')->name('medical-records.edit');
-    Route::post('/consultation/medical-records/edit/{id}/', 'App\Http\Controllers\PatientMedicalRecordController@update')->name('medical-records.update');
+    Route::put('/consultation/medical-records/edit/{id}/', 'App\Http\Controllers\PatientMedicalRecordController@update')->name('medical-records.update');
     Route::delete('/consultation/medical-records/delete/{id}', 'App\Http\Controllers\PatientMedicalRecordController@destroy')->name('medical-records.delete');
     // End Consultation & Medical Records //
 
