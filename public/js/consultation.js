@@ -33,7 +33,6 @@ $(document).on("change", ".favcolor1, .favcolor2, .favcolor3, .favcolor4", funct
 
 $(function(){
     "use strict";
-    console.log('sdf')
     $(".odpoints span").each(function(){
         odpoints.push({description: $(this).text(), color: $(this).data('color'), type: $(this).data('itype')});
     });
@@ -60,6 +59,7 @@ $(function(){
     });
 
     $(document).on('click', '.btn-consultation', function(e){
+        console.log('sdfds');
         e.preventDefault();
         var form_data = $(this).closest('form').serializeArray();       
         var url = $(this).closest('form').attr('action');
