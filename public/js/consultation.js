@@ -99,7 +99,6 @@ $(function(){
             url: url,
             data: form_data,
             success: function(data){
-                alert(data);
                 if(data.trim() == 'success'){
                     console.log(data);
                     alert("Record updated successfully.");
@@ -110,7 +109,7 @@ $(function(){
                 }              
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
-                alert(XMLHttpRequest[0])
+                alert(XMLHttpRequest)
                 console.log(XMLHttpRequest)
                 console.log(textStatus)
             },
