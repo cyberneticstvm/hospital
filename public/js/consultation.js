@@ -95,7 +95,7 @@ $(function(){
         form_data.push({name: 'odospoints', value: JSON.stringify(odospoints)});
         //form_data.push({name: 'odospaths', value: JSON.stringify(odospaths)});
         form_data.push({"_token": $('meta[name="csrf-token"]').attr('content')});
-        print(form_data);
+        console.log(form_data);
         $.ajax({
             type: 'POST',
             url: url,
