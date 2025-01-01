@@ -317,14 +317,14 @@ class PDFController extends Controller
     public function visioncertificate($id)
     {
         $patient = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->select('pr.patient_name', 'pr.age')->where('pmr.id', $id)->first();
-        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devihospitals.in/auth/certificate/$id/"));
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://emr.devihospitals.in/auth/certificate/$id/"));
         $pdf = PDF::loadView('/pdf/license/vision', compact('qrcode', 'patient'));
         return $pdf->stream('vision.pdf', array("Attachment" => 0));
     }
     public function medicalcertificate($id)
     {
         $patient = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->select('pr.patient_name', 'pr.age')->where('pmr.id', $id)->first();
-        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devihospitals.in/auth/certificate/$id/"));
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://emr.devihospitals.in/auth/certificate/$id/"));
         $pdf = PDF::loadView('/pdf/license/medical', compact('qrcode', 'patient'));
         return $pdf->stream('medical.pdf', array("Attachment" => 0));
     }

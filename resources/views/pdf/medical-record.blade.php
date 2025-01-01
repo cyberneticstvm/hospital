@@ -646,12 +646,12 @@
             @forelse($retinas as $key => $retina)
             <tr>
                 @if($retina_od && !empty($retina_od[$key]))
-                <td width="50%"><img src="{{ ($retina_od && $retina_od[$key]->retina_img) ? 'https://devihospitals.in/public/storage/'.$retina_od[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_od && $retina_od[$key]->description) ? $retina_od[$key]->description : '' }}</td>
+                <td width="50%"><img src="{{ ($retina_od && $retina_od[$key]->retina_img) ? 'https://emr.devihospitals.in/public/storage/'.$retina_od[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_od && $retina_od[$key]->description) ? $retina_od[$key]->description : '' }}</td>
                 @else
                 <td width="50%"></td>
                 @endif
                 @if($retina_os && !empty($retina_os[$key]))
-                <td width="50%"><img src="{{ ($retina_os && $retina_os[$key]->retina_img) ?  'https://devihospitals.in/public/storage/'.$retina_os[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_os && $retina_os[$key]->description) ? $retina_os[$key]->description : '' }}</td>
+                <td width="50%"><img src="{{ ($retina_os && $retina_os[$key]->retina_img) ?  'https://emr.devihospitals.in/public/storage/'.$retina_os[$key]->retina_img : '' }}" width='100%' /><br>{{ ($retina_os && $retina_os[$key]->description) ? $retina_os[$key]->description : '' }}</td>
                 @else
                 <td width="50%"></td>
                 @endif
