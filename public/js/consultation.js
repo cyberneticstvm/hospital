@@ -94,24 +94,25 @@ $(function(){
         //var odospaths = $.merge($.merge(odpoints_paths_array, ospoints_paths_array), $.merge(odpoints1_paths_array, ospoints1_paths_array));
         form_data.push({name: 'odospoints', value: JSON.stringify(odospoints)});
         //form_data.push({name: 'odospaths', value: JSON.stringify(odospaths)});
-        
+        console.log(form_data);
         $.ajax({
             type: 'POST',
             url: url,
             data: form_data,
+            dataType: 'jsonp',
             success: function(data){
                 if(data.trim() == 'success'){
-                    //console.log(data);
+                    console.log(data);
                     alert("Record updated successfully.");
                     window.location.href = '/consultation/medical-records/';
                 }else{
                     //alert(data);
-                    //console.log(data);
+                    console.log(data);
                 }              
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
                 //alert(XMLHttpRequest[0])
-                //console.log(textStatus)
+                console.log(textStatus)
             },
             beforeSend: function(){
                 $(".btn-consultation").html("<span class='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'></span>&nbsp;Loading...");
