@@ -193,7 +193,6 @@ class PatientMedicalRecordController extends Controller
     public function update(Request $request, $id)
     {
         echo "success";
-        //return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
 
     /**
