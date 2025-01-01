@@ -94,7 +94,7 @@ $(function(){
         //var odospaths = $.merge($.merge(odpoints_paths_array, ospoints_paths_array), $.merge(odpoints1_paths_array, ospoints1_paths_array));
         form_data.push({name: 'odospoints', value: JSON.stringify(odospoints)});
         //form_data.push({name: 'odospaths', value: JSON.stringify(odospaths)});
-        form_data.push({"_token": $('meta[name="csrf-token"]').attr('content')});
+        //form_data.push({"_token": $('meta[name="csrf-token"]').attr('content')});
         $.ajax({
             type: 'POST',
             url: url,
