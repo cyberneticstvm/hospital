@@ -105,12 +105,12 @@ $(function(){
                     alert("Record updated successfully.");
                     window.location.href = '/consultation/medical-records/';
                 }else{
-                    alert(data);
+                    //alert(data);
                     //console.log(data);
                 }              
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
-                //alert(XMLHttpRequest[0])
+                alert(XMLHttpRequest[0])
                 console.log(XMLHttpRequest)
             },
             beforeSend: function(){
