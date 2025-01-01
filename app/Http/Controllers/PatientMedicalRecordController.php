@@ -19,10 +19,10 @@ class PatientMedicalRecordController extends Controller
 
     function __construct()
     {
-        /*$this->middleware('permission:patient-medical-record-list|patient-medical-record-create|patient-medical-record-edit|patient-medical-record-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:patient-medical-record-list|patient-medical-record-create|patient-medical-record-edit|patient-medical-record-delete', ['only' => ['index', 'store']]);
         $this->middleware('permission:patient-medical-record-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:patient-medical-record-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:patient-medical-record-delete', ['only' => ['destroy']]);*/
+        $this->middleware('permission:patient-medical-record-delete', ['only' => ['destroy']]);
         $this->branch = session()->get('branch');
     }
     /**
@@ -192,7 +192,203 @@ class PatientMedicalRecordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        echo "success";
+        /*if(empty($request->symptom_id)){
+            echo "Please choose symptom";
+            die;
+        }
+        if(empty($request->diagnosis_id)){
+            echo "Please choose diagnosis";
+            die;
+        }
+        if(empty($request->doctor_recommondations)){
+            echo "Please enter doctor recommondations";
+            die;
+        }*/
+        $img1 = NULL;
+        $img2 = NULL;
+        $img3 = NULL;
+        $img4 = NULL;
+        $img5 = NULL;
+        $img6 = NULL;
+        $img7 = NULL;
+        $img8 = NULL;
+        $input = $request->all();
+
+        $odospoints = json_decode(stripslashes($input['odospoints']), true);
+
+        $input['review_date'] = ($input['review_date']) ? Carbon::createFromFormat('d/M/Y', $request['review_date'])->format('Y-m-d') : NULL;
+        $input['symptoms'] = ($request->symptom_id) ? implode(',', $request->symptom_id) : 0;
+        $input['diagnosis'] = ($request->diagnosis_id) ? implode(',', $request->diagnosis_id) : 0;
+
+        $input['sel_1_od'] = ($request->sel_1_od) ? implode(',', $request->sel_1_od) : 0;
+        $input['sel_1_os'] = ($request->sel_1_os) ? implode(',', $request->sel_1_os) : 0;
+        $input['sel_2_od'] = ($request->sel_2_od) ? implode(',', $request->sel_2_od) : 0;
+        $input['sel_2_os'] = ($request->sel_2_os) ? implode(',', $request->sel_2_os) : 0;
+        $input['sel_3_od'] = ($request->sel_3_od) ? implode(',', $request->sel_3_od) : 0;
+        $input['sel_3_os'] = ($request->sel_3_os) ? implode(',', $request->sel_3_os) : 0;
+        $input['sel_4_od'] = ($request->sel_4_od) ? implode(',', $request->sel_4_od) : 0;
+        $input['sel_4_os'] = ($request->sel_4_os) ? implode(',', $request->sel_4_os) : 0;
+        $input['sel_5_od'] = ($request->sel_5_od) ? implode(',', $request->sel_5_od) : 0;
+        $input['sel_5_os'] = ($request->sel_5_os) ? implode(',', $request->sel_5_os) : 0;
+        $input['sel_6_od'] = ($request->sel_6_od) ? implode(',', $request->sel_6_od) : 0;
+        $input['sel_6_os'] = ($request->sel_6_os) ? implode(',', $request->sel_6_os) : 0;
+        $input['sel_7_od'] = ($request->sel_7_od) ? implode(',', $request->sel_7_od) : 0;
+        $input['sel_7_os'] = ($request->sel_7_os) ? implode(',', $request->sel_7_os) : 0;
+        $input['sel_8_od'] = ($request->sel_8_od) ? implode(',', $request->sel_8_od) : 0;
+        $input['sel_8_os'] = ($request->sel_8_os) ? implode(',', $request->sel_8_os) : 0;
+        $input['sel_9_od'] = ($request->sel_9_od) ? implode(',', $request->sel_9_od) : 0;
+        $input['sel_9_os'] = ($request->sel_9_os) ? implode(',', $request->sel_9_os) : 0;
+        $input['sel_10_od'] = ($request->sel_10_od) ? implode(',', $request->sel_10_od) : 0;
+        $input['sel_10_os'] = ($request->sel_10_os) ? implode(',', $request->sel_10_os) : 0;
+        $input['sel_11_od'] = ($request->sel_11_od) ? implode(',', $request->sel_11_od) : 0;
+        $input['sel_11_os'] = ($request->sel_11_os) ? implode(',', $request->sel_11_os) : 0;
+        $input['sel_12_od'] = ($request->sel_12_od) ? implode(',', $request->sel_12_od) : 0;
+        $input['sel_12_os'] = ($request->sel_12_os) ? implode(',', $request->sel_12_os) : 0;
+        $input['sel_13_od'] = ($request->sel_13_od) ? implode(',', $request->sel_13_od) : 0;
+        $input['sel_13_os'] = ($request->sel_13_os) ? implode(',', $request->sel_13_os) : 0;
+        $input['sel_14_od'] = ($request->sel_14_od) ? implode(',', $request->sel_14_od) : 0;
+        $input['sel_14_os'] = ($request->sel_14_os) ? implode(',', $request->sel_14_os) : 0;
+        $input['sel_15_od'] = ($request->sel_15_od) ? implode(',', $request->sel_15_od) : 0;
+        $input['sel_15_os'] = ($request->sel_15_os) ? implode(',', $request->sel_15_os) : 0;
+        $input['sel_16_od'] = ($request->sel_16_od) ? implode(',', $request->sel_16_od) : 0;
+        $input['sel_16_os'] = ($request->sel_16_os) ? implode(',', $request->sel_16_os) : 0;
+        $input['sel_17_od'] = ($request->sel_17_od) ? implode(',', $request->sel_17_od) : 0;
+        $input['sel_17_os'] = ($request->sel_17_os) ? implode(',', $request->sel_17_os) : 0;
+        $input['sel_18_od'] = ($request->sel_18_od) ? implode(',', $request->sel_18_od) : 0;
+        $input['sel_18_os'] = ($request->sel_18_os) ? implode(',', $request->sel_18_os) : 0;
+        $input['sel_19_od'] = ($request->sel_19_od) ? implode(',', $request->sel_19_od) : 0;
+        $input['sel_19_os'] = ($request->sel_19_os) ? implode(',', $request->sel_19_os) : 0;
+        $input['sel_20_od'] = ($request->sel_20_od) ? implode(',', $request->sel_20_od) : 0;
+        $input['sel_20_os'] = ($request->sel_20_os) ? implode(',', $request->sel_20_os) : 0;
+
+        $input['medicine'] = $request->medicine_id;
+        $input['dosage'] = $request->dosage;
+        $input['dosage1'] = $request->dosage1;
+
+        //$input['is_admission'] = $request->is_admission;
+        $record = PMRecord::find($id);
+        $input['created_by'] = $record->getOriginal('created_by');
+
+        try {
+            //$record->update($input);
+            //DB::table("patient_medicine_records")->where('mrn', $request->mrn)->delete();
+            DB::table("patient_medical_records_vision")->where('medical_record_id', $record->id)->delete();
+            DB::table("patient_medical_records_retina")->where('medical_record_id', $record->id)->delete();
+            /*if($input['medicine']):
+                for($i=0; $i<count($input['medicine']); $i++):
+                    if($input['medicine'][$i] > 0):
+                        DB::table('patient_medicine_records')->insert([
+                            'medical_record_id' => $record->id,
+                            'mrn' => $request->mrn,
+                            'medicine_type' => $input['medicine_type'][$i],
+                            'eye' => $input['eye'][$i],
+                            'medicine' => $input['medicine'][$i],
+                            'dosage' => $input['dosage'][$i],
+                            'duration' => $input['duration'][$i],
+                            'qty' => $input['qty'][$i],
+                            'price' => $input['price'][$i],
+                            'discount' => $input['discount'][$i],
+                            'tax_amount' => $input['tax_amount'][$i],
+                            'tax_percentage' => $input['tax_percentage'][$i],
+                            'total' => $input['total'][$i],
+                            'notes' => $input['notes'][$i],
+                            'status' => ($input['price'][$i] > 0) ? 1 : 0,
+                            'created_at' => Carbon::now(),
+                        ]);
+                    endif;
+                endfor;
+            endif;*/
+
+            if ($odospoints):
+                foreach ($odospoints as $value):
+                    if ($value['type'] == 'vision_od_img1' && !empty($value['description'])):
+                        $img1 = $input['vision_od_img1'];
+                    endif;
+                    if ($value['type'] == 'vision_os_img1' && !empty($value['description'])):
+                        $img2 = $input['vision_os_img1'];
+                    endif;
+                    if ($value['type'] == 'vision_od_img2' && !empty($value['description'])):
+                        $img3 = $input['vision_od_img2'];
+                    endif;
+                    if ($value['type'] == 'vision_os_img2' && !empty($value['description'])):
+                        $img4 = $input['vision_os_img2'];
+                    endif;
+                    if ($value['type'] == 'vision_od_img3' && !empty($value['description'])):
+                        $img5 = $input['vision_od_img3'];
+                    endif;
+                    if ($value['type'] == 'vision_os_img3' && !empty($value['description'])):
+                        $img6 = $input['vision_os_img3'];
+                    endif;
+                    if ($value['type'] == 'vision_od_img4' && !empty($value['description'])):
+                        $img7 = $input['vision_od_img4'];
+                    endif;
+                    if ($value['type'] == 'vision_os_img4' && !empty($value['description'])):
+                        $img8 = $input['vision_os_img4'];
+                    endif;
+                    DB::table('patient_medical_records_vision')->insert([
+                        'medical_record_id' => $record->id,
+                        'description' => $value['description'],
+                        'color' => $value['color'],
+                        'img_type' => $value['type'],
+                    ]);
+                endforeach;
+            endif;
+
+            if (isset($input['retina_img'])):
+                for ($i = 0; $i < count($input['retina_img']); $i++):
+                    $fpath = 'assets/retina/' . $id . '/file_' . $i . '.png';
+                    Storage::disk('public')->put($fpath, base64_decode(str_replace(['data:image/jpeg;base64,', 'data:image/png;base64,', ' '], ['', '', '+'], $input['retina_img'][$i])));
+                    DB::table('patient_medical_records_retina')->insert([
+                        'medical_record_id' => $record->id,
+                        'retina_img' => $fpath,
+                        'description' => $input['retina_desc'][$i],
+                        'retina_type' => $input['retina_type'][$i],
+                    ]);
+                endfor;
+            endif;
+            $input['vision_od_img1'] = $img1;
+            $input['vision_os_img1'] = $img2;
+            $input['vision_od_img2'] = $img3;
+            $input['vision_os_img2'] = $img4;
+            $input['vision_od_img3'] = $img5;
+            $input['vision_os_img3'] = $img6;
+            $input['vision_od_img4'] = $img7;
+            $input['vision_os_img4'] = $img8;
+            $record->update($input);
+            //print_r($odospoints);
+            /*if($input['review_date']):
+                $patient = DB::table('patient_registrations')->find($request->patient_id);
+                DB::table('appointments')->upsert(['patient_id' => $patient->id, 'patient_name' => $patient->patient_name, 'gender' => $patient->gender, 'age' => $patient->age, 'mobile_number' => $patient->mobile_number, 'address' => $patient->address, 'branch' => $this->branch, 'doctor' => $request->doctor_id, 'appointment_date' => $input['review_date'], 'appointment_time' => '10:00:00', 'status' => 1, 'notes' => 'REVIEW BOOKING', 'medical_record_id' => 0, 'created_by' => $request->user()->id, 'updated_by' => $request->user()->id, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], ['patient_id', 'appointment_date', 'branch']);
+            endif;*/
+            $tadvised = (isset($request->tests_advised) && $request->tests_advised) ? $request->tests_advised : NULL;
+            $data = [];
+            if ($tadvised):
+                foreach ($tadvised as $key => $test):
+                    $data[] = [
+                        'medical_record_id' => $record->id,
+                        'patient_id' => $record->patient_id,
+                        'doctor_id' => $record->doctor_id,
+                        'branch' => $record->branch,
+                        'test' => $tadvised[$key],
+                        'notes' => NULL,
+                        'status' => 'Pending',
+                        'created_by' => Auth::user()->id,
+                        'updated_by' => Auth::user()->id,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+            endif;
+            DB::transaction(function () use ($data, $record) {
+                DB::table('tests_adviseds')->where('medical_record_id', $record->id)->delete();
+                DB::table('tests_adviseds')->insert($data);
+            });
+
+            echo "success";
+        } catch (Exception $e) {
+            throw $e;
+        }
+        //return redirect()->route('consultation.index')->with('success','Medical Record updated successfully');
     }
 
     /**

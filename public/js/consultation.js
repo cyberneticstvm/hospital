@@ -60,7 +60,7 @@ $(function(){
 
     $(document).on('click', '.btn-consultation', function(e){
         e.preventDefault();
-        var form_data = $(this).closest('form').serializeArray();
+        var form_data = $(this).closest('form').serializeArray();        
         var url = $(this).closest('form').attr('action');
         var btn = $("#btn_text").val();
         var vision_od_canvas = document.getElementById('re_eye');
@@ -100,19 +100,16 @@ $(function(){
             data: form_data,
             success: function(data){
                 if(data.trim() == 'success'){
-                    console.log(data);
+                    //console.log(data);
                     alert("Record updated successfully.");
                     window.location.href = '/consultation/medical-records/';
                 }else{
                     alert(data);
-                    console.log(data);
                 }              
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
-                alert(XMLHttpRequest[0]);
+                alert(XMLHttpRequest[0])
                 console.log(XMLHttpRequest)
-                console.log(textStatus)
-                //console.log(url)
             },
             beforeSend: function(){
                 $(".btn-consultation").html("<span class='spinner-grow spinner-grow-sm' role='status' aria-hidden='true'></span>&nbsp;Loading...");
