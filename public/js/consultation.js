@@ -60,6 +60,7 @@ $(function(){
 
     $(document).on('click', '.btn-consultation', function(e){
         e.preventDefault();
+        var form_data = $(this).closest('form').serializeArray();
         var url = $(this).closest('form').attr('action');
         var btn = $("#btn_text").val();
         var vision_od_canvas = document.getElementById('re_eye');
