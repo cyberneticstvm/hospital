@@ -106,7 +106,7 @@ $(function(){
                     alert("Record updated successfully.");
                     window.location.href = '/consultation/medical-records/';
                 }else{
-                    //alert(data);
+                    alert(data);
                     //console.log(data);
                 }              
             },
