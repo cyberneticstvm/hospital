@@ -18,7 +18,8 @@
                     <th>Departments</th>
                     <th>Fee</th>
                     <th>Joined Date</th>
-                    <th>Edit</th>Remove</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
                 </tr>
             </thead>
             <tbody>
