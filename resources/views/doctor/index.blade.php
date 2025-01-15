@@ -18,8 +18,7 @@
                     <th>Departments</th>
                     <th>Fee</th>
                     <th>Joined Date</th>
-                    <th>Edit</th>
-                    <th>Remove</th>
+                    <th>Edit</th><!--<th>Remove</th>-->
                 </tr>
             </thead>
             <tbody>
@@ -43,13 +42,13 @@
                     <td>{{ $doctor->doctor_fee }}</td>
                     <td>{{ date('d/M/Y', strtotime($doctor->date_of_join)) }}</td>
                     <td><a class='btn btn-link' href="{{ route('doctor.edit', $doctor->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
-                    <td>
+                    <!--<td>
                         <form method="post" action="{{ route('doctor.delete', $doctor->id) }}">
-                            @csrf
+                            @csrf 
                             @method("DELETE")
                             <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Doctor?');"><i class="fa fa-trash text-danger"></i></button>
                         </form>
-                    </td>
+                    </td>-->
                 </tr>
                 @endforeach
             </tbody>
