@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class doctor extends Model
 {
-    use HasFactory, HasRoles;
+    use HasFactory, HasRoles, SoftDeletes;
 
     protected $fillable = [
         'doctor_name',
@@ -18,7 +19,8 @@ class doctor extends Model
         'doctor_fee',
     ];
 
-    public function doctor_has_departments(){
+    public function doctor_has_departments()
+    {
         return $this->hasMany(doctor_has_department::class, 'doctor_id');
     }
 }
