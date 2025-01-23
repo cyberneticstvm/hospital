@@ -54,7 +54,7 @@
             <td colspan="2">{{ $doctor->doctor_name }}</td>
         </tr>
         <tr>
-            <td colspan="4">Date: {{ $labs->first()->created_at->format('d M, Y') }}</td>
+            <td colspan="4">Date: {{ $labs->first()->created_at }}</td>
         </tr>
     </table>
     <br>
