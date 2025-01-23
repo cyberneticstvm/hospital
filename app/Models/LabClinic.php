@@ -10,7 +10,10 @@ class LabClinic extends Model
 {
     use HasFactory, HasRoles;
 
-    public function user(): BelongsTo {
+    protected $casts = ['created_at' => 'datetiem'];
+
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 }
