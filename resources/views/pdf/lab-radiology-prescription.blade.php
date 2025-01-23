@@ -61,7 +61,6 @@
         <tr>
             <th width="10%">SL No</th>
             <th width="70%">Test</th>
-            <th>Date</th>
         </tr>
         @php $c = 1; @endphp
         @foreach($labs as $lab)
@@ -71,7 +70,6 @@
         <tr>
             <td>{{ $c++ }}</th>
             <td>{{ $test->lab_type_name }}</td>
-            <td></td>
         </tr>
         @endforeach
     </table>
