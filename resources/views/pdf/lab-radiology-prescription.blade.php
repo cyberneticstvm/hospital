@@ -53,10 +53,9 @@
             <td>Doctor Name</td>
             <td colspan="2">{{ $doctor->doctor_name }}</td>
         </tr>
-        <tr>
-            <td colspan="2">Date: {{ date('d/M/Y', strtotime($labs->first()->created_at)) }}</td>
-        </tr>
     </table>
+    <br>
+    <p>Date: {{ date('d/M/Y', strtotime($labs->first()->created_at)) }}</p>
     <br>
     <table width="100%" border="1" cellpadding='1' cellspacing='0' class="text-large">
         <tr>
@@ -72,7 +71,7 @@
         <tr>
             <td>{{ $c++ }}</th>
             <td>{{ $test->lab_type_name }}</td>
-            <td>{{ date('d/M/Y', strtotime($lab->created_at)) }}</td>
+            <td></td>
         </tr>
         @endforeach
     </table>
