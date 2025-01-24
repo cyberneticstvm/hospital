@@ -99,7 +99,7 @@
             @forelse($procedure as $key => $proc)
             <tr>
                 <td>3. {{ $key + 1 }}</td>
-                <td>Procedures Fee ({{ $proc?->procedures?->name }})</td>
+                <td>Procedure Fee ({{ $proc?->procedures?->name }})</td>
                 <td class="text-right">1</td>
                 <td class="text-right">{{ number_format($proc->fee + $proc->discount, 2) }}</td>
                 <td class="text-right">{{ $proc->discount }}</td>
