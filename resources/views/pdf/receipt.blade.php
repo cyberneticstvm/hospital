@@ -109,9 +109,15 @@
             @endforelse
             @endif
             <tr>
-                <td>Total</td>
-                <td>{{ number_format($reg_fee + $reference->doctor_fee + $procedure->sum('fee') + $procedure->sum('discount'), 2) }}</td>
-                <td colspan="3" class="text-right">Total</td>
+                <td colspan="5" class="text-right">Total</td>
+                <td class="text-right">{{ number_format($reg_fee + $reference->doctor_fee + $procedure->sum('fee') + $procedure->sum('discount'), 2) }}</td>
+            </tr>
+            <tr>
+                <td colspan="5" class="text-right">Discount</td>
+                <td class="text-right">{{ number_format($procedure->sum('discount') + $reference->discount, 2) }}</td>
+            </tr>
+            <tr>
+                <td colspan="5" class="text-right">Total after Discount</td>
                 <td class="text-right fw-bold">{{ number_format($reg_fee + $reference->doctor_fee + $procedure->sum('fee') - $reference->discount, 2) }}</td>
             </tr>
         </tbody>
