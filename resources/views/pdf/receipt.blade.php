@@ -92,18 +92,21 @@
                 <td class="text-right">{{ number_format($reg_fee, 2) }}</td>
             </tr>
             @if($procedure)
+            @forelse($procedure as $key => $proc)
             <tr>
-                <td>3</td>
-                <td>Procedures Fee ({{ $procedure->procs }})</td>
+                <td>3. {{ $key + 1 }}</td>
+                <td>Procedures Fee ({{ $proc?->procedures?->name }})</td>
                 <td class="text-right">1</td>
-                <td class="text-right">{{ number_format($procedure->fee + $procedure->discount, 2) }}</td>
-                <td class="text-right">{{ $procedure->discount }}</td>
-                <td class="text-right">{{ $procedure->fee }}</td>
+                <td class="text-right">{{ number_format($proc->fee + $proc->discount, 2) }}</td>
+                <td class="text-right">{{ $proc->discount }}</td>
+                <td class="text-right">{{ $proc->fee }}</td>
             </tr>
+            @empty
+            @endforelse
             @endif
             <tr>
                 <td colspan="5" class="text-right">Total</td>
-                <td class="text-right">{{ number_format($reg_fee + $reference->doctor_fee + $procedure->fee - $reference->discount, 2) }}</td>
+                <td class="text-right">{{ number_format($reg_fee + $reference->doctor_fee + $procedure->sum('fee') - $reference->discount, 2) }}</td>
             </tr>
         </tbody>
     </table>
