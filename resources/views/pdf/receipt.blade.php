@@ -25,6 +25,10 @@
         .text-right {
             text-align: right;
         }
+
+        .fw-bold {
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -105,7 +109,7 @@
             @endforelse
             @endif
             <tr>
-                <td>Grand Total</td>
+                <td>Total</td>
                 <td>{{ number_format($reg_fee + $reference->doctor_fee + $procedure->sum('fee') + $procedure->sum('discount'), 2) }}</td>
                 <td colspan="3" class="text-right">Total</td>
                 <td class="text-right fw-bold">{{ number_format($reg_fee + $reference->doctor_fee + $procedure->sum('fee') - $reference->discount, 2) }}</td>
