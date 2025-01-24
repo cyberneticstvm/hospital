@@ -58,7 +58,7 @@
             <td class='text-blue text-medium-large'>{{ strtoupper($doctor->designation) }}</td>
         </tr>
     </table>
-    <p class='text-right'>Date: {{ date('d/M/Y H:i:A') }}</p>
+    <p class='text-right'>Date: {{ date('d/M/Y h:i:a') }}</p>
     <pre />
     <pre />
     <pre />
