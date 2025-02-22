@@ -161,7 +161,7 @@ class PatientRegistrationController extends Controller
         ]);
         $input = $request->all();
         $search_term = $request->search_term;
-        $records = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->leftJoin('patient_medicine_records as med', 'med.medical_record_id', 'pmr.id')->select('pr.id as reference_id', 'pr.status', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.mobile_number', 'p.patient_id as pno', 'doctors.doctor_name', 'med.id as pharma_id', DB::Raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->where('pr.patient_id', $search_term)->orderByDesc('pr.id')->get();
+        $records = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->leftJoin('doctors', 'pr.doctor_id', '=', 'doctors.id')->leftJoin('patient_registrations as p', 'pr.patient_id', '=', 'p.id')->leftJoin('patient_medicine_records as med', 'med.medical_record_id', 'pmr.id')->select('pr.id as reference_id', 'pr.status', 'pmr.id as medical_record_id', 'p.patient_name as pname', 'p.mobile_number', 'p.patient_id as pno', 'doctors.doctor_name', 'med.id as pharma_id', DB::Raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->where('pr.patient_id', $search_term)->groupBy('pmr.id')->orderByDesc('pr.id')->get();
 
         return view('patient.search-consultation', compact('records', 'search_term'));
     }
