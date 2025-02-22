@@ -507,6 +507,19 @@ class PDFController extends Controller
         return $pdf->stream('hfa.pdf', array("Attachment" => 0));
     }
 
+    public function octreceipt($id)
+    {
+        $oct = DB::table('octs')->find($id);
+        $patient = DB::table('patient_registrations')->find($oct->patient_id);
+        $branch = DB::table('branches')->find($oct->branch_id);
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'pp.fee', 'pp.discount')->where('pp.medical_record_id', $oct->medical_record_id)->where('pp.type', 'O')->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));
+        $mrecord = PatientMedicalRecord::find($oct->medical_record_id);
+        $doctor = doctor::find($mrecord->doctor_id ?? 0);
+        $pdf = PDF::loadView('/pdf/oct/receipt', compact('qrcode', 'oct', 'patient', 'branch', 'procedures', 'mrecord', 'doctor'));
+        return $pdf->stream('hfa.pdf', array("Attachment" => 0));
+    }
+
     public function surgeryconsumablereceipt($id)
     {
         $psc = PatientSurgeryConsumable::find($id);

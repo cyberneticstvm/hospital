@@ -82,6 +82,8 @@
     $ascan = DB::table('ascans')->where('medical_record_id', $mrecord->id)->first();
     $onotes = DB::table('operation_notes')->where('medical_record_id', $mrecord->id)->first();
     $pachymetry = DB::table('pachymetries')->where('medical_record_id', $mrecord->id)->first();
+    $oct = DB::table('octs')->where('medical_record_id', $mrecord->id)->whereNull('deleted_at')->first();
+    $octimages = DB::table('oct_docs')->where('oct_id', $oct->id ?? 0)->where('doc_type', 'img')->get();
 
     $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.product_name', 'm.qty', 'm.dosage', 'm.duration', 'm.notes', 't.name', DB::raw("CASE WHEN m.eye='L' THEN 'Left Eye Only' WHEN m.eye='R' THEN 'Right Eye Only' WHEN m.eye='B' THEN 'Both Eyes' ELSE 'Oral' END AS eye"))->where('m.medical_record_id', $mrecord->id)->get();
 
@@ -780,10 +782,24 @@
         </tr>
     </table>
     <br>
-    <hr>
+    <p>OCT</p>
+    <table border="0" width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+            @forelse($octimages as $key => $item):
+            <tr width="100%">
+                <td>
+                    <img src="{{ ($item) ? './storage/'.$item->doc_url : '' }}" width="100%" height="50%" /><br />
+                </td>
+            </tr>
+            @empty
+            @endforelse
+        </tbody>
+    </table>
     <br>
     @empty
     @endforelse
+    <br>
+    <hr>
 </body>
 
 </html>

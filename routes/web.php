@@ -367,6 +367,15 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::delete('/tonometry/delete/{id}/', 'App\Http\Controllers\TonometryController@destroy')->name('tonometry.delete');
     // end tonometry //
 
+    // oct //
+    Route::get('/oct', 'App\Http\Controllers\OCTController@index')->name('oct.index');
+    Route::post('/oct', 'App\Http\Controllers\OCTController@show')->name('oct.show');
+    Route::post('/oct/create/', 'App\Http\Controllers\OCTController@store')->name('oct.save');
+    Route::get('/oct/edit/{id}/', 'App\Http\Controllers\OCTController@edit')->name('oct.edit');
+    Route::put('/oct/edit/{id}/', 'App\Http\Controllers\OCTController@update')->name('oct.update');
+    Route::delete('/oct/delete/{id}/', 'App\Http\Controllers\OCTController@destroy')->name('oct.delete');
+    // end oct //
+
     // ascan //
     Route::get('/ascan/', 'App\Http\Controllers\AscanController@index')->name('ascan.index');
     Route::post('/ascan/show/', 'App\Http\Controllers\AscanController@show')->name('ascan.show');
@@ -734,6 +743,7 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::get('/patient/payments/bill/{id}/', [PDFController::class, 'patientpaymentbill']);
     Route::get('/onote/report/{id}/', [PDFController::class, 'printonote']);
     Route::get('/hfa/receipt/{id}/', [PDFController::class, 'hfareceipt']);
+    Route::get('/oct/receipt/{id}/', [PDFController::class, 'octreceipt']);
     Route::get('/surgery/consumable/receipt/{id}/', [PDFController::class, 'surgeryconsumablereceipt']);
     Route::get('/dsummary/report/{id}', [PDFController::class, 'dsummary']);
     Route::get('/patient/owed/history/{id}', [PDFController::class, 'patientTransactionHistory'])->name('patient.transaction.history.pdf');

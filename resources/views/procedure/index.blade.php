@@ -33,6 +33,7 @@
                                         <option value="T" {{ ($proc && $proc->type == 'T') ? 'selected' : '' }}>Tonometry</option>
                                         <option value="C" {{ ($proc && $proc->type == 'C') ? 'selected' : '' }}>Pachymetry</option>
                                         <option value="H" {{ ($proc && $proc->type == 'H') ? 'selected' : '' }}>HFA</option>
+                                        <option value="O" {{ ($proc && $proc->type == 'O') ? 'selected' : '' }}>OCT</option>
                                         <option value="L" {{ ($proc && $proc->type == 'L') ? 'selected' : '' }}>Axial Length</option>
                                     </select>
                                 </div>
