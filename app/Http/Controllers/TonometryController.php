@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Tonometry;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class TonometryController extends Controller
 {
@@ -183,6 +184,9 @@ class TonometryController extends Controller
     public function destroy($id)
     {
         $tonometry = Tonometry::find($id);
+        $tonometry->update([
+            'deleted_by' => Auth::user()->id,
+        ]);
         DB::table('patient_procedures')->where('medical_record_id', $tonometry->medical_record_id)->where('type', 'T')->delete();
         $tonometry->delete();
         return redirect()->route('tonometry.index')

@@ -7,6 +7,7 @@ use App\Helper\Helper;
 use App\Models\Ascan;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class AscanController extends Controller
 {
@@ -28,7 +29,7 @@ class AscanController extends Controller
     }
     public function index()
     {
-        $ascans = Ascan::leftJoin('patient_medical_records AS m', 'ascans.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'ascans.patient_id', '=', 'p.id')->where('ascans.branch', $this->branch)->selectRaw("ascans.*, p.patient_name, p.patient_id, ascans.medical_record_id")->whereDate('ascans.created_at', Carbon::today())->orderByDesc("ascans.id")->get();
+        $ascans = Ascan::withTrashed()->leftJoin('patient_medical_records AS m', 'ascans.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'ascans.patient_id', '=', 'p.id')->where('ascans.branch', $this->branch)->selectRaw("ascans.*, p.patient_name, p.patient_id, ascans.medical_record_id")->whereDate('ascans.created_at', Carbon::today())->orderByDesc("ascans.id")->get();
         return view('ascan.index', compact('ascans'));
     }
 
@@ -181,6 +182,9 @@ class AscanController extends Controller
     public function destroy($id)
     {
         $ascan = Ascan::find($id);
+        $ascan->update([
+            'deleted_by' => Auth::user()->id,
+        ]);
         DB::table('patient_procedures')->where('medical_record_id', $ascan->medical_record_id)->where('type', 'A')->delete();
         $ascan->delete();
         return redirect()->route('ascan.index')

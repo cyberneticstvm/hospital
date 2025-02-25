@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Pachymetry;
 use Carbon\Carbon;
 use DB;
-
+use Illuminate\Support\Facades\Auth;
 
 class PachymetryController extends Controller
 {
@@ -30,7 +30,7 @@ class PachymetryController extends Controller
 
     public function index()
     {
-        $pams = Pachymetry::leftJoin('patient_medical_records AS m', 'pachymetries.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'pachymetries.patient_id', '=', 'p.id')->selectRaw("pachymetries.*, p.patient_name, p.patient_id, pachymetries.medical_record_id")->where('pachymetries.branch', $this->branch)->whereDate('pachymetries.created_at', Carbon::today())->orderByDesc("pachymetries.id")->get();
+        $pams = Pachymetry::withTrashed()->leftJoin('patient_medical_records AS m', 'pachymetries.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'pachymetries.patient_id', '=', 'p.id')->selectRaw("pachymetries.*, p.patient_name, p.patient_id, pachymetries.medical_record_id")->where('pachymetries.branch', $this->branch)->whereDate('pachymetries.created_at', Carbon::today())->orderByDesc("pachymetries.id")->get();
         return view('pachymetry.index', compact('pams'));
     }
 
@@ -204,6 +204,9 @@ class PachymetryController extends Controller
     public function destroy($id)
     {
         $p = Pachymetry::find($id);
+        $p->update([
+            'deleted_by' => Auth::user()->id,
+        ]);
         DB::table('patient_procedures')->where('medical_record_id', $p->medical_record_id)->where('type', 'P')->delete();
         $p->delete();
         return redirect()->route('pachymetry.index')

@@ -26,8 +26,10 @@ return new class extends Migration
             $table->String('at_time', 10)->nullable();
             $table->unsignedBigInteger('created_by')->references('id')->on('users');
             $table->unsignedBigInteger('updated_by')->references('id')->on('users');
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->foreign('medical_record_id')->references('id')->on('patient_medical_records')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

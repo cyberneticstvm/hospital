@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Keratometry;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class KeratometryController extends Controller
 {
@@ -28,7 +29,7 @@ class KeratometryController extends Controller
 
     public function index()
     {
-        $keratometries = Keratometry::leftJoin('patient_medical_records AS m', 'keratometries.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'keratometries.patient_id', '=', 'p.id')->selectRaw("keratometries.*, p.patient_name, p.patient_id, keratometries.medical_record_id")->where('keratometries.branch', $this->branch)->whereDate('keratometries.created_at', Carbon::today())->orderByDesc("keratometries.id")->get();
+        $keratometries = Keratometry::withTrashed()->leftJoin('patient_medical_records AS m', 'keratometries.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'keratometries.patient_id', '=', 'p.id')->selectRaw("keratometries.*, p.patient_name, p.patient_id, keratometries.medical_record_id")->where('keratometries.branch', $this->branch)->whereDate('keratometries.created_at', Carbon::today())->orderByDesc("keratometries.id")->get();
         return view('keratometry.index', compact('keratometries'));
     }
 
@@ -181,6 +182,9 @@ class KeratometryController extends Controller
     public function destroy($id)
     {
         $ke = Keratometry::find($id);
+        $ke->update([
+            'deleted_by' => Auth::user()->id,
+        ]);
         DB::table('patient_procedures')->where('medical_record_id', $ke->medical_record_id)->where('type', 'K')->delete();
         $ke->delete();
         return redirect()->route('keratometry.index')

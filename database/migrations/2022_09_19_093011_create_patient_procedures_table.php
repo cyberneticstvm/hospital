@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('discount_category_id')->nullable();
             $table->unsignedBigInteger('created_by')->references('id')->on('users');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

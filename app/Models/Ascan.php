@@ -45,4 +45,9 @@ class Ascan extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function status()
+    {
+        return ($this->deleted_at) ? "<span class='badge badge-danger'>Cancelled</span>" : "<span class='badge badge-success'>Active</span>";
+    }
 }

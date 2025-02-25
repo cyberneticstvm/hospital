@@ -40,4 +40,9 @@ class HFA extends Model
     {
         return $this->belongsTo(Branch::class, 'branch', 'id');
     }
+
+    public function status()
+    {
+        return ($this->deleted_at) ? "<span class='badge badge-danger'>Cancelled</span>" : "<span class='badge badge-success'>Active</span>";
+    }
 }

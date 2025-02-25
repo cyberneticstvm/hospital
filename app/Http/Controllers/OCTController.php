@@ -34,7 +34,7 @@ class OCTController extends Controller
      */
     public function index()
     {
-        $octs = Oct::leftJoin('patient_medical_records AS m', 'octs.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'octs.patient_id', '=', 'p.id')->selectRaw("octs.*, p.patient_name, p.patient_id, octs.medical_record_id")->when(Auth::user()->roles->first()->name == 'Doctor', function ($q) {
+        $octs = Oct::withTrashed()->leftJoin('patient_medical_records AS m', 'octs.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'octs.patient_id', '=', 'p.id')->selectRaw("octs.*, p.patient_name, p.patient_id, octs.medical_record_id")->when(Auth::user()->roles->first()->name == 'Doctor', function ($q) {
             return $q->where('m.doctor_id', Auth::user()->doctor_id);
         })->where('octs.branch_id', $this->branch)->orderByDesc("octs.id")->get();
         return view('oct.index', compact('octs'));
@@ -249,6 +249,9 @@ class OCTController extends Controller
     public function destroy($id)
     {
         $oct = Oct::find($id);
+        $oct->update([
+            'deleted_by' => Auth::user()->id,
+        ]);
         DB::table('patient_procedures')->where('medical_record_id', $oct->medical_record_id)->where('type', 'O')->delete();
         OctDocs::where('oct_id', $oct->id)->delete();
         $oct->delete();
