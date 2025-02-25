@@ -48,6 +48,6 @@ class Ascan extends Model
 
     public function status()
     {
-        return ($this->deleted_at) ? "<span class='badge badge-danger'>Cancelled</span>" : "<span class='badge badge-info'>Active</span>";
+        return ($this->deleted_at) ? "<span class='badge badge-danger text-danger'>Cancelled</span>" : "<span class='badge badge-success text-success'>Active</span>";
     }
 }
