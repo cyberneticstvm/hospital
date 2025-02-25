@@ -180,11 +180,11 @@ class KeratometryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $ke = Keratometry::find($id);
-        $ke->update([
-            'deleted_by' => Auth::user()->id,
+        Keratometry::where('id', $id)->update([
+            'deleted_by' => $request->user()->id,
         ]);
         PatientProcedure::where('medical_record_id', $ke->medical_record_id)->where('type', 'K')->delete();
         $ke->delete();

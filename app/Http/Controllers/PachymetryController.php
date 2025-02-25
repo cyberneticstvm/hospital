@@ -202,11 +202,11 @@ class PachymetryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $p = Pachymetry::find($id);
-        $p->update([
-            'deleted_by' => Auth::user()->id,
+        Pachymetry::where('id', $id)->update([
+            'deleted_by' => $request->user()->id,
         ]);
         PatientProcedure::where('medical_record_id', $p->medical_record_id)->where('type', 'P')->delete();
         $p->delete();

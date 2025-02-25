@@ -246,11 +246,11 @@ class OCTController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $oct = Oct::find($id);
-        $oct->update([
-            'deleted_by' => Auth::user()->id,
+        Oct::where('id', $id)->update([
+            'deleted_by' => $request->user()->id,
         ]);
         PatientProcedure::where('medical_record_id', $oct->medical_record_id)->where('type', 'O')->delete();
         OctDocs::where('oct_id', $oct->id)->delete();

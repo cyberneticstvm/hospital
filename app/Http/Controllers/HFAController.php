@@ -215,11 +215,11 @@ class HFAController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $hfa = HFA::find($id);
-        $hfa->update([
-            'deleted_by' => Auth::user()->id,
+        HFA::where('id', $id)->update([
+            'deleted_by' => $request->user()->id,
         ]);
         PatientProcedure::where('medical_record_id', $hfa->medical_record_id)->where('type', 'H')->delete();
         $hfa->delete();
