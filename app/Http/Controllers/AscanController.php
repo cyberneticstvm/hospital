@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Helper\Helper;
 use App\Models\Ascan;
+use App\Models\PatientProcedure;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -185,7 +186,7 @@ class AscanController extends Controller
         $ascan->update([
             'deleted_by' => Auth::user()->id,
         ]);
-        DB::table('patient_procedures')->where('medical_record_id', $ascan->medical_record_id)->where('type', 'A')->delete();
+        PatientProcedure::where('medical_record_id', $ascan->medical_record_id)->where('type', 'A')->delete();
         $ascan->delete();
         return redirect()->route('ascan.index')
             ->with('success', 'Record deleted successfully');

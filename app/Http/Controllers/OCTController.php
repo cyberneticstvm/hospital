@@ -252,7 +252,7 @@ class OCTController extends Controller
         $oct->update([
             'deleted_by' => Auth::user()->id,
         ]);
-        DB::table('patient_procedures')->where('medical_record_id', $oct->medical_record_id)->where('type', 'O')->delete();
+        PatientProcedure::where('medical_record_id', $oct->medical_record_id)->where('type', 'O')->delete();
         OctDocs::where('oct_id', $oct->id)->delete();
         $oct->delete();
         return redirect()->route('oct.index')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helper\Helper;
 use Illuminate\Http\Request;
 use App\Models\Keratometry;
+use App\Models\PatientProcedure;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -185,7 +186,7 @@ class KeratometryController extends Controller
         $ke->update([
             'deleted_by' => Auth::user()->id,
         ]);
-        DB::table('patient_procedures')->where('medical_record_id', $ke->medical_record_id)->where('type', 'K')->delete();
+        PatientProcedure::where('medical_record_id', $ke->medical_record_id)->where('type', 'K')->delete();
         $ke->delete();
         return redirect()->route('keratometry.index')
             ->with('success', 'Record deleted successfully');

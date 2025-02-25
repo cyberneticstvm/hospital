@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Helper\Helper;
 use App\Models\doctor;
 use App\Models\HFA;
+use App\Models\PatientProcedure;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
@@ -220,7 +221,7 @@ class HFAController extends Controller
         $hfa->update([
             'deleted_by' => Auth::user()->id,
         ]);
-        DB::table('patient_procedures')->where('medical_record_id', $hfa->medical_record_id)->where('type', 'H')->delete();
+        PatientProcedure::where('medical_record_id', $hfa->medical_record_id)->where('type', 'H')->delete();
         $hfa->delete();
         return redirect()->route('hfa.index')
             ->with('success', 'Record deleted successfully');

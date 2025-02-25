@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Helper\Helper;
 use Illuminate\Http\Request;
 use App\Models\Pachymetry;
+use App\Models\PatientProcedure;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -207,7 +208,7 @@ class PachymetryController extends Controller
         $p->update([
             'deleted_by' => Auth::user()->id,
         ]);
-        DB::table('patient_procedures')->where('medical_record_id', $p->medical_record_id)->where('type', 'P')->delete();
+        PatientProcedure::where('medical_record_id', $p->medical_record_id)->where('type', 'P')->delete();
         $p->delete();
         return redirect()->route('pachymetry.index')
             ->with('success', 'Record deleted successfully');
