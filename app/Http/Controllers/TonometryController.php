@@ -27,7 +27,7 @@ class TonometryController extends Controller
     }
     public function index()
     {
-        $tonometries = Tonometry::leftJoin('patient_medical_records AS m', 'tonometries.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'tonometries.patient_id', '=', 'p.id')->selectRaw("tonometries.*, p.patient_name, p.patient_id, tonometries.medical_record_id")->where('tonometries.branch', $this->branch)->whereDate('tonometries.created_at', Carbon::today())->orderByDesc("tonometries.id")->get();
+        $tonometries = Tonometry::withTrashed()->leftJoin('patient_medical_records AS m', 'tonometries.medical_record_id', '=', 'm.id')->leftJoin('patient_registrations AS p', 'tonometries.patient_id', '=', 'p.id')->selectRaw("tonometries.*, p.patient_name, p.patient_id, tonometries.medical_record_id")->where('tonometries.branch', $this->branch)->whereDate('tonometries.created_at', Carbon::today())->orderByDesc("tonometries.id")->get();
         return view('tonometry.index', compact('tonometries'));
     }
 
