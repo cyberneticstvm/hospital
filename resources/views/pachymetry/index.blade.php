@@ -1,7 +1,7 @@
 @extends("templates.base")
 @section("content")
 <div class="body d-flex">
-    <div class="container">        
+    <div class="container">
         <div class="row g-4">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
@@ -30,7 +30,7 @@
                             @if (count($errors) > 0)
                             <div role="alert" class="text-danger mt-3">
                                 @foreach ($errors->all() as $error)
-                                    {{ $error }}
+                                {{ $error }}
                                 @endforeach
                             </div>
                             @endif
@@ -41,29 +41,46 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Report</th><th>Receipt</th><th>Created By</th><th>Time</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
-                        @php $i = 0; @endphp
-                        @foreach($pams as $pam)
-                            <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $pam->medical_record_id }}</td>
-                                <td>{{ $pam->patient_name }}</td>
-                                <td>{{ $pam->patient_id }}</td>
-                                <td><a href="/pachymetry/report/{{ $pam->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
-                                <td><a href="/pachymetry/receipt/{{ $pam->id }}/" target="_blank"><i class="fa fa-file-o text-danger"></i></a></td>
-                                <td>{{ $pam->user->name }}</td>
-                                <td>{{ $pam->created_at->format('h:i a') }}</td>
-                                <td><a class='btn btn-link' href="{{ route('pachymetry.edit', $pam->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
-                                <td>
-                                    <form method="post" action="{{ route('pachymetry.delete', $pam->id) }}">
-                                        @csrf 
-                                        @method("DELETE")
-                                        <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this record?');"><i class="fa fa-trash text-danger"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody></table>
+                            <thead>
+                                <tr>
+                                    <th>SL No.</th>
+                                    <th>MR.ID</th>
+                                    <th>Patient Name</th>
+                                    <th>Patient ID</th>
+                                    <th>Report</th>
+                                    <th>Receipt</th>
+                                    <th>Created By</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Edit</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $i = 0; @endphp
+                                @foreach($pams as $pam)
+                                <tr>
+                                    <td>{{ ++$i }}</td>
+                                    <td>{{ $pam->medical_record_id }}</td>
+                                    <td>{{ $pam->patient_name }}</td>
+                                    <td>{{ $pam->patient_id }}</td>
+                                    <td><a href="/pachymetry/report/{{ $pam->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
+                                    <td><a href="/pachymetry/receipt/{{ $pam->id }}/" target="_blank"><i class="fa fa-file-o text-danger"></i></a></td>
+                                    <td>{{ $pam->user->name }}</td>
+                                    <td>{{ $pam->created_at->format('h:i a') }}</td>
+                                    <td>{!! $pam->status() !!}</td>
+                                    <td><a class='btn btn-link' href="{{ route('pachymetry.edit', $pam->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
+                                    <td>
+                                        <form method="post" action="{{ route('pachymetry.delete', $pam->id) }}">
+                                            @csrf
+                                            @method("DELETE")
+                                            <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this record?');"><i class="fa fa-trash text-danger"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

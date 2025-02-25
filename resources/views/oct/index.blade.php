@@ -48,6 +48,7 @@
                                     <th>Patient Name</th>
                                     <th>Patient ID</th>
                                     <th>Receipt</th>
+                                    <th>Status</th>
                                     <th>Edit</th>
                                     <th>Remove</th>
                                 </tr>
@@ -61,6 +62,7 @@
                                     <td>{{ $oct->patient_name }}</td>
                                     <td>{{ $oct->patient_id }}</td>
                                     <td><a href="/oct/receipt/{{ $oct->id }}/" target="_blank"><i class="fa fa-file-o text-danger"></i></a></td>
+                                    <td>{!! $oct->status() !!}</td>
                                     <td><a class='btn btn-link' href="{{ route('oct.edit', $oct->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                     <td>
                                         <form method="post" action="{{ route('oct.delete', $oct->id) }}">
