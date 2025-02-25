@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper\Helper;
+use App\Models\PatientProcedure;
 use Illuminate\Http\Request;
 use App\Models\Tonometry;
 use Carbon\Carbon;
@@ -187,7 +188,7 @@ class TonometryController extends Controller
         $tonometry->update([
             'deleted_by' => Auth::user()->id,
         ]);
-        DB::table('patient_procedures')->where('medical_record_id', $tonometry->medical_record_id)->where('type', 'T')->delete();
+        PatientProcedure::where('medical_record_id', $tonometry->medical_record_id)->where('type', 'T')->delete();
         $tonometry->delete();
         return redirect()->route('tonometry.index')
             ->with('success', 'Record deleted successfully');
