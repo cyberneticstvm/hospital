@@ -185,7 +185,7 @@ class TonometryController extends Controller
     public function destroy(Request $request, $id)
     {
         $tonometry = Tonometry::find($id);
-        $tonometry->update([
+        Tonometry::where('id', $id)->update([
             'deleted_by' => $request->user()->id,
         ]);
         PatientProcedure::where('medical_record_id', $tonometry->medical_record_id)->where('type', 'T')->delete();
