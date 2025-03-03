@@ -27,8 +27,8 @@
                             <input type="hidden" name="branch_id" value="{{ $mrecord->branch }}" />
                             <div class="row g-4">
                                 <div class="col-sm-6">
-                                    <label class="form-label">Upload Image <sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
-                                    <input type="file" name="images[]" class="form-control form-control-md" multiple required />
+                                    <label class="form-label">Upload Image <small class="text-info">(Multiple selection enabled)</small></label>
+                                    <input type="file" name="images[]" class="form-control form-control-md" multiple />
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">Upload Document <small class="text-info">(Multiple selection enabled)</small></label>

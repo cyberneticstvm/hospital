@@ -28,7 +28,7 @@
                             <input type="hidden" name="branch_id" value="{{ $mrecord->branch }}" />
                             <div class="row g-4">
                                 <div class="col-sm-6">
-                                    <label class="form-label">Upload Image <sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
+                                    <label class="form-label">Upload Image <small class="text-info">(Multiple selection enabled)</small></label>
                                     <input type="file" name="images[]" class="form-control form-control-md" multiple />
                                     @forelse($docs->where('doc_type', 'img') AS $key => $item)
                                     <small><a href="{{ ($item) ? public_path().'/storage/'.$item->doc_url : '#' }}" target="_blank">Document Uploaded</a></small><br>
