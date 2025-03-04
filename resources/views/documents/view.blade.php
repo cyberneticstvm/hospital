@@ -72,7 +72,7 @@
                             @empty
                             @endforelse
                         </div>
-                        <div class="row g-4 mt-5">
+                        <div class="row g-4 mt-3">
                             <h5 class="text-primary">OCT Documents</h5>
                             @forelse($octs as $key => $oct)
                             <div class="col-sm-3">
