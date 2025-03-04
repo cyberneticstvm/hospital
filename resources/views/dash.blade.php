@@ -117,7 +117,9 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-fill me-3 text-truncate">
                                                     <div class="text-primary mb-2 text-uppercase">Consultation</div>
-                                                    <h4 class="mb-0">{{ $consultation }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-primary"></i> Nos.</small></div> </h4>
+                                                    <h4 class="mb-0">{{ $consultation }}
+                                                        <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-primary"></i> Nos.</small></div>
+                                                    </h4>
                                                     <small></small>
                                                 </div>
                                                 <div class="avatar lg rounded-circle no-thumbnail bg-primary text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
@@ -127,7 +129,9 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-fill me-3 text-truncate">
                                                     <div class="text-success mb-2 text-uppercase">Certificate</div>
-                                                    <h4 class="mb-0">{{ $certificate }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-success"></i> Nos.</small></div></h4>
+                                                    <h4 class="mb-0">{{ $certificate }}
+                                                        <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-success"></i> Nos.</small></div>
+                                                    </h4>
                                                 </div>
                                                 <div class="avatar lg rounded-circle no-thumbnail bg-success text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
                                             </div>
@@ -136,7 +140,9 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-fill me-3 text-truncate">
                                                     <div class="text-info mb-2 text-uppercase">Camp</div>
-                                                    <h4 class="mb-0">{{ $camp }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-info"></i> Nos.</small></div></h4>
+                                                    <h4 class="mb-0">{{ $camp }}
+                                                        <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-info"></i> Nos.</small></div>
+                                                    </h4>
                                                 </div>
                                                 <div class="avatar lg rounded-circle no-thumbnail bg-info text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
                                             </div>
@@ -145,7 +151,9 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-fill me-3 text-truncate">
                                                     <div class="text-warning mb-2 text-uppercase">Vision</div>
-                                                    <h4 class="mb-0">{{ $vision }} <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-info"></i> Nos.</small></div></h4>
+                                                    <h4 class="mb-0">{{ $vision }}
+                                                        <div class="fs-6 d-inline"> <small class="text-muted"><i class="fa fa-level-up text-info"></i> Nos.</small></div>
+                                                    </h4>
                                                 </div>
                                                 <div class="avatar lg rounded-circle no-thumbnail bg-warning text-light"><i class="fa fa-stethoscope fa-lg"></i></div>
                                             </div>
@@ -180,7 +188,7 @@
                     <div class="card">
                         <div class="card-header py-3 d-flex flex-wrap  justify-content-between align-items-center bg-transparent border-bottom-0">
                             <div>
-                                <h6 class="card-title m-0">Income/Expense Overview Current Month (All Branches)</h6>
+                                <h6 class="card-title m-0">Income/Expense Overview Current Month - <span class="text-primary">{{ DB::table('branches')->where('id', Session::get('branch'))->value('branch_name') }}</span></h6>
                                 <small class="text-muted">Or you can <a href="#">sync data to Dashboard</a> to ensure your data is always up-to-date.</small>
                             </div>
                             <div class="dropdown">
@@ -247,12 +255,12 @@
                     <div class="col-sm-12">
                         <label class="form-label">Select Branch<sup class="text-danger">*</sup></label>
                         <select class="form-control form-control-md show-tick ms" data-placeholder="Select" name="branch_id">
-                        <option value="">Select</option>
-                        @isset($branches)
+                            <option value="">Select</option>
+                            @isset($branches)
                             @foreach($branches as $br)
-                                <option value="{{ $br->id }}" {{ old('branch_id') == $br->id ? 'selected' : '' }}>{{ $br->branch_name }}</option>
+                            <option value="{{ $br->id }}" {{ old('branch_id') == $br->id ? 'selected' : '' }}>{{ $br->branch_name }}</option>
                             @endforeach
-                        @endisset;
+                            @endisset;
                         </select>
                         @error('branch_id')
                         <small class="text-danger">{{ $errors->first('branch_id') }}</small>
@@ -267,5 +275,5 @@
         </div>
     </div>
 </div>
-    
+
 @endsection
