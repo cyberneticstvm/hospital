@@ -30,7 +30,7 @@ class DocumentController extends Controller
         $doctor = [];
         $mref = [];
         $docs = [];
-        $octs = [];
+        $octs = collect();
         return view('documents.index', compact('docs', 'mref', 'doctor', 'patient', 'octs'));
     }
 
@@ -104,7 +104,8 @@ class DocumentController extends Controller
         $patient = DB::table('patient_registrations')->find($mref->patient_id);
         $doctor = DB::table('doctors')->find($mref->doctor_id);
         $docs = DB::table('documents')->where('medical_record_id', $mref->id)->get();
-        return view('documents.view', compact('docs', 'mref', 'doctor', 'patient'));
+        $octs = collect();
+        return view('documents.view', compact('docs', 'mref', 'doctor', 'patient', 'octs'));
     }
 
     /**
