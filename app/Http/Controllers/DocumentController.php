@@ -30,7 +30,8 @@ class DocumentController extends Controller
         $doctor = [];
         $mref = [];
         $docs = [];
-        return view('documents.index', compact('docs', 'mref', 'doctor', 'patient'));
+        $octs = [];
+        return view('documents.index', compact('docs', 'mref', 'doctor', 'patient', 'octs'));
     }
 
     /**
