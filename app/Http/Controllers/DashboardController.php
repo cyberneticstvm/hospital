@@ -118,9 +118,9 @@ class DashboardController extends Controller
 
         $day_tot_income = $this->getDayTotal();
 
-        $income_monthly = DB::table('patient_payments')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->sum('amount');
+        $income_monthly = DB::table('patient_payments')->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->where('branch', Session::get('branch'))->sum('amount');
 
-        $expense_monthly = DB::table('expenses')->where('head', '!=', 22)->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->sum('amount');
+        $expense_monthly = DB::table('expenses')->where('head', '!=', 22)->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->where('branch', Session::get('branch'))->sum('amount');
 
         if (Auth::user()->roles->first()->name == 'Admin') :
             return view('dash', compact('branch_id', 'new_patients_count', 'review_count', 'cancelled', 'consultation', 'certificate', 'camp', 'vision', 'tot_patients', 'day_tot_income', 'day_tot_exp', 'income_monthly', 'expense_monthly', 'consultation_all_br'));
