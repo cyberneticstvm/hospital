@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\PatientPayment;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\SurgeryConsumableItem;
+use App\Models\UserBranch;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class HelperController extends Controller
 {
@@ -487,5 +490,15 @@ class HelperController extends Controller
             endforeach;
         endif;
         echo $op;
+    }
+
+    public function switchBranch($branch)
+    {
+        if (UserBranch::where('user_id', Auth::id())->where('branch_id', decrypt($branch))->exists()) :
+            Session::put('branch', decrypt($branch));
+            return redirect()->back()->with("success", "Branch switched successfully");
+        else :
+            return redirect()->back()->with("error", "Requested branch access denied!");
+        endif;
     }
 }

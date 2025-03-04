@@ -764,4 +764,6 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::get('/settings/appointment/', [SettingsController::class, 'showAppointment'])->name('settings.showappointment');
     Route::put('/settings/appointment/', [SettingsController::class, 'updateAppointment'])->name('settings.appointment.update');
     // End Settings //
+
+    Route::get('/switch/branch/{branch}', [HelperController::class, 'switchBranch'])->name('switch.branch');
 });

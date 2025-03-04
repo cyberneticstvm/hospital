@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use App\Models\Branch;
 use App\Models\Procedure;
 use App\Models\PatientMedicalRecord;
 use App\Models\PatientReference;
@@ -9,8 +10,10 @@ use App\Models\PatientSurgeryConsumable;
 use App\Models\InhouseCamp;
 use App\Models\InhouseCampProcedure;
 use App\Models\RoyaltyCardProcedure;
+use App\Models\UserBranch;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class Helper
 {
