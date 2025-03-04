@@ -6,15 +6,18 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Document;
+use App\Models\Oct;
+use App\Models\OctDocs;
 use DB;
 
 class DocumentController extends Controller
 {
-    function __construct(){
-         $this->middleware('permission:document-list|document-create|document-edit|document-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:document-create', ['only' => ['create','store']]);
-         $this->middleware('permission:document-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:document-delete', ['only' => ['destroy']]);
+    function __construct()
+    {
+        $this->middleware('permission:document-list|document-create|document-edit|document-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:document-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:document-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:document-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -23,7 +26,10 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        $patient = []; $doctor = []; $mref = []; $docs = [];
+        $patient = [];
+        $doctor = [];
+        $mref = [];
+        $docs = [];
         return view('documents.index', compact('docs', 'mref', 'doctor', 'patient'));
     }
 
@@ -50,12 +56,12 @@ class DocumentController extends Controller
             'description' => 'required',
         ]);
         $input = $request->all();
-        if($request->hasFile('doc')):
+        if ($request->hasFile('doc')):
             $doc = $request->file('doc');
-            $fname = 'patient/'.$request->medical_record_id.'/'.$doc->getClientOriginalName();
+            $fname = 'patient/' . $request->medical_record_id . '/' . $doc->getClientOriginalName();
             Storage::disk('public')->putFileAs($fname, $doc, '');
-            $input['name'] = $doc->getClientOriginalName();                 
-            $input['type'] = $doc->extension();                 
+            $input['name'] = $doc->getClientOriginalName();
+            $input['type'] = $doc->extension();
         endif;
         $input['created_by'] = Auth::user()->id;
         Document::create($input);
@@ -74,11 +80,12 @@ class DocumentController extends Controller
             'medical_record_number' => 'required',
         ]);
         $mref = DB::table('patient_references')->find($request->medical_record_number);
-        if($mref):
+        if ($mref):
             $patient = DB::table('patient_registrations')->find($mref->patient_id);
             $doctor = DB::table('doctors')->find($mref->doctor_id);
             $docs = DB::table('documents')->where('medical_record_id', $mref->id)->get();
-            return view('documents.index', compact('docs', 'mref', 'doctor', 'patient'));
+            $octs = OctDocs::whereIn('oct_id', Oct::where('medical_record_id', $mref->id)->pluck('id'))->get();
+            return view('documents.index', compact('docs', 'mref', 'doctor', 'patient', 'octs'));
         else:
             return redirect()->route('documents.index')->withErrors('No records found!');
         endif;
