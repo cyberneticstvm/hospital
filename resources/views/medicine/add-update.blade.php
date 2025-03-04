@@ -132,13 +132,9 @@
                                     @if($c == 1)<label class="form-label">Notes.</label>@endif
                                     <input type='text' class='form-control form-control-md' name='notes[]' value="{{ $pmr->notes }}" placeholder='Notes' />
                                 </div>
-                                @if($c == 1)
-                                <div class="col-sm-1">
-                                    <a class="medicineAdvise" href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success"></i></a>
-                                </div>
-                                @else
+
                                 <div class="col-sm-1"><i class="fa fa-trash text-danger" style="cursor:pointer" onClick="$(this).parent().parent().remove();"></i></div>
-                                @endif
+
                             </div>
                             @endforeach
                             @endif
