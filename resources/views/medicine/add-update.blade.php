@@ -135,7 +135,7 @@
                                 </div>
 
                                 <div class="col-sm-1">
-                                    @if($c == 1)<label class="form-label">Remove</label>@endif<br />
+                                    @if($c == 1)<label class="form-label">Remove</label><br />@endif
                                     <i class="fa fa-trash text-danger" style="cursor:pointer" onClick="$(this).parent().parent().remove();"></i>
                                 </div>
 
