@@ -14,6 +14,11 @@
                 {{ session('success') }}
             </div>
             @endif
+            @if (session('error'))
+            <div class="alert alert-success" style="margin-top: 0.2rem;">
+                {{ session('error') }}
+            </div>
+            @endif
             <div class="col-md-4">
                 <h5 class="text-primary">Total Consultation: {{ $ccount+$ccount1 }}</h5>
             </div>
