@@ -12,6 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
+                        <p class="text-right my-3"><a href="javascript:void(0)"><i class="fa fa-plus fa-lg text-success medicineAdvise"></i></a></p>
                         <form action="{{ route('medicine.add.update.save', $id) }}" method="post">
                             @csrf
                             @method("PUT")
