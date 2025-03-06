@@ -512,7 +512,7 @@ class PDFController extends Controller
         $oct = DB::table('octs')->find($id);
         $patient = DB::table('patient_registrations')->find($oct->patient_id);
         $branch = DB::table('branches')->find($oct->branch_id);
-        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'pp.fee', 'pp.discount')->where('pp.medical_record_id', $oct->medical_record_id)->where('pp.type', 'O')->get();
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'pp.fee', 'pp.discount')->whereNull('pp.deleted_at')->where('pp.medical_record_id', $oct->medical_record_id)->where('pp.type', 'O')->get();
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));
         $mrecord = PatientMedicalRecord::find($oct->medical_record_id);
         $doctor = doctor::find($mrecord->doctor_id ?? 0);
