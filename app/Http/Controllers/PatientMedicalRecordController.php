@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\PatientMedicalRecord as PMRecord;
+use App\Models\Procedure;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
@@ -162,7 +163,8 @@ class PatientMedicalRecordController extends Controller
                 abort(403, 'Oops.. You are not allowed to perform this action!');
             }
         endif;
-        $tests = DB::table('tests')->orderBy('name')->get();
+        //$tests = DB::table('tests')->orderBy('name')->get();
+        $tests = Procedure::where('is_available_for_consultation', 'yes')->get();
         $tests_advised = DB::table('tests_adviseds')->where('medical_record_id', $id)->get();
         $patient = DB::table('patient_registrations')->find($record->patient_id);
         $symptoms = DB::table('symptoms')->get();
