@@ -191,9 +191,14 @@ class MedicineController extends Controller
     {
         $id = decrypt($id);
         $medicine_record = DB::table('patient_medicine_records')->where('medical_record_id', $id)->where('status', 0)->get();
-        $mtypes = DB::table('medicine_types')->get();
-        $medicines = DB::table('products')->get();
-        return view('medicine.add-update', compact('medicine_record', 'mtypes', 'id', 'medicines'));
+        if ($medicine_record):
+            $mtypes = DB::table('medicine_types')->get();
+            $medicines = DB::table('products')->get();
+            return view('medicine.add-update', compact('medicine_record', 'mtypes', 'id', 'medicines'));
+        else:
+            return redirect()->back()
+                ->with('error', 'Medicine bill has been generated and not allowed to modify.');
+        endif;
     }
 
     public function addUpdateSave(Request $request, string $id)
