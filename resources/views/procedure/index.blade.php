@@ -16,7 +16,7 @@
                             @csrf
                             @if($proc) @method("PUT") @endif
                             <div class="row g-4">
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <label class="form-label">Procedure Name<sup class="text-danger">*</sup></label>
                                     <input type="text" value="{{ ($proc) ? $proc->name : old('name') }}" name="name" class="form-control form-control-md" placeholder="Procedure Name">
                                     @error('name')
@@ -35,6 +35,14 @@
                                         <option value="H" {{ ($proc && $proc->type == 'H') ? 'selected' : '' }}>HFA</option>
                                         <option value="O" {{ ($proc && $proc->type == 'O') ? 'selected' : '' }}>OCT</option>
                                         <option value="L" {{ ($proc && $proc->type == 'L') ? 'selected' : '' }}>Axial Length</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Avail. Consult.</label>
+                                    <select class="form-control" name="type">
+                                        <option value="">Select</option>
+                                        <option value="yes" {{ ($proc && $proc->is_available_for_consultation == 'yes') ? 'selected' : '' }}>Yes</option>
+                                        <option value="no" {{ ($proc && $proc->is_available_for_consultation == 'no') ? 'selected' : '' }}>No</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
