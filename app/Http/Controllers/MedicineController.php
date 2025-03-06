@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PatientMedicalRecord as PMRecord;
 use App\Models\PatientMedicalRecord;
+use App\Models\PatientMedicineRecord;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Carbon\Carbon;
@@ -190,8 +191,8 @@ class MedicineController extends Controller
     public function addUpdate(string $id)
     {
         $id = decrypt($id);
-        $medicine_record = DB::table('patient_medicine_records')->where('medical_record_id', $id)->where('status', 0)->get();
-        if ($medicine_record):
+        $medicine_record = PatientMedicineRecord::where('medical_record_id', $id)->where('status', 0)->get();
+        if ($medicine_record->isNotEmpty()):
             $mtypes = DB::table('medicine_types')->get();
             $medicines = DB::table('products')->get();
             return view('medicine.add-update', compact('medicine_record', 'mtypes', 'id', 'medicines'));
