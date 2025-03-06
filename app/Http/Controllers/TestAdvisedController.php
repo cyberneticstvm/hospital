@@ -25,7 +25,7 @@ class TestAdvisedController extends Controller
     public function edit($id)
     {
         $test = TestsAdvised::find($id);
-        $tname = Procedure::findOrFail($test->test);
+        $tname = Procedure::findOrFail($test->test)->name;
         return view('tests-advised.edit', compact('test', 'tname'));
     }
 
