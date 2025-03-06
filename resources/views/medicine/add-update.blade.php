@@ -134,7 +134,7 @@
                                     <input type='text' class='form-control form-control-md' name='notes[]' value="{{ $pmr->notes }}" placeholder='Notes' />
                                 </div>
 
-                                <div class="col-sm-1"><i class="fa fa-trash text-danger" style="cursor:pointer" onClick="$(this).parent().parent().remove();"></i></div>
+                                <div class="col-sm-1">@if($c == 1)<label class="form-label">Remove</label>@endif<i class="fa fa-trash text-danger" style="cursor:pointer" onClick="$(this).parent().parent().remove();"></i></div>
 
                             </div>
                             @endforeach
