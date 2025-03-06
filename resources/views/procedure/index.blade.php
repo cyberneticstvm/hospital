@@ -69,6 +69,7 @@
                                 <tr>
                                     <th>SL No.</th>
                                     <th>Procedure Name</th>
+                                    <th>Available for Consult.</th>
                                     <th>Fee</th>
                                     <th>Edit</th><!--<th>Remove</th>-->
                                 </tr>
@@ -79,6 +80,7 @@
                                 <tr>
                                     <td>{{ ++$i }}</td>
                                     <td>{{ $procedure->name }}</td>
+                                    <td>{{ $procedure->is_available_for_consultation }}</td>
                                     <td class="text-right">{{ $procedure->fee }}</td>
                                     <td><a class='btn btn-link' href="{{ route('procedure.edit', $procedure->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                     <!--<td>
