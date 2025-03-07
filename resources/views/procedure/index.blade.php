@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">Avail. Consult.</label>
-                                    <select class="form-control" name="type">
+                                    <select class="form-control" name="is_available_for_consultation">
                                         <option value="">Select</option>
                                         <option value="yes" {{ ($proc && $proc->is_available_for_consultation == 'yes') ? 'selected' : '' }}>Yes</option>
                                         <option value="no" {{ ($proc && $proc->is_available_for_consultation == 'no') ? 'selected' : '' }}>No</option>
