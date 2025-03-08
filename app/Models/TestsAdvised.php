@@ -41,4 +41,9 @@ class TestsAdvised extends Model
     {
         return $this->belongsTo(Test::class, 'test');
     }
+
+    public function procedure()
+    {
+        return $this->belongsTo(Procedure::class, 'test', 'id');
+    }
 }
