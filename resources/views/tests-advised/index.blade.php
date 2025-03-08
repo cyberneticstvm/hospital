@@ -40,7 +40,7 @@
                     <td>{{ $test->patient->patient_id }}</td>
                     <td>{{ $test->patient->mobile_number }}</td>
                     <td>{{ $test?->doctor?->doctor_name }}</td>
-                    <td>{{ $test->test()->find($test->test)->name }}</td>
+                    <td>{{ $test?->test?->name }}</td>
                     <td>{{ $test->notes }}</td>
                     <td>{{ ($test->proposed_date) ? date('d/M/Y', strtotime($test->proposed_date)) : '' }}</td>
                     <td>{{ date('d/M/Y', strtotime($test->created_at)) }}</td>
