@@ -114,7 +114,7 @@ class PatientPaymentController extends Controller
 
         $consultation_fee = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pr', 'pmr.mrn', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->where('pr.discount', 0)->value('pr.doctor_fee');
 
-        $procedure_fee = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->where('pmr.id', $request->medical_record_id)->sum('fee');
+        $procedure_fee = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->whereNull('pp.deleted_at')->where('pmr.id', $request->medical_record_id)->sum('fee');
 
         $certificate_fee = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->where('pc.medical_record_id', $request->medical_record_id)->where('pcd.status', 'I')->sum('pcd.fee');
 
