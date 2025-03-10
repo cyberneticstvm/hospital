@@ -104,7 +104,7 @@ class DocumentController extends Controller
         $patient = DB::table('patient_registrations')->find($mref->patient_id);
         $doctor = DB::table('doctors')->find($mref->doctor_id);
         $docs = DB::table('documents')->where('medical_record_id', $mref->id)->get();
-        $octs = collect();
+        $octs = OctDocs::whereIn('oct_id', Oct::where('medical_record_id', $mref->id)->pluck('id'))->get();
         return view('documents.view', compact('docs', 'mref', 'doctor', 'patient', 'octs'));
     }
 
