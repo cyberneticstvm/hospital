@@ -86,6 +86,8 @@ class DocumentController extends Controller
             $doctor = DB::table('doctors')->find($mref->doctor_id);
             $docs = DB::table('documents')->where('medical_record_id', $mref->id)->get();
             $octs = OctDocs::whereIn('oct_id', Oct::where('medical_record_id', $mref->id)->pluck('id'))->get();
+            dd($octs);
+            die;
             return view('documents.index', compact('docs', 'mref', 'doctor', 'patient', 'octs'));
         else:
             return redirect()->route('documents.index')->withErrors('No records found!');
