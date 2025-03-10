@@ -788,7 +788,7 @@
             @forelse($octimages as $key => $item):
             <tr width="100%">
                 <td>
-                    <img src="{{ ($item) ? './storage/'.$item->doc_url : '' }}" width="50%" height="50%" /><br />
+                    <img src="{{ ($item) ? './storage/'.$item->doc_url : '' }}" /><br />
                 </td>
             </tr>
             @empty
