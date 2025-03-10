@@ -785,14 +785,14 @@
     <p>OCT</p>
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
-            @forelse($octimages as $key => $item):
             <tr width="100%">
-                <td class="text-center" width="100%">
-                    <img src="{{ ($item) ? './storage/'.$item->doc_url : '' }}" width="70%" />
+                @forelse($octimages as $key => $item):
+                <td class="text-center" width="50%">
+                    <img src="{{ ($item) ? './storage/'.$item->doc_url : '' }}" width="50%" />
                 </td>
+                @empty
+                @endforelse
             </tr>
-            @empty
-            @endforelse
         </tbody>
     </table>
     <br>
