@@ -24,7 +24,7 @@ use App\Models\TestsAdvised;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 
 class ReportController extends Controller
 {
@@ -571,7 +571,9 @@ class ReportController extends Controller
         $branches = $this->getBranches($this->branch);
         $procs = ProcedureType::all();
         $tbl = $procs->where('id', $request->procedure)->first()->table_name;
-        $records = PatientProcedure::onlyTrashed()->get();
+        $className = 'App\\' . Str::studly(Str::singular($tbl));
+        $model = new $className;
+        $records = $model::onlyTrashed()->get();
         $inputs = array($request->from_date, $request->to_date, $request->procedure, $request->branch);
         return view('reports.proc-cancelled', compact('branches', 'records', 'inputs', 'procs'));
     }
