@@ -571,7 +571,7 @@ class ReportController extends Controller
         $branches = $this->getBranches($this->branch);
         $procs = ProcedureType::all();
         $tbl = $procs->where('id', $request->procedure)->first()->table_name;
-        $className = 'App\\' . Str::studly(Str::singular($tbl));
+        $className = 'App\\Models\\' . Str::studly(Str::singular($tbl));
         $model = new $className;
         $records = $model::onlyTrashed()->get();
         $inputs = array($request->from_date, $request->to_date, $request->procedure, $request->branch);
