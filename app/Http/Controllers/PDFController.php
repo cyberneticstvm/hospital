@@ -209,7 +209,7 @@ class PDFController extends Controller
     {
         $spectacle = Spectacle::find($id);
         $mrecord = DB::table('patient_medical_records')->find($spectacle->medical_record_id);
-        $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
+        $patient = PatientRegistrations::find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
         $reference = DB::table('patient_references')->find($mrecord->mrn);
         $branch = DB::table('branches')->find($reference->branch);
