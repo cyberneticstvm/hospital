@@ -20,4 +20,9 @@ class AxialLength extends Model
         'created_by',
         'updated_by',
     ];
+
+    public function patient()
+    {
+        return $this->belongsTo(PatientRegistrations::class, 'patient_id', 'id');
+    }
 }

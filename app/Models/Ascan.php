@@ -46,6 +46,11 @@ class Ascan extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function patient()
+    {
+        return $this->belongsTo(PatientRegistrations::class, 'patient_id', 'id');
+    }
+
     public function status()
     {
         return ($this->deleted_at) ? "<span class='badge badge-danger text-danger'>Cancelled</span>" : "<span class='badge badge-success text-success'>Active</span>";

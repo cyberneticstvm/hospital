@@ -64,8 +64,7 @@
                                     <th>MR Id</th>
                                     <th>Patient Name</th>
                                     <th>Patient ID</th>
-                                    <th>Branch</th>
-                                    <th>Doctor</th>
+
                                     <th>Test Name</th>
                                     <th>Status</th>
                                     <th>Date</th>
@@ -75,11 +74,9 @@
                                 @forelse($records as $key => $row)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $row->medical_record_id }}</td>
+                                    <td>{{ $row->patient->patient_name }}</td>
+                                    <td>{{ $row->patient->patient_id }}</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
