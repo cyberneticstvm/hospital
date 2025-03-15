@@ -29,9 +29,11 @@
                                         <option value="P" {{ ($proc && $proc->type == 'P') ? 'selected' : '' }}>Select</option>
                                         <option value="S" {{ ($proc && $proc->type == 'S') ? 'selected' : '' }}>Surgery</option>
                                         <option value="A" {{ ($proc && $proc->type == 'A') ? 'selected' : '' }}>A-Scan</option>
+                                        <option value="B" {{ ($proc && $proc->type == 'B') ? 'selected' : '' }}>B-Scan</option>
                                         <option value="K" {{ ($proc && $proc->type == 'K') ? 'selected' : '' }}>Keratometry</option>
                                         <option value="T" {{ ($proc && $proc->type == 'T') ? 'selected' : '' }}>Tonometry</option>
                                         <option value="C" {{ ($proc && $proc->type == 'C') ? 'selected' : '' }}>Pachymetry</option>
+                                        <option value="G" {{ ($proc && $proc->type == 'G') ? 'selected' : '' }}>Laser</option>
                                         <option value="H" {{ ($proc && $proc->type == 'H') ? 'selected' : '' }}>HFA</option>
                                         <option value="O" {{ ($proc && $proc->type == 'O') ? 'selected' : '' }}>OCT</option>
                                         <option value="L" {{ ($proc && $proc->type == 'L') ? 'selected' : '' }}>Axial Length</option>

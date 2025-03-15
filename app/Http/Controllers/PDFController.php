@@ -517,7 +517,33 @@ class PDFController extends Controller
         $mrecord = PatientMedicalRecord::find($oct->medical_record_id);
         $doctor = doctor::find($mrecord->doctor_id ?? 0);
         $pdf = PDF::loadView('/pdf/oct/receipt', compact('qrcode', 'oct', 'patient', 'branch', 'procedures', 'mrecord', 'doctor'));
-        return $pdf->stream('hfa.pdf', array("Attachment" => 0));
+        return $pdf->stream('oct.pdf', array("Attachment" => 0));
+    }
+
+    public function bscanreceipt($id)
+    {
+        $bscan = DB::table('bscans')->find($id);
+        $patient = DB::table('patient_registrations')->find($bscan->patient_id);
+        $branch = DB::table('branches')->find($bscan->branch_id);
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'pp.fee', 'pp.discount')->whereNull('pp.deleted_at')->where('pp.medical_record_id', $bscan->medical_record_id)->where('pp.type', 'B')->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));
+        $mrecord = PatientMedicalRecord::find($bscan->medical_record_id);
+        $doctor = doctor::find($mrecord->doctor_id ?? 0);
+        $pdf = PDF::loadView('/pdf/bscan/receipt', compact('qrcode', 'bscan', 'patient', 'branch', 'procedures', 'mrecord', 'doctor'));
+        return $pdf->stream('bscan.pdf', array("Attachment" => 0));
+    }
+
+    public function laserreceipt($id)
+    {
+        $laser = DB::table('lasers')->find($id);
+        $patient = DB::table('patient_registrations')->find($laser->patient_id);
+        $branch = DB::table('branches')->find($laser->branch_id);
+        $procedures = DB::table('patient_procedures  as pp')->leftJoin('procedures as p', 'p.id', 'pp.procedure')->select('p.name', 'pp.fee', 'pp.discount')->whereNull('pp.deleted_at')->where('pp.medical_record_id', $laser->medical_record_id)->where('pp.type', 'G')->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));
+        $mrecord = PatientMedicalRecord::find($laser->medical_record_id);
+        $doctor = doctor::find($mrecord->doctor_id ?? 0);
+        $pdf = PDF::loadView('/pdf/laser/receipt', compact('qrcode', 'laser', 'patient', 'branch', 'procedures', 'mrecord', 'doctor'));
+        return $pdf->stream('laser.pdf', array("Attachment" => 0));
     }
 
     public function surgeryconsumablereceipt($id)

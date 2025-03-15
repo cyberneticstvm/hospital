@@ -385,6 +385,24 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::delete('/ascan/delete/{id}/', 'App\Http\Controllers\AscanController@destroy')->name('ascan.delete');
     // end ascan //
 
+    // bscan //
+    Route::get('/bscan', 'App\Http\Controllers\BscanController@index')->name('bscan.index');
+    Route::post('/bscan', 'App\Http\Controllers\BscanController@show')->name('bscan.show');
+    Route::post('/bscan/create/', 'App\Http\Controllers\BscanController@store')->name('bscan.save');
+    Route::get('/bscan/edit/{id}/', 'App\Http\Controllers\BscanController@edit')->name('bscan.edit');
+    Route::put('/bscan/edit/{id}/', 'App\Http\Controllers\BscanController@update')->name('bscan.update');
+    Route::delete('/bscan/delete/{id}/', 'App\Http\Controllers\BscanController@destroy')->name('bscan.delete');
+    // end bscan //
+
+    // laser //
+    Route::get('/laser', 'App\Http\Controllers\LaserController@index')->name('laser.index');
+    Route::post('/laser', 'App\Http\Controllers\LaserController@show')->name('laser.show');
+    Route::post('/laser/create/', 'App\Http\Controllers\LaserController@store')->name('laser.save');
+    Route::get('/laser/edit/{id}/', 'App\Http\Controllers\LaserController@edit')->name('laser.edit');
+    Route::put('/laser/edit/{id}/', 'App\Http\Controllers\LaserController@update')->name('laser.update');
+    Route::delete('/laser/delete/{id}/', 'App\Http\Controllers\LaserController@destroy')->name('laser.delete');
+    // end laser //
+
     // surgery register //
     Route::get('/surgery/', 'App\Http\Controllers\SurgeryController@index')->name('surgery.index');
     Route::get('/surgery/edit/{id}', 'App\Http\Controllers\SurgeryController@edit')->name('surgery.edit');
@@ -744,6 +762,8 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::get('/onote/report/{id}/', [PDFController::class, 'printonote']);
     Route::get('/hfa/receipt/{id}/', [PDFController::class, 'hfareceipt']);
     Route::get('/oct/receipt/{id}/', [PDFController::class, 'octreceipt']);
+    Route::get('/bscan/receipt/{id}/', [PDFController::class, 'bscanreceipt']);
+    Route::get('/laser/receipt/{id}/', [PDFController::class, 'laserreceipt']);
     Route::get('/surgery/consumable/receipt/{id}/', [PDFController::class, 'surgeryconsumablereceipt']);
     Route::get('/dsummary/report/{id}', [PDFController::class, 'dsummary']);
     Route::get('/patient/owed/history/{id}', [PDFController::class, 'patientTransactionHistory'])->name('patient.transaction.history.pdf');
