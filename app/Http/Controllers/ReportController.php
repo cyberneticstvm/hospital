@@ -569,7 +569,10 @@ class ReportController extends Controller
         ]);
         $branches = $this->getBranches($this->branch);
         $procs = ProcedureType::all();
-        $records = DB::table($procs->where('id', $request->procedure)->first()->table_name)->whereNotNull('deleted_at')->get();
+        $tbl = $procs->where('id', $request->procedure)->first()->table_name;
+        $records = DB::table($tbl)->whereNotNull('deleted_at')->get();
+        dd($records);
+        die;
         $inputs = array($request->fromdate, $request->todate, $request->procedure, $request->branch);
         return view('reports.proc-cancelled', compact('branches', 'records', 'inputs', 'procs'));
     }
