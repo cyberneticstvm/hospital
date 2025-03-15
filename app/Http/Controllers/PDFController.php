@@ -42,7 +42,7 @@ class PDFController extends Controller
     public function prescription($id)
     {
         $reference = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pr.consultation_type', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at', 'pr.appointment_id')->first();
-        $patient = DB::table('patient_registrations')->find($reference->patient_id);
+        $patient = PatientRegistrations::find($reference->patient_id);
         $branch = Branch::findOrFail($reference->branch);
         $doctor = DB::table('doctors')->find($reference->doctor_id);
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://play.google.com/store/apps/details?id=com.devieh.virtualtoken'));
