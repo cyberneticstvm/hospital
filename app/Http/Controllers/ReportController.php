@@ -571,7 +571,7 @@ class ReportController extends Controller
         $branches = $this->getBranches($this->branch);
         $procs = ProcedureType::all();
         $tbl = $procs->where('id', $request->procedure)->first()->table_name;
-        $records = PatientProcedure::whereNotNull('deleted_at')->get();
+        $records = PatientProcedure::onlyTrashed()->get();
         $inputs = array($request->from_date, $request->to_date, $request->procedure, $request->branch);
         return view('reports.proc-cancelled', compact('branches', 'records', 'inputs', 'procs'));
     }
