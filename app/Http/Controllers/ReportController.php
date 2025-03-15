@@ -16,6 +16,7 @@ use App\Models\PatientReference;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\Procedure;
+use App\Models\ProcedureType;
 use App\Models\RoyaltyCard;
 use App\Models\Spectacle;
 use App\Models\Surgery;
@@ -553,7 +554,7 @@ class ReportController extends Controller
     {
         $branches = $this->getBranches($this->branch);
         $records = collect();
-        $procs = Procedure::all();
+        $procs = ProcedureType::all();
         $inputs = array(date('Y-m-d'), date('Y-m-d'), $procs->first()->id, $this->branch);
         return view('reports.proc-cancelled', compact('branches', 'records', 'inputs', 'procs'));
     }
@@ -567,7 +568,8 @@ class ReportController extends Controller
             'procedure' => 'required',
         ]);
         $branches = $this->getBranches($this->branch);
-        $procs = Procedure::all();
+        $procs = ProcedureType::all();
+        $records = DB::table($procs->where('id', $request->procedure)->first()->table_name)->whereNotNull('deleted_at')->get();
         $inputs = array($request->fromdate, $request->todate, $request->procedure, $request->branch);
         return view('reports.proc-cancelled', compact('branches', 'records', 'inputs', 'procs'));
     }

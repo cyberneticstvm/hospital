@@ -6,7 +6,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">Tests Advised Records</h5>
+                        <h5 class="mb-0">Procedure Cancelled Records</h5>
                         <span class="text-muted"></span>
                     </div>
                 </div>
@@ -32,7 +32,6 @@
                                 <div class="col-sm-3">
                                     <label class="form-label">Procedure </label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="procedure">
-                                        <option value="0">Select</option>
                                         @foreach($procs as $key => $proc)
                                         <option value="{{ $proc->id }}" {{ ($inputs[2] == $proc->id) ? 'selected'  : '' }}>{{ $proc->name }}</option>
                                         @endforeach
