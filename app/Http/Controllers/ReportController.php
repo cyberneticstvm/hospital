@@ -548,6 +548,16 @@ class ReportController extends Controller
         return view('reports.glasses-prescribed', compact('branches', 'records', 'inputs'));
     }
 
+    public function fetchProcedureCancellation(Request $request)
+    {
+        $this->validate($request, [
+            'fromdate' => 'required',
+            'todate' => 'required',
+            'branch' => 'required',
+            'procedure' => 'required',
+        ]);
+    }
+
     public function showDiscount()
     {
         $rcs = RoyaltyCard::all();
