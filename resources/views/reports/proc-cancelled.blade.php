@@ -75,14 +75,14 @@
                                 @forelse($records as $key => $row)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $row->medical_record_id }}</td>
-                                    <td>{{ $row->patient->patient_name }}</td>
-                                    <td>{{ $row->patient->patient_id }}</td>
-                                    <td>{{ $row->branchdetails->branch_name }}</td>
-                                    <td>{{ $row->doctor->doctor_name }}</td>
-                                    <td>{{ $row->test()->find($row->test)->name }}</td>
-                                    <td>{{ $row->status }}</td>
-                                    <td>{{ $row->created_at->format('d/M/Y') }}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 @empty
                                 @endforelse
