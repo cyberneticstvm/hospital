@@ -49,7 +49,7 @@
         </tr>
         <tr>
             <td width='20%'>Age</td>
-            <td>{{ $patient->age }} {{ ($patient->new_born_baby == 1) ? 'Months' : '' }} / {{ $patient->gender }}</td>
+            <td>{{ $patient->patientAge }} {{ ($patient->new_born_baby == 1) ? 'Months' : '' }} / {{ $patient->gender }}</td>
             <td class='text-blue text-medium-large'>{{ strtoupper($doctor->doctor_name) }}</td>
         </tr>
         <tr>
