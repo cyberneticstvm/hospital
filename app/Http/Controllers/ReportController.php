@@ -58,6 +58,7 @@ class ReportController extends Controller
         $this->middleware('permission:report-tests-procedure', ['only' => ['showTests', 'fetchTests']]);
         $this->middleware('permission:report-glasses-prescribed', ['only' => ['glassesPrescribed', 'fetchGlassesPrescribed']]);
         $this->middleware('permission:report-rc-card-usage', ['only' => ['showDiscount', 'fetchDiscount']]);
+        $this->middleware('permission:report-procedure-cancelled', ['only' => ['procedureCancelled', 'fetchProcedureCancelled']]);
 
         $this->branch = session()->get('branch');
     }
@@ -548,16 +549,16 @@ class ReportController extends Controller
         return view('reports.glasses-prescribed', compact('branches', 'records', 'inputs'));
     }
 
-    public function procedureCancellation()
+    public function procedureCancelled()
     {
         $branches = $this->getBranches($this->branch);
         $records = collect();
         $procs = Procedure::all();
-        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch, $procs->first()->id);
-        return view('reports.glasses-prescribed', compact('branches', 'records', 'inputs', 'procs'));
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $procs->first()->id, $this->branch);
+        return view('reports.proc-cancelled', compact('branches', 'records', 'inputs', 'procs'));
     }
 
-    public function fetchProcedureCancellation(Request $request)
+    public function fetchProcedureCancelled(Request $request)
     {
         $this->validate($request, [
             'fromdate' => 'required',
@@ -565,6 +566,10 @@ class ReportController extends Controller
             'branch' => 'required',
             'procedure' => 'required',
         ]);
+        $branches = $this->getBranches($this->branch);
+        $procs = Procedure::all();
+        $inputs = array($request->fromdate, $request->todate, $request->procedure, $request->branch);
+        return view('reports.proc-cancelled', compact('branches', 'records', 'inputs', 'procs'));
     }
 
     public function showDiscount()

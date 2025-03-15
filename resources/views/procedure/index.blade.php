@@ -25,18 +25,10 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Type</label>
-                                    <select class="form-control" name="type">
-                                        <option value="P" {{ ($proc && $proc->type == 'P') ? 'selected' : '' }}>Select</option>
-                                        <option value="S" {{ ($proc && $proc->type == 'S') ? 'selected' : '' }}>Surgery</option>
-                                        <option value="A" {{ ($proc && $proc->type == 'A') ? 'selected' : '' }}>A-Scan</option>
-                                        <option value="B" {{ ($proc && $proc->type == 'B') ? 'selected' : '' }}>B-Scan</option>
-                                        <option value="K" {{ ($proc && $proc->type == 'K') ? 'selected' : '' }}>Keratometry</option>
-                                        <option value="T" {{ ($proc && $proc->type == 'T') ? 'selected' : '' }}>Tonometry</option>
-                                        <option value="C" {{ ($proc && $proc->type == 'C') ? 'selected' : '' }}>Pachymetry</option>
-                                        <option value="G" {{ ($proc && $proc->type == 'G') ? 'selected' : '' }}>Laser</option>
-                                        <option value="H" {{ ($proc && $proc->type == 'H') ? 'selected' : '' }}>HFA</option>
-                                        <option value="O" {{ ($proc && $proc->type == 'O') ? 'selected' : '' }}>OCT</option>
-                                        <option value="L" {{ ($proc && $proc->type == 'L') ? 'selected' : '' }}>Axial Length</option>
+                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="type">
+                                        @foreach($ptypes as $key => $ptype)
+                                        <option value="{{ $ptype->type }}" {{ ($proc && $proc->type == $ptype->type) ? 'selected'  : '' }}>{{ $ptype->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-sm-2">

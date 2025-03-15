@@ -710,6 +710,9 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     Route::get('/reports/discount/', 'App\Http\Controllers\ReportController@showDiscount')->name('reports.discount.show');
     Route::post('/reports/discount/', 'App\Http\Controllers\ReportController@fetchDiscount')->name('reports.discount.fetch');
 
+    Route::get('/reports/procedure/cancelled', 'App\Http\Controllers\ReportController@procedureCancelled')->name('reports.procedure.cancelled');
+    Route::post('/reports/procedure/cancelled', 'App\Http\Controllers\ReportController@fetchProcedureCancelled')->name('reports.procedure.cancelled.fetch');
+
     // End Reports //
 
     // Helper //

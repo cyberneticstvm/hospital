@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Helper\Helper;
 use App\Models\Procedure;
+use App\Models\ProcedureType;
 use Carbon\Carbon;
 use DB;
 
@@ -35,8 +36,9 @@ class ProcedureController extends Controller
     public function index()
     {
         $procedures = Procedure::orderBy('name', 'ASC')->get();
+        $ptypes = ProcedureType::all();
         $proc = [];
-        return view('procedure.index', compact('procedures', 'proc'));
+        return view('procedure.index', compact('procedures', 'proc', 'ptypes'));
     }
 
     /**
@@ -100,7 +102,8 @@ class ProcedureController extends Controller
     {
         $procedures = Procedure::all();
         $proc = Procedure::find($id);
-        return view('procedure.index', compact('proc', 'procedures'));
+        $ptypes = ProcedureType::all();
+        return view('procedure.index', compact('proc', 'procedures', 'ptypes'));
     }
 
     /**
