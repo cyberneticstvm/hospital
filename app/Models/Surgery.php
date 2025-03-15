@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
 
 class Surgery extends Model
 {
-    use HasFactory, HasRoles;
+    use HasFactory, HasRoles, SoftDeletes;
 
     protected $casts = ['surgery_date' => 'datetime'];
 
