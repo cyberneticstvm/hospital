@@ -40,7 +40,6 @@
                                 <div class="col-sm-3">
                                     <label class="form-label">Branch </label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="branch">
-                                        <option value="0">Select</option>
                                         @foreach($branches as $key => $branch)
                                         <option value="{{ $branch->id }}" {{ ($inputs[3] == $branch->id) ? 'selected'  : '' }}>{{ $branch->branch_name }}</option>
                                         @endforeach

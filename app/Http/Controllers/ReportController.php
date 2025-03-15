@@ -570,10 +570,10 @@ class ReportController extends Controller
         ]);
         $branches = $this->getBranches($this->branch);
         $procs = ProcedureType::all();
-        $tbl = $procs->where('id', $request->procedure)->first()->table_name;
+        /*$tbl = $procs->where('id', $request->procedure)->first()->table_name;
         $className = 'App\\Models\\' . Str::studly(Str::singular($tbl));
-        $model = new $className;
-        $records = $model::onlyTrashed()->get();
+        $model = new $className;*/
+        $records = PatientProcedure::onlyTrashed()->where('branch', $request->branch)->where('type', $procs->where('id', $request->procedure)->first()->type)->whereBetween('deleted_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->get();
         $inputs = array($request->from_date, $request->to_date, $request->procedure, $request->branch);
         return view('reports.proc-cancelled', compact('branches', 'records', 'inputs', 'procs'));
     }
