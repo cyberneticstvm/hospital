@@ -562,8 +562,8 @@ class ReportController extends Controller
     public function fetchProcedureCancelled(Request $request)
     {
         $this->validate($request, [
-            'fromdate' => 'required',
-            'todate' => 'required',
+            'from_date' => 'required',
+            'to_date' => 'required',
             'branch' => 'required',
             'procedure' => 'required',
         ]);
