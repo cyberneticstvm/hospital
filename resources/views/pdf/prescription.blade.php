@@ -55,7 +55,7 @@
         <tr>
             <td>Address</td>
             <td class="text-medium">{{ strtoupper($patient->address) }}</td>
-            <td class='text-blue text-medium'>{{ strtoupper($doctor->designation) }}</td>
+            <td class='text-blue text-medium'>{{ strtoupper($doctor->designation) }}<br />{{ strtoupper($doctor->additional_qualification) }}</td>
         </tr>
     </table>
     <p class='text-right'>Date: {{ date('d/M/Y h:i a') }}</p>
