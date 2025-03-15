@@ -54,7 +54,7 @@
         </tr>
         <tr>
             <td>Address</td>
-            <td>{{ strtoupper($patient->address) }}</td>
+            <td class="text-medium">{{ strtoupper($patient->address) }}</td>
             <td class='text-blue text-medium'>{{ strtoupper($doctor->designation) }}</td>
         </tr>
     </table>
