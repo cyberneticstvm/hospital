@@ -90,6 +90,24 @@
                             @empty
                             @endforelse
                         </div>
+                        <div class="row g-4 mt-3">
+                            <h5 class="text-primary">B-Scan Documents</h5>
+                            @forelse($bscans as $key => $bscan)
+                            <div class="col-sm-3">
+                                <div class="card p-3">
+                                    <i class="fa fa-file-o fa-2x text-info"></i>
+                                    <div class="mt-3">
+                                        <h5>Document</h5>
+                                        <div class="d-flex text-muted flex-wrap justify-content-between small text-uppercase">Type: <span>{{ $bscan->doc_type }}</span></div>
+                                        <div class="d-flex text-muted flex-wrap justify-content-between small text-uppercase">Description: <span>NA</span></div>
+                                        <div class="d-flex text-muted flex-wrap justify-content-between small text-uppercase">Uploaded On: <span>{{ date('d/M/Y h:i:A', strtotime($bscan->created_at)) }}</span></div>
+                                        <div class="d-flex text-muted flex-wrap justify-content-between small text-uppercase">Download: <a href="{{ ($bscan->doc_url) ? public_path().'/storage/'.$bscan->doc_url : '#' }}" target="_blank"><i class="fa fa-download fa-lg"></i></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            @empty
+                            @endforelse
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bscan;
+use App\Models\BscanDocs;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -86,7 +88,8 @@ class DocumentController extends Controller
             $doctor = DB::table('doctors')->find($mref->doctor_id);
             $docs = DB::table('documents')->where('medical_record_id', $mref->id)->get();
             $octs = OctDocs::whereIn('oct_id', Oct::where('medical_record_id', $mref->id)->pluck('id'))->get();
-            return view('documents.index', compact('docs', 'mref', 'doctor', 'patient', 'octs'));
+            $bscans = BscanDocs::whereIn('bscan_id', Bscan::where('medical_record_id', $mref->id)->pluck('id'))->get();
+            return view('documents.index', compact('docs', 'mref', 'doctor', 'patient', 'octs', 'bscans'));
         else:
             return redirect()->route('documents.index')->withErrors('No records found!');
         endif;
@@ -105,7 +108,8 @@ class DocumentController extends Controller
         $doctor = DB::table('doctors')->find($mref->doctor_id);
         $docs = DB::table('documents')->where('medical_record_id', $mref->id)->get();
         $octs = OctDocs::whereIn('oct_id', Oct::where('medical_record_id', $mref->id)->pluck('id'))->get();
-        return view('documents.view', compact('docs', 'mref', 'doctor', 'patient', 'octs'));
+        $bscans = BscanDocs::whereIn('bscan_id', Bscan::where('medical_record_id', $mref->id)->pluck('id'))->get();
+        return view('documents.view', compact('docs', 'mref', 'doctor', 'patient', 'octs', 'bscans'));
     }
 
     /**
