@@ -63,10 +63,9 @@
                                     <th>MR Id</th>
                                     <th>Patient Name</th>
                                     <th>Patient ID</th>
-
                                     <th>Test Name</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
+                                    <th>Created On</th>
+                                    <th>Deleted On</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,9 +75,9 @@
                                     <td>{{ $row->medical_record_id }}</td>
                                     <td>{{ $row->patient->patient_name }}</td>
                                     <td>{{ $row->patient->patient_id }}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $row->procedures->name }}</td>
+                                    <td>{{ $row->created_at->format('d.M.Y') }}</td>
+                                    <td>{{ $row->deleted_at->format('d.M.Y') }}</td>
                                 </tr>
                                 @empty
                                 @endforelse
