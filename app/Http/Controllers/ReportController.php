@@ -548,6 +548,15 @@ class ReportController extends Controller
         return view('reports.glasses-prescribed', compact('branches', 'records', 'inputs'));
     }
 
+    public function procedureCancellation()
+    {
+        $branches = $this->getBranches($this->branch);
+        $records = collect();
+        $procs = Procedure::all();
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch, $procs->first()->id);
+        return view('reports.glasses-prescribed', compact('branches', 'records', 'inputs', 'procs'));
+    }
+
     public function fetchProcedureCancellation(Request $request)
     {
         $this->validate($request, [

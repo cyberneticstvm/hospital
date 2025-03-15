@@ -15,6 +15,7 @@ class doctor extends Model
         'doctor_name',
         'designation',
         'reg_no',
+        'additional_qualification',
         'date_of_join',
         'doctor_fee',
     ];
