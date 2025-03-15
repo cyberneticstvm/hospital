@@ -82,7 +82,7 @@ class PatientReferenceController extends Controller
     public function create($id)
     {
         $patient = Preg::find($id);
-        $doctors = DB::table('doctors')->get();
+        $doctors = doctor::all();
         $departments = DB::table('departments')->get();
         $ctypes = DB::table('consultation_types')->get();
         $review = 'no';
