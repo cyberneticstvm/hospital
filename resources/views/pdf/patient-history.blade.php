@@ -84,6 +84,8 @@
     $pachymetry = DB::table('pachymetries')->where('medical_record_id', $mrecord->id)->first();
     $oct = DB::table('octs')->where('medical_record_id', $mrecord->id)->whereNull('deleted_at')->first();
     $octimages = DB::table('oct_docs')->where('oct_id', $oct->id ?? 0)->where('doc_type', 'img')->get();
+    $bscan = DB::table('bscans')->where('medical_record_id', $mrecord->id)->whereNull('deleted_at')->first();
+    $bscan_images = DB::table('bscan_docs')->where('bscan_id', $bscan->id ?? 0)->where('doc_type', 'img')->get();
 
     $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.product_name', 'm.qty', 'm.dosage', 'm.duration', 'm.notes', 't.name', DB::raw("CASE WHEN m.eye='L' THEN 'Left Eye Only' WHEN m.eye='R' THEN 'Right Eye Only' WHEN m.eye='B' THEN 'Both Eyes' ELSE 'Oral' END AS eye"))->where('m.medical_record_id', $mrecord->id)->get();
 
@@ -787,6 +789,20 @@
         <tbody>
             <tr width="100%">
                 @forelse($octimages as $key => $item):
+                <td class="text-center" width="50%">
+                    <img src="{{ ($item) ? './storage/'.$item->doc_url : '' }}" width="75%" />
+                </td>
+                @empty
+                @endforelse
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <p>B-Scan</p>
+    <table border="0" width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr width="100%">
+                @forelse($bscan_images as $key => $item):
                 <td class="text-center" width="50%">
                     <img src="{{ ($item) ? './storage/'.$item->doc_url : '' }}" width="75%" />
                 </td>
