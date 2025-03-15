@@ -24,6 +24,7 @@ use App\Models\TestsAdvised;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\App;
 
 class ReportController extends Controller
 {
@@ -570,7 +571,7 @@ class ReportController extends Controller
         $branches = $this->getBranches($this->branch);
         $procs = ProcedureType::all();
         $tbl = $procs->where('id', $request->procedure)->first()->table_name;
-        $records = $tbl::whereNotNull('deleted_at')->get();
+        $records = \App\Models\PatientProcedure::whereNotNull('deleted_at')->get();
         $inputs = array($request->fromdate, $request->todate, $request->procedure, $request->branch);
         return view('reports.proc-cancelled', compact('branches', 'records', 'inputs', 'procs'));
     }
