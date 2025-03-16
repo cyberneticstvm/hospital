@@ -85,7 +85,7 @@
                                     <td>{{ $row->patient->patient_name }}</td>
                                     <td>{{ $row->patient->patient_id }}</td>
                                     <td>{{ $row->branches->branch_name }}</td>
-                                    <td>{{ $row->procedures->name }}</td>
+                                    <td>{{ $row->procedures?->name }}</td>
                                     <td>{{ $row->created_at->format('d/M/Y') }}</td>
                                     <td>{{ $row->createdBy->name }}</td>
                                     <td class="text-end">{{ $row->procedures->fee }}</td>
