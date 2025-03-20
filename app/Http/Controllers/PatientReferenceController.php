@@ -12,6 +12,7 @@ use App\Models\Appointment;
 use App\Models\doctor;
 use App\Models\DoctorOptometrist;
 use App\Models\InhouseCamp;
+use App\Models\PatientRegistrations;
 use App\Models\RoyaltyCard;
 use App\Models\User;
 use Carbon\Carbon;
@@ -121,6 +122,7 @@ class PatientReferenceController extends Controller
             'consultation_type' => 'required'
         ]);
         try {
+            $patient = PatientRegistrations::find($request->pid);
             $secret = Helper::apiSecret();
             $vcode = $request->rc_number;
             if ($vcode && $request->rc_type == 2):
@@ -133,6 +135,9 @@ class PatientReferenceController extends Controller
                     else:
                         $input['rc_type'] = $request->rc_type;
                         $input['rc_number'] = $request->rc_number;
+                        if ($vehicle->data->contact_number == $patient->mobile_number && $vehicle->data->owner_name == $patient->patient_name):
+                            $request->session()->put('vehicle', $vehicle->data);
+                        endif;
                     endif;
                 endif;
             endif;
@@ -213,6 +218,7 @@ class PatientReferenceController extends Controller
         ]);
         try {
             $input = $request->all();
+            $patient = PatientRegistrations::find($request->pid);
             $secret = Helper::apiSecret();
             $vcode = $request->rc_number;
             if ($vcode && $request->rc_type == 2):
@@ -225,6 +231,9 @@ class PatientReferenceController extends Controller
                     else:
                         $input['rc_type'] = $request->rc_type;
                         $input['rc_number'] = $request->rc_number;
+                        if ($vehicle->data->contact_number == $patient->mobile_number && $vehicle->data->owner_name == $patient->patient_name):
+                            $request->session()->put('vehicle', $vehicle->data);
+                        endif;
                     endif;
                 endif;
             endif;

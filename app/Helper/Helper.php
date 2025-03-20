@@ -9,11 +9,13 @@ use App\Models\PatientReference;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\InhouseCamp;
 use App\Models\InhouseCampProcedure;
+use App\Models\PatientRegistrations;
 use App\Models\RoyaltyCardProcedure;
 use App\Models\UserBranch;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class Helper
 {
@@ -69,6 +71,7 @@ class Helper
         $discount_category_id = 0;
         $mrecord = PatientMedicalRecord::find($medical_record_id);
         $pref = PatientReference::find($mrecord->mrn);
+        $patient = PatientRegistrations::find($mrecord->patient_id);
         if ($pref->camp_id > 0):
             $camp = InhouseCamp::find($pref->camp_id);
             $valid_to = Carbon::parse($pref->created_at)->addDays($camp->validity)->format('Y-m-d');
@@ -82,11 +85,16 @@ class Helper
             $pro = RoyaltyCardProcedure::where('proc_id', $proc->id)->where('royalty_card_id', $pref->rc_type)->first();
             if ($pro && $pro->discount_percentage > 0):
                 $discount = ($proc->fee * $pro->discount_percentage) / 100;
-                $fee = $proc->fee - $discount;
-                $discount_category = 'royalty-card';
-                $discount_category_id = $pref->rc_type;
             endif;
+            $vehicle = Session::get('vehicle');
+            if ($vehicle && $vehicle->contact_number == $patient->mobile_number && $vehicle->owner_name == $patient->patient_name):
+                $discount = $proc->fee;
+            endif;
+            $fee = $proc->fee - $discount;
+            $discount_category = 'royalty-card';
+            $discount_category_id = $pref->rc_type;
         endif;
+        Session::forget('vehicle');
         return array($fee, $discount, $discount_category, $discount_category_id);
     }
 
