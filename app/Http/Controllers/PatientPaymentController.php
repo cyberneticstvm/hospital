@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Helper\Helper;
+use App\Models\PatientMedicalRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\PatientPayment as PP;
 use App\Models\PatientPayment;
+use App\Models\PatientProcedure;
 use App\Models\PatientReference as PR;
 use App\Models\PatientReference;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Hash;
 
 class PatientPaymentController extends Controller
 {
@@ -133,12 +136,46 @@ class PatientPaymentController extends Controller
 
         $payments = PP::where('medical_record_id', $request->medical_record_id)->leftJoin('payment_modes as p', 'patient_payments.payment_mode', '=', 'p.id')->select('patient_payments.id', 'patient_payments.amount', 'patient_payments.notes', 'p.name')->get();
 
+        $procs = PatientProcedure::where('medical_record_id', $request->medical_record_id)->where('discount', 0)->get();
+
         $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $postop_medicine, $procedure_fee, $radiology_lab, $reg_fee, $surgery_consumables, $surgery_medicine, $vision);
         $tot = $reg_fee + $consultation_fee + $procedure_fee + $certificate_fee + $pharmacy + $radiology_lab + $clinical_lab + $vision + $surgery_medicine + $postop_medicine + $surgery_consumables;
         if ($patient):
-            return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments', 'types'));
+            return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments', 'types', 'procs'));
         else:
             return redirect()->back()->with('error', 'No records found.');
+        endif;
+    }
+
+    function patientPaymentDiscountUpdate(Request $request)
+    {
+        if (Hash::check($request->password, Auth::user()->password)):
+            if ($request->cfeedisc > 0):
+                $fee = PatientReference::where('id', PatientMedicalRecord::find($request->mrid)->mrn)->first();
+                $fee->update([
+                    'fee' => $fee->doctor_fee - $request->cfeedisc,
+                    'discount' => $request->cfeedisc,
+                    'discounted_by' => $request->user()->id,
+                    'discounted_at' => Carbon::now(),
+                ]);
+            endif;
+            if ($request->procs):
+                foreach ($request->procs as $key => $item):
+                    if ($request->discounts[$key] > 0):
+                        $proc = PatientProcedure::where('id', $item)->first();
+                        $proc->update([
+                            'fee' => $proc->fee - $request->discounts[$key],
+                            'discount' => $request->discounts[$key],
+                            'discount_category' => 'staff',
+                            'discounted_by' => $request->user()->id,
+                            'discounted_at' => Carbon::now(),
+                        ]);
+                    endif;
+                endforeach;
+            endif;
+            return redirect()->route('patient-payment.index')->with('success', 'Discount settings updated successfully.');
+        else:
+            return redirect()->route('patient-payment.index')->with('error', 'Incorrect Password');
         endif;
     }
 
