@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use DB;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class PatientReferenceController extends Controller
 {
@@ -41,6 +42,8 @@ class PatientReferenceController extends Controller
     private function getDoctorFee($pid, $fee, $ctype)
     {
         $doc_fee = 0.00;
+        $vehicle = Session::get('vehicle');
+        $patient = PatientRegistrations::find($pid);
         $days = DB::table('settings')->where('id', 1)->value('consultation_fee_days');
         //$date_diff = PRef::where('patient_id', $pid)->select(DB::raw("IFNULL(DATEDIFF(now(), created_at), 0) as days"))->latest()->value('days');
         $date_diff = PRef::where('patient_id', $pid)->select(DB::raw("IFNULL(DATEDIFF(now(), created_at), 0) as days, status, consultation_type"))->latest()->first();
@@ -52,6 +55,9 @@ class PatientReferenceController extends Controller
         endif;
         if ($ctype == 2 || $ctype == 4 || $ctype == 5 || $ctype == 6 || $ctype == 7 || $ctype == 8) :
             $doc_fee = 0.00; // ctype 2/4/5 means purpose of visit is Certificate/Camp/Vision Examination and no consultation fee for that.
+        endif;
+        if ($vehicle && $vehicle->contact_number == $patient->mobile_number && $vehicle->owner_name == $patient->patient_name):
+            $doc_fee = 0.00;
         endif;
         return $doc_fee;
     }
