@@ -86,15 +86,10 @@ class Helper
             if ($pro && $pro->discount_percentage > 0):
                 $discount = ($proc->fee * $pro->discount_percentage) / 100;
             endif;
-            $vehicle = Session::get('vehicle');
-            if ($vehicle && $vehicle->contact_number == $patient->mobile_number && $vehicle->owner_name == $patient->patient_name):
-                $discount = $proc->fee;
-            endif;
             $fee = $proc->fee - $discount;
             $discount_category = 'royalty-card';
             $discount_category_id = $pref->rc_type;
         endif;
-        Session::forget('vehicle');
         return array($fee, $discount, $discount_category, $discount_category_id);
     }
 

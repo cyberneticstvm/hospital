@@ -59,6 +59,7 @@ class PatientReferenceController extends Controller
         if ($vehicle && $vehicle->contact_number == $patient->mobile_number && $vehicle->owner_name == $patient->patient_name):
             $doc_fee = 0.00;
         endif;
+        Session::forget('vehicle');
         return $doc_fee;
     }
 
