@@ -19,6 +19,13 @@ use Illuminate\Support\Facades\Session;
 
 class Helper
 {
+    protected $url, $secret;
+
+    public function __construct()
+    {
+        $this->url = "https://store.devihospitals.in";
+        $this->secret = 'fdjsvsgdf4dhgf687f4bg54g4hf787';
+    }
     public static function api_url()
     {
         return "https://store.devihospitals.in";
@@ -62,6 +69,22 @@ class Helper
         return $res;
     }
 
+    function getVehicle($vcode, $rc_type)
+    {
+        $data = null;
+        if ($vcode && $rc_type == 2):
+            $url = Helper::api_url() . "/api/vehicle/$vcode/" . $this->secret;
+            $json = file_get_contents($url);
+            $vehicle = json_decode($json);
+            if ($vehicle->status):
+                if ($vehicle->vstatus == 'Active'):
+                    $data = $vehicle->data;
+                endif;
+            endif;
+        endif;
+        return $data;
+    }
+
     public static function getProcedureFee($medical_record_id, $procedure)
     {
         $proc = Procedure::find($procedure);
@@ -85,6 +108,10 @@ class Helper
             $pro = RoyaltyCardProcedure::where('proc_id', $proc->id)->where('royalty_card_id', $pref->rc_type)->first();
             if ($pro && $pro->discount_percentage > 0):
                 $discount = ($proc->fee * $pro->discount_percentage) / 100;
+            endif;
+            $vehicle = self::getVehicle($pref->rc_number, $pref->rc_type);
+            if ($vehicle->contact_number == $patient->mobile_number && $vehicle->owner_name == $patient->patient_name):
+                $discount = $proc->fee;
             endif;
             $fee = $proc->fee - $discount;
             $discount_category = 'royalty-card';
