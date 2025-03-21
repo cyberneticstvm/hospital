@@ -140,8 +140,9 @@ class PatientPaymentController extends Controller
 
         $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $postop_medicine, $procedure_fee, $radiology_lab, $reg_fee, $surgery_consumables, $surgery_medicine, $vision);
         $tot = $reg_fee + $consultation_fee + $procedure_fee + $certificate_fee + $pharmacy + $radiology_lab + $clinical_lab + $vision + $surgery_medicine + $postop_medicine + $surgery_consumables;
+        $chk = $request->chkApplyDisc;
         if ($patient):
-            return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments', 'types', 'procs'));
+            return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments', 'types', 'procs', 'chk'));
         else:
             return redirect()->back()->with('error', 'No records found.');
         endif;

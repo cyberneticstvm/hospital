@@ -132,6 +132,7 @@
         </div> <!-- .row end -->
     </div>
 </div>
+@if($chk)
 <div class="modal fade" id="paymentModalLg" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -189,4 +190,5 @@
         </div>
     </div>
 </div>
+@endif
 @endsection
