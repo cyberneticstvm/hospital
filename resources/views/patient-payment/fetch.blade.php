@@ -175,7 +175,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="4" class="text-danger">By updating "Discount", you confirm that you are aware and responsible for the modification which you have made. - {{ Auth::user()->name }}</td>
+                                <td colspan="4" class="text-danger">By updating "Discount", I confirmed that I'm aware and responsible for the modification which I've made. - {{ Auth::user()->name }}</td>
                             </tr>
                             <tr>
                                 <td colspan="4"><input type="password" name="password" class="form-control" placeholder="Enter your password to save the updates" required /></td>
