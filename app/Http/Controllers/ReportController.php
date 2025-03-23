@@ -360,7 +360,7 @@ class ReportController extends Controller
 
     public function pharmacy()
     {
-        $inputs = array(date('d/M/Y'), date('d/M/Y'), '-1', $this->branch);
+        $inputs = array(date('d/M/Y'), date('d/M/Y'), '', $this->branch);
         $branches = $this->getBranches($this->branch);
         $products = Product::orderBy('product_name')->get();
         $records = [];

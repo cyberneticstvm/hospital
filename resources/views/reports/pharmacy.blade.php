@@ -47,8 +47,9 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-3">
-                                    <label class="form-label">Product<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Product</label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="product">
+                                        <option value="">Select</option>
                                         @foreach($products as $key => $product)
                                         <option value="{{ $product->id }}" {{ ($inputs && $inputs[2] == $product->id) ? 'selected'  : '' }}>{{ $product->product_name }}</option>
                                         @endforeach
