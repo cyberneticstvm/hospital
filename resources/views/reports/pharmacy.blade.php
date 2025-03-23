@@ -47,10 +47,21 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-4">
+                                    <label class="form-label">Product<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="product">
+                                        @foreach($products as $key => $product)
+                                        <option value="{{ $product->id }}" {{ ($inputs && $inputs[2] == $product->id) ? 'selected'  : '' }}>{{ $product->product_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('product')
+                                    <small class="text-danger">{{ $errors->first('product') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-4">
                                     <label class="form-label">Branch<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="branch">
                                         @foreach($branches as $key => $branch)
-                                        <option value="{{ $branch->id }}" {{ ($inputs && $inputs[2] == $branch->id) ? 'selected'  : '' }}>{{ $branch->branch_name }}</option>
+                                        <option value="{{ $branch->id }}" {{ ($inputs && $inputs[3] == $branch->id) ? 'selected'  : '' }}>{{ $branch->branch_name }}</option>
                                         @endforeach
                                     </select>
                                     @error('branch')

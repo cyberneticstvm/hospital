@@ -17,6 +17,7 @@ use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\Procedure;
 use App\Models\ProcedureType;
+use App\Models\Product;
 use App\Models\RoyaltyCard;
 use App\Models\Spectacle;
 use App\Models\Surgery;
@@ -359,10 +360,11 @@ class ReportController extends Controller
 
     public function pharmacy()
     {
-        $inputs = array(date('d/M/Y'), date('d/M/Y'), $this->branch);
+        $inputs = array(date('d/M/Y'), date('d/M/Y'), '', $this->branch);
         $branches = $this->getBranches($this->branch);
+        $products = Product::orderBy('name')->get();
         $records = [];
-        return view('reports.pharmacy', compact('inputs', 'branches', 'records'));
+        return view('reports.pharmacy', compact('inputs', 'branches', 'records', 'products'));
     }
 
     public function fetchPharmacy(Request $request)
@@ -373,11 +375,12 @@ class ReportController extends Controller
             'branch' => 'required',
         ]);
         $branches = $this->getBranches($this->branch);
-        $inputs = array($request->fromdate, $request->todate, $request->branch);
+        $products = Product::orderBy('name')->get();
+        $inputs = array($request->fromdate, $request->todate, $request->product, $request->branch);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
         $records = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->whereBetween('pmr1.created_at', [$startDate, $endDate])->where('pmr1.branch', $request->branch)->select('pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name')->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->get();
-        return view('reports.pharmacy', compact('branches', 'records', 'inputs'));
+        return view('reports.pharmacy', compact('branches', 'records', 'inputs', 'products'));
     }
 
     public function showmRecord()
