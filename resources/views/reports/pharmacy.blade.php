@@ -16,7 +16,7 @@
                             @csrf
                             @php $today = date('d/M/Y') @endphp
                             <div class="row g-4">
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <label class="form-label">From Date</label>
                                     <fieldset class="form-icon-group left-icon position-relative">
                                         <input type="text" value="{{ ($inputs) ? $inputs[0] : $today }}" name="fromdate" class="form-control form-control-md dtpicker">
@@ -31,7 +31,7 @@
                                     <small class="text-danger">{{ $errors->first('fromdate') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <label class="form-label">To Date</label>
                                     <fieldset class="form-icon-group left-icon position-relative">
                                         <input type="text" value="{{ ($inputs) ? $inputs[1] : $today }}" name="todate" class="form-control form-control-md dtpicker">
