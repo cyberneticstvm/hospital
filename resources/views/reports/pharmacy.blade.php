@@ -46,7 +46,7 @@
                                     <small class="text-danger">{{ $errors->first('todate') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Product<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="product">
                                         @foreach($products as $key => $product)
@@ -57,7 +57,7 @@
                                     <small class="text-danger">{{ $errors->first('product') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Branch<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="branch">
                                         @foreach($branches as $key => $branch)
