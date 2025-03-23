@@ -362,7 +362,7 @@ class ReportController extends Controller
     {
         $inputs = array(date('d/M/Y'), date('d/M/Y'), '', $this->branch);
         $branches = $this->getBranches($this->branch);
-        $products = Product::orderBy('name')->get();
+        $products = Product::orderBy('product_name')->get();
         $records = [];
         return view('reports.pharmacy', compact('inputs', 'branches', 'records', 'products'));
     }
@@ -375,7 +375,7 @@ class ReportController extends Controller
             'branch' => 'required',
         ]);
         $branches = $this->getBranches($this->branch);
-        $products = Product::orderBy('name')->get();
+        $products = Product::orderBy('product_name')->get();
         $inputs = array($request->fromdate, $request->todate, $request->product, $request->branch);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
