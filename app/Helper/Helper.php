@@ -69,7 +69,7 @@ class Helper
         return $res;
     }
 
-    function getVehicle($vcode, $rc_type)
+    public function getVehicle($vcode, $rc_type)
     {
         $data = null;
         if ($vcode && $rc_type == 2):
@@ -109,7 +109,7 @@ class Helper
             if ($pro && $pro->discount_percentage > 0):
                 $discount = ($proc->fee * $pro->discount_percentage) / 100;
             endif;
-            $vehicle = self::getVehicle($pref->rc_number, $pref->rc_type);
+            $vehicle = (new self)->getVehicle($pref->rc_number, $pref->rc_type);
             if ($vehicle->contact_number == $patient->mobile_number && $vehicle->owner_name == $patient->patient_name):
                 $discount = $proc->fee;
             endif;
