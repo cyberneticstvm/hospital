@@ -13,12 +13,18 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <div class="row g-4 mb-3">
-                            <div class="col-sm-3">MR.ID: <h5 class="text-primary">{{ $mrecord->id }}</h5>
+                            <div class="col-sm-3">MRN: <h5 class="text-primary">{{ $mrecord->id }}</h5>
                             </div>
-                            <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ ($patient) ? $patient->patient_name : '' }}</h5>
+                            <div class="col-sm-4">Patient Name: <h5 class="text-primary">{{ ($patient) ? $patient->patient_name : '' }}</h5>
                             </div>
                             <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ ($patient) ? $patient->patient_id : '' }}</h5>
                             </div>
+                            @if($pref->rc_type && $pref->rc_number)
+                            <div class="col-sm-2 text-end">
+                                <label>Royalty Card Applied</label>
+                                <img src="/public/images/rc-card.jpg" width="50%" />
+                            </div>
+                            @endif
                         </div>
                         <form action="{{ route('bscan.save') }}" method="post" enctype="multipart/form-data">
                             @csrf

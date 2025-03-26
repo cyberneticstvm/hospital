@@ -6,6 +6,7 @@ use App\Helper\Helper;
 use App\Models\Bscan;
 use App\Models\BscanDocs;
 use App\Models\PatientProcedure;
+use App\Models\PatientReference;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -136,9 +137,10 @@ class BscanController extends Controller
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
         if ($mrecord) :
+            $pref = PatientReference::where('id', $mrecord->mrn)->first();
             $procedures = DB::table('procedures')->where('type', 'B')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
-            return view('bscan.create', compact('mrecord', 'patient', 'procedures'));
+            return view('bscan.create', compact('mrecord', 'patient', 'procedures', 'pref'));
         else :
             return redirect()->route('bscan.index')->withErrors('No records found.');
         endif;
