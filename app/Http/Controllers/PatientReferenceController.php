@@ -169,7 +169,7 @@ class PatientReferenceController extends Controller
                 Appointment::where(['id' => $request->appointment_id])->update(['medical_record_id' => $reference->id]);
             });
         } catch (Exception $e) {
-            return redirect()->back()->with("error", "Royalty Card information not found!")->withInput($request->all());
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
 
         return redirect()->route('consultation.patient-reference')->with('success', 'Doctor Assigned successfully');
