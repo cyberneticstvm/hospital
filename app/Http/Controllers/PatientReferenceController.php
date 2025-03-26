@@ -139,8 +139,8 @@ class PatientReferenceController extends Controller
                 if ($vehicle->status):
                     if ($vehicle->vstatus == 'Inactive'):
                         exit("Provided vehicle is inactive or does not exists");
-                    elseif (Carbon::parse($vehicle->last_payment_date)->format('Y-m-d') == Carbon::today()):
-                        exit("Royalty card is under 12 Hrs cooling period");
+                    elseif ($vehicle->vstatus == 'Cooling'):
+                        throw new Exception($vehicle->data);
                     else:
                         $input['rc_type'] = $request->rc_type;
                         $input['rc_number'] = $request->rc_number;
