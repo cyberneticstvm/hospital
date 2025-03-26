@@ -76,8 +76,6 @@ class Helper
             $url = Helper::api_url() . "/api/vehicle/$vcode/" . $this->secret;
             $json = file_get_contents($url);
             $vehicle = json_decode($json);
-            dd($vehicle);
-            die;
             if ($vehicle->status):
                 if ($vehicle->vstatus == 'Active'):
                     $data = $vehicle->data;
@@ -112,6 +110,8 @@ class Helper
                 $discount = ($proc->fee * $pro->discount_percentage) / 100;
             endif;
             $vehicle = (new self)->getVehicle($pref->rc_number, $pref->rc_type);
+            dd($vehicle);
+            die;
             if ($vehicle?->contact_number == $patient->mobile_number && $vehicle->owner_name == $patient->patient_name):
                 $discount = $proc->fee;
             endif;
