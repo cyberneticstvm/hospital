@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Helper\Helper;
+use App\Models\PatientReference;
 use App\Models\Procedure;
 use App\Models\ProcedureType;
 use Carbon\Carbon;
@@ -83,10 +84,11 @@ class ProcedureController extends Controller
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_number);
         if ($mrecord) :
             $procedures = Procedure::where('type', 'P')->get();
+            $pref = PatientReference::where('id', $mrecord->mrn)->first();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-            return view('procedure.create', compact('mrecord', 'patient', 'doctor', 'age', 'procedures'));
+            return view('procedure.create', compact('mrecord', 'patient', 'doctor', 'age', 'procedures', 'pref'));
         else :
             return redirect("/consultation/procedure/")->withErrors('No records found.');
         endif;
