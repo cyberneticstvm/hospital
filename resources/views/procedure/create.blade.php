@@ -18,22 +18,20 @@
                             <input type="hidden" id="age" value="{{ $age }}" />
                             <input type="hidden" name="patient_id" value="{{ $patient->id }}" />
                             <div class="row g-4">
-                                <div class="col-sm-3">Medical Record No: <h5 class="text-primary">{{ $mrecord->id }}</h5>
+                                <div class="col-sm-2">MRN: <h5 class="text-primary">{{ $mrecord->id }}</h5>
                                 </div>
                                 <div class="col-sm-3">Patient Name / Age: <h5 class="text-primary">{{ $patient->patient_name }} / {{ $age }}</h5>
                                 </div>
-                                <div class="col-sm-3">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5>
+                                <div class="col-sm-2">Patient ID: <h5 class="text-primary">{{ $patient->patient_id }}</h5>
                                 </div>
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5>
                                 </div>
-                            </div>
-                            @if($pref->rc_type && $pref->rc_number)
-                            <div class="row g-4">
-                                <div class="col-md-12 text-end">
+                                @if($pref->rc_type && $pref->rc_number)
+                                <div class="col-sm-2 text-end">
                                     <img src="/public/images/rc-card.jpg" width="5%" />
                                 </div>
+                                @endif
                             </div>
-                            @endif
                             <div class="row mt-3">
                                 <div class="col-sm-9">
                                     <label class="form-label">Procedures<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
