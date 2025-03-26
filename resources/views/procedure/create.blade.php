@@ -29,7 +29,9 @@
                             </div>
                             @if($pref->rc_type && $pref->rc_number)
                             <div class="row g-4">
-                                <div class="col-md-12 text-center">Card Applied</div>
+                                <div class="col-md-12 text-center">
+                                    <img src="/public/images/rc-card.jpg" width="25%" />
+                                </div>
                             </div>
                             @endif
                             <div class="row mt-3">
