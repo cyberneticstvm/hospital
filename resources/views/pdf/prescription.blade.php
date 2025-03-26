@@ -101,7 +101,6 @@
     <pre />
     <pre />
     <pre />
-    <pre />
     <img src="data:image/png;base64, {!! $qrcode !!}">
     <p class="text-small">To book an appointment, scan this QR code.</p>
     <p class="text-right">{{ ($reference->rc_type && $reference->rc_number) ? 'Royalty Card Applied' : '' }}</p>
