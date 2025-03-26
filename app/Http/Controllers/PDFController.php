@@ -41,7 +41,7 @@ class PDFController extends Controller
 
     public function prescription($id)
     {
-        $reference = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pr.consultation_type', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at', 'pr.appointment_id')->first();
+        $reference = DB::table('patient_references as pr')->leftJoin('patient_medical_records as pmr', 'pr.id', '=', 'pmr.mrn')->where('pr.id', $id)->select('pr.id', 'pr.rc_type', 'pr.rc_number', 'pr.consultation_type', 'pmr.id as medical_record_id', 'pr.token', 'pr.patient_id', 'pr.doctor_id', 'pr.branch', 'pr.created_at', 'pr.appointment_id')->first();
         $patient = PatientRegistrations::find($reference->patient_id);
         $branch = Branch::findOrFail($reference->branch);
         $doctor = DB::table('doctors')->find($reference->doctor_id);

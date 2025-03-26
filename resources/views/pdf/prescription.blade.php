@@ -27,6 +27,10 @@
         .text-large {
             font-size: 15px;
         }
+
+        .text-right {
+            text-align: right !important;
+        }
     </style>
 </head>
 
