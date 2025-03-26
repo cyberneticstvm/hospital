@@ -27,9 +27,11 @@
                                 <div class="col-sm-3">Doctor Name: <h5 class="text-primary">{{ $doctor->doctor_name }}</h5>
                                 </div>
                             </div>
+                            @if($pref->rc_type && $pref->rc_number)
                             <div class="row g-4">
                                 <div class="col-md-12 text-center">Card Applied</div>
                             </div>
+                            @endif
                             <div class="row mt-3">
                                 <div class="col-sm-9">
                                     <label class="form-label">Procedures<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
