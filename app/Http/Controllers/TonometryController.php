@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helper\Helper;
 use App\Models\PatientProcedure;
+use App\Models\PatientReference;
 use Illuminate\Http\Request;
 use App\Models\Tonometry;
 use Carbon\Carbon;
