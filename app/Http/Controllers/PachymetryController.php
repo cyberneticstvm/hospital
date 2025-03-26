@@ -7,6 +7,7 @@ use App\Helper\Helper;
 use Illuminate\Http\Request;
 use App\Models\Pachymetry;
 use App\Models\PatientProcedure;
+use App\Models\PatientReference;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -114,9 +115,10 @@ class PachymetryController extends Controller
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
         if ($mrecord):
             $procedures = DB::table('procedures')->where('type', 'C')->get();
+            $pref = PatientReference::where('id', $mrecord->mrn)->first();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
-            return view('pachymetry.create', compact('mrecord', 'patient', 'doctor', 'procedures'));
+            return view('pachymetry.create', compact('mrecord', 'patient', 'doctor', 'procedures', 'pref'));
         else:
             return redirect("/pachymetry/")->withErrors('No records found.');
         endif;
