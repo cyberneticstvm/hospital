@@ -237,6 +237,8 @@ class PatientReferenceController extends Controller
                 if ($vehicle->status):
                     if ($vehicle->vstatus == 'Inactive'):
                         throw new Exception("Provided vehicle is inactive or does not exists");
+                    elseif ($vehicle->vstatus == 'Cooling'):
+                        throw new Exception($vehicle->data);
                     else:
                         $input['rc_type'] = $request->rc_type;
                         $input['rc_number'] = $request->rc_number;
