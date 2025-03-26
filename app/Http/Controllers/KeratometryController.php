@@ -6,6 +6,7 @@ use App\Helper\Helper;
 use Illuminate\Http\Request;
 use App\Models\Keratometry;
 use App\Models\PatientProcedure;
+use App\Models\PatientReference;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -100,11 +101,12 @@ class KeratometryController extends Controller
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
         if ($mrecord):
             $procedures = DB::table('procedures')->where('type', 'K')->get();
+            $pref = PatientReference::where('id', $mrecord->mrn)->first();
             $powers = DB::table('eye_powers')->where('category', 'keratometry')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-            return view('keratometry.create', compact('mrecord', 'patient', 'doctor', 'age', 'powers', 'procedures'));
+            return view('keratometry.create', compact('mrecord', 'patient', 'doctor', 'age', 'powers', 'procedures', 'pref'));
         else:
             return redirect("/keratometry/")->withErrors('No records found.');
         endif;
