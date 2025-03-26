@@ -7,6 +7,7 @@ use App\Helper\Helper;
 use App\Models\doctor;
 use App\Models\HFA;
 use App\Models\PatientProcedure;
+use App\Models\PatientReference;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
@@ -134,10 +135,11 @@ class HFAController extends Controller
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
         if ($mrecord) :
+            $pref = PatientReference::where('id', $mrecord->mrn)->first();
             $procedures = DB::table('procedures')->where('type', 'H')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
-            return view('hfa.create', compact('mrecord', 'patient', 'doctor', 'procedures'));
+            return view('hfa.create', compact('mrecord', 'patient', 'doctor', 'procedures', 'pref'));
         else :
             return redirect("/hfa")->withErrors('No records found.');
         endif;
