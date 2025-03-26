@@ -49,8 +49,8 @@ class PDFController extends Controller
         //view()->share('patient', $reference);     
         $pdf = PDF::loadView('/pdf/prescription', compact('reference', 'patient', 'doctor', 'qrcode', 'branch'));
         //return $pdf->download('token.pdf');
-        if ($reference->consultation_type == 4) :
-            $txt = 'CAMP';
+        if ($reference->consultation_type == 4 || $reference->rc_type && $reference->rc_number) :
+            $txt = ($reference->consultation_type == 4) ? 'CAMP' : 'ROYALTY CARD';
             if ($reference->appointment_id > 0) :
                 $app = Appointment::find($reference->appointment_id);
                 if ($app->camp_id > 0) :
