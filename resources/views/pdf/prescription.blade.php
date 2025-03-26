@@ -31,6 +31,10 @@
         .text-right {
             text-align: right !important;
         }
+
+        .text-gray {
+            color: gray !important;
+        }
     </style>
 </head>
 
@@ -100,10 +104,9 @@
     <pre />
     <pre />
     <pre />
-    <pre />
     <img src="data:image/png;base64, {!! $qrcode !!}">
     <p class="text-small">To book an appointment, scan this QR code.</p>
-    <p class="text-right">{{ ($reference->rc_type && $reference->rc_number) ? 'Royalty Card Applied' : '' }}</p>
+    <p class="text-right text-gray">{{ ($reference->rc_type && $reference->rc_number) ? 'Royalty Card Applied' : '' }}</p>
     <hr>
     <center>
         <p class='text-medium'>VARKALA | PARIPPALLY | POTHENCODE | PARAVOOR | CHIRAYINKEEZHU | KADAKKAL | ATTINGAL | OONNINMOODU | EDAVA | NADAYARA</p>
