@@ -110,7 +110,7 @@ class Helper
                 $discount = ($proc->fee * $pro->discount_percentage) / 100;
             endif;
             $vehicle = (new self)->getVehicle($pref->rc_number, $pref->rc_type);
-            dd($vehicle);
+            dd($pref->rc_number, $pref->rc_type);
             die;
             if ($vehicle?->contact_number == $patient->mobile_number && $vehicle->owner_name == $patient->patient_name):
                 $discount = $proc->fee;
