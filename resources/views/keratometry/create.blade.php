@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <div class="row g-4 mb-3">
-                            <div class="col-sm-2">MR.ID: <h5 class="text-primary">{{ $mrecord->id }}</h5>
+                            <div class="col-sm-2">MRN: <h5 class="text-primary">{{ $mrecord->id }}</h5>
                             </div>
                             <div class="col-sm-3">Patient Name: <h5 class="text-primary">{{ ($patient) ? $patient->patient_name : '' }}</h5>
                             </div>

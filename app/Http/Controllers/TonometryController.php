@@ -100,12 +100,13 @@ class TonometryController extends Controller
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
         if ($mrecord) :
             $procedures = DB::table('procedures')->where('type', 'T')->get();
+            $pref = PatientReference::where('id', $mrecord->mrn)->first();
             $powers_nct = DB::table('eye_powers')->where('category', 'tonometry_nct')->get();
             $powers_at = DB::table('eye_powers')->where('category', 'tonometry_at')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $doctor = DB::table('doctors')->find($mrecord->doctor_id);
             $age = DB::table('patient_registrations')->where('id', $mrecord->patient_id)->selectRaw('CASE WHEN age > 0 THEN age+(YEAR(NOW())-YEAR(created_at)) ELSE timestampdiff(YEAR, dob, NOW()) END AS age')->pluck('age')->first();
-            return view('tonometry.create', compact('mrecord', 'patient', 'doctor', 'age', 'powers_nct', 'powers_at', 'procedures'));
+            return view('tonometry.create', compact('mrecord', 'patient', 'doctor', 'age', 'powers_nct', 'powers_at', 'procedures', 'pref'));
         else :
             return redirect("/tonometry/")->withErrors('No records found.');
         endif;
