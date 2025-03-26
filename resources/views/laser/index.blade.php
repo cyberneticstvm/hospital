@@ -40,6 +40,16 @@
                 <h5 class="mb-3 mt-3">Laser Register</h5>
                 <div class="card">
                     <div class="card-body table-responsive">
+                        @if (session('success'))
+                        <div class="alert alert-success" style="margin-top: 0.2rem;">
+                            {{ session('success') }}
+                        </div>
+                        @endif
+                        @if (session('error'))
+                        <div class="alert alert-danger" style="margin-top: 0.2rem;">
+                            {{ session('error') }}
+                        </div>
+                        @endif
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
                             <thead>
                                 <tr>
