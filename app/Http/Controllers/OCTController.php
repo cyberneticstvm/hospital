@@ -6,6 +6,7 @@ use App\Helper\Helper;
 use App\Models\Oct;
 use App\Models\OctDocs;
 use App\Models\PatientProcedure;
+use App\Models\PatientReference;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -138,9 +139,10 @@ class OCTController extends Controller
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
         if ($mrecord) :
+            $pref = PatientReference::where('id', $mrecord->mrn)->first();
             $procedures = DB::table('procedures')->where('type', 'O')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
-            return view('oct.create', compact('mrecord', 'patient', 'procedures'));
+            return view('oct.create', compact('mrecord', 'patient', 'procedures', 'pref'));
         else :
             return redirect()->route('oct.index')->withErrors('No records found.');
         endif;
