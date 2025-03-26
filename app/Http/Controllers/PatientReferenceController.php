@@ -268,7 +268,7 @@ class PatientReferenceController extends Controller
             $reference->update($input);
             DB::table('patient_medical_records')->where('mrn', $id)->update(['status' => $input['status']]);
         } catch (Exception $e) {
-            return redirect()->back()->with("error", "Royalty Card information not found!")->withInput($request->all());
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
         return redirect()->route('consultation.patient-reference')->with('success', 'Record Updated successfully');
     }
