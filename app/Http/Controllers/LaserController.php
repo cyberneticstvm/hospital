@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helper\Helper;
 use App\Models\Laser;
 use App\Models\PatientProcedure;
+use App\Models\PatientReference;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -105,9 +106,10 @@ class LaserController extends Controller
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
         if ($mrecord) :
+            $pref = PatientReference::where('id', $mrecord->mrn)->first();
             $procedures = DB::table('procedures')->where('type', 'G')->get();
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
-            return view('laser.create', compact('mrecord', 'patient', 'procedures'));
+            return view('laser.create', compact('mrecord', 'patient', 'procedures', 'pref'));
         else :
             return redirect()->route('laser.index')->withErrors('No records found.');
         endif;
