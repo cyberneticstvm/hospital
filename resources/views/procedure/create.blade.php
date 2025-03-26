@@ -28,6 +28,7 @@
                                 </div>
                                 @if($pref->rc_type && $pref->rc_number)
                                 <div class="col-sm-2 text-end">
+                                    <label>Royalty Card Applied</label>
                                     <img src="/public/images/rc-card.jpg" width="50%" />
                                 </div>
                                 @endif
