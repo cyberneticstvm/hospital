@@ -66,6 +66,9 @@
                                         <option value="{{ $camp->id }}" {{ $campid == $camp->id ? 'selected' : '' }}>{{ $camp->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('camp_id')
+                                    <small class="text-danger">{{ $errors->first('camp_id') }}</small>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Royalty Card Type</label>
@@ -75,10 +78,16 @@
                                         <option value="{{ $card->id }}">{{ $card->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('rc_type')
+                                    <small class="text-danger">{{ $errors->first('rc_type') }}</small>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Royalty Card Number</label>
                                     <input type="text" class="form-control" name="rc_number" value="{{ old('rc_number') }}" placeholder="Royalty Card Number" />
+                                    @error('rc_number')
+                                    <small class="text-danger">{{ $errors->first('rc_number') }}</small>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">Notes</label>

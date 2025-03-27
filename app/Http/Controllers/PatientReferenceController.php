@@ -126,9 +126,14 @@ class PatientReferenceController extends Controller
         $this->validate($request, [
             'doctor_id' => 'required',
             'department_id' => 'required',
-            'consultation_type' => 'required'
+            'consultation_type' => 'required',
+            'rc_type' => 'required_with:rc_number',
+            'rc_number' => 'required_with:rc_type',
         ]);
         try {
+            if ($request->rc_number && $request->consultation_type == 4):
+                throw new Exception("Camp and Royalty Card cannot be clubbed together");
+            endif;
             $patient = PatientRegistrations::find($request->pid);
             $secret = Helper::apiSecret();
             $vcode = $request->rc_number;
@@ -223,9 +228,14 @@ class PatientReferenceController extends Controller
         $this->validate($request, [
             'doctor_id' => 'required',
             'department_id' => 'required',
-            'consultation_type' => 'required'
+            'consultation_type' => 'required',
+            'rc_type' => 'required_with:rc_number',
+            'rc_number' => 'required_with:rc_type',
         ]);
         try {
+            if ($request->rc_number && $request->consultation_type == 4):
+                throw new Exception("Camp and Royalty Card cannot be clubbed together");
+            endif;
             $input = $request->all();
             $patient = PatientRegistrations::find($request->pid);
             $secret = Helper::apiSecret();
