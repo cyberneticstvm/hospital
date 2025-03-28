@@ -180,6 +180,9 @@
                             <tr>
                                 <td colspan="4"><input type="password" name="password" class="form-control" placeholder="Enter your password to save the updates" required /></td>
                             </tr>
+                            <tr>
+                                <td colspan="4"><input type="text" name="discount_notes" class="form-control" placeholder="Discount Notes / Description" required /></td>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>

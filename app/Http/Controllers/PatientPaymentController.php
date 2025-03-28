@@ -151,8 +151,8 @@ class PatientPaymentController extends Controller
     function patientPaymentDiscountUpdate(Request $request)
     {
         if (Hash::check($request->password, Auth::user()->password)):
+            $fee = PatientReference::where('id', PatientMedicalRecord::find($request->mrid)->mrn)->first();
             if ($request->cfeedisc > 0):
-                $fee = PatientReference::where('id', PatientMedicalRecord::find($request->mrid)->mrn)->first();
                 $fee->update([
                     'fee' => $fee->doctor_fee - $request->cfeedisc,
                     'discount' => $request->cfeedisc,
@@ -174,6 +174,9 @@ class PatientPaymentController extends Controller
                     endif;
                 endforeach;
             endif;
+            $fee->update([
+                'discount_notes' => $request->discount_notes,
+            ]);
             return redirect()->route('patient-payment.index')->with('success', 'Discount settings updated successfully.');
         else:
             return redirect()->route('patient-payment.index')->with('error', 'Incorrect Password');
