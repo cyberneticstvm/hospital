@@ -154,7 +154,7 @@ class PatientPaymentController extends Controller
             $fee = PatientReference::where('id', PatientMedicalRecord::find($request->mrid)->mrn)->first();
             if ($request->cfeedisc > 0):
                 $fee->update([
-                    'fee' => $fee->doctor_fee - $request->cfeedisc,
+                    'doctor_fee' => $fee->doctor_fee - $request->cfeedisc,
                     'discount' => $request->cfeedisc,
                     'discounted_by' => $request->user()->id,
                     'discounted_at' => Carbon::now(),
