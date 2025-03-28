@@ -47,6 +47,12 @@ Route::post('/testsmsapi', [AppointmentController::class, 'testsmsapisend'])->na
 Route::get('/', function () {
     return view('/login');
 })->name('login');
+
+Route::get('/schedule/appointment', 'App\Http\Controllers\AppointmentController@publicAppointment')->name('schedule.appointment');
+Route::post('/schedule/appointment', 'App\Http\Controllers\AppointmentController@publicAppointmentUpdate')->name('schedule.appointment.update');
+Route::get('/schedule/appointment/confirmation', function () {
+    return view('appointment.people.confirmation');
+})->name('schedule.appointment.confirmation');
 Route::post('/', 'App\Http\Controllers\DashboardController@userlogin')->name('login');
 
 // Authentication //
