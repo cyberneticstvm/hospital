@@ -158,7 +158,7 @@
                                 <td>0</td>
                                 <td>Consultation Fee</td>
                                 <td>{{ $fee[2] }}</td>
-                                <td><input type="number" name="cfeedisc" class="form-control text-end" min="0" max="{{ $fee[2] }}" step="1" value="0" /></td>
+                                <td><input type="number" name="cfeedisc" class="form-control text-end" min="0" max="{{ $fee[2] }}" step="1" value="0" {{ ($fee[2] > 0) ? '' : 'readonly' }} /></td>
                             </tr>
                             @forelse($procs as $key => $item)
                             <tr>
