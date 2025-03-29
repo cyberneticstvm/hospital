@@ -194,6 +194,102 @@ class ReportController extends Controller
 
         return view('reports.daybook', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'outstanding_received_other'));
     }
+    public function showdaybookcc()
+    {
+        $branches = $this->getBranches($this->branch);
+        $is_admin = $this->isAdmin();
+        $is_accounts = $this->isAccounts();
+        $isCEO = $this->isCEO();
+        $records = [];
+        $inputs = [];
+        $reg_fee_total = 0.00;
+        $consultation_fee_total = 0.00;
+        $procedure_fee_total = 0.00;
+        $certificate_fee_total = 0.00;
+        $pharmacy = 0.00;
+        $medicine = 0.00;
+        $income = 0.00;
+        $expense = 0.00;
+        $income_total = 0.00;
+        $income_received_cash = 0.00;
+        $income_received_upi = 0.00;
+        $income_received_card = 0.00;
+        $income_received_staff = 0.00;
+        $opening_balance = 0.00;
+        $vision = 0.00;
+        $outstanding = 0.00;
+        $clinical_lab = 0.00;
+        $radiology_lab = 0.00;
+        $surgery_medicine = 0.00;
+        $postop_medicine = 0.00;
+        $surgery_consumables = 0.00;
+        $outstanding_received = 0.00;
+        $outstanding_received_other = 0.00;
+        return view('reports.daybookcc', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'outstanding_received_other'));
+    }
+    public function fetchdaybookcc(Request $request)
+    {
+        $this->validate($request, [
+            'fromdate' => 'required',
+            'todate' => 'required',
+            'branch' => 'required',
+        ]);
+        $branches = $this->getBranches($this->branch);
+        $is_admin = $this->isAdmin();
+        $is_accounts = $this->isAccounts();
+        $isCEO = $this->isCEO();
+        $inputs = array($request->fromdate, $request->todate, $request->branch);
+        $prev_day = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay()->subDays(1);
+        $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
+        $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
+
+        $opening_balance = DB::table('daily_closing as d')->select(DB::raw("MAX(d.id), IFNULL(d.closing_balance, 0) AS closing_balance"))->whereDate('d.date', '=', $prev_day)->where('d.branch', $request->branch)->orderByDesc('d.id')->first()->closing_balance;
+
+        $reg_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('patient_references as pref', 'pref.id', 'pmr.mrn')->where('pref.review', 'no')->whereBetween('pmr.created_at', [$startDate, $endDate])->where('pr.branch', $request->branch)->sum('pr.registration_fee');
+
+        $consultation_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pr', 'pmr.mrn', '=', 'pr.id')->whereBetween('pr.created_at', [$startDate, $endDate])->where('pr.discount', 0)->where('pr.branch', $request->branch)->where('pr.status', 1)->sum('pr.doctor_fee');
+
+        $procedure_fee_total = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->whereBetween('pp.created_at', [$startDate, $endDate])->where('pp.branch', $request->branch)->whereNull('pp.deleted_at')->sum('fee');
+
+        $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->whereBetween('pc.created_at', [$startDate, $endDate])->where('pc.branch_id', $request->branch)->where('pcd.status', 'I')->sum('pcd.fee');
+
+        $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $request->branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
+
+        $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('m.status', 1)->where('p.branch', $request->branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('m.total');
+
+        $vision = DB::table('spectacles as s')->leftJoin('patient_medical_records as m', 'm.id', '=', 's.medical_record_id')->where('m.branch', $request->branch)->whereBetween('s.created_at', [$startDate, $endDate])->sum('s.fee');
+
+        $clinical_lab = DB::table('lab_clinics as l')->leftJoin('patient_medical_records as m', 'm.id', '=', 'l.medical_record_id')->whereBetween('l.created_at', [$startDate, $endDate])->where('l.tested_from', 1)->where('m.branch', $request->branch)->sum('l.fee');
+
+        $radiology_lab = DB::table('lab_radiologies as l')->leftJoin('patient_medical_records as m', 'm.id', '=', 'l.medical_record_id')->whereBetween('l.created_at', [$startDate, $endDate])->where('l.tested_from', 1)->where('m.branch', $request->branch)->sum('l.fee');
+
+        $surgery_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'surgery')->whereBetween('d.created_at', [$startDate, $endDate])->where('m.branch', $request->branch)->sum('d.total');
+
+        $postop_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'postop')->whereBetween('d.created_at', [$startDate, $endDate])->where('m.branch', $request->branch)->sum('d.total');
+
+        $surgery_consumables = PatientSurgeryConsumable::whereBetween('created_at', [$startDate, $endDate])->where('branch', $request->branch)->sum('total_after_discount');
+
+        $income = DB::table('incomes')->where('branch', $request->branch)->whereBetween('date', [$startDate, $endDate])->sum('amount');
+        $expense = DB::table('expenses')->where('branch', $request->branch)->whereBetween('date', [$startDate, $endDate])->sum('amount');
+
+        $income_received_cash = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->where('payment_mode', 1)->where('type', '!=', 9)->where('type', '!=', 8)->sum('amount');
+
+        $income_received_upi = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [3, 4])->where('type', '!=', 9)->where('type', '!=', 8)->sum('amount');
+
+        $income_received_card = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [2, 5, 7])->where('type', '!=', 9)->where('type', '!=', 8)->sum('amount');
+
+        $income_received_staff = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [6])->where('type', '!=', 9)->where('type', '!=', 8)->sum('amount');
+
+        $outstanding = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->where('type', 8)->sum('amount');
+
+        $outstanding_received = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->where('type', 9)->where('payment_mode', 1)->sum('amount');
+
+        $outstanding_received_other = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->where('type', 9)->where('payment_mode', '!=', 1)->sum('amount');
+
+        $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $income + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
+
+        return view('reports.daybookcc', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'outstanding_received_other'));
+    }
     public function showincomeexpense()
     {
         $branches = $this->getBranches($this->branch);

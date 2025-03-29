@@ -671,6 +671,10 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
     // End Discharge Summary //
 
     // Reports //
+
+    Route::get('/reports/daybookcc/', 'App\Http\Controllers\ReportController@showdaybookcc')->name('reports.showdaybook.cc');
+    Route::post('/reports/daybookcc/', 'App\Http\Controllers\ReportController@fetchdaybookcc')->name('reports.fetchdaybook.cc');
+
     Route::get('/reports/daybook/', 'App\Http\Controllers\ReportController@showdaybook')->name('reports.showdaybook');
     Route::post('/reports/daybook/', 'App\Http\Controllers\ReportController@fetchdaybook')->name('reports.fetchdaybook');
     Route::get('/reports/income-expense/', 'App\Http\Controllers\ReportController@showincomeexpense')->name('reports.showincomeexpense');

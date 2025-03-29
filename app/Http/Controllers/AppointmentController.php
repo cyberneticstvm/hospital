@@ -80,7 +80,7 @@ class AppointmentController extends Controller
         } catch (Exception $e) {
             return redirect()->route('schedule.appointment.confirmation')->with("error", $e->getMessage());
         }
-        return redirect()->route('schedule.appointment.confirmation')->with("success", "Appointment Scheduled Successfully");
+        return redirect()->route('schedule.appointment.confirmation')->with("success", "Appointment Scheduled Successfully. We will get in touch with you shortly with your appointment time and other details");
     }
 
     public function index()
