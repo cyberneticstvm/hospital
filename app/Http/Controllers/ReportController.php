@@ -206,6 +206,7 @@ class ReportController extends Controller
         $consultation_fee_total = 0.00;
         $consultation_fee_discount = 0.00;
         $procedure_fee_total = 0.00;
+        $procedure_fee_discount = 0.00;
         $certificate_fee_total = 0.00;
         $pharmacy = 0.00;
         $medicine = 0.00;
@@ -226,7 +227,7 @@ class ReportController extends Controller
         $surgery_consumables = 0.00;
         $outstanding_received = 0.00;
         $outstanding_received_other = 0.00;
-        return view('reports.daybookcc', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'consultation_fee_discount', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'outstanding_received_other'));
+        return view('reports.daybookcc', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'consultation_fee_discount', 'procedure_fee_total', 'procedure_fee_discount', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'outstanding_received_other'));
     }
     public function fetchdaybookcc(Request $request)
     {
@@ -253,7 +254,10 @@ class ReportController extends Controller
         $consultation_fee_total = $consultation_fee->sum('pr.doctor_fee') + $consultation_fee->sum('pr.discount');
         $consultation_fee_discount = $consultation_fee->sum('pr.discount');
 
-        $procedure_fee_total = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->whereBetween('pp.created_at', [$startDate, $endDate])->where('pp.branch', $request->branch)->whereNull('pp.deleted_at')->sum('fee');
+        $procedure_fee = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->whereBetween('pp.created_at', [$startDate, $endDate])->where('pp.branch', $request->branch)->whereNull('pp.deleted_at');
+
+        $procedure_fee_total = $procedure_fee->sum('fee') + $procedure_fee->sum('discount');
+        $procedure_fee_discount = $procedure_fee->sum('discount');
 
         $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->whereBetween('pc.created_at', [$startDate, $endDate])->where('pc.branch_id', $request->branch)->where('pcd.status', 'I')->sum('pcd.fee');
 
@@ -292,7 +296,7 @@ class ReportController extends Controller
 
         $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $income + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
 
-        return view('reports.daybookcc', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'consultation_fee_discount', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'outstanding_received_other'));
+        return view('reports.daybookcc', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'consultation_fee_discount', 'procedure_fee_total', 'procedure_fee_discount', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'outstanding_received_other'));
     }
     public function showincomeexpense()
     {
