@@ -168,8 +168,8 @@
                                     <td>13</td>
                                     <td>Income from Surgery Consumables</td>
                                     <td class="text-end">{{ number_format($surgery_consumables, 2) }}</td>
-                                    <td></td>
-                                    <td class="text-end">{{ number_format($surgery_consumables, 2) }}</td>
+                                    <td class="text-end">{{ number_format($surgery_consumables_discount, 2) }}</td>
+                                    <td class="text-end">{{ number_format($surgery_consumables - $surgery_consumables_discount, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td>14</td>

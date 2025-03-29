@@ -225,9 +225,10 @@ class ReportController extends Controller
         $surgery_medicine = 0.00;
         $postop_medicine = 0.00;
         $surgery_consumables = 0.00;
+        $surgery_consumables_discount = 0.00;
         $outstanding_received = 0.00;
         $outstanding_received_other = 0.00;
-        return view('reports.daybookcc', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'consultation_fee_discount', 'procedure_fee_total', 'procedure_fee_discount', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'outstanding_received_other'));
+        return view('reports.daybookcc', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'consultation_fee_discount', 'procedure_fee_total', 'procedure_fee_discount', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'surgery_consumables_discount', 'outstanding_received_other'));
     }
     public function fetchdaybookcc(Request $request)
     {
@@ -275,7 +276,10 @@ class ReportController extends Controller
 
         $postop_medicine = DB::table('post_operative_medicine_details as d')->leftjoin('post_operative_medicines as m', 'm.id', 'd.pom_id')->where('m.type', 'postop')->whereBetween('d.created_at', [$startDate, $endDate])->where('m.branch', $request->branch)->sum('d.total');
 
-        $surgery_consumables = PatientSurgeryConsumable::whereBetween('created_at', [$startDate, $endDate])->where('branch', $request->branch)->sum('total_after_discount');
+        $surgery_consumable = PatientSurgeryConsumable::whereBetween('created_at', [$startDate, $endDate])->where('branch', $request->branch);
+
+        $surgery_consumables = $surgery_consumable->sum('total');
+        $surgery_consumables_discount = $surgery_consumable->sum('discount');
 
         $income = DB::table('incomes')->where('branch', $request->branch)->whereBetween('date', [$startDate, $endDate])->sum('amount');
         $expense = DB::table('expenses')->where('branch', $request->branch)->whereBetween('date', [$startDate, $endDate])->sum('amount');
@@ -296,7 +300,7 @@ class ReportController extends Controller
 
         $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $income + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
 
-        return view('reports.daybookcc', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'consultation_fee_discount', 'procedure_fee_total', 'procedure_fee_discount', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'outstanding_received_other'));
+        return view('reports.daybookcc', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'consultation_fee_discount', 'procedure_fee_total', 'procedure_fee_discount', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'surgery_consumables_discount', 'outstanding_received_other'));
     }
     public function showincomeexpense()
     {
