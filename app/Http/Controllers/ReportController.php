@@ -247,7 +247,7 @@ class ReportController extends Controller
 
         $reg_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_registrations as pr', 'pmr.patient_id', '=', 'pr.id')->leftJoin('patient_references as pref', 'pref.id', 'pmr.mrn')->where('pref.review', 'no')->whereBetween('pmr.created_at', [$startDate, $endDate])->where('pr.branch', $request->branch)->sum('pr.registration_fee');
 
-        $consultation_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pr', 'pmr.mrn', '=', 'pr.id')->whereBetween('pr.created_at', [$startDate, $endDate])->where('pr.branch', $request->branch)->where('pr.status', 1)->get();
+        $consultation_fee_total = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pr', 'pmr.mrn', '=', 'pr.id')->whereBetween('pr.created_at', [$startDate, $endDate])->where('pr.branch', $request->branch)->where('pr.status', 1)->sum('pr.doctor_fee');
 
         $procedure_fee_total = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->whereBetween('pp.created_at', [$startDate, $endDate])->where('pp.branch', $request->branch)->whereNull('pp.deleted_at')->sum('fee');
 
@@ -286,7 +286,7 @@ class ReportController extends Controller
 
         $outstanding_received_other = DB::table('patient_payments')->where('branch', $request->branch)->whereBetween('created_at', [$startDate, $endDate])->where('type', 9)->where('payment_mode', '!=', 1)->sum('amount');
 
-        $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total->sum('pr.doctor_fee') + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $income + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
+        $income_total = $opening_balance + $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $pharmacy + $medicine + $vision + $income + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
 
         return view('reports.daybookcc', compact('inputs', 'branches', 'reg_fee_total', 'consultation_fee_total', 'procedure_fee_total', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'outstanding_received_other'));
     }
