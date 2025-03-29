@@ -98,8 +98,8 @@
                                     <td>3</td>
                                     <td>Income from Consultation</td>
                                     <td class="text-end">{{ number_format($consultation_fee_total, 2) }}</td>
-                                    <td></td>
-                                    <td class="text-right text-danger"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="consultationModal" data-bs-target="#consultationModal" data-title="Consultation Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="consultation">{{ number_format($consultation_fee_total, 2) }}</a></td>
+                                    <td class="text-end">{{ number_format($consultation_fee_discount, 2) }}</td>
+                                    <td class="text-right text-danger"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="consultationModal" data-bs-target="#consultationModal" data-title="Consultation Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="consultation">{{ number_format($consultation_fee_total - $consultation_fee_discount, 2) }}</a></td>
                                 </tr>
                                 <tr>
                                     <td>4</td>
