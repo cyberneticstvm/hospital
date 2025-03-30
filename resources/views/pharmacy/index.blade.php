@@ -22,6 +22,13 @@
                     <label class="form-label">&nbsp;</label>
                     <button type="submit" class="btn btn-primary btn-submit w-100">Fetch</button>
                 </div>
+                @if (count($errors) > 0)
+                <div role="alert" class="text-danger mt-3">
+                    @foreach ($errors->all() as $error)
+                    {{ $error }}
+                    @endforeach
+                </div>
+                @endif
             </div>
         </form>
     </div>
