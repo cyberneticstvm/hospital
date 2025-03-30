@@ -277,7 +277,7 @@ class HelperController extends Controller
             $html .= "</tr>";
             $tot += $record->discount;
         endforeach;
-        $html .= "</tbody><tfoot><tr><td colspan='7' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($tot, 2) . "</td></tr></tfoot></table>";
+        $html .= "</tbody><tfoot><tr><td colspan='8' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($tot, 2) . "</td></tr></tfoot></table>";
         return $html;
     }
     private function getCertificateDetailed($fdate, $tdate, $branch)
