@@ -70,6 +70,9 @@ class HelperController extends Controller
         if ($request->type == 'consultation') :
             $html = $this->getConsultationDetailed($fdate, $tdate, $branch);
         endif;
+        if ($request->type == 'consultationDiscount') :
+            $html = $this->getConsultationDiscountDetailed($fdate, $tdate, $branch);
+        endif;
         if ($request->type == 'procedure') :
             $html = $this->getProcedureDetailed($fdate, $tdate, $branch);
         endif;
@@ -205,6 +208,26 @@ class HelperController extends Controller
             $html .= "<td class='text-end'>" . $record->fee . "</td>";
             $html .= "</tr>";
             $tot += $record->fee;
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='5' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($tot, 2) . "</td></tr></tfoot></table>";
+        return $html;
+    }
+    private function getConsultationDiscountDetailed($fdate, $tdate, $branch)
+    {
+        $consultation = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pr', 'pmr.mrn', '=', 'pr.id')->leftJoin('patient_registrations as preg', 'preg.id', '=', 'pr.patient_id')->select('preg.patient_name', 'preg.patient_id', 'pmr.id as mrid', 'pr.doctor_fee AS fee', 'pr.discount', DB::raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->whereBetween('pr.created_at', [$fdate, $tdate])->where('pr.branch', $branch)->where('pr.status', 1)->where('pr.discount', 0)->orderByDesc('pmr.id')->get();
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Reg.Date</th><th>Discount</th></tr></thead><tbody>";
+        $c = 1;
+        $tot = 0;
+        foreach ($consultation as $key => $record) :
+            $html .= "<tr>";
+            $html .= "<td>" . $c++ . "</td>";
+            $html .= "<td>" . $record->mrid . "</td>";
+            $html .= "<td>" . $record->patient_name . "</td>";
+            $html .= "<td>" . $record->patient_id . "</td>";
+            $html .= "<td>" . $record->rdate . "</td>";
+            $html .= "<td class='text-end'>" . $record->discount . "</td>";
+            $html .= "</tr>";
+            $tot += $record->discount;
         endforeach;
         $html .= "</tbody><tfoot><tr><td colspan='5' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($tot, 2) . "</td></tr></tfoot></table>";
         return $html;

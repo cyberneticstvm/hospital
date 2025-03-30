@@ -101,7 +101,7 @@
                                     <td>3</td>
                                     <td>Income from Consultation</td>
                                     <td class="text-end">{{ number_format($consultation_fee_total, 2) }}</td>
-                                    <td class="text-end">{{ number_format($consultation_fee_discount, 2) }}</td>
+                                    <td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="consultationDiscountModal" data-bs-target="#consultationDiscountModal" data-title="Consultation Discount Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="consultationDiscount">{{ number_format($consultation_fee_discount, 2) }}</a></td>
                                     <td class="text-right text-danger"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="consultationModal" data-bs-target="#consultationModal" data-title="Consultation Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="consultation">{{ number_format($consultation_fee_total - $consultation_fee_discount, 2) }}</a></td>
                                 </tr>
                                 <tr>
@@ -282,6 +282,21 @@
     </div>
 </div>
 <div class="modal fade" id="consultationModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row">
+                    <div class="col-md-12 table-responsive dayBookDetailed"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="consultationDiscountModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
