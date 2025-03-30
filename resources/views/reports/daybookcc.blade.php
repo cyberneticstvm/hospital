@@ -108,7 +108,7 @@
                                     <td>4</td>
                                     <td>Income from Procedures</td>
                                     <td class="text-end">{{ number_format($procedure_fee_total, 2) }}</td>
-                                    <td class="text-end">{{ number_format($procedure_fee_discount, 2) }}</td>
+                                    <td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="procedureDiscountModal" data-bs-target="#procedureDiscountModal" data-title="Procedure Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="procedureDiscount">{{ number_format($procedure_fee_discount, 2) }}</a></td>
                                     <td class="text-right text-danger"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="procedureModal" data-bs-target="#procedureModal" data-title="Procedure Fee Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="procedure">{{ number_format($procedure_fee_total - $procedure_fee_discount, 2) }}</a></td>
                                 </tr>
                                 <tr>
@@ -312,6 +312,21 @@
     </div>
 </div>
 <div class="modal fade" id="procedureModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row">
+                    <div class="col-md-12 table-responsive dayBookDetailed"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="procedureDiscountModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">

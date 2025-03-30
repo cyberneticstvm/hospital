@@ -254,6 +254,29 @@ class HelperController extends Controller
         $html .= "</tbody><tfoot><tr><td colspan='7' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($tot, 2) . "</td></tr></tfoot></table>";
         return $html;
     }
+    private function getProcedureDiscountDetailed($fdate, $tdate, $branch)
+    {
+        $procedure = DB::table('patient_procedures as pp')->leftJoin('procedures as p', 'pp.procedure', '=', 'p.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 'pp.medical_record_id')->leftJoin('patient_registrations as pr', 'pr.id', '=', 'pmr.patient_id')->leftJoin('users as u', 'pp.created_by', 'u.id')->select(DB::raw("(GROUP_CONCAT(p.name SEPARATOR ',')) as 'procs'"), 'pp.medical_record_id as mrid', 'pr.patient_name', 'pr.patient_id', DB::raw("SUM(pp.discount) as discount, DATE_FORMAT(pp.created_at, '%d/%b/%Y') AS cdate, u.name"))->whereBetween('pp.created_at', [$fdate, $tdate])->where('pp.branch', $branch)->whereNull('pp.deleted_at')->groupBy('pp.medical_record_id')->orderByDesc('pmr.id')->havingRaw('discount > ?', [0])->get();
+        $c = 1;
+        $tot = 0;
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Procedures</th><th>Date</th><th>Created By</th></th><th>Notes</th><th>Discount</th></tr></thead><tbody>";
+        foreach ($procedure as $key => $record) :
+            $html .= "<tr>";
+            $html .= "<td>" . $c++ . "</td>";
+            $html .= "<td>" . $record->mrid . "</td>";
+            $html .= "<td>" . $record->patient_name . "</td>";
+            $html .= "<td>" . $record->patient_id . "</td>";
+            $html .= "<td>" . $record->procs . "</td>";
+            $html .= "<td>" . $record->cdate . "</td>";
+            $html .= "<td>" . $record->name . "</td>";
+            $html .= "<td>" . $record->notes . "</td>";
+            $html .= "<td class='text-end'>" . $record->discount . "</td>";
+            $html .= "</tr>";
+            $tot += $record->discount;
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='7' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($tot, 2) . "</td></tr></tfoot></table>";
+        return $html;
+    }
     private function getCertificateDetailed($fdate, $tdate, $branch)
     {
         $certificate = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->leftJoin('patient_references as pr', 'pr.id', '=', 'pc.medical_record_id')->leftJoin('patient_registrations as preg', 'preg.id', '=', 'pr.patient_id')->select('preg.patient_name', 'preg.patient_id', 'pr.id as mrid', DB::raw("SUM(pcd.fee) AS fee, DATE_FORMAT(pc.created_at, '%d/%b/%Y') AS cdate"),)->whereBetween('pc.created_at', [$fdate, $tdate])->where('pc.branch_id', $branch)->where('pcd.status', 'I')->groupBy('pcd.patient_certificate_id')->orderByDesc('pc.medical_record_id')->get();
