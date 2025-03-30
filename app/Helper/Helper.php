@@ -132,6 +132,8 @@ class Helper
 
         $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('p.id', $mrid)->where('m.status', 1)->sum('m.total');
 
+        $pharmacy = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'p.id', 'pr.pharmacy_id')->where('p.medical_record_id', $mrid)->sum('total');
+
         $vision = DB::table('spectacles')->where('medical_record_id', $mrid)->sum('fee');
 
         $clinical_lab = DB::table('lab_clinics')->where('medical_record_id', $mrid)->where('tested_from', 1)->sum('fee');
@@ -144,7 +146,7 @@ class Helper
 
         $surgery_consumables = PatientSurgeryConsumable::where('medical_record_id', $mrid)->sum('total_after_discount');
 
-        return $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine + $vision + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
+        return $reg_fee_total + $consultation_fee_total + $procedure_fee_total + $certificate_fee_total + $medicine + $pharmacy + $vision + $clinical_lab + $radiology_lab + $surgery_medicine + $postop_medicine + $surgery_consumables;
     }
 
     public static function getPaidTotal($mrid)
@@ -165,6 +167,8 @@ class Helper
 
         $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('p.id', $mrid)->where('m.status', 1)->sum('m.total');
 
+        $pharmacy = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'p.id', 'pr.pharmacy_id')->where('p.medical_record_id', $mrid)->sum('total');
+
         $vision = DB::table('spectacles')->where('medical_record_id', $mrid)->sum('fee');
 
         $clinical_lab = DB::table('lab_clinics')->where('medical_record_id', $mrid)->where('tested_from', 1)->sum('fee');
@@ -177,6 +181,6 @@ class Helper
 
         $surgery_consumables = PatientSurgeryConsumable::where('medical_record_id', $mrid)->sum('total_after_discount');
 
-        return array('registration' => $reg_fee_total, 'consultation' => $consultation_fee_total, 'procedure' => $procedure_fee_total, 'certificate' => $certificate_fee_total, 'pharmacy' => $medicine, 'vision' => $vision, 'clinic' => $clinical_lab, 'radiology' => $radiology_lab, 'surgerymed' => $surgery_medicine, 'postop' => $postop_medicine, 'surgeryconsumable' => $surgery_consumables);
+        return array('registration' => $reg_fee_total, 'consultation' => $consultation_fee_total, 'procedure' => $procedure_fee_total, 'certificate' => $certificate_fee_total, 'pharmacy' => $medicine, 'medicine' => $pharmacy, 'vision' => $vision, 'clinic' => $clinical_lab, 'radiology' => $radiology_lab, 'surgerymed' => $surgery_medicine, 'postop' => $postop_medicine, 'surgeryconsumable' => $surgery_consumables);
     }
 }
