@@ -26,6 +26,7 @@
         </form>
     </div>
 </div>
+<h4>Pharmacy Direct Register</h4>
 <div class="card mb-4 border-0">
     <div class="card-body">
         <p class="text-right my-3"><a href="/extras/pharmacy/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
