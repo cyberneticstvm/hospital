@@ -41,7 +41,9 @@ class PharmacyController extends Controller
     public function create()
     {
         $products = DB::table('products')->get();
-        return view('pharmacy.create', compact('products'));
+        $pref = collect();
+        $patient = collect();
+        return view('pharmacy.create', compact('products', 'pref', 'patient'));
     }
 
     /**
