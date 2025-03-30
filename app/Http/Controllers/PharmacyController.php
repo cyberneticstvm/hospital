@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PatientReference;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Pharmacy;
@@ -97,6 +98,13 @@ class PharmacyController extends Controller
         $this->validate($request, [
             'medical_record_number' => 'required',
         ]);
+        $pref = PatientReference::findOrFail($request->medical_record_number);
+        if ($pref->exists()):
+            $products = DB::table('products')->get();
+            return view('pharmacy.create', compact('products'));
+        else:
+            return redirect()->back()->with('error', 'No records found.');
+        endif;
     }
 
     /**
