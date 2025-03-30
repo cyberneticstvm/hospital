@@ -76,6 +76,9 @@ class HelperController extends Controller
         if ($request->type == 'procedure') :
             $html = $this->getProcedureDetailed($fdate, $tdate, $branch);
         endif;
+        if ($request->type == 'procedureDiscount') :
+            $html = $this->getProcedureDiscountDetailed($fdate, $tdate, $branch);
+        endif;
         if ($request->type == 'certificate') :
             $html = $this->getCertificateDetailed($fdate, $tdate, $branch);
         endif;
