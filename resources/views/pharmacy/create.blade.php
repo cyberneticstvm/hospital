@@ -15,18 +15,18 @@
                         <form action="{{ route('pharmacy.create') }}" method="post">
                             @csrf
                             <input type="hidden" name="" class="selFromBranch" value="{{ session()->get('branch') }}" />
-                            <input type="hidden" name="" class="medical_record_id" value="{{ ($pref?->id) ? $pref->id : null }}" />
+                            <input type="hidden" name="" class="medical_record_id" value="{{ ($pref && $pref?->id) ? $pref->id : null }}" />
                             <div class="row g-4">
                                 <div class="col-sm-4">
                                     <label class="form-label">Patient Name / MR.ID / Patient ID<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ ($patient) ? $patient?->patient_name : old('patient_name') }}" name="patient_name" class="form-control form-control-md" placeholder="Patient Name / MR.ID / Patient ID">
+                                    <input type="text" value="{{ ($patient && $patient->patient_name) ? $patient->patient_name : old('patient_name') }}" name="patient_name" class="form-control form-control-md" placeholder="Patient Name / MR.ID / Patient ID">
                                     @error('patient_name')
                                     <small class="text-danger">{{ $errors->first('patient_name') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-8">
                                     <label class="form-label">Age / Address / Phone number If any.</label>
-                                    <input type="text" value="{{ ($patient) ? $patient->address : old('other_info') }}" name="other_info" class="form-control form-control-md" placeholder="Age / Address / Phone number If any.">
+                                    <input type="text" value="{{ ($patient && $patient->address) ? $patient->address : old('other_info') }}" name="other_info" class="form-control form-control-md" placeholder="Age / Address / Phone number If any.">
                                     @error('other_info')
                                     <small class="text-danger">{{ $errors->first('other_info') }}</small>
                                     @enderror
