@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('reports.fetchdaybook.cc') }}" method="post">
+                        <form action="{{ route('reports.fetchdaybook') }}" method="post">
                             @csrf
                             @php $today = date('d/M/Y') @endphp
                             <div class="row g-4">
