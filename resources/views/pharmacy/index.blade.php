@@ -12,21 +12,19 @@
             @csrf
             <div class="row g-4">
                 <div class="col-sm-3">
-                    <label class="form-label">Medical Record ID (MR.ID)<sup class="text-danger">*</sup></label>
-                    <input type="number" value="{{ old('medical_record_number') }}" name="medical_record_number" class="form-control form-control-md" placeholder="Mediical Record Number" required="required">
-                    @error('medical_record_number')
-                    <small class="text-danger">{{ $errors->first('medical_record_number') }}</small>
+                    <label class="form-label">Medical Record ID<sup class="text-danger">*</sup></label>
+                    <input type="number" value="{{ old('medical_record_id') }}" name="medical_record_id" class="form-control form-control-md" placeholder="Mediical Record Number" required="required">
+                    @error('medical_record_id')
+                    <small class="text-danger">{{ $errors->first('medical_record_id') }}</small>
                     @enderror
                 </div>
                 <div class="col-sm-2">
                     <label class="form-label">&nbsp;</label>
                     <button type="submit" class="btn btn-primary btn-submit w-100">Fetch</button>
                 </div>
-                @if (count($errors) > 0)
-                <div role="alert" class="text-danger mt-3">
-                    @foreach ($errors->all() as $error)
-                    {{ $error }}
-                    @endforeach
+                @if (session('error'))
+                <div class="alert alert-danger" style="margin-top: 0.2rem;">
+                    {{ session('error') }}
                 </div>
                 @endif
             </div>

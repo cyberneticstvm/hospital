@@ -96,9 +96,9 @@ class PharmacyController extends Controller
     public function show(Request $request)
     {
         $this->validate($request, [
-            'medical_record_number' => 'required',
+            'medical_record_id' => 'required',
         ]);
-        $pref = PatientReference::findOrFail($request->medical_record_number);
+        $pref = PatientReference::findOrFail($request->medical_record_id);
         if ($pref->exists()):
             $products = DB::table('products')->get();
             return view('pharmacy.create', compact('products'));
