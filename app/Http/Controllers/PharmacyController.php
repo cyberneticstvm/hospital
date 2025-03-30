@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PatientReference;
+use App\Models\PatientRegistrations;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Pharmacy;
@@ -100,8 +101,9 @@ class PharmacyController extends Controller
         ]);
         $pref = PatientReference::findOrFail($request->medical_record_id);
         if ($pref->exists()):
+            $patient = PatientRegistrations::find($pref->patient_id);
             $products = DB::table('products')->get();
-            return view('pharmacy.create', compact('products'));
+            return view('pharmacy.create', compact('products', 'pref', 'patient'));
         else:
             return redirect()->back()->with('error', 'No records found.');
         endif;
