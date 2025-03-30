@@ -17,12 +17,13 @@ class PharmacyController extends Controller
      */
     private $branch;
 
-    function __construct()    {
-         $this->middleware('permission:pharmacy-list|pharmacy-create|pharmacy-edit|pharmacy-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:pharmacy-create', ['only' => ['create','store']]);
-         $this->middleware('permission:pharmacy-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:pharmacy-delete', ['only' => ['destroy']]);
-         $this->branch = session()->get('branch');
+    function __construct()
+    {
+        $this->middleware('permission:pharmacy-list|pharmacy-create|pharmacy-edit|pharmacy-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:pharmacy-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:pharmacy-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:pharmacy-delete', ['only' => ['destroy']]);
+        $this->branch = session()->get('branch');
     }
     public function index()
     {
@@ -56,10 +57,10 @@ class PharmacyController extends Controller
         $input['created_by'] = Auth::user()->id;
         $input['updated_by'] = Auth::user()->id;
         $input['branch'] = $this->branch;
-        try{
+        try {
             $pharmacy = Pharmacy::create($input);
-            if(!empty($input['product'])):
-                for($i=0; $i<count($request->product); $i++):
+            if (!empty($input['product'])):
+                for ($i = 0; $i < count($request->product); $i++):
                     $product = DB::table('products')->where('id', $request->product[$i])->first();
                     $data[] = [
                         'pharmacy_id'   => $pharmacy->id,
@@ -78,11 +79,11 @@ class PharmacyController extends Controller
                 endfor;
                 DB::table('pharmacy_records')->insert($data);
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
         return redirect()->route('pharmacy.index')
-                        ->with('success','Record added successfully');
+            ->with('success', 'Record added successfully');
     }
 
     /**
@@ -91,9 +92,11 @@ class PharmacyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $this->validate($request, [
+            'medical_record_number' => 'required',
+        ]);
     }
 
     /**
@@ -127,11 +130,11 @@ class PharmacyController extends Controller
         $input['updated_by'] = Auth::user()->id;
         $input['created_by'] = $pharmacy->getOriginal('created_by');
         $input['branch'] = $this->branch;
-        try{
+        try {
             $pharmacy->update($input);
             DB::table("pharmacy_records")->where('pharmacy_id', $id)->delete();
-            if(!empty($input['product'])):
-                for($i=0; $i<count($request->product); $i++):
+            if (!empty($input['product'])):
+                for ($i = 0; $i < count($request->product); $i++):
                     $product = DB::table('products')->where('id', $request->product[$i])->first();
                     $data[] = [
                         'pharmacy_id'   => $pharmacy->id,
@@ -150,11 +153,11 @@ class PharmacyController extends Controller
                 endfor;
                 DB::table('pharmacy_records')->insert($data);
             endif;
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
         }
         return redirect()->route('pharmacy.index')
-                        ->with('success','Record updated successfully');
+            ->with('success', 'Record updated successfully');
     }
 
     /**
@@ -167,6 +170,6 @@ class PharmacyController extends Controller
     {
         Pharmacy::find($id)->delete();
         return redirect()->route('pharmacy.index')
-                        ->with('success','Record deleted successfully');
+            ->with('success', 'Record deleted successfully');
     }
 }

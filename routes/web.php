@@ -246,6 +246,7 @@ Route::group(['middleware' => ['auth', 'branch']], function () {
 
     // Pharmacy -> for both inside and outside customers //
     Route::get('/extras/pharmacy/', 'App\Http\Controllers\PharmacyController@index')->name('pharmacy.index');
+    Route::post('/extras/pharmacy/', 'App\Http\Controllers\PharmacyController@show')->name('pharmacy.direct.fetch');
     Route::get('/extras/pharmacy/create/', 'App\Http\Controllers\PharmacyController@create')->name('pharmacy.create');
     Route::post('/extras/pharmacy/create/', 'App\Http\Controllers\PharmacyController@store')->name('pharmacy.create');
     Route::get('/extras/pharmacy/edit/{id}/', 'App\Http\Controllers\PharmacyController@edit')->name('pharmacy.edit');
