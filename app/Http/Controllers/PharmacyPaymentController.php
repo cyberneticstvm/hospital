@@ -18,13 +18,14 @@ class PharmacyPaymentController extends Controller
      */
     private $branch;
 
-    function __construct(){
-         $this->middleware('permission:pharmacyd-payments-list|pharmacyd-payments-create|pharmacyd-payments-edit|pharmacyd-payments-delete', ['only' => ['index', 'store']]);
-         $this->middleware('permission:pharmacyd-payments-list', ['only' => ['index']]);
-         $this->middleware('permission:pharmacyd-payments-create', ['only' => ['store']]);
-         $this->middleware('permission:pharmacyd-payments-edit', ['only' => ['edit', 'update']]);
-         $this->middleware('permission:pharmacyd-payments-delete', ['only' => ['destroy']]);
-         $this->branch = session()->get('branch');
+    function __construct()
+    {
+        $this->middleware('permission:pharmacyd-payments-list|pharmacyd-payments-create|pharmacyd-payments-edit|pharmacyd-payments-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:pharmacyd-payments-list', ['only' => ['index']]);
+        $this->middleware('permission:pharmacyd-payments-create', ['only' => ['store']]);
+        $this->middleware('permission:pharmacyd-payments-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:pharmacyd-payments-delete', ['only' => ['destroy']]);
+        $this->branch = session()->get('branch');
     }
     public function index()
     {
@@ -44,10 +45,11 @@ class PharmacyPaymentController extends Controller
         ]);
         $patient = DB::table('pharmacies')->find($request->bill_number);
         $amount = DB::table('pharmacy_records')->where('pharmacy_id', $request->bill_number)->get()->sum('total');
-        $pmodes = DB::table('payment_modes')->orderBy('name')->get();
+        $pmodes = DB::table('payment_modes')->whereIn('id', [1, 2, 3, 4, 5, 6, 7])->orderBy('name')->get();
+        $types = DB::table('payment_modes')->whereIn('id', [8, 9])->orderBy('name')->get();
         $payments = PP::where('pharmacy_id', $request->bill_number)->leftJoin('payment_modes as p', 'patient_payments.payment_mode', '=', 'p.id')->select('patient_payments.id', 'patient_payments.amount', 'patient_payments.notes', 'p.name')->get();
-        if($patient):
-            return view('patient-payment.pharmacy-direct.fetch', compact('patient', 'amount', 'pmodes', 'payments'));
+        if ($patient):
+            return view('patient-payment.pharmacy-direct.fetch', compact('patient', 'amount', 'pmodes', 'payments', 'types'));
         else:
             return redirect()->back()->with('error', 'No records found.');
         endif;
@@ -60,7 +62,7 @@ class PharmacyPaymentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
+    {
         $this->validate($request, [
             'amount' => 'required',
             'payment_mode' => 'required',
@@ -72,7 +74,7 @@ class PharmacyPaymentController extends Controller
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $pp = PP::create($input);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        return redirect()->route('paypharma.index')->with('success','Payment recorded successfully');
+        return redirect()->route('paypharma.index')->with('success', 'Payment recorded successfully');
     }
 
     /**
@@ -95,9 +97,10 @@ class PharmacyPaymentController extends Controller
     public function edit($id)
     {
         $payment = PP::find($id);
-        $pmodes = DB::table('payment_modes')->orderBy('name')->get();
+        $pmodes = DB::table('payment_modes')->whereIn('id', [1, 2, 3, 4, 5, 6, 7])->orderBy('name')->get();
+        $types = DB::table('payment_modes')->whereIn('id', [8, 9])->orderBy('name')->get();
         $patient = DB::table('pharmacies')->find($payment->pharmacy_id);
-        return view('patient-payment.pharmacy-direct.edit', compact('payment', 'pmodes', 'patient'));
+        return view('patient-payment.pharmacy-direct.edit', compact('payment', 'pmodes', 'patient', 'types'));
     }
 
     /**
@@ -116,7 +119,7 @@ class PharmacyPaymentController extends Controller
         $input = $request->all();
         $created_at = (!empty($request->created_at)) ? Carbon::createFromFormat('d/M/Y', $input['created_at'])->format('Y-m-d H:i:s') : Carbon::now();
         $pp = PP::where('id', $id)->update(['amount' => $request->amount, 'payment_mode' => $request->payment_mode, 'notes' => $request->notes, 'created_at' => $created_at]);
-        return redirect()->route('paypharma.index')->with('success','Payment updated successfully');
+        return redirect()->route('paypharma.index')->with('success', 'Payment updated successfully');
     }
 
     /**
@@ -129,6 +132,6 @@ class PharmacyPaymentController extends Controller
     {
         PP::find($id)->delete();
         return redirect()->route('paypharma.list')
-                        ->with('success','Payment deleted successfully');
+            ->with('success', 'Payment deleted successfully');
     }
 }
