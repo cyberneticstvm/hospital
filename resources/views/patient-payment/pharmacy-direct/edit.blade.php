@@ -75,7 +75,7 @@
                                     <small class="text-danger">{{ $errors->first('type') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Notes</label>
                                     <input type="text" name="notes" class="form-control form-control-md" value="{{ $payment->notes }}">
                                 </div>
