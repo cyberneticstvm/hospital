@@ -114,7 +114,7 @@
                                     <small class="text-danger">{{ $errors->first('type') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <label class="form-label">Notes</label>
                                     <input type="text" name="notes" class="form-control form-control-md" placeholder="Notes">
                                 </div>
