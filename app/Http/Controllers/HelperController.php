@@ -197,7 +197,7 @@ class HelperController extends Controller
 
     private function getConsultationDetailed($fdate, $tdate, $branch)
     {
-        $consultation = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pr', 'pmr.mrn', '=', 'pr.id')->leftJoin('patient_registrations as preg', 'preg.id', '=', 'pr.patient_id')->select('preg.patient_name', 'preg.patient_id', 'pmr.id as mrid', 'pr.doctor_fee AS fee', DB::raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->whereBetween('pr.created_at', [$fdate, $tdate])->where('pr.branch', $branch)->where('pr.status', 1)->orderByDesc('pmr.id')->havingRaw('fee > ?', [0])->get();
+        $consultation = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pr', 'pmr.mrn', '=', 'pr.id')->leftJoin('patient_registrations as preg', 'preg.id', '=', 'pr.patient_id')->select('preg.patient_name', 'preg.patient_id', 'pmr.id as mrid', 'pr.doctor_fee AS fee', 'pr.discount AS discount', DB::raw("DATE_FORMAT(pr.created_at, '%d/%b/%Y') AS rdate"))->whereBetween('pr.created_at', [$fdate, $tdate])->where('pr.branch', $branch)->where('pr.status', 1)->orderByDesc('pmr.id')->havingRaw('fee > ?', [0])->get();
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Reg.Date</th><th>Amount</th></tr></thead><tbody>";
         $c = 1;
         $tot = 0;
@@ -208,9 +208,9 @@ class HelperController extends Controller
             $html .= "<td>" . $record->patient_name . "</td>";
             $html .= "<td>" . $record->patient_id . "</td>";
             $html .= "<td>" . $record->rdate . "</td>";
-            $html .= "<td class='text-end'>" . $record->fee . "</td>";
+            $html .= "<td class='text-end'>" . $record->fee - $record->discount . "</td>";
             $html .= "</tr>";
-            $tot += $record->fee;
+            $tot += $record->fee - $record->discount;
         endforeach;
         $html .= "</tbody><tfoot><tr><td colspan='5' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($tot, 2) . "</td></tr></tfoot></table>";
         return $html;
