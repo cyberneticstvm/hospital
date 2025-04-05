@@ -252,7 +252,7 @@ class ReportController extends Controller
 
         $consultation_fee = DB::table('patient_medical_records as pmr')->leftJoin('patient_references as pr', 'pmr.mrn', '=', 'pr.id')->whereBetween('pr.created_at', [$startDate, $endDate])->where('pr.branch', $request->branch)->where('pr.status', 1);
 
-        $consultation_fee_total = $consultation_fee->sum('pr.doctor_fee') + $consultation_fee->sum('pr.discount');
+        $consultation_fee_total = $consultation_fee->sum('pr.doctor_fee');
         $consultation_fee_discount = $consultation_fee->sum('pr.discount');
 
         $procedure_fee = DB::table('patient_procedures as pp')->leftJoin('patient_medical_records as pmr', 'pp.medical_record_id', '=', 'pmr.id')->whereBetween('pp.created_at', [$startDate, $endDate])->where('pp.branch', $request->branch)->whereNull('pp.deleted_at');
