@@ -106,7 +106,7 @@
                                 <div class="col-sm-2">
                                     <label class="form-label">Payment Type<sup class="text-danger">*</sup></label>
                                     <select class="form-control select2" name="type">
-                                        <option value="">Select</option>
+                                        <option value="0">Select</option>
                                         @forelse($types as $key => $type)
                                         <option value="{{ $type->id }}">{{ $type->name }}</option>
                                         @empty
