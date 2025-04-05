@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PatientMedicalRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\PatientPayment as PP;
+use App\Models\PatientRegistrations;
 use Carbon\Carbon;
 use DB;
 
@@ -47,9 +49,10 @@ class PharmacyPaymentController extends Controller
         $amount = DB::table('pharmacy_records')->where('pharmacy_id', $request->bill_number)->get()->sum('total');
         $pmodes = DB::table('payment_modes')->whereIn('id', [1, 2, 3, 4, 5, 6, 7])->orderBy('name')->get();
         $types = DB::table('payment_modes')->whereIn('id', [8, 9])->orderBy('name')->get();
+        $pid = $patient->medical_record_id > 0 ? PatientMedicalRecord::find($patient->medical_record_id)->patient_id : 0;
         $payments = PP::where('pharmacy_id', $request->bill_number)->leftJoin('payment_modes as p', 'patient_payments.payment_mode', '=', 'p.id')->select('patient_payments.id', 'patient_payments.amount', 'patient_payments.notes', 'p.name')->get();
         if ($patient):
-            return view('patient-payment.pharmacy-direct.fetch', compact('patient', 'amount', 'pmodes', 'payments', 'types'));
+            return view('patient-payment.pharmacy-direct.fetch', compact('patient', 'amount', 'pmodes', 'payments', 'types', 'pid'));
         else:
             return redirect()->back()->with('error', 'No records found.');
         endif;
@@ -68,8 +71,6 @@ class PharmacyPaymentController extends Controller
             'payment_mode' => 'required',
         ]);
         $input = $request->all();
-        $input['medical_record_id'] = 0;
-        $input['patient_id'] = 0;
         $input['created_by'] = Auth::user()->id;
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $pp = PP::create($input);

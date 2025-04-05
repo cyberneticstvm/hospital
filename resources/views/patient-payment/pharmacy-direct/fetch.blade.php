@@ -24,6 +24,8 @@
                             @csrf
                             <input type="hidden" name="pharmacy_id" value="{{ $patient->id }}" />
                             <input type="hidden" name="branch" value="{{ $patient->branch }}" />
+                            <input type="hidden" name="medical_record_id" value="{{ $patient->medical_record_id ?? 0 }}" />
+                            <input type="hidden" name="patient_id" value="{{ $pid }}" />
                             <table class="table table-sm table-striped table-hover align-middle">
                                 <thead>
                                     <tr>
