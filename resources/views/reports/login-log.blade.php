@@ -76,7 +76,7 @@
                                     <th>User</th>
                                     <th>Device</th>
                                     <th>Address</th>
-                                    <th>Image</th>
+                                    <!--<th>Image</th>-->
                                     <th>Logged In</th>
                                     <th>Logged Out</th>
                                 </tr>
@@ -89,7 +89,7 @@
                                     <td>{{ $row->user->name }}</td>
                                     <td>{{ $row->device }}</td>
                                     <td><a href="{{ route('user.location.map', ['lid' => encrypt($row->id)]) }}" target="_blank">{{ $row->address }}</a></td>
-                                    <td><a href="https://maps.googleapis.com/maps/api/place/details/json?place_id={{ $row->place_id }}&fields=place_id&key={{config('app.gpak')}}" target="_blank"><i class="fa fa-image text-success"></i></a></td>
+                                    <!--<td><a href="https://maps.googleapis.com/maps/api/place/details/json?place_id={{ $row->place_id }}&fields=place_id&key={{config('app.gpak')}}" target="_blank"><i class="fa fa-image text-success"></i></a></td>-->
                                     <td>{{ ($row->logged_in) ? date('d/M/Y h:i a', strtotime($row->logged_in)) : '' }}</td>
                                     <td>{{ ($row->logged_out) ? date('d/M/Y h:i a', strtotime($row->logged_out)) : '' }}</td>
                                 </tr>
