@@ -87,7 +87,7 @@
                                     <td>{{ $c++ }}</td>
                                     <td>{{ $row->user->name }}</td>
                                     <td>{{ $row->device }}</td>
-                                    <td>{{ $row->address }}</td>
+                                    <td><a href="{{ route('user.location.map', ['lid' => encrypt($row->id)]) }}" target="_blank">{{ $row->address }}</a></td>
                                     <td>{{ ($row->logged_in) ? date('d/M/Y h:i a', strtotime($row->logged_in)) : '' }}</td>
                                     <td>{{ ($row->logged_out) ? date('d/M/Y h:i a', strtotime($row->logged_out)) : '' }}</td>
                                 </tr>
