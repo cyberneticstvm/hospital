@@ -1,7 +1,7 @@
 @extends("templates.base")
 @section("content")
 <div class="body d-flex">
-    <div class="container">        
+    <div class="container">
         <div class="row g-4">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
@@ -22,8 +22,8 @@
                                         <input type="text" value="{{ ($inputs) ? $inputs[0] : $today }}" name="fromdate" class="form-control form-control-md dtpicker">
                                         <div class="form-icon position-absolute">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
-                                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                                             </svg>
                                         </div>
                                     </fieldset>
@@ -37,8 +37,8 @@
                                         <input type="text" value="{{ ($inputs) ? $inputs[1] : $today }}" name="todate" class="form-control form-control-md dtpicker">
                                         <div class="form-icon position-absolute">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
-                                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                                             </svg>
                                         </div>
                                     </fieldset>
@@ -49,10 +49,10 @@
                                 <div class="col-sm-3">
                                     <label class="form-label">User</label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="user">
-                                    <option value="0">Select</option>
-                                    @foreach($users as $key => $user)
+                                        <option value="0">Select</option>
+                                        @foreach($users as $key => $user)
                                         <option value="{{ $user->id }}" {{ ($inputs && $inputs[2] == $user->id) ? 'selected'  : '' }}>{{ $user->name }}</option>
-                                    @endforeach
+                                        @endforeach
                                     </select>
                                     @error('user')
                                     <small class="text-danger">{{ $errors->first('user') }}</small>
@@ -70,20 +70,29 @@
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
-                            <thead><tr><th>SL No.</th><th>User</th><th>Device</th><th>Location</th><th>IP</th><th>Logged In</th><th>Logged Out</th></tr></thead><tbody>
-                            @php $c = 1;@endphp
-                            @forelse($records as $key => $row)
-                            <tr>
-                                <td>{{ $c++ }}</td>
-                                <td>{{ $row->user->name }}</td>
-                                <td>{{ $row->device }}</td>
-                                <td>{{ $row->city_name.','.$row->region_name }}</td>
-                                <td>{{ $row->ip }}</td>
-                                <td>{{ ($row->logged_in) ? date('d/M/Y h:i a', strtotime($row->logged_in)) : '' }}</td>
-                                <td>{{ ($row->logged_out) ? date('d/M/Y h:i a', strtotime($row->logged_out)) : '' }}</td>
-                            </tr>
-                            @empty
-                            @endforelse
+                            <thead>
+                                <tr>
+                                    <th>SL No.</th>
+                                    <th>User</th>
+                                    <th>Device</th>
+                                    <th>Address</th>
+                                    <th>Logged In</th>
+                                    <th>Logged Out</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $c = 1;@endphp
+                                @forelse($records as $key => $row)
+                                <tr>
+                                    <td>{{ $c++ }}</td>
+                                    <td>{{ $row->user->name }}</td>
+                                    <td>{{ $row->device }}</td>
+                                    <td>{{ $row->address }}</td>
+                                    <td>{{ ($row->logged_in) ? date('d/M/Y h:i a', strtotime($row->logged_in)) : '' }}</td>
+                                    <td>{{ ($row->logged_out) ? date('d/M/Y h:i a', strtotime($row->logged_out)) : '' }}</td>
+                                </tr>
+                                @empty
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

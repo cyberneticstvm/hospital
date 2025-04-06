@@ -52,11 +52,12 @@ class DashboardController extends Controller
             'username' => 'required',
             'password' => 'required|min:6',
         ]);
-        /*if (!$request->lat || !$request->lng):
+        if (!$request->place_id):
             return redirect()->back()->withErrors("Denied!!! You dont have enabled an active location. Please enable your location and try again.");
         else:
-            Cookie::queue('location', $request->cid, time() + 60 * 60 * 24 * 365);
-        endif;*/
+            Cookie::forget('location');
+            Cookie::queue('location', $request->place_id, time() + 60 * 60 * 24 * 365);
+        endif;
         $ip = ($request->ip() == '127.0.0.1') ? '59.89.235.2' : $request->ip();
         $data = file_get_contents("https://ipinfo.io/$ip?token=38fa67afac8600");
         $obj = json_decode($data);
@@ -73,7 +74,7 @@ class DashboardController extends Controller
             $branches = DB::table('branches')->leftJoin('user_branches', 'branches.id', '=', 'user_branches.branch_id')->select('branches.id', 'branches.branch_name')->where('user_branches.user_id', '=', $user_id)->get();
             $sid = Str::random(25);
             User::where('id', $user_id)->update(['session_id' => $sid]);
-            LoginLog::insert(['user_id' => $user_id, 'session_id' => $sid, 'ip' => $request->ip(), 'city_name' => $obj->city, 'region_name' => $obj->region, 'country_name' => $obj->country, 'zip_code' => $obj->postal, 'device' => $device, 'latitude' => $coordinates[0], 'longitude' => $coordinates[1], 'logged_in' => Carbon::now()]);
+            LoginLog::insert(['user_id' => $user_id, 'session_id' => $sid, 'ip' => $request->ip(), 'city_name' => $obj->city, 'region_name' => $obj->region, 'country_name' => $obj->country, 'zip_code' => $obj->postal, 'device' => $device, 'latitude' => $coordinates[0], 'longitude' => $coordinates[1], 'address' => $request->address, 'place_id' => $request->place_id, 'lat' => $request->lat, 'lng' => $request->lng, 'logged_in' => Carbon::now()]);
             $branch_id = 0;
             $new_patients_count = 0;
             $review_count = 0;
