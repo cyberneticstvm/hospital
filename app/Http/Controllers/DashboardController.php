@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Session;
 use DB;
+use Illuminate\Support\Facades\Cookie;
 
 class DashboardController extends Controller
 {
@@ -51,6 +52,11 @@ class DashboardController extends Controller
             'username' => 'required',
             'password' => 'required|min:6',
         ]);
+        /*if (!$request->lat || !$request->lng):
+            return redirect()->back()->withErrors("Denied!!! You dont have enabled an active location. Please enable your location and try again.");
+        else:
+            Cookie::queue('location', $request->cid, time() + 60 * 60 * 24 * 365);
+        endif;*/
         $ip = ($request->ip() == '127.0.0.1') ? '59.89.235.2' : $request->ip();
         $data = file_get_contents("https://ipinfo.io/$ip?token=38fa67afac8600");
         $obj = json_decode($data);

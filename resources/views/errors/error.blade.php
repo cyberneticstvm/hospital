@@ -9,7 +9,9 @@
                     {{ session()->get('error') }}
                 </div>
                 @endif
+                @if(isset($exception))
                 {{ $exception->getMessage() }}
+                @endif
             </div>
         </div>
     </div>

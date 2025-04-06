@@ -197,4 +197,6 @@ return [
         'Helper' => App\Helper\Helper::class,
     ])->toArray(),
 
+    'gpak' => env('GOOGLE_PLACES_API_KEY', ''),
+
 ];
