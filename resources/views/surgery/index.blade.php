@@ -10,9 +10,31 @@
     <div class="card-body">
         <!--<p class= "text-right my-3"><a href="#"><i class="fa fa-plus fa-lg text-success"></i></a></p>-->
         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
-            <thead><tr><th>SL No.</th><th>MR ID.</th><th>Patient Name</th><th>Patient ID</th><th>Phone Number</th><th>Doctor Name</th><th>Surg. Date</th><th>Adv. Date</th><th>Surgery Name</th><th>Eye</th><th>Surgeon</th><th>Status</th><th>notes</th><th>History</th><th>Medicine</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
-            @php $i = 0; @endphp
-            @foreach($surgeries as $surgery)
+            <thead>
+                <tr>
+                    <th>SL No.</th>
+                    <th>MR ID.</th>
+                    <th>Patient Name</th>
+                    <th>Patient ID</th>
+                    <th>Phone Number</th>
+                    <th>Doctor Name</th>
+                    <th>Surg. Date</th>
+                    <th>Adv. Date</th>
+                    <th>Adv. Br.</th>
+                    <th>Surgery Name</th>
+                    <th>Fee</th>
+                    <th>Eye</th>
+                    <th>Surgeon</th>
+                    <th>Status</th>
+                    <th>notes</th>
+                    <th>History</th>
+                    <th>Medicine</th>
+                    <th>Edit</th><!--<th>Remove</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                @php $i = 0; @endphp
+                @foreach($surgeries as $surgery)
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ $surgery->medical_record_id }}</td>
@@ -22,8 +44,10 @@
                     <td>{{ $surgery->doctor_name }}</td>
                     <td>{{ $surgery->sdate }}</td>
                     <td>{{ $surgery->adate }}</td>
+                    <td>{{ $surgery->advised_branch }}</td>
                     <td>{{ $surgery->surgery_name }}</td>
                     <td>{{ ucfirst($surgery->eye) }}</td>
+                    <td>{{ $surgery->surgery_fee }}</td>
                     <td>{{ $surgery->surgeon }}</td>
                     <td>{{ $surgery->sname }}</td>
                     <td>{{ $surgery->remarks }}</td>
@@ -38,8 +62,9 @@
                         </form>
                     </td>-->
                 </tr>
-            @endforeach
-        </tbody></table>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
 @endsection

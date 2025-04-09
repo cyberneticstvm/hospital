@@ -25,7 +25,8 @@ class Surgery extends Model
         'remarks',
         'status',
         'surgery_fee',
-        'updated_by'
+        'updated_by',
+        'advised_branch'
     ];
 
     public function patient()
