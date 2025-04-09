@@ -18,17 +18,18 @@ class SurgeryController extends Controller
      */
     private $branch;
 
-    function __construct(){
-        $this->middleware('permission:surgery-list|surgery-create|surgery-edit|surgery-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:surgery-create', ['only' => ['create','store']]);
-        $this->middleware('permission:surgery-edit', ['only' => ['edit','update']]);
+    function __construct()
+    {
+        $this->middleware('permission:surgery-list|surgery-create|surgery-edit|surgery-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:surgery-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:surgery-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:surgery-delete', ['only' => ['destroy']]);
         $this->branch = session()->get('branch');
-   }
+    }
 
     public function index()
     {
-        $surgeries = DB::table('surgeries as s')->leftJoin('patient_registrations as p', 's.patient_id', '=', 'p.id')->leftJoin('doctors as d', 's.doctor_id', '=', 'd.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 's.medical_record_id')->leftJoin('surgery_types as st', 's.surgery_type', '=', 'st.id')->leftjoin('doctors as doc', 's.surgeon', '=', 'doc.id')->leftJoin('types as t', 't.id', '=', 's.status')->whereIn('s.status', [1,2])->selectRaw("s.id, p.id as pid, p.patient_name, p.mobile_number, p.patient_id, d.doctor_name, s.medical_record_id, DATE_FORMAT(s.surgery_date, '%d/%b/%Y') AS sdate, DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS adate, CASE WHEN pmr.is_patient_surgery = 'N' THEN 'No' ELSE 'Yes' END AS is_patient_surgery, st.surgery_name, doc.doctor_name as surgeon, s.eye, s.remarks, t.name as sname")->orderByRaw('ISNULL(s.surgery_date), s.surgery_date ASC')->get();
+        $surgeries = DB::table('surgeries as s')->leftJoin('patient_registrations as p', 's.patient_id', '=', 'p.id')->leftJoin('doctors as d', 's.doctor_id', '=', 'd.id')->leftJoin('patient_medical_records as pmr', 'pmr.id', '=', 's.medical_record_id')->leftJoin('surgery_types as st', 's.surgery_type', '=', 'st.id')->leftjoin('doctors as doc', 's.surgeon', '=', 'doc.id')->leftJoin('types as t', 't.id', '=', 's.status')->whereIn('s.status', [1, 2])->selectRaw("s.id, p.id as pid, p.patient_name, p.mobile_number, p.patient_id, d.doctor_name, s.medical_record_id, s.advised_branch, DATE_FORMAT(s.surgery_date, '%d/%b/%Y') AS sdate, DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS adate, CASE WHEN pmr.is_patient_surgery = 'N' THEN 'No' ELSE 'Yes' END AS is_patient_surgery, st.surgery_name, doc.doctor_name as surgeon, s.eye, s.remarks, t.name as sname")->orderByRaw('ISNULL(s.surgery_date), s.surgery_date ASC')->get();
         return view('surgery.index', compact('surgeries'));
     }
 
@@ -97,11 +98,11 @@ class SurgeryController extends Controller
         ]);
         $input = $request->all();
         $input['surgery_date'] = (!empty($request->surgery_date)) ? Carbon::createFromFormat('d/M/Y', $request['surgery_date'])->format('Y-m-d') : NULL;
-        $input['updated_by'] = $request->user()->id;        
+        $input['updated_by'] = $request->user()->id;
         $surgery = Surgery::find($id);
         $input['branch'] = $surgery->getOriginal('branch');
-        $surgery->update($input);        
-        return redirect()->route('surgery.index')->with('success','Surgery updated successfully');
+        $surgery->update($input);
+        return redirect()->route('surgery.index')->with('success', 'Surgery updated successfully');
     }
 
     /**
@@ -116,6 +117,6 @@ class SurgeryController extends Controller
         $surgery->delete();
         DB::table('patient_medical_records')->where('id', $surgery->medical_record_id)->update(['is_surgery' => 0]);
         return redirect()->route('surgery.index')
-                        ->with('success','Surgery deleted successfully');
+            ->with('success', 'Surgery deleted successfully');
     }
 }
