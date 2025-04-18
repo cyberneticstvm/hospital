@@ -90,6 +90,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             PromotionContact::update(['wa_sms_status' => null]);
+            PatientRegistrations::update(['wa_sms_status' => null]);
         })->dailyAt('23:30');
     }
 
