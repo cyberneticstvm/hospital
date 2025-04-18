@@ -79,8 +79,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
 
-    Route::get('/asd', [HelperController::class, 'asd'])->name('asd');
-
     Route::get('/google/map', 'App\Http\Controllers\GoogleMapController@getUserLocationMap')->name('user.location.map');
 
     Route::get('/test/{branch}', 'App\Http\Controllers\ReportController@getClosingBalance');
