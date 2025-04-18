@@ -15,6 +15,7 @@ use App\Models\UserBranch;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 
 class Helper
@@ -34,6 +35,57 @@ class Helper
     {
         return 'fdjsvsgdf4dhgf687f4bg54g4hf787';
     }
+
+    public static function sendWaPromotion($schedule, $name, $mobile)
+    {
+        $token = Config::get('myconfig.whatsapp.token');
+        $config = [
+            "messaging_product" => "whatsapp",
+            "to" => "+91" . $mobile,
+            "type" => "template",
+            "template" => [
+                "name" => $schedule->template_id,
+                "language" => ["code" => $schedule->template_language],
+                "components" => [
+                    [
+                        "type" => "header",
+                        "parameters" => [
+                            [
+                                "type" => "image",
+                                "image" =>
+                                [
+                                    "link" => ($schedule->entity == 'store') ? "https://store.devihospitals.in/public/backend/assets/images/logo/devi-hospital-logo.png" : "https://store.devihospitals.in/public/backend/assets/images/logo/devi-hospital-logo.png",
+                                ],
+                            ],
+                        ]
+                    ],
+                    [
+                        "type" => "body",
+                        "parameters" => []
+                    ],
+                ]
+            ]
+        ];
+        $curl = curl_init();
+        $data_string = json_encode($config);
+        $ch = curl_init('https://graph.facebook.com/v22.0/543653938835557/messages');
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            array(
+                'Authorization: Bearer ' . $token,
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string)
+            )
+        );
+        $result = curl_exec($ch);
+        $res = json_decode($result, true);
+        return $res;
+    }
+
 
     public static function getAvailableStock($product, $batch, $from_branch)
     {

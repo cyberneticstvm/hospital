@@ -25,6 +25,7 @@ use App\Http\Controllers\DischargeSummaryController;
 use App\Http\Controllers\InhouseCampController;
 use App\Http\Controllers\SurgeryConsumableController;
 use App\Http\Controllers\PostOperativeInstructionController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RoyaltyCardProcedure;
 use App\Http\Controllers\TestAdvisedController;
 
@@ -804,4 +805,22 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     // End Settings //
 
     Route::get('/switch/branch/{branch}', [HelperController::class, 'switchBranch'])->name('switch.branch');
+
+    Route::prefix('promotion')->controller(PromotionController::class)->group(function () {
+        Route::get('/contact/list', 'contactList')->name('promotion.contact.list');
+        Route::get('/contact/list/create', 'createContact')->name('promotion.contact.create');
+        Route::post('/contact/list/create', 'saveContact')->name('promotion.contact.save');
+        Route::get('/contact/list/edit/{id}', 'editContact')->name('promotion.contact.edit');
+        Route::post('/contact/list/edit/{id}', 'updateContact')->name('promotion.contact.update');
+        Route::get('/contact/list/delete/{id}', 'deleteContact')->name('promotion.contact.delete');
+        Route::get('/contact/list/restore/{id}', 'restoreContact')->name('promotion.contact.restore');
+
+        Route::get('/schedule/list', 'scheduleList')->name('promotion.schedule.list');
+        Route::get('/schedule/list/create', 'createSchedule')->name('promotion.schedule.create');
+        Route::post('/schedule/list/create', 'saveSchedule')->name('promotion.schedule.save');
+        Route::get('/schedule/list/edit/{id}', 'editSchedule')->name('promotion.schedule.edit');
+        Route::post('/schedule/list/edit/{id}', 'updateSchedule')->name('promotion.schedule.update');
+        Route::get('/schedule/list/delete/{id}', 'deleteSchedule')->name('promotion.schedule.delete');
+        Route::get('/schedule/list/restore/{id}', 'restoreSchedule')->name('promotion.schedule.restore');
+    });
 });

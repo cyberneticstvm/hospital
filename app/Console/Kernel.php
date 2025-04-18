@@ -7,7 +7,10 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 use Illuminate\Support\Facades\Config;
 use App\Helper\Helper;
+use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
+use App\Models\PromotionContact;
+use App\Models\PromotionSchedule;
 use Carbon\Carbon;
 use DB;
 
@@ -58,6 +61,35 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             DB::table('appointments')->whereDate('appointment_date', '<=', Carbon::now()->subDays(7))->where('patient_id', 0)->where('medical_record_id', 0)->delete();
+        })->dailyAt('23:30');
+
+        $schedule->call(function () {
+            $promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
+            if ($promo):
+                $clist = PromotionContact::selectRaw("id, name, contact_number as mobile, 'clist' as type")->whereNull('wa_sms_status')->where('entity', $promo->entity)->where('type', 'include')->when($promo->branch_id > 0, function ($q) use ($promo) {
+                    return $q->where('branch_id', $promo->branch_id);
+                })->orderBy('id');
+                $cdata = null;
+                if ($promo->entity == 'hospital'):
+                    $cdata = PatientRegistrations::selectRaw("id, patient_name as name, mobile_number as mobile, 'patient' as type")->whereNull('wa_sms_status')->when($promo->branch_id > 0, function ($q) use ($promo) {
+                        return $q->where('branch_id', $promo->branch_id);
+                    })->limit($promo->sms_limit_per_hour)->union($clist)->orderBy('id')->get()->unique('mobile');
+                endif;
+                if ($cdata):
+                    foreach ($cdata as $key => $item):
+                        Helper::sendWaPromotion($promo, $item->name, $item->mobile);
+                        if ($item->type == 'clist'):
+                            PromotionContact::where('id', $item->id)->update(['wa_sms_status' => 'yes']);
+                        else:
+                            PatientRegistrations::where('id', $item->id)->update(['wa_sms_status' => 'yes']);
+                        endif;
+                    endforeach;
+                endif;
+            endif;
+        })->hourly();
+
+        $schedule->call(function () {
+            PromotionContact::update(['wa_sms_status' => null]);
         })->dailyAt('23:30');
     }
 
