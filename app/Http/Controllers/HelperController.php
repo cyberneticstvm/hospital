@@ -569,7 +569,7 @@ class HelperController extends Controller
             endif;
             dd($cdata);
             die;
-        /*if ($cdata):
+            if ($cdata):
                 foreach ($cdata as $key => $item):
                     Helper::sendWaPromotion($promo, $item->name, $item->mobile);
                     if ($item->type == 'clist'):
@@ -578,7 +578,7 @@ class HelperController extends Controller
                         PatientRegistrations::where('id', $item->id)->update(['wa_sms_status' => 'yes']);
                     endif;
                 endforeach;
-            endif;*/
+            endif;
         endif;
     }
 }

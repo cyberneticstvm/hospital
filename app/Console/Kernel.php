@@ -72,7 +72,7 @@ class Kernel extends ConsoleKernel
                 $cdata = null;
                 if ($promo->entity == 'hospital'):
                     $cdata = PatientRegistrations::selectRaw("id, patient_name as name, mobile_number as mobile, 'patient' as type")->whereNull('wa_sms_status')->when($promo->branch_id > 0, function ($q) use ($promo) {
-                        return $q->where('branch_id', $promo->branch_id);
+                        return $q->where('branch', $promo->branch_id);
                     })->limit($promo->sms_limit_per_hour)->union($clist)->orderBy('id')->get()->unique('mobile');
                 endif;
                 if ($cdata):
