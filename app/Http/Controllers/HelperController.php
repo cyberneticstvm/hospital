@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helper;
 use App\Models\PatientPayment;
+use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
+use App\Models\PromotionContact;
+use App\Models\PromotionSchedule;
 use App\Models\SurgeryConsumableItem;
 use App\Models\UserBranch;
 use Illuminate\Http\Request;
@@ -547,6 +551,34 @@ class HelperController extends Controller
             return redirect()->back()->with("success", "Branch switched successfully");
         else :
             return redirect()->back()->with("error", "Requested branch access denied!");
+        endif;
+    }
+
+    public function asd()
+    {
+        $promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
+        if ($promo):
+            $clist = PromotionContact::selectRaw("id, name, contact_number as mobile, 'clist' as type")->whereNull('wa_sms_status')->where('entity', $promo->entity)->where('type', 'include')->when($promo->branch_id > 0, function ($q) use ($promo) {
+                return $q->where('branch_id', $promo->branch_id);
+            })->orderBy('id');
+            $cdata = null;
+            if ($promo->entity == 'hospital'):
+                $cdata = PatientRegistrations::selectRaw("id, patient_name as name, mobile_number as mobile, 'patient' as type")->whereNull('wa_sms_status')->when($promo->branch_id > 0, function ($q) use ($promo) {
+                    return $q->where('branch_id', $promo->branch_id);
+                })->limit($promo->sms_limit_per_hour)->union($clist)->orderBy('id')->get()->unique('mobile');
+            endif;
+            dd($cdata);
+            die;
+        /*if ($cdata):
+                foreach ($cdata as $key => $item):
+                    Helper::sendWaPromotion($promo, $item->name, $item->mobile);
+                    if ($item->type == 'clist'):
+                        PromotionContact::where('id', $item->id)->update(['wa_sms_status' => 'yes']);
+                    else:
+                        PatientRegistrations::where('id', $item->id)->update(['wa_sms_status' => 'yes']);
+                    endif;
+                endforeach;
+            endif;*/
         endif;
     }
 }
