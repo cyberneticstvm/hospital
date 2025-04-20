@@ -73,22 +73,28 @@ class Kernel extends ConsoleKernel
                 if ($promo->entity == 'hospital'):
                     $cdata = PatientRegistrations::selectRaw("id, patient_name as name, mobile_number as mobile, 'patient' as type")->whereNull('wa_sms_status')->when($promo->branch_id > 0, function ($q) use ($promo) {
                         return $q->where('branch', $promo->branch_id);
-                    })->limit($promo->sms_limit_per_hour)->union($clist)->orderBy('id')->get()->unique('mobile');
+                    })->whereNotIn('mobile_number', PromotionContact::where('type', 'exclude')->pluck('contact_number'))->limit($promo->sms_limit_per_hour)->union($clist)->orderBy('id')->get()->unique('mobile');
                 endif;
                 if ($cdata):
+                    $ids1 = [];
+                    $ids2 = [];
                     foreach ($cdata as $key => $item):
                         Helper::sendWaPromotion($promo, $item->name, $item->mobile);
                         if ($item->type == 'clist'):
-                            PromotionContact::where('id', $item->id)->update(['wa_sms_status' => 'yes']);
+                            array_push($ids1, $item->id);
                         else:
-                            PatientRegistrations::where('id', $item->id)->update(['wa_sms_status' => 'yes']);
+                            array_push($ids2, $item->id);
                         endif;
                     endforeach;
+                    PromotionContact::whereIn('id', $ids1)->update(['wa_sms_status' => 'yes']);
+                    PatientRegistrations::where('id', $ids2)->update(['wa_sms_status' => 'yes']);
                 endif;
             endif;
         })->hourly();
 
         $schedule->call(function () {
+            $promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
+            $promo->update(['sms_count' => $promo->waSmsProcessedCount()]);
             PromotionContact::update(['wa_sms_status' => null]);
             PatientRegistrations::update(['wa_sms_status' => null]);
         })->dailyAt('23:30');

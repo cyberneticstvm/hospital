@@ -102,8 +102,8 @@ class PromotionController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'scheduled_date' => 'required|date',
-            'template_id' => 'required|unique:promotion_schedules,template_id',
+            'scheduled_date' => 'required|date|unique:promotion_schedules,scheduled_date',
+            'template_id' => 'required',
             'entity' => 'required',
             'sms_limit_per_hour' => 'required|numeric|min:1',
             'branch_id' => 'required',
@@ -126,8 +126,8 @@ class PromotionController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'scheduled_date' => 'required|date',
-            'template_id' => 'required|unique:promotion_schedules,template_id,' . $id,
+            'scheduled_date' => 'required|date|unique:promotion_schedules,scheduled_date,' . $id,
+            'template_id' => 'required',
             'entity' => 'required',
             'sms_limit_per_hour' => 'required|numeric|min:1',
             'branch_id' => 'required',
