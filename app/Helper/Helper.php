@@ -115,7 +115,7 @@ class Helper
                             ["type" => "text", "text" => $appointment->patient_name],
                             ["type" => "text", "text" => ($action == 'save') ? 'Booked' : 'Updated'],
                             ["type" => "text", "text" => $appointment->appointment_date->format('d.M.Y')],
-                            ["type" => "text", "text" => $appointment->appointment_time->format('h:i s')],
+                            ["type" => "text", "text" => $appointment->appointment_time->format('h:i A')],
                             ["type" => "text", "text" => $appointment->doctors->doctor_name],
                             ["type" => "text", "text" => $appointment->branches->branch_name],
                             ["type" => "text", "text" => $appointment->branches->address],
