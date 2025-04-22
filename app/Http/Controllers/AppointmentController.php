@@ -30,7 +30,7 @@ class AppointmentController extends Controller
         $this->middleware('permission:appointment-active-list', ['only' => ['activelist']]);
 
         $this->branch = session()->get('branch');
-        $this->doctors = DB::table('doctors')->get();
+        $this->doctors = DB::table('doctors')->whereNull('deleted_at')->get();
         $this->branches = DB::table('branches')->get();
         $this->settings = DB::table('settings')->selectRaw("TIME_FORMAT(appointment_from_time, '%h:%i %p') AS from_time, TIME_FORMAT(appointment_to_time, '%h:%i %p') AS to_time, appointment_interval AS ti")->where('id', 1)->first();
         $this->camps = InhouseCamp::where('status', 1)->get();
