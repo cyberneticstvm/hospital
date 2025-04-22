@@ -27,6 +27,8 @@ class Appointment extends Model
         'updated_by',
     ];
 
+    protected $casts = ['appointment_date' => 'datetime', 'appointment_time', 'datetime'];
+
     public function branches()
     {
         return $this->belongsTo(Branch::class, 'branch', 'id');
@@ -36,6 +38,4 @@ class Appointment extends Model
     {
         return $this->belongsTo(doctor::class, 'doctor', 'id');
     }
-
-    protected $casts = ['appointment_date' => 'date', 'appointment_time', 'time'];
 }
