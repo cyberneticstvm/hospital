@@ -158,8 +158,9 @@ class AppointmentController extends Controller
                     return redirect()->back()->with('error', 'Daily patient registration exceeded for provided date/branch/camp.')->withInput();
                 endif;
             endif;
-            $apo = Appointment::create($input);
-            $code = Helper::sendSms(Config::get('myconfig.sms'));
+            $appointment = Appointment::create($input);
+            Helper::sendSms(Config::get('myconfig.sms'));
+            Helper::sendAppointmentConfirmation($appointment, 'save');
         } catch (Exception $e) {
             throw $e;
         }
@@ -246,7 +247,8 @@ class AppointmentController extends Controller
             endif;
             $apo = Appointment::find($id);
             $apo->update($input);
-            $code = Helper::sendSms(Config::get('myconfig.sms'));
+            Helper::sendSms(Config::get('myconfig.sms'));
+            Helper::sendAppointmentConfirmation($apo, 'update');
         } catch (Exception $e) {
             throw $e;
         }
