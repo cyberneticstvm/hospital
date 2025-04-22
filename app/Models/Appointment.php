@@ -37,5 +37,5 @@ class Appointment extends Model
         return $this->belongsTo(doctor::class, 'doctor', 'id');
     }
 
-    protected $casts = ['appointment_date' => 'date', 'appointment_time', 'datetime'];
+    protected $casts = ['appointment_date' => 'date', 'appointment_time', 'time'];
 }
