@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">Test Dose Time<sup class="text-danger">*</sup></label>
-                                    <input type="time" name="test_dose_time" class="form-control form-control-md" value="{{ $onote?->test_dose_time->format('h:i A') }}" />
+                                    <input type="time" name="test_dose_time" class="form-control form-control-md" value="{{ $onote?->test_dose_time }}" />
                                     @error('test_dose_time')
                                     <small class="text-danger">{{ $errors->first('test_dose_time') }}</small>
                                     @enderror
