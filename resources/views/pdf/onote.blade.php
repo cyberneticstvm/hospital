@@ -85,7 +85,7 @@
             <td>{{ $onote->test_dose_time?->format('h:i A') }}</td>
             <td>{{ $onote->test_dose_result }}</td>
             <td>{{ $onote->blood_pressure_mm }}/{{ $onote->blood_pressure_hg }} mmHg</td>
-            <td>{{ $onote->gbrs }} mg/dL</td>
+            <td>{{ $onote->grbs }} mg/dL</td>
         </tr>
     </table>
     <br />
