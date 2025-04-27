@@ -118,7 +118,8 @@
     <br />
     <br />
     Surgeon<br />
-    {{ $onote->surgeond?->doctor_name }}
+    {{ $onote->surgeond?->doctor_name }}<br />
+    {{ $onote->surgeond?->designation }}
 </body>
 
 </html>
