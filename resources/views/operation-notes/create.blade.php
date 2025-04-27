@@ -54,13 +54,6 @@
                                     <small class="text-danger">{{ $errors->first('date_of_surgery') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-12">
-                                    <label class="form-label">Procedure<sup class="text-danger">*</sup></label>
-                                    <textarea name="procedures" class="form-control" rows="5" placeholder="Procedures">{{ old('procedures') }}</textarea>
-                                    @error('procedures')
-                                    <small class="text-danger">{{ $errors->first('procedures') }}</small>
-                                    @enderror
-                                </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Test Dose Time<sup class="text-danger">*</sup></label>
                                     <input type="time" name="test_dose_time" class="form-control form-control-md" value="{{ old('test_dose_time') }}" />
@@ -87,6 +80,14 @@
                                     <label class="form-label">GRBS<sup class="text-danger">*</sup></label>
                                     <input type="text" name="grbs" class="form-control form-control-md" value="{{ old('grbs') }}" maxlength="3" placeholder="00" />
                                 </div>
+                                <div class="col-sm-12">
+                                    <label class="form-label">Procedure<sup class="text-danger">*</sup></label>
+                                    <textarea name="procedures" class="form-control" rows="5" placeholder="Procedures">{{ old('procedures') }}</textarea>
+                                    @error('procedures')
+                                    <small class="text-danger">{{ $errors->first('procedures') }}</small>
+                                    @enderror
+                                </div>
+
                                 <div class="col-sm-12">
                                     <label class="form-label">Procedure Details<sup class="text-danger">*</sup></label>
                                     <textarea name="notes" class="form-control" rows="5" placeholder="Procedure Details">{{ old('notes') }}</textarea>
