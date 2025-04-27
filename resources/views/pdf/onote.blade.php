@@ -60,7 +60,7 @@
             </tr>
             <tr>
                 <td>DOCTOR NAME</td>
-                <td>{{ $doctor->doctor_name }}</td>
+                <td>{{ $doctor?->doctor_name }}</td>
                 <td>DATE</td>
                 <td>{{ ($onote->created_at) ? date('d/M/Y h:i:A', strtotime($onote->created_at)) : '' }}</td>
             </tr>
