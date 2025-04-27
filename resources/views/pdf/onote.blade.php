@@ -87,7 +87,7 @@
     {!! nl2br($onote->procedures) !!}
     <br />
     <br />
-    <p>Test Dose Time: {{ $onote->test_dose_time->format('h:i A') }}</p>
+    <p>Test Dose Time: {{ $onote->test_dose_time?->format('h:i A') }}</p>
     <p>Test Dose Result: {{ $onote->test_dose_result }}</p>
     <p>Blood Pressure: {{ $onote->blood_pressure_mm }}/{{ $onote->blood_pressure_hg }} mmHg</p>
     <p>GRBS: {{ $onote->gbrs }} mg/dL</p>
