@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Procedure<sup class="text-danger">*</sup></label>
-                                    <textarea name="procedures" class="form-control" rows="5" placeholder="Procedures">{{ old('procedures') }}</textarea>
+                                    <textarea name="procedures" class="form-control" rows="5" placeholder="Procedures">OD Cataract Surgery with IOL (21.00)</textarea>
                                     @error('procedures')
                                     <small class="text-danger">{{ $errors->first('procedures') }}</small>
                                     @enderror
@@ -94,21 +94,24 @@
 
                                 <div class="col-sm-12">
                                     <label class="form-label">Procedure Details<sup class="text-danger">*</sup></label>
-                                    <textarea name="notes" class="form-control" rows="5" placeholder="Procedure Details">{{ old('notes') }}</textarea>
+                                    <textarea name="notes" class="form-control" rows="5" placeholder="Procedure Details">The patient underwent OD Cataract Surgery with Intraocular Lens (IOL) implantation under
+                                    local anesthesia. The procedure was performed successfully by Dr.Sanjay Raju at 04.05PM. The surgery was well-tolerated, and no complications were noted during the procedure.</textarea>
                                     @error('notes')
                                     <small class="text-danger">{{ $errors->first('notes') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Post-operative Advice<sup class="text-danger">*</sup></label>
-                                    <textarea name="post_operative_advice" class="form-control" rows="5" placeholder="Post-operative Advice">{{ old('post_operative_advice') }}</textarea>
+                                    <textarea name="post_operative_advice" class="form-control" rows="5" placeholder="Post-operative Advice">Review: The patient is advised to follow-up tomorrow, (25 Apr. 2025), at the Varkala OPD, at 10:00 AM for a postoperative check-up.</textarea>
                                     @error('post_operative_advice')
                                     <small class="text-danger">{{ $errors->first('post_operative_advice') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Medications Prescribed<sup class="text-danger">*</sup></label>
-                                    <textarea name="medications_prescribed" class="form-control" rows="5" placeholder="Medications Prescribed">{{ old('medications_prescribed') }}</textarea>
+                                    <textarea name="medications_prescribed" class="form-control" rows="5" placeholder="Medications Prescribed">1. Tab. Cefixime 200 mg – 1 tablet in the morning and 1 tablet in the evening for 3 days
+                                    2. Tab. Pantop 40 mg – Take 1 tablet daily
+                                    3. Tab. Dolo (SoS)</textarea>
                                     @error('medications_prescribed')
                                     <small class="text-danger">{{ $errors->first('medications_prescribed') }}</small>
                                     @enderror
