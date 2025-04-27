@@ -68,16 +68,20 @@
     </table>
     <br />
     <br />
-    <table style="width: 60%; border: 0px">
+    <table style="width: 100%; border: 0px">
         <tr>
             <th style="text-align: left;">Eye</th>
             <th style="text-align: left;">Surgeon</th>
             <th style="text-align: left;">Surgery Date</th>
+            <th style="text-align: left;">Test Dose Time</th>
+            <th style="text-align: left;">Test Dose Result</th>
         </tr>
         <tr>
             <td>{{ $onote->eye }}</td>
             <td>{{ $onote->surgeond?->doctor_name }}</td>
             <td>{{ $onote->date_of_surgery?->format('d.M.Y') }}</td>
+            <td>{{ $onote->test_dose_time?->format('h:i A') }}</td>
+            <td>{{ $onote->test_dose_result }}</td>
         </tr>
     </table>
     <br />
@@ -87,8 +91,6 @@
     {!! nl2br($onote->procedures) !!}
     <br />
     <br />
-    <p>Test Dose Time: {{ $onote->test_dose_time?->format('h:i A') }}</p>
-    <p>Test Dose Result: {{ $onote->test_dose_result }}</p>
     <p>Blood Pressure: {{ $onote->blood_pressure_mm }}/{{ $onote->blood_pressure_hg }} mmHg</p>
     <p>GRBS: {{ $onote->gbrs }} mg/dL</p>
     <br />
