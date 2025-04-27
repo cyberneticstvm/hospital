@@ -22,8 +22,8 @@
                     <th>Adv. Date</th>
                     <th>Adv. Br.</th>
                     <th>Surgery Name</th>
-                    <th>Fee</th>
                     <th>Eye</th>
+                    <th>Fee</th>
                     <th>Surgeon</th>
                     <th>Status</th>
                     <th>notes</th>

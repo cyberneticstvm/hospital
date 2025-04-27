@@ -13,6 +13,7 @@ use App\Models\InhouseCamp;
 use Illuminate\Http\Request;
 use App\Models\PatientReference as PRef;
 use App\Models\LabClinic;
+use App\Models\OperationNote;
 use App\Models\PatientMedicalRecord;
 use App\Models\PatientProcedure;
 use App\Models\PatientReference;
@@ -485,7 +486,7 @@ class PDFController extends Controller
 
     public function printonote($id)
     {
-        $onote = DB::table('operation_notes')->find($id);
+        $onote = OperationNote::find($id);
         $patient = DB::table('patient_registrations')->find($onote->patient_id);
         $pref = DB::table('patient_references')->find($onote->medical_record_id);
         $branch = DB::table('branches')->find($onote->branch);

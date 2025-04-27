@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\doctor;
 use Illuminate\Http\Request;
 use App\Models\OperationNote;
+use App\Models\Surgery;
 use Carbon\Carbon;
 use DB;
 
@@ -17,10 +19,11 @@ class OperationNoteController extends Controller
      */
     private $branch;
 
-    function __construct(){
-        $this->middleware('permission:operation-note-list|operation-note-create|operation-note-edit|operation-note-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:operation-note-create', ['only' => ['create','store']]);
-        $this->middleware('permission:operation-note-edit', ['only' => ['edit','update']]);
+    function __construct()
+    {
+        $this->middleware('permission:operation-note-list|operation-note-create|operation-note-edit|operation-note-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:operation-note-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:operation-note-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:operation-note-delete', ['only' => ['destroy']]);
 
         $this->branch = session()->get('branch');
@@ -56,12 +59,12 @@ class OperationNoteController extends Controller
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
-        try{
-            $onote = OperationNote::create($input);
-        }catch(Exception $e){
+        try {
+            OperationNote::create($input);
+        } catch (Exception $e) {
             throw $e;
-        }        
-        return redirect()->route('onote.index')->with('success','Record created successfully');
+        }
+        return redirect()->route('onote.index')->with('success', 'Record created successfully');
     }
 
     /**
@@ -76,10 +79,14 @@ class OperationNoteController extends Controller
             'medical_record_id' => 'required',
         ]);
         $mrecord = DB::table('patient_medical_records')->find($request->medical_record_id);
-        if($mrecord):
+        if ($mrecord):
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $branch = DB::table('branches')->find($mrecord->branch);
-            return view('operation-notes.create', compact('mrecord', 'patient', 'branch'));
+            $surgery = Surgery::where('medical_record_id', $request->medical_record_id)->first();
+            $doctors = doctor::when($surgery?->surgeon > 0, function ($q) use ($surgery) {
+                return $q->where('id', $surgery->surgeon);
+            })->get();
+            return view('operation-notes.create', compact('mrecord', 'patient', 'branch', 'doctors', 'surgery'));
         else:
             return redirect("/operation-notes/")->withErrors('No records found.');
         endif;
@@ -97,7 +104,9 @@ class OperationNoteController extends Controller
         $mrecord = DB::table('patient_medical_records')->find($onote->medical_record_id);
         $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $branch = DB::table('branches')->find($mrecord->branch);
-        return view('operation-notes.edit', compact('onote', 'patient', 'mrecord', 'branch'));
+        $surgery = Surgery::where('medical_record_id', $onote->medical_record_id)->first();
+        $doctors = doctor::get();
+        return view('operation-notes.edit', compact('onote', 'patient', 'mrecord', 'branch', 'doctors', 'surgery'));
     }
 
     /**
@@ -114,13 +123,13 @@ class OperationNoteController extends Controller
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
-        try{
+        try {
             $onote = OperationNote::find($id);
             $onote->update($input);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
-        }        
-        return redirect()->route('onote.index')->with('success','Record updated successfully');
+        }
+        return redirect()->route('onote.index')->with('success', 'Record updated successfully');
     }
 
     /**
@@ -133,6 +142,6 @@ class OperationNoteController extends Controller
     {
         OperationNote::find($id)->delete();
         return redirect()->route('onote.index')
-                        ->with('success','Record deleted successfully');
+            ->with('success', 'Record deleted successfully');
     }
 }

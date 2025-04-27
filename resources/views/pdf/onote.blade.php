@@ -1,35 +1,46 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Devi Eye Clinic & Opticians</title>
     <style>
-        table{
+        table {
             border: 1px solid #e6e6e6;
             font-size: 12px;
         }
-        thead{
+
+        thead {
             border-bottom: 1px solid #e6e6e6;
         }
-        table thead th, table tbody td{
+
+        table thead th,
+        table tbody td {
             padding: 5px;
         }
-        .bordered td{
+
+        .bordered td {
             border: 1px solid #e6e6e6;
         }
-        .text-right{
+
+        .text-right {
             text-align: right;
         }
     </style>
 </head>
+
 <body>
     <center>
-        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%"/><br/>
-            {{ $branch->address }}, Phone:
-            {{ $branch->contact_number }}
+        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+        {{ $branch->address }}, Phone:
+        {{ $branch->contact_number }}
     </center>
-    <br/>
+    <br />
     <table width="100%">
-        <thead><tr><th text-align="center" colspan="4">Operation Notes</th></tr></thead>
+        <thead>
+            <tr>
+                <th text-align="center" colspan="4">Operation Notes</th>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td>PATIENT NAME</td>
@@ -55,7 +66,49 @@
             </tr>
         </tbody>
     </table>
-    <p>Operation Notes</p>
+    <br />
+    <br />
+    <table style="width: 60%; border: 0px">
+        <tr>
+            <th style="text-align: left;">Eye</th>
+            <th style="text-align: left;">Surgeon</th>
+            <th style="text-align: left;">Surgery Date</th>
+        </tr>
+        <tr>
+            <td>{{ $onote->eye }}</td>
+            <td>{{ $onote->surgeond->doctor_name }}</td>
+            <td>{{ $onote->date_of_surgery?->format('d.M.Y') }}</td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    <strong>Procedure</strong>
+    <br />
+    {!! nl2br($onote->procedures) !!}
+    <br />
+    <br />
+    <p>Test Dose Time: {{ $onote->test_dose_time->format('h:i A') }}</p>
+    <p>Test Dose Result: {{ $onote->test_dose_result }}</p>
+    <p>Blood Pressure: {{ $onote->blood_pressure_mm }}/{{ $onote->blood_pressure_hg }} mmHg</p>
+    <p>GRBS: {{ $onote->gbrs }} mg/dL</p>
+    <br />
+    <strong>Procedure Details</strong>
+    <br />
     {!! nl2br($onote->notes) !!}
+    <br />
+    <br />
+    <strong>Post-operative Advice</strong>
+    <br />
+    {!! nl2br($onote->post_operative_advice) !!}
+    <br />
+    <br />
+    <strong>Medications Prescribed</strong>
+    <br />
+    {!! nl2br($onote->medications_prescribed) !!}
+    <br />
+    <br />
+    Surgeon<br />
+    {{ $onote->surgeond->doctor_name }}
 </body>
+
 </html>

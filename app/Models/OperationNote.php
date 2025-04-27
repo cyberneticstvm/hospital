@@ -9,12 +9,12 @@ class OperationNote extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'medical_record_id',
-        'patient_id',
-        'branch',
-        'notes',
-        'created_by',
-        'updated_by',
-    ];
+    protected $guarded = [];
+
+    protected $casts = ['date_of_surgery' => 'datetime', 'test_dose_time' => 'datetime'];
+
+    public function surgeond()
+    {
+        return $this->belongsTo(doctor::class, 'surgeon', 'id');
+    }
 }
