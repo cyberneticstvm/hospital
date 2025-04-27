@@ -95,6 +95,13 @@
     {!! nl2br($onote->procedures) !!}
     <br />
     <br />
+    @if($onote->iol_power)
+    <strong>IOL Power</strong>
+    <br />
+    {{ $onote->iol_power }}D
+    <br />
+    <br />
+    @endif
     <strong>Procedure Details</strong>
     <br />
     {!! nl2br($onote->notes) !!}

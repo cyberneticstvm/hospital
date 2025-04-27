@@ -81,6 +81,10 @@
                                     <label class="form-label">GRBS<sup class="text-danger">*</sup></label>
                                     <input type="text" name="grbs" class="form-control form-control-md" value="{{ $onote->grbs }}" maxlength="3" placeholder="00" />
                                 </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">IOL Power</label>
+                                    <input type="text" name="iol_power" class="form-control form-control-md" value="{{ $onote->iol_power }}" maxlength="5" placeholder="00.00" />
+                                </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Procedure<sup class="text-danger">*</sup></label>
                                     <textarea name="procedures" class="form-control" rows="5" placeholder="Procedures">{{ $onote->procedures }}</textarea>
