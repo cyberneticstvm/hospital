@@ -76,7 +76,7 @@
         </tr>
         <tr>
             <td>{{ $onote->eye }}</td>
-            <td>{{ $onote->surgeond->doctor_name }}</td>
+            <td>{{ $onote->surgeond?->doctor_name }}</td>
             <td>{{ $onote->date_of_surgery?->format('d.M.Y') }}</td>
         </tr>
     </table>
@@ -108,7 +108,7 @@
     <br />
     <br />
     Surgeon<br />
-    {{ $onote->surgeond->doctor_name }}
+    {{ $onote->surgeond?->doctor_name }}
 </body>
 
 </html>
