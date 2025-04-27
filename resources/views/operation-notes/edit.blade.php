@@ -32,9 +32,13 @@
                                 <div class="col-sm-2">
                                     <label class="form-label">Eye</label>
                                     <select class="form-control form-control-md" name="eye">
+                                        <option value="">Select</option>
                                         <option value="Right" {{ $onote->eye == 'Right' ? 'selected' : '' }}>Right</option>
                                         <option value="Left" {{ $onote->eye == 'Left' ? 'selected' : '' }}>Left</option>
                                     </select>
+                                    @error('eye')
+                                    <small class="text-danger">{{ $errors->first('eye') }}</small>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Surgeon<sup class="text-danger">*</sup></label>

@@ -120,6 +120,9 @@ class OperationNoteController extends Controller
     {
         $this->validate($request, [
             'notes' => 'required',
+            'eye' => 'required',
+            'surgeon' => 'required',
+            'date_of_surgery' => 'required|date',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
