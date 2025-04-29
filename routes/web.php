@@ -23,6 +23,7 @@ use App\Http\Controllers\HelperController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DischargeSummaryController;
 use App\Http\Controllers\InhouseCampController;
+use App\Http\Controllers\PatientPaymentController;
 use App\Http\Controllers\SurgeryConsumableController;
 use App\Http\Controllers\PostOperativeInstructionController;
 use App\Http\Controllers\PromotionController;
@@ -41,6 +42,8 @@ use App\Http\Controllers\TestAdvisedController;
 */
 
 Route::get('/test', [DashboardController::class, 'test'])->name('test');
+Route::get('/due/{mrid}', [HelperController::class, 'getOwedTotal'])->name('due.total');
+Route::get('/paid/{mrid}', [HelperController::class, 'getPaidTotal'])->name('paid.total');
 
 Route::get('/testsmsapi', [AppointmentController::class, 'testsmsapi'])->name('testsmsapi');
 Route::post('/testsmsapi', [AppointmentController::class, 'testsmsapisend'])->name('testsmsapisend');
