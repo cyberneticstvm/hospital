@@ -73,7 +73,7 @@
                         <div class="card">
                             <div class="card-header py-3 d-flex flex-wrap  justify-content-between align-items-center bg-transparent border-bottom-0">
                                 <div>
-                                    <h6 class="card-title m-0">Patient Overview Last 12 months (All Branches)</h6>
+                                    <h6 class="card-title m-0">Patient Overview Last 12 months - <span class="text-primary">{{ DB::table('branches')->where('id', Session::get('branch'))->value('branch_name') }}</span></h6>
                                     <small class="text-muted">Or you can <a href="#">sync data to Dashboard</a> to ensure your data is always up-to-date.</small>
                                 </div>
                                 <div class="dropdown">
