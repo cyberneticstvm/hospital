@@ -183,13 +183,15 @@ class DashboardController extends Controller
 
     public function patientMonth()
     {
-        $patients = DB::table('patient_registrations')->selectRaw("COUNT(id) AS pcount, DATE_FORMAT(created_at, '%d/%b') AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->groupBy('day')->orderByDesc('id')->get();
+        $br = $this->branch;
+        $patients = DB::table('patient_registrations')->selectRaw("COUNT(id) AS pcount, DATE_FORMAT(created_at, '%d/%b') AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->where('branch', $br)->groupBy('day')->orderByDesc('id')->get();
         return json_encode($patients);
     }
 
     public function reviewMonth()
     {
-        $patients = DB::table('patient_references')->selectRaw("COUNT(id) AS pcount, DATE_FORMAT(created_at, '%d/%b') AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->where('review', 'yes')->where('status', 1)->groupBy('day')->orderByDesc('id')->get();
+        $br = $this->branch;
+        $patients = DB::table('patient_references')->selectRaw("COUNT(id) AS pcount, DATE_FORMAT(created_at, '%d/%b') AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->where('review', 'yes')->where('status', 1)->where('branch', $br)->groupBy('day')->orderByDesc('id')->get();
         return json_encode($patients);
     }
 
