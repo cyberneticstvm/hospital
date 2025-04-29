@@ -42,8 +42,8 @@ use App\Http\Controllers\TestAdvisedController;
 */
 
 Route::get('/test', [DashboardController::class, 'test'])->name('test');
-Route::get('/due/{mrid}', [HelperController::class, 'getOwedTotal'])->name('due.total');
-Route::get('/paid/{mrid}', [HelperController::class, 'getPaidTotal'])->name('paid.total');
+/*Route::get('/due/{mrid}', [HelperController::class, 'getOwedTotal'])->name('due.total');
+Route::get('/paid/{mrid}', [HelperController::class, 'getPaidTotal'])->name('paid.total');*/
 
 Route::get('/testsmsapi', [AppointmentController::class, 'testsmsapi'])->name('testsmsapi');
 Route::post('/testsmsapi', [AppointmentController::class, 'testsmsapisend'])->name('testsmsapisend');
