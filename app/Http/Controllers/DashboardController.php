@@ -162,6 +162,7 @@ class DashboardController extends Controller
 
     public function patientOverview()
     {
+        $br = $this->branch;
         $patients = DB::select("SELECT date, CONCAT_WS('-', SUBSTRING(MONTHNAME(date), 1, 3), DATE_FORMAT(date, '%y')) AS mname, COUNT(p.id) AS ptot FROM (
 		    SELECT LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL 1 MONTH AS date UNION ALL
 		    SELECT LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL 2 MONTH UNION ALL
@@ -176,7 +177,7 @@ class DashboardController extends Controller
 		    SELECT LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL 11 MONTH UNION ALL
 		    SELECT LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL 12 MONTH
 		) AS dates
-		LEFT JOIN patient_registrations p ON p.created_at >= date AND p.created_at < date + INTERVAL 1 MONTH GROUP BY date");
+		LEFT JOIN patient_registrations p ON p.created_at >= date AND p.created_at < date + INTERVAL 1 MONTH AND p.branch = $br GROUP BY date");
         return json_encode($patients);
     }
 
