@@ -259,7 +259,7 @@ class PatientPaymentController extends Controller
             foreach ($refs as $key => $val):
                 $owed = Helper::getOwedTotal($val->id);
                 $paid = Helper::getPaidTotal($val->id);
-                if ($owed - $paid > 0):
+                if ((float)$owed - (float)$paid > 0):
                     $outstandings[] = [
                         'due' => $owed,
                         'received' => $paid,
