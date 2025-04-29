@@ -259,15 +259,15 @@ class PatientPaymentController extends Controller
             foreach ($refs as $key => $val):
                 $owed = Helper::getOwedTotal($val->id);
                 $paid = Helper::getPaidTotal($val->id);
-                //if ($owed - $paid > 0):
-                $outstandings[] = [
-                    'due' => $owed,
-                    'received' => $paid,
-                    'balance' => $owed - $paid,
-                    'patient_name' => $val->patient->patient_name,
-                    'patient_id' => $val->patient_id,
-                ];
-            //endif;
+                if ($owed - $paid > 0):
+                    $outstandings[] = [
+                        'due' => $owed,
+                        'received' => $paid,
+                        'balance' => $owed - $paid,
+                        'patient_name' => $val->patient->patient_name,
+                        'patient_id' => $val->patient_id,
+                    ];
+                endif;
             endforeach;
         else:
             return redirect()->back()->with('error', 'Date range should not be more than 62 days.');
