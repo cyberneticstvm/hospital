@@ -23,6 +23,7 @@ use App\Http\Controllers\HelperController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DischargeSummaryController;
 use App\Http\Controllers\InhouseCampController;
+use App\Http\Controllers\PatientAcknoledgementController;
 use App\Http\Controllers\PatientPaymentController;
 use App\Http\Controllers\SurgeryConsumableController;
 use App\Http\Controllers\PostOperativeInstructionController;
@@ -793,6 +794,7 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
 
     Route::get('/axial-length/receipt/{id}/', [PDFController::class, 'axialLengthReceipt'])->name('receipt.axial.length');
     Route::get('/axial-length/report/{id}/', [PDFController::class, 'axialLengthReport'])->name('report.axial.length');
+    Route::get('/patient/acknowledgement/pdf/{id}', [PDFController::class, 'patientAcknowledgement'])->name('patient.ack.pdf');
     // End PDFs //
 
     // Settings //
@@ -825,5 +827,14 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
         Route::post('/schedule/list/edit/{id}', 'updateSchedule')->name('promotion.schedule.update');
         Route::get('/schedule/list/delete/{id}', 'deleteSchedule')->name('promotion.schedule.delete');
         Route::get('/schedule/list/restore/{id}', 'restoreSchedule')->name('promotion.schedule.restore');
+    });
+
+    Route::prefix('patient/acknowledgement')->controller(PatientAcknoledgementController::class)->group(function () {
+        Route::get('list', 'index')->name('patient.ack.list');
+        Route::post('list', 'fetch')->name('patient.ack.fetch');
+        Route::post('create', 'store')->name('patient.ack.save');
+        Route::get('edit/{id}', 'edit')->name('patient.ack.edit');
+        Route::post('edit/{id}', 'update')->name('patient.ack.update');
+        Route::delete('delete/{id}', 'destroy')->name('patient.ack.delete');
     });
 });

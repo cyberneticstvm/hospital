@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use App\Models\PatientReference as PRef;
 use App\Models\LabClinic;
 use App\Models\OperationNote;
+use App\Models\PatientAcknoledgement;
+use App\Models\PatientAcknowledgementProcedure;
 use App\Models\PatientMedicalRecord;
 use App\Models\PatientProcedure;
 use App\Models\PatientReference;
@@ -601,5 +603,16 @@ class PDFController extends Controller
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));
         $pdf = PDF::loadView('/pdf/axial-length/report', compact('qrcode', 'ax', 'patient', 'branch', 'procs', 'procedures'));
         return $pdf->stream('axial-length.pdf', array("Attachment" => 0));
+    }
+
+    public function patientAcknowledgement($id)
+    {
+        $ack = PatientAcknoledgement::find($id);
+        $procs = DB::table('types')->where('category', 'ack')->get();
+        $ackproc = PatientAcknowledgementProcedure::where('patient_acknowledgement_id', $id)->pluck('procedure_id')->all();
+        $doctor = doctor::find(PatientReference::find($ack->medical_record_id)->doctor_id);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));
+        $pdf = PDF::loadView('pdf.acknowledgement', compact('qrcode', 'procs', 'ackproc', 'ack', 'doctor'));
+        return $pdf->stream('patient-ack.pdf', array("Attachment" => 0));
     }
 }
