@@ -94,7 +94,9 @@
         @endforelse
     </table>
     <p class="">Notes: {{ $ack->notes }}</p>
-    <p class='text-right'>Authorized Signatory</p>
+    <br />
+    <p class="">Received by Patient / Bystander</p>
+    <p class='text-right'>Hospital Staff Signature</p>
     <p class='text-right'>Printed at: {{ date('d/M/Y H:i:A') }}</p>
 </body>
 
