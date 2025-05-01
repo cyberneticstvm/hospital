@@ -42,7 +42,7 @@
                         </form>
                     </div>
                 </div>
-                <h5 class="mb-3 mt-3">Patient Acknoledgement Register</h5>
+                <h5 class="mb-3 mt-3">Patient Acknowledgement Register</h5>
                 <div class="card">
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
