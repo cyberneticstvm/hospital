@@ -47,7 +47,7 @@
 <body>
     <center>
         <img src="./images/assets/Devi-Logo-Transparent.jpg" height='100' width='115' />
-        <p>{{ $ack->branch->branch_name }}, {{ $ack->branch->address }}, {{ $ack->branch->contact_number }}</p>
+        <p>{{ $ack?->branch?->branch_name }}, {{ $ack?->branch?->address }}, {{ $ack?->branch?->contact_number }}</p>
         <p>DL Number: RLF21KL2022000540, RLF20KL2022000543</p>
         <h3>Patient Acknowledgement</h3>
     </center>
