@@ -70,7 +70,7 @@
             <td>Doctor Name</td>
             <td colspan="3">{{ $doctor->doctor_name }}</td>
             <td>Surgeon Name</td>
-            <td></td>
+            <td>{{ $surgery?->surgeondetails?->doctor_name }}</td>
         </tr>
     </table>
     <br />
@@ -95,7 +95,7 @@
     </table>
     <p class="">Notes: {{ $ack->notes }}</p>
     <br />
-    <p class="">Received by Patient / Bystander</p>
+    <p class="">Received by Patient / Bystander / Authorized Person</p>
     <p class='text-right'>Hospital Staff Signature</p>
     <p class='text-right'>Printed at: {{ date('d/M/Y H:i:A') }}</p>
 </body>

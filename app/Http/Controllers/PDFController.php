@@ -23,6 +23,7 @@ use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\Procedure;
 use App\Models\Spectacle;
+use App\Models\Surgery;
 use QrCode;
 use PDF;
 use DB;
@@ -608,11 +609,12 @@ class PDFController extends Controller
     public function patientAcknowledgement($id)
     {
         $ack = PatientAcknoledgement::find($id);
+        $surgery = Surgery::where('medical_record_id', $ack->medical_record_id)->first();
         $procs = DB::table('types')->where('category', 'ack')->get();
         $ackproc = PatientAcknowledgementProcedure::where('patient_acknowledgement_id', $id)->pluck('procedure_id')->all();
         $doctor = doctor::find(PatientReference::find($ack->medical_record_id)->doctor_id);
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate("https://devieh.com/online"));
-        $pdf = PDF::loadView('pdf.acknowledgement', compact('qrcode', 'procs', 'ackproc', 'ack', 'doctor'));
+        $pdf = PDF::loadView('pdf.acknowledgement', compact('qrcode', 'procs', 'ackproc', 'ack', 'doctor', 'surgery'));
         return $pdf->stream('patient-ack.pdf', array("Attachment" => 0));
     }
 }
