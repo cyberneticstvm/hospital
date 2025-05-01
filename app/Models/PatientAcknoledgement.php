@@ -19,7 +19,7 @@ class PatientAcknoledgement extends Model
 
     public function branch()
     {
-        return $this->belongsTo(branch::class, 'branch_id', 'id');
+        return $this->belongsTo(Branch::class, 'branch_id', 'id');
     }
 
     public function status()
