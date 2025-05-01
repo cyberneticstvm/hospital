@@ -66,12 +66,12 @@
             <td>Ack. Number / Date</td>
             <td>{{ $ack->id }} / {{ $ack->created_at->format('d, M Y h:i a') }}</td>
         </tr>
-        <tr>
+        <!--<tr>
             <td>Doctor Name</td>
             <td colspan="3">{{ $doctor->doctor_name }}</td>
             <td>Surgeon Name</td>
             <td>{{ $surgery?->surgeondetails?->doctor_name }}</td>
-        </tr>
+        </tr>-->
     </table>
     <br />
     <strong>Reports</strong>
