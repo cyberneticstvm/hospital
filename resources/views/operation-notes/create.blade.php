@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Procedure<sup class="text-danger">*</sup></label>
-                                    <textarea name="procedures" class="form-control" rows="5" placeholder="Procedures">OD Cataract Surgery with IOL (21.00)</textarea>
+                                    <textarea name="procedures" class="form-control" rows="5" placeholder="Procedures">{{ $ascan?->eye }} Cataract Surgery with IOL ({{ ($ascan?->eye == 'OD' || $ascan?->eye == 'od') ? $ascan?->od_iol_power : $ascan?->os_iol_power }})</textarea>
                                     @error('procedures')
                                     <small class="text-danger">{{ $errors->first('procedures') }}</small>
                                     @enderror
