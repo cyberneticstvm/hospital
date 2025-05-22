@@ -734,7 +734,7 @@
     @if($onotes && $onotes->notes)
     @php $ont = $onote->where('medical_record_id', $mrecord->id)->first() @endphp
     <p>Operation Notes</p>
-    <table style="width: 100%;">
+    <table style="width: 100%; border:1px solid #000">
         <tr>
             <th style="text-align: left;">Eye</th>
             <th style="text-align: left;">Surgeon</th>
