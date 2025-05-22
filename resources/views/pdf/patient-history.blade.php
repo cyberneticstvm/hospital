@@ -757,6 +757,34 @@
     <br />
     {!! nl2br($ont->notes) !!}
     <br>
+    <br />
+    <br />
+    <strong>Procedure</strong>
+    <br />
+    {!! nl2br($ont->procedures) !!}
+    <br />
+    <br />
+    @if($ont->iol_power)
+    <strong>IOL Power</strong>
+    <br />
+    {{ $ont->iol_power }}D
+    <br />
+    <br />
+    @endif
+    <strong>Procedure Details</strong>
+    <br />
+    {!! nl2br($ont->notes) !!}
+    <br />
+    <br />
+    <strong>Post-operative Advice</strong>
+    <br />
+    {!! nl2br($ont->post_operative_advice) !!}
+    <br />
+    <br />
+    <strong>Medications Prescribed</strong>
+    <br />
+    {!! nl2br($ont->medications_prescribed) !!}
+    <br />
     @endif
     @if($mrecord->doctor_recommondations)
     <p>Doctor Recommendations</p>
