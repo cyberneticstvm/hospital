@@ -118,9 +118,9 @@
                                     <small class="text-danger">{{ $errors->first('medications_prescribed') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-6">
                                     <label class="form-label">Emergency Contact Number<sup class="text-danger">*</sup></label>
-                                    <input type="text" name="emergency_contact_number" maxlength="10" class="form-control form-control-md" value="{{ $onote->emergency_contact_number }}" />
+                                    <input type="text" name="emergency_contact_number" maxlength="40" class="form-control form-control-md" value="{{ $onote->emergency_contact_number }}" />
                                     @error('emergency_contact_number')
                                     <small class="text-danger">{{ $errors->first('emergency_contact_number') }}</small>
                                     @enderror

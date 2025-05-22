@@ -117,13 +117,15 @@
     {!! nl2br($onote->medications_prescribed) !!}
     <br />
     <br />
-    <strong>For emergency please contact: +91 {{ $onote->emergency_contact_number }}</strong>
-    <br />
-    <br />
     Surgeon<br />
     {{ $onote->surgeond?->doctor_name }}<br />
     {{ $onote->surgeond?->designation }}<br />
     {{ $onote->surgeond?->additional_qualification	 }}
+    <br />
+    <br />
+    <strong>For emergency please contact: {{ $onote->emergency_contact_number }}</strong>
+    <br />
+    <br />
 </body>
 
 </html>
