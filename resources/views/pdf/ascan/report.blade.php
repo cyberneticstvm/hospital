@@ -26,6 +26,10 @@
         .text-right {
             text-align: right;
         }
+
+        .bg-info {
+            background-color: lightskyblue;
+        }
     </style>
 </head>
 
