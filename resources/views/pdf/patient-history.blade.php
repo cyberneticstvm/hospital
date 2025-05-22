@@ -81,6 +81,7 @@
     $keratometry = DB::table('keratometries')->where('medical_record_id', $mrecord->id)->first();
     $ascan = DB::table('ascans')->where('medical_record_id', $mrecord->id)->first();
     $onotes = DB::table('operation_notes')->where('medical_record_id', $mrecord->id)->first();
+
     $pachymetry = DB::table('pachymetries')->where('medical_record_id', $mrecord->id)->first();
     $oct = DB::table('octs')->where('medical_record_id', $mrecord->id)->whereNull('deleted_at')->first();
     $octimages = DB::table('oct_docs')->where('oct_id', $oct->id ?? 0)->where('doc_type', 'img')->get();
@@ -731,8 +732,30 @@
     <br>
     @endif
     @if($onotes && $onotes->notes)
+    @php $ont = $onote->where('medical_record_id', $mrecord->id)->first() @endphp
     <p>Operation Notes</p>
-    {!! nl2br($onotes->notes) !!}
+    <table style="width: 100%; border: 0px">
+        <tr>
+            <th style="text-align: left;">Eye</th>
+            <th style="text-align: left;">Surgeon</th>
+            <th style="text-align: left;">Surgery Date</th>
+            <th style="text-align: left;">Test Dose Time</th>
+            <th style="text-align: left;">Test Dose Result</th>
+            <th style="text-align: left;">Blood Pressure</th>
+            <th style="text-align: left;">GRBS</th>
+        </tr>
+        <tr>
+            <td>{{ $ont->eye }}</td>
+            <td>{{ $ont->surgeond?->doctor_name }}</td>
+            <td>{{ $ont->date_of_surgery?->format('d.M.Y') }}</td>
+            <td>{{ $ont->test_dose_time?->format('h:i A') }}</td>
+            <td>{{ $ont->test_dose_result }}</td>
+            <td>{{ $ont->blood_pressure_mm }}/{{ $ont->blood_pressure_hg }} mmHg</td>
+            <td>{{ $ont->grbs }} mg/dL</td>
+        </tr>
+    </table>
+    <br />
+    {!! nl2br($ont->notes) !!}
     <br>
     @endif
     @if($mrecord->doctor_recommondations)
