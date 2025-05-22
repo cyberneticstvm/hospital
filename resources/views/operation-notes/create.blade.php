@@ -119,7 +119,7 @@
                                     <small class="text-danger">{{ $errors->first('medications_prescribed') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-">
                                     <label class="form-label">Emergency Contact Number<sup class="text-danger">*</sup></label>
                                     <input type="text" name="emergency_contact_number" maxlength="10" class="form-control form-control-md" value="{{ old('emergency_contact_number') }}" />
                                     @error('emergency_contact_number')
