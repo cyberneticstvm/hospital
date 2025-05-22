@@ -755,9 +755,6 @@
         </tr>
     </table>
     <br />
-    {!! nl2br($ont->notes) !!}
-    <br>
-    <br />
     <br />
     <strong>Procedure</strong>
     <br />
