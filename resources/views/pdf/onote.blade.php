@@ -119,6 +119,7 @@
     <br />
     <strong>For emergency please contact: +91 {{ $onote->emergency_contact_number }}</strong>
     <br />
+    <br />
     Surgeon<br />
     {{ $onote->surgeond?->doctor_name }}<br />
     {{ $onote->surgeond?->designation }}<br />
