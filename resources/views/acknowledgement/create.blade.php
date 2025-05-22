@@ -28,7 +28,7 @@
                             <div class="row mx-1">
                                 @foreach($procs as $value)
                                 <div class="col-sm-2 form-check form-check-inline">
-                                    <label class="form-check-label" for="flexCheckDefault">{{ $value->name }}</label>{{ Form::checkbox('procs[]', $value->id, false, array('class' => 'name, form-check-input')) }}
+                                    <label class="form-check-label" for="flexCheckDefault">{{ $value->name }}</label>{{ Form::checkbox('procs[]', $value->id, ($value->checked == 1) ? true : false, array('class' => 'name, form-check-input')) }}
                                 </div>
                                 @endforeach
                                 @error('procs')
