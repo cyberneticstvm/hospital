@@ -114,7 +114,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr class="{{ ($ascan?->eye == 'OD' || $ascan?->eye == 'od') ? 'bg-info' : '' }}">
                 <td>OD</td>
                 <td>{{ $ascan->od_axl }}</td>
                 <td>{{ $ascan->od_acd }}</td>
@@ -122,7 +122,7 @@
                 <td>{{ $ascan->od_a_constant }}</td>
                 <td>{{ $ascan->od_iol_power }}</td>
             </tr>
-            <tr>
+            <tr class="{{ ($ascan?->eye == 'OS' || $ascan?->eye == 'os') ? 'bg-info' : '' }}">
                 <td>OS</td>
                 <td>{{ $ascan->os_axl }}</td>
                 <td>{{ $ascan->os_acd }}</td>
