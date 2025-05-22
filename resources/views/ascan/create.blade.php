@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="row g-4">
                                     <div class="col-sm-2">
-                                        <label class="form-label">Eye</label>
+                                        <label class="form-label req">Eye</label>
                                         <input type="text" name="eye" class="form-control" placeholder="Eye" />
                                     </div>
                                     <div class="col-sm-6">
