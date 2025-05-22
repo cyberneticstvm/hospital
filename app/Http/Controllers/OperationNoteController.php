@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ascan;
 use App\Models\doctor;
 use Illuminate\Http\Request;
 use App\Models\OperationNote;
@@ -86,7 +87,8 @@ class OperationNoteController extends Controller
             $doctors = doctor::when($surgery?->surgeon > 0, function ($q) use ($surgery) {
                 return $q->where('id', $surgery->surgeon);
             })->get();
-            return view('operation-notes.create', compact('mrecord', 'patient', 'branch', 'doctors', 'surgery'));
+            $ascan = Ascan::where('medical_record_id', $request->medical_record_id)->first();
+            return view('operation-notes.create', compact('mrecord', 'patient', 'branch', 'doctors', 'surgery', 'ascan'));
         else:
             return redirect("/operation-notes/")->withErrors('No records found.');
         endif;

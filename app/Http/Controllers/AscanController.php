@@ -55,6 +55,7 @@ class AscanController extends Controller
     {
         $this->validate($request, [
             'medical_record_id' => 'required',
+            'eye' => 'required',
             'procedure' => 'required|array|min:1',
         ]);
         $input = $request->all();
@@ -142,6 +143,7 @@ class AscanController extends Controller
     {
         $this->validate($request, [
             'medical_record_id' => 'required',
+            'eye' => 'required',
             'procedure' => 'required|array|min:1',
         ]);
         $input = $request->all();

@@ -98,7 +98,7 @@
 
                                 <div class="col-sm-12">
                                     <label class="form-label">Procedure Details<sup class="text-danger">*</sup></label>
-                                    <textarea name="notes" class="form-control" rows="5" placeholder="Procedure Details">The patient underwent OD Cataract Surgery with Intraocular Lens (IOL) implantation under local anesthesia. The procedure was performed successfully by Dr.Sanjay Raju at 04.05PM. The surgery was well-tolerated, and no complications were noted during the procedure.</textarea>
+                                    <textarea name="notes" class="form-control" rows="5" placeholder="Procedure Details">The patient underwent {{ $ascan?->eye }} Cataract Surgery with Intraocular Lens (IOL) implantation under local anesthesia. The procedure was performed successfully by Dr.Sanjay Raju at 04.05PM. The surgery was well-tolerated, and no complications were noted during the procedure.</textarea>
                                     @error('notes')
                                     <small class="text-danger">{{ $errors->first('notes') }}</small>
                                     @enderror

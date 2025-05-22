@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="row g-4">
                                     <div class="col-sm-2">
-                                        <label class="form-label req">Eye</label>
+                                        <label class="form-label">Eye <sup class="text-danger">*</sup></label>
                                         <input type="text" name="eye" class="form-control" value="{{ $ascan->eye }}" placeholder="Eye" />
                                     </div>
                                     <div class="col-sm-6">
