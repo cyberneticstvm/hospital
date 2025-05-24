@@ -84,6 +84,7 @@
                     <div class="card-body table-responsive">
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
                             <thead>
+                                <th colspan="6" class="text-center fw-bold"><a href="">Show Outstanding Due</a></th>
                                 <tr>
                                     <th>SL No.</th>
                                     <th>Patient Name</th>

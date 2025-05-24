@@ -323,10 +323,6 @@ class Helper
                 ];
             endif;
         endforeach;
-        if ($startDate && $endDate):
-            return $outstandings;
-        else:
-            return array_sum(array_column($outstandings, 'balance'));
-        endif;
+        return $outstandings;
     }
 }
