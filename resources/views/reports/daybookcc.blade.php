@@ -75,7 +75,7 @@
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
                             <thead>
                                 <tr>
-                                    <th colspan="4" class="text-center fw-bold"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="outstandingDueModal" data-bs-target="#outstandingDueModal" data-title="Outstanding Due Detailed" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="outstanding">Show Outstanding Due</a></th>
+                                    <th colspan="5" class="text-center fw-bold"><a class="daybook" href="javascript:void(0)" data-bs-toggle="modal" data-modal="outstandingDueModal" data-bs-target="#outstandingDueModal" data-title="Outstanding Due Detailed" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="outstanding">Show Outstanding Due</a></th>
                                 </tr>
                                 <tr>
                                     <th>SL No.</th>
