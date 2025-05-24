@@ -85,9 +85,6 @@
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th colspan="6" class="text-center fw-bold"><a href="">Show Outstanding Due</a></th>
-                                </tr>
-                                <tr>
                                     <th>SL No.</th>
                                     <th>Patient Name</th>
                                     <th>Patient ID</th>

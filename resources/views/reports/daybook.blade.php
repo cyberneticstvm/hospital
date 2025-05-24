@@ -72,6 +72,9 @@
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
                             <thead>
                                 <tr>
+                                    <th colspan="4" class="text-center fw-bold"><a href="">Show Outstanding Due</a></th>
+                                </tr>
+                                <tr>
                                     <th>SL No.</th>
                                     <th>Particulars</th>
                                     <th class="text-end">Total</th>
