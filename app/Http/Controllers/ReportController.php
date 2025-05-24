@@ -229,7 +229,8 @@ class ReportController extends Controller
         $surgery_consumables_discount = 0.00;
         $outstanding_received = 0.00;
         $outstanding_received_other = 0.00;
-        return view('reports.daybookcc', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'consultation_fee_discount', 'procedure_fee_total', 'procedure_fee_discount', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'surgery_consumables_discount', 'outstanding_received_other'));
+        $patientOutStandingTotal = 0.00;
+        return view('reports.daybookcc', compact('inputs', 'records', 'branches', 'reg_fee_total', 'consultation_fee_total', 'consultation_fee_discount', 'procedure_fee_total', 'procedure_fee_discount', 'certificate_fee_total', 'pharmacy', 'medicine', 'income', 'expense', 'income_total', 'income_received_cash', 'income_received_upi', 'income_received_card', 'income_received_staff', 'opening_balance', 'vision', 'is_admin', 'is_accounts', 'isCEO', 'outstanding', 'outstanding_received', 'clinical_lab', 'radiology_lab', 'surgery_medicine', 'postop_medicine', 'surgery_consumables', 'surgery_consumables_discount', 'outstanding_received_other', 'patientOutStandingTotal'));
     }
     public function fetchdaybookcc(Request $request)
     {
