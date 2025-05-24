@@ -254,8 +254,9 @@ class PatientPaymentController extends Controller
 
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
-        if ($startDate->diffInDays($endDate) <= 62):
-            $refs = PatientReference::where('branch', $brn)->whereBetween('created_at', [$startDate, $endDate])->get();
+        if ($startDate->diffInDays($endDate) <= 30):
+            $outstandings = Helper::getPatientOutstanding($startDate, $endDate, $brn);
+        /*$refs = PatientReference::where('branch', $brn)->whereBetween('created_at', [$startDate, $endDate])->get();
             foreach ($refs as $key => $val):
                 $owed = Helper::getOwedTotal($val->id);
                 $paid = Helper::getPaidTotal($val->id);
@@ -268,9 +269,9 @@ class PatientPaymentController extends Controller
                         'patient_id' => $val->patient_id,
                     ];
                 endif;
-            endforeach;
+            endforeach;*/
         else:
-            return redirect()->back()->with('error', 'Date range should not be more than 62 days.');
+            return redirect()->back()->with('error', 'Date range should not be more than 30 days.');
         endif;
         //$outstandings = PatientPayment::selectRaw("SUM(CASE WHEN type = 8 THEN amount END) AS due, SUM(CASE WHEN type = 9 THEN amount END) AS received, SUM(IF(type=8, amount, 0))-SUM(IF(type=9, amount, 0)) AS balance, patient_id")->where('branch', $brn)->groupBy('patient_id')->having('balance', '>', 0)->get();
         return view('patient-payment.outstanding-due', compact('branches', 'outstandings', 'brn', 'inputs'));

@@ -28,7 +28,7 @@
                             @csrf
                             @php $today = date('d/M/Y') @endphp
                             <div class="row g-4">
-                                <div class="col-12 text-danger">Date range should <strong>NOT</strong> be more than 62 days!</div>
+                                <div class="col-12 text-danger">Date range should <strong>NOT</strong> be more than 30 days!</div>
                                 <div class="col-sm-3">
                                     <label class="form-label">From Date</label>
                                     <fieldset class="form-icon-group left-icon position-relative">

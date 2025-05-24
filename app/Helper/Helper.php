@@ -301,4 +301,24 @@ class Helper
 
         return array('registration' => $reg_fee_total, 'consultation' => $consultation_fee_total, 'procedure' => $procedure_fee_total, 'certificate' => $certificate_fee_total, 'pharmacy' => $medicine, 'medicine' => $pharmacy, 'vision' => $vision, 'clinic' => $clinical_lab, 'radiology' => $radiology_lab, 'surgerymed' => $surgery_medicine, 'postop' => $postop_medicine, 'surgeryconsumable' => $surgery_consumables);
     }
+
+    public static function getPatientOutstanding($startDate, $endDate, $brn)
+    {
+        $outstandings = [];
+        $refs = PatientReference::where('branch', $brn)->whereBetween('created_at', [$startDate, $endDate])->get();
+        foreach ($refs as $key => $val):
+            $owed = Helper::getOwedTotal($val->id);
+            $paid = Helper::getPaidTotal($val->id);
+            if ($owed - $paid != 0):
+                $outstandings[] = [
+                    'due' => $owed,
+                    'received' => $paid,
+                    'balance' => $owed - $paid,
+                    'patient_name' => $val->patient->patient_name,
+                    'patient_id' => $val->patient_id,
+                ];
+            endif;
+        endforeach;
+        return $outstandings;
+    }
 }
