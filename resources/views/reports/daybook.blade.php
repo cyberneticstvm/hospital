@@ -72,10 +72,6 @@
                         <table class="table table-sm dataTable table-striped table-hover align-middle">
                             <thead>
                                 <tr>
-                                    <th colspan="3" class="text-end fw-bold">Outstanding Due</th>
-                                    <th class="fw-bold">{{ number_format($patientOutStandingTotal, 2) }}</th>
-                                </tr>
-                                <tr>
                                     <th>SL No.</th>
                                     <th>Particulars</th>
                                     <th class="text-end">Total</th>
