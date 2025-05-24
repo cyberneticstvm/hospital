@@ -832,6 +832,7 @@
         </tr>
     </table>
     <br>
+    @if($octimages)
     <p>OCT</p>
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
@@ -846,6 +847,8 @@
         </tbody>
     </table>
     <br>
+    @endif;
+    @if($bscan_images)
     <p>B-Scan</p>
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
@@ -863,6 +866,7 @@
     @empty
     @endforelse
     <br>
+    @endif
     <hr>
 </body>
 
