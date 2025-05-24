@@ -863,10 +863,11 @@
         </tbody>
     </table>
     <br>
+    @endif
     @empty
     @endforelse
     <br>
-    @endif
+
     <hr>
 </body>
 
