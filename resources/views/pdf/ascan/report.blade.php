@@ -172,7 +172,7 @@
         </tbody>
     </table>
     <p>Procedures: {{ $procs->whereIn('id', $procedures->pluck('procedure'))->pluck('name')->implode(',') }}</p>
-    <h3>Sx Eye: {{ $ascan->eye }}</h3>
+    <h3>Sx Eye: {{ $ascan->eye }} - {{ ($ascan?->eye == 'OD' || $ascan?->eye == 'od') ? $ascan?->od_iol_power : $ascan?->os_iol_power }}</h3>
 </body>
 
 </html>

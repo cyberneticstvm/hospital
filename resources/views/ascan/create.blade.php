@@ -53,7 +53,7 @@
                                                 <td><input type="text" name="od_acd" class="form-control" placeholder="Acd" /></td>
                                                 <td><input type="text" name="od_lens" class="form-control" placeholder="Lens" /></td>
                                                 <td><input type="text" name="od_a_constant" class="form-control" placeholder="A-Constant" /></td>
-                                                <td><input type="text" name="od_iol_power" class="form-control" placeholder="IOL Power" /></td>
+                                                <td><input type="number" name="od_iol_power" class="form-control" placeholder="IOL Power" /></td>
                                             </tr>
                                             <tr>
                                                 <td>OS</td>
@@ -61,7 +61,7 @@
                                                 <td><input type="text" name="os_acd" class="form-control" placeholder="Acd" /></td>
                                                 <td><input type="text" name="os_lens" class="form-control" placeholder="Lens" /></td>
                                                 <td><input type="text" name="os_a_constant" class="form-control" placeholder="A-Constant" /></td>
-                                                <td><input type="text" name="os_iol_power" class="form-control" placeholder="IOL Power" /></td>
+                                                <td><input type="number" name="os_iol_power" class="form-control" placeholder="IOL Power" /></td>
                                             </tr>
                                         </tbody>
                                     </table>
