@@ -305,7 +305,11 @@ class Helper
     public static function getPatientOutstanding($startDate, $endDate, $brn)
     {
         $outstandings = [];
-        $refs = PatientReference::where('branch', $brn)->whereBetween('created_at', [$startDate, $endDate])->get();
+        if ($startDate && $endDate):
+            $refs = PatientReference::where('branch', $brn)->whereBetween('created_at', [$startDate, $endDate])->get();
+        else:
+            $refs = PatientReference::where('branch', $brn)->get();
+        endif;
         foreach ($refs as $key => $val):
             $owed = Helper::getOwedTotal($val->id);
             $paid = Helper::getPaidTotal($val->id);
@@ -319,6 +323,10 @@ class Helper
                 ];
             endif;
         endforeach;
-        return $outstandings;
+        if ($startDate && $endDate):
+            return $outstandings;
+        else:
+            return array_sum(array_column($outstandings, 'balance'));
+        endif;
     }
 }
