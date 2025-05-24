@@ -110,7 +110,34 @@ class HelperController extends Controller
         if ($request->type == 'outstandingReceived') :
             $html = $this->getOutstandingReceived($fdate, $tdate, $branch);
         endif;
+        if ($request->type == 'outstanding') :
+            $html = $this->getPatientOutstandingDueDetails($branch);
+        endif;
         echo $html;
+    }
+
+    public function getPatientOutstandingDueDetails($branch)
+    {
+        $outstandings = Helper::getPatientOutstanding(null, null, $branch);
+        $tot = 0;
+        $duetot = 0;
+        $paidtot = 0;
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>Patient</th><th>PId</th><th>Due</th><th>Received</th><th>Balance</th></tr></thead><tbody>";
+        foreach ($outstandings as $key => $os) :
+            $html .= "<tr>";
+            $html .= "<td>" . $key + 1 . "</td>";
+            $html .= "<td>" . $os['patient_name'] . "</td>";
+            $html .= "<td>" . $os['patient_id'] . "</td>";
+            $html .= "<td class='text-end'>" . number_format($os['due'], 2) . "</td>";
+            $html .= "<td class='text-end'>" . number_format($os['received'], 2) . "</td>";
+            $html .= "<td class='text-end'>" . number_format($os['balance'], 2) . "</td>";
+            $html .= "</tr>";
+            $tot += $os['balance'];
+            $duetot += $os['due'];
+            $paidtot += $os['received'];
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='3' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($duetot, 2) . "</td><td class='text-end fw-bold'>" . number_format($paidtot, 2) . "</td><td class='text-end fw-bold'>" . number_format($tot, 2) . "</td></tr></tfoot></table>";
+        return $html;
     }
 
     public function getOutstandingReceived($fdate, $tdate, $branch)
