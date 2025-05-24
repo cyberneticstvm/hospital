@@ -206,14 +206,14 @@ $(function () {
                 type: 'GET',
                 url: '/helper/daybook/',
                 data: { 'fdate': fdate, 'tdate': tdate, 'branch': branch, 'type': type },
-                success: function (data) {
-                    $("#" + modal).find(".dayBookDetailed").html(data);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    console.log(XMLHttpRequest);
-                },
                 beforeSend: function(){
                     $("#" + modal).find(".dayBookDetailed").html("<center>Loading...</center>");
+                },
+                success: function (data) {
+                    $("#" + modal).find(".dayBookDetailed").html(data);
+                },                
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest);
                 },
                 complete: function(){
 
