@@ -118,7 +118,7 @@ class HelperController extends Controller
 
     public function getPatientOutstandingDueDetails($fdate, $tdate, $branch)
     {
-        $outstandings = Helper::getPatientOutstanding($fdate, $tdate, $branch);
+        $outstandings = Helper::getPatientOutstanding(null, null, $branch);
         $tot = 0;
         $duetot = 0;
         $paidtot = 0;
