@@ -832,7 +832,7 @@
         </tr>
     </table>
     <br>
-    @if($octimages)
+    @if(count($octimages) > 0)
     <p>OCT</p>
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
@@ -847,8 +847,8 @@
         </tbody>
     </table>
     <br>
-    @endif;
-    @if($bscan_images)
+    @endif
+    @if(count($bscan_images) > 0)
     <p>B-Scan</p>
     <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
