@@ -211,6 +211,12 @@ $(function () {
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log(XMLHttpRequest);
+                },
+                beforeSend: function(){
+                    $("#" + modal).find(".dayBookDetailed").html("<center>Loading...</center>");
+                },
+                complete: function(){
+
                 }
             });
         });

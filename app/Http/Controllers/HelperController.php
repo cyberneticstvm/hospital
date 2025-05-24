@@ -111,14 +111,14 @@ class HelperController extends Controller
             $html = $this->getOutstandingReceived($fdate, $tdate, $branch);
         endif;
         if ($request->type == 'outstanding') :
-            $html = $this->getPatientOutstandingDueDetails($branch);
+            $html = $this->getPatientOutstandingDueDetails($fdate, $tdate, $branch);
         endif;
         echo $html;
     }
 
-    public function getPatientOutstandingDueDetails($branch)
+    public function getPatientOutstandingDueDetails($fdate, $tdate, $branch)
     {
-        $outstandings = Helper::getPatientOutstanding(null, null, $branch);
+        $outstandings = Helper::getPatientOutstanding($fdate, $tdate, $branch);
         $tot = 0;
         $duetot = 0;
         $paidtot = 0;
