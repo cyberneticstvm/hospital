@@ -732,7 +732,7 @@
     <br>
     @endif
     @if($onotes && $onotes->notes)
-    @php $ont = $onote->where('medical_record_id', $mrecord->id)->first() @endphp
+    @php $ont = $onote?->where('medical_record_id', $mrecord->id)->first() @endphp
     <p>Operation Notes</p>
     <table style="width: 100%; border:1px solid #000">
         <tr>
@@ -758,29 +758,29 @@
     <br />
     <strong>Procedure</strong>
     <br />
-    {!! nl2br($ont->procedures) !!}
+    {!! nl2br($ont?->procedures) !!}
     <br />
     <br />
     @if($ont->iol_power)
     <strong>IOL Power</strong>
     <br />
-    {{ $ont->iol_power }}D
+    {{ $ont?->iol_power }}D
     <br />
     <br />
     @endif
     <strong>Procedure Details</strong>
     <br />
-    {!! nl2br($ont->notes) !!}
+    {!! nl2br($ont?->notes) !!}
     <br />
     <br />
     <strong>Post-operative Advice</strong>
     <br />
-    {!! nl2br($ont->post_operative_advice) !!}
+    {!! nl2br($ont?->post_operative_advice) !!}
     <br />
     <br />
     <strong>Medications Prescribed</strong>
     <br />
-    {!! nl2br($ont->medications_prescribed) !!}
+    {!! nl2br($ont?->medications_prescribed) !!}
     <br />
     @endif
     @if($mrecord->doctor_recommondations)
