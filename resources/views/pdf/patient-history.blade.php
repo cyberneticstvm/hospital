@@ -746,7 +746,7 @@
         </tr>
         <tr>
             <td>{{ $ont?->eye }}</td>
-            <td>{{ $ont->surgeond?->doctor_name }}</td>
+            <td>{{ $ont?->surgeond?->doctor_name }}</td>
             <td>{{ $ont->date_of_surgery?->format('d.M.Y') }}</td>
             <td>{{ $ont->test_dose_time?->format('h:i A') }}</td>
             <td>{{ $ont->test_dose_result }}</td>
