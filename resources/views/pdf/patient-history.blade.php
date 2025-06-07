@@ -761,7 +761,7 @@
     {!! nl2br($ont?->procedures) !!}
     <br />
     <br />
-    @if($ont->iol_power)
+    @if($ont?->iol_power)
     <strong>IOL Power</strong>
     <br />
     {{ $ont?->iol_power }}D
