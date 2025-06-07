@@ -745,7 +745,7 @@
             <th style="text-align: left;">GRBS</th>
         </tr>
         <tr>
-            <td>{{ $ont->eye }}</td>
+            <td>{{ $ont?->eye }}</td>
             <td>{{ $ont->surgeond?->doctor_name }}</td>
             <td>{{ $ont->date_of_surgery?->format('d.M.Y') }}</td>
             <td>{{ $ont->test_dose_time?->format('h:i A') }}</td>
@@ -810,7 +810,7 @@
                 <td>{{ $medicine->product_name }}</td>
                 <td>{{ $medicine->dosage }}</td>
                 <td>{{ $medicine->duration }}</td>
-                <td>{{ $medicine->eye }}</td>
+                <td>{{ $medicine?->eye }}</td>
                 <td class="text-right">{{ $medicine->qty }}</td>
                 <td>{{ $medicine->notes }}</td>
             </tr>
