@@ -750,7 +750,7 @@
             <td>{{ $ont?->date_of_surgery?->format('d.M.Y') }}</td>
             <td>{{ $ont?->test_dose_time?->format('h:i A') }}</td>
             <td>{{ $ont?->test_dose_result }}</td>
-            <td>{{ $ont?->blood_pressure_mm }}/{{ $ont->blood_pressure_hg }} mmHg</td>
+            <td>{{ $ont?->blood_pressure_mm }}/{{ $ont?->blood_pressure_hg }} mmHg</td>
             <td>{{ $ont?->grbs }} mg/dL</td>
         </tr>
     </table>
