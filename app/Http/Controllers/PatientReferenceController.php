@@ -53,7 +53,7 @@ class PatientReferenceController extends Controller
             // $diff = 0 means first consultation, $diff<$days and cstatus means the patient might be cancelled the consultation
             $doc_fee = $fee;
         endif;
-        if ($ctype == 2 || $ctype == 4 || $ctype == 5 || $ctype == 6 || $ctype == 7 || $ctype == 8) :
+        if ($ctype == 2 || $ctype == 4 || $ctype == 5 || $ctype == 6 || $ctype == 7 || $ctype == 8 || $ctype == 9) :
             $doc_fee = 0.00; // ctype 2/4/5 means purpose of visit is Certificate/Camp/Vision Examination and no consultation fee for that.
         endif;
         if ($vehicle && $vehicle->contact_number == $patient->mobile_number && $vehicle->owner_name == $patient->patient_name):
