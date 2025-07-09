@@ -127,6 +127,7 @@ class PDFController extends Controller
 
     public function medicalrecord($id)
     {
+        $id = ($id > 0) ?? decrypt($id);
         $record = DB::table('patient_medical_records')->find($id);
         $retina_od = DB::table('patient_medical_records_retina')->select('retina_img', 'description')->where('medical_record_id', $id)->where('retina_type', 'od')->get()->toArray();
         $retina_os = DB::table('patient_medical_records_retina')->select('retina_img', 'description')->where('medical_record_id', $id)->where('retina_type', 'os')->get()->toArray();
@@ -202,6 +203,7 @@ class PDFController extends Controller
 
     public function medicalrecordhistory($id)
     {
+        $id = ($id > 0) ?? decrypt($id);
         $patient = DB::table('patient_registrations')->find($id);
         $references = DB::table('patient_references')->where('patient_id', $id)->get();
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
@@ -211,6 +213,7 @@ class PDFController extends Controller
 
     public function spectacleprescription($id)
     {
+        $id = ($id > 0) ?? decrypt($id);
         $spectacle = Spectacle::find($id);
         $mrecord = DB::table('patient_medical_records')->find($spectacle->medical_record_id);
         $patient = PatientRegistrations::find($mrecord->patient_id);

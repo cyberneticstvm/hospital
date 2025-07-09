@@ -810,6 +810,8 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     // End Settings //
 
     Route::get('/switch/branch/{branch}', [HelperController::class, 'switchBranch'])->name('switch.branch');
+    Route::post('/wa/docs', [HelperController::class, 'waDocs'])->name('send.docs.wa');
+    Route::post('/email/docs', [HelperController::class, 'emailDocs'])->name('send.docs.email');
 
     Route::prefix('promotion')->controller(PromotionController::class)->group(function () {
         Route::get('/contact/list', 'contactList')->name('promotion.contact.list');
@@ -837,4 +839,10 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
         Route::post('edit/{id}', 'update')->name('patient.ack.update');
         Route::delete('delete/{id}', 'destroy')->name('patient.ack.delete');
     });
+});
+
+Route::prefix('wa')->controller(PdfController::class)->group(function () {
+    Route::get('/emr/{id}', 'medicalrecord')->name('emr.wa');
+    Route::get('/patienthistory/{id}', 'medicalrecordhistory')->name('patient.history.wa');
+    Route::get('/spectacle/{id}', 'spectacleprescription')->name('spectacle.wa');
 });

@@ -67,8 +67,8 @@
                                     <td>{{ $record->rdate }}</td>
                                     <td class="text-center"><a href="/generate-medical-record/{{ $record->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>
                                     <td>{{ $record->review_date }}</td>
-                                    <td class="text-center"><a href="javascript:void(0)" data-mobile="{{ $record->mobile_number }}" class="wa" data-mrid="{{ $record->id }}" data-type="wa-order" data-bs-toggle="modal" data-modal="waModal" data-bs-target="#waModal" data-title="Send Docs via WA"><i class="fa fa-whatsapp text-success"></i></a></td>
-                                    <td class="text-center"><a href="javascript:void(0)" class="email" data-mrid="{{ $record->id }}" data-type="email" data-bs-toggle="modal" data-modal="emailModal" data-bs-target="#emailModal" data-title="Send Docs via Email"><i class="fa fa-envelope text-success"></i></a></td>
+                                    <td class="text-center"><a href="javascript:void(0)" data-mobile="{{ $record->mobile_number }}" class="sendDocs" data-pname="{{ $record->patient_name }}" data-mrid="{{ $record->id }}" data-type="wa" data-bs-toggle="modal" data-modal="waModal" data-bs-target="#waModal" data-title="Send Docs via WA"><i class="fa fa-whatsapp text-success fa-lg"></i></a></td>
+                                    <td class="text-center"><a href="javascript:void(0)" data-email="{{ $record->email }}" class="sendDocs" data-pname="{{ $record->patient_name }}" data-mrid="{{ $record->id }}" data-type="email" data-bs-toggle="modal" data-modal="emailModal" data-bs-target="#emailModal" data-title="Send Docs via Email"><i class="fa fa-envelope text-success fa-lg"></i></a></td>
                                     @if($record->status == 1)
                                     <td><a class='btn btn-link' href="{{ route('medical-records.edit', $record->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                     @else
@@ -95,13 +95,47 @@
     <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-primary"></h5>
+                <h5 class="modal-title text-primary">Send Docs via WhatsApp</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body custom_scroll">
-                <div class="row">
-
-                </div>
+                <form action="{{ route('send.docs.wa') }}" method="post">
+                    @csrf
+                    <input type="hidden" class="mrid" value="" />
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label class="form-label">Patient Name<sup class="text-danger">*</sup></label>
+                            <input type="text" value="" name="patient_name" class="form-control form-control-md pName" placeholder="Patient Name" readonly>
+                            @error('patient_name')
+                            <small class="text-danger">{{ $errors->first('patient_name') }}</small>
+                            @enderror
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">WhatsApp Number<sup class="text-danger">*</sup></label>
+                            <input type="text" value="" name="mobile_number" maxlength="10" class="form-control form-control-md dType" placeholder="Mobile Number" required>
+                            @error('mobile_number')
+                            <small class="text-danger">{{ $errors->first('mobile_number') }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <h5 class="mt-3 mb-3 text-primary">Documents</h5>
+                    <div class="row">
+                        <div class="col-sm-4 form-check form-check-inline">
+                            <label class="form-check-label" for="flexCheckDefault">Medical Record</label>{{ Form::checkbox('medical_record', 1, false, array('class' => 'name, form-check-input')) }}
+                        </div>
+                        <div class="col-sm-4 form-check form-check-inline">
+                            <label class="form-check-label" for="flexCheckDefault">Patient History</label>{{ Form::checkbox('patient_history', 1, false, array('class' => 'name, form-check-input')) }}
+                        </div>
+                        <div class="col-sm-4 form-check form-check-inline">
+                            <label class="form-check-label" for="flexCheckDefault">Spectacle Prescription</label>{{ Form::checkbox('spectacle_prescription', 1, false, array('class' => 'name, form-check-input')) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            <button type="submit" class="btn btn-primary btn-submit">Send</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -110,13 +144,47 @@
     <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-primary"></h5>
+                <h5 class="modal-title text-primary">Send Docs via Email</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body custom_scroll">
-                <div class="row">
-                    <div class="col-md-12 table-responsive dayBookDetailed"></div>
-                </div>
+                <form action="{{ route('send.docs.email') }}" method="post">
+                    @csrf
+                    <input type="hidden" class="mrid" value="" />
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label class="form-label">Patient Name<sup class="text-danger">*</sup></label>
+                            <input type="text" value="" name="patient_name" class="form-control form-control-md pName" placeholder="Patient Name" readonly>
+                            @error('patient_name')
+                            <small class="text-danger">{{ $errors->first('patient_name') }}</small>
+                            @enderror
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">Email<sup class="text-danger">*</sup></label>
+                            <input type="email" value="" name="email" class="form-control form-control-md dType" placeholder="Email" required>
+                            @error('email')
+                            <small class="text-danger">{{ $errors->first('email') }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <h5 class="mt-3 mb-3 text-primary">Documents</h5>
+                    <div class="row">
+                        <div class="col-sm-4 form-check form-check-inline">
+                            <label class="form-check-label" for="flexCheckDefault">Medical Record</label>{{ Form::checkbox('medical_record', 1, false, array('class' => 'name, form-check-input')) }}
+                        </div>
+                        <div class="col-sm-4 form-check form-check-inline">
+                            <label class="form-check-label" for="flexCheckDefault">Patient History</label>{{ Form::checkbox('patient_history', 1, false, array('class' => 'name, form-check-input')) }}
+                        </div>
+                        <div class="col-sm-4 form-check form-check-inline">
+                            <label class="form-check-label" for="flexCheckDefault">Spectacle Prescription</label>{{ Form::checkbox('spectacle_prescription', 1, false, array('class' => 'name, form-check-input')) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            <button type="submit" class="btn btn-primary btn-submit">Send</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

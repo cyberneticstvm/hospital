@@ -376,6 +376,15 @@ $(function () {
                 console.log(XMLHttpRequest);
             }
         });
+    });
+
+    $(document).on("click", ".sendDocs", function(){
+        let pname = $(this).data('pname');
+        let mrid = $(this).data('mrid');
+        let type = ($(this).data('type') == 'wa') ? $(this).data('mobile') : $(this).data('email');
+        $(".mrid").val(mrid);
+        $(".pName").val(pname);
+        $(".dType").val(type);
     })
 });
 

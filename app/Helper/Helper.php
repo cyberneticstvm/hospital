@@ -36,6 +36,140 @@ class Helper
         return 'fdjsvsgdf4dhgf687f4bg54g4hf787';
     }
 
+    public static function sendRequestedDocviaWa($mobile, $name, $mrid, $doc_type)
+    {
+        $token = Config::get('myconfig.whatsapp.token');
+        if ($doc_type == 'mrecord'):
+            $config = [
+                "messaging_product" => "whatsapp",
+                "to" => "+91" . $mobile,
+                "type" => "template",
+                "template" => [
+                    "name" => "prescription_f",
+                    "language" => ["code" => "en"],
+                    "components" => [
+                        [
+                            "type" => "body",
+                            "parameters" => [
+                                ["type" => "text", "text" => $name],
+                                ["type" => "text", "text" => "+91 9388611622"],
+                            ]
+                        ],
+                        [
+                            "type" => "button",
+                            "sub_type" => "url",
+                            "index" => 0,
+                            "parameters" => [
+                                ["type" => "text", "text" => encrypt($mrid)],
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        endif;
+
+        if ($doc_type == 'phistory'):
+            $config = [
+                "messaging_product" => "whatsapp",
+                "to" => "+91" . $mobile,
+                "type" => "template",
+                "template" => [
+                    "name" => "order_reference",
+                    "language" => ["code" => "en"],
+                    "components" => [
+                        [
+                            "type" => "header",
+                            "parameters" => [
+                                [
+                                    "type" => "image",
+                                    "image" =>
+                                    [
+                                        "link" => "https://store.devihospitals.in/public/backend/assets/images/logo/devi-hospital-logo.png",
+                                    ],
+                                ],
+                            ]
+                        ],
+                        [
+                            "type" => "body",
+                            "parameters" => [
+                                ["type" => "text", "text" => $name],
+                                ["type" => "text", "text" => "+91 9388611622"],
+                            ]
+                        ],
+                        [
+                            "type" => "button",
+                            "sub_type" => "url",
+                            "index" => 0,
+                            "parameters" => [
+                                ["type" => "text", "text" => encrypt($mrid)],
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        endif;
+
+        if ($doc_type == 'spectacle'):
+            $config = [
+                "messaging_product" => "whatsapp",
+                "to" => "+91" . $mobile,
+                "type" => "template",
+                "template" => [
+                    "name" => "order_reference",
+                    "language" => ["code" => "en"],
+                    "components" => [
+                        [
+                            "type" => "header",
+                            "parameters" => [
+                                [
+                                    "type" => "image",
+                                    "image" =>
+                                    [
+                                        "link" => "https://store.devihospitals.in/public/backend/assets/images/logo/devi-hospital-logo.png",
+                                    ],
+                                ],
+                            ]
+                        ],
+                        [
+                            "type" => "body",
+                            "parameters" => [
+                                ["type" => "text", "text" => $name],
+                                ["type" => "text", "text" => "+91 9388611622"],
+                            ]
+                        ],
+                        [
+                            "type" => "button",
+                            "sub_type" => "url",
+                            "index" => 0,
+                            "parameters" => [
+                                ["type" => "text", "text" => encrypt($mrid)],
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        endif;
+
+        $curl = curl_init();
+        $data_string = json_encode($config);
+        $ch = curl_init('https://graph.facebook.com/v22.0/543653938835557/messages');
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            array(
+                'Authorization: Bearer ' . $token,
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string)
+            )
+        );
+        $result = curl_exec($ch);
+        $res = json_decode($result, true);
+        return $res;
+    }
+
     public static function sendWaPromotion($schedule, $name, $mobile)
     {
         $token = Config::get('myconfig.whatsapp.token');
