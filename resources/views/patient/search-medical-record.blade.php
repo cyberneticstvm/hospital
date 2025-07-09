@@ -77,8 +77,8 @@
                                     <td>{{ $record->rdate }}</td>
                                     <td class="text-center"><a href="/generate-medical-record/{{ $record->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>
                                     <td>{{ $record->review_date }}</td>
-                                    <td class="text-center"><a href="javascript:void(0)"><i class="fa fa-whatsapp text-success fa-lg sendDocs" data-mobile="{{ $record->mobile_number }}" data-pname="{{ $record->patient_name }}" data-mrid="{{ $record->id }}" data-type="wa" data-bs-toggle="modal" data-modal="waModal" data-bs-target="#waModal" data-title="Send Docs via WA"></i></a></td>
-                                    <td class="text-center"><a href="javascript:void(0)"><i class="fa fa-envelope text-success fa-lg sendDocs" data-email="{{ $record->email }}" data-pname="{{ $record->patient_name }}" data-mrid="{{ $record->id }}" data-type="email" data-bs-toggle="modal" data-modal="emailModal" data-bs-target="#emailModal" data-title="Send Docs via Email"></i></a></td>
+                                    <td class="text-center"><a href="javascript:void(0)" data-mobile="{{ $record->mobile_number }}" class="sendDocs" data-pname="{{ $record->patient_name }}" data-mrid="{{ $record->id }}" data-type="wa" data-bs-toggle="modal" data-modal="waModal" data-bs-target="#waModal" data-title="Send Docs via WA"><i class="fa fa-whatsapp text-success fa-lg"></i></a></td>
+                                    <td class="text-center"><a href="javascript:void(0)" data-email="{{ $record->email }}" class="sendDocs" data-pname="{{ $record->patient_name }}" data-mrid="{{ $record->id }}" data-type="email" data-bs-toggle="modal" data-modal="emailModal" data-bs-target="#emailModal" data-title="Send Docs via Email"><i class="fa fa-envelope text-success fa-lg"></i></a></td>
                                     @if($record->status == 1)
                                     <td><a class='btn btn-link' href="{{ route('medical-records.edit', $record->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                     @else
