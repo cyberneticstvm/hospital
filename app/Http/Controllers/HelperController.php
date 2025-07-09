@@ -720,7 +720,7 @@ class HelperController extends Controller
 
             //Mail::to($request->email)->bcc('vijoysasidharan@yahoo.com')->send(new SendDocuments($data));
             Mail::send('email.send-documents', $data, function ($message) use ($data, $request) {
-                $message->to($request->email, $request->email)->bcc('vijoysasidharan@yahoo.com')
+                $message->to($request->email, $request->email)->bcc('cssumesh@yahoo.com')
                     ->subject("Devi Eye Hospitals - Documents");
                 if ($data['mrecord']):
                     $message->attachData($data['mrecord']->output(), "medical_record.pdf");
