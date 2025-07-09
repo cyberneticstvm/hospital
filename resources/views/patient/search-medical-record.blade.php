@@ -115,7 +115,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <label class="form-label">Patient Name<sup class="text-danger">*</sup></label>
-                            <input type="text" value="" name="patient_name" class="form-control form-control-md pName" placeholder="Patient Name" readonly>
+                            <input type="text" value="" name="patient_name" class="form-control form-control-md pName" placeholder="Patient Name">
                             @error('patient_name')
                             <small class="text-danger">{{ $errors->first('patient_name') }}</small>
                             @enderror
@@ -164,7 +164,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <label class="form-label">Patient Name<sup class="text-danger">*</sup></label>
-                            <input type="text" value="" name="patient_name" class="form-control form-control-md pName" placeholder="Patient Name" readonly>
+                            <input type="text" value="" name="patient_name" class="form-control form-control-md pName" placeholder="Patient Name">
                             @error('patient_name')
                             <small class="text-danger">{{ $errors->first('patient_name') }}</small>
                             @enderror
