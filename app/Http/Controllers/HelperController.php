@@ -596,7 +596,7 @@ class HelperController extends Controller
             'mobile_number' => 'required|numeric|digits:10',
         ]);
         $mr = PatientMedicalRecord::findOrFail($request->mrid);
-        dd($mr);
+        dd($mr->id);
         die;
         try {
 
