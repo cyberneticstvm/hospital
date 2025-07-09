@@ -268,7 +268,7 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::post('/postop/medicine/create/', [PostOperativeMedicineController::class, 'store'])->name('postop.medicine.save');
     Route::get('/postop/medicine/edit/{id}/', [PostOperativeMedicineController::class, 'edit'])->name('postop.medicine.edit');
     Route::put('/postop/medicine/edit/{id}/', [PostOperativeMedicineController::class, 'update'])->name('postop.medicine.update');
-    Route::delete('/postop/medicine/edit/{id}/',  [PostOperativeMedicineController::class, 'destroy'])->name('surgery.medicine.delete');
+    Route::delete('/postop/medicine/delete/{id}/',  [PostOperativeMedicineController::class, 'destroy'])->name('postop.medicine.delete');
     // End Postop Medicine//
 
     // Surgery Medicine //
