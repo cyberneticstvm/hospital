@@ -719,17 +719,38 @@ class HelperController extends Controller
             $data['spectacle'] = Pdf::loadView('pdf.spectacle-prescription', compact('patient', 'qrcode', 'reference', 'spectacle', 'mrecord', 'doctor', 'branch'));
 
             //Mail::to($request->email)->bcc('vijoysasidharan@yahoo.com')->send(new SendDocuments($data));
-            Mail::send('email.send-documents', $data, function ($message) use ($data, $request) {
+            Mail::send('email.send-documents', $data, function ($message) use ($data, $request, $patient) {
                 $message->to($request->email, $request->email)->bcc('cssumesh@yahoo.com')
                     ->subject("Devi Eye Hospitals - Documents");
                 if ($data['mrecord']):
                     $message->attachData($data['mrecord']->output(), "medical_record.pdf");
+                    DocumentTrack::create([
+                        'patient_id' => $patient->id,
+                        'created_by' => $request->user()->id,
+                        'sent_to' => $request->email,
+                        'sent_via' => 'email',
+                        'doc_type' => 'mrecord',
+                    ]);
                 endif;
                 if ($data['phistory']):
                     $message->attachData($data['phistory']->output(), "history.pdf");
+                    DocumentTrack::create([
+                        'patient_id' => $patient->id,
+                        'created_by' => $request->user()->id,
+                        'sent_to' => $request->email,
+                        'sent_via' => 'email',
+                        'doc_type' => 'phistory',
+                    ]);
                 endif;
                 if ($data['spectacle']):
                     $message->attachData($data['spectacle']->output(), "spectacle.pdf");
+                    DocumentTrack::create([
+                        'patient_id' => $patient->id,
+                        'created_by' => $request->user()->id,
+                        'sent_to' => $request->email,
+                        'sent_via' => 'email',
+                        'doc_type' => 'spectacle',
+                    ]);
                 endif;
             });
         } catch (Exception $e) {
