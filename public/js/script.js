@@ -382,6 +382,7 @@ $(function () {
         let pname = $(this).data('pname');
         let mrid = $(this).data('mrid');
         let type = ($(this).data('type') == 'wa') ? $(this).data('mobile') : $(this).data('email');
+        console.log(mrid);
         $(".mrid").val(mrid);
         $(".pName").val(pname);
         $(".dType").val(type);
