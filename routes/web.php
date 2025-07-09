@@ -844,5 +844,5 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
 Route::prefix('wa')->controller(PdfController::class)->group(function () {
     Route::get('/emr/{id}', 'medicalrecord')->name('emr.wa');
     Route::get('/patienthistory/{id}', 'medicalrecordhistory')->name('patient.history.wa');
-    Route::get('/spectacle/{id}', 'spectacleprescription')->name('spectacle.wa');
+    Route::get('/prescription/{id}', 'spectacleprescription')->name('spectacle.wa');
 });
