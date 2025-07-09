@@ -591,13 +591,15 @@ class HelperController extends Controller
 
     public function waDocs(Request $request)
     {
+
         $this->validate($request, [
             'mobile_number' => 'required|numeric|digits:10',
         ]);
         $mr = PatientMedicalRecord::findOrFail($request->mrid);
         try {
+
             if ($request->medical_record):
-                Helper::sendRequestedDocviaWa($request->mobile_number, $mr->patient_name, $mr->id, 'mrecord');
+                Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->id, 'mrecord');
                 DocumentTrack::create([
                     'patient_id' => $mr->patient_id,
                     'created_by' => $request->user()->id,
@@ -607,7 +609,7 @@ class HelperController extends Controller
                 ]);
             endif;
             if ($request->patient_history):
-                Helper::sendRequestedDocviaWa($request->mobile_number, $mr->patient_name, $mr->id, 'phistory');
+                Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->id, 'phistory');
                 DocumentTrack::create([
                     'patient_id' => $mr->patient_id,
                     'created_by' => $request->user()->id,
@@ -617,7 +619,7 @@ class HelperController extends Controller
                 ]);
             endif;
             if ($request->spectacle_prescription):
-                Helper::sendRequestedDocviaWa($request->mobile_number, $mr->patient_name, $mr->id, 'spectacle');
+                Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->id, 'spectacle');
                 DocumentTrack::create([
                     'patient_id' => $mr->patient_id,
                     'created_by' => $request->user()->id,
@@ -719,6 +721,6 @@ class HelperController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
-        return redirect()->back()->with("success", "Email sent successfully");
+        return redirect()->back()->with("success", "Documents sent successfully");
     }
 }

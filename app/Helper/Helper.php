@@ -45,9 +45,21 @@ class Helper
                 "to" => "+91" . $mobile,
                 "type" => "template",
                 "template" => [
-                    "name" => "prescription_f",
+                    "name" => "hosp_emr",
                     "language" => ["code" => "en"],
                     "components" => [
+                        [
+                            "type" => "header",
+                            "parameters" => [
+                                [
+                                    "type" => "image",
+                                    "image" =>
+                                    [
+                                        "link" => "https://store.devihospitals.in/public/backend/assets/images/logo/devi-hospital-logo.png",
+                                    ],
+                                ],
+                            ]
+                        ],
                         [
                             "type" => "body",
                             "parameters" => [
@@ -74,7 +86,7 @@ class Helper
                 "to" => "+91" . $mobile,
                 "type" => "template",
                 "template" => [
-                    "name" => "order_reference",
+                    "name" => "hosp_phistory",
                     "language" => ["code" => "en"],
                     "components" => [
                         [
@@ -115,7 +127,7 @@ class Helper
                 "to" => "+91" . $mobile,
                 "type" => "template",
                 "template" => [
-                    "name" => "order_reference",
+                    "name" => "hosp_prescription",
                     "language" => ["code" => "en"],
                     "components" => [
                         [

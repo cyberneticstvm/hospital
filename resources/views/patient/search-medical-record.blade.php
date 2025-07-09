@@ -34,6 +34,16 @@
                                 @endforeach
                             </div>
                             @endif
+                            @if (session('success'))
+                            <div class="alert alert-success" style="margin-top: 0.2rem;">
+                                {{ session('success') }}
+                            </div>
+                            @endif
+                            @if (session('error'))
+                            <div class="alert alert-danger" style="margin-top: 0.2rem;">
+                                {{ session('error') }}
+                            </div>
+                            @endif
                         </form>
                         <div class="mt-5"></div>
                         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
@@ -101,7 +111,7 @@
             <div class="modal-body custom_scroll">
                 <form action="{{ route('send.docs.wa') }}" method="post">
                     @csrf
-                    <input type="hidden" class="mrid" value="" />
+                    <input type="hidden" class="mrid" name="mrid" value="" />
                     <div class="row">
                         <div class="col-sm-6">
                             <label class="form-label">Patient Name<sup class="text-danger">*</sup></label>
@@ -150,7 +160,7 @@
             <div class="modal-body custom_scroll">
                 <form action="{{ route('send.docs.email') }}" method="post">
                     @csrf
-                    <input type="hidden" class="mrid" value="" />
+                    <input type="hidden" class="mrid" name="mrid" value="" />
                     <div class="row">
                         <div class="col-sm-6">
                             <label class="form-label">Patient Name<sup class="text-danger">*</sup></label>
