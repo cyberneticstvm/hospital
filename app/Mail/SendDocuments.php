@@ -50,6 +50,12 @@ class SendDocuments extends Mailable
         );
     }
 
+    public function build()
+    {
+
+        //
+    }
+
     /**
      * Get the attachments for the message.
      *
