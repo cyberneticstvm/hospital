@@ -655,8 +655,6 @@ class HelperController extends Controller
         //$medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->select('p.product_name', 'm.dosage', 'm.notes', 'm.qty', DB::raw("CASE WHEN m.eye = 'R' THEN 'RE' WHEN m.eye='L' THEN 'LE' ELSE 'Both' END AS eye"))->where('m.medical_record_id', $id)->get();
         $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.product_name', 'm.qty', 'm.dosage', 'm.duration', 'm.notes', 't.name', DB::raw("CASE WHEN m.eye='L' THEN 'Left Eye Only' WHEN m.eye='R' THEN 'Right Eye Only' WHEN m.eye='B' THEN 'Both Eyes' ELSE 'Oral' END AS eye"))->where('m.medical_record_id', $id)->get();
         $patient = DB::table('patient_registrations')->find($record->patient_id);
-        dd($patient);
-        die;
         $reference = DB::table('patient_references')->find($record->mrn);
         $doctor = DB::table('doctors')->find($record->doctor_id);
         $branch = DB::table('branches')->find($reference->branch);
