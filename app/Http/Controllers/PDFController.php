@@ -128,6 +128,8 @@ class PDFController extends Controller
     public function medicalrecord($id)
     {
         $id = ($id > 0) ?? decrypt($id);
+        echo $id;
+        die;
         $record = DB::table('patient_medical_records')->find($id);
         $retina_od = DB::table('patient_medical_records_retina')->select('retina_img', 'description')->where('medical_record_id', $id)->where('retina_type', 'od')->get()->toArray();
         $retina_os = DB::table('patient_medical_records_retina')->select('retina_img', 'description')->where('medical_record_id', $id)->where('retina_type', 'os')->get()->toArray();
