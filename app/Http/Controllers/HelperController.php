@@ -722,7 +722,7 @@ class HelperController extends Controller
             Mail::send('email.send-documents', $data, function ($message) use ($data, $request, $patient) {
                 $message->to($request->email, $request->email)->bcc('cssumesh@yahoo.com')
                     ->subject("Devi Eye Hospitals - Documents");
-                if ($data['mrecord']):
+                if ($data['is_mrecord']):
                     $message->attachData($data['mrecord']->output(), "medical_record.pdf");
                     DocumentTrack::create([
                         'patient_id' => $patient->id,
@@ -732,7 +732,7 @@ class HelperController extends Controller
                         'doc_type' => 'mrecord',
                     ]);
                 endif;
-                if ($data['phistory']):
+                if ($data['is_phistory']):
                     $message->attachData($data['phistory']->output(), "history.pdf");
                     DocumentTrack::create([
                         'patient_id' => $patient->id,
@@ -742,7 +742,7 @@ class HelperController extends Controller
                         'doc_type' => 'phistory',
                     ]);
                 endif;
-                if ($data['spectacle']):
+                if ($data['is_spectacle']):
                     $message->attachData($data['spectacle']->output(), "spectacle.pdf");
                     DocumentTrack::create([
                         'patient_id' => $patient->id,
