@@ -57,7 +57,7 @@
                 <td>PATIENT NAME</td>
                 <td>{{ $patient->patient_name }}</td>
                 <td>AGE / SEX</td>
-                <td>{{ $patient->patientAge() }} / {{ $patient->gender }}</td>
+                <td>{{ $patient->age }} / {{ $patient->gender }}</td>
             </tr>
             <tr>
                 <td>PATIENT ID</td>
