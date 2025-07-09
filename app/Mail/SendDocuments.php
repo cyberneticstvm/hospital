@@ -52,8 +52,8 @@ class SendDocuments extends Mailable
 
     public function build()
     {
-
-        //
+        return $this->subject('Devi Eye Hospitals - Documents')
+            ->view('email.send-documents');
     }
 
     /**

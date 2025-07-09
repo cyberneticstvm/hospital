@@ -718,7 +718,15 @@ class HelperController extends Controller
         $data['phistory'] = Pdf::loadView('pdf.medical-record-history', compact('patient', 'qrcode', 'references'));
         $data['spectacle'] = Pdf::loadView('pdf.spectacle-prescription', compact('patient', 'qrcode', 'reference', 'spectacle', 'mrecord', 'doctor', 'branch'));
 
-        Mail::to($request->email)->bcc('vijoysasidharan@yahoo.com')->send(new SendDocuments($data));
+        //Mail::to($request->email)->bcc('vijoysasidharan@yahoo.com')->send(new SendDocuments($data));
+        Mail::send('email.send-documents', $data, function ($message) use ($data, $request) {
+
+            $message->to($request->email, $request->email)
+
+                ->subject("Devi Eye Hospitals - Documents")
+
+                ->attachData($data['mrecord']->output(), "medical_record.pdf");
+        });
         /*} catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }*/
