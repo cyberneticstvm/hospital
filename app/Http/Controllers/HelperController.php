@@ -639,102 +639,102 @@ class HelperController extends Controller
         $this->validate($request, [
             'email' => 'required|email',
         ]);
-        /*try {*/
-        $id = $request->mrid;
-        $record = PatientMedicalRecord::findOrFail($id);
-        $retina_od = DB::table('patient_medical_records_retina')->select('retina_img', 'description')->where('medical_record_id', $id)->where('retina_type', 'od')->get()->toArray();
-        $retina_os = DB::table('patient_medical_records_retina')->select('retina_img', 'description')->where('medical_record_id', $id)->where('retina_type', 'os')->get()->toArray();
-        $v_od_1 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_od_img1')->where('medical_record_id', $id)->value('names');
-        $v_os_1 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_os_img1')->where('medical_record_id', $id)->value('names');
-        $v_od_2 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_od_img2')->where('medical_record_id', $id)->value('names');
-        $v_os_2 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_os_img2')->where('medical_record_id', $id)->value('names');
-        $v_od_3 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_od_img3')->where('medical_record_id', $id)->value('names');
-        $v_os_3 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_os_img3')->where('medical_record_id', $id)->value('names');
-        $v_od_4 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_od_img4')->where('medical_record_id', $id)->value('names');
-        $v_os_4 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_os_img4')->where('medical_record_id', $id)->value('names');
-        //$medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->select('p.product_name', 'm.dosage', 'm.notes', 'm.qty', DB::raw("CASE WHEN m.eye = 'R' THEN 'RE' WHEN m.eye='L' THEN 'LE' ELSE 'Both' END AS eye"))->where('m.medical_record_id', $id)->get();
-        $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.product_name', 'm.qty', 'm.dosage', 'm.duration', 'm.notes', 't.name', DB::raw("CASE WHEN m.eye='L' THEN 'Left Eye Only' WHEN m.eye='R' THEN 'Right Eye Only' WHEN m.eye='B' THEN 'Both Eyes' ELSE 'Oral' END AS eye"))->where('m.medical_record_id', $id)->get();
-        //$patient = DB::table('patient_registrations')->find($record->patient_id);
-        $patient = PatientRegistrations::find($record->patient_id);
-        $reference = DB::table('patient_references')->find($record->mrn);
-        $doctor = DB::table('doctors')->find($record->doctor_id);
-        $branch = DB::table('branches')->find($reference->branch);
-        $sympt = explode(',', $record->symptoms);
-        $diag = explode(',', $record->diagnosis);
-        $symptoms = DB::table('symptoms')->whereIn('id', $sympt)->get();
-        $diagnosis = DB::table('diagnosis')->whereIn('id', $diag)->get();
-        $spectacle = Spectacle::where('medical_record_id', $id)->first();
-        $tonometry = DB::table('tonometries')->where('medical_record_id', $id)->first();
-        $keratometry = DB::table('keratometries')->where('medical_record_id', $id)->first();
-        $ascan = DB::table('ascans')->where('medical_record_id', $id)->first();
-        $onotes = DB::table('operation_notes')->where('medical_record_id', $id)->first();
-        $pachymetry = DB::table('pachymetries')->where('medical_record_id', $id)->first();
+        try {
+            $id = $request->mrid;
+            $record = PatientMedicalRecord::findOrFail($id);
+            $retina_od = DB::table('patient_medical_records_retina')->select('retina_img', 'description')->where('medical_record_id', $id)->where('retina_type', 'od')->get()->toArray();
+            $retina_os = DB::table('patient_medical_records_retina')->select('retina_img', 'description')->where('medical_record_id', $id)->where('retina_type', 'os')->get()->toArray();
+            $v_od_1 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_od_img1')->where('medical_record_id', $id)->value('names');
+            $v_os_1 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_os_img1')->where('medical_record_id', $id)->value('names');
+            $v_od_2 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_od_img2')->where('medical_record_id', $id)->value('names');
+            $v_os_2 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_os_img2')->where('medical_record_id', $id)->value('names');
+            $v_od_3 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_od_img3')->where('medical_record_id', $id)->value('names');
+            $v_os_3 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_os_img3')->where('medical_record_id', $id)->value('names');
+            $v_od_4 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_od_img4')->where('medical_record_id', $id)->value('names');
+            $v_os_4 = DB::table('patient_medical_records_vision')->select(DB::raw("IFNULL(group_concat(description), 'Na') as names"))->where('img_type', 'vision_os_img4')->where('medical_record_id', $id)->value('names');
+            //$medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->select('p.product_name', 'm.dosage', 'm.notes', 'm.qty', DB::raw("CASE WHEN m.eye = 'R' THEN 'RE' WHEN m.eye='L' THEN 'LE' ELSE 'Both' END AS eye"))->where('m.medical_record_id', $id)->get();
+            $medicines = DB::table('patient_medicine_records as m')->leftJoin('products as p', 'm.medicine', '=', 'p.id')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.product_name', 'm.qty', 'm.dosage', 'm.duration', 'm.notes', 't.name', DB::raw("CASE WHEN m.eye='L' THEN 'Left Eye Only' WHEN m.eye='R' THEN 'Right Eye Only' WHEN m.eye='B' THEN 'Both Eyes' ELSE 'Oral' END AS eye"))->where('m.medical_record_id', $id)->get();
+            //$patient = DB::table('patient_registrations')->find($record->patient_id);
+            $patient = PatientRegistrations::find($record->patient_id);
+            $reference = DB::table('patient_references')->find($record->mrn);
+            $doctor = DB::table('doctors')->find($record->doctor_id);
+            $branch = DB::table('branches')->find($reference->branch);
+            $sympt = explode(',', $record->symptoms);
+            $diag = explode(',', $record->diagnosis);
+            $symptoms = DB::table('symptoms')->whereIn('id', $sympt)->get();
+            $diagnosis = DB::table('diagnosis')->whereIn('id', $diag)->get();
+            $spectacle = Spectacle::where('medical_record_id', $id)->first();
+            $tonometry = DB::table('tonometries')->where('medical_record_id', $id)->first();
+            $keratometry = DB::table('keratometries')->where('medical_record_id', $id)->first();
+            $ascan = DB::table('ascans')->where('medical_record_id', $id)->first();
+            $onotes = DB::table('operation_notes')->where('medical_record_id', $id)->first();
+            $pachymetry = DB::table('pachymetries')->where('medical_record_id', $id)->first();
 
-        $sel_1_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_1_od))->value('names');
-        $sel_1_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_1_os))->value('names');
-        $sel_2_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_2_od))->value('names');
-        $sel_2_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_2_os))->value('names');
-        $sel_3_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_3_od))->value('names');
-        $sel_3_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_3_os))->value('names');
-        $sel_4_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_4_od))->value('names');
-        $sel_4_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_4_os))->value('names');
-        $sel_5_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_5_od))->value('names');
-        $sel_5_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_5_os))->value('names');
-        $sel_6_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_6_od))->value('names');
-        $sel_6_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_6_os))->value('names');
-        $sel_7_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_7_od))->value('names');
-        $sel_7_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_7_os))->value('names');
-        $sel_8_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_8_od))->value('names');
-        $sel_8_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_8_os))->value('names');
-        $sel_9_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_9_od))->value('names');
-        $sel_9_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_9_os))->value('names');
-        $sel_10_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_10_od))->value('names');
-        $sel_10_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_10_os))->value('names');
-        $sel_11_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_11_od))->value('names');
-        $sel_11_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_11_os))->value('names');
-        $sel_12_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_12_od))->value('names');
-        $sel_12_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_12_os))->value('names');
-        $sel_13_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_13_od))->value('names');
-        $sel_13_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_13_os))->value('names');
-        $sel_14_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_14_od))->value('names');
-        $sel_14_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_14_os))->value('names');
-        $sel_15_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_15_od))->value('names');
-        $sel_15_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_15_os))->value('names');
-        $sel_16_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_16_od))->value('names');
-        $sel_16_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_16_os))->value('names');
-        $sel_17_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_17_od))->value('names');
-        $sel_17_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_17_os))->value('names');
-        $sel_18_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_18_od))->value('names');
-        $sel_18_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_18_os))->value('names');
-        $sel_19_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_19_od))->value('names');
-        $sel_19_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_19_os))->value('names');
-        $sel_20_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_20_od))->value('names');
-        $sel_20_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_20_os))->value('names');
-        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://play.google.com/store/apps/details?id=com.devieh.virtualtoken'));
-        $data = ['body' => $request->body, 'cname' => $request->patient_name, 'uname' => Auth::user()->name, 'time' => Carbon::now(), 'is_mrecord' => $request->medical_record, 'is_phistory' => $request->patient_history, 'is_spectacle' => $request->spectacle_prescription];
-        $data['mrecord'] = Pdf::loadView('pdf.medical-record', compact('record', 'patient', 'doctor', 'qrcode', 'branch', 'reference', 'symptoms', 'diagnosis', 'medicines', 'spectacle', 'tonometry', 'keratometry', 'ascan', 'pachymetry', 'onotes', 'retina_od', 'retina_os', 'v_od_1', 'v_os_1', 'v_od_2', 'v_os_2', 'v_od_3', 'v_os_3', 'v_od_4', 'v_os_4', 'sel_1_od', 'sel_1_os', 'sel_2_od', 'sel_2_os', 'sel_3_od', 'sel_3_os', 'sel_4_od', 'sel_4_os', 'sel_5_od', 'sel_5_os', 'sel_6_od', 'sel_6_os', 'sel_7_od', 'sel_7_os', 'sel_8_od', 'sel_8_os', 'sel_9_od', 'sel_9_os', 'sel_10_od', 'sel_10_os', 'sel_11_od', 'sel_11_os', 'sel_12_od', 'sel_12_os', 'sel_13_od', 'sel_13_os', 'sel_14_od', 'sel_14_os', 'sel_15_od', 'sel_15_os', 'sel_16_od', 'sel_16_os', 'sel_17_od', 'sel_17_os', 'sel_18_od', 'sel_18_os', 'sel_19_od', 'sel_19_os', 'sel_20_od', 'sel_20_os'));
-        $references = DB::table('patient_references')->where('patient_id', $patient->id)->get();
-        $mrecord = $record;
-        $data['phistory'] = Pdf::loadView('pdf.medical-record-history', compact('patient', 'qrcode', 'references'));
-        $data['spectacle'] = Pdf::loadView('pdf.spectacle-prescription', compact('patient', 'qrcode', 'reference', 'spectacle', 'mrecord', 'doctor', 'branch'));
+            $sel_1_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_1_od))->value('names');
+            $sel_1_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_1_os))->value('names');
+            $sel_2_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_2_od))->value('names');
+            $sel_2_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_2_os))->value('names');
+            $sel_3_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_3_od))->value('names');
+            $sel_3_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_3_os))->value('names');
+            $sel_4_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_4_od))->value('names');
+            $sel_4_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_4_os))->value('names');
+            $sel_5_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_5_od))->value('names');
+            $sel_5_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_5_os))->value('names');
+            $sel_6_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_6_od))->value('names');
+            $sel_6_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_6_os))->value('names');
+            $sel_7_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_7_od))->value('names');
+            $sel_7_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_7_os))->value('names');
+            $sel_8_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_8_od))->value('names');
+            $sel_8_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_8_os))->value('names');
+            $sel_9_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_9_od))->value('names');
+            $sel_9_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_9_os))->value('names');
+            $sel_10_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_10_od))->value('names');
+            $sel_10_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_10_os))->value('names');
+            $sel_11_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_11_od))->value('names');
+            $sel_11_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_11_os))->value('names');
+            $sel_12_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_12_od))->value('names');
+            $sel_12_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_12_os))->value('names');
+            $sel_13_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_13_od))->value('names');
+            $sel_13_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_13_os))->value('names');
+            $sel_14_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_14_od))->value('names');
+            $sel_14_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_14_os))->value('names');
+            $sel_15_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_15_od))->value('names');
+            $sel_15_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_15_os))->value('names');
+            $sel_16_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_16_od))->value('names');
+            $sel_16_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_16_os))->value('names');
+            $sel_17_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_17_od))->value('names');
+            $sel_17_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_17_os))->value('names');
+            $sel_18_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_18_od))->value('names');
+            $sel_18_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_18_os))->value('names');
+            $sel_19_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_19_od))->value('names');
+            $sel_19_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_19_os))->value('names');
+            $sel_20_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_20_od))->value('names');
+            $sel_20_os = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_20_os))->value('names');
+            $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://play.google.com/store/apps/details?id=com.devieh.virtualtoken'));
+            $data = ['body' => $request->body, 'cname' => $request->patient_name, 'uname' => Auth::user()->name, 'time' => Carbon::now(), 'is_mrecord' => $request->medical_record, 'is_phistory' => $request->patient_history, 'is_spectacle' => $request->spectacle_prescription];
+            $data['mrecord'] = Pdf::loadView('pdf.medical-record', compact('record', 'patient', 'doctor', 'qrcode', 'branch', 'reference', 'symptoms', 'diagnosis', 'medicines', 'spectacle', 'tonometry', 'keratometry', 'ascan', 'pachymetry', 'onotes', 'retina_od', 'retina_os', 'v_od_1', 'v_os_1', 'v_od_2', 'v_os_2', 'v_od_3', 'v_os_3', 'v_od_4', 'v_os_4', 'sel_1_od', 'sel_1_os', 'sel_2_od', 'sel_2_os', 'sel_3_od', 'sel_3_os', 'sel_4_od', 'sel_4_os', 'sel_5_od', 'sel_5_os', 'sel_6_od', 'sel_6_os', 'sel_7_od', 'sel_7_os', 'sel_8_od', 'sel_8_os', 'sel_9_od', 'sel_9_os', 'sel_10_od', 'sel_10_os', 'sel_11_od', 'sel_11_os', 'sel_12_od', 'sel_12_os', 'sel_13_od', 'sel_13_os', 'sel_14_od', 'sel_14_os', 'sel_15_od', 'sel_15_os', 'sel_16_od', 'sel_16_os', 'sel_17_od', 'sel_17_os', 'sel_18_od', 'sel_18_os', 'sel_19_od', 'sel_19_os', 'sel_20_od', 'sel_20_os'));
+            $references = DB::table('patient_references')->where('patient_id', $patient->id)->get();
+            $mrecord = $record;
+            $data['phistory'] = Pdf::loadView('pdf.medical-record-history', compact('patient', 'qrcode', 'references'));
+            $data['spectacle'] = Pdf::loadView('pdf.spectacle-prescription', compact('patient', 'qrcode', 'reference', 'spectacle', 'mrecord', 'doctor', 'branch'));
 
-        //Mail::to($request->email)->bcc('vijoysasidharan@yahoo.com')->send(new SendDocuments($data));
-        Mail::send('email.send-documents', $data, function ($message) use ($data, $request) {
-            $message->to($request->email, $request->email)->bcc('vijoysasidharan@yahoo.com')
-                ->subject("Devi Eye Hospitals - Documents");
-            if ($data['mrecord']):
-                $message->attachData($data['mrecord']->output(), "medical_record.pdf");
-            endif;
-            if ($data['phistory']):
-                $message->attachData($data['phistory']->output(), "history.pdf");
-            endif;
-            if ($data['spectacle']):
-                $message->attachData($data['spectacle']->output(), "history.pdf");
-            endif;
-        });
-        /*} catch (Exception $e) {
+            //Mail::to($request->email)->bcc('vijoysasidharan@yahoo.com')->send(new SendDocuments($data));
+            Mail::send('email.send-documents', $data, function ($message) use ($data, $request) {
+                $message->to($request->email, $request->email)->bcc('vijoysasidharan@yahoo.com')
+                    ->subject("Devi Eye Hospitals - Documents");
+                if ($data['mrecord']):
+                    $message->attachData($data['mrecord']->output(), "medical_record.pdf");
+                endif;
+                if ($data['phistory']):
+                    $message->attachData($data['phistory']->output(), "history.pdf");
+                endif;
+                if ($data['spectacle']):
+                    $message->attachData($data['spectacle']->output(), "spectacle.pdf");
+                endif;
+            });
+        } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
-        }*/
+        }
         return redirect()->back()->with("success", "Documents sent successfully");
     }
 }
