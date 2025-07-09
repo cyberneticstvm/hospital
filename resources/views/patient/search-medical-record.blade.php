@@ -1,7 +1,7 @@
 @extends("templates.base")
 @section("content")
 <div class="body d-flex">
-    <div class="container-fluid">        
+    <div class="container-fluid">
         <div class="row g-4">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
@@ -30,45 +30,95 @@
                             @if (count($errors) > 0)
                             <div role="alert" class="text-danger mt-3">
                                 @foreach ($errors->all() as $error)
-                                    {{ $error }}
+                                {{ $error }}
                                 @endforeach
                             </div>
                             @endif
                         </form>
                         <div class="mt-5"></div>
                         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
-                        <thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Mobile Number</th><th>Doctor</th><th>Reg.Date</th><th>Medical Record</th><th>Review Date</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
-                        @php $i = 1; @endphp
-                        @foreach($records as $record)
-                            <tr class="{{ ($record->status == 0) ? 'text-decoration-line-through' : '' }} {{ ($i == 1) ? 'text-highlight' : '' }}">
-                                <td>{{ $i++ }}</td>
-                                <td>{{ $record->id }}</td>
-                                <td>{{ $record->patient_name }}</td>
-                                <td>{{ $record->patient_id }}</td>
-                                <td>{{ $record->mobile_number }}</td>
-                                <td>{{ $record->doctor_name }}</td>
-                                <td>{{ $record->rdate }}</td>
-                                <td class="text-center"><a href="/generate-medical-record/{{ $record->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>
-                                <td>{{ $record->review_date }}</td>
-                                @if($record->status == 1)
-                                <td><a class='btn btn-link' href="{{ route('medical-records.edit', $record->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
-                                @else
-                                <td></td>
-                                @endif                    
-                                <td>
-                                    <form method="post" action="{{ route('medical-records.delete', $record->id) }}">
-                                        @csrf 
-                                        @method("DELETE")
-                                        <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Record?');"><i class="fa fa-trash text-danger"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody></table>
+                            <thead>
+                                <tr>
+                                    <th>SL No.</th>
+                                    <th>MR.ID</th>
+                                    <th>Patient Name</th>
+                                    <th>Patient ID</th>
+                                    <th>Mobile Number</th>
+                                    <th>Doctor</th>
+                                    <th>Reg.Date</th>
+                                    <th>Medical Record</th>
+                                    <th>Review Date</th>
+                                    <th>WA</th>
+                                    <th>E-mail</th>
+                                    <th>Edit</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $i = 1; @endphp
+                                @foreach($records as $record)
+                                <tr class="{{ ($record->status == 0) ? 'text-decoration-line-through' : '' }} {{ ($i == 1) ? 'text-highlight' : '' }}">
+                                    <td>{{ $i++ }}</td>
+                                    <td>{{ $record->id }}</td>
+                                    <td>{{ $record->patient_name }}</td>
+                                    <td>{{ $record->patient_id }}</td>
+                                    <td>{{ $record->mobile_number }}</td>
+                                    <td>{{ $record->doctor_name }}</td>
+                                    <td>{{ $record->rdate }}</td>
+                                    <td class="text-center"><a href="/generate-medical-record/{{ $record->id }}/" target="_blank"><i class="fa fa-file-o text-primary"></i></a></td>
+                                    <td>{{ $record->review_date }}</td>
+                                    <td class="text-center"><a href="javascript:void(0)" data-mobile="{{ $record->mobile_number }}" class="wa" data-mrid="{{ $record->id }}" data-type="wa-order" data-bs-toggle="modal" data-modal="waModal" data-bs-target="#waModal" data-title="Send Docs via WA"><i class="fa fa-whatsapp text-success"></i></a></td>
+                                    <td class="text-center"><a href="javascript:void(0)" class="email" data-mrid="{{ $record->id }}" data-type="email" data-bs-toggle="modal" data-modal="emailModal" data-bs-target="#emailModal" data-title="Send Docs via Email"><i class="fa fa-envelope text-success"></i></a></td>
+                                    @if($record->status == 1)
+                                    <td><a class='btn btn-link' href="{{ route('medical-records.edit', $record->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
+                                    @else
+                                    <td></td>
+                                    @endif
+                                    <td>
+                                        <form method="post" action="{{ route('medical-records.delete', $record->id) }}">
+                                            @csrf
+                                            @method("DELETE")
+                                            <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Record?');"><i class="fa fa-trash text-danger"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div> <!-- .row end -->
+    </div>
+</div>
+<div class="modal fade" id="waModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="emailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row">
+                    <div class="col-md-12 table-responsive dayBookDetailed"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
