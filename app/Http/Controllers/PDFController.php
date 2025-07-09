@@ -204,7 +204,8 @@ class PDFController extends Controller
     public function medicalrecordhistory($id)
     {
         $id = (intval($id) > 0) ? $id : decrypt($id);
-        $patient = DB::table('patient_registrations')->find($id);
+        $mrecord = DB::table('patient_medical_records')->find($id);
+        $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
         $references = DB::table('patient_references')->where('patient_id', $id)->get();
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
         $pdf = PDF::loadView('/pdf/medical-record-history', compact('patient', 'qrcode', 'references'));
