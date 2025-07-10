@@ -317,6 +317,7 @@ class PDFController extends Controller
     }
     public function patienthistory($id)
     {
+        $id = (intval($id) > 0) ? $id : decrypt($id);
         $mrecords = DB::table('patient_medical_records')->where('patient_id', $id)->get();
         $onote = OperationNote::where('patient_id', $id);
         $patient = DB::table('patient_registrations')->where('id', $id)->first();
