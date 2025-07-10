@@ -64,7 +64,7 @@ class Helper
                             "type" => "body",
                             "parameters" => [
                                 ["type" => "text", "text" => $name],
-                                ["type" => "text", "text" => "+91 9388611622"],
+                                ["type" => "text", "text" => "+91 9188836222"],
                             ]
                         ],
                         [
@@ -105,7 +105,7 @@ class Helper
                             "type" => "body",
                             "parameters" => [
                                 ["type" => "text", "text" => $name],
-                                ["type" => "text", "text" => "+91 9388611622"],
+                                ["type" => "text", "text" => "+91 9188836222"],
                             ]
                         ],
                         [
@@ -146,7 +146,7 @@ class Helper
                             "type" => "body",
                             "parameters" => [
                                 ["type" => "text", "text" => $name],
-                                ["type" => "text", "text" => "+91 9388611622"],
+                                ["type" => "text", "text" => "+91 9188836222"],
                             ]
                         ],
                         [
