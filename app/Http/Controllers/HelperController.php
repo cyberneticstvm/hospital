@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helper\Helper;
 use App\Mail\SendDocuments;
 use App\Models\DocumentTrack;
+use App\Models\OperationNote;
 use App\Models\PatientMedicalRecord;
 use App\Models\PatientPayment;
 use App\Models\PatientRegistrations;
@@ -716,6 +717,7 @@ class HelperController extends Controller
             $references = DB::table('patient_references')->where('patient_id', $patient->id)->get();
             $mrecord = $record;
             $mrecords = DB::table('patient_medical_records')->where('patient_id', $id)->get();
+            $onote = OperationNote::where('patient_id', $id);
             $data['phistory'] = Pdf::loadView('pdf.patient-history', compact('mrecords', 'qrcode', 'patient', 'onote'));
             $data['spectacle'] = Pdf::loadView('pdf.spectacle-prescription', compact('patient', 'qrcode', 'reference', 'spectacle', 'mrecord', 'doctor', 'branch'));
 
