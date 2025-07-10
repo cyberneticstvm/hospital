@@ -322,6 +322,8 @@ class PDFController extends Controller
         $onote = OperationNote::where('patient_id', $id);
         //$patient = DB::table('patient_registrations')->where('id', $id)->first();
         $patient = PatientRegistrations::find($id);
+        dd($patient);
+        die;
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
         $pdf = PDF::loadView('/pdf/patient-history', compact('mrecords', 'qrcode', 'patient', 'onote'));
         return $pdf->stream($patient->patient_id . '.pdf', array("Attachment" => 0));
