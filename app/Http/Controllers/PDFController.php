@@ -320,10 +320,7 @@ class PDFController extends Controller
         $id = (intval($id) > 0) ? $id : decrypt($id);
         $mrecords = DB::table('patient_medical_records')->where('patient_id', $id)->get();
         $onote = OperationNote::where('patient_id', $id);
-        //$patient = DB::table('patient_registrations')->where('id', $id)->first();
-        $patient = PatientRegistrations::find($id);
-        dd($id);
-        die;
+        $patient = DB::table('patient_registrations')->where('id', $id)->first();
         $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
         $pdf = PDF::loadView('/pdf/patient-history', compact('mrecords', 'qrcode', 'patient', 'onote'));
         return $pdf->stream($patient->patient_id . '.pdf', array("Attachment" => 0));
