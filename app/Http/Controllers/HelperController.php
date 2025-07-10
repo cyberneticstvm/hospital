@@ -716,11 +716,10 @@ class HelperController extends Controller
             $data['mrecord'] = Pdf::loadView('pdf.medical-record', compact('record', 'patient', 'doctor', 'qrcode', 'branch', 'reference', 'symptoms', 'diagnosis', 'medicines', 'spectacle', 'tonometry', 'keratometry', 'ascan', 'pachymetry', 'onotes', 'retina_od', 'retina_os', 'v_od_1', 'v_os_1', 'v_od_2', 'v_os_2', 'v_od_3', 'v_os_3', 'v_od_4', 'v_os_4', 'sel_1_od', 'sel_1_os', 'sel_2_od', 'sel_2_os', 'sel_3_od', 'sel_3_os', 'sel_4_od', 'sel_4_os', 'sel_5_od', 'sel_5_os', 'sel_6_od', 'sel_6_os', 'sel_7_od', 'sel_7_os', 'sel_8_od', 'sel_8_os', 'sel_9_od', 'sel_9_os', 'sel_10_od', 'sel_10_os', 'sel_11_od', 'sel_11_os', 'sel_12_od', 'sel_12_os', 'sel_13_od', 'sel_13_os', 'sel_14_od', 'sel_14_os', 'sel_15_od', 'sel_15_os', 'sel_16_od', 'sel_16_os', 'sel_17_od', 'sel_17_os', 'sel_18_od', 'sel_18_os', 'sel_19_od', 'sel_19_os', 'sel_20_od', 'sel_20_os'));
             $references = DB::table('patient_references')->where('patient_id', $patient->id)->get();
             $mrecord = $record;
-            $mrecords = DB::table('patient_medical_records')->where('patient_id', $id)->get();
-            $onote = OperationNote::where('patient_id', $id);
+            $mrecords = DB::table('patient_medical_records')->where('patient_id', $patient->id)->get();
+            $onote = OperationNote::where('patient_id', $patient->id);
             $data['phistory'] = Pdf::loadView('pdf.patient-history', compact('mrecords', 'qrcode', 'patient', 'onote'));
             $data['spectacle'] = Pdf::loadView('pdf.spectacle-prescription', compact('patient', 'qrcode', 'reference', 'spectacle', 'mrecord', 'doctor', 'branch'));
-
             //Mail::to($request->email)->bcc('vijoysasidharan@yahoo.com')->send(new SendDocuments($data));
             Mail::send('email.send-documents', $data, function ($message) use ($data, $request, $patient) {
                 $message->to($request->email, $request->email)->bcc('cssumesh@yahoo.com')
