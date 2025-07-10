@@ -609,7 +609,7 @@ class HelperController extends Controller
                 ]);
             endif;
             if ($request->patient_history):
-                Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->id, 'phistory');
+                Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->patient_id, 'phistory');
                 DocumentTrack::create([
                     'patient_id' => $mr->patient_id,
                     'created_by' => $request->user()->id,
