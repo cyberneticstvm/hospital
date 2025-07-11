@@ -215,15 +215,14 @@ class PDFController extends Controller
     public function spectacleprescription($id)
     {
         $id = (intval($id) > 0) ? $id : decrypt($id);
-        $spectacle = Spectacle::where((intval($id) > 0) ? 'id' : 'medical_record_id', $id)->firstOrFail();
+        $spectacle = Spectacle::where((intval($id) > 0) ? 'id' : 'medical_record_id', $id)->first();
         $mrecord = DB::table('patient_medical_records')->find($spectacle->medical_record_id);
         $patient = PatientRegistrations::find($mrecord->patient_id);
         $doctor = DB::table('doctors')->find($mrecord->doctor_id);
         $reference = DB::table('patient_references')->find($mrecord->mrn);
         $branch = DB::table('branches')->find($reference->branch);
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://play.google.com/store/apps/details?id=com.devieh.virtualtoken'));
-        dd($spectacle);
-        die;
+
         $pdf = PDF::loadView('/pdf/spectacle-prescription', compact('patient', 'qrcode', 'reference', 'spectacle', 'mrecord', 'doctor', 'branch'));
         return $pdf->stream($patient->patient_id . '.pdf', array("Attachment" => 0));
     }
