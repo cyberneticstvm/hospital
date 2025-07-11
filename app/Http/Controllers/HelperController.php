@@ -721,7 +721,7 @@ class HelperController extends Controller
             $data['phistory'] = Pdf::loadView('pdf.patient-history', compact('mrecords', 'qrcode', 'patient', 'onote'));
             $data['spectacle'] = Pdf::loadView('pdf.spectacle-prescription', compact('patient', 'qrcode', 'reference', 'spectacle', 'mrecord', 'doctor', 'branch'));
             //Mail::to($request->email)->bcc('vijoysasidharan@yahoo.com')->send(new SendDocuments($data));
-            Mail::send('email.send-documents', $data, function ($message) use ($data, $request, $patient) {
+            Mail::send('email.send-documents', $data, function ($message) use ($data, $request, $patient, $spectacle) {
                 $message->to($request->email, $request->email)->bcc('cssumesh@yahoo.com')
                     ->subject("Devi Eye Hospitals - Documents");
                 if ($data['is_mrecord']):
@@ -744,7 +744,7 @@ class HelperController extends Controller
                         'doc_type' => 'phistory',
                     ]);
                 endif;
-                if ($data['is_spectacle']):
+                if ($data['is_spectacle'] && $spectacle):
                     $message->attachData($data['spectacle']->output(), "spectacle.pdf");
                     DocumentTrack::create([
                         'patient_id' => $patient->id,
