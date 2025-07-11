@@ -215,6 +215,8 @@ class PDFController extends Controller
     public function spectacleprescription($id)
     {
         $id = (intval($id) > 0) ? $id : decrypt($id);
+        dd($id);
+        id;
         $spectacle = Spectacle::where((intval($id) > 0) ? 'id' : 'medical_record_id', $id)->firstOrFail();
         $mrecord = DB::table('patient_medical_records')->find($spectacle->medical_record_id);
         $patient = PatientRegistrations::find($mrecord->patient_id);
