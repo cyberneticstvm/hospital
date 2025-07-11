@@ -719,7 +719,9 @@ class HelperController extends Controller
             $mrecords = DB::table('patient_medical_records')->where('patient_id', $patient->id)->get();
             $onote = OperationNote::where('patient_id', $patient->id);
             $data['phistory'] = Pdf::loadView('pdf.patient-history', compact('mrecords', 'qrcode', 'patient', 'onote'));
-            $data['spectacle'] = Pdf::loadView('pdf.spectacle-prescription', compact('patient', 'qrcode', 'reference', 'spectacle', 'mrecord', 'doctor', 'branch'));
+            if ($spectacle):
+                $data['spectacle'] = Pdf::loadView('pdf.spectacle-prescription', compact('patient', 'qrcode', 'reference', 'spectacle', 'mrecord', 'doctor', 'branch'));
+            endif;
             //Mail::to($request->email)->bcc('vijoysasidharan@yahoo.com')->send(new SendDocuments($data));
             Mail::send('email.send-documents', $data, function ($message) use ($data, $request, $patient, $spectacle) {
                 $message->to($request->email, $request->email)->bcc('cssumesh@yahoo.com')
@@ -744,7 +746,7 @@ class HelperController extends Controller
                         'doc_type' => 'phistory',
                     ]);
                 endif;
-                if ($data['is_spectacle'] && $spectacle?->id):
+                if ($data['is_spectacle'] && $spectacle):
                     $message->attachData($data['spectacle']->output(), "spectacle.pdf");
                     DocumentTrack::create([
                         'patient_id' => $patient->id,
