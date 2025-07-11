@@ -744,7 +744,7 @@ class HelperController extends Controller
                         'doc_type' => 'phistory',
                     ]);
                 endif;
-                if ($data['is_spectacle'] && $spectacle?->id):
+                if ($data['is_spectacle']):
                     $message->attachData($data['spectacle']->output(), "spectacle.pdf");
                     DocumentTrack::create([
                         'patient_id' => $patient->id,
