@@ -744,6 +744,8 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::get('/helper/getlabtests/', [HelperController::class, 'getlabtests']);
     Route::get('/helper/updatesmsstatus/', [HelperController::class, 'updatesmsstatus']);
     Route::get('/helper/getsurgeryconsumables/', [HelperController::class, 'getsurgeryconsumables']);
+    Route::get('/helper/iolpower/', [HelperController::class, 'iolPower'])->name('iol.power');
+    Route::post('/helper/iolpower/', [HelperController::class, 'calculateIolPower'])->name('iol.power.calculate');
     // End Helper //
 
     // PDFs //

@@ -385,7 +385,40 @@ $(function () {
         $(".mrid").val(mrid);
         $(".pName").val(pname);
         $(".dType").val(type);
-    })
+    });
+
+    $(document).on("click", ".btnIolPower", function (e) {
+        e.preventDefault();
+        let frm = $(this).closest('form').attr('id');
+        var form = document.getElementById(frm);
+        var formData = new FormData(form);
+        $.ajax({
+            type: 'POST',
+            url: '/helper/iolpower',
+            data: formData,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if(response.type == "OD"){
+                    $(".odIolPower").text(response.iol_Power);
+                    $(".odMsg").text(response.message);
+                }else{
+                    $(".osIolPower").text(response.iol_Power);
+                    $(".osMsg").text(response.message);
+                }
+            },            
+            beforeSend: function(){
+                $(".btnIolPower").html("Calculating...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
+            },
+            complete: function(){
+                $(".btnIolPower").html("Calculate");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest);
+            },
+        });
+    });
 });
 
 /*$(window).on('load', function () {

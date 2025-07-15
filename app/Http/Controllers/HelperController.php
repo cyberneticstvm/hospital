@@ -27,6 +27,11 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class HelperController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:send-documents', ['only' => ['waDocs', 'emailDocs']]);
+        $this->middleware('permission:iol-power-calculator', ['only' => ['iolPower', 'calculateIolPower']]);
+    }
     public function getMedicineType($mid)
     {
         $data = DB::table('medicine_types as m')->leftJoin('products as p', 'm.id', '=', 'p.medicine_type')->select('m.id', 'm.name', 'm.default_qty', 'm.default_dosage')->where('p.id', $mid)->first();
@@ -761,5 +766,111 @@ class HelperController extends Controller
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
         return redirect()->back()->with("success", "Documents sent successfully");
+    }
+
+    function iolPower()
+    {
+        return view('extras.iol-power');
+    }
+
+    function calculateIolPower(Request $request)
+    {
+        $this->validate($request, [
+            'axial_length' => 'required',
+        ]);
+        $ar = self::getIolPower($request->axial_length, $request->k1, $request->k2, $request->acd, $request->a_constant, $request->formula, $request->target_refraction, $request->a0, $request->a1, $request->a2, $request->lens_thick, $request->wtw, $request->age);
+        return response()->json([
+            'iol_Power' => $ar[0] . ' D',
+            'status' => 'success',
+            "message" => $ar[1],
+            "type" => $request->type,
+        ]);
+    }
+
+    function getIolPower($axl, $k1, $k2, $acd, $a, $formula, $r, $a0, $a1, $a2, $lens_thickness, $wtw, $age)
+    {
+        $p = 0;
+        $msg = "Applied formula is as requested";
+        $k = ($k1 > 0 || $k2 > 0) ? ($k1 + $k2) / 2 : 0;
+        if ($formula == 0):
+            if ($axl < 21):
+                // Very short eye - High hyperopia, more IOL power needed - Formual 1
+                $p = self::calculateFormula1($axl, $k, $acd, $a);
+                $msg = "Very short eye - High hyperopia, more IOL power needed. Applied formula is Hoffer Q";
+            endif;
+            if ($axl >= 21 && $axl < 22):
+                // Short eye - Mild hyperopia - Formula 1
+                $p = self::calculateFormula1($axl, $k, $acd, $a);
+                $msg = "Short eye - Mild hyperopia. Applied formula is Hoffer Q";
+            endif;
+            if ($axl >= 22 && $axl < 24.5):
+                // Normal range - Most common in emmetropic eyes - Formula 3 and 4
+                $p = self::calculateFormula3($axl, $k, $acd, $a, $r, $lens_thickness, $wtw, $age);
+                $msg = "Normal range - Most common in emmetropic eyes. Holladay 2";
+            endif;
+            if ($axl >= 24.5 && $axl <= 26):
+                // Moderately long - Often mild myopia - Formula 4
+                $p = self::calculateFormula4($axl, $k, $acd, $a);
+                $msg = "Normal range - Most common in emmetropic eyes. Applied formula is SRK/T";
+            endif;
+            if ($axl > 26):
+                // Long eye - High myopia, special IOL calculation needed - Formula 5, 4 and 2
+                $p = self::calculateFormula5($axl, $k, $acd, $a);
+                $msg = "Long eye - High myopia, special IOL calculation needed. Applied formula is Barrett Universal II";
+            endif;
+        else:
+            if ($formula == 1)
+                $p = self::calculateFormula1($axl, $k, $acd, $a);
+            if ($formula == 2)
+                $p = self::calculateFormula2($axl, $k, $acd, $r, $a0, $a1, $a2);
+        endif;
+        return array($p, $msg);
+    }
+
+    function calculateFormula1($axl, $k, $acd, $a)
+    {
+        // Hoffer Q
+        $n = 1.336; // Refractive index of aqueous/vitreous
+        $elp = 0.56 * $acd + 0.36 * $k - 0.1;
+        $retina_adjustment = 0.65696 - 0.02029 * $axl;
+        $l = $axl + $retina_adjustment;
+        $iol_power = ($n / ($l - $elp)) - ($n / $axl);
+        $iol_power *= 1000;
+        return round($iol_power, 2);
+    }
+
+    function calculateFormula2($axl, $k, $acd, $r, $a0, $a1, $a2)
+    {
+        // Haigis
+        $n = 1.336; // Refractive index of aqueous/vitreous
+        $elp = $a0 + ($a1 * $acd) + ($a2 * $axl);
+        $iol_power = (($n / ($axl - $elp)) - ($n / ($r + 0.000001))) / $k;
+        return round($iol_power, 2);
+    }
+
+    function calculateFormula3($axl, $k, $acd, $a, $r, $lens_thickness, $wtw, $age)
+    {
+        // Holladay 2
+        $n = 1.336;
+        $elp = 0.56 * $acd + 0.28 * $lens_thickness + 0.1 * $wtw - 0.05 * $age + 1.5;
+        $iol_power = ($n / ($axl - $elp)) - ($n / ($axl - 0.05)); // assuming 0.05mm offset to retina
+        $iol_power *= 1000;
+        return round($iol_power, 2);
+    }
+
+    function calculateFormula4($axl, $k, $acd, $a)
+    {
+        // SRK/T
+        $p = $a - 2.5 * $axl - 0.9 * $k;
+    }
+
+    function calculateFormula5($axl, $k, $acd, $a)
+    {
+        // Barrett Universal II
+    }
+
+    function calculateFormula6($axl, $k, $acd, $a)
+    {
+        // Kane
     }
 }
