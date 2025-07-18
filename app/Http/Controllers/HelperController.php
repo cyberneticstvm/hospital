@@ -842,9 +842,10 @@ class HelperController extends Controller
     function calculateFormula2($axl, $k, $acd, $r, $a0, $a1, $a2)
     {
         // Haigis
-        $n = 1.336; // Refractive index of aqueous/vitreous
+        $n = 1.336;
+        $d = 0; // Refractive index of aqueous/vitreous
         $elp = $a0 + ($a1 * $acd) + ($a2 * $axl);
-        $iol_power = (($n / ($axl - $elp)) - ($n / ($r + 0.000001))) / $k;
+        $iol_power = ($n / ($axl - $elp)) - ($n / ($axl - $d)) - $k;
         return round($iol_power, 2);
     }
 
@@ -861,6 +862,7 @@ class HelperController extends Controller
     function calculateFormula4($axl, $k, $acd, $a)
     {
         // SRK/T
+        $elp = 0.56 * $acd + 0.36 * $k - 0.1;
         $p = $a - 2.5 * $axl - 0.9 * $k;
     }
 
