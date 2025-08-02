@@ -12,6 +12,7 @@ use App\Models\InhouseCampProcedure;
 use App\Models\PatientRegistrations;
 use App\Models\RoyaltyCardProcedure;
 use App\Models\UserBranch;
+use App\Models\VehicleAccount;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -354,6 +355,7 @@ class Helper
         $proc = Procedure::find($procedure);
         $fee = $proc->fee;
         $discount = 0;
+        $credit = 0;
         $discount_category = 'Na';
         $discount_category_id = 0;
         $mrecord = PatientMedicalRecord::find($medical_record_id);
@@ -370,7 +372,12 @@ class Helper
         endif;
         if ($pref->rc_type && $pref->rc_number):
             $pro = RoyaltyCardProcedure::where('proc_id', $proc->id)->where('royalty_card_id', $pref->rc_type)->first();
-            if ($pro && $pro->discount_percentage > 0):
+            if ($pro && $pro->discount_percentage > 0 && $pref->rc_type == 3):
+                // Gold card - 35% of discount will be credited to vehicle owner and 65% will be go to patient.
+                $disctot = ($proc->fee * $pro->discount_percentage) / 100;
+                $credit = ($disctot * 35) / 100;
+                $discount = $disctot - $credit;
+            elseif ($pro && $pro->discount_percentage > 0):
                 $discount = ($proc->fee * $pro->discount_percentage) / 100;
             endif;
             $vehicle = (new self)->getVehicle($pref->rc_number, $pref->rc_type);
@@ -380,6 +387,28 @@ class Helper
             $fee = $proc->fee - $discount;
             $discount_category = 'royalty-card';
             $discount_category_id = $pref->rc_type;
+            if ($credit > 0 && $vehicle?->id > 0):
+                VehicleAccount::updateOrCreate(
+                    [
+                        'vehicle_id' => $vehicle?->id,
+                        'patient_id' => $patient->id,
+                        'medical_record_id' => $medical_record_id,
+                        'procedure_id' => $procedure,
+                        'type' => 'cr',
+                    ],
+                    [
+                        'vehicle_id' => $vehicle?->id,
+                        'patient_id' => $patient->id,
+                        'medical_record_id' => $medical_record_id,
+                        'procedure_id' => $procedure,
+                        'type' => 'cr',
+                        'amount' => $credit,
+                        'notes' => 'Royalty Card',
+                        'created_by' => Auth::user()->id,
+                        'updated_by' => Auth::user()->id,
+                    ]
+                );
+            endif;
         endif;
         return array($fee, $discount, $discount_category, $discount_category_id);
     }
