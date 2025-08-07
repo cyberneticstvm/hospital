@@ -25,6 +25,8 @@
                         <form action="{{ route('patient-payment.save') }}" method="post">
                             @csrf
                             <input type="hidden" name="medical_record_id" value="{{ $medical_record_id }}" />
+                            <input type="hidden" name="vehicle_id" value="{{ $vehicle->id }}" />
+                            <input type="hidden" name="credit" value="{{ $credit }}" />
                             <input type="hidden" name="pharmacy_id" value="0" />
                             <input type="hidden" name="patient_id" value="{{ ($patient) ? $patient->id : 0 }}" />
                             <input type="hidden" name="branch" value="{{ ($patient) ? $patient->branch : 0 }}" />
@@ -40,6 +42,10 @@
                                     <tr>
                                         <td class="text-danger fw-bold">Total Due</td>
                                         <td class="text-right text-danger fw-bold">{{ number_format($due, 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-success fw-bold">Available Credit</td>
+                                        <td class="text-right text-success fw-bold">{{ number_format($credit, 2) }}</td>
                                     </tr>
                                     @forelse($heads as $key => $head)
                                     <tr>

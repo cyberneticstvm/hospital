@@ -14,6 +14,7 @@ use App\Models\PatientReference as PR;
 use App\Models\PatientReference;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
+use App\Models\VehicleAccount;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Hash;
@@ -72,7 +73,22 @@ class PatientPaymentController extends Controller
         $input['created_by'] = Auth::user()->id;
         $check = $this->checkMedicalRecordID($request->medical_record_id);
         if ($check == 1):
-            $pp = PP::create($input);
+            if ($request->payment_mode == 10 && $request->credit >= $request->amount):
+                $pp = PP::create($input);
+                VehicleAccount::create([
+                    'vehicle_id' => $request->vehicle_id,
+                    'patient_id' => $request->patient_id,
+                    'medical_record_id' => $request->medical_record_id,
+                    'procedure_id' => $pp->id,
+                    'type' => 'dr',
+                    'amount' => $request->amount,
+                    'notes' => 'Credit Used',
+                    'created_by' => Auth::user()->id,
+                    'updated_by' => Auth::user()->id,
+                ]);
+            else:
+                PP::create($input);
+            endif;
             return redirect()->route('patient-payment.index')->with('success', 'Payment recorded successfully');
         elseif ($check == 2):
             return redirect()->route('patient-payment.index')->with('error', 'You are trying to record the payment with old Medical Record ID.');
@@ -108,7 +124,7 @@ class PatientPaymentController extends Controller
             'medical_record_id' => 'required',
         ]);
         $heads = DB::table('income_expense_heads')->where('type', 'I')->where('category', 'patient')->orderBy('name')->get();
-        $pmodes = DB::table('payment_modes')->whereIn('id', [1, 2, 3, 4, 5, 6, 7])->orderBy('name')->get();
+        $pmodes = DB::table('payment_modes')->whereIn('id', [1, 2, 3, 4, 5, 6, 7, 10])->orderBy('name')->get();
         $types = DB::table('payment_modes')->whereIn('id', [8, 9])->orderBy('name')->get();
         $medical_record_id = $request->medical_record_id;
         $patient = DB::table('patient_registrations as pr')->leftJoin('patient_medical_records as pmr', 'pmr.patient_id', '=', 'pr.id')->where('pmr.id', $request->medical_record_id)->select('pr.id', 'pr.patient_name', 'pr.patient_id', 'pmr.branch', DB::raw("DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS cdate"))->first();
@@ -141,8 +157,10 @@ class PatientPaymentController extends Controller
         $fee = array($certificate_fee, $clinical_lab, $consultation_fee, $pharmacy, $postop_medicine, $procedure_fee, $radiology_lab, $reg_fee, $surgery_consumables, $surgery_medicine, $vision);
         $tot = $reg_fee + $consultation_fee + $procedure_fee + $certificate_fee + $pharmacy + $radiology_lab + $clinical_lab + $vision + $surgery_medicine + $postop_medicine + $surgery_consumables;
         $chk = $request->chkApplyDisc;
+        $vehicle = Helper::getCustomerCredit($request->medical_record_id)[0];
+        $credit = Helper::getCustomerCredit($request->medical_record_id)[1];
         if ($patient):
-            return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments', 'types', 'procs', 'chk'));
+            return view('patient-payment.fetch', compact('patient', 'medical_record_id', 'heads', 'pmodes', 'fee', 'tot', 'payments', 'types', 'procs', 'chk', 'credit', 'vehicle'));
         else:
             return redirect()->back()->with('error', 'No records found.');
         endif;
@@ -192,10 +210,12 @@ class PatientPaymentController extends Controller
     public function edit($id)
     {
         $payment = PP::find($id);
-        $pmodes = DB::table('payment_modes')->whereIn('id', [1, 2, 3, 4, 5, 6, 7])->orderBy('name')->get();
+        $pmodes = DB::table('payment_modes')->whereIn('id', [1, 2, 3, 4, 5, 6, 7, 10])->orderBy('name')->get();
         $types = DB::table('payment_modes')->whereIn('id', [8, 9])->orderBy('name')->get();
         $patient = DB::table('patient_registrations')->find($payment->patient_id);
-        return view('patient-payment.edit', compact('payment', 'pmodes', 'patient', 'types'));
+        $vehicle = Helper::getCustomerCredit($payment->medical_record_id)[0];
+        $credit = Helper::getCustomerCredit($payment->medical_record_id)[1];
+        return view('patient-payment.edit', compact('payment', 'pmodes', 'patient', 'types', 'vehicle', 'credit'));
     }
 
     /**
@@ -215,6 +235,22 @@ class PatientPaymentController extends Controller
         $input = $request->all();
         $created_at = (!empty($request->created_at)) ? Carbon::createFromFormat('d/M/Y', $input['created_at'])->format('Y-m-d H:i:s') : Carbon::now();
         $pp = PP::where('id', $id)->update(['amount' => $request->amount, 'payment_mode' => $request->payment_mode, 'type' => $request->type, 'notes' => $request->notes, 'created_at' => $created_at]);
+        if ($request->payment_mode == 10 && ($request->credit + $request->amount) >= $request->amount):
+            VehicleAccount::where('procedure_id', $id)->delete();
+            VehicleAccount::create([
+                'vehicle_id' => $request->vehicle_id,
+                'patient_id' => $request->patient_id,
+                'medical_record_id' => $request->medical_record_id,
+                'procedure_id' => $pp->id,
+                'type' => 'dr',
+                'amount' => $request->amount,
+                'notes' => 'Credit Used',
+                'created_by' => Auth::user()->id,
+                'updated_by' => Auth::user()->id,
+            ]);
+        else:
+
+        endif;
         return redirect()->route('patient-payment.index')->with('success', 'Payment updated successfully');
     }
 

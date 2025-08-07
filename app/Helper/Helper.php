@@ -337,7 +337,7 @@ class Helper
     public function getVehicle($vcode, $rc_type)
     {
         $data = null;
-        if ($vcode && $rc_type == 2):
+        if ($vcode):
             $url = Helper::api_url() . "/api/vehicle/$rc_type/$vcode/" . $this->secret;
             $json = file_get_contents($url);
             $vehicle = json_decode($json);
@@ -411,6 +411,15 @@ class Helper
             endif;
         endif;
         return array($fee, $discount, $discount_category, $discount_category_id);
+    }
+
+    public static function getCustomerCredit($medical_record_id)
+    {
+        $pref = PatientReference::findOrFail($medical_record_id);
+        $vehicle = (new self)->getVehicle($pref->rc_number, $pref->rc_type);
+        $dr = VehicleAccount::where('vehicle_id', $vehicle?->id ?? 0)->where('type', 'dr')->sum('amount');
+        $cr = VehicleAccount::where('vehicle_id', $vehicle?->id ?? 0)->where('type', 'cr')->sum('amount');
+        return array($vehicle, $cr - $dr);
     }
 
     public static function getOwedTotal($mrid)
