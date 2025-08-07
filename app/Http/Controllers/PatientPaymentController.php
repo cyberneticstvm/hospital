@@ -72,8 +72,10 @@ class PatientPaymentController extends Controller
         $input = $request->all();
         $input['created_by'] = Auth::user()->id;
         $check = $this->checkMedicalRecordID($request->medical_record_id);
+        $vehicle = $request->vehicle;
+        $patient = PatientRegistrations::find($request->patient_id);
         if ($check == 1):
-            if ($request->payment_mode == 10 && $request->credit >= $request->amount):
+            if ($request->payment_mode == 10 && $request->credit >= $request->amount && $vehicle?->contact_number == $patient->mobile_number && strtoupper($vehicle->owner_name) == strtoupper($patient->patient_name)):
                 $pp = PP::create($input);
                 VehicleAccount::create([
                     'vehicle_id' => $request->vehicle_id,
@@ -87,7 +89,11 @@ class PatientPaymentController extends Controller
                     'updated_by' => Auth::user()->id,
                 ]);
             else:
-                PP::create($input);
+                if ($request->payment_mode != 10):
+                    PP::create($input);
+                else:
+                    return redirect()->route('patient-payment.index')->with('error', 'Credit used couldnt apply due to details mismatch!');
+                endif;
             endif;
             return redirect()->route('patient-payment.index')->with('success', 'Payment recorded successfully');
         elseif ($check == 2):
@@ -233,12 +239,14 @@ class PatientPaymentController extends Controller
             'medical_record_id' => 'required',
         ]);
         $input = $request->all();
+        $vehicle = $request->vehicle;
+        $patient = PatientRegistrations::find($request->patient_id);
         $created_at = (!empty($request->created_at)) ? Carbon::createFromFormat('d/M/Y', $input['created_at'])->format('Y-m-d H:i:s') : Carbon::now();
-        $pp = PP::where('id', $id)->update(['amount' => $request->amount, 'payment_mode' => $request->payment_mode, 'type' => $request->type, 'notes' => $request->notes, 'created_at' => $created_at]);
-        if ($request->payment_mode == 10 && ($request->credit + $request->amount) >= $request->amount):
-            VehicleAccount::where('procedure_id', $id)->delete();
+        if ($request->payment_mode == 10 && ($request->credit + $request->amount) >= $request->amount && $vehicle?->contact_number == $patient->mobile_number && strtoupper($vehicle->owner_name) == strtoupper($patient->patient_name)):
+            $pp = PP::where('id', $id)->update(['amount' => $request->amount, 'payment_mode' => $request->payment_mode, 'type' => $request->type, 'notes' => $request->notes, 'created_at' => $created_at]);
+            VehicleAccount::where('procedure_id', $id)->where('medical_record_id', $request->medical_record_id)->where('type', 'dr')->delete();
             VehicleAccount::create([
-                'vehicle_id' => $request->vehicle_id,
+                'vehicle_id' => $vehicle->id,
                 'patient_id' => $request->patient_id,
                 'medical_record_id' => $request->medical_record_id,
                 'procedure_id' => $pp->id,
@@ -249,7 +257,11 @@ class PatientPaymentController extends Controller
                 'updated_by' => Auth::user()->id,
             ]);
         else:
-
+            if ($request->payment_mode != 10):
+                PP::where('id', $id)->update(['amount' => $request->amount, 'payment_mode' => $request->payment_mode, 'type' => $request->type, 'notes' => $request->notes, 'created_at' => $created_at]);
+            else:
+                return redirect()->route('patient-payment.index')->with('error', 'Credit used couldnt apply due to details mismatch!');
+            endif;
         endif;
         return redirect()->route('patient-payment.index')->with('success', 'Payment updated successfully');
     }

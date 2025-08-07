@@ -750,7 +750,7 @@ class ReportController extends Controller
 
         $income_received_cash = DB::table('patient_payments')->where('branch', $branch)->whereBetween('created_at', [$startDate, $endDate])->where('payment_mode', 1)->where('type', '!=', 9)->sum('amount');
 
-        $income_received_other = DB::table('patient_payments')->where('branch', $branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [2, 3, 4, 5, 7])->where('type', '!=', 9)->sum('amount');
+        $income_received_other = DB::table('patient_payments')->where('branch', $branch)->whereBetween('created_at', [$startDate, $endDate])->whereIn('payment_mode', [2, 3, 4, 5, 7, 10])->where('type', '!=', 9)->sum('amount');
 
         $clinical_lab = DB::table('lab_clinics as l')->leftJoin('patient_medical_records as m', 'm.id', '=', 'l.medical_record_id')->whereBetween('l.created_at', [$startDate, $endDate])->where('l.tested_from', 1)->where('m.branch', $branch)->sum('l.fee');
 
