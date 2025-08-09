@@ -65,9 +65,9 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             return redirect()->back()->with('error', 'Requested record not found / deleted!');
         }
-        if ($e instanceof ErrorException) {
+        /*if ($e instanceof ErrorException) {
             return response()->view('errors.error', ['exception' => $e]);
-        }
+        }*/
         return parent::render($request, $e);
     }
 }
