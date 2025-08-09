@@ -137,10 +137,9 @@ class PatientReferenceController extends Controller
             $patient = PatientRegistrations::find($request->pid);
             $secret = Helper::apiSecret();
             $vcode = $request->rc_number;
-            if ($vcode && $request->rc_type == 2):
-                $url = Helper::api_url() . "/api/vehicle/$vcode/$secret";
-                dd($url);
-                die;
+            $rtype = $request->rc_type;
+            if ($vcode &&  $rtype == 2):
+                $url = Helper::api_url() . "/api/vehicle/$vcode/$rtype/$secret";
                 $json = file_get_contents($url);
                 $vehicle = json_decode($json);
                 if ($vehicle->status):
@@ -149,7 +148,7 @@ class PatientReferenceController extends Controller
                     elseif ($vehicle->vstatus == 'Cooling'):
                         throw new Exception($vehicle->data);
                     else:
-                        $input['rc_type'] = $request->rc_type;
+                        $input['rc_type'] = $rtype;
                         $input['rc_number'] = $request->rc_number;
                         if ($vehicle->data->contact_number == $patient->mobile_number && $vehicle->data->owner_name == $patient->patient_name):
                             $request->session()->put('vehicle', $vehicle->data);
