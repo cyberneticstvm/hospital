@@ -25,7 +25,7 @@
                         <form action="{{ route('patient-payment.save') }}" method="post">
                             @csrf
                             <input type="hidden" name="medical_record_id" value="{{ $medical_record_id }}" />
-                            <input type="hidden" name="vehicle" value="{{ $vehicle }}" />
+                            <!--<input type="hidden" name="vehicle" value="{{ $vehicle }}" />-->
                             <input type="hidden" name="credit" value="{{ $credit }}" />
                             <input type="hidden" name="pharmacy_id" value="0" />
                             <input type="hidden" name="patient_id" value="{{ ($patient) ? $patient->id : 0 }}" />
