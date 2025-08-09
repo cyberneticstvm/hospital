@@ -140,8 +140,6 @@ class PatientReferenceController extends Controller
             $rtype = $request->rc_type;
             if ($vcode &&  $rtype == 2):
                 $url = Helper::api_url() . "/api/vehicle/$vcode/$rtype/$secret";
-                dd($url);
-                die;
                 $json = file_get_contents($url);
                 $vehicle = json_decode($json);
                 if ($vehicle->status):
@@ -243,8 +241,9 @@ class PatientReferenceController extends Controller
             $patient = PatientRegistrations::find($request->pid);
             $secret = Helper::apiSecret();
             $vcode = $request->rc_number;
+            $rtype = $request->rc_type;
             if ($vcode && $request->rc_type == 2):
-                $url = Helper::api_url() . "/api/vehicle/" . $vcode . "/" . $secret;
+                $url = Helper::api_url() . "/api/vehicle/$vcode/$rtype/$secret";
                 $json = file_get_contents($url);
                 $vehicle = json_decode($json);
                 if ($vehicle->status):
