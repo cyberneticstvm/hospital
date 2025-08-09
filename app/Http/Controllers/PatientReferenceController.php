@@ -139,6 +139,8 @@ class PatientReferenceController extends Controller
             $vcode = $request->rc_number;
             if ($vcode && $request->rc_type == 2):
                 $url = Helper::api_url() . "/api/vehicle/$vcode/$secret";
+                dd($url);
+                die;
                 $json = file_get_contents($url);
                 $vehicle = json_decode($json);
                 if ($vehicle->status):
