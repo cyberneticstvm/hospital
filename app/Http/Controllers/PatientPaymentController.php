@@ -239,14 +239,13 @@ class PatientPaymentController extends Controller
             'medical_record_id' => 'required',
         ]);
         $input = $request->all();
-        $vehicle = $request->vehicle;
         $patient = PatientRegistrations::find($request->patient_id);
         $created_at = (!empty($request->created_at)) ? Carbon::createFromFormat('d/M/Y', $input['created_at'])->format('Y-m-d H:i:s') : Carbon::now();
-        if ($request->payment_mode == 10 && ($request->credit + $request->amount) >= $request->amount && $vehicle?->contact_number == $patient->mobile_number && strtoupper($vehicle->owner_name) == strtoupper($patient->patient_name)):
+        if ($request->payment_mode == 10 && ($request->credit + $request->amount) >= $request->amount && $request?->contact_number == $patient->mobile_number && strtoupper($request->owner_name) == strtoupper($patient->patient_name)):
             $pp = PP::where('id', $id)->update(['amount' => $request->amount, 'payment_mode' => $request->payment_mode, 'type' => $request->type, 'notes' => $request->notes, 'created_at' => $created_at]);
             VehicleAccount::where('procedure_id', $id)->where('medical_record_id', $request->medical_record_id)->where('type', 'dr')->delete();
             VehicleAccount::create([
-                'vehicle_id' => $vehicle->id,
+                'vehicle_id' => $request->vehicle_id,
                 'patient_id' => $request->patient_id,
                 'medical_record_id' => $request->medical_record_id,
                 'procedure_id' => $pp->id,
