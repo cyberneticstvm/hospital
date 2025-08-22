@@ -77,12 +77,12 @@
     $symptoms = DB::table('symptoms')->whereIn('id', $sympt)->get();
     $diagnosis = DB::table('diagnosis')->whereIn('id', $diag)->get();
     $spectacle = DB::table('spectacles')->where('medical_record_id', $mrecord->id)->first();
-    $tonometry = DB::table('tonometries')->where('medical_record_id', $mrecord->id)->first();
-    $keratometry = DB::table('keratometries')->where('medical_record_id', $mrecord->id)->first();
-    $ascan = DB::table('ascans')->where('medical_record_id', $mrecord->id)->first();
+    $tonometry = DB::table('tonometries')->where('medical_record_id', $mrecord->id)->whereNull('deleted_at')->first();
+    $keratometry = DB::table('keratometries')->where('medical_record_id', $mrecord->id)->whereNull('deleted_at')->first();
+    $ascan = DB::table('ascans')->where('medical_record_id', $mrecord->id)->whereNull('deleted_at')->first();
     $onotes = DB::table('operation_notes')->where('medical_record_id', $mrecord->id)->first();
 
-    $pachymetry = DB::table('pachymetries')->where('medical_record_id', $mrecord->id)->first();
+    $pachymetry = DB::table('pachymetries')->where('medical_record_id', $mrecord->id)->whereNull('deleted_at')->first();
     $oct = DB::table('octs')->where('medical_record_id', $mrecord->id)->whereNull('deleted_at')->first();
     $octimages = DB::table('oct_docs')->where('oct_id', $oct->id ?? 0)->where('doc_type', 'img')->get();
     $bscan = DB::table('bscans')->where('medical_record_id', $mrecord->id)->whereNull('deleted_at')->first();
