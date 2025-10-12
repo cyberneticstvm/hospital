@@ -682,7 +682,7 @@
         </tr>
         <tr>
             <td>{{ $onotes?->eye }}</td>
-            <td>{{ $onotes?->surgeond?->doctor_name }}</td>
+            <td>{{ $onotes?->surgeon }}</td>
             <td></td>
             <td></td>
             <td>{{ $onotes?->test_dose_result }}</td>
