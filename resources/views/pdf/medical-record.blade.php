@@ -682,9 +682,9 @@
         </tr>
         <tr>
             <td>{{ $onotes?->eye }}</td>
-            <td>{{ $onotes?->surgeond()?->doctor_name }}</td>
-            <td></td>
-            <td></td>
+            <td>{{ $onotes?->surgeond?->doctor_name }}</td>
+            <td>{{ $ont?->date_of_surgery?->format('d.M.Y') }}</td>
+            <td>{{ $ont?->test_dose_time?->format('h:i A') }}</td>
             <td>{{ $onotes?->test_dose_result }}</td>
             <td>{{ $onotes?->blood_pressure_mm }}/{{ $onotes?->blood_pressure_hg }} mmHg</td>
             <td>{{ $onotes?->grbs }} mg/dL</td>

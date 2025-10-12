@@ -153,7 +153,7 @@ class PDFController extends Controller
         $tonometry = DB::table('tonometries')->where('medical_record_id', $id)->whereNull('deleted_at')->first();
         $keratometry = DB::table('keratometries')->where('medical_record_id', $id)->whereNull('deleted_at')->first();
         $ascan = DB::table('ascans')->where('medical_record_id', $id)->whereNull('deleted_at')->first();
-        $onotes = DB::table('operation_notes')->where('medical_record_id', $id)->first();
+        $onotes = OperationNote::where('medical_record_id', $id)->first();
         $pachymetry = DB::table('pachymetries')->where('medical_record_id', $id)->first();
 
         $sel_1_od = DB::table('vision_extras')->select(DB::raw('group_concat(name) as names'))->whereIn('id', explode(',', $record->sel_1_od))->value('names');
