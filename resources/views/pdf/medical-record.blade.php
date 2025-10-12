@@ -670,8 +670,54 @@
     @endif
     @if($onotes && $onotes->notes)
     <p>Operation Notes</p>
-    {!! nl2br($onotes->notes) !!}
-    <br>
+    <table style="width: 100%; border:1px solid #000">
+        <tr>
+            <th style="text-align: left;">Eye</th>
+            <th style="text-align: left;">Surgeon</th>
+            <th style="text-align: left;">Surgery Date</th>
+            <th style="text-align: left;">Test Dose Time</th>
+            <th style="text-align: left;">Test Dose Result</th>
+            <th style="text-align: left;">Blood Pressure</th>
+            <th style="text-align: left;">GRBS</th>
+        </tr>
+        <tr>
+            <td>{{ $onotes?->eye }}</td>
+            <td>{{ $onotes?->surgeond?->doctor_name }}</td>
+            <td>{{ $onotes?->date_of_surgery?->format('d.M.Y') }}</td>
+            <td>{{ $onotes?->test_dose_time?->format('h:i A') }}</td>
+            <td>{{ $onotes?->test_dose_result }}</td>
+            <td>{{ $onotes?->blood_pressure_mm }}/{{ $onotes?->blood_pressure_hg }} mmHg</td>
+            <td>{{ $onotes?->grbs }} mg/dL</td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    <strong>Procedure</strong>
+    <br />
+    {!! nl2br($onotes?->procedures) !!}
+    <br />
+    <br />
+    @if($onotes?->iol_power)
+    <strong>IOL Power</strong>
+    <br />
+    {{ $onotes?->iol_power }}D
+    <br />
+    <br />
+    @endif
+    <strong>Procedure Details</strong>
+    <br />
+    {!! nl2br($onotes?->notes) !!}
+    <br />
+    <br />
+    <strong>Post-operative Advice</strong>
+    <br />
+    {!! nl2br($onotes?->post_operative_advice) !!}
+    <br />
+    <br />
+    <strong>Medications Prescribed</strong>
+    <br />
+    {!! nl2br($onotes?->medications_prescribed) !!}
+    <br />
     @endif
     @if($record->doctor_recommondations)
     <p>Doctor Recommendations</p>
