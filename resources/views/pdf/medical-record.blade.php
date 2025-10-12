@@ -682,7 +682,7 @@
         </tr>
         <tr>
             <td>{{ $onotes?->eye }}</td>
-            <td>{{ $onotes?->surgeond?->doctor_name }}</td>
+            <td></td>
             <td>{{ $onotes?->date_of_surgery?->format('d.M.Y') }}</td>
             <td>{{ $onotes?->test_dose_time?->format('h:i A') }}</td>
             <td>{{ $onotes?->test_dose_result }}</td>
