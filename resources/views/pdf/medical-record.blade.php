@@ -768,7 +768,7 @@
         </tr>
     </table>
     <br>
-    <div class="text-right">{{ $doctor->doctor_name }}<br />{{ $doctor->designation }}<br />Reg. No: {{ $doctor->reg_no }}</div>
+    <div class="text-right">{{ $doctor->doctor_name }}<br />{{ $doctor->designation }}<br />Reg. No: {{ $doctor->reg_no }}<br />{{ $doctor->additional_qualification }}</div>
     <pre />
     <img src="data:image/png;base64, {!! $qrcode !!}">
     <p class="text-small">To book an appointment, scan this QR code.</p>
