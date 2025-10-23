@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'Vijoy Sasidharan',
             'username' => 'vijo',
             'email' => 'mail@cybernetics.me',
-            'mobile' => '9188848860',
             'password' => bcrypt('stupid')
         ]);
 
