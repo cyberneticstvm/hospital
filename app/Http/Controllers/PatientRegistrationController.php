@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -10,6 +11,7 @@ use App\Models\InhouseCamp;
 use App\Models\RoyaltyCard;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Session;
 
 class PatientRegistrationController extends Controller
 {
@@ -72,8 +74,12 @@ class PatientRegistrationController extends Controller
         ]);
         $input = $request->all();
         $input['dob'] = (!empty($request->dob)) ? Carbon::createFromFormat('d/M/Y', $request['dob'])->format('Y-m-d') : NULL;
-
-        $next = DB::table('patient_registrations')->selectRaw("CONCAT_WS('-', 'P', LPAD(IFNULL(max(id)+1, 1), 6, '0')) AS id")->first();
+        $branch = Branch::where('id', Session::get('branch'))->first();
+        if ($branch->short_name == 'SAS1'):
+            $next = DB::table('patient_registrations')->selectRaw("CONCAT_WS('-', 'SAS', LPAD(IFNULL(max(id)+1, 1), 8, '0')) AS id")->first();
+        else:
+            $next = DB::table('patient_registrations')->selectRaw("CONCAT_WS('-', 'P', LPAD(IFNULL(max(id)+1, 1), 6, '0')) AS id")->first();
+        endif;
         $input['patient_id'] = $next->id;
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;

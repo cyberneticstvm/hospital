@@ -25,7 +25,12 @@ class Helper
 
     public function __construct()
     {
-        $this->url = "https://store.devihospitals.in";
+        $branch = Branch::where('id', Session::get('branch'))->first();
+        if ($branch->short_name == 'SAS1'):
+            $this->url = "https://storesas.devihospitals.in";
+        else:
+            $this->url = "https://store.devihospitals.in";
+        endif;
         $this->secret = 'fdjsvsgdf4dhgf687f4bg54g4hf787';
     }
     public static function api_url()
