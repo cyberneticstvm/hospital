@@ -154,7 +154,7 @@ class AuthController extends Controller
         /*$doctors = DB::table('doctors')->whereIn('id', function ($query) use ($id) {
             $query->select('doctor_id')->from('users')->where('id', '=', $id);
         })->get();*/
-        $doctors = DB::table('doctors')->get();
+        $doctors = DB::table('doctors')->whereNul('deleted_at')->get();
 
         return view('user.edit', compact('user', 'roles', 'userRole', 'branches', 'doctors'));
     }
