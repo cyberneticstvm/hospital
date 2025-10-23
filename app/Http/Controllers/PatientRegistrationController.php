@@ -76,7 +76,7 @@ class PatientRegistrationController extends Controller
         $input['dob'] = (!empty($request->dob)) ? Carbon::createFromFormat('d/M/Y', $request['dob'])->format('Y-m-d') : NULL;
         $branch = Branch::where('id', Session::get('branch'))->first();
         if ($branch->short_name == 'SAS1'):
-            $next = DB::table('patient_registrations')->selectRaw("CONCAT_WS('-', 'SAS', LPAD(IFNULL(max(id)+1, 1), 8, '0')) AS id")->first();
+            $next = DB::table('patient_registrations')->selectRaw("CONCAT_WS('-', 'SAS', LPAD(IFNULL(max(id)+1, 1), 6, '0')) AS id")->first();
         else:
             $next = DB::table('patient_registrations')->selectRaw("CONCAT_WS('-', 'P', LPAD(IFNULL(max(id)+1, 1), 6, '0')) AS id")->first();
         endif;

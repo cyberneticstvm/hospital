@@ -33,9 +33,25 @@ class Helper
         endif;
         $this->secret = 'fdjsvsgdf4dhgf687f4bg54g4hf787';
     }
+
+    public static function domain_url()
+    {
+        $branch = Branch::where('id', Session::get('branch'))->first();
+        $url = "https://emr.devihospitals.in";
+        if ($branch->short_name == 'SAS1'):
+            $url = "https://emrsas.devihospitals.in";
+        endif;
+        return $url;
+    }
+
     public static function api_url()
     {
-        return "https://store.devihospitals.in";
+        $branch = Branch::where('id', Session::get('branch'))->first();
+        $url = "https://store.devihospitals.in";
+        if ($branch->short_name == 'SAS1'):
+            $url = "https://storesas.devihospitals.in";
+        endif;
+        return $url;
     }
     public static function apiSecret()
     {
