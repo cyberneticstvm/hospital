@@ -63,6 +63,7 @@ class ProcedureController extends Controller
         $this->validate($request, [
             'name' => 'required|unique:procedures,name',
             'fee' => 'required',
+            'fee_stkta' => 'required',
         ]);
         $input = $request->all();
         $proc = Procedure::create($input);
@@ -120,6 +121,7 @@ class ProcedureController extends Controller
         $this->validate($request, [
             'name' => 'required|unique:procedures,name,' . $id,
             'fee' => 'required',
+            'fee_stkta' => 'required',
         ]);
         $input = $request->all();
         $proc = Procedure::find($id);

@@ -46,6 +46,13 @@
                                     <small class="text-danger">{{ $errors->first('fee') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Fee Stkta<sup class="text-danger">*</sup></label>
+                                    <input type="number" value="{{ ($proc) ? $proc->fee_stkta : old('fee_stkta') }}" name="fee_stkta" class="form-control form-control-md" step="any" placeholder="0.00">
+                                    @error('fee_stkta')
+                                    <small class="text-danger">{{ $errors->first('fee_stkta') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
@@ -65,6 +72,7 @@
                                     <th>Procedure Name</th>
                                     <th>Available for Consult.</th>
                                     <th>Fee</th>
+                                    <th>Fee-Stkta</th>
                                     <th>Edit</th><!--<th>Remove</th>-->
                                 </tr>
                             </thead>
@@ -76,6 +84,7 @@
                                     <td>{{ $procedure->name }}</td>
                                     <td>{{ $procedure->is_available_for_consultation }}</td>
                                     <td class="text-right">{{ $procedure->fee }}</td>
+                                    <td class="text-right">{{ $procedure->fee_stkta }}</td>
                                     <td><a class='btn btn-link' href="{{ route('procedure.edit', $procedure->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                     <!--<td>
                                     <form method="post" action="{{ route('procedure.delete', $procedure->id) }}">

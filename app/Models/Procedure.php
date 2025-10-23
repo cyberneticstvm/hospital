@@ -13,6 +13,7 @@ class Procedure extends Model
         'name',
         'type',
         'fee',
+        'fee_stkta',
         'is_available_for_consultation'
     ];
 

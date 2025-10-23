@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->String('name', 50)->unique();
             $table->decimal('fee', 6, 2)->default(0.00);
+            $table->decimal('fee_stkta', 9, 2)->default(0.00);
             $table->timestamps();
         });
     }

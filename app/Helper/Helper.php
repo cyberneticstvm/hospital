@@ -353,7 +353,8 @@ class Helper
     public static function getProcedureFee($medical_record_id, $procedure)
     {
         $proc = Procedure::find($procedure);
-        $fee = $proc->fee;
+        // 7 is Sasthamkotta Branch
+        $fee = (Session::get('branch') == 7) ? $proc->fee_stkta : $proc->fee;
         $discount = 0;
         $credit = 0;
         $discount_category = 'Na';
