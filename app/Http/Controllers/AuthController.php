@@ -151,9 +151,10 @@ class AuthController extends Controller
         $roles = Role::pluck('name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
         $branches = Branch::get();
-        $doctors = DB::table('doctors')->whereIn('id', function ($query) use ($id) {
+        /*$doctors = DB::table('doctors')->whereIn('id', function ($query) use ($id) {
             $query->select('doctor_id')->from('users')->where('id', '=', $id);
-        })->get();
+        })->get();*/
+        $doctors = DB::table('doctors')->get();
 
         return view('user.edit', compact('user', 'roles', 'userRole', 'branches', 'doctors'));
     }
