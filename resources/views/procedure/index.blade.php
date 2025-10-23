@@ -16,7 +16,7 @@
                             @csrf
                             @if($proc) @method("PUT") @endif
                             <div class="row g-4">
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Procedure Name<sup class="text-danger">*</sup></label>
                                     <input type="text" value="{{ ($proc) ? $proc->name : old('name') }}" name="name" class="form-control form-control-md" placeholder="Procedure Name">
                                     @error('name')
