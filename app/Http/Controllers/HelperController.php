@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Helper\Helper;
 use App\Mail\SendDocuments;
+use App\Models\Branch;
 use App\Models\DocumentTrack;
 use App\Models\OperationNote;
 use App\Models\PatientMedicalRecord;
 use App\Models\PatientPayment;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
+use App\Models\Product;
 use App\Models\PromotionContact;
 use App\Models\PromotionSchedule;
 use App\Models\Spectacle;
@@ -37,6 +39,28 @@ class HelperController extends Controller
         $data = DB::table('medicine_types as m')->leftJoin('products as p', 'm.id', '=', 'p.medicine_type')->select('m.id', 'm.name', 'm.default_qty', 'm.default_dosage')->where('p.id', $mid)->first();
         return response()->json($data);
     }
+
+    function getStockStatus(Request $request)
+    {
+        $branches = Branch::pluck('branch_name', 'id');
+        $products = Product::pluck('product_name', 'id');
+        $inputs = array(Session::get('branch'), 0);
+        $stock = collect(Helper::getStock(0, Session::get('branch'), 0));
+        return view('pharmacy.stock.stock', compact('stock', 'branches', 'products', 'inputs'));
+    }
+
+    function getStockStatusUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'branch_id' => 'required',
+        ]);
+        $branches = Branch::pluck('branch_name', 'id');
+        $products = Product::pluck('product_name', 'id');
+        $inputs = array($request->branch_id, $request->product_id ?? '');
+        $stock = collect(Helper::getStock($request->product_id ?? 0, $request->branch_id, 0));
+        return view('pharmacy.stock.stock', compact('stock', 'branches', 'products', 'inputs'));
+    }
+
     public function getProductForTransfer(Request $request)
     {
         if ($request->branch == 0) :
@@ -77,7 +101,17 @@ class HelperController extends Controller
     public function getProductPrice(Request $request)
     {
         $price = DB::table('purchase_details')->where('batch_number', $request->batch_number)->where('product', $request->product)->first();
-        echo $price->price;
+        $mrp = $price->mrp / $price->qty;
+        $rate = $price->selling_price;
+        $taxa = ($rate * $price->tax_percentage) / 100;
+        return response()->json([
+            'mrp' => $mrp,
+            'taxp' => $price->tax_percentage,
+            'price' => $rate - $taxa,
+            'discount' => $mrp - $rate,
+            'taxa' => $taxa,
+            'total' => $rate * $request->qty,
+        ]);
     }
     public function getDayBookDetailed(Request $request)
     {

@@ -32,24 +32,28 @@
                                     <table class="tblMedicine table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th width='30%'>Product</th>
+                                                <th width='20%'>Product</th>
                                                 <th>Batch No.</th>
                                                 <th>Dosage</th>
                                                 <th>Duration</th>
                                                 <th>Qty</th>
-                                                <th>Price</th>
+                                                <th>MRP/Qty</th>
                                                 <th>Discount</th>
                                                 <th>Tax%</th>
                                                 <th>Tax Amount</th>
+                                                <th>Price/Qty</th>
                                                 <th>Total</th>
                                                 <th>Remove</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @php use App\Http\Controllers\HelperController; @endphp
+                                            @php
+                                            use App\Http\Controllers\HelperController;
+                                            @endphp
                                             @foreach($medicines as $medicine)
                                             @php
-                                            $bnos = HelperController::getProductForTransferForEdit($medicine->medicine, Session::get('branch'));
+                                            /*$bnos = HelperController::getProductForTransferForEdit($medicine->medicine, Session::get('branch'));*/
+                                            $bnos = Helper::getStock($medicine->medicine, Session::get('branch'), $medicine->qty);
                                             @endphp
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}" />
                                             <input type='hidden' name='eye[]' value="{{ $medicine->eye }}" />
@@ -66,9 +70,8 @@
                                                 <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'>
                                                         <option value="">Select</option>
                                                         @forelse($bnos as $key => $bno)
-                                                        <option value="{{ $bno->batch_number }}" {{ $medicine->batch_number == $bno->batch_number ? 'selected' : '' }}>{{ $bno->batch_number .' ('.$bno->balance_qty.' Qty in Hand)' }}</option>
+                                                        <option value="{{ $bno->batch_number }}" {{ $medicine->batch_number == $bno->batch_number ? 'selected' : '' }} data-qty="{{ $bno->balance_qty }}">{{ $bno->batch_number .' ('.$bno->balance_qty.' Qty in Hand)' }}</option>
                                                         @empty
-                                                        <option value="{{ $medicine->batch_number }}">{{ $medicine->batch_number }}</option>
                                                         @endforelse
                                                     </select></td>
                                                 <!--<td>
@@ -84,16 +87,19 @@
                                                     <input type="number" class="form-control form-control-md text-right qty" placeholder="0" name="qty[]" value="{{ $medicine->qty }}" required='required' />
                                                 </td>
                                                 <td>
+                                                    <input type="number" class="form-control form-control-md text-right mrp" placeholder="0" name="mrp[]" step="any" value="{{ $medicine->mrp }}" required='required' />
+                                                </td>
+                                                <td>
+                                                    <input type="number" step="any" class="form-control form-control-md text-right disc" placeholder="0" name="discount[]" value="{{ $medicine->discount }}" />
+                                                </td>
+                                                <td>
+                                                    <input type="number" step="any" class="form-control form-control-md text-right taxp" placeholder="0" name="tax_percentage[]" value="{{ $medicine->tax_percentage }}" />
+                                                </td>
+                                                <td>
+                                                    <input type="number" step="any" class="form-control form-control-md text-right taxa" placeholder="0" name="tax_amount[]" value="{{ $medicine->tax_amount }}" required='required' />
+                                                </td>
+                                                <td>
                                                     <input type="number" class="form-control form-control-md text-right price" placeholder="0" name="price[]" step="any" value="{{ $medicine->price }}" required='required' />
-                                                </td>
-                                                <td>
-                                                    <input type="number" step="any" class="form-control form-control-md text-right" placeholder="0" name="discount[]" value="{{ $medicine->discount }}" />
-                                                </td>
-                                                <td>
-                                                    <input type="number" step="any" class="form-control form-control-md text-right" placeholder="0" name="tax_percentage[]" value="{{ $medicine->tax_percentage }}" />
-                                                </td>
-                                                <td>
-                                                    <input type="number" step="any" class="form-control form-control-md text-right" placeholder="0" name="tax_amount[]" value="{{ $medicine->tax_amount }}" required='required' />
                                                 </td>
                                                 <td>
                                                     <input type="number" step="any" class="form-control form-control-md text-right total" placeholder="0" name="total[]" value="{{ $medicine->total }}" required='required' />
@@ -106,7 +112,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="9" class="text-right">Total</td>
+                                                <td colspan="10" class="text-right">Total</td>
                                                 <td class="text-right fw-bold gtot">{{ number_format($medicines->sum('total'), 2) }}</td>
                                             </tr>
                                         </tfoot>

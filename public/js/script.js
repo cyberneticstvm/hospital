@@ -114,17 +114,28 @@ $(function () {
         bindDDL('medicine', 'selProduct');
     });
 
-    $(".addPurchaseRow").click(function () {
+    /*$(".addPurchaseRow").click(function () {
         $(".purchaseRow").append("<div class='row mt-3'><div class='col-sm-2'><select class='form-control form-control-md show-tick ms select2 selProductForPurchase' data-placeholder='Select' name='product[]' required='required'><option value=''>Select</option></select></div><div class='col-sm-2'><input type='text' name='batch_number[]' class='form-control form-control-md bno' placeholder='Batch Number' required='required'></div><div class='col-sm-2'><input type='date' name='expiry_date[]' class='form-control form-control-md' placeholder='dd/mm/yyyy' required='required'></div><div class='col-sm-1'><input type='number' name='qty[]' class='form-control form-control-md calcTot qty' placeholder='0' required='required'></div><div class='col-sm-1'><input type='number' name='purchase_price[]' step='any' class='form-control form-control-md calcTot purchasePrice' placeholder='0.00'></div><div class='col-sm-1'><input type='number' name='mrp[]' step='any' class='form-control form-control-md calcTot' placeholder='0.00' required='required'></div><div class='col-sm-1'><input type='number' name='price[]' step='any' class='form-control form-control-md calcTot' placeholder='0.00' required='required'></div><div class='col-sm-1'><input type='number' name='adjustment[]' step='any' class='form-control form-control-md adjust calcTot' placeholder='0.00'></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove();'><i class='fa fa-trash text-danger calcTot'></i></a></div></div>");
         $('.selProductForPurchase').select2();
         bindDDL('medicine', 'selProductForPurchase');
+    });*/
+    $(".addPurchaseRow").click(function () {
+        $(".purchaseRow").append(`<tr><td><select class='form-control form-control-md show-tick ms select2 selProductForPurchase' data-placeholder='Select' name='product[]' required='required'><option value=''>Select</option></select></td><td><input type='number' name='qty[]' class='form-control form-control-md calcTot qty' placeholder='0' required='required'></td><td><input type='text' name='batch_number[]' class='form-control form-control-md bno' placeholder='Batch' required='required'></td><td><input type='date' name='expiry_date[]' class='form-control form-control-md' required='required'></td><td><input type='number' name='purchase_price[]' step='any' class='form-control form-control-md calcTot purchasePrice' placeholder='0.00'></td><td><input type='number' name='price[]' step='any' class='form-control form-control-md calcTot' placeholder='0.00' required='required'></td><td><input type='number' name='mrp[]' step='any' class='form-control form-control-md calcTot' placeholder='0.00' required='required'></td><td><input type='number' name='discount[]' min='' max='' step='any' class='form-control form-control-md calcTot' placeholder='0.00'></td><td><input type='number' name='adjustment[]' step='any' class='form-control form-control-md adjust calcTot' placeholder='0.00'></td><td><a href='javascript:void(0)' onClick='$(this).parent().parent().remove();'><i class='fa fa-trash text-danger calcTot'></i></a></td></tr>`);
+        bindDDL('medicine', 'selProductForPurchase');
     });
 
-    $(".addStockTransferRow").click(function () {
-        $(".stockTransferRow").append("<div class='row mt-3'><div class='col-sm-5'><select class='form-control form-control-md show-tick ms select2 selProductForTransfer' data-placeholder='Select' name='product[]' required='required'></select></div><div class='col-sm-3'><select name='batch_number[]' class='form-control form-control-md bno' required='required'><option value=''>Select</option></select></div><div class='col-sm-1'><input type='number' name='qty[]' class='form-control form-control-md' placeholder='0' required='required'></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger '></i></a></div></div>");
+    $(".addProductTransferRow").click(function(){
+        let rand = Math.floor(Math.random() * 100) + 1;
+        $(".ProductTransferRow").append(`<tr><td><select class='form-control form-control-md show-tick ms select2 selProductForTransfer' data-placeholder='Select' name='product[]' id='${rand}' required='required'></select></td><td><select name='batch_number[]' class='form-control form-control-md bno' required='required'><option value=''>Select</option></select></td><td><input type='number' name='qty[]' class='form-control form-control-md qty' placeholder='0' required='required'></td><td><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger '></i></a></td></tr>`);
         $('.selProductForTransfer').select2();
         bindDDL('medicine', 'selProductForTransfer');
     });
+
+    /*$(".addStockTransferRow").click(function () {
+        $(".stockTransferRow").append("<div class='row mt-3'><div class='col-sm-5'><select class='form-control form-control-md show-tick ms select2 selProductForTransfer' data-placeholder='Select' name='product[]' required='required'></select></div><div class='col-sm-3'><select name='batch_number[]' class='form-control form-control-md bno' required='required'><option value=''>Select</option></select></div><div class='col-sm-1'><input type='number' name='qty[]' class='form-control form-control-md' placeholder='0' required='required'></div><div class='col-sm-1'><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger '></i></a></div></div>");
+        $('.selProductForTransfer').select2();
+        bindDDL('medicine', 'selProductForTransfer');
+    });*/
 
     $(".addLabTest").click(function () {
         var type = $(this).data('category');
@@ -151,7 +162,7 @@ $(function () {
         bindDDL('medicine', 'selProductForTransfer');
     });
 
-    $(document).on("change", ".selProductForTransfer", function () {
+    /*$(document).on("change", ".selProductForTransfer", function () {
         var batch = $(this).parent().parent().find(".bno");
         var branch = $(".selFromBranch").val();
         var product = $(this).val();
@@ -168,6 +179,32 @@ $(function () {
             }
         });
         return false;
+    });*/
+
+    $(document).on("change", ".selProductForTransfer", function () {
+        var batch = $(this).parent().parent().find(".bno");
+        var branch = $(".selFromBranch").val();
+        var product = $(this).val();
+        var qty = $(this).parent().parent().find(".qty");
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/batch/',
+            data: { 'product': product, 'branch': branch,  'qty': qty.val()},
+            success: function (data) {
+                batch.html(data);
+                batch.select2();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest);
+            }
+        });
+        return false;
+    });
+
+    $(document).on("change", ".bno", function(){
+        let dis = $(this);
+        let qty = dis.find('option:selected').data('qty');
+        dis.parent().parent().find(".qty").attr('max', qty)
     });
 
     $(".vEModal").click(function () {
@@ -307,15 +344,23 @@ $(function () {
         var pdct = $(this).parent().parent().find(".selProductForTransfer").val();
         var price = $(this).parent().parent().find(".price");
         var total = $(this).parent().parent().find(".total");
+        var taxp = $(this).parent().parent().find(".taxp");
+        var taxa = $(this).parent().parent().find(".taxa");
+        var disc = $(this).parent().parent().find(".disc");
+        var mrp = $(this).parent().parent().find(".mrp");
         var qty = parseInt($(this).parent().parent().find(".qty").val());
         $.ajax({
             type: 'GET',
             url: '/helper/getPdctPrice/',
-            data: { 'product': pdct, 'batch_number': bno },
+            dataType: 'json',
+            data: { 'product': pdct, 'batch_number': bno, 'qty': qty },
             success: function (response) {
-                var cost = parseFloat(response).toFixed(2);
-                price.val(response);
-                total.val(cost * qty);
+                mrp.val(parseFloat(response.mrp).toFixed(2));
+                taxp.val(parseInt(response.taxp));
+                price.val(parseFloat(response.price).toFixed(2));
+                disc.val(parseFloat(response.discount).toFixed(2));
+                taxa.val(parseFloat(response.taxa).toFixed(2));
+                total.val(parseFloat(response.total).toFixed(2));
                 calculateTotal();
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -327,8 +372,15 @@ $(function () {
     $(document).on("blur", ".qty", function () {
         var qty = parseInt($(this).val());
         var total = $(this).parent().parent().find(".total");
+        var discount = $(this).parent().parent().find(".disc");
+        var disc = discount.val();
+        var taxa = $(this).parent().parent().find(".taxa");
+        var taxamout = taxa.val();
         var price = parseFloat($(this).parent().parent().find(".price").val());
-        total.val(qty * price);
+        var tax = parseFloat($(this).parent().parent().find(".taxa").val());
+        total.val(parseFloat(qty * (price+tax)).toFixed(2));
+        discount.val(parseFloat(disc * qty).toFixed(2));
+        taxa.val(parseFloat(taxamout * qty).toFixed(2));
         calculateTotal();
     })
 
@@ -440,6 +492,14 @@ function bindDDL(type, ddl) {
         });
         $('.' + ddl).select2({ data: xdata });
     });
+}
+
+function bindDDL1(data, ddl){
+    xdata = $.map(data, function (obj) {
+        obj.text = obj.name || obj.id;
+        return obj;
+    });
+    $('.' + ddl).select2({ data: xdata });
 }
 
 function convertToDate(date) {

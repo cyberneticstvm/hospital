@@ -7,8 +7,12 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\ProductTransfer;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Helper\Helper;
+use App\Models\Branch;
+use App\Models\Product;
+use App\Models\ProductTransferDetail;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -33,10 +37,12 @@ class ProductTransferController extends Controller
      */
     public function index()
     {
-        $transfers = DB::table('product_transfers AS t')->leftJoin('branches AS b', 't.from_branch', '=', 'b.id')->leftJoin('branches AS b1', 't.to_branch', '=', 'b1.id')->where('t.from_branch', 0)->when(!in_array(Auth::user()->roles->first()->name, ['Admin']), function ($q) {
+        /*$transfers = DB::table('product_transfers AS t')->leftJoin('branches AS b', 't.from_branch', '=', 'b.id')->leftJoin('branches AS b1', 't.to_branch', '=', 'b1.id')->where('t.from_branch', 0)->when(!in_array(Auth::user()->roles->first()->name, ['Admin']), function ($q) {
             return $q->where('t.from_branch', Session::get('branch'));
         })->select('t.id', 't.transfer_note AS tnote', DB::raw("CASE WHEN t.from_branch = 0 THEN 'Main Stock' ELSE b.branch_name END AS from_branch"), DB::raw("CASE WHEN t.to_branch = 0 THEN 'Main Stock' ELSE b1.branch_name END AS to_branch"), 't.transfer_date AS tdate')->orderBy('t.transfer_date', 'DESC')->get();
-        return view('product-transfer.index', compact('transfers'));
+        return view('product-transfer.index', compact('transfers'));*/
+        $transfers = ProductTransfer::withTrashed()->latest()->get();
+        return view('pharmacy.stock.transfer.index', compact('transfers'));
     }
 
     /**
@@ -46,9 +52,9 @@ class ProductTransferController extends Controller
      */
     public function create()
     {
-        $products = DB::table('products')->get();
-        $branches = DB::table('branches')->get();
-        return view('product-transfer.create', compact('products', 'branches'));
+        $products = Product::pluck('product_name', 'id');
+        $branches = Branch::orderBy('branch_name')->get();
+        return view('pharmacy.stock.transfer.create', compact('products', 'branches'));
     }
 
     /**
@@ -59,7 +65,7 @@ class ProductTransferController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
             'from_branch' => 'required',
             'to_branch' => 'required',
             'transfer_date' => 'required',
@@ -80,14 +86,36 @@ class ProductTransferController extends Controller
                 endif;
             endfor;
         endif;
-        return redirect()->route('product-transfer.index')->with('success', 'Product Transferred successfully');
-        /*$available_qty = Helper::getAvailableStock($request->product, $request->batch_number, $request->from_branch);
-        if($available_qty >= $request->qty):
-            $transfer = ProductTransfer::create($input);
-            return redirect()->route('product-transfer.index')->with('success','Product Transferred successfully');
-        else:
-            return redirect("/product-transfer/create/")->withErrors('Insufficient Quantity');
-        endif;*/
+        return redirect()->route('product-transfer.index')->with('success', 'Product Transferred successfully');*/
+        $this->validate($request, [
+            'from_branch' => 'required',
+            'to_branch' => 'required',
+            'transfer_date' => 'required|date',
+            'product' => 'required',
+            'batch_number' => 'required',
+            'qty' => 'required',
+        ]);
+        try {
+            $inputs = $request->except(array('product', 'batch_number', 'qty'));
+            DB::transaction(function () use ($request, $inputs) {
+                $transfer = ProductTransfer::create($inputs);
+                $data = [];
+                foreach ($request->product as $key => $item):
+                    $data[] = [
+                        'transfer_id' => $transfer->id,
+                        'product' => $item,
+                        'batch_number' => $request->batch_number[$key],
+                        'qty' => $request->qty[$key],
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+                ProductTransferDetail::insert($data);
+            });
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
+        return redirect()->route('product-transfer.index')->with('success', 'Transfer recorded successfully');
     }
 
     /**
@@ -134,11 +162,15 @@ class ProductTransferController extends Controller
      */
     public function edit($id)
     {
-        $transfer = ProductTransfer::find($id);
+        /*$transfer = ProductTransfer::find($id);
         $branches = DB::table('branches')->get();
         $products = DB::table('products')->get();
         $transfer_details = DB::table('product_transfer_details')->where('transfer_id', $transfer->id)->get();
-        return view('product-transfer.edit', compact('transfer', 'branches', 'products', 'transfer_details'));
+        return view('product-transfer.edit', compact('transfer', 'branches', 'products', 'transfer_details'));*/
+        $transfer = ProductTransfer::find(decrypt($id));
+        $products = Product::pluck('product_name', 'id');
+        $branches = Branch::orderBy('branch_name')->get();
+        return view('pharmacy.stock.transfer.edit', compact('transfer', 'products', 'branches'));
     }
 
     /**
@@ -150,7 +182,7 @@ class ProductTransferController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
             'from_branch' => 'required',
             'to_branch' => 'required',
             'transfer_date' => 'required',
@@ -176,14 +208,38 @@ class ProductTransferController extends Controller
                 endif;
             endfor;
         endif;
-        return redirect()->route('product-transfer.index')->with('success', 'Product Transfer Updated successfully');
-        /*$available_qty = Helper::getAvailableStock($request->product, $request->batch_number, $request->from_branch);
-        if($available_qty >= $request->qty):
-            $transfer = ProductTransfer::create($input);
-            return redirect()->route('product-transfer.index')->with('success','Product Transfer Updated successfully');
-        else:
-            return redirect("/product-transfer/edit/".$id)->withErrors('Insufficient Quantity');
-        endif;*/
+        return redirect()->route('product-transfer.index')->with('success', 'Product Transfer Updated successfully');*/
+        $this->validate($request, [
+            'from_branch' => 'required',
+            'to_branch' => 'required',
+            'transfer_date' => 'required|date',
+            'product' => 'required',
+            'batch_number' => 'required',
+            'qty' => 'required',
+        ]);
+        try {
+            $inputs = $request->except(array('product', 'batch_number', 'qty'));
+            DB::transaction(function () use ($request, $inputs, $id) {
+                $transfer = ProductTransfer::findOrFail(decrypt($id));
+                $transfer->update($inputs);
+                $data = [];
+                foreach ($request->product as $key => $item):
+                    $data[] = [
+                        'transfer_id' => $transfer->id,
+                        'product' => $item,
+                        'batch_number' => $request->batch_number[$key],
+                        'qty' => $request->qty[$key],
+                        'created_at' => $transfer->created_at,
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+                ProductTransferDetail::where('transfer_id', $transfer->id)->delete();
+                ProductTransferDetail::insert($data);
+            });
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
+        return redirect()->route('product-transfer.index')->with('success', 'Transfer updated successfully');
     }
 
     /**
@@ -194,9 +250,9 @@ class ProductTransferController extends Controller
      */
     public function destroy($id)
     {
-        ProductTransfer::find($id)->delete();
+        ProductTransfer::find(decrypt($id))->delete();
         return redirect()->route('product-transfer.index')
-            ->with('success', 'Record deleted successfully');
+            ->with('success', 'Transfer record deleted successfully');
     }
 
     public function pendingRegister()

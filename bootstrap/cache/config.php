@@ -193,7 +193,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\storage\\framework/cache/data',
+        'path' => 'D:\\InstalledApps\\laragon\\www\\hospital\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -276,7 +276,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'db_speczone_hospital',
+        'database' => 'db_devi_hospital',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -286,12 +286,12 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'db_speczone_hospital',
+        'database' => 'db_devi_hospital',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
-        'charset' => 'utf8',
-        'collation' => 'utf8_unicode_ci',
+        'charset' => 'utf8mb4',
+        'collation' => 'utf8mb4_unicode_ci',
         'prefix' => '',
         'prefix_indexes' => true,
         'strict' => false,
@@ -306,7 +306,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'db_speczone_hospital',
+        'database' => 'db_devi_hospital',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -321,7 +321,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'db_speczone_hospital',
+        'database' => 'db_devi_hospital',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -363,10 +363,10 @@
     'convert_entities' => true,
     'defines' => 
     array (
-      'font_dir' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\storage\\fonts',
-      'font_cache' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\storage\\fonts',
-      'temp_dir' => 'C:\\Users\\vijoy\\AppData\\Local\\Temp',
-      'chroot' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital',
+      'font_dir' => 'D:\\InstalledApps\\laragon\\www\\hospital\\storage\\fonts',
+      'font_cache' => 'D:\\InstalledApps\\laragon\\www\\hospital\\storage\\fonts',
+      'temp_dir' => 'C:\\Users\\Lenovo\\AppData\\Local\\Temp',
+      'chroot' => 'D:\\InstalledApps\\laragon\\www\\hospital',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
@@ -388,12 +388,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\storage\\app',
+        'root' => 'D:\\InstalledApps\\laragon\\www\\hospital\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\storage\\app/public',
+        'root' => 'D:\\InstalledApps\\laragon\\www\\hospital\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -411,7 +411,7 @@
     ),
     'links' => 
     array (
-      'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\public\\storage' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\storage\\app/public',
+      'D:\\InstalledApps\\laragon\\www\\hospital\\public\\storage' => 'D:\\InstalledApps\\laragon\\www\\hospital\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -446,13 +446,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\storage\\logs/laravel.log',
+        'path' => 'D:\\InstalledApps\\laragon\\www\\hospital\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\storage\\logs/laravel.log',
+        'path' => 'D:\\InstalledApps\\laragon\\www\\hospital\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -504,7 +504,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\storage\\logs/laravel.log',
+        'path' => 'D:\\InstalledApps\\laragon\\www\\hospital\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -569,7 +569,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\resources\\views/vendor/mail',
+        0 => 'D:\\InstalledApps\\laragon\\www\\hospital\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -747,7 +747,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\storage\\framework/sessions',
+    'files' => 'D:\\InstalledApps\\laragon\\www\\hospital\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -767,9 +767,9 @@
   array (
     'paths' => 
     array (
-      0 => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\resources\\views',
+      0 => 'D:\\InstalledApps\\laragon\\www\\hospital\\resources\\views',
     ),
-    'compiled' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital\\storage\\framework\\views',
+    'compiled' => 'D:\\InstalledApps\\laragon\\www\\hospital\\storage\\framework\\views',
   ),
   'flare' => 
   array (
@@ -844,7 +844,7 @@
     array (
     ),
     'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => 'D:\\InstalledApps\\xampp\\htdocs\\projects\\laravel\\hospital',
+    'remote_sites_path' => 'D:\\InstalledApps\\laragon\\www\\hospital',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',

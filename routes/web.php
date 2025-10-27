@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AxialLengthController;
@@ -303,7 +304,7 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::get('/purchase/create/', 'App\Http\Controllers\PurchaseController@create')->name('purchase.create');
     Route::post('/purchase/create/', 'App\Http\Controllers\PurchaseController@store')->name('purchase.save');
     Route::get('/purchase/edit/{id}/', 'App\Http\Controllers\PurchaseController@edit')->name('purchase.edit');
-    Route::put('/purchase/edit/{id}/', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update');
+    Route::post('/purchase/update/{id}/', 'App\Http\Controllers\PurchaseController@update')->name('purchase.update');
     Route::delete('/purchase/delete/{id}/', 'App\Http\Controllers\PurchaseController@destroy')->name('purchase.delete');
     // End purchase //
 
@@ -312,7 +313,7 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::get('/product-transfer/create/', 'App\Http\Controllers\ProductTransferController@create')->name('product-transfer.create');
     Route::post('/product-transfer/create/', 'App\Http\Controllers\ProductTransferController@store')->name('product-transfer.save');
     Route::get('/product-transfer/edit/{id}/', 'App\Http\Controllers\ProductTransferController@edit')->name('product-transfer.edit');
-    Route::put('/product-transfer/edit/{id}/', 'App\Http\Controllers\ProductTransferController@update')->name('product-transfer.update');
+    Route::post('/product-transfer/edit/{id}/', 'App\Http\Controllers\ProductTransferController@update')->name('product-transfer.update');
     Route::delete('/product-transfer/delete/{id}/', 'App\Http\Controllers\ProductTransferController@destroy')->name('product-transfer.delete');
     Route::get('/stock-in-hand/', 'App\Http\Controllers\ProductTransferController@show')->name('stock-in-hand.show');
     Route::post('/stock-in-hand/', 'App\Http\Controllers\ProductTransferController@fetch')->name('stock-in-hand.fetch');
@@ -748,6 +749,10 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::post('/helper/iolpower/', [HelperController::class, 'calculateIolPower'])->name('iol.power.calculate');
     // End Helper //
 
+    // Ajax //
+
+    Route::get('/ajax/batch/', [AjaxController::class, 'getBatch']);
+
     // PDFs //
     Route::get('/patient-history/{id}/', [PDFController::class, 'patienthistory'])->name('patienthistory');
     Route::get('/generate-token/{id}/', [PDFController::class, 'token']);
@@ -847,4 +852,9 @@ Route::prefix('wa')->controller(PdfController::class)->group(function () {
     Route::get('/emr/{id}', 'medicalrecord')->name('emr.wa');
     Route::get('/patienthistory/{id}', 'patienthistory')->name('patient.history.wa');
     Route::get('/prescription/{id}', 'spectacleprescription')->name('spectacle.wa');
+});
+
+Route::prefix('stock')->controller(HelperController::class)->group(function () {
+    Route::get('/status', 'getStockStatus')->name('stock.status');
+    Route::post('/status', 'getStockStatusUpdate')->name('stock.status.update');
 });

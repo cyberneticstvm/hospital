@@ -2,24 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
+use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\Models\Purchase;
+use App\Models\PurchaseDetail;
+use App\Models\Supplier;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class PurchaseController extends Controller
 {
     private $branch;
-    
+
     function __construct()
     {
-         $this->middleware('permission:purchase-list|purchase-create|purchase-edit|purchase-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:purchase-create', ['only' => ['create','store']]);
-         $this->middleware('permission:purchase-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:purchase-delete', ['only' => ['destroy']]);
-         $this->branch = session()->get('branch');
+        $this->middleware('permission:purchase-list|purchase-create|purchase-edit|purchase-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:purchase-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:purchase-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:purchase-delete', ['only' => ['destroy']]);
+        $this->branch = session()->get('branch');
     }
     /**
      * Display a listing of the resource.
@@ -28,8 +32,10 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        $purchases = Purchase::leftJoin('suppliers as s', 'purchases.supplier', '=', 's.id')->select('purchases.id', 'purchases.invoice_number', 'purchases.order_date', 'purchases.delivery_date', 's.name')->orderBy('purchases.created_at','DESC')->get();
-        return view('purchase.index', compact('purchases'));
+        /*$purchases = Purchase::leftJoin('suppliers as s', 'purchases.supplier', '=', 's.id')->select('purchases.id', 'purchases.invoice_number', 'purchases.order_date', 'purchases.delivery_date', 's.name')->orderBy('purchases.created_at','DESC')->get();
+        return view('purchase.index', compact('purchases'));*/
+        $purchases = Purchase::withTrashed()->latest()->get();
+        return view('pharmacy.stock.purchase.index', compact('purchases'));
     }
 
     /**
@@ -39,9 +45,13 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        $products = DB::table('products')->get();
+        /*$products = DB::table('products')->get();
         $suppliers = DB::table('suppliers')->get();
-        return view('purchase.create', compact('products', 'suppliers'));
+        return view('purchase.create', compact('products', 'suppliers'));*/
+        $products = Product::pluck('product_name', 'id');
+        $suppliers = Supplier::pluck('name', 'id');
+        $branches = Branch::where('id', $this->branch)->pluck('branch_name', 'id');
+        return view('pharmacy.stock.purchase.create', compact('products', 'suppliers', 'branches'));
     }
 
     /**
@@ -52,7 +62,7 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
             'product' => 'required',
             'supplier' => 'required',
             'qty' => 'required',
@@ -62,14 +72,14 @@ class PurchaseController extends Controller
         $input['order_date'] = (!empty($request->order_date)) ? Carbon::createFromFormat('d/M/Y', $input['order_date'])->format('Y-m-d') : NULL;
         $input['delivery_date'] = (!empty($request->delivery_date)) ? Carbon::createFromFormat('d/M/Y', $input['delivery_date'])->format('Y-m-d') : NULL;
         $input['created_by'] = $request->user()->id;
-        try{
-            DB::transaction(function() use ($input) {
+        try {
+            DB::transaction(function () use ($input) {
                 $purchase = Purchase::create($input);
-                if($input['product']):
-                    for($i=0; $i<count($input['product']); $i++):
-                        if($input['product'][$i] > 0):
-                            $tot = ($input['purchase_price'][$i] > 0 ) ? $input['qty'][$i]*$input['purchase_price'][$i] : 0.00;
-                            $tot = $tot+$input['adjustment'][$i];
+                if ($input['product']):
+                    for ($i = 0; $i < count($input['product']); $i++):
+                        if ($input['product'][$i] > 0):
+                            $tot = ($input['purchase_price'][$i] > 0) ? $input['qty'][$i] * $input['purchase_price'][$i] : 0.00;
+                            $tot = $tot + $input['adjustment'][$i];
                             $data[] = [
                                 'purchase_id' => $purchase->id,
                                 'product' => $input['product'][$i],
@@ -87,13 +97,60 @@ class PurchaseController extends Controller
                             ];
                         endif;
                     endfor;
-                    DB::table('purchase_details')->insert($data);            
+                    DB::table('purchase_details')->insert($data);
                 endif;
             });
-        }catch(Exception $e){
+        } catch (Exception $e) {
             throw $e;
-        }        
-        return redirect()->route('purchase.index')->with('success','Purchase recorded successfully');
+        }
+        return redirect()->route('purchase.index')->with('success', 'Purchase recorded successfully');*/
+        $this->validate($request, [
+            'product' => 'required',
+            'supplier' => 'required',
+            'invoice_number' => 'required',
+            'order_date' => 'required|date',
+            'delivery_date' => 'required|date',
+            'branch_id' => 'required',
+            'qty' => 'required',
+            'price' => 'required',
+            'batch_number' => 'required',
+            'purchase_price' => 'required',
+            'mrp' => 'required',
+        ]);
+        try {
+            $inputs = $request->only(array('_token', 'order_date', 'delivery_date', 'branch_id', 'supplier', 'invoice_number', 'notes'));
+            DB::transaction(function () use ($request, $inputs) {
+                $purchase = Purchase::create($inputs);
+                $data = [];
+                foreach ($request->product as $key => $item):
+                    $product = Product::findOrFail($item);
+                    $tax_amount = (((float)$request->purchase_price[$key] - (float)$request->discount[$key]) * $product->category->tax_percentage) / 100;
+                    $data[] = [
+                        'purchase_id' => $purchase->id,
+                        'product' => $product->id,
+                        'batch_number' => $request->batch_number[$key],
+                        'expiry_date' => $request->expiry_date[$key],
+                        'qty' => $request->qty[$key],
+                        'purchase_price' => $request->purchase_price[$key],
+                        'price' => $request->price[$key],
+                        'mrp' => $request->mrp[$key],
+                        'discount' => $request->discount[$key],
+                        'adjustment' => $request->adjustment[$key],
+                        'tax_percentage' => $product->category->tax_percentage,
+                        'tax_amount' => $tax_amount,
+                        'total' => ($request->purchase_price[$key] - (float)$request->discount[$key]) + $tax_amount,
+                        'selling_price' => $request->price[$key] / $request->qty[$key], // per qty
+                        'mrp_qty' => $request->mrp[$key] / $request->qty[$key], // per qty
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+                PurchaseDetail::insert($data);
+            });
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
+        return redirect()->route('purchase.index')->with('success', 'Purchase recorded successfully');
     }
 
     /**
@@ -115,11 +172,11 @@ class PurchaseController extends Controller
      */
     public function edit($id)
     {
-        $products = DB::table('products')->get();
-        $suppliers = DB::table('suppliers')->get();
-        $purchase = Purchase::find($id);
-        $purchase_details = DB::table('purchase_details')->where('purchase_id', '=', $id)->get();
-        return view('purchase.edit', compact('products', 'suppliers', 'purchase', 'purchase_details'));
+        $products = Product::pluck('product_name', 'id');
+        $suppliers = Supplier::pluck('name', 'id');
+        $branches = Branch::where('id', $this->branch)->pluck('branch_name', 'id');
+        $purchase = Purchase::findorFail(decrypt($id));
+        return view('pharmacy.stock.purchase.edit', compact('products', 'suppliers', 'branches', 'purchase'));
     }
 
     /**
@@ -131,25 +188,26 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
             'product' => 'required',
             'supplier' => 'required',
             'qty' => 'required',
             'price' => 'required',
         ]);
+        $id = decrypt($id);
         $input = $request->all();
         $input['order_date'] = (!empty($request->order_date)) ? Carbon::createFromFormat('d/M/Y', $input['order_date'])->format('Y-m-d') : NULL;
         $input['delivery_date'] = (!empty($request->delivery_date)) ? Carbon::createFromFormat('d/M/Y', $input['delivery_date'])->format('Y-m-d') : NULL;
         $purchase = Purchase::find($id);
         $input['created_by'] = $purchase->getOriginal('created_by');
-        DB::transaction(function() use ($input, $purchase, $id) {
+        DB::transaction(function () use ($input, $purchase, $id) {
             $purchase->update($input);
             DB::table("purchase_details")->where('purchase_id', $purchase->id)->delete();
-            if($input['product']):
-                for($i=0; $i<count($input['product']); $i++):
-                    if($input['product'][$i] > 0):
-                        $tot = ($input['purchase_price'][$i] > 0 ) ? $input['qty'][$i]*$input['purchase_price'][$i] : 0.00;
-                        $tot = $tot+$input['adjustment'][$i];
+            if ($input['product']):
+                for ($i = 0; $i < count($input['product']); $i++):
+                    if ($input['product'][$i] > 0):
+                        $tot = ($input['purchase_price'][$i] > 0) ? $input['qty'][$i] * $input['purchase_price'][$i] : 0.00;
+                        $tot = $tot + $input['adjustment'][$i];
                         $data[] = [
                             'purchase_id' => $purchase->id,
                             'product' => $input['product'][$i],
@@ -170,8 +228,57 @@ class PurchaseController extends Controller
                 DB::table('purchase_details')->insert($data);
             endif;
         });
-        
-        return redirect()->route('purchase.index')->with('success','Purchase record updated successfully');
+
+        return redirect()->route('purchase.index')->with('success', 'Purchase record updated successfully');*/
+        $this->validate($request, [
+            'product' => 'required',
+            'supplier' => 'required',
+            'invoice_number' => 'required',
+            'order_date' => 'required|date',
+            'delivery_date' => 'required|date',
+            'branch_id' => 'required',
+            'qty' => 'required',
+            'price' => 'required',
+            'batch_number' => 'required',
+            'purchase_price' => 'required',
+            'mrp' => 'required',
+        ]);
+        try {
+            $inputs = $request->only(array('_token', 'order_date', 'delivery_date', 'branch_id', 'supplier', 'invoice_number', 'notes'));
+            DB::transaction(function () use ($request, $inputs, $id) {
+                $purchase = Purchase::findOrFail(decrypt($id));
+                $purchase->update($inputs);
+                $data = [];
+                foreach ($request->product as $key => $item):
+                    $product = Product::findOrFail($item);
+                    $tax_amount = (((float)$request->purchase_price[$key] - (float)$request->discount[$key]) * $product->category->tax_percentage) / 100;
+                    $data[] = [
+                        'purchase_id' => $purchase->id,
+                        'product' => $product->id,
+                        'batch_number' => $request->batch_number[$key],
+                        'expiry_date' => $request->expiry_date[$key],
+                        'qty' => $request->qty[$key],
+                        'purchase_price' => $request->purchase_price[$key],
+                        'price' => $request->price[$key],
+                        'mrp' => $request->mrp[$key],
+                        'discount' => $request->discount[$key],
+                        'adjustment' => $request->adjustment[$key],
+                        'tax_percentage' => $product->category->tax_percentage,
+                        'tax_amount' => $tax_amount,
+                        'total' => ($request->purchase_price[$key] - (float)$request->discount[$key]) + $tax_amount,
+                        'selling_price' => $request->price[$key] / $request->qty[$key], // per qty
+                        'mrp_qty' => $request->mrp[$key] / $request->qty[$key], // per qty
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+                PurchaseDetail::where('purchase_id', $purchase->id)->delete();
+                PurchaseDetail::insert($data);
+            });
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
+        return redirect()->route('purchase.index')->with('success', 'Purchase updated successfully');
     }
 
     /**
@@ -182,8 +289,8 @@ class PurchaseController extends Controller
      */
     public function destroy($id)
     {
-        Purchase::find($id)->delete();
+        Purchase::find(decrypt($id))->delete();
         return redirect()->route('purchase.index')
-                        ->with('success','Purchase record deleted successfully');
+            ->with('success', 'Purchase record deleted successfully');
     }
 }

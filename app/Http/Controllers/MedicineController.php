@@ -84,6 +84,7 @@ class MedicineController extends Controller
                         'total' => $input['total'][$i],
                         'notes' => $input['notes'][$i],
                         'status' => ($input['price'][$i] > 0) ? 1 : 0,
+                        'branch_id' => $this->branch,
                         'created_by' => $request->user()->id,
                         'created_at' => Carbon::now(),
                     ]);
@@ -154,12 +155,14 @@ class MedicineController extends Controller
                         'duration' => $input['duration'][$i],
                         'notes' => $input['notes'][$i],
                         'qty' => $input['qty'][$i],
+                        'mrp' => $input['mrp'][$i],
                         'price' => $input['price'][$i],
                         'discount' => $input['discount'][$i],
                         'tax_percentage' => $input['tax_percentage'][$i],
                         'tax_amount' => $input['tax_amount'][$i],
                         'total' => $input['total'][$i],
                         'status' => '1', //1-Billed, 0-Not Billed
+                        'branch_id' => $this->branch,
                         'updated_by' => $request->user()->id,
                         'updated_at' => Carbon::now(),
                     ]);
