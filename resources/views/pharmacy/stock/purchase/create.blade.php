@@ -74,8 +74,6 @@
                                                     <th>P. Price</th>
                                                     <th>S. Price</th>
                                                     <th>MRP</th>
-                                                    <th>Disc.</th>
-                                                    <th>Adjust</th>
                                                     <th>Remove</th>
                                                 </tr>
                                             </thead>
