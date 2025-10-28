@@ -136,7 +136,7 @@ class PurchaseController extends Controller
                         'mrp' => $request->mrp[$key], // mrp per qty
                         'tax_percentage' => $product->category->tax_percentage,
                         'tax_amount' => $tax_amount, // per qty
-                        'total' => $request->purchase_price[$key]  + $tax_amount,
+                        'total' => ($request->purchase_price[$key]  + $tax_amount) * $request->qty[$key],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
@@ -247,21 +247,19 @@ class PurchaseController extends Controller
                 $data = [];
                 foreach ($request->product as $key => $item):
                     $product = Product::findOrFail($item);
-                    $tax_amount = ((float)$request->purchase_price[$key] * $product->category->tax_percentage) / 100;
+                    $tax_amount = ((float)$request->price[$key] * $product->category->tax_percentage) / 100; // tax amount per qty
                     $data[] = [
                         'purchase_id' => $purchase->id,
                         'product' => $product->id,
                         'batch_number' => $request->batch_number[$key],
                         'expiry_date' => $request->expiry_date[$key],
                         'qty' => $request->qty[$key],
-                        'purchase_price' => $request->purchase_price[$key],
-                        'price' => $request->price[$key],
-                        'mrp' => $request->mrp[$key],
+                        'purchase_price' => $request->purchase_price[$key], // per qty
+                        'price' => $request->price[$key], // selling price per qty
+                        'mrp' => $request->mrp[$key], // mrp per qty
                         'tax_percentage' => $product->category->tax_percentage,
-                        'tax_amount' => $tax_amount,
-                        'total' => $request->purchase_price[$key] + $tax_amount,
-                        'selling_price' => $request->price[$key] / $request->qty[$key], // per qty
-                        'mrp_qty' => $request->mrp[$key] / $request->qty[$key], // per qty
+                        'tax_amount' => $tax_amount, // per qty
+                        'total' => ($request->purchase_price[$key]  + $tax_amount) * $request->qty[$key],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
