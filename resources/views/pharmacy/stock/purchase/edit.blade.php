@@ -1,7 +1,7 @@
 @extends("templates.base")
 @section("content")
 <div class="body d-flex">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="card mt-3">
@@ -74,8 +74,6 @@
                                                     <th>P. Price</th>
                                                     <th>S. Price</th>
                                                     <th>MRP</th>
-                                                    <th>Disc.</th>
-                                                    <th>Adjust</th>
                                                     <th>Remove</th>
                                                 </tr>
                                             </thead>
@@ -122,18 +120,6 @@
                                                         {{ Form::number('mrp[]', $item->mrp, ['min' => 1,  'max' => '', 'step' => '', 'class' => 'form-control form-control-md calcTot', 'placeholder' => '0.00', 'required' => 'required']) }}
                                                         @error('mrp')
                                                         <small class="text-danger">{{ $errors->first('mrp') }}</small>
-                                                        @enderror
-                                                    </td>
-                                                    <td>
-                                                        {{ Form::number('discount[]', $item->discount, ['min' => '',  'max' => '', 'step' => '', 'class' => 'form-control form-control-md calcTot', 'placeholder' => '0.00']) }}
-                                                        @error('discount')
-                                                        <small class="text-danger">{{ $errors->first('discount') }}</small>
-                                                        @enderror
-                                                    </td>
-                                                    <td>
-                                                        {{ Form::number('adjustment[]', $item->adjustment, ['min' => 0,  'max' => '', 'step' => '', 'class' => 'form-control form-control-md adjust calcTot', 'placeholder' => '0.00', 'required' => 'required']) }}
-                                                        @error('adjustment')
-                                                        <small class="text-danger">{{ $errors->first('adjustment') }}</small>
                                                         @enderror
                                                     </td>
                                                     @if($key == 0)

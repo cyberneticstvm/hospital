@@ -124,7 +124,7 @@ class PurchaseController extends Controller
                 $data = [];
                 foreach ($request->product as $key => $item):
                     $product = Product::findOrFail($item);
-                    $tax_amount = (((float)$request->purchase_price[$key] - (float)$request->discount[$key]) * $product->category->tax_percentage) / 100;
+                    $tax_amount = ((float)$request->purchase_price[$key] * $product->category->tax_percentage) / 100;
                     $data[] = [
                         'purchase_id' => $purchase->id,
                         'product' => $product->id,
@@ -134,11 +134,9 @@ class PurchaseController extends Controller
                         'purchase_price' => $request->purchase_price[$key],
                         'price' => $request->price[$key],
                         'mrp' => $request->mrp[$key],
-                        'discount' => $request->discount[$key],
-                        'adjustment' => $request->adjustment[$key],
                         'tax_percentage' => $product->category->tax_percentage,
                         'tax_amount' => $tax_amount,
-                        'total' => ($request->purchase_price[$key] - (float)$request->discount[$key]) + $tax_amount,
+                        'total' => $request->purchase_price[$key]  + $tax_amount,
                         'selling_price' => $request->price[$key] / $request->qty[$key], // per qty
                         'mrp_qty' => $request->mrp[$key] / $request->qty[$key], // per qty
                         'created_at' => Carbon::now(),
@@ -251,7 +249,7 @@ class PurchaseController extends Controller
                 $data = [];
                 foreach ($request->product as $key => $item):
                     $product = Product::findOrFail($item);
-                    $tax_amount = (((float)$request->purchase_price[$key] - (float)$request->discount[$key]) * $product->category->tax_percentage) / 100;
+                    $tax_amount = ((float)$request->purchase_price[$key] * $product->category->tax_percentage) / 100;
                     $data[] = [
                         'purchase_id' => $purchase->id,
                         'product' => $product->id,
@@ -261,11 +259,9 @@ class PurchaseController extends Controller
                         'purchase_price' => $request->purchase_price[$key],
                         'price' => $request->price[$key],
                         'mrp' => $request->mrp[$key],
-                        'discount' => $request->discount[$key],
-                        'adjustment' => $request->adjustment[$key],
                         'tax_percentage' => $product->category->tax_percentage,
                         'tax_amount' => $tax_amount,
-                        'total' => ($request->purchase_price[$key] - (float)$request->discount[$key]) + $tax_amount,
+                        'total' => $request->purchase_price[$key] + $tax_amount,
                         'selling_price' => $request->price[$key] / $request->qty[$key], // per qty
                         'mrp_qty' => $request->mrp[$key] / $request->qty[$key], // per qty
                         'created_at' => Carbon::now(),
