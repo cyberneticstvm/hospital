@@ -71,9 +71,9 @@
                                                     <th>Qty</th>
                                                     <th>Batch</th>
                                                     <th>Expiry</th>
-                                                    <th>P. Price</th>
-                                                    <th>S. Price</th>
-                                                    <th>MRP</th>
+                                                    <th>P.Price/Qty</th>
+                                                    <th>S.Price/Qty</th>
+                                                    <th>MRP/Qty</th>
                                                     <th>Remove</th>
                                                 </tr>
                                             </thead>
