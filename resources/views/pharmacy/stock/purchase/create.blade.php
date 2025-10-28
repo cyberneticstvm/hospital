@@ -14,14 +14,14 @@
                                 @csrf
                                 <div class="row g-4">
                                     <div class="col-sm-3">
-                                        <label class="form-label">Order Date<sup class="text-danger">*</sup></label>
+                                        <label class="form-label">Invoice Date<sup class="text-danger">*</sup></label>
                                         {{ Form::date('order_date', (old('order_date')) ?? date('Y-m-d'), ['class' => 'form-control']) }}
                                         @error('order_date')
                                         <small class="text-danger">{{ $errors->first('order_date') }}</small>
                                         @enderror
                                     </div>
                                     <div class="col-sm-3">
-                                        <label class="form-label">Delivery Date<sup class="text-danger">*</sup></label>
+                                        <label class="form-label">Entry Date<sup class="text-danger">*</sup></label>
                                         {{ Form::date('delivery_date', (old('delivery_date')) ?? date('Y-m-d'), ['class' => 'form-control']) }}
                                         @error('delivery_date')
                                         <small class="text-danger">{{ $errors->first('delivery_date') }}</small>
