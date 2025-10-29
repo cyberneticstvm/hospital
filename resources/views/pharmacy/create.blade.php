@@ -64,7 +64,7 @@
                                                 <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'>
                                                         <option value="">Select</option>
                                                     </select></td>
-                                                <td><input type="number" class="form-control form-control-sm text-end qty" step="any" min="1" name="qty[]" placeholder="0" required='required' /></td>
+                                                <td><input type="number" class="form-control form-control-sm text-end qty" step="any" min="1" name="qty[]" placeholder="0" value="1" required='required' /></td>
                                                 <td><input type='text' class='form-control form-control-sm' name='dosage[]' placeholder='Dosage' /></td>
                                                 <td>
                                                     <input type="text" class="form-control form-control-md" placeholder="Duration" name="duration[]" value="" />
