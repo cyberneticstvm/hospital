@@ -70,13 +70,13 @@
                                                     <input type="text" class="form-control form-control-md" placeholder="Duration" name="duration[]" value="" />
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control form-control-md text-right mrp" placeholder="0" name="mrp[]" step="any" value="{{ $medicine->mrp }}" required='required' />
+                                                    <input type="number" class="form-control form-control-md text-right mrp" placeholder="0" name="mrp[]" step="any" value="" required='required' />
                                                 </td>
                                                 <td><input type="number" class="form-control form-control-sm text-end disc" step="any" name="discount[]" placeholder="0.00" /></td>
                                                 <td><input type="number" class="form-control form-control-sm text-end taxp" step="any" name="tax[]" placeholder="0%" /></td>
                                                 <td><input type="number" class="form-control form-control-sm text-end taxa" step="any" name="tax_amount[]" placeholder="0.00" /></td>
                                                 <td>
-                                                    <input type="number" class="form-control form-control-md text-right price" placeholder="0" name="price[]" step="any" value="{{ $medicine->price }}" required='required' />
+                                                    <input type="number" class="form-control form-control-md text-right price" placeholder="0" name="price[]" step="any" value="" required='required' />
                                                 </td>
                                                 <td><input type="number" class="form-control form-control-sm text-end total" step="any" name="total[]" placeholder="0.00" required='required' /></td>
                                                 <td></td>
