@@ -84,11 +84,11 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="8" class="text-end">Total</td>
+                                                <td colspan="10" class="text-end">Total</td>
                                                 <td class="text-end fw-bold gtot">0.00</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="9" class="text-center"><a class="btn btn-info text-white addPharmacyRow">ADD MORE</a></td>
+                                                <td colspan="11" class="text-center"><a class="btn btn-info text-white addPharmacyRow">ADD MORE</a></td>
                                             </tr>
                                         </tfoot>
                                     </table>
