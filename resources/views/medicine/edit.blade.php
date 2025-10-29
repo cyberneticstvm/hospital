@@ -33,8 +33,8 @@
                                         <thead>
                                             <tr>
                                                 <th width='20%'>Product</th>
-                                                <th>Qty</th>
                                                 <th>Batch No.</th>
+                                                <th>Qty</th>
                                                 <th>Dosage</th>
                                                 <th>Duration</th>
                                                 <th>MRP/Qty</th>
