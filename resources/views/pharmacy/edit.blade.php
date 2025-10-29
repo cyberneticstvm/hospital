@@ -101,7 +101,7 @@
                                         <tfoot>
                                             <tr>
                                                 <td colspan="10" class="text-end">Total</td>
-                                                <td class="text-end fw-bold gtot">0.00</td>
+                                                <td class="text-end fw-bold gtot">{{ number_format($records->sum('total'), 2) }}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="11" class="text-center"><a class="btn btn-info text-white addPharmacyRow">ADD MORE</a></td>
