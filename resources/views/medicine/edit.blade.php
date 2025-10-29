@@ -78,13 +78,13 @@
                                                     <input type="text" class="form-control form-control-md" placeholder="Batch Number" name="batch_number[]" value="{{ $medicine->batch_number }}" />
                                                 </td>-->
                                                 <td>
+                                                    <input type="number" class="form-control form-control-md text-right qty" placeholder="0" name="qty[]" value="{{ $medicine->qty }}" required='required' />
+                                                </td>
+                                                <td>
                                                     <input type="text" class="form-control form-control-md" placeholder="Dosage" name="dosage[]" value="{{ $medicine->dosage }}" />
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control form-control-md" placeholder="Duration" name="duration[]" value="{{ $medicine->duration }}" />
-                                                </td>
-                                                <td>
-                                                    <input type="number" class="form-control form-control-md text-right qty" placeholder="0" name="qty[]" value="{{ $medicine->qty }}" required='required' />
                                                 </td>
                                                 <td>
                                                     <input type="number" class="form-control form-control-md text-right mrp" placeholder="0" name="mrp[]" step="any" value="{{ $medicine->mrp }}" required='required' />

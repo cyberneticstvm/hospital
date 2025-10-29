@@ -41,12 +41,10 @@
                                                 <th>Batch No.</th>
                                                 <th>Qty</th>
                                                 <th>Dosage</th>
-                                                <th>Duration</th>
-                                                <th>MRP/Qty</th>
+                                                <th>Price</th>
                                                 <th>Discount</th>
                                                 <th>Tax%</th>
                                                 <th>Tax Amount</th>
-                                                <th>Price/Qty</th>
                                                 <th>total</th>
                                                 <th></th>
                                             </tr>
@@ -66,18 +64,10 @@
                                                     </select></td>
                                                 <td><input type="number" class="form-control form-control-sm text-end qty" step="any" min="1" name="qty[]" placeholder="0" required='required' /></td>
                                                 <td><input type='text' class='form-control form-control-sm' name='dosage[]' placeholder='Dosage' /></td>
-                                                <td>
-                                                    <input type="text" class="form-control form-control-md" placeholder="Duration" name="duration[]" value="" />
-                                                </td>
-                                                <td>
-                                                    <input type="number" class="form-control form-control-md text-right mrp" placeholder="0" name="mrp[]" step="any" value="{{ $medicine->mrp }}" required='required' />
-                                                </td>
-                                                <td><input type="number" class="form-control form-control-sm text-end disc" step="any" name="discount[]" placeholder="0.00" /></td>
-                                                <td><input type="number" class="form-control form-control-sm text-end taxp" step="any" name="tax[]" placeholder="0%" /></td>
-                                                <td><input type="number" class="form-control form-control-sm text-end taxa" step="any" name="tax_amount[]" placeholder="0.00" /></td>
-                                                <td>
-                                                    <input type="number" class="form-control form-control-md text-right price" placeholder="0" name="price[]" step="any" value="{{ $medicine->price }}" required='required' />
-                                                </td>
+                                                <td><input type="number" class="form-control form-control-sm text-end price" step="any" name="price[]" placeholder="0.00" required='required' /></td>
+                                                <td><input type="number" class="form-control form-control-sm text-end discount" step="any" name="discount[]" placeholder="0.00" /></td>
+                                                <td><input type="number" class="form-control form-control-sm text-end tax" step="any" name="tax[]" placeholder="0%" /></td>
+                                                <td><input type="number" class="form-control form-control-sm text-end tax_amount" step="any" name="tax_amount[]" placeholder="0.00" /></td>
                                                 <td><input type="number" class="form-control form-control-sm text-end total" step="any" name="total[]" placeholder="0.00" required='required' /></td>
                                                 <td></td>
                                             </tr>
