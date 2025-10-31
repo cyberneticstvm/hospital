@@ -68,10 +68,10 @@
                                 @endphp
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $row->patient->patient_name }}</td>
-                                    <td>{{ $row->patient->patient_id }}</td>
-                                    <td>{{ $row->branchdetails->branch_name }}</td>
-                                    <td>{{ $row->doctor->doctor_name }}</td>
+                                    <td>{{ $row->patient?->patient_name }}</td>
+                                    <td>{{ $row->patient?->patient_id }}</td>
+                                    <td>{{ $row->branchdetails?->branch_name }}</td>
+                                    <td>{{ $row->doctor?->doctor_name }}</td>
                                     <td>{{ DB::table('diagnosis')->select(DB::raw("IFNULL(group_concat(diagnosis_name), 'Na') as names"))->whereIn('id', $diagnosis)->value('names'); }}</td>
                                     <td>{{ $row->created_at->format('d/M/Y') }}</td>
                                 </tr>
