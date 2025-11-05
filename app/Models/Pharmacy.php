@@ -13,6 +13,7 @@ class Pharmacy extends Model
         'patient_name',
         'medical_record_id',
         'other_info',
+        'used_for',
         'branch',
         'created_by',
         'updated_by',
