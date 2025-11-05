@@ -27,7 +27,7 @@ use App\Models\Product;
                             </div>
                         </div>
                     </div>
-                    <form method="post" action="{{ route() }}">
+                    <form method="post" action="{{ route('sales.return.save') }}">
                         @csrf
                         <input type="hidden" name="source" value="{{ $source }}" />
                         <div class="card-body table-responsive">

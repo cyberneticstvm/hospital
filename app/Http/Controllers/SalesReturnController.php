@@ -47,4 +47,9 @@ class SalesReturnController extends Controller
         }
         return view('pharmacy.stock.return.sales.list', compact('sales', 'source'));
     }
+
+    function store(Request $request)
+    {
+        //
+    }
 }

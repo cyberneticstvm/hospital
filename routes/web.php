@@ -863,4 +863,5 @@ Route::prefix('stock')->controller(HelperController::class)->group(function () {
 Route::prefix('sreturn')->controller(SalesReturnController::class)->group(function () {
     Route::get('', 'index')->name('sales.return.register');
     Route::post('', 'fetch')->name('sales.return.fetch');
+    Route::post('save', 'store')->name('sales.return.save');
 });
