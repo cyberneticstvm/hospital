@@ -39,8 +39,8 @@
                             <tbody>
                                 @forelse($sales as $key => $sale)
                                 <tr>
-                                    <td>{{ $key }}</td>
-                                    <td></td>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ Product::find($sale->product)->product_name }}</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
