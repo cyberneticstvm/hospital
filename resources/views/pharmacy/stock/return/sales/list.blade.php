@@ -1,5 +1,8 @@
 @extends("templates.base")
 @section("content")
+@php
+use App\Models\Product;
+@endphp
 <div class="body d-flex">
     <div class="container">
         <div class="row">
