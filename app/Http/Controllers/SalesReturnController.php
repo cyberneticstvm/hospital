@@ -83,6 +83,6 @@ class SalesReturnController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
-        return redirect()->route('pharmacy.stock.return.sales.sales-return')->with("success", "Return recorded successfully");
+        return redirect()->route('sales.return.register')->with("success", "Return recorded successfully");
     }
 }
