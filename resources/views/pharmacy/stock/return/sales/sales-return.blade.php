@@ -62,13 +62,15 @@
                                 <tr>
                                     <th>SL No.</th>
                                     <th>MRID</th>
+                                    <th>Notes</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($sreturns as $key => $sreturn)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td></td>
+                                    <td>{{ $sreturn->pharmacy_id }}</td>
+                                    <td>{{ $sreturn->notes }}</td>
                                 </tr>
                                 @empty
                                 @endforelse
