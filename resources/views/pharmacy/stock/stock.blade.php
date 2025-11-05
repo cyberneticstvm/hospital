@@ -55,6 +55,8 @@
                                     <th>Purchased</th>
                                     <th>Tr. In</th>
                                     <th>Tr. Out</th>
+                                    <th>SReturn</th>
+                                    <th>PReturn</th>
                                     <th>Billed</th>
                                     <th>Balance</th>
                                 </tr>
@@ -69,6 +71,8 @@
                                     <td>{{ $item->purchased_qty }}</td>
                                     <td>{{ $item->transfer_in }}</td>
                                     <td>{{ $item->transfer_out }}</td>
+                                    <td>{{ $item->sreturn }}</td>
+                                    <td></td>
                                     <td>{{ $item->billed }}</td>
                                     <td>{{ $item->balance_qty }}</td>
                                 </tr>
