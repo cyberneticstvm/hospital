@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\PatientMedicineRecord;
 use App\Models\Pharmacy;
 use App\Models\SalesReturn;
+use App\Models\SalesReturnDetail;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +54,32 @@ class SalesReturnController extends Controller
     function store(Request $request)
     {
         try {
-            DB::transaction(function () use ($request) {});
+            DB::transaction(function () use ($request) {
+                $sr = SalesReturn::create([
+                    'pharmacy_id' => $request->term,
+                    'source' => $request->source,
+                    'branch_id' => $request->branch_id,
+                    'notes' => $request->notes,
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                ]);
+                $data = [];
+                foreach ($request->product_id as $key => $item):
+                    if ($request->ret_qty[$key] > 0):
+                        $data[] = [
+                            'return_id' => $sr->id,
+                            'product_id' => $item,
+                            'batch_number' => $request->batch_number[$key],
+                            'oqty' => $request->qty[$key],
+                            'rqty' => $request->ret_qty[$key],
+                            'ramount' => ($request->total[$key] / $request->qty[$key]) * $request->ret_qty[$key],
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                        ];
+                    endif;
+                endforeach;
+                SalesReturnDetail::insert($data);
+            });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }

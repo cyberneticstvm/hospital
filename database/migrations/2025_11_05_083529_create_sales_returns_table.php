@@ -19,6 +19,8 @@ return new class extends Migration
             $table->enum('source', ['Pharmacy', 'Medicine'])->nullable();
             $table->unsignedBigInteger('branch_id');
             $table->string('notes')->nullable();
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by');
             $table->timestamps();
             $table->softDeletes();
             $table->timestamp('stock_updated_at')->nullable();
