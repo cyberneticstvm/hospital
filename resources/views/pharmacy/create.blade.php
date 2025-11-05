@@ -24,7 +24,15 @@
                                     <small class="text-danger">{{ $errors->first('patient_name') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-3">
+                                    <label class="form-label">Used For<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md" name="used_for">
+                                        <option value="Camp">Camp</option>
+                                        <option value="OP">OP</option>
+                                        <option value="Customer" selected>Customer</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-5">
                                     <label class="form-label">Age / Address / Phone number If any.</label>
                                     <input type="text" value="{{ ($patient && $patient->address) ? $patient->address : old('other_info') }}" name="other_info" class="form-control form-control-md" placeholder="Age / Address / Phone number If any.">
                                     @error('other_info')

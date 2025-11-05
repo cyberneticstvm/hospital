@@ -30,6 +30,7 @@ use App\Http\Controllers\SurgeryConsumableController;
 use App\Http\Controllers\PostOperativeInstructionController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RoyaltyCardProcedure;
+use App\Http\Controllers\SalesReturnController;
 use App\Http\Controllers\TestAdvisedController;
 
 /*
@@ -857,4 +858,9 @@ Route::prefix('wa')->controller(PdfController::class)->group(function () {
 Route::prefix('stock')->controller(HelperController::class)->group(function () {
     Route::get('/status', 'getStockStatus')->name('stock.status');
     Route::post('/status', 'getStockStatusUpdate')->name('stock.status.update');
+});
+
+Route::prefix('sreturn')->controller(SalesReturnController::class)->group(function () {
+    Route::get('', 'index')->name('sales.return.register');
+    Route::post('', 'fetch')->name('sales.return.fetch');
 });
