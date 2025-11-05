@@ -30,6 +30,8 @@ use App\Models\Product;
                     <form method="post" action="{{ route('sales.return.save') }}">
                         @csrf
                         <input type="hidden" name="source" value="{{ $source }}" />
+                        <input type="hidden" name="term" value="{{ $term }}" />
+                        <input type="hidden" name="branch_id" value="{{ $sales?->first()?->branch_id }}" />
                         <div class="card-body table-responsive">
                             <table id="" class="table table-striped table-hover align-middle table-sm" style="width:100%">
                                 <thead>

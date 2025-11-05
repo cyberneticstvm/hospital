@@ -36,20 +36,26 @@ class SalesReturnController extends Controller
         ]);
         try {
             $source = $request->source;
+            $term = $request->term;
             if ($request->source == 'Medicine'):
-                $sales = PatientMedicineRecord::where('medical_record_id', $request->term)->whereNull('deleted_at')->whereNull('stock_updated_at')->where('status', 1)->select('medicine AS product', 'batch_number', 'qty', 'total')->get();
+                $sales = PatientMedicineRecord::where('medical_record_id', $request->term)->whereNull('deleted_at')->whereNull('stock_updated_at')->where('status', 1)->select('medicine AS product', 'batch_number', 'qty', 'total', 'branch_id')->get();
             else:
                 $data = Pharmacy::where('medical_record_id', $request->term)->orWhere('id', $request->term)->whereNull('deleted_at')->whereNull('stock_updated_at')->where('status', 1)->first();
-                $sales = DB::table('pharmacy_records')->where('pharmacy_id', $data->id)->select('product', 'batch_number', 'qty', 'total')->get();
+                $sales = DB::table('pharmacy_records')->where('pharmacy_id', $data->id)->select('product', 'batch_number', 'qty', 'total', $data->branch . 'AS branch_id')->get();
             endif;
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
-        return view('pharmacy.stock.return.sales.list', compact('sales', 'source'));
+        return view('pharmacy.stock.return.sales.list', compact('sales', 'source', 'term'));
     }
 
     function store(Request $request)
     {
-        //
+        try {
+            DB::transaction(function () use ($request) {});
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
+        return redirect()->route('pharmacy.stock.return.sales.sales-return')->with("success", "Return recorded successfully");
     }
 }
