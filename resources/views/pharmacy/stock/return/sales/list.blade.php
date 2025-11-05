@@ -54,7 +54,7 @@ use App\Models\Product;
                                         <td>{{ $sale->batch_number }}</td>
                                         <td>{{ $sale->qty }}</td>
                                         <td>
-                                            <input type="number" name="ret_qty[]" min="1" max="{{ $sale->qty }}" step="1" class="form-control" placeholder="0" />
+                                            <input type="number" name="ret_qty[]" min="" max="{{ $sale->qty }}" step="1" class="form-control" placeholder="0" />
                                         </td>
                                         <td class="text-end">{{ $sale->total }}</td>
                                     </tr>
@@ -64,6 +64,12 @@ use App\Models\Product;
                             </table>
                             <div class="mt-5">
                                 <textarea class="form-control" placeholder="Notes / Remarks"></textarea>
+                            </div>
+                            <div class="row g-4 mt-3">
+                                <div class="col-sm-12 text-right">
+                                    <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
+                                    <button type="submit" class="btn btn-primary btn-submit">Save</button>
+                                </div>
                             </div>
                         </div>
                     </form>
