@@ -44,10 +44,12 @@ use App\Models\Product;
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ Product::find($sale->product)->product_name }}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $sale->batch_number }}</td>
+                                    <td>{{ $sale->qty }}</td>
+                                    <td>
+                                        <input type="number" name="ret_qty" min="1" max="{{ $sale->qty }}" step="1" class="form-control" />
+                                    </td>
+                                    <td class="text-end">{{ $sale->total }}</td>
                                 </tr>
                                 @empty
                                 @endforelse
