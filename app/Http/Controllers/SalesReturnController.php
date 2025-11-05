@@ -25,7 +25,7 @@ class SalesReturnController extends Controller
 
     function index()
     {
-        $sreturns = SalesReturn::latest()->get();
+        $sreturns = SalesReturn::whereDate(Carbon::today())->latest()->get();
         $inputs = array('', 'medicine');
         return view('pharmacy.stock.return.sales.sales-return', compact('sreturns', 'inputs'));
     }
