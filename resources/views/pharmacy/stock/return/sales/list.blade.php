@@ -39,7 +39,7 @@
                             <tbody>
                                 @forelse($sales as $key => $sale)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $key }}</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
