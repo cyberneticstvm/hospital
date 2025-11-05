@@ -65,7 +65,8 @@ use App\Models\Product;
                                 </tbody>
                             </table>
                             <div class="mt-5">
-                                <textarea class="form-control" placeholder="Notes / Remarks"></textarea>
+                                <label>Notes Remarks</label>
+                                <textarea class="form-control" placeholder="Notes / Remarks" name="notes"></textarea>
                             </div>
                             <div class="row g-4 mt-3">
                                 <div class="col-sm-12 text-right">
