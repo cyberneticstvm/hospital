@@ -52,11 +52,11 @@
                                     <th>Pid</th>
                                     <th>Product</th>
                                     <th>Batch No.</th>
-                                    <th>Purchased</th>
+                                    <th>Pur.</th>
                                     <th>Tr. In</th>
                                     <th>Tr. Out</th>
-                                    <th>SReturn</th>
-                                    <th>PReturn</th>
+                                    <th>S.Ret</th>
+                                    <th>P.Ret</th>
                                     <th>Billed</th>
                                     <th>Balance</th>
                                 </tr>
@@ -72,9 +72,9 @@
                                     <td>{{ $item->transfer_in }}</td>
                                     <td>{{ $item->transfer_out }}</td>
                                     <td>{{ $item->sreturn }}</td>
-                                    <td></td>
+                                    <td>{{ $item->preturn }}</td>
                                     <td>{{ $item->billed }}</td>
-                                    <td>{{ $item->balance_qty }}</td>
+                                    <td>{{ $item->balanceQty }}</td>
                                 </tr>
                                 @empty
                                 @endforelse
