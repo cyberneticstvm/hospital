@@ -29,6 +29,7 @@ use App\Http\Controllers\PatientPaymentController;
 use App\Http\Controllers\SurgeryConsumableController;
 use App\Http\Controllers\PostOperativeInstructionController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\PurchaseReturnController;
 use App\Http\Controllers\RoyaltyCardProcedure;
 use App\Http\Controllers\SalesReturnController;
 use App\Http\Controllers\TestAdvisedController;
@@ -861,7 +862,13 @@ Route::prefix('stock')->controller(HelperController::class)->group(function () {
 });
 
 Route::prefix('sreturn')->controller(SalesReturnController::class)->group(function () {
-    Route::get('', 'index')->name('sales.return.register');
-    Route::post('', 'fetch')->name('sales.return.fetch');
+    Route::get('register', 'index')->name('sales.return.register');
+    Route::post('fetch', 'fetch')->name('sales.return.fetch');
     Route::post('save', 'store')->name('sales.return.save');
+});
+
+Route::prefix('preturn')->controller(PurchaseReturnController::class)->group(function () {
+    Route::get('register', 'index')->name('purchase.return.register');
+    Route::post('fetch', 'fetch')->name('purchase.return.fetch');
+    Route::post('save', 'store')->name('purchase.return.save');
 });

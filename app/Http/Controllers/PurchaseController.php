@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use App\Models\Purchase;
+use App\Models\PurchaseAccount;
 use App\Models\PurchaseDetail;
 use App\Models\Supplier;
 use Carbon\Carbon;
@@ -142,6 +143,15 @@ class PurchaseController extends Controller
                     ];
                 endforeach;
                 PurchaseDetail::insert($data);
+                PurchaseAccount::create([
+                    'supplier_id' => $request->supplier,
+                    'parent_id' => $purchase->id,
+                    'parent_type' => 'purchase',
+                    'amount' => $purchase->details->sum('total'),
+                    'notes' => 'Purchase created with id: ' . $purchase->id,
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                ]);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -265,7 +275,17 @@ class PurchaseController extends Controller
                     ];
                 endforeach;
                 PurchaseDetail::where('purchase_id', $purchase->id)->delete();
+                PurchaseAccount::where('parent_id', $purchase->id)->where('parent_type', 'purchase')->forceDelete();
                 PurchaseDetail::insert($data);
+                PurchaseAccount::create([
+                    'supplier_id' => $request->supplier,
+                    'parent_id' => $purchase->id,
+                    'parent_type' => 'purchase',
+                    'amount' => $purchase->details->sum('total'),
+                    'notes' => 'Purchase updated with id: ' . $purchase->id,
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                ]);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());

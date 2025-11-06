@@ -104,19 +104,19 @@
                                                         @enderror
                                                     </td>
                                                     <td>
-                                                        {{ Form::number('purchase_price[]', old('purchase_price'), ['min' => 1,  'max' => '', 'step' => '', 'class' => 'form-control form-control-md calcTot purchasePrice', 'placeholder' => '0.00', 'required' => 'required']) }}
+                                                        {{ Form::number('purchase_price[]', old('purchase_price'), ['min' => 1,  'max' => '', 'step' => 'any', 'class' => 'form-control form-control-md calcTot purchasePrice', 'placeholder' => '0.00', 'required' => 'required']) }}
                                                         @error('purchase_price')
                                                         <small class="text-danger">{{ $errors->first('purchase_price') }}</small>
                                                         @enderror
                                                     </td>
                                                     <td>
-                                                        {{ Form::number('price[]', old('price'), ['min' => 1,  'max' => '', 'step' => '', 'class' => 'form-control form-control-md calcTot', 'placeholder' => '0.00', 'required' => 'required']) }}
+                                                        {{ Form::number('price[]', old('price'), ['min' => 1,  'max' => '', 'step' => 'any', 'class' => 'form-control form-control-md calcTot', 'placeholder' => '0.00', 'required' => 'required']) }}
                                                         @error('price')
                                                         <small class="text-danger">{{ $errors->first('price') }}</small>
                                                         @enderror
                                                     </td>
                                                     <td>
-                                                        {{ Form::number('mrp[]', old('mrp'), ['min' => 1,  'max' => '', 'step' => '', 'class' => 'form-control form-control-md calcTot', 'placeholder' => '0.00', 'required' => 'required']) }}
+                                                        {{ Form::number('mrp[]', old('mrp'), ['min' => 1,  'max' => '', 'step' => 'any', 'class' => 'form-control form-control-md calcTot', 'placeholder' => '0.00', 'required' => 'required']) }}
                                                         @error('mrp')
                                                         <small class="text-danger">{{ $errors->first('mrp') }}</small>
                                                         @enderror
