@@ -30,6 +30,7 @@
                                     <select class="form-control form-control-md" name="used_for">
                                         <option value="Camp" {{ $pharmacy->used_for == 'Camp' ? 'selected' : '' }}>Camp</option>
                                         <option value="OP" {{ $pharmacy->used_for == 'OP' ? 'selected' : '' }}>OP</option>
+                                        <option value="OT" {{ $pharmacy->used_for == 'OT' ? 'selected' : '' }}>OT</option>
                                         <option value="Customer" {{ $pharmacy->used_for == 'Customer' ? 'selected' : '' }}</option>Customer</option>
                                     </select>
                                 </div>

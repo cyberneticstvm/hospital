@@ -29,6 +29,7 @@
                                     <select class="form-control form-control-md" name="used_for">
                                         <option value="Camp">Camp</option>
                                         <option value="OP">OP</option>
+                                        <option value="OT">OT</option>
                                         <option value="Customer" selected>Customer</option>
                                     </select>
                                 </div>
