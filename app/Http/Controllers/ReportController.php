@@ -490,7 +490,7 @@ class ReportController extends Controller
         $inputs = array($request->fromdate, $request->todate, $request->product, $request->branch);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
-        $records = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->whereBetween('pmr1.created_at', [$startDate, $endDate])->where('pmr1.branch', $request->branch)->when($request->product > 0, function ($q) use ($request) {
+        $records = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->whereBetween('pmr.updated_at', [$startDate, $endDate])->where('pmr.branch_id', $request->branch)->when($request->product > 0, function ($q) use ($request) {
             return $q->where("pmr.medicine", $request->product);
         })->select('pmr.id', 'pmr.medical_record_id', 'pmr.status', 'p.patient_name', 'p.patient_id', 'doc.doctor_name', 'pmr.total')->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->get();
         return view('reports.pharmacy', compact('branches', 'records', 'inputs', 'products'));
