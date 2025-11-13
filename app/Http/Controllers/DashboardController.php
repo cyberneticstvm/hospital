@@ -191,7 +191,7 @@ class DashboardController extends Controller
     public function pharmacyMonth()
     {
         $br = $this->branch;
-        $tot = DB::table('patient_medicine_records')->selectRaw("SUM(total) AS total, DATE_FORMAT(created_at, '%d/%b') AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->where('branch_id', $br)->where('status', 1)->groupBy('day')->orderByDesc('id')->get();
+        $tot = DB::table('patient_medicine_records')->selectRaw("SUM(total) AS total, DATE_FORMAT(created_at, '%d/%b') AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->groupBy('day')->orderByDesc('id')->get();
         return json_encode($tot);
     }
 
