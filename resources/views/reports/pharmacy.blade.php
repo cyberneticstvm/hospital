@@ -112,7 +112,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="8" class="text-end">0.00</td>
+                                    <td colspan="8" class="text-end fw-bold">{{ number_format($records->sum('total', 2)) }}</td>
                                 </tr>
                             </tfoot>
                         </table>
