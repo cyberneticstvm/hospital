@@ -154,12 +154,12 @@ $(function() {
             series: [{
                 data: pArr,
                 type: 'column',
-                name: 'Number of Patients'
+                name: 'Total'
             }],
             xaxis: {
                 categories: dayArr,
                 title: {
-                    text: 'Patient Count'
+                    text: 'Total'
                 }
             },
             yaxis: [{
