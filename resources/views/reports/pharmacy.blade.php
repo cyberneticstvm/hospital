@@ -6,7 +6,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
                     <div class="mb-3">
-                        <h5 class="mb-0">Patient Payments Report</h5>
+                        <h5 class="mb-0">Pharmacy Report</h5>
                         <span class="text-muted"></span>
                     </div>
                 </div>
@@ -87,6 +87,7 @@
                                     <th>Patient ID</th>
                                     <th>Doctor</th>
                                     <th>Prescription</th>
+                                    <th>Bill No</th>
                                     <th>Receipt</th>
                                 </tr>
                             </thead>
@@ -100,6 +101,7 @@
                                     <td>{{ $med->patient_id }}</td>
                                     <td>{{ $med->doctor_name }}</td>
                                     <td class="text-center"><a href="/generate-pharmacy-out/{{ $med->medical_record_id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
+                                    <td>{{ $med->id }}</td>
                                     <td class="text-center">
                                         @if($med->status == 1)
                                         <a href='/generate-pharmacy-bill/{{ $med->medical_record_id }}/' target='_blank'><i class="fa fa-file text-info"></i></a>
@@ -108,6 +110,11 @@
                                 </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="7" class="text-end">0.00</td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
