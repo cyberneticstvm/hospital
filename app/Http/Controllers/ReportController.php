@@ -474,7 +474,7 @@ class ReportController extends Controller
         $inputs = array(date('d/M/Y'), date('d/M/Y'), '', $this->branch);
         $branches = $this->getBranches($this->branch);
         $products = Product::orderBy('product_name')->get();
-        $records = [];
+        $records = collect();
         return view('reports.pharmacy', compact('inputs', 'branches', 'records', 'products'));
     }
 
