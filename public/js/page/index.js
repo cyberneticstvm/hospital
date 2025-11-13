@@ -111,7 +111,8 @@ $(function() {
         chart.render();
     });
 
-    $.getJSON('/pharmacymonth/', function(response){        
+    $.getJSON('/pharmacymonth/', function(response){  
+        console.log(response);      
         var arr = Object.values(response);
         var dayArr = []; var pArr = [];
         dayArr = arr.map(function(el){
