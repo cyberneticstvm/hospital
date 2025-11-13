@@ -53,7 +53,7 @@
                                     <td>{{ $transfer->fromBr->branch_name }}</td>
                                     <td>{{ $transfer->toBr->branch_name }}</td>
                                     <td>{{ $transfer->approved ? 'Yes' : 'No' }}</td>
-                                    <td class="text-center"><a href=""><i class="fa fa-file-pdf-o text-danger"></i></a></td>
+                                    <td class="text-center"><a href="/product-transfer/bill/{{ $transfer->id}}" target="_blank"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
                                     <td class="text-center">{!! $transfer->status() !!}</td>
                                     <td><a class='btn btn-link' href="{{ route('product-transfer.edit', encrypt($transfer->id)) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                     <td>

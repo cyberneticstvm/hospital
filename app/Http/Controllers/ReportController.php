@@ -19,6 +19,7 @@ use App\Models\PatientSurgeryConsumable;
 use App\Models\Procedure;
 use App\Models\ProcedureType;
 use App\Models\Product;
+use App\Models\ProductTransfer;
 use App\Models\RoyaltyCard;
 use App\Models\Spectacle;
 use App\Models\Surgery;
@@ -691,6 +692,33 @@ class ReportController extends Controller
         $records = PatientProcedure::onlyTrashed()->where('branch', $request->branch)->where('type', $procs->where('id', $request->procedure)->first()->type)->whereBetween('deleted_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->get();
         $inputs = array($request->from_date, $request->to_date, $request->procedure, $request->branch);
         return view('reports.proc-cancelled', compact('branches', 'records', 'inputs', 'procs'));
+    }
+
+    public function transfer()
+    {
+        $branches = Branch::pluck("branch_name", "id");
+        $products = Product::pluck("product_name", "id");
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch, NULL);
+        $transfers = collect();
+        return view('reports.transfer', compact('branches', 'products', 'inputs', 'transfers'));
+    }
+
+    public function fetchTransfer(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+            'branch' => 'required',
+        ]);
+        $branches = Branch::pluck("branch_name", "id");
+        $products = Product::pluck("product_name", "id");
+        $inputs = array($request->from_date, $request->to_date, $request->branch, $request->product);
+        $transfers = ProductTransfer::whereBetween('transfer_date', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('from_branch', $request->branch);
+        })->when($request->product > 0, function ($q) use ($request) {
+            return $q->leftJoin('product_transfer_details AS ptd', 'ptd.transfer_id', 'product_transfers.id')->where('ptd.product', $request->product);
+        })->get();
+        return view('reports.transfer', compact('branches', 'products', 'inputs', 'transfers'));
     }
 
     public function showDiscount()

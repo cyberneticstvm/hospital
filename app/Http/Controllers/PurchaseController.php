@@ -138,6 +138,8 @@ class PurchaseController extends Controller
                         'tax_percentage' => $product->category->tax_percentage,
                         'tax_amount' => $tax_amount, // per qty
                         'total' => ($request->purchase_price[$key]  + $tax_amount) * $request->qty[$key],
+                        'discount' => $request->discount[$key],
+                        'ptype' => $request->ptype[$key],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
@@ -270,6 +272,8 @@ class PurchaseController extends Controller
                         'tax_percentage' => $product->category->tax_percentage,
                         'tax_amount' => $tax_amount, // per qty
                         'total' => ($request->purchase_price[$key]  + $tax_amount) * $request->qty[$key],
+                        'discount' => $request->discount[$key],
+                        'ptype' => $request->ptype[$key],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];

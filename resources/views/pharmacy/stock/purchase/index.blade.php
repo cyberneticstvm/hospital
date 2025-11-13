@@ -53,7 +53,7 @@
                                     <td>{{ $purchase->delivery_date->format('d.M.Y') }}</td>
                                     <td>{{ $purchase->supplierr->name }}</td>
                                     <td>{{ $purchase->invoice_number }}</td>
-                                    <td class="text-center"><a href=""><i class="fa fa-file-pdf-o text-danger"></i></a></td>
+                                    <td class="text-center"><a href="/purchase/bill/{{ $purchase->id }}" target="_blank"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
                                     <td class="text-center">{!! $purchase->status() !!}</td>
                                     <td><a class='btn btn-link' href="{{ route('purchase.edit', encrypt($purchase->id)) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                     <td>

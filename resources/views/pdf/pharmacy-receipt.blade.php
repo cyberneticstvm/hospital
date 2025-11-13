@@ -40,7 +40,7 @@
     <table width="100%" border="1" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
-                <th text-align="center" colspan="6">PHARMACY RECEIPT</th>
+                <th text-align="center" colspan="6">PHARMACY CASH BILL</th>
             </tr>
         </thead>
         <tbody>

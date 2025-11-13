@@ -1,36 +1,49 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Devi Eye Clinic & Opticians</title>
     <style>
-        table{
+        table {
             border: 1px solid #e6e6e6;
             font-size: 12px;
         }
-        thead{
+
+        thead {
             border-bottom: 1px solid #e6e6e6;
         }
-        table thead th, table tbody td{
+
+        table thead th,
+        table tbody td {
             padding: 5px;
         }
-        .bordered td, .bordered th{
+
+        .bordered td,
+        .bordered th {
             border: 1px solid #e6e6e6;
         }
-        .text-right{
+
+        .text-right {
             text-align: right;
         }
-        .fw-bold{
+
+        .fw-bold {
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
     <center>
-        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%"/><br/>
+        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
     </center>
-    <br/>
+    <br />
     <table width="100%" class="bordered" cellpadding="0" cellspacing="0">
-        <thead><tr><th text-align="center" colspan="4">PURCHASE BILL ON {{ date('d/M/Y', strtotime($purchase->delivery_date)) }}</th></tr></thead>
+        <thead>
+            <tr>
+                <th text-align="center" colspan="4">PURCHASE BILL ON {{ date('d/M/Y', strtotime($purchase->delivery_date)) }}</th>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td>Supplier</td>
@@ -48,21 +61,43 @@
     </table>
     <br><br>
     <table width="100%" class="bordered" cellpadding="0" cellspacing="0">
-        <thead><th>SL No.</th><th>Product</th><th>Batch</th><th>Qty</th><th>MRP</th><th>Price</th><th>Total</th></thead><tbody>
-        @php $c = 1; @endphp
-        @forelse($purchases as $key => $pur)
-        <tr>
-            <td>{{ $c++ }}</td>
-            <td>{{ $pur->product_name }}</td>
-            <td>{{ $pur->batch_number }}</td>
-            <td class="text-right">{{ $pur->qty }}</td>
-            <td class="text-right">{{ number_format($pur->mrp, 2) }}</td>
-            <td class="text-right">{{ number_format($pur->price, 2) }}</td>
-            <td class="text-right">{{ number_format($pur->total, 2) }}</td>
-        </tr>
-        @empty
-        @endforelse
-        <tr><td colspan="6" class="text-right fw-bold">Total</td><td class="text-right fw-bold">{{ number_format($tot, 2) }}</td>        
-    </tbody></table>
+        <thead>
+            <th>SL No.</th>
+            <th>Product</th>
+            <th>Batch</th>
+            <th>Qty</th>
+            <th>MRP</th>
+            <th>Price</th>
+            <th>CGST</th>
+            <th>SGST</th>
+            <th>Total</th>
+        </thead>
+        <tbody>
+            @php $c = 1; $tax_tot = 0; @endphp
+            @forelse($purchases as $key => $pur)
+            @php
+            $tax_tot += ($pur->tax_amount * $pur->qty) / 2;
+            @endphp
+            <tr>
+                <td>{{ $c++ }}</td>
+                <td>{{ $pur->product_name }}</td>
+                <td>{{ $pur->batch_number }}</td>
+                <td class="text-right">{{ $pur->qty }}</td>
+                <td class="text-right">{{ number_format($pur->mrp, 2) }}</td>
+                <td class="text-right">{{ number_format($pur->price, 2) }}</td>
+                <td class="text-right">{{ number_format(($pur->tax_amount * $pur->qty) / 2, 2) }}</td>
+                <td class="text-right">{{ number_format(($pur->tax_amount * $pur->qty) / 2, 2) }}</td>
+                <td class="text-right">{{ number_format($pur->total, 2) }}</td>
+            </tr>
+            @empty
+            @endforelse
+            <tr>
+                <td colspan="6" class="text-right fw-bold">Total</td>
+                <td class="text-right fw-bold">{{ number_format($tax_tot, 2) }}</td>
+                <td class="text-right fw-bold">{{ number_format($tax_tot, 2) }}</td>
+                <td class="text-right fw-bold">{{ number_format($tot, 2) }}</td>
+        </tbody>
+    </table>
 </body>
+
 </html>
