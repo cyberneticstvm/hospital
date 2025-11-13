@@ -112,7 +112,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="7" class="text-end">0.00</td>
+                                    <td colspan="8" class="text-end">0.00</td>
                                 </tr>
                             </tfoot>
                         </table>
