@@ -101,7 +101,7 @@
                                     <td>{{ $med->patient_id }}</td>
                                     <td>{{ $med->doctor_name }}</td>
                                     <td class="text-center"><a href="/generate-pharmacy-out/{{ $med->medical_record_id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
-                                    <td>{{ $med->medical_record_id }}</td>
+                                    <td>{{ $med->id }}</td>
                                     <td class="text-center">
                                         @if($med->status == 1)
                                         <a href='/generate-pharmacy-bill/{{ $med->medical_record_id }}/' target='_blank'><i class="fa fa-file text-info"></i></a>
