@@ -188,6 +188,13 @@ class DashboardController extends Controller
         return json_encode($patients);
     }
 
+    public function pharmacyMonth()
+    {
+        $br = $this->branch;
+        $patients = DB::table('patient_medicine_records')->selectRaw("SUM(total) AS total, DATE_FORMAT(created_at, '%d/%b') AS day")->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->where('branch', $br)->where('status', 1)->groupBy('day')->orderByDesc('id')->get();
+        return json_encode($patients);
+    }
+
     public function reviewMonth()
     {
         $br = $this->branch;

@@ -239,6 +239,36 @@
                 <!-- .row end -->
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header py-3 d-flex flex-wrap  justify-content-between align-items-center bg-transparent border-bottom-0">
+                        <div>
+                            <h6 class="card-title m-0">Pharmacy Current Month - <span class="text-primary">{{ DB::table('branches')->where('id', Session::get('branch'))->value('branch_name') }}</span></h6>
+                            <small class="text-muted">Or you can <a href="#">sync data to Dashboard</a> to ensure your data is always up-to-date.</small>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-link text-muted d-none d-sm-inline-block" type="button"><i class="fa fa-download"></i></button>
+                            <button class="btn btn-sm btn-link text-muted d-none d-sm-inline-block" type="button"><i class="fa fa-external-link"></i></button>
+                            <button class="btn btn-sm btn-link text-muted dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                            <ul class="dropdown-menu dropdown-animation dropdown-menu-end shadow border-0">
+                                <li><a class="dropdown-item" href="#">Action<i class="fa fa-arrow-right"></i></a></li>
+                                <li><a class="dropdown-item" href="#">Another action<i class="fa fa-arrow-right"></i></a></li>
+                                <li><a class="dropdown-item" href="#">Something else here<i class="fa fa-arrow-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-header border">
+                            <div class="d-flex flex-row align-items-center">
+                                Pharmacy Overview
+                            </div>
+                        </div>
+                        <div id="pharmacyMonth"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!-- Modal -->

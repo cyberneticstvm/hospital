@@ -111,6 +111,71 @@ $(function() {
         chart.render();
     });
 
+    $.getJSON('/pharmacymonth/', function(response){        
+        var arr = Object.values(response);
+        var dayArr = []; var pArr = [];
+        dayArr = arr.map(function(el){
+            return el.day
+        });
+        pArr = arr.map(function(el){
+            return el.total
+        });        
+        var options = {
+            chart: {
+                height: 400,
+                type: 'bar',
+                toolbar: {
+                    show: false,
+                },
+            },
+            colors: '#4FB8C9',
+            grid: {
+                yaxis: {
+                    lines: {
+                        show: false,
+                    }
+                },
+                padding: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
+                },
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            series: [{
+                data: pArr,
+                type: 'column',
+                name: 'Number of Patients'
+            }],
+            xaxis: {
+                categories: dayArr,
+                title: {
+                    text: 'Patient Count'
+                }
+            },
+            yaxis: [{
+                title: {
+                    text: 'Days',
+                },
+            }]
+        };
+    
+        var chart = new ApexCharts(
+            document.querySelector("#pharmacyMonth"),
+            options
+        );
+        
+        chart.render();
+    });
+
     $.getJSON('/incomeexpense/', function(response){        
         var arr = response;
         var incArr = []; var expArr = []; var dayArr = [];

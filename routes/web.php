@@ -78,6 +78,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dash/', [DashboardController::class, 'index'])->name('dash.index');
     Route::get('/patientOverview/', [DashboardController::class, 'patientOverview'])->name('dash.patientoverview');
     Route::get('/patientmonth/', [DashboardController::class, 'patientMonth'])->name('dash.patientmonth');
+    Route::get('/pharmacymonth/', [DashboardController::class, 'pharmacyMonth'])->name('dash.pharmacymonth');
     Route::get('/reviewmonth/', [DashboardController::class, 'reviewMonth'])->name('dash.reviewmonth');
     Route::get('/incomeexpense/', [DashboardController::class, 'incomeExpense'])->name('dash.incomeexpense');
     Route::get('/logout/', 'App\Http\Controllers\AuthController@userlogout');
