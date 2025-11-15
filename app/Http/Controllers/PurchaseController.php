@@ -35,7 +35,7 @@ class PurchaseController extends Controller
     {
         /*$purchases = Purchase::leftJoin('suppliers as s', 'purchases.supplier', '=', 's.id')->select('purchases.id', 'purchases.invoice_number', 'purchases.order_date', 'purchases.delivery_date', 's.name')->orderBy('purchases.created_at','DESC')->get();
         return view('purchase.index', compact('purchases'));*/
-        $purchases = Purchase::withTrashed()->latest()->get();
+        $purchases = Purchase::withTrashed()->whereNull('stock_updated_at')->latest()->get();
         return view('pharmacy.stock.purchase.index', compact('purchases'));
     }
 
