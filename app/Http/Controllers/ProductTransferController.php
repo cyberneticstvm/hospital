@@ -41,7 +41,7 @@ class ProductTransferController extends Controller
             return $q->where('t.from_branch', Session::get('branch'));
         })->select('t.id', 't.transfer_note AS tnote', DB::raw("CASE WHEN t.from_branch = 0 THEN 'Main Stock' ELSE b.branch_name END AS from_branch"), DB::raw("CASE WHEN t.to_branch = 0 THEN 'Main Stock' ELSE b1.branch_name END AS to_branch"), 't.transfer_date AS tdate')->orderBy('t.transfer_date', 'DESC')->get();
         return view('product-transfer.index', compact('transfers'));*/
-        $transfers = ProductTransfer::withTrashed()->latest()->get();
+        $transfers = ProductTransfer::withTrashed()->whereNull('stock_updated_at')->latest()->get();
         return view('pharmacy.stock.transfer.index', compact('transfers'));
     }
 
