@@ -348,13 +348,13 @@ $(function () {
         var disc = $(this).parent().parent().find(".disc");
         var mrp = $(this).parent().parent().find(".mrp");
         var qty = parseInt($(this).parent().parent().find(".qty").val());
+        console.log(pdct, bno);
         $.ajax({
             type: 'GET',
             url: '/helper/getPdctPrice/',
             dataType: 'json',
             data: { 'product': pdct, 'batch_number': bno, 'qty': qty },
             success: function (response) {
-                console.log(response)
                 mrp.val(parseFloat(response.mrp).toFixed(2));
                 taxp.val(parseInt(response.taxp));
                 price.val(parseFloat(response.price).toFixed(2));
