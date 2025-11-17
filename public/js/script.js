@@ -348,7 +348,6 @@ $(function () {
         var disc = $(this).parent().parent().find(".disc");
         var mrp = $(this).parent().parent().find(".mrp");
         var qty = parseInt($(this).parent().parent().find(".qty").val());
-        console.log(pdct, bno);
         $.ajax({
             type: 'GET',
             url: '/helper/getPdctPrice/',
