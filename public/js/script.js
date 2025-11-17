@@ -354,6 +354,7 @@ $(function () {
             dataType: 'json',
             data: { 'product': pdct, 'batch_number': bno, 'qty': qty },
             success: function (response) {
+                console.log(response)
                 mrp.val(parseFloat(response.mrp).toFixed(2));
                 taxp.val(parseInt(response.taxp));
                 price.val(parseFloat(response.price).toFixed(2));
