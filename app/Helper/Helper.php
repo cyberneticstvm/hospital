@@ -466,7 +466,7 @@ class Helper
 
         $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('p.id', $mrid)->where('m.status', 1)->sum('m.total');
 
-        $pharmacy = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'p.id', 'pr.pharmacy_id')->where('p.medical_record_id', $mrid)->sum('total');
+        $pharmacy = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'p.id', 'pr.pharmacy_id')->where('p.used_for', 'Customer')->where('p.medical_record_id', $mrid)->sum('total');
 
         $vision = DB::table('spectacles')->where('medical_record_id', $mrid)->sum('fee');
 
@@ -501,7 +501,7 @@ class Helper
 
         $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('p.id', $mrid)->where('m.status', 1)->sum('m.total');
 
-        $pharmacy = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'p.id', 'pr.pharmacy_id')->where('p.medical_record_id', $mrid)->sum('total');
+        $pharmacy = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'p.id', 'pr.pharmacy_id')->where('p.used_for', 'Customer')->where('p.medical_record_id', $mrid)->sum('total');
 
         $vision = DB::table('spectacles')->where('medical_record_id', $mrid)->sum('fee');
 
