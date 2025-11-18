@@ -24,19 +24,18 @@ class SurgeryConsumableController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:surgery-consumable-list|surgery-consumable-create|surgery-consumable-edit|surgery-consumable-delete|surgery-consumable-surgery-list|surgery-consumable-surgery-create|surgery-consumable-surgery-edit|surgery-consumable-surgery-delete|patient-surgery-consumable-list|patient-surgery-consumable-create|patient-surgery-consumable-edit|patient-surgery-consumable-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:surgery-consumable-create', ['only' => ['create','store']]);
-         $this->middleware('permission:surgery-consumable-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:surgery-consumable-delete', ['only' => ['destroy']]);
-         $this->middleware('permission:surgery-consumable-surgery-list', ['only' => ['showsurgeryconsumable']]);
-         $this->middleware('permission:surgery-consumable-surgery-create', ['only' => ['savesurgeryconsumable']]);
-         $this->middleware('permission:surgery-consumable-surgery-edit', ['only' => ['editsurgeryconsumable', 'updatesurgeryconsumable']]);
-         $this->middleware('permission:surgery-consumable-surgery-delete', ['only' => ['deletesurgeryconsumable']]);
-         $this->middleware('permission:patient-surgery-consumable-list', ['only' => ['patientsurgeryconsumablelist']]);
-         $this->middleware('permission:patient-surgery-consumable-create', ['only' => ['patientsurgeryconsumablefetch', 'patientsurgeryconsumablecreate', 'patientsurgeryconsumablelistshow', 'patientsurgeryconsumablelistsave']]);
-         $this->middleware('permission:patient-surgery-consumable-edit', ['only' => ['patientsurgeryconsumablelistedit', 'patientsurgeryconsumablelistupdate']]);
-         $this->middleware('permission:patient-surgery-consumable-delete', ['only' => ['patientsurgeryconsumablelistdelete']]);
-         
+        $this->middleware('permission:surgery-consumable-list|surgery-consumable-create|surgery-consumable-edit|surgery-consumable-delete|surgery-consumable-surgery-list|surgery-consumable-surgery-create|surgery-consumable-surgery-edit|surgery-consumable-surgery-delete|patient-surgery-consumable-list|patient-surgery-consumable-create|patient-surgery-consumable-edit|patient-surgery-consumable-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:surgery-consumable-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:surgery-consumable-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:surgery-consumable-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:surgery-consumable-surgery-list', ['only' => ['showsurgeryconsumable']]);
+        $this->middleware('permission:surgery-consumable-surgery-create', ['only' => ['savesurgeryconsumable']]);
+        $this->middleware('permission:surgery-consumable-surgery-edit', ['only' => ['editsurgeryconsumable', 'updatesurgeryconsumable']]);
+        $this->middleware('permission:surgery-consumable-surgery-delete', ['only' => ['deletesurgeryconsumable']]);
+        $this->middleware('permission:patient-surgery-consumable-list', ['only' => ['patientsurgeryconsumablelist']]);
+        $this->middleware('permission:patient-surgery-consumable-create', ['only' => ['patientsurgeryconsumablefetch', 'patientsurgeryconsumablecreate', 'patientsurgeryconsumablelistshow', 'patientsurgeryconsumablelistsave']]);
+        $this->middleware('permission:patient-surgery-consumable-edit', ['only' => ['patientsurgeryconsumablelistedit', 'patientsurgeryconsumablelistupdate']]);
+        $this->middleware('permission:patient-surgery-consumable-delete', ['only' => ['patientsurgeryconsumablelistdelete']]);
     }
 
     public function index()
@@ -69,7 +68,7 @@ class SurgeryConsumableController extends Controller
         ]);
         $input = $request->all();
         SurgeryConsumable::create($input);
-        return redirect()->route('surgery.consumable.index')->with('success','Product created successfully');
+        return redirect()->route('surgery.consumable.index')->with('success', 'Product created successfully');
     }
 
     /**
@@ -101,13 +100,13 @@ class SurgeryConsumableController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|unique:surgery_consumables,name,'.$id,
+            'name' => 'required|unique:surgery_consumables,name,' . $id,
             'price' => 'required',
         ]);
         $input = $request->all();
         $sc = SurgeryConsumable::find($id);
         $sc->update($input);
-        return redirect()->route('surgery.consumable.index')->with('success','Product updated successfully');
+        return redirect()->route('surgery.consumable.index')->with('success', 'Product updated successfully');
     }
 
     /**
@@ -119,17 +118,19 @@ class SurgeryConsumableController extends Controller
     public function destroy($id)
     {
         SurgeryConsumable::find($id)->delete();
-        return redirect()->route('surgery.consumable.index')->with('success','Product deleted successfully');
+        return redirect()->route('surgery.consumable.index')->with('success', 'Product deleted successfully');
     }
 
-    public function showsurgeryconsumable(){
+    public function showsurgeryconsumable()
+    {
         $surgeries = SurgeryType::all();
         $consumables = SurgeryConsumable::all();
         $scis = SurgeryConsumableItem::all();
         return view('surgery-consumables.surgery-consumable-list', compact('scis', 'surgeries', 'consumables'));
     }
 
-    public function savesurgeryconsumable(Request $request){
+    public function savesurgeryconsumable(Request $request)
+    {
         $this->validate($request, [
             'surgery_id' => 'required',
             'consumable_id' => 'required',
@@ -137,17 +138,19 @@ class SurgeryConsumableController extends Controller
         ]);
         $input = $request->all();
         SurgeryConsumableItem::create($input);
-        return redirect()->route('surgery.consumable.surgey')->with('success','Record saved successfully');
+        return redirect()->route('surgery.consumable.surgey')->with('success', 'Record saved successfully');
     }
 
-    public function editsurgeryconsumable($id){
+    public function editsurgeryconsumable($id)
+    {
         $surgeries = SurgeryType::all();
         $consumables = SurgeryConsumable::all();
         $sc = SurgeryConsumableItem::find($id);
         return view('surgery-consumables.edit-surgery-consumable-list', compact('sc', 'surgeries', 'consumables'));
     }
 
-    public function updatesurgeryconsumable(Request $request, $id){
+    public function updatesurgeryconsumable(Request $request, $id)
+    {
         $this->validate($request, [
             'surgery_id' => 'required',
             'consumable_id' => 'required',
@@ -156,30 +159,33 @@ class SurgeryConsumableController extends Controller
         $input = $request->all();
         $sci = SurgeryConsumableItem::find($id);
         $sci->update($input);
-        return redirect()->route('surgery.consumable.surgey')->with('success','Record updated successfully');
+        return redirect()->route('surgery.consumable.surgey')->with('success', 'Record updated successfully');
     }
 
     public function deletesurgeryconsumable($id)
     {
         SurgeryConsumableItem::find($id)->delete();
-        return redirect()->route('surgery.consumable.surgey')->with('success','Record deleted successfully');
+        return redirect()->route('surgery.consumable.surgey')->with('success', 'Record deleted successfully');
     }
 
-    public function patientsurgeryconsumablelist(){
+    public function patientsurgeryconsumablelist()
+    {
         $pscls = PatientSurgeryConsumable::orderByDesc('id')->get();
         return view('surgery-consumables.patient-surgery-consumable-list', compact('pscls'));
     }
 
-    public function patientsurgeryconsumablecreate(){
+    public function patientsurgeryconsumablecreate()
+    {
         return view('surgery-consumables.patient-surgery-consumable-create');
     }
 
-    public function patientsurgeryconsumablefetch(Request $request){
+    public function patientsurgeryconsumablefetch(Request $request)
+    {
         $this->validate($request, [
             'medical_record_number' => 'required',
         ]);
-        $mrecord = PatientMedicalRecord::find($request->medical_record_number);        
-        if($mrecord):
+        $mrecord = PatientMedicalRecord::find($request->medical_record_number);
+        if ($mrecord):
             $patient = PatientRegistrations::find($mrecord->patient_id);
             $doctor = doctor::find($mrecord->doctor_id);
             $stypes = SurgeryType::all();
@@ -190,7 +196,8 @@ class SurgeryConsumableController extends Controller
         endif;
     }
 
-    public function patientsurgeryconsumablelistsave(Request $request){
+    public function patientsurgeryconsumablelistsave(Request $request)
+    {
         $this->validate($request, [
             'medical_record_id' => 'required',
             'patient_id' => 'required',
@@ -201,45 +208,47 @@ class SurgeryConsumableController extends Controller
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
 
-        $input['bill_number'] = PatientSurgeryConsumable::latest()->first()->bill_number + 1;
+        $input['bill_number'] = (PatientSurgeryConsumable::latest()->first()->bill_number) ?  PatientSurgeryConsumable::latest()->first()->bill_number + 1 : 1;
         $tot = 0;
-        foreach($request->consumable_id as $key => $val):
+        foreach ($request->consumable_id as $key => $val):
             $item = SurgeryConsumable::find($val);
-            $tot += $item->price*$request->qty[$key];
+            $tot += $item->price * $request->qty[$key];
         endforeach;
         $input['total'] = $tot;
         $input['total_after_discount'] = $tot - $request->discount;
-        try{
-            DB::transaction(function() use ($request, $input) {
+        try {
+            DB::transaction(function () use ($request, $input) {
                 $psc = PatientSurgeryConsumable::create($input);
-                foreach($request->consumable_id as $key => $val):
+                foreach ($request->consumable_id as $key => $val):
                     $item = SurgeryConsumable::find($val);
-                    $data [] = [
+                    $data[] = [
                         'psc_id' => $psc->id,
                         'consumable_id' => $val,
                         'cost' => $item->price,
                         'qty' => $request->qty[$key],
-                        'total' => $item->price*$request->qty[$key],
+                        'total' => $item->price * $request->qty[$key],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
                 endforeach;
                 PatientSurgeryConsumableList::insert($data);
-            });            
-        }catch(Exception $e){
+            });
+        } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
         return redirect()->route('patient.surgey.consumable')->with('success', 'Record updated successfully');
     }
 
-    public function patientsurgeryconsumablelistedit($id){
+    public function patientsurgeryconsumablelistedit($id)
+    {
         $psc = PatientSurgeryConsumable::find($id);
         $stypes = SurgeryType::all();
         $consumables = SurgeryConsumable::all();
         return view('surgery-consumables.patient-surgery-consumable-edit', compact('psc', 'stypes', 'consumables'));
     }
 
-    public function patientsurgeryconsumablelistupdate(Request $request, $id){
+    public function patientsurgeryconsumablelistupdate(Request $request, $id)
+    {
         $this->validate($request, [
             'medical_record_id' => 'required',
             'patient_id' => 'required',
@@ -248,41 +257,42 @@ class SurgeryConsumableController extends Controller
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
-        
+
         $tot = 0;
-        foreach($request->consumable_id as $key => $val):
+        foreach ($request->consumable_id as $key => $val):
             $item = SurgeryConsumable::find($val);
-            $tot += $item->price*$request->qty[$key];
+            $tot += $item->price * $request->qty[$key];
         endforeach;
         $input['total'] = $tot;
         $input['total_after_discount'] = $tot - $request->discount;
 
-        try{
-            DB::transaction(function() use ($request, $input, $id) {
+        try {
+            DB::transaction(function () use ($request, $input, $id) {
                 $psc = PatientSurgeryConsumable::find($id);
                 $psc->update($input);
-                foreach($request->consumable_id as $key => $val):
+                foreach ($request->consumable_id as $key => $val):
                     $item = SurgeryConsumable::find($val);
-                    $data [] = [
+                    $data[] = [
                         'psc_id' => $psc->id,
                         'consumable_id' => $val,
                         'cost' => $item->price,
                         'qty' => $request->qty[$key],
-                        'total' => $item->price*$request->qty[$key],
+                        'total' => $item->price * $request->qty[$key],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
                 endforeach;
                 PatientSurgeryConsumableList::where('psc_id', $id)->delete();
                 PatientSurgeryConsumableList::insert($data);
-            });            
-        }catch(Exception $e){
+            });
+        } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
         return redirect()->route('patient.surgey.consumable')->with('success', 'Record updated successfully');
     }
 
-    public function patientsurgeryconsumablelistdelete($id){
+    public function patientsurgeryconsumablelistdelete($id)
+    {
         PatientSurgeryConsumable::find($id)->delete();
         return redirect()->route('patient.surgey.consumable')->with('success', 'Record deleted successfully');
     }
