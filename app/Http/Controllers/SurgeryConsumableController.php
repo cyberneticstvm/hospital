@@ -208,7 +208,7 @@ class SurgeryConsumableController extends Controller
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
 
-        $input['bill_number'] = (PatientSurgeryConsumable::latest()->first()->bill_number) ?  PatientSurgeryConsumable::latest()->first()->bill_number + 1 : 1;
+        $input['bill_number'] = (PatientSurgeryConsumable::latest()?->first()?->bill_number) ?  PatientSurgeryConsumable::latest()->first()->bill_number + 1 : 1;
         $tot = 0;
         foreach ($request->consumable_id as $key => $val):
             $item = SurgeryConsumable::find($val);
