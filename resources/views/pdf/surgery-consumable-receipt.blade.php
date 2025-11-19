@@ -46,7 +46,11 @@
 
 <body>
     <center>
-        <img src="./images/assets/Devi-Logo-Transparent.jpg" height='100' width='115' />
+        @if(Helper::subdomain() == 'emrsas')
+        <img src="./images/assets/devi-sas-logo.png" width="35%" /><br />
+        @else
+        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+        @endif
         <p>{{ $psc->branches->branch_name }}, {{ $psc->branches->address }}, {{ $psc->branches->contact_number }}</p>
         <p>DL Number: RLF21KL2022000540, RLF20KL2022000543</p>
         <h3>Surgery Bill</h3>

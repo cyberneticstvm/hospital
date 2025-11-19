@@ -56,7 +56,11 @@ use App\Helper\Helper;
 
 <body>
     <center>
+        @if(Helper::subdomain() == 'emrsas')
+        <img src="./images/assets/devi-sas-logo.png" width="35%" /><br />
+        @else
         <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+        @endif
     </center>
     <center>
         <h5>PATIENT MEDICAL HISTORY</h5>

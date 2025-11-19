@@ -30,7 +30,11 @@
 
 <body>
     <center>
+        @if(Helper::subdomain() == 'emrsas')
+        <img src="./images/assets/devi-sas-logo.png" width="35%" /><br />
+        @else
         <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+        @endif
         Registered Office: Maithanam, Varkala, Thiruvananthapuram. Phone: {{ $branch?->contact_number }}<br>
         Branch: Thekkumbagom, Paravur, Kollam.<br>
         DL Number: RLF21KL2022000540, RLF20KL2022000543

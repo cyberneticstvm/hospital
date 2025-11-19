@@ -1,36 +1,53 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Devi Eye Clinic & Opticians</title>
     <style>
-        table{
+        table {
             border: 1px solid #e6e6e6;
             font-size: 12px;
         }
-        thead{
+
+        thead {
             border-bottom: 1px solid #e6e6e6;
         }
-        table thead th, table tbody td{
+
+        table thead th,
+        table tbody td {
             padding: 5px;
         }
-        .bordered td, .bordered th{
+
+        .bordered td,
+        .bordered th {
             border: 1px solid #e6e6e6;
         }
-        .text-right{
+
+        .text-right {
             text-align: right;
         }
-        .fw-bold{
+
+        .fw-bold {
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
     <center>
-        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%"/><br/>
+        @if(Helper::subdomain() == 'emrsas')
+        <img src="./images/assets/devi-sas-logo.png" width="35%" /><br />
+        @else
+        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+        @endif
     </center>
-    <br/>
+    <br />
     <table width="100%" class="bordered" cellpadding="0" cellspacing="0">
-        <thead><tr><th text-align="center" colspan="4">PRODUCT TRANSFER ON {{ $transfer->tdate }}</th></tr></thead>
+        <thead>
+            <tr>
+                <th text-align="center" colspan="4">PRODUCT TRANSFER ON {{ $transfer->tdate }}</th>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td>From Branch</td>
@@ -48,17 +65,25 @@
     </table>
     <br><br>
     <table width="100%" class="bordered" cellpadding="0" cellspacing="0">
-        <thead><th>SL No.</th><th>Product</th><th>Batch</th><th>Qty</th></thead><tbody>
-        @php $c = 1; @endphp
-        @forelse($tdetails as $key => $tr)
-        <tr>
-            <td>{{ $c++ }}</td>
-            <td>{{ $tr->product_name }}</td>
-            <td>{{ $tr->batch_number }}</td>
-            <td class="text-right">{{ $tr->qty }}</td>
-        </tr>
-        @empty
-        @endforelse      
-    </tbody></table>
+        <thead>
+            <th>SL No.</th>
+            <th>Product</th>
+            <th>Batch</th>
+            <th>Qty</th>
+        </thead>
+        <tbody>
+            @php $c = 1; @endphp
+            @forelse($tdetails as $key => $tr)
+            <tr>
+                <td>{{ $c++ }}</td>
+                <td>{{ $tr->product_name }}</td>
+                <td>{{ $tr->batch_number }}</td>
+                <td class="text-right">{{ $tr->qty }}</td>
+            </tr>
+            @empty
+            @endforelse
+        </tbody>
+    </table>
 </body>
+
 </html>

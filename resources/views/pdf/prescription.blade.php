@@ -44,7 +44,11 @@
             <td width='20%'>MR.ID / Token</td>
             <td width='50%'>{{ $reference->medical_record_id }} / {{ $reference->token }}</td>
             <td rowspan='3'>
-                <img src="./images/assets/Devi-Logo-Transparent.jpg" width='40%' />
+                @if(Helper::subdomain() == 'emrsas')
+                <img src="./images/assets/devi-sas-logo.png" width="35%" /><br />
+                @else
+                <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+                @endif
             </td>
         </tr>
         <tr>

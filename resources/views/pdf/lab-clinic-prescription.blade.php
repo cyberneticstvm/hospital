@@ -34,7 +34,11 @@
 
 <body>
     <center>
-        <img src="./images/assets/Devi-Logo-Transparent.jpg" height='75' width='115' />
+        @if(Helper::subdomain() == 'emrsas')
+        <img src="./images/assets/devi-sas-logo.png" width="35%" /><br />
+        @else
+        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+        @endif
         <p>{{ $branch->branch_name }}, {{ $branch->address }}, {{ $branch->contact_number }}</p>
         <h3>Lab Test Request</h3>
     </center>

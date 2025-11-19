@@ -1,42 +1,57 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Devi Eye Clinic & Opticians</title>
     <style>
-        table{
+        table {
             border: 1px solid #e6e6e6;
             font-size: 15px;
         }
-        thead{
+
+        thead {
             border-bottom: 1px solid #e6e6e6;
         }
-        table thead th, table tbody td, table thead th{
+
+        table thead th,
+        table tbody td,
+        table thead th {
             padding: 10px;
         }
-        .bordered td{
+
+        .bordered td {
             border: 1px solid #e6e6e6;
         }
-        .text-right{
+
+        .text-right {
             text-align: right;
         }
-        .text-end{
+
+        .text-end {
             text-align: right;
         }
-        table tfoot td{
+
+        table tfoot td {
             padding: 10px;
         }
-        .fw-bold{
+
+        .fw-bold {
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
     <center>
-        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%"/><br/>
-            {{ $branch->address }}, Phone:
-            {{ $branch->contact_number }}
+        @if(Helper::subdomain() == 'emrsas')
+        <img src="./images/assets/devi-sas-logo.png" width="35%" /><br />
+        @else
+        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+        @endif
+        {{ $branch->address }}, Phone:
+        {{ $branch->contact_number }}
     </center>
-    <br/>
+    <br />
     <table width="100%" class="bordered" cellspacing="0" cellpadding="0">
         <tbody>
             <tr>
@@ -48,13 +63,17 @@
                 <td>{{ $patient->patient_id }}</td>
             </tr>
             <tr>
-                <td>Contact Number</td><td>{{ $patient->mobile_number }}</td>
-                <td>Address</td><td colspan="3">{{ $patient->address }}</td>
+                <td>Contact Number</td>
+                <td>{{ $patient->mobile_number }}</td>
+                <td>Address</td>
+                <td colspan="3">{{ $patient->address }}</td>
             </tr>
         </tbody>
     </table>
-    <br/>
-    <center><h5>STATEMENT OF ACCOUNTS</h5></center>
+    <br />
+    <center>
+        <h5>STATEMENT OF ACCOUNTS</h5>
+    </center>
     <table class="bordered" width="100%" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
@@ -69,23 +88,31 @@
         <tbody>
             @php $owedtot = 0; $baltot = 0; $paidtot = 0; @endphp
             @forelse($mrns as $key => $mrn)
-                @php
-                    $owed = App\Helper\Helper::getOwedTotal($mrn->id);
-                    $paid = App\Helper\Helper::getPaidTotal($mrn->id);
-                    $owedtot += $owed; $paidtot += $paid; $baltot += $owed - $paid;
-                @endphp
-                <tr>
-                    <td>{{ $key + 1}}</td>
-                    <td>{{ $mrn->id }}</td>
-                    <td>{{ $mrn->created_at->format('d/M/Y') }}</td>
-                    <td class="text-end">{{  number_format($owed, 2) }}</td>
-                    <td class="text-end">{{  number_format($paid, 2) }}</td>
-                    <td class="text-end">{{ number_format($owed-$paid, 2) }}</td>
-                </tr>
+            @php
+            $owed = App\Helper\Helper::getOwedTotal($mrn->id);
+            $paid = App\Helper\Helper::getPaidTotal($mrn->id);
+            $owedtot += $owed; $paidtot += $paid; $baltot += $owed - $paid;
+            @endphp
+            <tr>
+                <td>{{ $key + 1}}</td>
+                <td>{{ $mrn->id }}</td>
+                <td>{{ $mrn->created_at->format('d/M/Y') }}</td>
+                <td class="text-end">{{ number_format($owed, 2) }}</td>
+                <td class="text-end">{{ number_format($paid, 2) }}</td>
+                <td class="text-end">{{ number_format($owed-$paid, 2) }}</td>
+            </tr>
             @empty
             @endforelse
         </tbody>
-        <tfoot><tr><td colspan="3" class="text-end fw-bold">Total</td><td class="text-end fw-bold">{{  number_format($owedtot, 2) }}</td><td class="text-end fw-bold">{{ number_format($paidtot, 2) }}</td><td class="text-end fw-bold text-danger">{{  number_format($baltot, 2) }}</td></tr></tfoot>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end fw-bold">Total</td>
+                <td class="text-end fw-bold">{{ number_format($owedtot, 2) }}</td>
+                <td class="text-end fw-bold">{{ number_format($paidtot, 2) }}</td>
+                <td class="text-end fw-bold text-danger">{{ number_format($baltot, 2) }}</td>
+            </tr>
+        </tfoot>
     </table>
 </body>
+
 </html>
