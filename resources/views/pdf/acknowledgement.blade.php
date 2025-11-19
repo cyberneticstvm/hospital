@@ -46,7 +46,11 @@
 
 <body>
     <center>
+        @if(Helper::subdomain() == 'emrsas')
+        <img src="./images/assets/devi-sas-logo.png" width="35%" />
+        @else
         <img src="./images/assets/Devi-Logo-Transparent.jpg" height='100' width='115' />
+        @endif
         <p>{{ $ack?->branch?->branch_name }}, {{ $ack?->branch?->address }}, {{ $ack?->branch?->contact_number }}</p>
         <p>DL Number: RLF21KL2022000540, RLF20KL2022000543</p>
         <h3>Patient Acknowledgement</h3>
