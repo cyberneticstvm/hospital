@@ -46,7 +46,11 @@
 
 <body>
     <center>
-        <img src="./images/assets/Devi-Logo-Transparent.jpg" height='100' width='115' />
+        @if(Helper::subdomain() == 'emrsas')
+        <img src="./images/assets/devi-sas-logo.png" width="35%" /><br />
+        @else
+        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+        @endif
         <p>{{ $ds->branches->branch_name }}, {{ $ds->branches->address }}, {{ $ds->branches->contact_number }}</p>
         <h3>Discharge Summary</h3>
     </center>
