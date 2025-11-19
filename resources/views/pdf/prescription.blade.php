@@ -47,7 +47,7 @@
                 @if(Helper::subdomain() == 'emrsas')
                 <img src="./images/assets/devi-sas-logo.png" width="35%" /><br />
                 @else
-                <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+                <img src="./images/assets/Devi-Logo-Transparent.jpg" width="25%" /><br />
                 @endif
             </td>
         </tr>
