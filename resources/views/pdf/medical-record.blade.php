@@ -59,13 +59,17 @@ use App\Helper\Helper;
 
 <body>
     <center>
+        @if(Helper::subdomain() == 'emrsas')
+        <img src="./images/assets/devi-sas-logo.png" width="15%" /><br />
+        @else
         <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+        @endif
         {{ $branch->address }}, Phone:
         {{ $branch->contact_number }}
     </center>
     <br />
     <center>
-        <h5>PATIENT MEDICAL RECORD (MRN: {{ $record->mrn }}) - {{ Helper::subdomain() }}</h5>
+        <h5>PATIENT MEDICAL RECORD (MRN: {{ $record->mrn }})</h5>
     </center>
     <table width="100%" cellspacing="0" cellpadding="0">
         <tbody>
