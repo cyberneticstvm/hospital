@@ -34,6 +34,11 @@ class Helper
         $this->secret = 'fdjsvsgdf4dhgf687f4bg54g4hf787';
     }
 
+    public function subdomain()
+    {
+        return env('SUBDOMAIN');
+    }
+
     public static function domain_url()
     {
         $branch = Branch::where('id', Session::get('branch'))->first();

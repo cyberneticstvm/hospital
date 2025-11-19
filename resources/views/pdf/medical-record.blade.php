@@ -65,7 +65,7 @@ use App\Helper\Helper;
     </center>
     <br />
     <center>
-        <h5>PATIENT MEDICAL RECORD (MRN: {{ $record->mrn }})</h5>
+        <h5>PATIENT MEDICAL RECORD (MRN: {{ $record->mrn }}) - {{ Helper::subdomain() }}</h5>
     </center>
     <table width="100%" cellspacing="0" cellpadding="0">
         <tbody>
