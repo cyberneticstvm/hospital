@@ -36,7 +36,7 @@ class Helper
 
     public static function subdomain()
     {
-        return env('SUBDOMAIN');
+        return Config::get('myconfig.domain.subdomain');
     }
 
     public static function domain_url()
