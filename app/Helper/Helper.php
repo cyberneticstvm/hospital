@@ -34,7 +34,7 @@ class Helper
         $this->secret = 'fdjsvsgdf4dhgf687f4bg54g4hf787';
     }
 
-    public function subdomain()
+    public static function subdomain()
     {
         return env('SUBDOMAIN');
     }
