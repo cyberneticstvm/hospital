@@ -1,42 +1,62 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Devi Eye Clinic & Opticians</title>
     <style>
-        table{
+        table {
             border: 1px solid #e6e6e6;
             font-size: 12px;
         }
-        thead{
+
+        thead {
             border-bottom: 1px solid #e6e6e6;
         }
-        table thead th, table tbody td, table tfoot td{
+
+        table thead th,
+        table tbody td,
+        table tfoot td {
             padding: 5px;
         }
-        .bordered td{
+
+        .bordered td {
             border: 1px solid #e6e6e6;
         }
-        .text-right{
+
+        .text-right {
             text-align: right;
         }
     </style>
 </head>
+
 <body>
     <center>
-        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%"/><br/>
-            {{ $branch->address }}, Phone:
-            {{ $branch->contact_number }}
+        @if(Helper::subdomain() == 'emrsas')
+        <img src="./images/assets/devi-sas-logo.png" width="35%" /><br />
+        @else
+        <img src="./images/assets/Devi-Logo-Transparent.jpg" width="15%" /><br />
+        @endif
+        {{ $branch->address }}, Phone:
+        {{ $branch->contact_number }}
     </center>
-    <br/>
+    <br />
     <table width="100%">
-        <thead><tr><th text-align="center" colspan="4">TONOMETRY REPORT</th></tr></thead>
+        <thead>
+            <tr>
+                <th text-align="center" colspan="4">TONOMETRY REPORT</th>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td>Patient Name / ID / MR.ID</td>
                 <td>{{ $patient->patient_name }} / {{ $patient->patient_id }} / {{ $tonometry->medical_record_id }}</td>
-                <td>Date</td><td>{{ date('d/M/Y', strtotime($tonometry->created_at)) }}</td>
+                <td>Date</td>
+                <td>{{ date('d/M/Y', strtotime($tonometry->created_at)) }}</td>
             </tr>
-            <tr><td>Address</td><td colspan="3">{{ $patient->address }}</td></tr>
+            <tr>
+                <td>Address</td>
+                <td colspan="3">{{ $patient->address }}</td>
+            </tr>
         </tbody>
     </table>
     <br />
@@ -45,24 +65,25 @@
             <tr>
                 <td></td>
                 <td>NCT</td>
-                <td>AT</td>                                                                               
+                <td>AT</td>
             </tr>
             <tr>
                 <td>OD</td>
                 <td>{{ $tonometry->nct_od }} {{ ($tonometry->nct_od) ? 'mmHg' : '' }}</td>
-                <td>{{ $tonometry->at_od }} {{ ($tonometry->at_od) ? 'mmHg' : '' }}</td>                                                                                
+                <td>{{ $tonometry->at_od }} {{ ($tonometry->at_od) ? 'mmHg' : '' }}</td>
             </tr>
             <tr>
                 <td>OS</td>
                 <td>{{ $tonometry->nct_os }} {{ ($tonometry->nct_os) ? 'mmHg' : '' }}</td>
-                <td>{{ $tonometry->at_os }} {{ ($tonometry->at_os) ? 'mmHg' : '' }}</td>                                                                                
+                <td>{{ $tonometry->at_os }} {{ ($tonometry->at_os) ? 'mmHg' : '' }}</td>
             </tr>
             <tr>
                 <td>TIME</td>
                 <td>{{ ($tonometry->nct_od > 0 || $tonometry->nct_os > 0) ? $tonometry->nct_time : '' }}</td>
-                <td>{{ ($tonometry->at_od > 0 || $tonometry->at_os > 0) ? $tonometry->at_time : '' }}</td>                                                                               
+                <td>{{ ($tonometry->at_od > 0 || $tonometry->at_os > 0) ? $tonometry->at_time : '' }}</td>
             </tr>
         </tbody>
     </table>
 </body>
+
 </html>
