@@ -567,7 +567,7 @@ class HelperController extends Controller
         $owed = 0.00;
         $paid = DB::table('patient_payments')->where('type', '!=', 8)->where('patient_id', $patient_id)->sum('amount');
         foreach ($mrns as $key => $val) :
-            $owed += $this->getOwedTotal($val->id) - $val->discount;
+            $owed += $this->getOwedTotal($val->id);
         endforeach;
         return $owed - $paid;
     }
