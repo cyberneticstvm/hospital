@@ -307,7 +307,7 @@ class HelperController extends Controller
             $html .= "<td>" . $record->patient_name . "</td>";
             $html .= "<td>" . $record->patient_id . "</td>";
             $html .= "<td>" . $record->rdate . "</td>";
-            $html .= "<td>" . $record->notes . ' | ' . $record->rc_number . "</td>";
+            $html .= "<td>" . $record->notes . ' | Vehicle Card: ' . $record->rc_number . "</td>";
             $html .= "<td class='text-end'>" . $record->discount . "</td>";
             $html .= "</tr>";
             $tot += $record->discount;
