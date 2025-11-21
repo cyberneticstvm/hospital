@@ -64,7 +64,9 @@
                                         <tbody class="tblPharmacy">
                                             @php $c = 1; @endphp
                                             @forelse($records as $key => $record)
-                                            @php $bnos = App\Http\Controllers\HelperController::getProductForTransferForEdit($record->product, Session::get('branch')); @endphp
+                                            @php /*$bnos = App\Http\Controllers\HelperController::getProductForTransferForEdit($record->product, Session::get('branch'));*/
+                                            $bnos = Helper::getStock($record->product, Session::get('branch'), $record->qty);
+                                            @endphp
                                             <tr>
                                                 <td>
                                                     <select class="form-control form-control-sm show-tick ms select2 selProductForTransfer selProductForPurchase" data-placeholder="Select" name="product[]" required='required'>
