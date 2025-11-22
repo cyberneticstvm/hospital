@@ -259,7 +259,7 @@ class PurchaseController extends Controller
                 $data = [];
                 foreach ($request->product as $key => $item):
                     $product = Product::findOrFail($item);
-                    $tax_amount = ((float)$request->price[$key] * $product->category->tax_percentage) / 100; // tax amount per qty
+                    $tax_amount = ((float)$request->purchase_price[$key] * $product->category->tax_percentage) / 100; // tax amount per qty
                     $data[] = [
                         'purchase_id' => $purchase->id,
                         'product' => $product->id,
