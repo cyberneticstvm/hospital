@@ -71,7 +71,7 @@
             <th>Batch</th>
             <th>Qty</th>
             <th>MRP</th>
-            <th>Price</th>
+            <th>Pur.Price</th>
             <th>CGST</th>
             <th>SGST</th>
             <th>Total</th>
@@ -88,7 +88,7 @@
                 <td>{{ $pur->batch_number }}</td>
                 <td class="text-right">{{ $pur->qty }}</td>
                 <td class="text-right">{{ number_format($pur->mrp, 2) }}</td>
-                <td class="text-right">{{ number_format($pur->price, 2) }}</td>
+                <td class="text-right">{{ number_format($pur->purchase_price, 2) }}</td>
                 <td class="text-right">{{ number_format(($pur->tax_amount * $pur->qty) / 2, 2) }}</td>
                 <td class="text-right">{{ number_format(($pur->tax_amount * $pur->qty) / 2, 2) }}</td>
                 <td class="text-right">{{ number_format($pur->total, 2) }}</td>
