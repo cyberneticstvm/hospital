@@ -107,7 +107,7 @@
                                                         @enderror
                                                     </td>
                                                     <td>
-                                                        {{ Form::number('purchase_price[]', $item->purchase_price, ['min' => 1,  'max' => '', 'step' => 'any', 'class' => 'form-control form-control-md calcTot purchasePrice', 'placeholder' => '0.00', 'required' => 'required']) }}
+                                                        {{ Form::number('purchase_price[]', $item->purchase_price, ['min' => '',  'max' => '', 'step' => 'any', 'class' => 'form-control form-control-md calcTot purchasePrice', 'placeholder' => '0.00', 'required' => 'required']) }}
                                                         @error('purchase_price')
                                                         <small class="text-danger">{{ $errors->first('purchase_price') }}</small>
                                                         @enderror
