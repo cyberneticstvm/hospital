@@ -776,7 +776,7 @@ class ReportController extends Controller
 
         $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $branch)->where('p.used_for', 'Customer')->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
 
-        $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('m.status', 1)->where('p.branch', $branch)->whereBetween('p.updated_at', [$startDate, $endDate])->sum('m.total');
+        $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('m.status', 1)->where('p.branch', $branch)->whereBetween('m.updated_at', [$startDate, $endDate])->sum('m.total');
 
         $vision = DB::table('spectacles as s')->leftJoin('patient_medical_records as m', 'm.id', '=', 's.medical_record_id')->where('m.branch', $branch)->whereBetween('s.created_at', [$startDate, $endDate])->sum('s.fee');
 
