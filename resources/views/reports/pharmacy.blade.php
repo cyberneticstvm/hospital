@@ -88,7 +88,7 @@
                         </form>
                     </div>
                     <div class="card-body">
-                        <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
+                        <table id="dataTblMed" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>SL No.</th>
