@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Permission;
 use App\Models\Surgery;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class SurgeryController extends Controller
 {
@@ -78,7 +79,10 @@ class SurgeryController extends Controller
         $surgery = Surgery::find($id);
         $patient = DB::table('patient_registrations')->find($surgery->patient_id);
         $doctor = DB::table('doctors')->find($surgery->doctor_id);
-        $status = DB::table('types')->where('category', 'surgery')->get();
+        $status = [];
+        if (in_array(Auth::user()->roles->first()->name, ['Admin', 'CEO'])):
+            $status = DB::table('types')->where('category', 'surgery')->get();
+        endif;
         return view('surgery.edit', compact('surgery', 'stypes', 'patient', 'doctor', 'doctors', 'status'));
     }
 
