@@ -15,7 +15,7 @@ $(function () {
     $('#dataTbl').dataTable({
         responsive: true
     });
-    $('#dTblApp, #dataTblMed').dataTable({
+    $('#dTblApp, #dataTblMed, #dTblSurgery').dataTable({
         responsive: true,
         dom: 'Bfrtip',
         buttons: [

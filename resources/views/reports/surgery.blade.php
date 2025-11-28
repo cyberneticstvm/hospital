@@ -49,7 +49,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <table id="dTblApp" class="table table-sm dataTable table-striped table-hover align-middle">
+                        <table id="dTblSurgery" class="table table-sm dataTable table-striped table-hover align-middle">
                             <thead>
                                 <tr>
                                     <th>SL No.</th>
