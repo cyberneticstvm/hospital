@@ -92,13 +92,15 @@
                             <thead>
                                 <tr>
                                     <th>SL No.</th>
-                                    <th>MR.ID</th>
-                                    <th>Patient Name</th>
-                                    <th>Patient ID</th>
-                                    <th>Doctor</th>
-                                    <th>Prescription</th>
                                     <th>Bill No</th>
-                                    <th>Receipt</th>
+                                    <th>Date</th>
+                                    <th>GSTIN</th>
+                                    <th>Customer Name</th>
+                                    <th>Voucher Type</th>
+                                    <th>CGST</th>
+                                    <th>SGST</th>
+                                    <th>Net Amount</th>
+                                    <th>Invoice Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,30 +108,23 @@
                                 @foreach($records as $med)
                                 <tr>
                                     <td>{{ ++$i }}</td>
-                                    <td>{{ $med->medical_record_id }}</td>
-                                    <td>{{ $med->patient_name }}</td>
-                                    <td>{{ $med->patient_id }}</td>
-                                    <td>{{ $med->doctor_name }}</td>
-                                    <td class="text-center"><a href="/generate-pharmacy-out/{{ $med->medical_record_id }}/" target="_blank">
-                                            @if($med->status == 1)
-                                            <i class="fa fa-file-o text-info"></i>
-                                            @endif
-                                        </a></td>
                                     <td>{{ $med->id }}</td>
-                                    <td class="text-center">
-                                        @if($med->status == 1)
-                                        <a href='/generate-pharmacy-bill/{{ $med->medical_record_id }}/' target='_blank'><i class="fa fa-file text-info"></i></a>
-                                        @else
-                                        {{ number_format($med->total, 2) }}
-                                        @endif
-                                    </td>
+                                    <td>{{ $med->edate }}</td>
+                                    <td></td>
+                                    <td>{{ $med->patient_name }}</td>
+                                    <td>Sales</td>
+                                    <td>{{ $med->cgst }}</td>
+                                    <td>{{ $med->sgst }}</td>
+                                    <td>{{ $med->net_amount }}</td>
+                                    <td>{{ $med->invoice_amount }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td class="fw-bold text-end" colspan="7">Total</td>
-                                    <td class="text-end fw-bold">{{ number_format($records->sum('total'), 2) }}</td>
+                                    <td class="fw-bold text-end" colspan="8">Total</td>
+                                    <td class="text-end fw-bold">{{ number_format($records->sum('net_amount'), 2) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($records->sum('invoice_amount'), 2) }}</td>
                                 </tr>
                             </tfoot>
                         </table>
