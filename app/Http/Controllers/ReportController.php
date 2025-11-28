@@ -493,7 +493,7 @@ class ReportController extends Controller
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
         $records = Purchase::where('branch_id', $request->branch)->whereBetween('purchases.created_at', [$startDate, $endDate])->when($request->product > 0, function ($q) use ($request) {
             return $q->leftJoin('purchase_details as pd', 'purchases.id', 'pd.purchase_id')->where("pd.product", $request->product);
-        })->get();
+        })->selectRaw("purchases.*")->get();
         return view('reports.purchase', compact('branches', 'records', 'inputs', 'products'));
     }
 
