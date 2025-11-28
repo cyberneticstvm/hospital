@@ -71,7 +71,7 @@
                                     <td>{{ $row->id }}</td>
                                     <td>{{ $row->created_at->format('d/M/Y') }}</td>
                                     <td></td>
-                                    <td>{{ $row->patient->patient_name }}</td>
+                                    <td>{{ $row->patient_name }}</td>
                                     <td>Surgery</td>
                                     <td>0.00</td>
                                     <td>0.00</td>
