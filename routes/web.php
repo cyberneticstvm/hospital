@@ -709,7 +709,10 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::post('/reports/patient/surgery/payments', 'App\Http\Controllers\ReportController@fetchSurgeryPayments')->name('reports.patient.surgery.payments.fetch');
 
     Route::get('/reports/patient/pharmacy', 'App\Http\Controllers\ReportController@pharmacy')->name('reports.patient.pharmacy');
-    Route::post('/reports/patient/pharmacy', 'App\Http\Controllers\ReportController@fetchPharmacy')->name('reports.patient.pharmacy.fetch');
+    Route::post('/reports/patient/pharmacy', 'App\Http\Controllers\ReportController@fetchPharmacy')->name('reports.purchase');
+
+    Route::get('/reports/purchase', 'App\Http\Controllers\ReportController@purchase')->name('reports.patient.pharmacy');
+    Route::post('/reports/purchase', 'App\Http\Controllers\ReportController@fetchPurchase')->name('reports.purchase.fetch');
 
     Route::get('/reports/mrecord/', 'App\Http\Controllers\ReportController@showmRecord')->name('reports.mrecord.show');
     Route::post('/reports/mrecord/', 'App\Http\Controllers\ReportController@fetchmRecord')->name('reports.mrecord.fetch');
