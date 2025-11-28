@@ -69,6 +69,16 @@
                                     <small class="text-danger">{{ $errors->first('branch') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Type<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="type">
+                                        <option value="in" {{ ($inputs && $inputs[4] == 'in') ? 'selected'  : '' }}>Pharmacy In</option>
+                                        <option value="out" {{ ($inputs && $inputs[4] == 'out') ? 'selected'  : '' }}>Pharmacy Out</option>
+                                    </select>
+                                    @error('type')
+                                    <small class="text-danger">{{ $errors->first('type') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
