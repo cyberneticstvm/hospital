@@ -42,6 +42,7 @@
                     <th>Patient Name</th>
                     <th>Other Info.</th>
                     <th>Date</th>
+                    <th>Used For</th>
                     <th>Receipt</th>
                     <th>Edit</th>
                     <th>Remove</th>
@@ -55,6 +56,7 @@
                     <td>{{ $record->patient_name }}</td>
                     <td>{{ $record->other_info }}</td>
                     <td>{{ $record->cdate }}</td>
+                    <td>{{ $record->used_for }}</td>
                     <td class="text-center"><a href="/pharmacy/receipt/{{ $record->id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('pharmacy.edit', $record->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
