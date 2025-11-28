@@ -99,7 +99,7 @@
                                     <td>{{ $pur->supplierr->name }}</td>
                                     <td>{{ $pur->invoice_number }}</td>
                                     <td>{{ $pur->id }}</td>
-                                    <td></td>
+                                    <td class="text-center"><a href="/purchase/bill/{{ $pur->id }}" target="_blank"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
                                     <td>{{ number_format($pur->details->sum('total'), 2) }}</td>
                                 </tr>
                                 @endforeach
