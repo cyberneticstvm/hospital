@@ -640,14 +640,16 @@ class HelperController extends Controller
         try {
 
             if ($request->medical_record):
-                Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->id, 'mrecord');
-                DocumentTrack::create([
+                $res = Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->id, 'mrecord');
+                dd($res);
+                die;
+            /*DocumentTrack::create([
                     'patient_id' => $mr->patient_id,
                     'created_by' => $request->user()->id,
                     'sent_to' => $request->mobile_number,
                     'sent_via' => 'wa',
                     'doc_type' => 'mrecord',
-                ]);
+                ]);*/
             endif;
             if ($request->patient_history):
                 Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->patient_id, 'phistory');
