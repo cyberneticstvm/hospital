@@ -545,7 +545,7 @@ class ReportController extends Controller
         $endDate = Carbon::parse($request->to_date)->endOfDay();
         $branches = $this->getBranches($this->branch);
         $inputs = array($request->from_date, $request->to_date, $request->branch);
-        $records = Surgery::leftJoin('patient_medical_records as pmr', 'surgeries.medical_record_id', 'pmr.id')->select('surgeries.id', 'surgeries.doctor_id', 'surgeries.patient_id', 'surgeries.branch', 'surgeries.surgery_type', 'pmr.created_at')->whereBetween('pmr.created_at', [$startDate, $endDate])->when($request->branch > 0, function ($q) use ($request) {
+        $records = Surgery::leftJoin('patient_medical_records as pmr', 'surgeries.medical_record_id', 'pmr.id')->leftJoin("patient_surgery_consumables AS psc", "surgeries.id", "psc.surgery_id")->select('surgeries.id', 'surgeries.doctor_id', 'surgeries.patient_id', 'surgeries.branch', 'surgeries.surgery_type', 'pmr.created_at')->whereBetween('pmr.created_at', [$startDate, $endDate])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('surgeries.branch', $request->branch);
         })->get();
         return view('reports.surgery', compact('branches', 'records', 'inputs'));
