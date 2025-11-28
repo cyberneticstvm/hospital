@@ -53,24 +53,30 @@
                             <thead>
                                 <tr>
                                     <th>SL No.</th>
-                                    <th>Patient Name</th>
-                                    <th>Patient ID</th>
-                                    <th>Branch</th>
-                                    <th>Doctor</th>
-                                    <th>Surgery Type</th>
-                                    <th>Reg.Date</th>
+                                    <th>Bill No</th>
+                                    <th>Date</th>
+                                    <th>GSTIN</th>
+                                    <th>Customer Name</th>
+                                    <th>Voucher Type</th>
+                                    <th>CGST</th>
+                                    <th>SGST</th>
+                                    <th>Net Amount</th>
+                                    <th>Invoice Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($records as $key => $row)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $row->patient->patient_name }}</td>
-                                    <td>{{ $row->patient->patient_id }}</td>
-                                    <td>{{ $row->branchdetails->branch_name }}</td>
-                                    <td>{{ $row->doctor->doctor_name }}</td>
-                                    <td>{{ $row->stype?->surgery_name }}</td>
+                                    <td>{{ $row->id }}</td>
                                     <td>{{ $row->created_at->format('d/M/Y') }}</td>
+                                    <td></td>
+                                    <td>{{ $row->patient->patient_name }}</td>
+                                    <td>Surgery</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>{{ $row->total }}</td>
+                                    <td>{{ $row->total_after_discount }}</td>
                                 </tr>
                                 @empty
                                 @endforelse
