@@ -193,7 +193,16 @@ class DashboardController extends Controller
         $br = $this->branch;
         //$tot = DB::table('patient_medicine_records')->selectRaw("SUM(total) AS total, DATE_FORMAT(updated_at, '%d/%b') AS day")->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->where('branch_id', $br)->where('status', 1)->whereNull('deleted_at')->whereNull('stock_updated_at')->groupBy('day')->orderByDesc('id')->get();
 
-        $tot = DB::select("SELECT SUM(pmr.total) AS total, DATE_FORMAT(pmr.updated_at, '%d/%b') AS day FROM patient_medicine_records pmr WHERE MONTH(pmr.updated_at) = MONTH(NOW()) AND YEAR(pmr.updated_at) = YEAR(NOW()) AND pmr.branch_id = ? AND pmr.deleted_at IS NULL AND pmr.stock_updated_at IS NULL GROUP BY day ORDER BY pmr.id DESC", [$br]);
+        $tot = DB::select("SELECT * FROM (SELECT SUM(pmr.total) AS total, DATE_FORMAT(pmr.updated_at, '%d/%b') AS day FROM patient_medicine_records pmr WHERE MONTH(pmr.updated_at) = MONTH(NOW()) AND YEAR(pmr.updated_at) = YEAR(NOW()) AND pmr.branch_id = ? AND pmr.deleted_at IS NULL AND pmr.stock_updated_at IS NULL GROUP BY day ORDER BY pmr.id DESC) AS tbl1", [$br]);
+        return json_encode($tot);
+    }
+
+    public function pharmacyOutMonth()
+    {
+        $br = $this->branch;
+        //$tot = DB::table('patient_medicine_records')->selectRaw("SUM(total) AS total, DATE_FORMAT(updated_at, '%d/%b') AS day")->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->where('branch_id', $br)->where('status', 1)->whereNull('deleted_at')->whereNull('stock_updated_at')->groupBy('day')->orderByDesc('id')->get();
+
+        $tot = DB::select("SELECT SUM(ph.total) AS total, DATE_FORMAT(p.updated_at, '%d/%b') AS day FROM pharmacies p LEFT JOIN pharmacy_records ph ON p.id = ph.pharmacy_id WHERE MONTH(p.updated_at) = MONTH(NOW()) AND YEAR(p.updated_at) = YEAR(NOW()) AND p.branch = ? AND p.deleted_at IS NULL AND p.stock_updated_at IS NULL GROUP BY day ORDER BY p.id DESC", [$br]);
         return json_encode($tot);
     }
 
