@@ -110,7 +110,11 @@
                                     <td>{{ $med->patient_name }}</td>
                                     <td>{{ $med->patient_id }}</td>
                                     <td>{{ $med->doctor_name }}</td>
-                                    <td class="text-center"><a href="/generate-pharmacy-out/{{ $med->medical_record_id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
+                                    <td class="text-center"><a href="/generate-pharmacy-out/{{ $med->medical_record_id }}/" target="_blank">
+                                            @if($med->status == 1)
+                                            <i class="fa fa-file-o text-info"></i>
+                                            @endif
+                                        </a></td>
                                     <td>{{ $med->id }}</td>
                                     <td class="text-center">
                                         @if($med->status == 1)
