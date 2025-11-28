@@ -191,7 +191,9 @@ class DashboardController extends Controller
     public function pharmacyMonth()
     {
         $br = $this->branch;
-        $tot = DB::table('patient_medicine_records')->selectRaw("SUM(total) AS total, DATE_FORMAT(updated_at, '%d/%b') AS day")->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->where('branch_id', $br)->where('status', 1)->whereNull('deleted_at')->whereNull('stock_updated_at')->groupBy('day')->orderByDesc('id')->get();
+        //$tot = DB::table('patient_medicine_records')->selectRaw("SUM(total) AS total, DATE_FORMAT(updated_at, '%d/%b') AS day")->whereMonth('updated_at', Carbon::now()->month)->whereYear('updated_at', Carbon::now()->year)->where('branch_id', $br)->where('status', 1)->whereNull('deleted_at')->whereNull('stock_updated_at')->groupBy('day')->orderByDesc('id')->get();
+
+        $tot = DB::select("SELECT SUM(pmr.total) AS total, DATE_FORMAT(pmr.updated_at, '%d/%b') AS day FROM patient_medicine_records pmr WHERE MONTH(pmr.updated_at) = MONTH(NOW()) AND YEAR(pmr.updated_at) = YEAR(NOW()) AND pmr.branch_id = ? AND pmr.deleted_at IS NULL AND pmr.stock_updated_at IS NULL GROUP BY day ORDER BY pmr.id DESC", [$br]);
         return json_encode($tot);
     }
 
