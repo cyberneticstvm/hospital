@@ -491,9 +491,15 @@ class ReportController extends Controller
         $inputs = array($request->fromdate, $request->todate, $request->product, $request->branch, $request->type);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
-        $records = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->whereBetween('pmr.updated_at', [$startDate, $endDate])->where('pmr.branch_id', $request->branch)->when($request->product > 0, function ($q) use ($request) {
-            return $q->where("pmr.medicine", $request->product);
-        })->selectRaw("pmr.id, pmr.medical_record_id, pmr.status, p.patient_name, p.patient_id, doc.doctor_name, SUM(pmr.total) AS total")->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->get();
+        if ($request->type == 'in'):
+            $records = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->whereBetween('pmr.updated_at', [$startDate, $endDate])->where('pmr.branch_id', $request->branch)->when($request->product > 0, function ($q) use ($request) {
+                return $q->where("pmr.medicine", $request->product);
+            })->selectRaw("pmr.id, pmr.medical_record_id, pmr.status, p.patient_name, p.patient_id, doc.doctor_name, SUM(pmr.total) AS total")->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->get();
+        else:
+            $records = DB::table("pharmacies as p")->leftJoin("pharmacy_records as pr", "p.id", "pr.pharmacy_id")->whereBetween("p.created_at", [$startDate, $endDate])->where('p.branch', $request->branch)->when($request->product > 0, function ($q) use ($request) {
+                return $q->where("pr.product", $request->product);
+            })->selectRaw("p.id, p.medical_record_id, '' AS status, p.patient_name, '' AS patient_id, '' AS doctor_name, SUM(pr.total) AS total")->groupBy('pr.pharmacy_id')->orderByDesc('p.id')->get();
+        endif;
         return view('reports.pharmacy', compact('branches', 'records', 'inputs', 'products'));
     }
 
