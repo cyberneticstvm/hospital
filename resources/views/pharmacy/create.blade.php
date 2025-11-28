@@ -27,6 +27,7 @@
                                 <div class="col-sm-3">
                                     <label class="form-label">Used For<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" name="used_for">
+                                        <option value="">Select</option>
                                         <option value="Camp">Camp</option>
                                         <option value="OP">OP</option>
                                         <option value="OT">OT</option>

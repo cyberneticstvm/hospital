@@ -28,6 +28,7 @@
                                 <div class="col-sm-3">
                                     <label class="form-label">Used For<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" name="used_for">
+                                        <option value="" {{ $pharmacy->used_for == '' ? 'selected' : '' }}>Select</option>
                                         <option value="Camp" {{ $pharmacy->used_for == 'Camp' ? 'selected' : '' }}>Camp</option>
                                         <option value="OP" {{ $pharmacy->used_for == 'OP' ? 'selected' : '' }}>OP</option>
                                         <option value="OT" {{ $pharmacy->used_for == 'OT' ? 'selected' : '' }}>OT</option>

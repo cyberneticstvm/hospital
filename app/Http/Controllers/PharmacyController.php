@@ -56,6 +56,7 @@ class PharmacyController extends Controller
     {
         $this->validate($request, [
             'patient_name' => 'required',
+            'used_for' => 'required',
         ]);
         $input = $request->all();
         $input['created_by'] = Auth::user()->id;
