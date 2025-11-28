@@ -82,15 +82,25 @@
                             <thead>
                                 <tr>
                                     <th>SL No.</th>
-
+                                    <th>Date</th>
+                                    <th>Supplier</th>
+                                    <th>Invoice</th>
+                                    <th>Purchase No</th>
+                                    <th>Bill</th>
+                                    <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php $i = 0; @endphp
-                                @foreach($records as $med)
+                                @foreach($records as $pur)
                                 <tr>
                                     <td>{{ ++$i }}</td>
-
+                                    <td>{{ $pur->delivery_date->format('d.M.Y') }}</td>
+                                    <td>{{ $pur->supplierr->name }}</td>
+                                    <td>{{ $pur->invoice_number }}</td>
+                                    <td>{{ $pur->id }}</td>
+                                    <td></td>
+                                    <td>{{ number_format($pur->details->sum('total'), 2) }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
