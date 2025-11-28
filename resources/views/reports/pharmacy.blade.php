@@ -113,8 +113,8 @@
                                     <td></td>
                                     <td>{{ $med->patient_name }}</td>
                                     <td>Sales</td>
-                                    <td>{{ $med->cgst }}</td>
-                                    <td>{{ $med->sgst }}</td>
+                                    <td>{{ number_format($med->cgst, 2) }}</td>
+                                    <td>{{ number_format($med->sgst, 2) }}</td>
                                     <td>{{ $med->net_amount }}</td>
                                     <td>{{ $med->invoice_amount }}</td>
                                 </tr>
