@@ -494,7 +494,7 @@ class ReportController extends Controller
         if ($request->type == 'in'):
             $records = DB::table('patient_medicine_records as pmr')->leftJoin('patient_medical_records as pmr1', 'pmr.medical_record_id', '=', 'pmr1.id')->leftJoin('patient_registrations as p', 'p.id', '=', 'pmr1.patient_id')->leftJoin('doctors as doc', 'pmr1.doctor_id', '=', 'doc.id')->whereBetween('pmr.updated_at', [$startDate, $endDate])->where('pmr.branch_id', $request->branch)->when($request->product > 0, function ($q) use ($request) {
                 return $q->where("pmr.medicine", $request->product);
-            })->selectRaw("pmr.id, pmr.medical_record_id, pmr.status, p.patient_name, p.patient_id, doc.doctor_name, SUM(pmr.total) AS total, SUM(price+discount) AS net_amount, tax_amount/2 AS cgst, tax_amount/2 AS sgst, SUM(pr.total) as invoice_amount, price AS taxable_amount, DATE_FORMAT(pmr.updated_at, '%d/%m/%Y') AS edate")->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->get();
+            })->selectRaw("pmr.id, pmr.medical_record_id, pmr.status, p.patient_name, p.patient_id, doc.doctor_name, SUM(pmr.total) AS total, SUM(price+discount) AS net_amount, tax_amount/2 AS cgst, tax_amount/2 AS sgst, SUM(pmr.total) as invoice_amount, price AS taxable_amount, DATE_FORMAT(pmr.updated_at, '%d/%m/%Y') AS edate")->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->get();
         else:
             $records = DB::table("pharmacies as p")->leftJoin("pharmacy_records as pr", "p.id", "pr.pharmacy_id")->whereBetween("p.created_at", [$startDate, $endDate])->where('p.branch', $request->branch)->when($request->product > 0, function ($q) use ($request) {
                 return $q->where("pr.product", $request->product);
