@@ -641,34 +641,38 @@ class HelperController extends Controller
 
             if ($request->medical_record):
                 $res = Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->id, 'mrecord');
-                dd($res);
-                die;
-            /*DocumentTrack::create([
+                DocumentTrack::create([
                     'patient_id' => $mr->patient_id,
                     'created_by' => $request->user()->id,
                     'sent_to' => $request->mobile_number,
                     'sent_via' => 'wa',
                     'doc_type' => 'mrecord',
-                ]);*/
+                    'msg_id' => $res['messages'][0]['id'],
+                    'msg_status' => $res['messages'][0]['message_status'],
+                ]);
             endif;
             if ($request->patient_history):
-                Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->patient_id, 'phistory');
+                $res = Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->patient_id, 'phistory');
                 DocumentTrack::create([
                     'patient_id' => $mr->patient_id,
                     'created_by' => $request->user()->id,
                     'sent_to' => $request->mobile_number,
                     'sent_via' => 'wa',
                     'doc_type' => 'phistory',
+                    'msg_id' => $res['messages'][0]['id'],
+                    'msg_status' => $res['messages'][0]['message_status'],
                 ]);
             endif;
             if ($request->spectacle_prescription):
-                Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->id, 'spectacle');
+                $res = Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->id, 'spectacle');
                 DocumentTrack::create([
                     'patient_id' => $mr->patient_id,
                     'created_by' => $request->user()->id,
                     'sent_to' => $request->mobile_number,
                     'sent_via' => 'wa',
                     'doc_type' => 'spectacle',
+                    'msg_id' => $res['messages'][0]['id'],
+                    'msg_status' => $res['messages'][0]['message_status'],
                 ]);
             endif;
         } catch (Exception $e) {
