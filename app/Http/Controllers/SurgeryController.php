@@ -105,6 +105,7 @@ class SurgeryController extends Controller
         $input['updated_by'] = $request->user()->id;
         $surgery = Surgery::find($id);
         $input['branch'] = $surgery->getOriginal('branch');
+        $input['status'] = $request->status ?? $surgery->status;
         $surgery->update($input);
         return redirect()->route('surgery.index')->with('success', 'Surgery updated successfully');
     }
