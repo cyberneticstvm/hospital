@@ -37,9 +37,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //$med_types = DB::table('medicine_types')->get();
+        $med_types = DB::table('medicine_types')->get();
         $categories = DB::table('product_categories')->get();
-        $med_types = DB::table('product_categories')->get();
         $taxes = DB::table('tax')->get();
         $mans = Manufacturer::all();
         return view('product.create', compact('categories', 'taxes', 'med_types', 'mans'));
@@ -88,8 +87,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $categories = DB::table('product_categories')->get();
         $taxes = DB::table('tax')->get();
-        //$med_types = DB::table('medicine_types')->get();
-        $med_types = DB::table('product_categories')->get();
+        $med_types = DB::table('medicine_types')->get();
         $mans = Manufacturer::all();
         return view('product.edit', compact('product', 'categories', 'taxes', 'med_types', 'mans'));
     }
