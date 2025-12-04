@@ -14,10 +14,10 @@ class ProductController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:product-list|product-create|product-edit|product-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:product-create', ['only' => ['create','store']]);
-         $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:product-list|product-create|product-edit|product-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:product-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:product-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:product-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = DB::table('products as p')->leftJoin('product_categories as c', 'p.category_id', '=', 'c.id')->select('p.id', 'p.product_name', 'p.hsn', 'p.tax_percentage', 'c.category_name')->get();        
+        $products = DB::table('products as p')->leftJoin('product_categories as c', 'p.category_id', '=', 'c.id')->select('p.id', 'p.product_name', 'p.hsn', 'p.tax_percentage', 'c.category_name')->get();
         return view('product.index', compact('products'));
     }
 
@@ -37,8 +37,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $med_types = DB::table('medicine_types')->get();
+        //$med_types = DB::table('medicine_types')->get();
         $categories = DB::table('product_categories')->get();
+        $med_types = DB::table('product_categories')->get();
         $taxes = DB::table('tax')->get();
         $mans = Manufacturer::all();
         return view('product.create', compact('categories', 'taxes', 'med_types', 'mans'));
@@ -62,7 +63,7 @@ class ProductController extends Controller
         $input = $request->all();
         $input['available_for_consultation'] = ($request->has('available_for_consultation')) ? 1 : 0;
         $product = Product::create($input);
-        return redirect()->route('product.index')->with('success','Product created successfully');
+        return redirect()->route('product.index')->with('success', 'Product created successfully');
     }
 
     /**
@@ -87,9 +88,10 @@ class ProductController extends Controller
         $product = Product::find($id);
         $categories = DB::table('product_categories')->get();
         $taxes = DB::table('tax')->get();
-        $med_types = DB::table('medicine_types')->get();
+        //$med_types = DB::table('medicine_types')->get();
+        $med_types = DB::table('product_categories')->get();
         $mans = Manufacturer::all();
-        return view('product.edit', compact('product','categories', 'taxes', 'med_types', 'mans'));
+        return view('product.edit', compact('product', 'categories', 'taxes', 'med_types', 'mans'));
     }
 
     /**
@@ -105,15 +107,15 @@ class ProductController extends Controller
             'product_name' => 'required',
             'medicine_type' => 'required',
             'category_id' => 'required',
-            'tax_percentage' => 'required', 
+            'tax_percentage' => 'required',
             'manufacturer' => 'required',
         ]);
         $input = $request->all();
         $input['available_for_consultation'] = ($request->has('available_for_consultation')) ? 1 : 0;
         $product = Product::find($id);
         $product->update($input);
-        
-        return redirect()->route('product.index')->with('success','Product updated successfully');
+
+        return redirect()->route('product.index')->with('success', 'Product updated successfully');
     }
 
     /**
@@ -126,6 +128,6 @@ class ProductController extends Controller
     {
         Product::find($id)->delete();
         return redirect()->route('product.index')
-                        ->with('success','Product deleted successfully');
+            ->with('success', 'Product deleted successfully');
     }
 }
