@@ -216,26 +216,26 @@ class SurgeryConsumableController extends Controller
         endforeach;
         $input['total'] = $tot;
         $input['total_after_discount'] = $tot - $request->discount;
-        //try {
-        DB::transaction(function () use ($request, $input) {
-            $psc = PatientSurgeryConsumable::create($input);
-            foreach ($request->consumable_id as $key => $val):
-                $item = SurgeryConsumable::find($val);
-                $data[] = [
-                    'psc_id' => $psc->id,
-                    'consumable_id' => $val,
-                    'cost' => $item->price,
-                    'qty' => $request->qty[$key],
-                    'total' => $item->price * $request->qty[$key],
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ];
-            endforeach;
-            PatientSurgeryConsumableList::insert($data);
-        });
-        //} catch (Exception $e) {
-        //return redirect()->back()->with('error', $e->getMessage());
-        //}
+        try {
+            DB::transaction(function () use ($request, $input) {
+                $psc = PatientSurgeryConsumable::create($input);
+                foreach ($request->consumable_id as $key => $val):
+                    $item = SurgeryConsumable::find($val);
+                    $data[] = [
+                        'psc_id' => $psc->id,
+                        'consumable_id' => $val,
+                        'cost' => $item->price,
+                        'qty' => $request->qty[$key],
+                        'total' => $item->price * $request->qty[$key],
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+                PatientSurgeryConsumableList::insert($data);
+            });
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
         return redirect()->route('patient.surgey.consumable')->with('success', 'Record updated successfully');
     }
 
