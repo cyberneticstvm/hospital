@@ -1,7 +1,7 @@
 @extends("templates.base")
 @section("content")
 <div class="body d-flex">
-    <div class="container">        
+    <div class="container">
         <div class="row g-4">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
@@ -12,6 +12,16 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
+                        @if (session('error'))
+                        <div class="alert alert-danger" style="margin-top: 0.2rem;">
+                            {{ session('error') }}
+                        </div>
+                        @endif
+                        @if (session('success'))
+                        <div class="alert alert-success" style="margin-top: 0.2rem;">
+                            {{ session('success') }}
+                        </div>
+                        @endif
                         <form action="{{ route('patient.surgey.consumable.fetch') }}" method="post">
                             @csrf
                             <div class="row g-4">
@@ -30,7 +40,7 @@
                             @if (count($errors) > 0)
                             <div role="alert" class="text-danger mt-3">
                                 @foreach ($errors->all() as $error)
-                                    {{ $error }}
+                                {{ $error }}
                                 @endforeach
                             </div>
                             @endif
