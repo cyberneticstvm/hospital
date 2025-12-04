@@ -49,7 +49,7 @@ class MedicineController extends Controller
         $doctor = DB::table('doctors')->find($medical_record->doctor_id);
         $products = DB::table('products')->get();
         $pmodes = DB::table('payment_modes')->get();
-        $mtypes = DB::table('medicine_types')->get();
+        $mtypes = DB::table('product_categories')->get();
         return view('medicine.create', compact('medicines', 'medical_record', 'patient', 'doctor', 'products', 'pmodes', 'mtypes'));
     }
 
@@ -196,7 +196,7 @@ class MedicineController extends Controller
         $id = decrypt($id);
         $medicine_record = PatientMedicineRecord::where('medical_record_id', $id)->where('status', 0)->get();
         if ($medicine_record->isNotEmpty()):
-            $mtypes = DB::table('medicine_types')->get();
+            $mtypes = DB::table('product_categories')->get();
             $medicines = DB::table('products')->get();
             return view('medicine.add-update', compact('medicine_record', 'mtypes', 'id', 'medicines'));
         else:
