@@ -35,7 +35,7 @@ class SymptomController extends Controller
             //$data = DB::table('products as p')->leftJoin('medicine_types as t', 'p.medicine_type', 't.id')->select('p.id', DB::raw("CONCAT_WS(' - ', p.product_name, t.name) AS name"))->get();
         }
         if ($type == 'medtype') {
-            $data = DB::table('medicine_types')->select('id', 'name')->get();
+            $data = DB::table('product_categories')->select('id', 'name')->get();
         }
         if ($type == 'dosage') {
             $data = DB::table('dosages')->select('id', 'dosage as name')->get();
