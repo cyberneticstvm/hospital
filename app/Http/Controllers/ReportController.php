@@ -494,6 +494,7 @@ class ReportController extends Controller
         $records = Purchase::where('branch_id', $request->branch)->whereBetween('purchases.created_at', [$startDate, $endDate])->when($request->product > 0, function ($q) use ($request) {
             return $q->leftJoin('purchase_details as pd', 'purchases.id', 'pd.purchase_id')->where("pd.product", $request->product);
         })->selectRaw("purchases.*")->get();
+        $records = collect($records);
         return view('reports.purchase', compact('branches', 'records', 'inputs', 'products'));
     }
 
