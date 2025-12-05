@@ -78,7 +78,11 @@
             <th>Total</th>
         </thead>
         <tbody>
-            @php $c = 1; $tax_tot = 0; $pp = 0; @endphp
+            @php
+            use App\Models\Product;
+            use App\Models\ProductCategory;
+            $c = 1; $tax_tot = 0; $pp = 0;
+            @endphp
             @forelse($purchases as $key => $pur)
             @php
             $tax_tot += ($pur->tax_amount * $pur->qty) / 2;
