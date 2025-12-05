@@ -25,10 +25,10 @@ class DischargeSummaryController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:discharge-summary-list|discharge-summary-create|discharge-summary-edit|discharge-summary-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:discharge-summary-create', ['only' => ['create','store']]);
-         $this->middleware('permission:discharge-summary-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:discharge-summary-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:discharge-summary-list|discharge-summary-create|discharge-summary-edit|discharge-summary-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:discharge-summary-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:discharge-summary-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:discharge-summary-delete', ['only' => ['destroy']]);
     }
 
     public function index()
@@ -62,10 +62,13 @@ class DischargeSummaryController extends Controller
             'medication' => 'required',
         ]);
         $input = $request->all();
-        try{
-            DB::transaction(function() use ($input, $request) {
+        try {
+            DB::transaction(function () use ($input, $request) {
                 $ds = DischargeSummary::create($input);
-                /*$diagnosis = []; $procedures = [];*/ $medicines = []; $instructions = []; $reviews = [];
+                /*$diagnosis = []; $procedures = [];*/
+                $medicines = [];
+                $instructions = [];
+                $reviews = [];
                 /*if($request->diagnosis):            
                     foreach($request->diagnosis as $key => $val):
                         $diagnosis [] = [
@@ -82,8 +85,8 @@ class DischargeSummaryController extends Controller
                         ];
                     endforeach;
                 endif;*/
-                foreach($request->product_id as $key => $val):
-                    $medicines [] = [
+                foreach ($request->product_id as $key => $val):
+                    $medicines[] = [
                         'summary_id' => $ds->id,
                         'medicine' => $val,
                         'type' => $request->medicine_type[$key],
@@ -91,14 +94,14 @@ class DischargeSummaryController extends Controller
                         'notes' => $request->notes[$key],
                     ];
                 endforeach;
-                foreach($request->instructions as $key => $val):
-                    $instructions [] = [
+                foreach ($request->instructions as $key => $val):
+                    $instructions[] = [
                         'summary_id' => $ds->id,
                         'instruction_id' => $val,
                     ];
                 endforeach;
-                foreach($request->review_date as $key => $val):
-                    $reviews [] = [
+                foreach ($request->review_date as $key => $val):
+                    $reviews[] = [
                         'summary_id' => $ds->id,
                         'review_date' => $val,
                         'review_time' => $request->review_time[$key],
@@ -110,7 +113,7 @@ class DischargeSummaryController extends Controller
                 DischargeSummaryInstruction::insert($instructions);
                 DischargeSummaryReview::insert($reviews);
             });
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return back()->with('error', $e->getMessage())->withInput($request->all());
         }
         return redirect()->route('dsummary.index')->with('success', 'Record saved successfully');
@@ -128,12 +131,12 @@ class DischargeSummaryController extends Controller
             'medical_record_id' => 'required',
         ]);
         $mrecord = PatientMedicalRecord::find($request->medical_record_id);
-        if($mrecord):
+        if ($mrecord):
             $patient = DB::table('patient_registrations')->find($mrecord->patient_id);
             $diagnosis = DB::table('diagnosis')->pluck('diagnosis_name', 'id')->all();
             $procedures = DB::table('procedures')->where('type', 'S')->pluck('name', 'id')->all();
             $medicines = DB::table('products')->pluck('product_name', 'id')->all();
-            $types = DB::table('medicine_types')->pluck('name', 'id')->all();
+            $types = DB::table('product_categories')->pluck('name', 'id')->all();
             $postinstructions = PostOperativeInstruction::all();
             $doctors = doctor::all();
             return view('discharge-summary.create', compact('mrecord', 'patient', 'diagnosis', 'procedures', 'medicines', 'postinstructions', 'doctors', 'types'));
@@ -157,7 +160,8 @@ class DischargeSummaryController extends Controller
         $procedures = DB::table('procedures')->where('type', 'S')->pluck('name', 'id')->all();
         $medicines = DB::table('products')->pluck('product_name', 'id')->all();
         $postinstructions = PostOperativeInstruction::all();
-        $doctors = doctor::all(); $types = DB::table('medicine_types')->pluck('name', 'id')->all();
+        $doctors = doctor::all();
+        $types = DB::table('medicine_types')->pluck('name', 'id')->all();
         return view('discharge-summary.edit', compact('mrecord', 'patient', 'diagnosis', 'procedures', 'medicines', 'postinstructions', 'ds', 'doctors', 'types'));
     }
 
@@ -177,11 +181,14 @@ class DischargeSummaryController extends Controller
             'medication' => 'required',
         ]);
         $input = $request->all();
-        try{
-            DB::transaction(function() use ($input, $request, $id) {
+        try {
+            DB::transaction(function () use ($input, $request, $id) {
                 $ds = DischargeSummary::find($id);
                 $ds->update($input);
-                /*$diagnosis = []; $procedures = [];*/ $medicines = []; $instructions = []; $reviews = [];
+                /*$diagnosis = []; $procedures = [];*/
+                $medicines = [];
+                $instructions = [];
+                $reviews = [];
                 /*if($request->diagnosis):           
                     foreach($request->diagnosis as $key => $val):
                         if($val):
@@ -202,8 +209,8 @@ class DischargeSummaryController extends Controller
                         endif;
                     endforeach;
                 endif;*/
-                foreach($request->product_id as $key => $val):
-                    $medicines [] = [
+                foreach ($request->product_id as $key => $val):
+                    $medicines[] = [
                         'summary_id' => $ds->id,
                         'medicine' => $val,
                         'type' => $request->medicine_type[$key],
@@ -211,14 +218,14 @@ class DischargeSummaryController extends Controller
                         'notes' => $request->notes[$key],
                     ];
                 endforeach;
-                foreach($request->instructions as $key => $val):
-                    $instructions [] = [
+                foreach ($request->instructions as $key => $val):
+                    $instructions[] = [
                         'summary_id' => $ds->id,
                         'instruction_id' => $val,
                     ];
                 endforeach;
-                foreach($request->review_date as $key => $val):
-                    $reviews [] = [
+                foreach ($request->review_date as $key => $val):
+                    $reviews[] = [
                         'summary_id' => $ds->id,
                         'review_date' => $val,
                         'review_time' => $request->review_time[$key],
@@ -235,7 +242,7 @@ class DischargeSummaryController extends Controller
                 DischargeSummaryInstruction::insert($instructions);
                 DischargeSummaryReview::insert($reviews);
             });
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return back()->with('error', $e->getMessage())->withInput($request->all());
         }
         return redirect()->route('dsummary.index')->with('success', 'Record updated successfully');
