@@ -161,7 +161,7 @@ class DischargeSummaryController extends Controller
         $medicines = DB::table('products')->pluck('product_name', 'id')->all();
         $postinstructions = PostOperativeInstruction::all();
         $doctors = doctor::all();
-        $types = DB::table('medicine_types')->pluck('name', 'id')->all();
+        $types = DB::table('product_categories')->pluck('name', 'id')->all();
         return view('discharge-summary.edit', compact('mrecord', 'patient', 'diagnosis', 'procedures', 'medicines', 'postinstructions', 'ds', 'doctors', 'types'));
     }
 
