@@ -480,7 +480,7 @@ class PDFController extends Controller
     public function purchasebill($id)
     {
         $purchase = DB::table('purchases')->find($id);
-        $purchases = DB::table('purchase_details as pd')->leftJoin('products as p', 'p.id', '=', 'pd.product')->selectRaw("pd.*, p.product_name, p.tax_percentage")->where('purchase_id', $purchase->id)->get();
+        $purchases = DB::table('purchase_details as pd')->leftJoin('products as p', 'p.id', '=', 'pd.product')->selectRaw("pd.*, p.product_name, p.tax_percentage, p.id AS pid")->where('purchase_id', $purchase->id)->get();
         $tot = $purchases->sum('total');
         $supplier = DB::table('suppliers')->find($purchase->supplier);
         $pdf = PDF::loadView('/pdf/purchase-bill', compact('purchase', 'purchases', 'supplier', 'tot'));
