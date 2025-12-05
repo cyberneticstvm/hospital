@@ -104,8 +104,8 @@
                                     <td>{{ $pur->id }}</td>
                                     <td class="text-center"><a href="/purchase/bill/{{ $pur->id }}" target="_blank"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
                                     <td>{{ number_format($pur->details()->sum('purchase_price'), 2) }}</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ number_format($pur->details()->sum('tax_amount') / 2, 2) }}</td>
+                                    <td>{{ number_format($pur->details()->sum('tax_amount') / 2, 2) }}</td>
                                     <td>{{ number_format($pur->details->sum('total'), 2) }}</td>
                                 </tr>
                                 @endforeach
