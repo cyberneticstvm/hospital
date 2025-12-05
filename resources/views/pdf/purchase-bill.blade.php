@@ -71,16 +71,18 @@
             <th>Batch</th>
             <th>Qty</th>
             <th>MRP</th>
+            <th>Tax%</th>
             <th>Pur.Price</th>
             <th>CGST</th>
             <th>SGST</th>
             <th>Total</th>
         </thead>
         <tbody>
-            @php $c = 1; $tax_tot = 0; @endphp
+            @php $c = 1; $tax_tot = 0; $pp = 0; @endphp
             @forelse($purchases as $key => $pur)
             @php
             $tax_tot += ($pur->tax_amount * $pur->qty) / 2;
+            $pp += $pur->purchase_price;
             @endphp
             <tr>
                 <td>{{ $c++ }}</td>
@@ -88,6 +90,7 @@
                 <td>{{ $pur->batch_number }}</td>
                 <td class="text-right">{{ $pur->qty }}</td>
                 <td class="text-right">{{ number_format($pur->mrp, 2) }}</td>
+                <td class="text-right">{{ $pur->tax_percentage }}</td>
                 <td class="text-right">{{ number_format($pur->purchase_price, 2) }}</td>
                 <td class="text-right">{{ number_format(($pur->tax_amount * $pur->qty) / 2, 2) }}</td>
                 <td class="text-right">{{ number_format(($pur->tax_amount * $pur->qty) / 2, 2) }}</td>
@@ -97,6 +100,7 @@
             @endforelse
             <tr>
                 <td colspan="6" class="text-right fw-bold">Total</td>
+                <td class="text-right fw-bold">{{ number_format($pp, 2) }}</td>
                 <td class="text-right fw-bold">{{ number_format($tax_tot, 2) }}</td>
                 <td class="text-right fw-bold">{{ number_format($tax_tot, 2) }}</td>
                 <td class="text-right fw-bold">{{ number_format($tot, 2) }}</td>
