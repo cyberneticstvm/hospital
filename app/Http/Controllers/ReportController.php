@@ -21,6 +21,7 @@ use App\Models\ProcedureType;
 use App\Models\Product;
 use App\Models\ProductTransfer;
 use App\Models\Purchase;
+use App\Models\PurchaseDetail;
 use App\Models\RoyaltyCard;
 use App\Models\Spectacle;
 use App\Models\Surgery;
@@ -472,7 +473,7 @@ class ReportController extends Controller
 
     public function purchase()
     {
-        $inputs = array(date('d/M/Y'), date('d/M/Y'), '', $this->branch);
+        $inputs = array(date('d/M/Y'), date('d/M/Y'), '', $this->branch, 'c');
         $branches = $this->getBranches($this->branch);
         $products = Product::orderBy('product_name')->get();
         $records = collect();
@@ -491,9 +492,15 @@ class ReportController extends Controller
         $inputs = array($request->fromdate, $request->todate, $request->product, $request->branch, $request->type);
         $startDate = Carbon::createFromFormat('d/M/Y', $request->fromdate)->startOfDay();
         $endDate = Carbon::createFromFormat('d/M/Y', $request->todate)->endOfDay();
-        $records = Purchase::where('branch_id', $request->branch)->whereBetween('purchases.created_at', [$startDate, $endDate])->when($request->product > 0, function ($q) use ($request) {
-            return $q->leftJoin('purchase_details as pd', 'purchases.id', 'pd.purchase_id')->where("pd.product", $request->product);
-        })->selectRaw("purchases.*")->get();
+        if ($request->type == 'c'):
+            $records = Purchase::where('branch_id', $request->branch)->whereBetween('purchases.created_at', [$startDate, $endDate])->when($request->product > 0, function ($q) use ($request) {
+                return $q->leftJoin('purchase_details as pd', 'purchases.id', 'pd.purchase_id')->where("pd.product", $request->product);
+            })->selectRaw("purchases.*")->get();
+        else:
+            $records = PurchaseDetail::leftJoin('purchases AS p', 'p.id', 'purchase_details AS pd')->leftJoin('suppliers AS s', 's.id', 'p.supplier')->whereBetween('p.created_at', [$startDate, $endDate])->when($request->product > 0, function ($q) use ($request) {
+                return $q->where("pd.product", $request->product);
+            })->selectRaw("p.id AS pid, p.delivery_date, p.invoice_number, s.name AS sname")->get();
+        endif;
         return view('reports.purchase', compact('branches', 'records', 'inputs', 'products'));
     }
 

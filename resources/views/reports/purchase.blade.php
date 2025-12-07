@@ -69,6 +69,16 @@
                                     <small class="text-danger">{{ $errors->first('branch') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Type</label>
+                                    <select class="form-control form-control-md select2" data-placeholder="Select" name="type">
+                                        <option value="c">Consolidated</option>
+                                        <option value="d">Detailed</option>
+                                    </select>
+                                    @error('type')
+                                    <small class="text-danger">{{ $errors->first('type') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
@@ -95,6 +105,7 @@
                             </thead>
                             <tbody>
                                 @php $i = 0; @endphp
+                                @if($inputs[0] == 'c')
                                 @foreach($records as $pur)
                                 <tr>
                                     <td>{{ ++$i }}</td>
@@ -109,6 +120,22 @@
                                     <td>{{ number_format($pur->details->sum('total'), 2) }}</td>
                                 </tr>
                                 @endforeach
+                                @else
+                                @foreach($records as $pur)
+                                <tr>
+                                    <td>{{ ++$i }}</td>
+                                    <td>{{ $pur->delivery_date->format('d.M.Y') }}</td>
+                                    <td>{{ $pur->sname }}</td>
+                                    <td>{{ $pur->invoice_number }}</td>
+                                    <td>{{ $pur->pid }}</td>
+                                    <td class="text-center"><a href="/purchase/bill/{{ $pur->pid }}" target="_blank"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
