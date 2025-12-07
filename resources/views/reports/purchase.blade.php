@@ -129,10 +129,10 @@
                                     <td>{{ $pur->invoice_number }}</td>
                                     <td>{{ $pur->pid }}</td>
                                     <td class="text-center"><a href="/purchase/bill/{{ $pur->pid }}" target="_blank"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ number_format($pur->purchase_price, 2) }}</td>
+                                    <td>{{ number_format($pur->tax_amount/2, 2) }}</td>
+                                    <td>{{ number_format($pur->tax_amount/2, 2) }}</td>
+                                    <td>{{ number_format($pur->total, 2) }}</td>
                                 </tr>
                                 @endforeach
                                 @endif
