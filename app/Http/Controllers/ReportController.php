@@ -499,7 +499,7 @@ class ReportController extends Controller
         else:
             $records = PurchaseDetail::leftJoin('purchases AS p', 'p.id', 'purchase_details.purchase_id')->leftJoin('suppliers AS s', 's.id', 'p.supplier')->whereBetween('p.created_at', [$startDate, $endDate])->when($request->product > 0, function ($q) use ($request) {
                 return $q->where("pd.product", $request->product);
-            })->selectRaw("p.id AS pid, p.delivery_date, p.invoice_number, s.name AS sname")->get();
+            })->selectRaw("p.id AS pid, DATE_FORMAT(p.delivery_date, '%d-%b-%Y') AS delivery_date, p.invoice_number, s.name AS sname")->get();
         endif;
         return view('reports.purchase', compact('branches', 'records', 'inputs', 'products'));
     }

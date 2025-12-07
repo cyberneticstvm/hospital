@@ -124,7 +124,7 @@
                                 @foreach($records as $pur)
                                 <tr>
                                     <td>{{ ++$i }}</td>
-                                    <td>{{ $pur->delivery_date->format('d.M.Y') }}</td>
+                                    <td>{{ $pur->delivery_date }}</td>
                                     <td>{{ $pur->sname }}</td>
                                     <td>{{ $pur->invoice_number }}</td>
                                     <td>{{ $pur->pid }}</td>
