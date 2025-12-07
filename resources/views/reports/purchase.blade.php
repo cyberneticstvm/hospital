@@ -72,8 +72,8 @@
                                 <div class="col-sm-3">
                                     <label class="form-label">Type</label>
                                     <select class="form-control form-control-md select2" data-placeholder="Select" name="type">
-                                        <option value="c">Consolidated</option>
-                                        <option value="d">Detailed</option>
+                                        <option value="c" {{ ($inputs && $inputs[4] == 'c') ? 'selected'  : '' }}>Consolidated</option>
+                                        <option value="d" {{ ($inputs && $inputs[4] == 'd') ? 'selected'  : '' }}>Detailed</option>
                                     </select>
                                     @error('type')
                                     <small class="text-danger">{{ $errors->first('type') }}</small>
