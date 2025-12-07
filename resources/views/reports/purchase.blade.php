@@ -105,7 +105,7 @@
                             </thead>
                             <tbody>
                                 @php $i = 0; @endphp
-                                @if($inputs[0] == 'c')
+                                @if($inputs[4] == 'c')
                                 @foreach($records as $pur)
                                 <tr>
                                     <td>{{ ++$i }}</td>
