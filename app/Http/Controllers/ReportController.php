@@ -497,7 +497,7 @@ class ReportController extends Controller
                 return $q->leftJoin('purchase_details as pd', 'purchases.id', 'pd.purchase_id')->where("pd.product", $request->product);
             })->selectRaw("purchases.*")->get();
         else:
-            $records = PurchaseDetail::leftJoin('purchases AS p', 'p.id', 'purchase_details AS pd')->leftJoin('suppliers AS s', 's.id', 'p.supplier')->whereBetween('p.created_at', [$startDate, $endDate])->when($request->product > 0, function ($q) use ($request) {
+            $records = PurchaseDetail::leftJoin('purchases AS p', 'p.id', 'purchase_details.purchase_id')->leftJoin('suppliers AS s', 's.id', 'p.supplier')->whereBetween('p.created_at', [$startDate, $endDate])->when($request->product > 0, function ($q) use ($request) {
                 return $q->where("pd.product", $request->product);
             })->selectRaw("p.id AS pid, p.delivery_date, p.invoice_number, s.name AS sname")->get();
         endif;
