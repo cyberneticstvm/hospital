@@ -14,8 +14,10 @@
                 <tr>
                     <th>SL No.</th>
                     <th>Buyer Name</th>
-                    <th>Supplier</th>
+                    <th>Address</th>
                     <th>Date</th>
+                    <th>Contact</th>
+                    <th>GSTIN</th>
                     <th>Receipt</th>
                     <th>Edit</th>
                     <th>Remove</th>
@@ -28,8 +30,9 @@
                     <td>{{ ++$i }}</td>
                     <td>{{ $record->patient_name }}</td>
                     <td>{{ $record->other_info }}</td>
-                    <td>{{ $record->cdate }}</td>
-                    <td>{{ $record->used_for }}</td>
+                    <td>{{ $record->created_at->format('d.M.Y') }}</td>
+                    <td>{{ $record->contact }}</td>
+                    <td>{{ $record->gstin }}</td>
                     <td class="text-center"><a href="#" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('pharmacy.b2b.edit', encrypt($record->id)) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
