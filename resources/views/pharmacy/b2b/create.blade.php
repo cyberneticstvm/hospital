@@ -31,7 +31,7 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
-                                    <label class="form-label">Addition<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Addition% / Qty<sup class="text-danger">*</sup></label>
                                     <input type="number" value="0" name="addition" class="form-control form-control-md addition" placeholder="0.00">
                                 </div>
                                 <div class="col-sm-5">
