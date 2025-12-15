@@ -26,6 +26,7 @@ use App\Http\Controllers\DischargeSummaryController;
 use App\Http\Controllers\InhouseCampController;
 use App\Http\Controllers\PatientAcknoledgementController;
 use App\Http\Controllers\PatientPaymentController;
+use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\SurgeryConsumableController;
 use App\Http\Controllers\PostOperativeInstructionController;
 use App\Http\Controllers\PromotionController;
@@ -256,7 +257,7 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::put('/consultation/medicine/update/{id}/', 'App\Http\Controllers\MedicineController@addUpdateSave')->name('medicine.add.update.save');
     // End Patient Medicine Records //
 
-    // Pharmacy -> for both inside and outside customers //
+    // Pharmacy -> for both inside and outside and b2b customers //
     Route::get('/extras/pharmacy/', 'App\Http\Controllers\PharmacyController@index')->name('pharmacy.index');
     Route::post('/extras/pharmacy/', 'App\Http\Controllers\PharmacyController@show')->name('pharmacy.direct.fetch');
     Route::get('/extras/pharmacy/create/', 'App\Http\Controllers\PharmacyController@create')->name('pharmacy.create');
@@ -265,6 +266,15 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::put('/extras/pharmacy/edit/{id}/', 'App\Http\Controllers\PharmacyController@update')->name('pharmacy.update');
     Route::delete('/extras/pharmacy/delete/{id}/', 'App\Http\Controllers\PharmacyController@destroy')->name('pharmacy.delete');
     Route::delete('/extras/pharmacy/medicinesingle/delete/{id}/', 'App\Http\Controllers\PharmacyController@remove')->name('pharmacysingle.delete');
+
+    Route::prefix('pharmacy/b2b')->controller(PharmacyController::class)->group(function () {
+        Route::get('', 'b2bindex')->name('pharmacy.b2b.index');
+        Route::get('create', 'b2bcreate')->name('pharmacy.b2b.create');
+        Route::post('store', 'b2bstore')->name('pharmacy.b2b.store');
+        Route::get('edit/{id}', 'b2bedit')->name('pharmacy.b2b.edit');
+        Route::put('upadte/{$id}', 'b2bupdate')->name('pharmacy.b2b.update');
+        Route::delete('delete/{$id}', 'b2bdelete')->name('pharmacy.b2b.delete');
+    });
     // End Pharmacy //
 
     // Postop Medicine //

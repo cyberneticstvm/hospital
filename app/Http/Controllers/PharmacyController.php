@@ -7,8 +7,9 @@ use App\Models\PatientRegistrations;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Pharmacy;
+use App\Models\Product;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class PharmacyController extends Controller
 {
@@ -29,7 +30,7 @@ class PharmacyController extends Controller
     }
     public function index()
     {
-        $records = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'pr.pharmacy_id', '=', 'p.id')->where('p.branch', $this->branch)->whereDate('p.created_at', Carbon::today())->whereNull('p.stock_updated_at')->select('p.id', 'p.patient_name', 'p.other_info', 'p.used_for', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate"))->groupBy('p.id')->orderByDesc('p.id')->get();
+        $records = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'pr.pharmacy_id', '=', 'p.id')->whereNotIn('p.used_for', ['B2B'])->where('p.branch', $this->branch)->whereDate('p.created_at', Carbon::today())->whereNull('p.stock_updated_at')->select('p.id', 'p.patient_name', 'p.other_info', 'p.used_for', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate"))->groupBy('p.id')->orderByDesc('p.id')->get();
         return view('pharmacy.index', compact('records'));
     }
 
@@ -188,5 +189,17 @@ class PharmacyController extends Controller
         Pharmacy::find($id)->delete();
         return redirect()->route('pharmacy.index')
             ->with('success', 'Record deleted successfully');
+    }
+
+    public function b2bindex()
+    {
+        $records = Pharmacy::where('used_for', 'B2B')->latest()->get();
+        return view('pharmacy.b2b.index', compact('records'));
+    }
+
+    public function b2bcreate()
+    {
+        $products = Product::orderBy('product_name')->get();
+        return view('pharmacy.b2b.create', compact('products'));
     }
 }
