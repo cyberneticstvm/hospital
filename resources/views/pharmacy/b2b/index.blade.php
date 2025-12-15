@@ -8,7 +8,7 @@
 </div>
 <div class="card mb-4 border-0">
     <div class="card-body">
-        <p class="text-right my-3"><a href="{{ route('pharmacy.b2b2.create') }}"><i class="fa fa-plus fa-lg text-success"></i></a></p>
+        <p class="text-right my-3"><a href="{{ route('pharmacy.b2b.create') }}"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         <table id="dataTbl" class="table display table-sm dataTable table-striped table-hover align-middle" style="width:100%">
             <thead>
                 <tr>
