@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use App\Models\Pharmacy;
 use App\Models\Product;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class PharmacyController extends Controller
 {
@@ -201,5 +203,115 @@ class PharmacyController extends Controller
     {
         $products = Product::orderBy('product_name')->get();
         return view('pharmacy.b2b.create', compact('products'));
+    }
+
+    public function b2bstore(Request $request)
+    {
+        $this->validate($request, [
+            'patient_name' => 'required',
+            'used_for' => 'required',
+            'other_info' => 'required',
+            'contact' => 'required',
+        ]);
+        try {
+            DB::transaction(function () use ($request) {
+                $pharmacy = Pharmacy::create([
+                    'patient_name' => $request->patient_name,
+                    'other_info' => $request->other_info,
+                    'branch' => $this->branch,
+                    'used_for' => 'B2B',
+                    'contact' => $request->contact,
+                    'gstin' => $request->gstin,
+                    'addition' => $request->addition,
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                ]);
+                $data = [];
+                foreach ($request->product as $key => $item):
+                    $product = Product::find($item);
+                    $data[] = [
+                        'pharmacy_id'   => $pharmacy->id,
+                        'product'       => $request->product[$key],
+                        'category'      => $product->category_id,
+                        'type'          => $product->medicine_type,
+                        'batch_number'  => $request->batch_number[$key],
+                        'qty'           => $request->qty[$key],
+                        'price'         => $request->price[$key],
+                        'mrp'         => $request->mrp[$key],
+                        'discount'      => $request->discount[$key],
+                        'tax'           => $request->tax[$key],
+                        'tax_amount'    => $request->tax_amount[$key],
+                        'total'         => $request->total[$key],
+                    ];
+                endforeach;
+                DB::table('pharmacy_records')->insert($data);
+            });
+        } catch (Exception $e) {
+            throw $e;
+        }
+        return redirect()->route('pharmacy.b2b.index')
+            ->with('success', 'Record added successfully');
+    }
+
+    public function b2bedit(string $id)
+    {
+        $pharmacy = Pharmacy::findOrFail(decrypt($id));
+        $products = Product::orderBy('product_name')->get();
+        $records = DB::table('pharmacy_records')->where('pharmacy_id', $pharmacy->id)->get();
+        return view('pharmacy.b2b.edit', compact('products', 'pharmacy', 'records'));
+    }
+
+    public function b2bupdate(Request $request, string $id)
+    {
+        $this->validate($request, [
+            'patient_name' => 'required',
+            'used_for' => 'required',
+            'other_info' => 'required',
+            'contact' => 'required',
+        ]);
+        try {
+            DB::transaction(function () use ($request, $id) {
+                $pharmacy = Pharmacy::findOrFail(decrypt($id));
+                $pharmacy->update([
+                    'patient_name' => $request->patient_name,
+                    'other_info' => $request->other_info,
+                    'contact' => $request->contact,
+                    'gstin' => $request->gstin,
+                    'addition' => $request->addition,
+                    'updated_by' => $request->user()->id,
+                ]);
+                $data = [];
+                foreach ($request->product as $key => $item):
+                    $product = Product::find($item);
+                    $data[] = [
+                        'pharmacy_id'   => $pharmacy->id,
+                        'product'       => $request->product[$key],
+                        'category'      => $product->category_id,
+                        'type'          => $product->medicine_type,
+                        'batch_number'  => $request->batch_number[$key],
+                        'qty'           => $request->qty[$key],
+                        'price'         => $request->price[$key],
+                        'mrp'         => $request->mrp[$key],
+                        'discount'      => $request->discount[$key],
+                        'tax'           => $request->tax[$key],
+                        'tax_amount'    => $request->tax_amount[$key],
+                        'total'         => $request->total[$key],
+                    ];
+                endforeach;
+                DB::table('pharmacy_records')->where('pharmacy_id', $pharmacy->id)->delete();
+                DB::table('pharmacy_records')->insert($data);
+            });
+        } catch (Exception $e) {
+            throw $e;
+        }
+        return redirect()->route('pharmacy.b2b.index')
+            ->with('success', 'Record added successfully');
+    }
+
+    public function b2bdelete(string $id)
+    {
+        Pharmacy::find(decrypt($id))->delete();
+        return redirect()->route('pharmacy.b2b.index')
+            ->with('success', 'Record deleted successfully');
     }
 }

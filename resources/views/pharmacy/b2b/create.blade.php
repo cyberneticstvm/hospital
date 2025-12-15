@@ -12,14 +12,14 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('pharmacy.b2b.create') }}" method="post">
+                        <form action="{{ route('pharmacy.b2b.store') }}" method="post">
                             @csrf
                             <input type="hidden" name="" class="selFromBranch" value="{{ session()->get('branch') }}" />
                             <input type="hidden" name="" class="medical_record_id" value="{{ NULL }}" />
                             <div class="row g-4">
                                 <div class="col-sm-3">
                                     <label class="form-label">Buyer Name<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="" name="patient_name" class="form-control form-control-md" placeholder="Buyer Name">
+                                    <input type="text" value="" name="patient_name" class="form-control form-control-md" placeholder="Buyer Name" required>
                                     @error('patient_name')
                                     <small class="text-danger">{{ $errors->first('patient_name') }}</small>
                                     @enderror
@@ -36,14 +36,14 @@
                                 </div>
                                 <div class="col-sm-5">
                                     <label class="form-label">Buyer Address</label>
-                                    <input type="text" value="" name="other_info" class="form-control form-control-md" placeholder="Buyer Address">
+                                    <input type="text" value="" name="other_info" class="form-control form-control-md" placeholder="Buyer Address" required>
                                     @error('other_info')
                                     <small class="text-danger">{{ $errors->first('other_info') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Contact</label>
-                                    <input type="text" value="" name="contact" class="form-control form-control-md" placeholder="Contact">
+                                    <input type="text" value="" name="contact" class="form-control form-control-md" placeholder="Contact" required>
                                     @error('contact')
                                     <small class="text-danger">{{ $errors->first('contact') }}</small>
                                     @enderror
