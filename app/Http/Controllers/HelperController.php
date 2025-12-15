@@ -101,8 +101,9 @@ class HelperController extends Controller
     public function getProductPrice(Request $request)
     {
         $price = DB::table('purchase_details')->where('batch_number', $request->batch_number)->where('product', $request->product)->first();
+        $addition = $request->addition ?? 0;
         $mrp = $price->mrp;
-        $rate = $price->price;
+        $rate = $price->price + $addition;
         $taxa = ($rate * $price->tax_percentage) / 100;
         return response()->json([
             'mrp' => $mrp,

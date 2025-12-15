@@ -17,24 +17,42 @@
                             <input type="hidden" name="" class="selFromBranch" value="{{ session()->get('branch') }}" />
                             <input type="hidden" name="" class="medical_record_id" value="{{ NULL }}" />
                             <div class="row g-4">
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label class="form-label">Buyer Name<sup class="text-danger">*</sup></label>
                                     <input type="text" value="" name="patient_name" class="form-control form-control-md" placeholder="Buyer Name">
                                     @error('patient_name')
                                     <small class="text-danger">{{ $errors->first('patient_name') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label class="form-label">Used For<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" name="used_for">
                                         <option value="B2B">B2B</option>
                                     </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Addition<sup class="text-danger">*</sup></label>
+                                    <input type="number" value="0" name="addition" class="form-control form-control-md addition" placeholder="0.00">
                                 </div>
                                 <div class="col-sm-5">
                                     <label class="form-label">Buyer Address</label>
                                     <input type="text" value="" name="other_info" class="form-control form-control-md" placeholder="Buyer Address">
                                     @error('other_info')
                                     <small class="text-danger">{{ $errors->first('other_info') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Contact</label>
+                                    <input type="text" value="" name="contact" class="form-control form-control-md" placeholder="Contact">
+                                    @error('contact')
+                                    <small class="text-danger">{{ $errors->first('contact') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">GSTIN</label>
+                                    <input type="text" value="" name="gstin" class="form-control form-control-md" placeholder="GSTIN">
+                                    @error('gstin')
+                                    <small class="text-danger">{{ $errors->first('gstin') }}</small>
                                     @enderror
                                 </div>
                             </div>

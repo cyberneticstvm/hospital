@@ -343,6 +343,7 @@ $(function () {
     });
 
     $(document).on("change", ".bno", function () {
+        let addition = $(".addition").val();
         var bno = $(this).val();
         var pdct = $(this).parent().parent().find(".selProductForTransfer").val();
         var price = $(this).parent().parent().find(".price");
@@ -356,7 +357,7 @@ $(function () {
             type: 'GET',
             url: '/helper/getPdctPrice/',
             dataType: 'json',
-            data: { 'product': pdct, 'batch_number': bno, 'qty': qty },
+            data: { 'product': pdct, 'batch_number': bno, 'qty': qty, 'addition': addition },
             success: function (response) {
                 mrp.val(parseFloat(response.mrp).toFixed(2));
                 taxp.val(parseInt(response.taxp));
