@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Contact</label>
-                                    <input type="text" value="{{ $pharmacy->contact }}" name="contact" class="form-control form-control-md" placeholder="Contact" required>
+                                    <input type="text" value="{{ $pharmacy->contact }}" name="contact" class="form-control form-control-md" placeholder="Contact">
                                     @error('contact')
                                     <small class="text-danger">{{ $errors->first('contact') }}</small>
                                     @enderror
