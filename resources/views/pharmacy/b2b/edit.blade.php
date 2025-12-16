@@ -107,7 +107,7 @@
                                                     <input type="number" class="form-control form-control-md text-right price" placeholder="0" name="price[]" step="any" value="{{ $record->price }}" required='required' />
                                                 </td>
                                                 <td><input type="number" class="form-control form-control-sm text-end total" step="any" name="total[]" value="{{ $record->total  }}" placeholder="0.00" required='required' /></td>
-                                                @if($c ==1)
+                                                @if($key == 1)
                                                 <td></td>
                                                 @else
                                                 <td class="text-center"><a href='javascript:void(0)' onClick='$(this).parent().parent().remove()'><i class='fa fa-trash text-danger'></i></a></td>
