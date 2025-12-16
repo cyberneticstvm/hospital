@@ -261,7 +261,7 @@ class PharmacyController extends Controller
         return view('pharmacy.b2b.edit', compact('products', 'pharmacy', 'records'));
     }
 
-    public function b2bupdate(Request $request, string $id)
+    public function updateB2b(Request $request, string $id)
     {
         dd($request);
         die;

@@ -12,7 +12,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('pharmacy.b2b.update', $pharmacy->id) }}" method="post">
+                        <form action="{{ route('pharmacy.update.b2b', $pharmacy->id) }}" method="post">
                             @csrf
                             <input type="hidden" name="" class="selFromBranch" value="{{ session()->get('branch') }}" />
                             <input type="hidden" name="" class="medical_record_id" value="{{ $pharmacy->medical_record_id }}" />
