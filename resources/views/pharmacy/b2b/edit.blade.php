@@ -14,7 +14,6 @@
                     <div class="card-body">
                         <form action="{{ route('pharmacy.b2b.update', encrypt($pharmacy->id)) }}" method="post">
                             @csrf
-                            @method("PUT")
                             <input type="hidden" name="" class="selFromBranch" value="{{ session()->get('branch') }}" />
                             <input type="hidden" name="" class="medical_record_id" value="{{ $pharmacy->medical_record_id }}" />
                             <div class="row g-4">
