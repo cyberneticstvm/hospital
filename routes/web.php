@@ -267,7 +267,7 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::delete('/extras/pharmacy/delete/{id}/', 'App\Http\Controllers\PharmacyController@destroy')->name('pharmacy.delete');
     Route::delete('/extras/pharmacy/medicinesingle/delete/{id}/', 'App\Http\Controllers\PharmacyController@remove')->name('pharmacysingle.delete');
 
-    Route::prefix('pharmacy/b2b')->controller(PharmacyController::class)->group(function () {
+    Route::prefix('b2b')->controller(PharmacyController::class)->group(function () {
         Route::get('', 'b2bindex')->name('pharmacy.b2b.index');
         Route::get('create', 'b2bcreate')->name('pharmacy.b2b.create');
         Route::post('store', 'b2bstore')->name('pharmacy.b2b.store');
