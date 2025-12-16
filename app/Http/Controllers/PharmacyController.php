@@ -263,13 +263,14 @@ class PharmacyController extends Controller
 
     public function b2bupdate(Request $request, string $id)
     {
+        dd($request);
+        die;
         $this->validate($request, [
             'patient_name' => 'required',
             'used_for' => 'required',
             'other_info' => 'required',
         ]);
-        dd($request);
-        die;
+
         try {
             DB::transaction(function () use ($request, $id) {
                 $pharmacy = Pharmacy::findOrFail(decrypt($id));
