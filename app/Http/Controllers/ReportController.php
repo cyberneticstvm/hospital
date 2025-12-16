@@ -162,7 +162,7 @@ class ReportController extends Controller
 
         $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->whereBetween('pc.created_at', [$startDate, $endDate])->where('pc.branch_id', $request->branch)->where('pcd.status', 'I')->sum('pcd.fee');
 
-        $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $request->branch)->whereIn('p.used_for', ['Customer', 'B2B'])->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
+        $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $request->branch)->whereNull('p.deleted_at')->whereIn('p.used_for', ['Customer', 'B2B'])->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
 
         $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('m.status', 1)->where('p.branch', $request->branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('m.total');
 
@@ -267,7 +267,7 @@ class ReportController extends Controller
 
         $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->whereBetween('pc.created_at', [$startDate, $endDate])->where('pc.branch_id', $request->branch)->where('pcd.status', 'I')->sum('pcd.fee');
 
-        $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $request->branch)->whereIn('p.used_for', ['Customer', 'B2B'])->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
+        $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $request->branch)->whereNull('p.deleted_at')->whereIn('p.used_for', ['Customer', 'B2B'])->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
 
         $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('m.status', 1)->where('p.branch', $request->branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('m.total');
 
@@ -531,7 +531,7 @@ class ReportController extends Controller
                 return $q->where("pmr.medicine", $request->product);
             })->selectRaw("pmr.id, pmr.medical_record_id, pmr.status, p.patient_name, p.patient_id, doc.doctor_name, SUM(pmr.total) AS total, SUM(price*qty) AS net_amount, (tax_amount*qty)/2 AS cgst, (tax_amount*qty)/2 AS sgst, SUM(pmr.total) as invoice_amount, price AS taxable_amount, DATE_FORMAT(pmr.updated_at, '%d/%m/%Y') AS edate")->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->get();
         else:
-            $records = DB::table("pharmacies as p")->leftJoin("pharmacy_records as pr", "p.id", "pr.pharmacy_id")->whereBetween("p.created_at", [$startDate, $endDate])->where('p.branch', $request->branch)->whereIn('p.used_for', ['Customer', 'B2B'])->when($request->product > 0, function ($q) use ($request) {
+            $records = DB::table("pharmacies as p")->whereNull('p.deleted_at')->leftJoin("pharmacy_records as pr", "p.id", "pr.pharmacy_id")->whereBetween("p.created_at", [$startDate, $endDate])->where('p.branch', $request->branch)->whereIn('p.used_for', ['Customer', 'B2B'])->when($request->product > 0, function ($q) use ($request) {
                 return $q->where("pr.product", $request->product);
             })->selectRaw("p.id, p.medical_record_id, '' AS status, p.patient_name, '' AS patient_id, '' AS doctor_name, SUM(pr.total) AS total, SUM(price) AS net_amount, tax_amount/2 AS cgst, tax_amount/2 AS sgst, SUM(pr.total) as invoice_amount, price AS taxable_amount, DATE_FORMAT(p.created_at, '%d/%m/%Y') AS edate")->groupBy('pr.pharmacy_id')->orderByDesc('p.id')->get();
         endif;
@@ -809,7 +809,7 @@ class ReportController extends Controller
 
         $certificate_fee_total = DB::table('patient_certificates as pc')->leftJoin('patient_certificate_details as pcd', 'pc.id', '=', 'pcd.patient_certificate_id')->whereBetween('pc.created_at', [$startDate, $endDate])->where('pc.branch_id', $branch)->where('pcd.status', 'I')->sum('pcd.fee');
 
-        $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $branch)->whereIn('p.used_for', ['Customer', 'B2B'])->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
+        $pharmacy = DB::table('pharmacies as p')->leftJoin('pharmacy_records as pr', 'p.id', '=', 'pr.pharmacy_id')->where('p.branch', $branch)->whereNull('p.deleted_at')->whereIn('p.used_for', ['Customer', 'B2B'])->whereBetween('p.created_at', [$startDate, $endDate])->sum('pr.total');
 
         $medicine = DB::table('patient_medical_records as p')->leftJoin('patient_medicine_records as m', 'p.id', '=', 'm.medical_record_id')->where('m.status', 1)->where('p.branch', $branch)->whereBetween('p.created_at', [$startDate, $endDate])->sum('m.total');
 
