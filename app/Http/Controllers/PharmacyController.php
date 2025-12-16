@@ -269,8 +269,6 @@ class PharmacyController extends Controller
 
     public function updateB2b(Request $request, string $id)
     {
-        dd($request);
-        die;
         $this->validate($request, [
             'patient_name' => 'required',
             'used_for' => 'required',
