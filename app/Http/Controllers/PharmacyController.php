@@ -273,7 +273,7 @@ class PharmacyController extends Controller
 
         try {
             DB::transaction(function () use ($request, $id) {
-                $pharmacy = Pharmacy::findOrFail(decrypt($id));
+                $pharmacy = Pharmacy::findOrFail($id);
                 $pharmacy->update([
                     'patient_name' => $request->patient_name,
                     'other_info' => $request->other_info,
