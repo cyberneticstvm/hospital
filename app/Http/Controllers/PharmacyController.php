@@ -268,6 +268,8 @@ class PharmacyController extends Controller
             'used_for' => 'required',
             'other_info' => 'required',
         ]);
+        dd($request);
+        die;
         try {
             DB::transaction(function () use ($request, $id) {
                 $pharmacy = Pharmacy::findOrFail(decrypt($id));
