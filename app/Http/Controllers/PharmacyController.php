@@ -267,7 +267,6 @@ class PharmacyController extends Controller
             'patient_name' => 'required',
             'used_for' => 'required',
             'other_info' => 'required',
-            'contact' => 'required',
         ]);
         try {
             DB::transaction(function () use ($request, $id) {
