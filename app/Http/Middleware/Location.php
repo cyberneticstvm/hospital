@@ -17,9 +17,10 @@ class Location
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Cookie::get('location')):
+        /*if (Cookie::get('location')):
             return $next($request);
         endif;
-        return redirect()->route('error')->with('error', 'Denied!!! You dont have enabled an active location. Please enable your location and try again.');
+        return redirect()->route('error')->with('error', 'Denied!!! You dont have enabled an active location. Please enable your location and try again.');*/
+        return $next($request);
     }
 }
