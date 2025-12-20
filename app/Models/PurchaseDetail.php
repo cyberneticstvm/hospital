@@ -12,4 +12,9 @@ class PurchaseDetail extends Model
     protected $casts = ['expiry_date' => 'datetime'];
 
     protected $guarded = [];
+
+    public function productDetail()
+    {
+        return $this->belongsTo(Product::class, 'product', 'id');
+    }
 }

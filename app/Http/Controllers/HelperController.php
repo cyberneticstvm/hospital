@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Models\ProductTransferDetail;
 use App\Models\PromotionContact;
 use App\Models\PromotionSchedule;
+use App\Models\PurchaseDetail;
 use App\Models\Spectacle;
 use App\Models\SurgeryConsumableItem;
 use App\Models\UserBranch;
@@ -225,7 +226,31 @@ class HelperController extends Controller
         if ($request->type == 'stockout') :
             $html = $this->getStockOutDetailed($product, $batch, $branch);
         endif;
+        if ($request->type == 'purchase') :
+            $html = $this->getPurchaseDetailed($product, $batch, $branch);
+        endif;
+        if ($request->type == 'billed') :
+            $html = $this->getBilledDetailed($product, $batch, $branch);
+        endif;
         echo $html;
+    }
+
+    function getPurchaseDetailed($product, $batch, $branch)
+    {
+        $data = PurchaseDetail::leftJoin('purchases AS p', 'p.id', 'purchase_details.purchase_id')->leftJoin('branches AS b', 'b.id', 'p.branch_id')->where('p.branch_id', $branch)->where('purchase_details.batch_number', $batch)->where('purchase_details.product', $product)->selectRaw("purchase_details.*, DATE_FORMAT(p.delivery_date, '%d/%b/%Y') AS pdate, b.branch_name AS bname")->get();
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>Product</th><th>Batch Number</th><th>To</th><th>Transfer Date</th><th>Qty</th></tr></thead><tbody>";
+        foreach ($data as $key => $record) :
+            $html .= "<tr>";
+            $html .= "<td>" . $key + 1 . "</td>";
+            $html .= "<td>" . $record->productDetail->product_name . "</td>";
+            $html .= "<td>" . $record->batch_number . "</td>";
+            $html .= "<td>" . $record->bname . "</td>";
+            $html .= "<td>" . $record->pdate . "</td>";
+            $html .= "<td class='text-end'>" . $record->qty . "</td>";
+            $html .= "</tr>";
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='5' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . $data->sum('qty') . "</td></tr></tfoot></table>";
+        return $html;
     }
     public function getStockOutDetailed($product, $batch, $branch)
     {
