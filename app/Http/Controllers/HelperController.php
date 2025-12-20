@@ -167,7 +167,31 @@ class HelperController extends Controller
         if ($request->type == 'outstanding') :
             $html = $this->getPatientOutstandingDueDetails($fdate, $tdate, $branch);
         endif;
+        if ($request->type == 'sc') :
+            $html = $this->getSurgeryConsumablesDiscountDetailed($fdate, $tdate, $branch);
+        endif;
         echo $html;
+    }
+
+    private function getSurgeryConsumablesDiscountDetailed($fdate, $tdate, $branch)
+    {
+        $data = PatientSurgeryConsumable::leftJoin('patient_registrations AS p', 'p.id', 'patient_surgery_consumables.patient_id')->whereBetween('created_at', [$fdate, $tdate])->where('branch', $branch)->selectRaw("patient_surgery_consumables.*, p.patient_name, DATE_FORMAT(patient_surgery_consumables.created_at, '%d/%b/%Y') AS cdate")->get();
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Date</th><th>Amount</th></tr></thead><tbody>";
+        foreach ($data as $key => $record) :
+            $html .= "<tr>";
+            $html .= "<td>" . $c++ . "</td>";
+            $html .= "<td>" . $record->medical_record_id . "</td>";
+            $html .= "<td>" . $record->patient_name . "</td>";
+            $html .= "<td>" . $record->patient_id . "</td>";
+            $html .= "<td>" . $record->cdate . "</td>";
+            $html .= "<td class='text-end'>" . $record->total . "</td>";
+            $html .= "<td class='text-end'>" . $record->discount . "</td>";
+            $html .= "<td class='text-end'>" . $record->total_after_discount . "</td>";
+            $html .= "</tr>";
+            $tot += $record->fee;
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='7' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($data->sum('total_after_discount'), 2) . "</td></tr></tfoot></table>";
+        return $html;
     }
 
     public function getPatientOutstandingDueDetails($fdate, $tdate, $branch)
