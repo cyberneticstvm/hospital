@@ -175,7 +175,7 @@
                                     <td>Income from Surgery Consumables</td>
                                     <td class="text-end">{{ number_format($surgery_consumables, 2) }}</td>
                                     <td class="text-end">{{ number_format($surgery_consumables_discount, 2) }}</td>
-                                    <td class="text-end">{{ number_format($surgery_consumables - $surgery_consumables_discount, 2) }}</td>
+                                    <td class="text-end"><a class="daybook text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="surgConModal" data-bs-target="#surgConModal" data-title="Surgery Consumables Detailed" data-fdate="{{ ($inputs) ? $inputs[0] : $today }}" data-tdate="{{ ($inputs) ? $inputs[1] : $today }}" data-branch="{{ ($inputs && $inputs[2]) ? $inputs[2] : 0 }}" data-type="sc">{{ number_format($surgery_consumables - $surgery_consumables_discount, 2) }}</a></td>
                                 </tr>
                                 <tr>
                                     <td>14</td>
@@ -465,6 +465,21 @@
     </div>
 </div>
 <div class="modal fade" id="outstandingDueModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row">
+                    <div class="col-md-12 table-responsive dayBookDetailed"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="surgConModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
