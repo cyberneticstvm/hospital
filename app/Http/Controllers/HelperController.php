@@ -175,7 +175,7 @@ class HelperController extends Controller
 
     private function getSurgeryConsumablesDiscountDetailed($fdate, $tdate, $branch)
     {
-        $data = PatientSurgeryConsumable::leftJoin('patient_registrations AS p', 'p.id', 'patient_surgery_consumables.patient_id')->whereBetween('created_at', [$fdate, $tdate])->where('branch', $branch)->selectRaw("patient_surgery_consumables.*, p.patient_name, DATE_FORMAT(patient_surgery_consumables.created_at, '%d/%b/%Y') AS cdate")->get();
+        $data = PatientSurgeryConsumable::leftJoin('patient_registrations AS p', 'p.id', 'patient_surgery_consumables.patient_id')->whereBetween('patient_surgery_consumables.created_at', [$fdate, $tdate])->where('branch', $branch)->selectRaw("patient_surgery_consumables.*, p.patient_name, DATE_FORMAT(patient_surgery_consumables.created_at, '%d/%b/%Y') AS cdate")->get();
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Date</th><th>Amount</th></tr></thead><tbody>";
         foreach ($data as $key => $record) :
             $html .= "<tr>";
