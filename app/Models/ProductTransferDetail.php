@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ProductTransferDetail extends Model
 {
     use HasFactory;
+
+    public function productDetail()
+    {
+        return $this->belongsTo(Product::class, 'product', 'id');
+    }
 }

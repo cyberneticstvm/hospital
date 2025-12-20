@@ -12,6 +12,7 @@ use App\Models\PatientPayment;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
 use App\Models\Product;
+use App\Models\ProductTransferDetail;
 use App\Models\PromotionContact;
 use App\Models\PromotionSchedule;
 use App\Models\Spectacle;
@@ -228,7 +229,7 @@ class HelperController extends Controller
     }
     public function getStockOutDetailed($product, $batch, $branch)
     {
-        $outs = DB::table('product_transfer_details as pd')->leftJoin('product_transfers as pt', 'pt.id', '=', 'pd.transfer_id')->leftJoin('products as pr', 'pr.id', '=', 'pd.product')->leftJoin('branches as b', 'b.id', '=', 'to_branch')->selectRaw("'Transfer' AS type, pd.qty, pd.batch_number, pr.product_name, DATE_FORMAT(pt.transfer_date, '%d/%b/%Y') AS pdate, b.branch_name")->when($branch == 0, function ($query) {
+        /*$outs = DB::table('product_transfer_details as pd')->leftJoin('product_transfers as pt', 'pt.id', '=', 'pd.transfer_id')->leftJoin('products as pr', 'pr.id', '=', 'pd.product')->leftJoin('branches as b', 'b.id', '=', 'to_branch')->selectRaw("'Transfer' AS type, pd.qty, pd.batch_number, pr.product_name, DATE_FORMAT(pt.transfer_date, '%d/%b/%Y') AS pdate, b.branch_name")->when($branch == 0, function ($query) {
             return $query->where('pt.from_branch', 0);
         })->when($branch > 0, function ($query) use ($branch) {
             return $query->where('pt.from_branch', $branch);
@@ -254,11 +255,25 @@ class HelperController extends Controller
             $html .= "</tr>";
         endforeach;
         $html .= "</tbody><tfoot><tr><td colspan='6' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . $surgery->sum('qty') . "</td></tr></tfoot></table>";
+        return $html;*/
+        $data = ProductTransferDetail::leftJoin('product_transfers AS pt', 'pt.id', 'product_transfer_details.transfer_id')->leftJoin('branches AS b', 'b.id', 'pt.to_branch')->where('pt.from_branch', $branch)->where('product_transfer_details.batch_number', $batch)->where('product_transfer_details.product', $product)->selectRaw("product_transfer_details.*, DATE_FORMAT(pt.transfer_date, '%d/%b/%Y') AS tdate, b.branch_name AS bname")->get();
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>Product</th><th>Batch Number</th><th>To</th><th>Transfer Date</th><th>Qty</th></tr></thead><tbody>";
+        foreach ($data as $key => $record) :
+            $html .= "<tr>";
+            $html .= "<td>" . $key + 1 . "</td>";
+            $html .= "<td>" . $record->productDetail->product_name . "</td>";
+            $html .= "<td>" . $record->batch_number . "</td>";
+            $html .= "<td>" . $record->bname . "</td>";
+            $html .= "<td>" . $record->tdate . "</td>";
+            $html .= "<td class='text-end'>" . $record->qty . "</td>";
+            $html .= "</tr>";
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='5' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . $data->sum('qty') . "</td></tr></tfoot></table>";
         return $html;
     }
     public function getStockInDetailed($product, $batch, $branch)
     {
-        if ($branch == 0) :
+        /*if ($branch == 0) :
             $ins = DB::table('purchase_details as pd')->leftJoin('purchases as p', 'p.id', '=', 'pd.purchase_id')->leftJoin('products as pr', 'pr.id', '=', 'pd.product')->selectRaw("pd.qty, pd.batch_number, pr.product_name, DATE_FORMAT(p.delivery_date, '%d/%b/%Y') AS pdate")->where('pd.product', $product)->where('pd.batch_number', $batch)->orderBy('p.delivery_date')->get();
         else :
             $ins = DB::table('product_transfer_details as pd')->leftJoin('product_transfers as pt', 'pt.id', '=', 'pd.transfer_id')->leftJoin('products as pr', 'pr.id', '=', 'pd.product')->selectRaw("pd.qty, pd.batch_number, pr.product_name, DATE_FORMAT(pt.transfer_date, '%d/%b/%Y') AS pdate")->where('pt.to_branch', $branch)->where('pd.product', $product)->where('pd.batch_number', $batch)->orderBy('pt.transfer_date')->get();
@@ -275,6 +290,20 @@ class HelperController extends Controller
             $html .= "</tr>";
         endforeach;
         $html .= "</tbody><tfoot><tr><td colspan='4' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . $ins->sum('qty') . "</td></tr></tfoot></table>";
+        return $html;*/
+        $data = ProductTransferDetail::leftJoin('product_transfers AS pt', 'pt.id', 'product_transfer_details.transfer_id')->leftJoin('branches AS b', 'b.id', 'pt.from_branch')->where('pt.to_branch', $branch)->where('product_transfer_details.batch_number', $batch)->where('product_transfer_details.product', $product)->selectRaw("product_transfer_details.*, DATE_FORMAT(pt.transfer_date, '%d/%b/%Y') AS tdate, b.branch_name AS bname")->get();
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>Product</th><th>Batch Number</th><th>From</th><th>Transfer Date</th><th>Qty</th></tr></thead><tbody>";
+        foreach ($data as $key => $record) :
+            $html .= "<tr>";
+            $html .= "<td>" . $key + 1 . "</td>";
+            $html .= "<td>" . $record->productDetail->product_name . "</td>";
+            $html .= "<td>" . $record->batch_number . "</td>";
+            $html .= "<td>" . $record->bname . "</td>";
+            $html .= "<td>" . $record->tdate . "</td>";
+            $html .= "<td class='text-end'>" . $record->qty . "</td>";
+            $html .= "</tr>";
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='5' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . $data->sum('qty') . "</td></tr></tfoot></table>";
         return $html;
     }
 

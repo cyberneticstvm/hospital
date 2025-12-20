@@ -68,12 +68,12 @@
                                     <td>{{ $item->pid }}</td>
                                     <td>{{ $item->pname }}</td>
                                     <td>{{ $item->batch_number }}</td>
-                                    <td>{{ $item->purchased_qty }}</td>
-                                    <td>{{ $item->transfer_in }}</td>
-                                    <td>{{ $item->transfer_out }}</td>
+                                    <td><a class="inventory text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="purchaseModal" data-bs-target="#purchaseModal" data-title="Purchase Detailed" data-branch="{{ $inputs[0] }}" data-product="{{ $item->pid }}" data-type="purchase" data-batchno="{{ $item->batch_number }}">{{ $item->purchased_qty }}</a></td>
+                                    <td><a class="inventory text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="transferInModal" data-bs-target="#transferInModal" data-title="Transfer In Detailed" data-branch="{{ $inputs[0] }}" data-product="{{ $item->pid }}" data-type="stockin" data-batchno="{{ $item->batch_number }}">{{ $item->transfer_in }}</a></td>
+                                    <td><a class="inventory text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="transferOutModal" data-bs-target="#transferOutModal" data-title="Transfer Out Detailed" data-branch="{{ $inputs[0] }}" data-product="{{ $item->pid }}" data-type="stockout" data-batchno="{{ $item->batch_number }}">{{ $item->transfer_out }}</a></td>
                                     <td>{{ $item->sreturn }}</td>
                                     <td>{{ $item->preturn }}</td>
-                                    <td>{{ $item->billed }}</td>
+                                    <td><a class="inventory text-danger" href="javascript:void(0)" data-bs-toggle="modal" data-modal="billedModal" data-bs-target="#billedModal" data-title="Billed Detailed" data-branch="{{ $inputs[0] }}" data-product="{{ $item->pid }}" data-type="billed" data-batchno="{{ $item->batch_number }}">{{ $item->billed }}</a></td>
                                     <td>{{ $item->balanceQty }}</td>
                                 </tr>
                                 @empty
@@ -84,6 +84,66 @@
                 </div>
             </div>
         </div> <!-- .row end -->
+    </div>
+</div>
+<div class="modal fade" id="purchaseModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row">
+                    <div class="col-md-12 table-responsive inventoryDetailed"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="transferInModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row">
+                    <div class="col-md-12 table-responsive inventoryDetailed"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="transferOutModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row">
+                    <div class="col-md-12 table-responsive inventoryDetailed"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="billedModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-vertical modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body custom_scroll">
+                <div class="row">
+                    <div class="col-md-12 table-responsive inventoryDetailed"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
