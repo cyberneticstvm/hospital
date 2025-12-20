@@ -188,7 +188,6 @@ class HelperController extends Controller
             $html .= "<td class='text-end'>" . $record->discount . "</td>";
             $html .= "<td class='text-end'>" . $record->total_after_discount . "</td>";
             $html .= "</tr>";
-            $tot += $record->fee;
         endforeach;
         $html .= "</tbody><tfoot><tr><td colspan='7' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($data->sum('total_after_discount'), 2) . "</td></tr></tfoot></table>";
         return $html;
