@@ -549,7 +549,7 @@ class HelperController extends Controller
             $html .= "<tr>";
             $html .= "<td>" . $c++ . "</td>";
             $html .= "<td>" . $record->mrid . "</td>";
-            $html .= "<td>" . $record->patient_name . "</td>";
+            $html .= "<td>" . $record->patient_name ?? 'Pharmacy Out' . "</td>";
             $html .= "<td>" . $record->patient_id . "</td>";
             $html .= "<td>" . $record->cdate . "</td>";
             $html .= "<td class='text-end'>" . $record->fee . "</td>";
