@@ -235,6 +235,28 @@ class HelperController extends Controller
         echo $html;
     }
 
+    function getBilledDetailed($product, $batch, $branch)
+    {
+        $meds = DB::table("patient_medicine_records as m")->leftjoin('patient_medical_records as pmr', 'pmr.id', '=', 'm.medical_record_id')->leftJoin('products as pr', 'pr.id', '=', 'm.medicine')->selectRaw("'Medicine' AS type, m.qty, m.batch_number, pr.product_name, DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS pdate, m.medical_record_id AS branch_name")->where('m.status', 1)->whereNull('m.deleted_at')->where('pmr.branch', $branch)->where('m.medicine', $product)->where('m.batch_number', $batch);
+
+        $pharmacy = DB::table("pharmacy_records as pr")->leftjoin('pharmacies as p', 'p.id', '=', 'pr.pharmacy_id')->leftJoin('products as pro', 'pro.id', '=', 'pr.product')->selectRaw("'Med Out' AS type, pr.qty, pr.batch_number, pro.product_name, DATE_FORMAT(p.created_at, '%d/%b/%Y') AS pdate, p.patient_name AS branch_name")->whereNull('p.deleted_at')->where('p.branch', $branch)->where('pr.product', $product)->where('pr.batch_number', $batch)->unionAll($meds);
+
+        $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>Product</th><th>Batch Number</th><th>Transfer Date</th><th>Type</th><th>Qty</th></tr></thead><tbody>";
+        $c = 1;
+        foreach ($pharmacy as $key => $record) :
+            $html .= "<tr>";
+            $html .= "<td>" . $c++ . "</td>";
+            $html .= "<td>" . $record->product_name . "</td>";
+            $html .= "<td>" . $record->batch_number . "</td>";
+            $html .= "<td>" . $record->pdate . "</td>";
+            $html .= "<td>" . $record->type . "</td>";
+            $html .= "<td class='text-end'>" . $record->qty . "</td>";
+            $html .= "</tr>";
+        endforeach;
+        $html .= "</tbody><tfoot><tr><td colspan='5' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . $pharmacy->sum('qty') . "</td></tr></tfoot></table>";
+        return $html;
+    }
+
     function getPurchaseDetailed($product, $batch, $branch)
     {
         $data = PurchaseDetail::leftJoin('purchases AS p', 'p.id', 'purchase_details.purchase_id')->leftJoin('branches AS b', 'b.id', 'p.branch_id')->where('p.branch_id', $branch)->where('purchase_details.batch_number', $batch)->where('purchase_details.product', $product)->selectRaw("purchase_details.*, DATE_FORMAT(p.delivery_date, '%d/%b/%Y') AS pdate, b.branch_name AS bname")->get();
