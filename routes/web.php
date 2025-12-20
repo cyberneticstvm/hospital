@@ -6,6 +6,8 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AxialLengthController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampMasterController;
+use App\Http\Controllers\CustomerAccountController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OperationNoteController;
 use App\Http\Controllers\LetterheadController;
 use App\Http\Controllers\MedicalFitnessController;
@@ -865,6 +867,24 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
         Route::get('edit/{id}', 'edit')->name('patient.ack.edit');
         Route::post('edit/{id}', 'update')->name('patient.ack.update');
         Route::delete('delete/{id}', 'destroy')->name('patient.ack.delete');
+    });
+
+    Route::prefix('customer')->controller(CustomerController::class)->group(function () {
+        Route::get('', 'index')->name('customer.list');
+        Route::get('create', 'create')->name('customer.create');
+        Route::post('create', 'store')->name('customer.save');
+        Route::get('edit/{id}', 'edit')->name('customer.edit');
+        Route::post('edit/{id}', 'update')->name('customer.update');
+        Route::delete('delete/{id}', 'destroy')->name('customer.delete');
+    });
+
+    Route::prefix('customer/account')->controller(CustomerAccountController::class)->group(function () {
+        Route::get('', 'index')->name('customer.account.list');
+        Route::get('create/{id}', 'create')->name('customer.account.create');
+        Route::post('create/{id}', 'store')->name('customer.account.save');
+        Route::get('edit/{id}', 'edit')->name('customer.account.edit');
+        Route::post('edit/{id}', 'update')->name('customer.account.update');
+        Route::delete('delete/{id}', 'destroy')->name('customer.account.delete');
     });
 });
 
