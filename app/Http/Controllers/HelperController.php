@@ -546,10 +546,11 @@ class HelperController extends Controller
         $tot = 0;
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Date</th><th>Amount</th></tr></thead><tbody>";
         foreach ($income as $key => $record) :
+            $p = ($record->patient_name != '') ? $record->patient_name : 'Pharmacy Out';
             $html .= "<tr>";
             $html .= "<td>" . $c++ . "</td>";
             $html .= "<td>" . $record->mrid . "</td>";
-            $html .= "<td>" . ($record->patient_name != '') ? $record->patient_name : 'Pharmacy Out' . "</td>";
+            $html .= "<td>" . $p . "</td>";
             $html .= "<td>" . $record->patient_id . "</td>";
             $html .= "<td>" . $record->cdate . "</td>";
             $html .= "<td class='text-end'>" . $record->fee . "</td>";
