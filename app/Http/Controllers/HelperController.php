@@ -177,9 +177,9 @@ class HelperController extends Controller
     {
         $data = PatientSurgeryConsumable::leftJoin('patient_registrations AS p', 'p.id', 'patient_surgery_consumables.patient_id')->whereBetween('patient_surgery_consumables.created_at', [$fdate, $tdate])->where('patient_surgery_consumables.branch', $branch)->selectRaw("patient_surgery_consumables.*, p.patient_name, DATE_FORMAT(patient_surgery_consumables.created_at, '%d/%b/%Y') AS cdate")->get();
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>MR.ID</th><th>Patient Name</th><th>Patient ID</th><th>Date</th><th>Total</th><th>Discount</th><th>Amount</th></tr></thead><tbody>";
-        /*foreach ($data as $key => $record) :
+        foreach ($data as $key => $record) :
             $html .= "<tr>";
-            $html .= "<td>" . $c++ . "</td>";
+            $html .= "<td>" . $key + 1 . "</td>";
             $html .= "<td>" . $record->medical_record_id . "</td>";
             $html .= "<td>" . $record->patient_name . "</td>";
             $html .= "<td>" . $record->patient_id . "</td>";
@@ -189,7 +189,7 @@ class HelperController extends Controller
             $html .= "<td class='text-end'>" . $record->total_after_discount . "</td>";
             $html .= "</tr>";
             $tot += $record->fee;
-        endforeach;*/
+        endforeach;
         $html .= "</tbody><tfoot><tr><td colspan='7' class='fw-bold text-end'>Total</td><td class='text-end fw-bold'>" . number_format($data->sum('total_after_discount'), 2) . "</td></tr></tfoot></table>";
         return $html;
     }
