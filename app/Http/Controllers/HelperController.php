@@ -239,7 +239,7 @@ class HelperController extends Controller
     {
         $meds = DB::table("patient_medicine_records as m")->leftjoin('patient_medical_records as pmr', 'pmr.id', '=', 'm.medical_record_id')->leftJoin('products as pr', 'pr.id', '=', 'm.medicine')->selectRaw("'Medicine' AS type, m.qty, m.batch_number, pr.product_name, DATE_FORMAT(pmr.created_at, '%d/%b/%Y') AS pdate, m.medical_record_id AS branch_name")->where('m.status', 1)->whereNull('m.deleted_at')->where('pmr.branch', $branch)->where('m.medicine', $product)->where('m.batch_number', $batch);
 
-        $pharmacy = DB::table("pharmacy_records as pr")->leftjoin('pharmacies as p', 'p.id', '=', 'pr.pharmacy_id')->leftJoin('products as pro', 'pro.id', '=', 'pr.product')->selectRaw("'Med Out' AS type, pr.qty, pr.batch_number, pro.product_name, DATE_FORMAT(p.created_at, '%d/%b/%Y') AS pdate, p.patient_name AS branch_name")->whereNull('p.deleted_at')->where('p.branch', $branch)->where('pr.product', $product)->where('pr.batch_number', $batch)->unionAll($meds);
+        $pharmacy = DB::table("pharmacy_records as pr")->leftjoin('pharmacies as p', 'p.id', '=', 'pr.pharmacy_id')->leftJoin('products as pro', 'pro.id', '=', 'pr.product')->selectRaw("'Med Out' AS type, pr.qty, pr.batch_number, pro.product_name, DATE_FORMAT(p.created_at, '%d/%b/%Y') AS pdate, p.patient_name AS branch_name")->whereNull('p.deleted_at')->where('p.branch', $branch)->where('pr.product', $product)->where('pr.batch_number', $batch)->unionAll($meds)->get();
 
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>Product</th><th>Batch Number</th><th>Transfer Date</th><th>Type</th><th>Qty</th></tr></thead><tbody>";
         $c = 1;
