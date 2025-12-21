@@ -104,18 +104,21 @@ class HelperController extends Controller
     {
         $price = DB::table('purchase_details')->where('batch_number', $request->batch_number)->where('product', $request->product)->first();
         $addition = $request->addition ?? 0;
-        $selling_price = ($request->type == 'b2b') ? $price->purchase_price : $price->price;
-        if ($addition > 0):
-            $addition = ($selling_price * $addition) / 100;
-        endif;
         $mrp = $price->mrp + $addition;
-        $rate = $selling_price + $addition;
+        if ($request->type == 'b2b'):
+            $addition = ($price->purchase_price * $addition) / 100;
+            $rate = $price->purchase_price + $addition;
+            $discount = 0;
+        else:
+            $rate = $price->price;
+            $discount = $mrp - $rate;
+        endif;
         $taxa = ($rate * $price->tax_percentage) / 100;
         return response()->json([
             'mrp' => $mrp,
             'taxp' => $price->tax_percentage,
             'price' => $rate - $taxa,
-            'discount' => $mrp - $rate,
+            'discount' => $discount,
             'taxa' => $taxa,
             'total' => $rate * $request->qty,
         ]);
