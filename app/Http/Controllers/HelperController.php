@@ -104,11 +104,12 @@ class HelperController extends Controller
     {
         $price = DB::table('purchase_details')->where('batch_number', $request->batch_number)->where('product', $request->product)->first();
         $addition = $request->addition ?? 0;
+        $selling_price = ($request->type == 'b2b') ? $price->purchase_price : $price->price;
         if ($addition > 0):
-            $addition = ($price->price * $addition) / 100;
+            $addition = ($selling_price * $addition) / 100;
         endif;
         $mrp = $price->mrp + $addition;
-        $rate = $price->price + $addition;
+        $rate = $selling_price + $addition;
         $taxa = ($rate * $price->tax_percentage) / 100;
         return response()->json([
             'mrp' => $mrp,
@@ -484,7 +485,7 @@ class HelperController extends Controller
     }
     private function getPharmacyDetailed($fdate, $tdate, $branch)
     {
-        $pharmacy = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'p.id', '=', 'pr.pharmacy_id')->whereIn('p.used_for', ['Customer', 'B2B'])->select('p.id', 'p.patient_name', 'p.other_info', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate, SUM(pr.total) AS fee"))->where('p.branch', $branch)->whereNull('p.deleted_at')->whereBetween('p.created_at', [$fdate, $tdate])->groupBy('pr.pharmacy_id')->orderBy('p.patient_name', 'asc')->get();
+        $pharmacy = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'p.id', '=', 'pr.pharmacy_id')->whereIn('p.used_for', ['Customer'])->select('p.id', 'p.patient_name', 'p.other_info', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate, SUM(pr.total) AS fee"))->where('p.branch', $branch)->whereNull('p.deleted_at')->whereBetween('p.created_at', [$fdate, $tdate])->groupBy('pr.pharmacy_id')->orderBy('p.patient_name', 'asc')->get();
         $c = 1;
         $tot = 0;
         $html = "<table class='table table-bordered table-striped table-hover table-sm'><thead><tr><th>SL No.</th><th>Bill No.</th><th>Patient Name</th><th>Address</th><th>Date</th><th>Amount</th></tr></thead><tbody>";

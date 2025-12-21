@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\CustomerAccount;
 use App\Models\PatientReference;
 use App\Models\PatientRegistrations;
 use Illuminate\Support\Facades\Auth;
@@ -202,31 +204,30 @@ class PharmacyController extends Controller
     public function b2bcreate()
     {
         $products = Product::orderBy('product_name')->get();
-        return view('pharmacy.b2b.create', compact('products'));
+        $customers = Customer::orderBy('name')->get();
+        return view('pharmacy.b2b.create', compact('products', 'customers'));
     }
 
     public function b2bstore(Request $request)
     {
         $this->validate($request, [
-            'patient_name' => 'required',
+            'customer_id' => 'required',
             'used_for' => 'required',
-            'other_info' => 'required',
-            'contact' => 'required',
         ]);
         try {
             DB::transaction(function () use ($request) {
+                $customer = Customer::findOrFail($request->customer_id);
                 $pharmacy = Pharmacy::create([
-                    'patient_name' => $request->patient_name,
-                    'other_info' => $request->other_info,
+                    'patient_name' => $customer->name,
+                    'customer_id' => $customer->id,
                     'branch' => $this->branch,
                     'used_for' => 'B2B',
-                    'contact' => $request->contact,
-                    'gstin' => $request->gstin,
                     'addition' => $request->addition,
                     'created_by' => $request->user()->id,
                     'updated_by' => $request->user()->id,
                 ]);
                 $data = [];
+                $tot = 0;
                 foreach ($request->product as $key => $item):
                     $product = Product::find($item);
                     $data[] = [
@@ -243,8 +244,19 @@ class PharmacyController extends Controller
                         'tax_amount'    => $request->tax_amount[$key],
                         'total'         => $request->total[$key],
                     ];
+                    $tot += $request->total[$key];
                 endforeach;
                 DB::table('pharmacy_records')->insert($data);
+                CustomerAccount::create([
+                    'pdate' => date('Y-m-d'),
+                    'customer_id' => $customer->id,
+                    'type' => 'dr',
+                    'type_id' => $pharmacy->id,
+                    'amount' => $tot,
+                    'notes' => 'Pharmacy created against id ' . $pharmacy->id,
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                ]);
             });
         } catch (Exception $e) {
             throw $e;
@@ -257,8 +269,9 @@ class PharmacyController extends Controller
     {
         $pharmacy = Pharmacy::findOrFail(decrypt($id));
         $products = Product::orderBy('product_name')->get();
+        $customers = Customer::orderBy('name')->get();
         $records = DB::table('pharmacy_records')->where('pharmacy_id', $pharmacy->id)->get();
-        return view('pharmacy.b2b.edit', compact('products', 'pharmacy', 'records'));
+        return view('pharmacy.b2b.edit', compact('products', 'pharmacy', 'records', 'customers'));
     }
 
     function hello(Request $request, string $id)
@@ -270,23 +283,22 @@ class PharmacyController extends Controller
     public function updateB2b(Request $request, string $id)
     {
         $this->validate($request, [
-            'patient_name' => 'required',
+            'customer_id' => 'required',
             'used_for' => 'required',
-            'other_info' => 'required',
         ]);
 
         try {
             DB::transaction(function () use ($request, $id) {
+                $customer = Customer::findOrFail($request->customer_id);
                 $pharmacy = Pharmacy::findOrFail($id);
                 $pharmacy->update([
-                    'patient_name' => $request->patient_name,
-                    'other_info' => $request->other_info,
-                    'contact' => $request->contact,
-                    'gstin' => $request->gstin,
+                    'patient_name' => $customer->name,
+                    'customer_id' => $customer->id,
                     'addition' => $request->addition,
                     'updated_by' => $request->user()->id,
                 ]);
                 $data = [];
+                $tot = 0;
                 foreach ($request->product as $key => $item):
                     $product = Product::find($item);
                     $data[] = [
@@ -303,9 +315,19 @@ class PharmacyController extends Controller
                         'tax_amount'    => $request->tax_amount[$key],
                         'total'         => $request->total[$key],
                     ];
+                    $tot += $request->total[$key];
                 endforeach;
                 DB::table('pharmacy_records')->where('pharmacy_id', $pharmacy->id)->delete();
                 DB::table('pharmacy_records')->insert($data);
+                CustomerAccount::where('type_id', $pharmacy->id)->where('type', 'dr')->update([
+                    'pdate' => date('Y-m-d'),
+                    'customer_id' => $customer->id,
+                    'type' => 'dr',
+                    'type_id' => $pharmacy->id,
+                    'amount' => $tot,
+                    'notes' => 'Pharmacy created against id ' . $pharmacy->id,
+                    'updated_by' => $request->user()->id,
+                ]);
             });
         } catch (Exception $e) {
             throw $e;

@@ -71,7 +71,7 @@
                                                         @endforeach
                                                     </select>
                                                 </td>
-                                                <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'>
+                                                <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" data-type="" required='required'>
                                                         <option value="">Select</option>
                                                     </select></td>
                                                 <td><input type="number" class="form-control form-control-sm text-end qty" step="any" min="1" name="qty[]" placeholder="0" value="1" required='required' /></td>

@@ -67,7 +67,7 @@
                                                         @endforeach
                                                     </select>
                                                 </td>
-                                                <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'>
+                                                <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" data-type="" required='required'>
                                                         <option value="">Select</option>
                                                         @forelse($bnos as $key => $bno)
                                                         <option value="{{ $bno->batch_number }}" {{ $medicine->batch_number == $bno->batch_number ? 'selected' : '' }} data-qty="{{ $bno->balance_qty }}">{{ $bno->batch_number .' ('.$bno->balance_qty.' Qty in Hand)' }}</option>

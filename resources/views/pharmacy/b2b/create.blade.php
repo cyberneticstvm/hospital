@@ -18,10 +18,15 @@
                             <input type="hidden" name="" class="medical_record_id" value="{{ NULL }}" />
                             <div class="row g-4">
                                 <div class="col-sm-3">
-                                    <label class="form-label">Buyer Name<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="" name="patient_name" class="form-control form-control-md" placeholder="Buyer Name" required>
-                                    @error('patient_name')
-                                    <small class="text-danger">{{ $errors->first('patient_name') }}</small>
+                                    <label class="form-label">Customer<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="customer_id">
+                                        <option value="">Select</option>
+                                        @foreach($customers as $customer)
+                                        <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>{{ $customer->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('customer_id')
+                                    <small class="text-danger">{{ $errors->first('customer_id') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-2">
@@ -33,27 +38,6 @@
                                 <div class="col-sm-2">
                                     <label class="form-label">Addition% / Qty<sup class="text-danger">*</sup></label>
                                     <input type="number" value="0" name="addition" class="form-control form-control-md addition" placeholder="0.00">
-                                </div>
-                                <div class="col-sm-5">
-                                    <label class="form-label">Buyer Address</label>
-                                    <input type="text" value="" name="other_info" class="form-control form-control-md" placeholder="Buyer Address" required>
-                                    @error('other_info')
-                                    <small class="text-danger">{{ $errors->first('other_info') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-3">
-                                    <label class="form-label">Contact</label>
-                                    <input type="text" value="" name="contact" class="form-control form-control-md" placeholder="Contact" required>
-                                    @error('contact')
-                                    <small class="text-danger">{{ $errors->first('contact') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-3">
-                                    <label class="form-label">GSTIN</label>
-                                    <input type="text" value="" name="gstin" class="form-control form-control-md" placeholder="GSTIN">
-                                    @error('gstin')
-                                    <small class="text-danger">{{ $errors->first('gstin') }}</small>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="row g-4 mt-3">
@@ -83,7 +67,7 @@
                                                         @endforeach
                                                     </select>
                                                 </td>
-                                                <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" required='required'>
+                                                <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" data-type="b2b" required='required'>
                                                         <option value="">Select</option>
                                                     </select></td>
                                                 <td><input type="number" class="form-control form-control-sm text-end qty" step="any" min="1" name="qty[]" placeholder="0" value="1" required='required' /></td>
