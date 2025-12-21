@@ -275,7 +275,7 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
         Route::post('store', 'b2bstore')->name('pharmacy.b2b.store');
         Route::get('edit/{id}', 'b2bedit')->name('pharmacy.b2b.edit');
         Route::post('update/{id}', 'updateB2b')->name('pharmacy.b2b.update');
-        Route::delete('delete/{$id}', 'b2bdelete')->name('pharmacy.b2b.delete');
+        Route::delete('delete/{id}', 'b2bdelete')->name('pharmacy.b2b.delete');
     });
     // End Pharmacy //
 
