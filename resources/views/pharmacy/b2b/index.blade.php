@@ -33,7 +33,7 @@
                     <td>{{ $record->created_at->format('d.M.Y') }}</td>
                     <td>{{ $record->contact }}</td>
                     <td>{{ $record->gstin }}</td>
-                    <td class="text-center"><a href="#" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
+                    <td class="text-center"><a href="{{ route('b2b.pharmacy.receipt', encrypt($record->id)) }}" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('pharmacy.b2b.edit', encrypt($record->id)) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
                         <form method="post" action="{{ route('pharmacy.b2b.delete', encrypt($record->id)) }}">

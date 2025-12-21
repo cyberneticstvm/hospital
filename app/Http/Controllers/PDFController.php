@@ -6,6 +6,7 @@ use App\Helper\Helper;
 use App\Models\Appointment;
 use App\Models\AxialLength;
 use App\Models\Branch;
+use App\Models\Customer;
 use App\Models\Diagnosis;
 use App\Models\DischargeSummary;
 use App\Models\DischargeSummaryDiagnosis;
@@ -22,6 +23,7 @@ use App\Models\PatientProcedure;
 use App\Models\PatientReference;
 use App\Models\PatientRegistrations;
 use App\Models\PatientSurgeryConsumable;
+use App\Models\Pharmacy;
 use App\Models\Procedure;
 use App\Models\Spectacle;
 use App\Models\Surgery;
@@ -324,6 +326,18 @@ class PDFController extends Controller
         $pdf = PDF::loadView('/pdf/pharmacy-receipt', compact('record', 'medicines', 'qrcode', 'branch'));
         return $pdf->stream('receipt.pdf', array("Attachment" => 0));
     }
+
+    public function b2breceipt($id)
+    {
+        $pharmacy = Pharmacy::findOrFail(decrypt($id));
+        $medicines = DB::table('pharmacy_records as pr')->leftJoin('products as p', 'pr.product', '=', 'p.id')->leftJoin('medicine_types as m', 'm.id', '=', 'pr.type')->select('p.product_name', 'pr.qty', 'pr.batch_number', 'pr.price', 'pr.discount', 'pr.tax', 'pr.tax_amount', 'pr.total', 'm.name as type')->where('pr.pharmacy_id', $pharmacy->id)->get();
+        $branch = Branch::find($pharmacy->branch);
+        $customer = Customer::find($pharmacy->customer_id);
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('https://devieh.com/online'));
+        $pdf = PDF::loadView('pdf.b2breceipt', compact('pharmacy', 'medicines', 'qrcode', 'branch', 'customer'));
+        return $pdf->stream('receipt.pdf', array("Attachment" => 0));
+    }
+
     public function patienthistory($id)
     {
         $id = (intval($id) > 0) ? $id : decrypt($id);

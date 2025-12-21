@@ -339,6 +339,7 @@ class PharmacyController extends Controller
     public function b2bdelete(string $id)
     {
         Pharmacy::find(decrypt($id))->delete();
+        CustomerAccount::where('type_id', decrypt($id))->where('type', 'dr')->delete();
         return redirect()->route('pharmacy.b2b.index')
             ->with('success', 'Record deleted successfully');
     }

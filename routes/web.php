@@ -793,6 +793,7 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::get('/lab/clinic/bill/{id}/', [PDFController::class, 'clinicbill']);
     Route::get('/lab/clinic/report/{id}/', [PDFController::class, 'clinicreport']);
     Route::get('/pharmacy/receipt/{id}/', [PDFController::class, 'pharmacyreceipt']);
+    Route::get('/b2b/receipt/{id}/', [PDFController::class, 'b2breceipt'])->name('b2b.pharmacy.receipt');
     Route::get('/license/vision/{id}/', [PDFController::class, 'visioncertificate']);
     Route::get('/license/medical/{id}/', [PDFController::class, 'medicalcertificate']);
     Route::get('/camp/print/{id}/', [PDFController::class, 'campprint']);
