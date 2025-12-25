@@ -34,8 +34,9 @@ class PharmacyController extends Controller
     }
     public function index()
     {
-        $records = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'pr.pharmacy_id', '=', 'p.id')->whereNotIn('p.used_for', ['B2B'])->whereNull('p.deleted_at')->where('p.branch', $this->branch)->whereDate('p.created_at', Carbon::today())->whereNull('p.stock_updated_at')->select('p.id', 'p.patient_name', 'p.other_info', 'p.used_for', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate"))->groupBy('p.id')->orderByDesc('p.id')->get();
+        $records = DB::table('pharmacy_records as pr')->leftJoin('pharmacies as p', 'pr.pharmacy_id', '=', 'p.id')->whereNotIn('p.used_for', ['B2B'])->whereNull('p.deleted_at')->where('p.branch', $this->branch)->whereNull('p.stock_updated_at')->select('p.id', 'p.patient_name', 'p.other_info', 'p.used_for', DB::raw("DATE_FORMAT(p.created_at, '%d/%b/%Y') AS cdate"))->groupBy('p.id')->orderByDesc('p.id')->get();
         return view('pharmacy.index', compact('records'));
+        //->whereDate('p.created_at', Carbon::today())
     }
 
     /**
