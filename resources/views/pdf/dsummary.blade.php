@@ -179,8 +179,9 @@
     <br><br>
     <div class="text-right">
         Doctor Name: {{ ($ds->doctors) ? $ds->doctors->doctor_name : '' }}<br>
-        Designation: {{ ($ds->doctors) ? $ds->doctors->designation : '' }}<br>
-        Reg ID: {{ ($ds->doctors) ? $ds->doctors->reg_no : '' }}
+        {{ ($ds->doctors) ? $ds->doctors->designation : '' }}<br>
+        Reg ID: {{ ($ds->doctors) ? $ds->doctors->reg_no : '' }}<br>
+        {!! $ds->doctors->additional_qualification !!}
     </div>
 </body>
 
