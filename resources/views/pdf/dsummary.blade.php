@@ -180,7 +180,7 @@
     <div class="text-right">
         Doctor Name: {{ ($ds->doctors) ? $ds->doctors->doctor_name : '' }}<br>
         {{ ($ds->doctors) ? $ds->doctors->designation : '' }}<br>
-        {!! $ds->doctors->additional_qualification !!}<br>
+        {!! ($ds->doctors) ? $ds->doctors->additional_qualification : '' !!}<br>
         Reg ID: {{ ($ds->doctors) ? $ds->doctors->reg_no : '' }}
     </div>
 </body>
