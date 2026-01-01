@@ -51,8 +51,12 @@
             <tr>
                 <td>Customer Name</td>
                 <td>{{ $customer?->name }}</td>
+            </tr>
+            <tr>
                 <td>Address</td>
                 <td>{{ $customer?->address }}</td>
+            </tr>
+            <tr>
                 <td>Bill/Receipt No.</td>
                 <td>{{ $pharmacy->id }}</td>
             </tr>
