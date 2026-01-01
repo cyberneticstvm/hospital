@@ -83,9 +83,9 @@
                 <td class="text-right">{{ $medicine->discount }}</td>
                 <td class="text-right">{{ $medicine->tax }}</td>
                 <td class="text-right">{{ $medicine->tax_amount }}</td>
-                <td class="text-right">{{ $medicine->total }}</td>
+                <td class="text-right">{{ number_format($medicine->total + $medicine->tax_amount, 2) }}</td>
             </tr>
-            @php $tot += $medicine->total @endphp
+            @php $tot += $medicine->total + $medicine->tax_amount @endphp
             @endforeach
         </tbody>
         <tfoot>
