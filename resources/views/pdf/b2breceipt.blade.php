@@ -44,21 +44,23 @@
     <table width="100%" border="1" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
-                <th text-align="center" colspan="6">PHARMACY SALE BILL</th>
+                <th text-align="center" colspan="4">PHARMACY SALE BILL</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>Customer Name</td>
-                <td>{{ $customer?->name }}</td>
+                <td colspan="3">{{ $customer?->name }}</td>
             </tr>
             <tr>
                 <td>Address</td>
-                <td>{{ $customer?->address }}</td>
+                <td colspan="3">{{ $customer?->address }}</td>
             </tr>
             <tr>
                 <td>Bill/Receipt No.</td>
                 <td>{{ $pharmacy->id }}</td>
+                <td>GSTIN</td>
+                <td>32AHTPC8761A1ZH</td>
             </tr>
         </tbody>
     </table>
