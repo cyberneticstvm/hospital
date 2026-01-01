@@ -39,7 +39,7 @@
         Registered Office: Maithanam, Varkala, Thiruvananthapuram. Phone: {{ $branch->contact_number }}<br>
         Branch: Thekkumbagom, Paravur, Kollam.<br>
         DL Number: RLF21KL2022000540, RLF20KL2022000543<br>
-        GSTIN: 32AHTPC8761A1ZH
+        GST: 32AHTPC8761A1ZH
     </center>
     <br />
     <table width="100%" border="1" cellspacing="0" cellpadding="0">
