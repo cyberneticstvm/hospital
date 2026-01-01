@@ -18,6 +18,7 @@
                     <th>Date</th>
                     <th>Contact</th>
                     <th>GSTIN</th>
+                    <th>Bill No</th>
                     <th>Receipt</th>
                     <th>Edit</th>
                     <th>Remove</th>
@@ -33,6 +34,7 @@
                     <td>{{ $record->created_at->format('d.M.Y') }}</td>
                     <td>{{ $record->contact }}</td>
                     <td>{{ $record->gstin }}</td>
+                    <td>{{ $record->id }}</td>
                     <td class="text-center"><a href="{{ route('b2b.pharmacy.receipt', encrypt($record->id)) }}" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                     <td><a class='btn btn-link' href="{{ route('pharmacy.b2b.edit', encrypt($record->id)) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
