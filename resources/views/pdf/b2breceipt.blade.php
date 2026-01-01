@@ -48,7 +48,7 @@
                 <th text-align="center" colspan="4">PHARMACY SALE BILL</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="bordered">
             <tr>
                 <td>Customer Name</td>
                 <td colspan="3">{{ $customer?->name }}</td>
