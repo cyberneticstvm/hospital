@@ -105,24 +105,23 @@ class HelperController extends Controller
         $price = DB::table('purchase_details')->where('batch_number', $request->batch_number)->where('product', $request->product)->first();
         $addition = $request->addition ?? 0;
         $mrp = $price->mrp + $addition;
-        $pr = 0;
+        $tax_amount = 0;
         if ($request->type == 'b2b'):
             $addition = ($price->purchase_price * $addition) / 100;
             $rate = $price->purchase_price + $addition;
             $discount = 0;
-            $pr = $rate;
         else:
             $rate = $price->price;
             $discount = $mrp - $rate;
         endif;
-        $taxa = ($rate * $price->tax_percentage) / 100;
+        $tax_amount = ($rate * $price->tax_percentage) / 100;
         return response()->json([
             'mrp' => $mrp,
             'taxp' => $price->tax_percentage,
-            'price' => $pr ?? $rate - $taxa,
+            'price' => ($request->type == 'b2b') ? $rate : $rate - $tax_amount,
             'discount' => $discount,
-            'taxa' => $taxa,
-            'total' => ($pr > 0) ? $pr * $request->qty : ($rate - $taxa) * $request->qty,
+            'taxa' => $tax_amount,
+            'total' => ($request->type == 'b2b') ? ($rate + $tax_amount) * $request->qty : $rate * $request->qty,
         ]);
     }
     public function getDayBookDetailed(Request $request)
