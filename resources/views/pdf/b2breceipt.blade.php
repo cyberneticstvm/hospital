@@ -92,12 +92,12 @@
                 <td class="text-right">{{ $medicine->price * $medicine->qty }}</td>
                 <td class="text-right">{{ number_format($medicine->total, 2) }}</td>
             </tr>
-            @php $tot += $medicine->total; $ttot += $medicine->total; @endphp
+            @php $tot += $medicine->total; $ttot += $medicine->price * $medicine->qty; @endphp
             @endforeach
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="7" class="text-right"><strong>Total</strong></td>
+                <td colspan="8" class="text-right"><strong>Total</strong></td>
                 <td class="text-right"><strong>{{ number_format($ttot, 2) }}</strong></td>
                 <td class="text-right"><strong>{{ number_format($tot, 2) }}</strong></td>
             </tr>
