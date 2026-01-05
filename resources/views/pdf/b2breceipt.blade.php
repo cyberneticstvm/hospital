@@ -68,16 +68,17 @@
         <tbody>
             <tr>
                 <td width="5%">SLNo.</td>
-                <td width="30%">MEDICINE</td>
+                <td width="20%">MEDICINE</td>
                 <td width="10%">BATCH</td>
                 <td width="5%">QTY</td>
                 <td width="10%">PRICE</td>
                 <td width="10%">DISCOUNT</td>
                 <td width="10%">TAX%</td>
-                <td width="10%">TAX AMOUNT</td>
+                <td width="10%">TAX</td>
+                <td width="10%">Taxable Value</td>
                 <td width="10%">TOTAL</td>
             </tr>
-            @php $c = 1; $tot = 0.00; @endphp
+            @php $c = 1; $tot = 0.00; $ttot = 0; @endphp
             @foreach($medicines as $medicine)
             <tr>
                 <td>{{ $c++ }}</td>
@@ -88,14 +89,16 @@
                 <td class="text-right">{{ $medicine->discount }}</td>
                 <td class="text-right">{{ $medicine->tax }}</td>
                 <td class="text-right">{{ $medicine->tax_amount }}</td>
-                <td class="text-right">{{ number_format($medicine->total + $medicine->tax_amount, 2) }}</td>
+                <td class="text-right">{{ $medicine->price * $medicine->qty }}</td>
+                <td class="text-right">{{ number_format($medicine->total, 2) }}</td>
             </tr>
-            @php $tot += $medicine->total + $medicine->tax_amount @endphp
+            @php $tot += $medicine->total; $ttot += $medicine->total; @endphp
             @endforeach
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="8" class="text-right"><strong>Total</strong></td>
+                <td colspan="7" class="text-right"><strong>Total</strong></td>
+                <td class="text-right"><strong>{{ number_format($ttot, 2) }}</strong></td>
                 <td class="text-right"><strong>{{ number_format($tot, 2) }}</strong></td>
             </tr>
         </tfoot>
