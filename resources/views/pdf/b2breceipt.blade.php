@@ -55,11 +55,11 @@
             </tr>
             <tr>
                 <td>Address</td>
-                <td colspan="3">{{ $customer?->address }}</td>
+                <td colspan="3">{{ wordwrap($customer?->address, 50, '\n', true) }}</td>
             </tr>
             <tr>
-                <td>Bill/Receipt No.</td>
-                <td colspan="3">{{ $pharmacy->id }}</td>
+                <td>Bill No. / Date</td>
+                <td colspan="3">{{ $pharmacy->id }} | {{ $pharmacy->created_at->format('d.M.Y') }}</td>
             </tr>
         </tbody>
     </table>
