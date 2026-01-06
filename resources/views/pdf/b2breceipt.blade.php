@@ -55,7 +55,7 @@
             </tr>
             <tr>
                 <td>Address</td>
-                <td colspan="3">{{ nl2br(wordwrap($customer?->address, 50, '\n', true)) }}</td>
+                <td colspan="3">{{ nl2br(wordwrap($customer?->address, 50, "\n", true)) }}</td>
             </tr>
             <tr>
                 <td>Bill No. / Date</td>
