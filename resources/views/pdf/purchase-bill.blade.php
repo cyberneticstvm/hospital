@@ -106,7 +106,7 @@
             @empty
             @endforelse
             <tr>
-                <td colspan="6" class="text-right fw-bold">Total</td>
+                <td colspan="7" class="text-right fw-bold">Total</td>
                 <td class="text-right fw-bold">{{ number_format($pp, 2) }}</td>
                 <td class="text-right fw-bold">{{ number_format($tax_tot, 2) }}</td>
                 <td class="text-right fw-bold">{{ number_format($tax_tot, 2) }}</td>
