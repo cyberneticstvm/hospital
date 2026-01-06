@@ -73,6 +73,7 @@
             <th>MRP</th>
             <th>Tax%</th>
             <th>Pur.Price</th>
+            <th>Tax.Value</th>
             <th>CGST</th>
             <th>SGST</th>
             <th>Total</th>
@@ -97,6 +98,7 @@
                 <td class="text-right">{{ number_format($pur->mrp, 2) }}</td>
                 <td class="text-right">{{ $pc->tax_percentage }}</td>
                 <td class="text-right">{{ number_format($pur->purchase_price, 2) }}</td>
+                <td class="text-right">{{ number_format($pur->purchase_price * $pur->qty, 2) }}</td>
                 <td class="text-right">{{ number_format(($pur->tax_amount * $pur->qty) / 2, 2) }}</td>
                 <td class="text-right">{{ number_format(($pur->tax_amount * $pur->qty) / 2, 2) }}</td>
                 <td class="text-right">{{ number_format($pur->total, 2) }}</td>
