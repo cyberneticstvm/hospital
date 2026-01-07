@@ -270,7 +270,7 @@ class PatientMedicalRecordController extends Controller
         //$input['is_admission'] = $request->is_admission;
         $record = PMRecord::find($id);
         $input['created_by'] = $record->getOriginal('created_by');
-        $input['updated_by'] = $record->getOriginal('updated_by');
+        $input['updated_by'] = $request->user()->id;
 
         try {
             //$record->update($input);
