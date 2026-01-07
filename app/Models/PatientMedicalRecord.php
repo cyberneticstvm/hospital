@@ -84,6 +84,7 @@ class PatientMedicalRecord extends Model
         'gonio_os',
         'review_date',
         'created_by',
+        'updated_by',
         'is_patient_admission',
         'is_patient_surgery',
     ];
