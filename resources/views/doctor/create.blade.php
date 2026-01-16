@@ -58,7 +58,18 @@
                                     <small class="text-danger">{{ $errors->first('date_of_join') }}</small>
                                     @enderror
                                 </div>
-
+                                <div class="col-sm-3">
+                                    <label class="form-label">Type<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="doc_type">
+                                        <option value="">Select</option>
+                                        @foreach($types as $type)
+                                        <option value="{{ $type->id }}" {{ old('doc_type') == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('doc_type')
+                                    <small class="text-danger">{{ $errors->first('doc_type') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">Doctor Fee<sup class="text-danger">*</sup></label>
                                     <input type="number" value="{{ old('doctor_fee') }}" name="doctor_fee" class="form-control form-control-md" placeholder="0.00">
@@ -66,7 +77,7 @@
                                     <small class="text-danger">{{ $errors->first('doctor_fee') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-3">
                                     <label class="form-label">Department<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
                                     <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="department_id[]">
                                         <option value="">Select</option>

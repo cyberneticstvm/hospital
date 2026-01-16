@@ -18,6 +18,7 @@ class doctor extends Model
         'additional_qualification',
         'date_of_join',
         'doctor_fee',
+        'doc_type',
     ];
 
     public function doctor_has_departments()

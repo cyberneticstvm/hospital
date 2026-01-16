@@ -15,10 +15,10 @@ class DoctorRegistrationController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:doctor-list|doctor-create|doctor-edit|doctor-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:doctor-create', ['only' => ['create','store']]);
-         $this->middleware('permission:doctor-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:doctor-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:doctor-list|doctor-create|doctor-edit|doctor-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:doctor-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:doctor-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:doctor-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class DoctorRegistrationController extends Controller
      */
     public function index()
     {
-        $doctors = doctor::orderBy('doctor_name','ASC')->get();
+        $doctors = doctor::orderBy('doctor_name', 'ASC')->get();
         $departments = DB::table('departments')->get();
         $doctor_depts = DB::table('doctor_has_departments')->get();
         return view('doctor.index', compact('doctors', 'departments', 'doctor_depts'));
@@ -39,9 +39,10 @@ class DoctorRegistrationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        $departments = DB::table('departments')->get();    
-        return view('doctor.create', compact('departments'));
+    {
+        $departments = DB::table('departments')->get();
+        $types = DB::table('types')->where('category', 'doctor')->get();
+        return view('doctor.create', compact('departments', 'types'));
     }
 
     /**
@@ -59,17 +60,18 @@ class DoctorRegistrationController extends Controller
             'designation' => 'required',
             'doctor_fee' => 'required',
             'department_id' => 'required',
+            'doc_type' => 'required',
         ]);
         $input = $request->all();
         $input['date_of_join'] = Carbon::createFromFormat('d/M/Y', $request['date_of_join'])->format('Y-m-d');
         $doctor = doctor::create($input);
-        foreach($items as $key => $value):
+        foreach ($items as $key => $value):
             DB::table('doctor_has_departments')->insert([
                 'doctor_id' => $doctor->id,
                 'department_id' => $value
             ]);
         endforeach;
-        return redirect()->route('doctor.index')->with('success','Doctor created successfully');
+        return redirect()->route('doctor.index')->with('success', 'Doctor created successfully');
         //$departments = $doctor->doctor_has_departments()->createMany($items);
     }
 
@@ -95,7 +97,8 @@ class DoctorRegistrationController extends Controller
         $doctor = doctor::find($id);
         $departments = DB::table('departments')->get();
         $doctor_depts = doctor_has_department::select('*')->where('doctor_id', '=', $id)->get();
-        return view('doctor.edit', compact('doctor', 'doctor_depts', 'departments'));
+        $types = DB::table('types')->where('category', 'doctor')->get();
+        return view('doctor.edit', compact('doctor', 'doctor_depts', 'departments', 'types'));
     }
 
     /**
@@ -114,19 +117,20 @@ class DoctorRegistrationController extends Controller
             'designation' => 'required',
             'doctor_fee' => 'required',
             'department_id' => 'required',
+            'doc_type' => 'required',
         ]);
         $input = $request->all();
         $input['date_of_join'] = Carbon::createFromFormat('d/M/Y', $request['date_of_join'])->format('Y-m-d');
         $doctor = doctor::find($id);
         $doctor->update($input);
         DB::table("doctor_has_departments")->where('doctor_id', $id)->delete();
-        foreach($items as $key => $value):
+        foreach ($items as $key => $value):
             DB::table('doctor_has_departments')->insert([
                 'doctor_id' => $id,
                 'department_id' => $value
             ]);
         endforeach;
-        return redirect()->route('doctor.index')->with('success','Doctor updated successfully');
+        return redirect()->route('doctor.index')->with('success', 'Doctor updated successfully');
     }
 
     /**
@@ -139,6 +143,6 @@ class DoctorRegistrationController extends Controller
     {
         doctor::find($id)->delete();
         return redirect()->route('doctor.index')
-                        ->with('success','Doctor deleted successfully');
+            ->with('success', 'Doctor deleted successfully');
     }
 }
