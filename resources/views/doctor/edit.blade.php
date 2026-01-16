@@ -78,7 +78,7 @@
                                     <small class="text-danger">{{ $errors->first('doctor_fee') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <label class="form-label">Department<sup class="text-danger">*</sup> <small class="text-info">(Multiple selection enabled)</small></label>
                                     <select class="form-control form-control-md show-tick ms select2" multiple data-placeholder="Select" name="department_id[]">
                                         <option value="">Select</option>
