@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class doctor extends Model
 {
@@ -24,5 +25,10 @@ class doctor extends Model
     public function doctor_has_departments()
     {
         return $this->hasMany(doctor_has_department::class, 'doctor_id');
+    }
+
+    public function doctype($id)
+    {
+        return DB::table('types')->where('id', $id)->first()->name;
     }
 }
