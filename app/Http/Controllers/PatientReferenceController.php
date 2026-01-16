@@ -39,7 +39,7 @@ class PatientReferenceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private function getDoctorFee($pid, $fee, $ctype)
+    private function getDoctorFee($pid, $doctor, $ctype)
     {
         $doc_fee = 0.00;
         $vehicle = Session::get('vehicle');
@@ -51,13 +51,17 @@ class PatientReferenceController extends Controller
         $cstatus = ($date_diff && $date_diff['status'] > 0) ? $date_diff['status'] : 0;
         if ($diff == 0 || $diff > $days || ($diff < $days && $cstatus == 0) || ($diff < $days && $date_diff['consultation_type'] == 2) || ($diff < $days && $date_diff['consultation_type'] == 4) || ($diff < $days && $date_diff['consultation_type'] == 5) || ($diff < $days && $date_diff['consultation_type'] == 6) || ($diff < $days && $date_diff['consultation_type'] == 7)) :
             // $diff = 0 means first consultation, $diff<$days and cstatus means the patient might be cancelled the consultation
-            $doc_fee = $fee;
+            $doc_fee = $doctor->doctor_fee;
         endif;
         if ($ctype == 2 || $ctype == 4 || $ctype == 5 || $ctype == 6 || $ctype == 7 || $ctype == 8 || $ctype == 9) :
             $doc_fee = 0.00; // ctype 2/4/5 means purpose of visit is Certificate/Camp/Vision Examination and no consultation fee for that.
         endif;
         if ($vehicle && $vehicle->contact_number == $patient->mobile_number && $vehicle->owner_name == $patient->patient_name):
             $doc_fee = 0.00;
+        endif;
+        if ($doctor->doc_type == 18 || $doctor->doc_type == 19):
+            // Consultation fee should be applicable for speciality and super speciality doctor
+            $doc_fee = $doctor->doctor_fee;
         endif;
         Session::forget('vehicle');
         return $doc_fee;
@@ -159,7 +163,7 @@ class PatientReferenceController extends Controller
             $input = $request->all();
             $doctor = doctor::find($request->doctor_id);
             $input['patient_id'] = $request->get('pid');
-            $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
+            $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor, $request->consultation_type);
             if ($input['rc_number']):
                 $input['discount'] = $input['doctor_fee'];
             endif;
@@ -266,7 +270,7 @@ class PatientReferenceController extends Controller
             //if($reference->getOriginal('doctor_id') == $request->doctor_id):
             //$input['doctor_fee'] = $reference->getOriginal('doctor_fee');
             //else:
-            $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor->doctor_fee, $request->consultation_type);
+            $input['doctor_fee'] = $this->getDoctorFee($request->get('pid'), $doctor, $request->consultation_type);
             if ($input['rc_number']):
                 $input['discount'] = $input['doctor_fee'];
             endif;
