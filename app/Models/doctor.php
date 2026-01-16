@@ -29,6 +29,6 @@ class doctor extends Model
 
     public function doctype($id)
     {
-        return DB::table('types')->where('id', $id)->first()->name;
+        return DB::table('types')->where('id', $id)->first()->name ?? '';
     }
 }

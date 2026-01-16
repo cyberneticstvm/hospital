@@ -30,7 +30,7 @@
                     <td>{{ ++$i }}</td>
                     <td>{{ $doctor->doctor_name }}</td>
                     <td>{{ $doctor->designation }}</td>
-                    <td>{{ $doctor->doctype($doctor->doc_type) }}</td>
+                    <td>{{ $doctor->doctype($doctor?->doc_type) }}</td>
                     <td>
                         @foreach($departments as $dept)
                         @foreach($doctor_depts as $docdept)
