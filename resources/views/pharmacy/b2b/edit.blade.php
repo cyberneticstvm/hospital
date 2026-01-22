@@ -19,7 +19,7 @@
                             <div class="row g-4">
                                 <div class="col-sm-3">
                                     <label class="form-label">Entry Date<sup class="text-danger">*</sup></label>
-                                    {{ Form::date('order_date', $pharmacy->entry_date, ['class' => 'form-control']) }}
+                                    {{ Form::date('entry_date', $pharmacy->entry_date, ['class' => 'form-control']) }}
                                     @error('entry_date')
                                     <small class="text-danger">{{ $errors->first('entry_date') }}</small>
                                     @enderror
