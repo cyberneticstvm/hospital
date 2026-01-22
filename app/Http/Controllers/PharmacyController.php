@@ -212,6 +212,7 @@ class PharmacyController extends Controller
     public function b2bstore(Request $request)
     {
         $this->validate($request, [
+            'entry_date' => 'required|date',
             'customer_id' => 'required',
             'used_for' => 'required',
         ]);
@@ -219,6 +220,7 @@ class PharmacyController extends Controller
             DB::transaction(function () use ($request) {
                 $customer = Customer::findOrFail($request->customer_id);
                 $pharmacy = Pharmacy::create([
+                    'entry_date' => $request->entry_date,
                     'patient_name' => $customer->name,
                     'customer_id' => $customer->id,
                     'branch' => $this->branch,
@@ -284,6 +286,7 @@ class PharmacyController extends Controller
     public function updateB2b(Request $request, string $id)
     {
         $this->validate($request, [
+            'entry_date' => 'required|date',
             'customer_id' => 'required',
             'used_for' => 'required',
         ]);
@@ -293,6 +296,7 @@ class PharmacyController extends Controller
                 $customer = Customer::findOrFail($request->customer_id);
                 $pharmacy = Pharmacy::findOrFail($id);
                 $pharmacy->update([
+                    'entry_date' => $request->entry_date,
                     'patient_name' => $customer->name,
                     'customer_id' => $customer->id,
                     'addition' => $request->addition,

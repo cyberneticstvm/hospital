@@ -18,6 +18,13 @@
                             <input type="hidden" name="" class="medical_record_id" value="{{ NULL }}" />
                             <div class="row g-4">
                                 <div class="col-sm-3">
+                                    <label class="form-label">Entry Date<sup class="text-danger">*</sup></label>
+                                    {{ Form::date('order_date', (old('entry_date')) ?? date('Y-m-d'), ['class' => 'form-control']) }}
+                                    @error('entry_date')
+                                    <small class="text-danger">{{ $errors->first('entry_date') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-3">
                                     <label class="form-label">Customer<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="customer_id">
                                         <option value="">Select</option>
