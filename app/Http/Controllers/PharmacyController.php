@@ -67,6 +67,7 @@ class PharmacyController extends Controller
         $input = $request->all();
         $input['created_by'] = Auth::user()->id;
         $input['updated_by'] = Auth::user()->id;
+        $input['enrty_date'] = Carbon::today();
         $input['branch'] = $this->branch;
         try {
             $pharmacy = Pharmacy::create($input);
