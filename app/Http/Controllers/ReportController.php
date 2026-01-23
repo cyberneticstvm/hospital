@@ -531,7 +531,7 @@ class ReportController extends Controller
                 return $q->where("pmr.medicine", $request->product);
             })->selectRaw("pmr.id, pmr.medical_record_id, pmr.status, p.patient_name, p.patient_id, doc.doctor_name, SUM(pmr.total) AS total, SUM(price*qty) AS net_amount, (tax_amount*qty)/2 AS cgst, (tax_amount*qty)/2 AS sgst, SUM(pmr.total) as invoice_amount, price AS taxable_amount, DATE_FORMAT(pmr.updated_at, '%d/%m/%Y') AS edate")->groupBy('pmr.medical_record_id')->orderByDesc('pmr.id')->get();
         else:
-            $records = DB::table("pharmacies as p")->whereNull('p.deleted_at')->leftJoin("pharmacy_records as pr", "p.id", "pr.pharmacy_id")->whereBetween("p.created_at", [$startDate, $endDate])->where('p.branch', $request->branch)->whereIn('p.used_for', ['Customer'])->when($request->product > 0, function ($q) use ($request) {
+            $records = DB::table("pharmacies as p")->whereNull('p.deleted_at')->leftJoin("pharmacy_records as pr", "p.id", "pr.pharmacy_id")->whereBetween("p.entry_date", [$startDate, $endDate])->where('p.branch', $request->branch)->whereIn('p.used_for', ['Customer'])->when($request->product > 0, function ($q) use ($request) {
                 return $q->where("pr.product", $request->product);
             })->selectRaw("p.id, p.medical_record_id, '' AS status, p.patient_name, '' AS patient_id, '' AS doctor_name, SUM(pr.total) AS total, SUM(price) AS net_amount, tax_amount/2 AS cgst, tax_amount/2 AS sgst, SUM(pr.total) as invoice_amount, price AS taxable_amount, DATE_FORMAT(p.created_at, '%d/%m/%Y') AS edate")->groupBy('pr.pharmacy_id')->orderByDesc('p.id')->get();
         endif;
