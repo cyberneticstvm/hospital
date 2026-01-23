@@ -9,6 +9,8 @@ class Pharmacy extends Model
 {
     use HasFactory;
 
+    protected $casts = ['entry_date' => 'datetime'];
+
     protected $fillable = [
         'entry_date',
         'patient_name',
