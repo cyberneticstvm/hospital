@@ -31,7 +31,7 @@
                     <td>{{ ++$i }}</td>
                     <td>{{ $record->patient_name }}</td>
                     <td>{{ $record->other_info }}</td>
-                    <td>{{ $record->entry_date->format('d.M.Y') }}</td>
+                    <td>{{ $record->entry_date?->format('d.M.Y') }}</td>
                     <td>{{ $record->contact }}</td>
                     <td>{{ $record->gstin }}</td>
                     <td>{{ $record->id }}</td>
