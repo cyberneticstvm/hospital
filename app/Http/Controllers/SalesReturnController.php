@@ -42,7 +42,7 @@ class SalesReturnController extends Controller
             if ($request->source == 'Medicine'):
                 $sales = PatientMedicineRecord::where('medical_record_id', $request->term)->whereNull('deleted_at')->whereNull('stock_updated_at')->where('status', 1)->select('medicine AS product', 'batch_number', 'qty', 'total', 'branch_id')->get();
             else:
-                $data = Pharmacy::where('medical_record_id', $request->term)->orWhere('id', $request->term)->whereNull('deleted_at')->whereNull('stock_updated_at')->where('status', 1)->first();
+                $data = Pharmacy::where('medical_record_id', $request->term)->orWhere('id', $request->term)->whereNull('deleted_at')->whereNull('stock_updated_at')->first();
                 $sales = DB::table('pharmacy_records')->where('pharmacy_id', $data->id)->select('product', 'batch_number', 'qty', 'total', $data->branch . 'AS branch_id')->get();
             endif;
         } catch (Exception $e) {
