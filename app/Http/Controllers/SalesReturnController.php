@@ -44,7 +44,7 @@ class SalesReturnController extends Controller
             else:
                 $data = Pharmacy::where('medical_record_id', $request->term)->orWhere('id', $request->term)->whereNull('deleted_at')->whereNull('stock_updated_at')->first();
                 $bid = $data->branch;
-                $sales = DB::table('pharmacy_records')->where('pharmacy_id', $data->id)->select('product', 'batch_number', 'qty', 'total', "$bid AS branch_id")->get();
+                $sales = DB::table('pharmacy_records')->where('pharmacy_id', $data->id)->selectRaw("product, batch_number, qty, total, $bid AS branch_id")->get();
             endif;
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
