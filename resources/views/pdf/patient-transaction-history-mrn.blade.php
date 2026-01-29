@@ -76,7 +76,9 @@
                 <td>Medical Record No.</td>
                 <td>{{ $mrn->id }}</td>
                 <td>Date</td>
-                <td colspan="3">{{ $mrn->created_at->format('d/M/Y') }}</td>
+                <td>{{ $mrn->created_at->format('d/M/Y') }}</td>
+                <td>Receipt No.</td>
+                <td>{{ $mrn->id }}</td>
             </tr>
         </tbody>
     </table>
@@ -87,7 +89,7 @@
     $tot = array_sum($fee);
     @endphp
     <center>
-        <h5>STATEMENT OF ACCOUNTS DETAILED</h5>
+        <h5>DETAILS</h5>
     </center>
     <table class="bordered" width="100%" cellspacing="0" cellpadding="0">
         <thead>
