@@ -78,7 +78,7 @@
                 <td>Date</td>
                 <td>{{ $mrn->created_at->format('d/M/Y') }}</td>
                 <td>Receipt No.</td>
-                <td>{{ $mrn->id }}</td>
+                <td>R-{{ $mrn->id }}</td>
             </tr>
         </tbody>
     </table>
