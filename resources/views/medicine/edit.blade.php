@@ -53,11 +53,11 @@
                                             @foreach($medicines as $medicine)
                                             @php
                                             /*$bnos = HelperController::getProductForTransferForEdit($medicine->medicine, Session::get('branch'));*/
-                                            $bnos = Helper::getStock($medicine->medicine, Session::get('branch'), $medicine->qty);
+                                            $bnos = Helper::getStock($medicine->medicine, Session::get('branch'), 0);
                                             @endphp
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}" />
                                             <input type='hidden' name='eye[]' value="{{ $medicine->eye }}" />
-                                            <input type='hidden' data-pid="{{ $medicine->medicine }}" name='medicine_type[]' value="{{ $medicine->medicine_type }}" />
+                                            <input type='hidden' name='medicine_type[]' value="{{ $medicine->medicine_type }}" />
                                             <tr>
                                                 <td>
                                                     <select class="form-control form-control-md select2 selProductForTransfer" data-placeholder="Select" name="medicine[]" required='required'>
