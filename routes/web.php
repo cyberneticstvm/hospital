@@ -897,6 +897,7 @@ Route::prefix('wa')->controller(PdfController::class)->group(function () {
 });
 
 Route::prefix('stock')->controller(HelperController::class)->group(function () {
+    Route::get('/list', 'stockList')->name('stock.list');
     Route::get('/status', 'getStockStatus')->name('stock.status');
     Route::post('/status', 'getStockStatusUpdate')->name('stock.status.update');
 });

@@ -42,6 +42,14 @@ class HelperController extends Controller
         return response()->json($data);
     }
 
+    function stockList()
+    {
+        $stock = collect(Helper::getStock(19, 1, 0));
+        return response()->json([
+            'stock' => $stock,
+        ]);
+    }
+
     function getStockStatus(Request $request)
     {
         $branches = Branch::pluck('branch_name', 'id');
