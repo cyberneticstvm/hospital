@@ -54,7 +54,6 @@
                                             @php
                                             /*$bnos = HelperController::getProductForTransferForEdit($medicine->medicine, Session::get('branch'));*/
                                             $bnos = Helper::getStock($medicine->medicine, Session::get('branch'), $medicine->qty);
-                                            print_r($bnos)
                                             @endphp
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}" />
                                             <input type='hidden' name='eye[]' value="{{ $medicine->eye }}" />
@@ -71,7 +70,10 @@
                                                 <td><select class="form-control form-control-sm select2 bno" name="batch_number[]" data-type="" required='required'>
                                                         <option value="">Select</option>
                                                         @forelse($bnos as $key => $bno)
-                                                        <option value="{{ $bno->batch_number }}" {{ $medicine->batch_number == $bno->batch_number ? 'selected' : '' }} data-qty="{{ $bno->balance_qty }}">{{ $bno->batch_number .' ('.$bno->balance_qty.' Qty in Hand)' }}</option>
+                                                        @php
+                                                        $bqty = $medicine->batch_number == $bno->batch_number ? $bno->balance_qty : 0
+                                                        @endphp
+                                                        <option value="{{ $bno->batch_number }}" {{ $medicine->batch_number == $bno->batch_number ? 'selected' : '' }} data-qty="{{ $bqty }}">{{ $bno->batch_number .' ('.$bqty.' Qty in Hand)' }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select></td>
