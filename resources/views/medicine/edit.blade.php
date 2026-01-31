@@ -53,7 +53,7 @@
                                             @foreach($medicines as $medicine)
                                             @php
                                             /*$bnos = HelperController::getProductForTransferForEdit($medicine->medicine, Session::get('branch'));*/
-                                            $bnos = Helper::getStock($medicine->medicine, Session::get('branch'), $medicine->qty);
+                                            $bnos = collect(Helper::getStock($medicine->medicine, Session::get('branch'), $medicine->qty));
                                             @endphp
                                             <input type='hidden' name='notes[]' value="{{ $medicine->notes }}" />
                                             <input type='hidden' name='eye[]' value="{{ $medicine->eye }}" />
