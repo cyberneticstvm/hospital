@@ -71,7 +71,8 @@
                                                         <option value="">Select</option>
                                                         @forelse($bnos as $key => $bno)
                                                         @php
-                                                        $bqty = $medicine->batch_number == $bno->batch_number ? $bno->balance_qty : 0
+                                                        /*$bqty = $medicine->batch_number == $bno->batch_number ? $bno->balance_qty : 0*/
+                                                        $bqty = $bno->balance_qty
                                                         @endphp
                                                         <option value="{{ $bno->batch_number }}" {{ $medicine->batch_number == $bno->batch_number ? 'selected' : '' }} data-qty="{{ $bqty }}">{{ $bno->batch_number .' ('.$bqty.' Qty in Hand)' }}</option>
                                                         @empty
