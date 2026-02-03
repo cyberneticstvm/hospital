@@ -64,6 +64,10 @@
         .fw-bold {
             font-weight: bold;
         }
+
+        .text-right {
+            text-align: right;
+        }
     </style>
 </head>
 
@@ -322,14 +326,14 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="5" class="fw-bold text-end">39694.00</td>
+                    <td colspan="5" class="fw-bold text-right">39694.00</td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="text-end fw-bold">Discount / Insurance / Others</td>
+                    <td colspan="4" class="text-right fw-bold">Discount / Insurance / Others</td>
                     <td class="fw-bold">4694</td>
                 </tr>
                 <tr>
-                    <td colspan="4" class="fw-bold">35000.00</td>
+                    <td colspan="4" class="fw-bold text-right">35000.00</td>
                 </tr>
             </tfoot>
         </table>
