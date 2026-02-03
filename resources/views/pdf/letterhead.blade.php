@@ -259,20 +259,7 @@
                     <td> 110.00</td>
                     <td> 110.00</td>
                 </tr>
-                <tr>
-                    <td>25</td>
-                    <td>SURGICAL instrument Drapes</td>
-                    <td> 3</td>
-                    <td> 80.00</td>
-                    <td> 240.00</td>
-                </tr>
-                <tr>
-                    <td>26</td>
-                    <td>4 QUIN- PFS 0.5 ml</td>
-                    <td> 1</td>
-                    <td> 280.00</td>
-                    <td> 280.00</td>
-                </tr>
+
             </tbody>
         </table>
         <br>
@@ -294,6 +281,20 @@
                         <br>
                         <br>
                     </td>
+                </tr>
+                <tr>
+                    <td>25</td>
+                    <td>SURGICAL instrument Drapes</td>
+                    <td> 3</td>
+                    <td> 80.00</td>
+                    <td> 240.00</td>
+                </tr>
+                <tr>
+                    <td>26</td>
+                    <td>4 QUIN- PFS 0.5 ml</td>
+                    <td> 1</td>
+                    <td> 280.00</td>
+                    <td> 280.00</td>
                 </tr>
             </tbody>
             <tfoot>
