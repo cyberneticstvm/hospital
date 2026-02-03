@@ -272,7 +272,12 @@
         <table width="100%">
             <tbody>
                 <tr>
-                    <td colspan="4"> <br>
+                    <td colspan="4">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
                         <br>
                         <br>
                         <br>
@@ -317,7 +322,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="4" class="fw-bold">39694.00</td>
+                    <td colspan="4" class="fw-bold text-end">39694.00</td>
                 </tr>
                 <tr>
                     <td colspan="3" class="text-end fw-bold">Discount / Insurance / Others</td>
