@@ -262,6 +262,11 @@
                     <td> 60.00</td>
                     <td> 60.00</td>
                 </tr>
+            </tbody>
+        </table>
+        </pre>
+        <table width="100%">
+            <tbody>
                 <tr>
                     <td>26</td>
                     <td>TROPICAL PLUS DROPS</td>
