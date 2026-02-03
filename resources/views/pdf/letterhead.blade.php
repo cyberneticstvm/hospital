@@ -269,13 +269,16 @@
         <br>
         <br>
         <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
         <table width="100%">
             <tbody>
+                <tr>
+                    <td colspan="4"> <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </td>
+                </tr>
                 <tr>
                     <td>26</td>
                     <td>TROPICAL PLUS DROPS</td>
