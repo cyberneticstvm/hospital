@@ -300,11 +300,11 @@
             <tfoot>
                 <tr>
                     <td colspan="4"></td>
-                    <td class="fw-bold">10964.00</td>
+                    <td class="fw-bold">10948.00</td>
                 </tr>
                 <tr>
                     <td colspan="4"></td>
-                    <td class="fw-bold">10964.00</td>
+                    <td class="fw-bold">10948.00</td>
                 </tr>
             </tfoot>
         </table>
