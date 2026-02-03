@@ -207,8 +207,8 @@
                     <td>17</td>
                     <td>MASK -SURGICAL</td>
                     <td> 1</td>
-                    <td> 7.00</td>
-                    <td> 7.00</td>
+                    <td> 5.00</td>
+                    <td> 5.00</td>
                 </tr>
                 <tr>
                     <td>18</td>
@@ -300,11 +300,11 @@
             <tfoot>
                 <tr>
                     <td colspan="4"></td>
-                    <td class="fw-bold">10948.00</td>
+                    <td class="fw-bold">10946.00</td>
                 </tr>
                 <tr>
                     <td colspan="4"></td>
-                    <td class="fw-bold">10948.00</td>
+                    <td class="fw-bold">10946.00</td>
                 </tr>
             </tfoot>
         </table>
