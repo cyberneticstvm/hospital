@@ -326,14 +326,16 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="5" class="fw-bold">39694.00</td>
+                    <td colspan="4"></td>
+                    <td class="fw-bold">39694.00</td>
                 </tr>
                 <tr>
                     <td colspan="4" class="text-right fw-bold">Discount / Insurance / Others</td>
                     <td class="fw-bold">4694.00</td>
                 </tr>
                 <tr>
-                    <td colspan="5" class="fw-bold">35000.00</td>
+                    <td colspan="4"></td>
+                    <td class="fw-bold">35000.00</td>
                 </tr>
             </tfoot>
         </table>
