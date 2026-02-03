@@ -326,7 +326,7 @@
                 </tr>
                 <tr>
                     <td colspan="3" class="text-end fw-bold">Discount / Insurance / Others</td>
-                    <td colspan="4" class="fw-bold">4694</td>
+                    <td class="fw-bold">4694</td>
                 </tr>
                 <tr>
                     <td colspan="4" class="fw-bold">35000.00</td>
