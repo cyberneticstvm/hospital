@@ -189,7 +189,9 @@ class Helper
             ];
         endif;
 
-        $curl = curl_init();
+        dd($config);
+        die;
+        curl_init();
         $data_string = json_encode($config);
         $ch = curl_init('https://graph.facebook.com/v22.0/543653938835557/messages');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
