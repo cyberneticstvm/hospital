@@ -72,7 +72,7 @@ class Helper
                 "to" => "+91" . $mobile,
                 "type" => "template",
                 "template" => [
-                    "name" => "hosp_emr1",
+                    "name" => "hosp_emr",
                     "language" => ["code" => "en"],
                     "components" => [
                         [
@@ -99,7 +99,7 @@ class Helper
                             "sub_type" => "url",
                             "index" => 0,
                             "parameters" => [
-                                ["type" => "text", "text" => encrypt($mrid)],
+                                ["type" => "text", "text" => $mrid],
                             ]
                         ]
                     ]
