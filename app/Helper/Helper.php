@@ -140,7 +140,7 @@ class Helper
                             "sub_type" => "url",
                             "index" => 0,
                             "parameters" => [
-                                ["type" => "text", "text" => encrypt($mrid)],
+                                ["type" => "text", "text" => $mrid],
                             ]
                         ]
                     ]
@@ -181,7 +181,7 @@ class Helper
                             "sub_type" => "url",
                             "index" => 0,
                             "parameters" => [
-                                ["type" => "text", "text" => encrypt($mrid)],
+                                ["type" => "text", "text" => $mrid],
                             ]
                         ]
                     ]
