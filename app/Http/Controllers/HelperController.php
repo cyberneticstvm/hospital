@@ -757,6 +757,9 @@ class HelperController extends Controller
         $mr = PatientMedicalRecord::findOrFail($request->mrid);
         try {
 
+            dd(array($request->mobile_number, $request->patient_name, $mr->id, 'mrecord'));
+            die;
+
             if ($request->medical_record):
                 $res = Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->id, 'mrecord');
                 DocumentTrack::create([
