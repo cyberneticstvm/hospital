@@ -767,6 +767,8 @@ class HelperController extends Controller
                     'msg_id' => $res['messages'][0]['id'],
                     'msg_status' => $res['messages'][0]['message_status'],
                 ]);
+                dd($res['messages']);
+                die;
             endif;
             if ($request->patient_history):
                 $res = Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->patient_id, 'phistory');

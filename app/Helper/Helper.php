@@ -72,7 +72,7 @@ class Helper
                 "to" => "+91" . $mobile,
                 "type" => "template",
                 "template" => [
-                    "name" => "hosp_emr",
+                    "name" => "hosp_emr1",
                     "language" => ["code" => "en"],
                     "components" => [
                         [
@@ -188,9 +188,6 @@ class Helper
                 ]
             ];
         endif;
-
-        dd($config);
-        die;
         curl_init();
         $data_string = json_encode($config);
         $ch = curl_init('https://graph.facebook.com/v22.0/543653938835557/messages');
