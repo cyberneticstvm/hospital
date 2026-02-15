@@ -285,7 +285,7 @@ class Helper
                         "type" => "body",
                         "parameters" => [
                             ["type" => "text", "text" => $appointment->patient_name],
-                            ["type" => "text", "text" => ($action == 'save') ? 'Booked' : 'Updated'],
+                            ["type" => "text", "text" => $action],
                             ["type" => "text", "text" => $appointment->appointment_date->format('d.M.Y')],
                             ["type" => "text", "text" => Carbon::parse($appointment->appointment_time)->format('g:i A')],
                             ["type" => "text", "text" => $appointment->doctors->doctor_name],

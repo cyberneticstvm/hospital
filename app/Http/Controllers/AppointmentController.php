@@ -160,7 +160,7 @@ class AppointmentController extends Controller
             endif;
             $appointment = Appointment::create($input);
             Helper::sendSms(Config::get('myconfig.sms'));
-            Helper::sendAppointmentConfirmation($appointment, 'save');
+            Helper::sendAppointmentConfirmation($appointment, 'Saved');
         } catch (Exception $e) {
             throw $e;
         }
@@ -248,7 +248,7 @@ class AppointmentController extends Controller
             $apo = Appointment::find($id);
             $apo->update($input);
             Helper::sendSms(Config::get('myconfig.sms'));
-            Helper::sendAppointmentConfirmation($apo, 'update');
+            Helper::sendAppointmentConfirmation($apo, 'Updated');
         } catch (Exception $e) {
             throw $e;
         }
