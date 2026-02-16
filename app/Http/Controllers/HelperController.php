@@ -769,7 +769,7 @@ class HelperController extends Controller
                 ]);
             endif;
             if ($request->patient_history):
-                $res = Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->patient_id, 'phistory');
+                $res = Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, encrypt($mr->patient_id), 'phistory');
                 DocumentTrack::create([
                     'patient_id' => $mr->patient_id,
                     'created_by' => $request->user()->id,
@@ -781,7 +781,7 @@ class HelperController extends Controller
                 ]);
             endif;
             if ($request->spectacle_prescription):
-                $res = Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, $mr->id, 'spectacle');
+                $res = Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, encrypt($mr->id), 'spectacle');
                 DocumentTrack::create([
                     'patient_id' => $mr->patient_id,
                     'created_by' => $request->user()->id,
