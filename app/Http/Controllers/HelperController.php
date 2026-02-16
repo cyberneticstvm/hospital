@@ -782,9 +782,7 @@ class HelperController extends Controller
             endif;
             if ($request->spectacle_prescription):
                 $res = Helper::sendRequestedDocviaWa($request->mobile_number, $request->patient_name, encrypt($mr->id), 'spectacle');
-                dd($res);
-                die;
-                /*DocumentTrack::create([
+                DocumentTrack::create([
                     'patient_id' => $mr->patient_id,
                     'created_by' => $request->user()->id,
                     'sent_to' => $request->mobile_number,
@@ -792,7 +790,7 @@ class HelperController extends Controller
                     'doc_type' => 'spectacle',
                     'msg_id' => $res['messages'][0]['id'],
                     'msg_status' => $res['messages'][0]['message_status'],
-                ]);*/
+                ]);
             endif;
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
