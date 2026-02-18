@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Mobile Number<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ ($patient && $patient->mobile_number) ? $patient->mobile_number : '' }}" name="mobile_number" class="form-control form-control-md" placeholder="Mobile Number">
+                                    <input type="text" value="{{ ($patient && $patient->mobile_number) ? $patient->mobile_number : ($mobile) ?? '' }}" name="mobile_number" class="form-control form-control-md" placeholder="Mobile Number">
                                     @error('mobile_number')
                                     <small class="text-danger">{{ $errors->first('mobile_number') }}</small>
                                     @enderror
