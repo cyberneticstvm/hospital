@@ -45,7 +45,7 @@
                             {{ session()->get('success') }}
                         </div>
                         @endif
-                        <p class="text-right my-3"><a href="/appointment/create/0"><i class="fa fa-plus fa-lg text-success"></i></a></p>
+                        <p class="text-right my-3"><a href="{{ route('appointment.create', ['mobile' => 0]) }}"><i class="fa fa-plus fa-lg text-success"></i></a></p>
                         <table id="dataTbl" class="table table-striped table-hover align-middle table-sm" style="width:100%">
                             <thead>
                                 <tr>
