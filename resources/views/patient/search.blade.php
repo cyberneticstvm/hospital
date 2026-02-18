@@ -1,7 +1,7 @@
 @extends("templates.base")
 @section("content")
 <div class="body d-flex">
-    <div class="container-fluid">        
+    <div class="container-fluid">
         <div class="row g-4">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
@@ -30,16 +30,31 @@
                             @if (count($errors) > 0)
                             <div role="alert" class="text-danger mt-3">
                                 @foreach ($errors->all() as $error)
-                                    {{ $error }}
+                                {{ $error }}
                                 @endforeach
                             </div>
                             @endif
                         </form>
                         <div class="mt-5"></div>
                         <table id="dataTbl" class="table display dataTable table-striped table-sm table-hover align-middle" style="width:100%">
-                            <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>Phone Number</th><th>Address</th><th>History</th><th>Assign Doctor</th><th>Reg.Date</th><th>Re-open</th><th>Edit</th><th>Remove</th></tr></thead><tbody>
-                            @php $i = 0; @endphp
-                            @forelse($records as $key => $patient)
+                            <thead>
+                                <tr>
+                                    <th>SL No.</th>
+                                    <th>Patient Name</th>
+                                    <th>Patient ID</th>
+                                    <th>Phone Number</th>
+                                    <th>Address</th>
+                                    <th>History</th>
+                                    <th>Assign Doctor</th>
+                                    <th>Reg.Date</th>
+                                    <th>Re-open</th>
+                                    <th>Edit</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $i = 0; @endphp
+                                @forelse($records as $key => $patient)
                                 <tr>
                                     <td>{{ ++$i }}</td>
                                     <td>{{ $patient->patient_name }}</td>
@@ -53,15 +68,17 @@
                                     <td><a class='btn btn-link' href="{{ route('patient.edit', $patient->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                                     <td>
                                         <form method="post" action="{{ route('patient.delete', $patient->id) }}">
-                                            @csrf 
+                                            @csrf
                                             @method("DELETE")
                                             <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to delete this Patient?');"><i class="fa fa-trash text-danger"></i></button>
                                         </form>
                                     </td>
                                 </tr>
-                            @empty
-                            @endforelse
-                        </tbody></table>
+                                @empty
+                                <a href="{{ route('appointment.create', ['mobile' => 0]) }}">Register</a>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
