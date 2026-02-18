@@ -1,7 +1,7 @@
 @extends("templates.base")
 @section("content")
 <div class="body d-flex">
-    <div class="container">        
+    <div class="container">
         <div class="row g-4">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
@@ -28,7 +28,7 @@
                                     @error('patient_name')
                                     <small class="text-danger">{{ $errors->first('patient_name') }}</small>
                                     @enderror
-                                </div>                                
+                                </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Gender<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" data-placeholder="Select" name="gender">
@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Mobile Number<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ ($patient && $patient->mobile_number) ? $patient->mobile_number : old('mobile_number') }}" name="mobile_number" maxlength="10" class="form-control form-control-md" placeholder="Mobile Number">
+                                    <input type="text" value="{{ ($patient && $patient->mobile_number) ? $patient->mobile_number : ($mobile) ?? old('mobile_number') }}" name="mobile_number" maxlength="10" class="form-control form-control-md" placeholder="Mobile Number">
                                     @error('mobile_number')
                                     <small class="text-danger">{{ $errors->first('mobile_number') }}</small>
                                     @enderror
@@ -68,8 +68,8 @@
                                         <input type="text" value="{{ old('appointment_date') }}" name="appointment_date" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy">
                                         <div class="form-icon position-absolute">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
-                                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                                             </svg>
                                         </div>
                                     </fieldset>
@@ -96,7 +96,7 @@
                                         @empty
                                         @endforelse
                                     </select>
-                                </div>                        
+                                </div>
                                 <div class="col-sm-2">
                                     <label class="form-label">Time<sup class="text-danger">*</sup></label>
                                     <select class="form-control select2 atime" name="appointment_time">
@@ -115,10 +115,10 @@
                                 </div>
                                 <div class="col-sm-5">
                                     <label class="form-label">Notes </label>
-                                    <input type="text" name="notes" class="form-control form-control-md" placeholder="Notes">                                   
+                                    <input type="text" name="notes" class="form-control form-control-md" placeholder="Notes">
                                 </div>
                                 <div class="col-sm-12 text-right">
-                                    <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
+                                    <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
                                     <button type="submit" class="btn btn-primary btn-submit">Save</button>
                                 </div>

@@ -94,13 +94,14 @@ class AppointmentController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(string $mobile)
     {
         $patient = [];
         $doctors = $this->doctors;
         $branches = $this->branches;
         $camps = $this->camps;
-        return view('appointment.create', compact('patient', 'doctors', 'branches', 'camps'));
+        $mobile = $mobile;
+        return view('appointment.create', compact('patient', 'doctors', 'branches', 'camps', 'mobile'));
     }
 
     public function gettime($date, $branch, $doctor)
