@@ -17,7 +17,7 @@
                             {{ session()->get('error') }}
                         </div>
                         @endif
-                        <form action="{{ route('appointment.create') }}" method="post">
+                        <form action="{{ route('appointment.save') }}" method="post">
                             @csrf
                             <input type="hidden" name="patient_id" value="{{ ($patient && $patient->id) ? $patient->id : 0 }}" />
                             <input type="hidden" name="status" value="1" />
