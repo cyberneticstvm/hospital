@@ -8,7 +8,7 @@
 </div>
 <div class="card mb-4 border-0">
     <div class="card-body">
-        <p class="text-right my-3"><a href="{{ route('patient.create', ['mobile' => 0]) }}"><i class="fa fa-plus fa-lg text-success"></i></a></p>
+        <p class="text-right my-3"><a href="/patient/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         <table id="dataTbl" class="table display dataTable table-striped table-sm table-hover align-middle" style="width:100%">
             <thead>
                 <tr>
