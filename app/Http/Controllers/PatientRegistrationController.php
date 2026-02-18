@@ -134,7 +134,7 @@ class PatientRegistrationController extends Controller
     public function search()
     {
         $records = [];
-        $search_term = '';
+        $search_term = ' ';
         return view('patient.search', compact('records', 'search_term'));
     }
     public function searchc()
