@@ -75,11 +75,13 @@
                                     </td>
                                 </tr>
                                 @empty
+                                @endforelse
+                            </tbody>
+                            <tfoot>
                                 <tr>
                                     <td colspan="11" class="text-center"><a href="{{ route('appointment.create', ['mobile' => $search_term]) }}">Create Appointment</a> | <a href="">Register Patient</a></td>
                                 </tr>
-                                @endforelse
-                            </tbody>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
