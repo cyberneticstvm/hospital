@@ -1,7 +1,7 @@
 @extends("templates.base")
 @section("content")
 <div class="body d-flex">
-    <div class="container">        
+    <div class="container">
         <div class="row g-4">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="d-flex flex-wrap justify-content-between align-items-end">
@@ -22,7 +22,7 @@
                                     @error('patient_name')
                                     <small class="text-danger">{{ $errors->first('patient_name') }}</small>
                                     @enderror
-                                </div>                                
+                                </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Gender<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md" data-placeholder="Select" name="gender">
@@ -48,15 +48,15 @@
                                         <option value="0">No</option>
                                         <option value="1">Yes</option>
                                     </select>
-                                </div> 
+                                </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Date of Birth</label>
                                     <fieldset class="form-icon-group left-icon position-relative">
                                         <input type="text" value="{{ old('dob') }}" name="dob" class="form-control form-control-md dtpicker" placeholder="dd/mm/yyyy">
                                         <div class="form-icon position-absolute">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
-                                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                                             </svg>
                                         </div>
                                     </fieldset>
@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="form-label">Mobile Number<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ ($patient && $patient->mobile_number) ? $patient->mobile_number : '' }}" name="mobile_number" class="form-control form-control-md" placeholder="Mobile Number">
+                                    <input type="text" value="{{ ($patient && $patient->mobile_number) ? $patient->mobile_number : ($mobile) ?? '' }}" name="mobile_number" class="form-control form-control-md" placeholder="Mobile Number">
                                     @error('mobile_number')
                                     <small class="text-danger">{{ $errors->first('mobile_number') }}</small>
                                     @enderror
@@ -95,10 +95,10 @@
                                 <div class="col-sm-3">
                                     <label class="form-label">City<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="city">
-                                    <option value="">Select</option>
-                                    @foreach($cities as $city)
+                                        <option value="">Select</option>
+                                        @foreach($cities as $city)
                                         <option value="{{ $city->id }}" {{ 1 == $city->id ? 'selected' : '' }}>{{ $city->city_name }}</option>
-                                    @endforeach
+                                        @endforeach
                                     </select>
                                     @error('city')
                                     <small class="text-danger">{{ $errors->first('city') }}</small>
@@ -107,10 +107,10 @@
                                 <div class="col-sm-3">
                                     <label class="form-label">State<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="state">
-                                    <option value="">Select</option>
-                                    @foreach($states as $state)
+                                        <option value="">Select</option>
+                                        @foreach($states as $state)
                                         <option value="{{ $state->id }}" {{ 1 == $state->id ? 'selected' : '' }}>{{ $state->state_name }}</option>
-                                    @endforeach
+                                        @endforeach
                                     </select>
                                     @error('state')
                                     <small class="text-danger">{{ $errors->first('state') }}</small>
@@ -119,17 +119,17 @@
                                 <div class="col-sm-3">
                                     <label class="form-label">Country<sup class="text-danger">*</sup></label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="country">
-                                    <option value="">Select</option>
-                                    @foreach($countries as $country)
+                                        <option value="">Select</option>
+                                        @foreach($countries as $country)
                                         <option value="{{ $country->id }}" {{ 1 == $country->id ? 'selected' : '' }}>{{ $country->country_name }}</option>
-                                    @endforeach
+                                        @endforeach
                                     </select>
                                     @error('country')
                                     <small class="text-danger">{{ $errors->first('country') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-sm-12 text-right">
-                                    <button type="button" onClick="history.back()"  class="btn btn-danger">Cancel</button>
+                                    <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
                                     <button type="submit" class="btn btn-primary btn-submit">Save</button>
                                 </div>

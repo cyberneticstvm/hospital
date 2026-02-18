@@ -8,11 +8,24 @@
 </div>
 <div class="card mb-4 border-0">
     <div class="card-body">
-        <p class= "text-right my-3"><a href="/patient/create/"><i class="fa fa-plus fa-lg text-success"></i></a></p>
+        <p class="text-right my-3"><a href="{{ route('patient.create', ['mobile' => 0]) }}"><i class="fa fa-plus fa-lg text-success"></i></a></p>
         <table id="dataTbl" class="table display dataTable table-striped table-sm table-hover align-middle" style="width:100%">
-            <thead><tr><th>SL No.</th><th>Patient Name</th><th>Patient ID</th><th>Address</th><th>History</th><th>Assign Doctor</th><th>Reg.Date</th><th>Re-open</th><th>Edit</th><!--<th>Remove</th>--></tr></thead><tbody>
-            @php $i = 0; @endphp
-            @foreach($patients as $patient)
+            <thead>
+                <tr>
+                    <th>SL No.</th>
+                    <th>Patient Name</th>
+                    <th>Patient ID</th>
+                    <th>Address</th>
+                    <th>History</th>
+                    <th>Assign Doctor</th>
+                    <th>Reg.Date</th>
+                    <th>Re-open</th>
+                    <th>Edit</th><!--<th>Remove</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                @php $i = 0; @endphp
+                @foreach($patients as $patient)
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ $patient->patient_name }}</td>
@@ -31,8 +44,9 @@
                         </form>
                     </td>-->
                 </tr>
-            @endforeach
-        </tbody></table>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
 @endsection
