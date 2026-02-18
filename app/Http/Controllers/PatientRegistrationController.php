@@ -46,13 +46,13 @@ class PatientRegistrationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(string $mobile)
     {
         $patient = [];
         $cities = DB::table('city')->get();
         $states = DB::table('state')->get();
         $countries = DB::table('country')->get();
-        $mobile = 0;
+        $mobile = $mobile;
         return view('patient.create', compact('cities', 'states', 'countries', 'patient', 'mobile'));
     }
 

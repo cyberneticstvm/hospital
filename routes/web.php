@@ -141,7 +141,7 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
 
     // Patient Registration //
     Route::get('/patient/', 'App\Http\Controllers\PatientRegistrationController@index')->name('patient.index');
-    Route::get('/patient/create/', 'App\Http\Controllers\PatientRegistrationController@create');
+    Route::get('/patient/create/{mobile}', 'App\Http\Controllers\PatientRegistrationController@create')->name("create.patient");
     Route::post('/patient/create/', 'App\Http\Controllers\PatientRegistrationController@store')->name('patient.create');
     Route::get('/patient/{id}/edit/', 'App\Http\Controllers\PatientRegistrationController@edit')->name('patient.edit');
     Route::put('/patient/{id}/edit/', 'App\Http\Controllers\PatientRegistrationController@update')->name('patient.update');
