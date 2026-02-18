@@ -17,7 +17,7 @@
                             <div class="row g-4">
                                 <div class="col-sm-3">
                                     <label class="form-label">Patient ID/Mobile/Name<sup class="text-danger">*</sup></label>
-                                    <input type="text" value="{{ $search_term }}" name="search_term" class="form-control form-control-md" placeholder="Patient ID/Mobile/Name">
+                                    <input type="text" value="{{ $search_term ?? '' }}" name="search_term" class="form-control form-control-md" placeholder="Patient ID/Mobile/Name">
                                     @error('search_term')
                                     <small class="text-danger">{{ $errors->first('search_term') }}</small>
                                     @enderror
