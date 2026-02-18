@@ -76,7 +76,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="11" class="text-center"><a href="{{ route('appointment.create', ['mobile' => 0]) }}">Register</a></td>
+                                    <td colspan="11" class="text-center"><a href="{{ route('appointment.create', ['mobile' => 0]) }}">Create Appointment</a></td>
                                 </tr>
                                 @endforelse
                             </tbody>
