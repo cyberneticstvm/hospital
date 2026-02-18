@@ -77,7 +77,7 @@
                                 @empty
                                 @endforelse
                             </tbody>
-                            @if(!$records)
+                            @if(empty($records))
                             <tfoot>
                                 <tr>
                                     <td colspan="11" class="text-center"><a href="{{ route('appointment.create', ['mobile' => $search_term]) }}">Create Appointment</a> | <a href="">Register Patient</a></td>
