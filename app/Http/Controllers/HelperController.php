@@ -44,7 +44,7 @@ class HelperController extends Controller
 
     function stockList()
     {
-        $stock = collect(Helper::getStock(19, 1, 0));
+        $stock = collect(Helper::getStock(4, 1, 0));
         return response()->json([
             'stock' => $stock,
         ]);
