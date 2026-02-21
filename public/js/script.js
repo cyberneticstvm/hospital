@@ -195,6 +195,7 @@ $(function () {
             url: '/ajax/batch/',
             data: { 'product': product, 'branch': branch,  'qty': qty.val()},
             success: function (data) {
+                console.log(data);
                 batch.html(data);
                 batch.select2();
             },
