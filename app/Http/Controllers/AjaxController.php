@@ -10,11 +10,12 @@ class AjaxController extends Controller
 {
     function getBatch(Request $request)
     {
-        $inventory = Helper::getStock($request->product, Session::get('branch'), $request->qty);
+        $inventory = Helper::getStock($request->product, $request->branch, $request->qty);
         $op = "<option value=''>Select</option>";
         if ($inventory) :
             foreach ($inventory as $key => $inv) :
-                $op .= "<option value='" . $inv->batch_number . "' data-qty='" . $inv->balanceQty . "'>" . $inv->batch_number . "  (" . $inv->balanceQty . " Qty in Hand)</option>";
+                if ($inv->balanceQty > 0)
+                    $op .= "<option value='" . $inv->batch_number . "' data-qty='" . $inv->balanceQty . "'>" . $inv->batch_number . "  (" . $inv->balanceQty . " Qty in Hand)</option>";
             endforeach;
         endif;
         echo $op;
