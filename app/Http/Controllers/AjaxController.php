@@ -14,7 +14,7 @@ class AjaxController extends Controller
         $op = "<option value=''>Select</option>";
         if ($inventory) :
             foreach ($inventory as $key => $inv) :
-                $op .= "<option value='" . $inv->batch_number . "' data-qty='" . $inv->balance_qty . "'>" . $inv->batch_number . "  (" . $inv->balance_qty . " Qty in Hand)</option>";
+                $op .= "<option value='" . $inv->batch_number . "' data-qty='" . $inv->balanceQty . "'>" . $inv->batch_number . "  (" . $inv->balanceQty . " Qty in Hand)</option>";
             endforeach;
         endif;
         echo $op;
