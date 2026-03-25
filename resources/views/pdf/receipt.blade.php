@@ -85,11 +85,11 @@
             </tr>
             <tr>
                 <td>1</td>
-                <td>Certificate Fee</td>
+                <td>Consultation Fee</td>
                 <td class="text-right">1</td>
                 <td class="text-right">{{ $reference->doctor_fee }}</td>
                 <td class="text-right">{{ $reference->discount }}</td>
-                <td class="text-right">200.00</td>
+                <td class="text-right">{{ number_format($reference->doctor_fee - $reference->discount, 2) }}</td>
             </tr>
             <tr>
                 <td>2</td>
@@ -114,7 +114,7 @@
             @endif
             <tr>
                 <td colspan="5" class="text-right">Total</td>
-                <td class="text-right">200.00</td>
+                <td class="text-right">{{ number_format($reg_fee + $reference->doctor_fee + $procedure->sum('fee') + $procedure->sum('discount'), 2) }}</td>
             </tr>
             <tr>
                 <td colspan="5" class="text-right">Discount</td>
@@ -122,7 +122,7 @@
             </tr>
             <tr>
                 <td colspan="5" class="text-right">Total after Discount</td>
-                <td class="text-right fw-bold">200.00</td>
+                <td class="text-right fw-bold">{{ number_format($reg_fee + $reference->doctor_fee + $procedure->sum('fee') - $reference->discount, 2) }}</td>
             </tr>
         </tbody>
     </table>
