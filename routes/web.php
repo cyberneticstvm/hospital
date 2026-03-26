@@ -757,6 +757,12 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::get('/reports/transfer', 'App\Http\Controllers\ReportController@transfer')->name('reports.transfer');
     Route::post('/reports/transfer', 'App\Http\Controllers\ReportController@fetchTransfer')->name('reports.transfer.fetch');
 
+    Route::get('/reports/certificate', 'App\Http\Controllers\ReportController@certificate')->name('reports.certificate');
+    Route::post('/reports/certificate', 'App\Http\Controllers\ReportController@fetch_certificate')->name('reports.certificate.fetch');
+
+    Route::get('/reports/hsn', 'App\Http\Controllers\ReportController@hsn')->name('reports.hsn');
+    Route::post('/reports/hsn', 'App\Http\Controllers\ReportController@fetch_hsn')->name('reports.hsn.fetch');
+
     // End Reports //
 
     // Helper //

@@ -67,6 +67,9 @@ class ReportController extends Controller
         $this->middleware('permission:report-rc-card-usage', ['only' => ['showDiscount', 'fetchDiscount']]);
         $this->middleware('permission:report-procedure-cancelled', ['only' => ['procedureCancelled', 'fetchProcedureCancelled']]);
 
+        $this->middleware('permission:report-hsn-product', ['only' => ['hsn', 'fetch_hsn']]);
+        $this->middleware('permission:report-patient-certificate', ['only' => ['certificate', 'fetch_certificate']]);
+
         $this->branch = session()->get('branch');
     }
 
@@ -790,6 +793,34 @@ class ReportController extends Controller
         $branches = $this->getBranches($this->branch);
         $inputs = array($request->fromdate, $request->todate, $request->branch, $request->rc, $request->category);
         return view('reports.rc-card-usage', compact('branches', 'records', 'inputs', 'rcs'));
+    }
+
+    function certificate()
+    {
+        $branches = $this->getBranches($this->branch);
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $records = collect();
+        return view('reports.certificate', compact('branches', 'records', 'inputs'));
+    }
+
+    function fetch_certificate(Request $request)
+    {
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $branches = $this->getBranches($this->branch);
+        $records = DB::table('patient_certificates as pc')->leftJoin('patient_registrations as pr', 'pc.patient_id', '=', 'pr.id')->leftJoin('branches as b', 'b.id', '=', 'pc.branch_id')->leftJoin('doctors as d', 'd.id', '=', 'pc.doctor_id')->select('pc.id', 'pr.patient_id', 'pr.patient_name', 'b.branch_name', 'pc.medical_record_id', 'd.doctor_name', DB::raw("DATE_FORMAT(pc.created_at, '%d/%b/%Y') AS cdate"))->whereBetween('pc.created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('pc.branch_id', $request->branch);
+        })->orderByDesc('pc.id')->get();
+        return view('reports.certificate', compact('branches', 'records', 'inputs'));
+    }
+
+    function hsn()
+    {
+        //
+    }
+
+    function fetch_hsn(Request $request)
+    {
+        //
     }
 
     public function getClosingBalance($branch)
