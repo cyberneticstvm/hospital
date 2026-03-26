@@ -833,44 +833,74 @@ class ReportController extends Controller
         })->unionall($medicines)->groupBy("hsn")->get();*/
         $from = Carbon::parse($request->from_date)->startOfDay();
         $to = Carbon::parse($request->to_date)->endOfDay();
-        $medicines = DB::table("patient_medicine_records as pmr")
-            ->leftJoin("products as p", "p.id", "pmr.medicine")
-            ->leftJoin("product_categories as c", "c.id", "p.category_id")
-            ->where("pmr.status", 1)
-            ->whereNull("pmr.deleted_at")
-            ->whereBetween("pmr.updated_at", [$from, $to])
-            ->when($request->branch > 0, fn($q) => $q->where("pmr.branch_id", $request->branch))
-            ->groupBy("c.hsn")
-            ->selectRaw("
+        if ($request->category == 'b2c'):
+            $medicines = DB::table("patient_medicine_records as pmr")
+                ->leftJoin("products as p", "p.id", "pmr.medicine")
+                ->leftJoin("product_categories as c", "c.id", "p.category_id")
+                ->where("pmr.status", 1)
+                ->whereNull("pmr.deleted_at")
+                ->whereBetween("pmr.updated_at", [$from, $to])
+                ->when($request->branch > 0, fn($q) => $q->where("pmr.branch_id", $request->branch))
+                ->groupBy("c.hsn")
+                ->selectRaw("
         c.hsn,
         SUM(COALESCE(pmr.qty, 0)) as qty,
         SUM(COALESCE(pmr.total, 0)) as total
     ");
-        $pharmacy = DB::table("pharmacy_records as pmr")
-            ->leftJoin("pharmacies as pr", "pr.id", "pmr.pharmacy_id")
-            ->leftJoin("products as p", "p.id", "pmr.product")
-            ->leftJoin("product_categories as c", "c.id", "p.category_id")
-            ->whereNull("pr.deleted_at")
-            ->whereBetween("pr.created_at", [$from, $to])
-            ->when($request->branch > 0, fn($q) => $q->where("pr.branch", $request->branch))
-            ->groupBy("c.hsn")
-            ->selectRaw("
+            $pharmacy = DB::table("pharmacy_records as pmr")
+                ->leftJoin("pharmacies as pr", "pr.id", "pmr.pharmacy_id")
+                ->leftJoin("products as p", "p.id", "pmr.product")
+                ->leftJoin("product_categories as c", "c.id", "p.category_id")
+                ->whereNull("pr.deleted_at")
+                ->whereNot("used_for", "B2B")
+                ->whereBetween("pr.created_at", [$from, $to])
+                ->when($request->branch > 0, fn($q) => $q->where("pr.branch", $request->branch))
+                ->groupBy("c.hsn")
+                ->selectRaw("
         c.hsn,
         SUM(COALESCE(pmr.qty, 0)) as qty,
         SUM(COALESCE(pmr.total, 0)) as total
     ");
-        $records = DB::query()
-            ->fromSub(
-                $pharmacy->unionAll($medicines),
-                'combined'
-            )
-            ->selectRaw("
+            $records = DB::query()
+                ->fromSub(
+                    $pharmacy->unionAll($medicines),
+                    'combined'
+                )
+                ->selectRaw("
         hsn,
         SUM(qty) as qty,
         SUM(total) as total
     ")
-            ->groupBy("hsn")
-            ->get();
+                ->groupBy("hsn")
+                ->get();
+        else:
+            $pharmacy = DB::table("pharmacy_records as pmr")
+                ->leftJoin("pharmacies as pr", "pr.id", "pmr.pharmacy_id")
+                ->leftJoin("products as p", "p.id", "pmr.product")
+                ->leftJoin("product_categories as c", "c.id", "p.category_id")
+                ->whereNull("pr.deleted_at")
+                ->where("used_for", "B2B")
+                ->whereBetween("pr.created_at", [$from, $to])
+                ->when($request->branch > 0, fn($q) => $q->where("pr.branch", $request->branch))
+                ->groupBy("c.hsn")
+                ->selectRaw("
+        c.hsn,
+        SUM(COALESCE(pmr.qty, 0)) as qty,
+        SUM(COALESCE(pmr.total, 0)) as total
+    ");
+            $records = DB::query()
+                ->fromSub(
+                    $pharmacy,
+                    'combined'
+                )
+                ->selectRaw("
+        hsn,
+        SUM(qty) as qty,
+        SUM(total) as total
+    ")
+                ->groupBy("hsn")
+                ->get();
+        endif;
         return view('reports.product-hsn', compact('branches', 'records', 'inputs'));
     }
 

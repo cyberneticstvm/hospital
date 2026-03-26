@@ -39,6 +39,14 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Category </label>
+                                    <select class="form-control form-control-md" data-placeholder="Select" name="category">
+                                        <option value="b2b" {{ ($inputs && $inputs[3] == 'b2b') ? 'selected'  : '' }}>B2B</option>
+                                        <option value="b2c" {{ ($inputs && $inputs[3] == 'b2c') ? 'selected'  : '' }}>B2C</option>
+
+                                    </select>
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>
