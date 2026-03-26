@@ -830,7 +830,7 @@ class ReportController extends Controller
         });
         $records = DB::table("pharmacy_records as pmr")->leftJoin("pharmacies as pr", "pr.id", "pmr.pharmacy_id")->leftJoin("products as p", "p.id", "pmr.product")->leftJoin("product_categories as c", "c.id", "p.category_id")->whereNull("pr.deleted_at")->whereBetween('pr.created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->selectRaw("c.hsn, SUM(IFNULL(pmr.qty, 0)) AS qty, SUM(IFNULL(pmr.total, 0)) AS total")->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('pr.branch', $request->branch);
-        })->union($medicines)->groupBy("hsn")->get();
+        })->unionall($medicines)->groupBy("hsn")->get();
         return view('reports.product-hsn', compact('branches', 'records', 'inputs'));
     }
 
