@@ -824,15 +824,15 @@ class ReportController extends Controller
     function fetch_hsn(Request $request)
     {
         $branches = $this->getBranches($this->branch);
-        $inputs = array($request->fromdate, $request->todate, $request->branch);
+        $inputs = array($request->from_date, $request->from_date, $request->branch);
         /*$medicines = DB::table("patient_medicine_records as pmr")->leftJoin("products as p", "p.id", "pmr.medicine")->leftJoin("product_categories as c", "c.id", "p.category_id")->where("pmr.status", 1)->whereNull("pmr.deleted_at")->whereBetween('pmr.updated_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->selectRaw("c.hsn, SUM(IFNULL(pmr.qty, 0)) AS qty, SUM(IFNULL(pmr.total, 0)) AS total")->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('pmr.branch_id', $request->branch);
         });
         $records = DB::table("pharmacy_records as pmr")->leftJoin("pharmacies as pr", "pr.id", "pmr.pharmacy_id")->leftJoin("products as p", "p.id", "pmr.product")->leftJoin("product_categories as c", "c.id", "p.category_id")->whereNull("pr.deleted_at")->whereBetween('pr.created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->selectRaw("c.hsn, SUM(IFNULL(pmr.qty, 0)) AS qty, SUM(IFNULL(pmr.total, 0)) AS total")->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('pr.branch', $request->branch);
         })->unionall($medicines)->groupBy("hsn")->get();*/
-        $from = Carbon::parse($request->fromdate)->startOfDay();
-        $to = Carbon::parse($request->todate)->endOfDay();
+        $from = Carbon::parse($request->from_date)->startOfDay();
+        $to = Carbon::parse($request->from_date)->endOfDay();
         $medicines = DB::table("patient_medicine_records as pmr")
             ->leftJoin("products as p", "p.id", "pmr.medicine")
             ->leftJoin("product_categories as c", "c.id", "p.category_id")
