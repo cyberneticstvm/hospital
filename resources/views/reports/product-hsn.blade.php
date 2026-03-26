@@ -54,14 +54,22 @@
                             <thead>
                                 <tr>
                                     <th>SL No.</th>
-
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>HSN</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($records as $key => $record)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-
+                                    <td>{{ $record->product_name }}</td>
+                                    <td>{{ $record->category_name }}</td>
+                                    <td>{{ $record->hsn }}</td>
+                                    <td>{{ $record->qty }}</td>
+                                    <td>{{ $record->total }}</td>
                                 </tr>
                                 @empty
                                 @endforelse
