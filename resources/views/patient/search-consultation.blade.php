@@ -71,8 +71,8 @@
                                     <td><a href='/generate-receipt/{{ $patient->reference_id }}/' target="_blank"><i class="fa fa-file text-success"></i></a></td>
                                     <td class="text-center"><a href="/generate-pharmacy-bill/{{ $patient->medical_record_id }}/" target="_blank"><i class="fa fa-file-o text-info"></i></a></td>
                                     <td>
-                                        @if($record->cert_id)
-                                        <a href="/certificate/receipt/{{ $record->cert_id }}/" target="_blank"><i class="fa fa-file-pdf-o text-primary"></i></a>
+                                        @if($patient->cert_id)
+                                        <a href="/certificate/receipt/{{ $patient->cert_id }}/" target="_blank"><i class="fa fa-file-pdf-o text-primary"></i></a>
                                         @endif
                                     </td>
                                     <td><a class='btn btn-link' href="{{ route('patient_reference.edit', $patient->reference_id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
