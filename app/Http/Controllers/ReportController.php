@@ -825,9 +825,12 @@ class ReportController extends Controller
     {
         $branches = $this->getBranches($this->branch);
         $inputs = array($request->fromdate, $request->todate, $request->branch);
-        $records = DB::table("patient_medicine_records as pmr")->leftJoin("products as p", "p.id", "pmr.medicine")->leftJoin("product_categories as c", "c.id", "p.category_id")->where("pmr.status", 1)->whereNull("pmr.deleted_at")->whereBetween('pmr.updated_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->selectRaw("c.hsn, SUM(IFNULL(pmr.qty, 0)) AS qty, SUM(IFNULL(pmr.price, 0)) AS total")->when($request->branch > 0, function ($q) use ($request) {
+        $medicines = DB::table("patient_medicine_records as pmr")->leftJoin("products as p", "p.id", "pmr.medicine")->leftJoin("product_categories as c", "c.id", "p.category_id")->where("pmr.status", 1)->whereNull("pmr.deleted_at")->whereBetween('pmr.updated_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->selectRaw("c.hsn, SUM(IFNULL(pmr.qty, 0)) AS qty, SUM(IFNULL(pmr.total, 0)) AS total")->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('pmr.branch_id', $request->branch);
-        })->groupBy("hsn")->get();
+        });
+        $records = DB::table("pharmacy_records as pr")->leftJoin("pharmacies as p", "p.id", "pr.pharmacy_id")->leftJoin("products as p", "p.id", "pr.product")->leftJoin("product_categories as c", "c.id", "p.category_id")->whereNull("p.deleted_at")->whereBetween('p.created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->selectRaw("c.hsn, SUM(IFNULL(pr.qty, 0)) AS qty, SUM(IFNULL(pr.total, 0)) AS total")->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('p.branch', $request->branch);
+        })->union($medicines)->groupBy("hsn")->get();
         return view('reports.product-hsn', compact('branches', 'records', 'inputs'));
     }
 
