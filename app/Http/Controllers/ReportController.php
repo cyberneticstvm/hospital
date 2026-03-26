@@ -816,7 +816,7 @@ class ReportController extends Controller
     function hsn()
     {
         $branches = $this->getBranches($this->branch);
-        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch);
+        $inputs = array(date('Y-m-d'), date('Y-m-d'), $this->branch, 'b2b');
         $records = collect();
         return view('reports.product-hsn', compact('branches', 'records', 'inputs'));
     }
@@ -824,7 +824,7 @@ class ReportController extends Controller
     function fetch_hsn(Request $request)
     {
         $branches = $this->getBranches($this->branch);
-        $inputs = array($request->from_date, $request->to_date, $request->branch);
+        $inputs = array($request->from_date, $request->to_date, $request->branch, $request->category);
         /*$medicines = DB::table("patient_medicine_records as pmr")->leftJoin("products as p", "p.id", "pmr.medicine")->leftJoin("product_categories as c", "c.id", "p.category_id")->where("pmr.status", 1)->whereNull("pmr.deleted_at")->whereBetween('pmr.updated_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->selectRaw("c.hsn, SUM(IFNULL(pmr.qty, 0)) AS qty, SUM(IFNULL(pmr.total, 0)) AS total")->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('pmr.branch_id', $request->branch);
         });
@@ -874,7 +874,7 @@ class ReportController extends Controller
                 ->groupBy("hsn")
                 ->get();
         else:
-            $pharmacy = DB::table("pharmacy_records as pmr")
+            $records = DB::table("pharmacy_records as pmr")
                 ->leftJoin("pharmacies as pr", "pr.id", "pmr.pharmacy_id")
                 ->leftJoin("products as p", "p.id", "pmr.product")
                 ->leftJoin("product_categories as c", "c.id", "p.category_id")
@@ -887,19 +887,9 @@ class ReportController extends Controller
         c.hsn,
         SUM(COALESCE(pmr.qty, 0)) as qty,
         SUM(COALESCE(pmr.total, 0)) as total
-    ");
-            $records = DB::query()
-                ->fromSub(
-                    $pharmacy,
-                    'combined'
-                )
-                ->selectRaw("
-        hsn,
-        SUM(qty) as qty,
-        SUM(total) as total
-    ")
-                ->groupBy("hsn")
+    ")->groupBy("hsn")
                 ->get();
+
         endif;
         return view('reports.product-hsn', compact('branches', 'records', 'inputs'));
     }
