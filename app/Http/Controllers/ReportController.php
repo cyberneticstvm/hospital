@@ -28,7 +28,7 @@ use App\Models\Surgery;
 use App\Models\TestsAdvised;
 use App\Models\User;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ReportController extends Controller
@@ -825,7 +825,9 @@ class ReportController extends Controller
     {
         $branches = $this->getBranches($this->branch);
         $inputs = array($request->fromdate, $request->todate, $request->branch);
-        $records = collect();
+        $records = DB::table("patient_medicine_records as pmr")->whereBetween('pmr.created_at', [Carbon::parse($request->fromdate)->startOfDay(), Carbon::parse($request->todate)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('pmr.branch_id', $request->branch);
+        })->get();
         return view('reports.product-hsn', compact('branches', 'records', 'inputs'));
     }
 
