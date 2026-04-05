@@ -95,6 +95,7 @@ class PatientReferenceController extends Controller
     {
         $patient = Preg::find($id);
         $doctors = DB::table('doctors')->where("referrer", 0)->whereNull('deleted_at')->get();
+        $referrer = DB::table('doctors')->where("referrer", 1)->whereNull('deleted_at')->get();
         $departments = DB::table('departments')->get();
         $ctypes = DB::table('consultation_types')->get();
         $review = 'no';
@@ -103,20 +104,21 @@ class PatientReferenceController extends Controller
         $campid = 0;
         $campid = ($appid > 0) ? Appointment::where('id', $appid)->value('camp_id') : 0;
         $rcards = RoyaltyCard::all();
-        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid', 'rcards'));
+        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid', 'rcards', 'referrer'));
     }
 
     public function reopen($id, $appid)
     {
         $patient = Preg::find($id);
         $doctors = DB::table('doctors')->where("referrer", 0)->whereNull('deleted_at')->get();
+        $referrer = DB::table('doctors')->where("referrer", 1)->whereNull('deleted_at')->get();
         $departments = DB::table('departments')->get();
         $ctypes = DB::table('consultation_types')->get();
         $review = 'yes';
         $camps = InhouseCamp::where('status', 1)->get();
         $campid = ($appid > 0) ? Appointment::where('id', $appid)->value('camp_id') : 0;
         $rcards = RoyaltyCard::all();
-        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid', 'rcards'));
+        return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid', 'rcards', 'referrer'));
     }
 
     /**
@@ -212,13 +214,14 @@ class PatientReferenceController extends Controller
     public function edit($id)
     {
         $doctors = DB::table('doctors')->where("referrer", 0)->whereNull('deleted_at')->get();
+        $referrer = DB::table('doctors')->where("referrer", 1)->whereNull('deleted_at')->get();
         $departments = DB::table('departments')->get();
         $reference = PRef::find($id);
         $patient = PReg::find($reference->patient_id);
         $ctypes = DB::table('consultation_types')->get();
         $camps = InhouseCamp::where('status', 1)->get();
         $rcards = RoyaltyCard::all();
-        return view('consultation.edit-patient-reference', compact('doctors', 'departments', 'reference', 'patient', 'ctypes', 'camps', 'rcards'));
+        return view('consultation.edit-patient-reference', compact('doctors', 'departments', 'reference', 'patient', 'ctypes', 'camps', 'rcards', 'referrer'));
     }
 
     /**

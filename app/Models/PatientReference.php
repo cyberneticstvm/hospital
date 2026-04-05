@@ -14,6 +14,7 @@ class PatientReference extends Model
         'patient_id',
         'department_id',
         'doctor_id',
+        'referrer_id',
         'doctor_fee',
         'discount',
         'discounted_by',

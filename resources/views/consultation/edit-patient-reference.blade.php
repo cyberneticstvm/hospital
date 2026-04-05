@@ -90,6 +90,18 @@
                                     <small class="text-danger">{{ $errors->first('rc_number') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Doctor<sup class="text-danger">*</sup></label>
+                                    <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="referrer_id">
+                                        <option value="">Select</option>
+                                        @foreach($referrer as $ref)
+                                        <option value="{{ $ref->id }}" {{ $reference->referrer_id == $ref->id ? 'selected' : '' }}>{{ $ref->doctor_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('referrer_id')
+                                    <small class="text-danger">{{ $errors->first('referrer_id') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-12">
                                     <label class="form-label">Notes</label>
                                     <textarea class='form-control' name="notes" placeholder="Notes">{{ $reference->notes }}</textarea>
