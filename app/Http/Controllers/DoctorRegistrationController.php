@@ -161,6 +161,8 @@ class DoctorRegistrationController extends Controller
 
     public function procedureUpdate(Request $request)
     {
+        dd($request);
+        die;
         try {
             DoctorProcedure::where('doctor_id', $request->doctor_id)->delete();
             $data = [];
