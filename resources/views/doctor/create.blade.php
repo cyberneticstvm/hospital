@@ -89,6 +89,16 @@
                                     <small class="text-danger">{{ $errors->first('department_id') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label">Is Referrer?<sup class="text-danger">*</sup>
+                                        <select class="form-control form-control-md" name="referrer">
+                                            <option value="0">No</option>
+                                            <option value="1">Yes</option>
+                                        </select>
+                                        @error('referrer')
+                                        <small class="text-danger">{{ $errors->first('referrer') }}</small>
+                                        @enderror
+                                </div>
                                 <div class="col-sm-12 text-right">
                                     <button type="button" onClick="history.back()" class="btn btn-danger">Cancel</button>
                                     <button type="reset" class="btn btn-warning">Reset</button>

@@ -20,6 +20,7 @@ class doctor extends Model
         'date_of_join',
         'doctor_fee',
         'doc_type',
+        'referrer'
     ];
 
     public function doctor_has_departments()

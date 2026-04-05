@@ -42,7 +42,8 @@ class DoctorRegistrationController extends Controller
     {
         $departments = DB::table('departments')->get();
         $types = DB::table('types')->where('category', 'doctor')->get();
-        return view('doctor.create', compact('departments', 'types'));
+        $refer = array("0" => "No", "1" => "Yes");
+        return view('doctor.create', compact('departments', 'types', 'refer'));
     }
 
     /**
@@ -98,7 +99,8 @@ class DoctorRegistrationController extends Controller
         $departments = DB::table('departments')->get();
         $doctor_depts = doctor_has_department::select('*')->where('doctor_id', '=', $id)->get();
         $types = DB::table('types')->where('category', 'doctor')->get();
-        return view('doctor.edit', compact('doctor', 'doctor_depts', 'departments', 'types'));
+        $refer = array("0" => "No", "1" => "Yes");
+        return view('doctor.edit', compact('doctor', 'doctor_depts', 'departments', 'types', 'refer'));
     }
 
     /**
