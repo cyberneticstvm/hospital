@@ -7,8 +7,11 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\doctor;
 use App\Models\doctor_has_department;
+use App\Models\DoctorProcedure;
+use App\Models\Procedure;
 use Carbon\Carbon;
-use DB;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class DoctorRegistrationController extends Controller
 {
@@ -150,6 +153,28 @@ class DoctorRegistrationController extends Controller
 
     public function procedure(string $id)
     {
-        return view('doctor.procedure');
+        $procedures = Procedure::all();
+        $doctor = doctor::findOrFail(decrypt($id));
+        $procs = DoctorProcedure::where("doctor_id", $doctor->id)->get();
+        return view('doctor.procedure', compact('procedures', 'doctor', 'procs'));
+    }
+
+    public function procedureUpdate(Request $request)
+    {
+        try {
+            DoctorProcedure::where('doctor_id', $request->doctor_id)->delete();
+            $data = [];
+            foreach ($request->proc as $key => $proc):
+                $data[] = [
+                    'doctor_id' => $request->doctor_id,
+                    'proc_id' => $proc,
+                    'discount_percentage' => $request->disc[$key],
+                ];
+            endforeach;
+            DoctorProcedure::insert($data);
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+        return redirect()->route('rcard.proc.index')->with('success', 'Procedure updated successfully');
     }
 }

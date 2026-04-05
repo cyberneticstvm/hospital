@@ -184,6 +184,7 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::delete('/doctor/{id}/delete/', 'App\Http\Controllers\DoctorRegistrationController@destroy')->name('doctor.delete');
 
     Route::get('/doctor/procedure/{id}', 'App\Http\Controllers\DoctorRegistrationController@procedure')->name('doctor.procedure');
+    Route::post('/doctor/procedure', 'App\Http\Controllers\DoctorRegistrationController@procedureUpdate')->name('doctor.procedure.update');
 
     // End Doctor Registration//
 
