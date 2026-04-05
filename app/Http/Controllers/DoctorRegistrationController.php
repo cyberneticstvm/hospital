@@ -184,6 +184,7 @@ class DoctorRegistrationController extends Controller
     public function account(string $id)
     {
         $accounts = DoctorAccount::where("doctor_id", decrypt($id))->get();
-        return view("doctor.account", compact('accounts'));
+        $doctor = doctor::findOrFail(decrypt($id));
+        return view("doctor.account", compact('accounts', 'doctor'));
     }
 }
