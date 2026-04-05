@@ -3,6 +3,8 @@
 namespace App\Helper;
 
 use App\Models\Branch;
+use App\Models\DoctorAccount;
+use App\Models\DoctorProcedure;
 use App\Models\Procedure;
 use App\Models\PatientMedicalRecord;
 use App\Models\PatientReference;
@@ -389,7 +391,8 @@ class Helper
     {
         $proc = Procedure::find($procedure);
         // 7 is Sasthamkotta Branch
-        $fee = (Session::get('branch') == 7) ? $proc->fee_stkta : $proc->fee;
+        //$fee = (Session::get('branch') == 7) ? $proc->fee_stkta : $proc->fee;
+        $fee = $proc->fee;
         $discount = 0;
         $credit = 0;
         $discount_category = 'Na';
@@ -397,6 +400,22 @@ class Helper
         $mrecord = PatientMedicalRecord::find($medical_record_id);
         $pref = PatientReference::find($mrecord->mrn);
         $patient = PatientRegistrations::find($mrecord->patient_id);
+        if ($pref->referrer_id > 0 && $proc->id > 0 && $fee > 0):
+            $pro = DoctorProcedure::where('procedure_id', $proc->id)->where('doctor_id', $pref->referrer_id)->first();
+            if ($pro->discount_percentage > 0):
+                $amount = ($fee * $pro->discount_percentage) / 100;
+                DoctorAccount::where("doctor_id", $pref->referrer_id)->where("medical_record_id", $medical_record_id)->where("procedure_id", $proc->id)->where("type", "cr")->delete();
+                DoctorAccount::create([
+                    "doctor_id" => $pref->referrer_id,
+                    "medical_record_id" => $medical_record_id,
+                    "procedure_id" => $proc->id,
+                    "amount" => $amount,
+                    "type" => "cr",
+                    "comment" => "Amount Credited",
+                    "notification" => false,
+                ]);
+            endif;
+        endif;
         if ($pref->camp_id > 0):
             $camp = InhouseCamp::find($pref->camp_id);
             $valid_to = Carbon::parse($pref->created_at)->addDays($camp->validity)->format('Y-m-d');
