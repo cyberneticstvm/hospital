@@ -147,4 +147,9 @@ class DoctorRegistrationController extends Controller
         return redirect()->route('doctor.index')
             ->with('success', 'Doctor deleted successfully');
     }
+
+    public function procedure(string $id)
+    {
+        return view('doctor.procedure');
+    }
 }
