@@ -161,20 +161,20 @@ class DoctorRegistrationController extends Controller
 
     public function procedureUpdate(Request $request)
     {
-        //try {
-        DoctorProcedure::where('doctor_id', $request->doctor_id)->delete();
-        $data = [];
-        foreach ($request->proc as $key => $proc):
-            $data[] = [
-                'doctor_id' => $request->doctor_id,
-                'proc_id' => $proc,
-                'discount_percentage' => $request->disc[$key],
-            ];
-        endforeach;
-        DoctorProcedure::insert($data);
-        /*} catch (Exception $e) {
+        try {
+            DoctorProcedure::where('doctor_id', $request->doctor_id)->delete();
+            $data = [];
+            foreach ($request->proc as $key => $proc):
+                $data[] = [
+                    'doctor_id' => $request->doctor_id,
+                    'procedure_id' => $proc,
+                    'discount_percentage' => $request->disc[$key],
+                ];
+            endforeach;
+            DoctorProcedure::insert($data);
+        } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
-        }*/
+        }
         return redirect()->route('doctor.procedure')->with('success', 'Procedure updated successfully');
     }
 }
