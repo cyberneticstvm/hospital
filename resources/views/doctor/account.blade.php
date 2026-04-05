@@ -30,7 +30,7 @@
                     @foreach($accounts as $key => $item)
                     <tr>
                         <td>{{ ++$i }}</td>
-                        <td>{{ $item->doctor_name }}</td>
+                        <td>{{ $item->doctor?->doctor_name }}</td>
                         <td>{{ $item->medical_record_id }}</td>
                         <td>{{ $item->procedure?->name }}</td>
                         <td>{{ $item->type }}</td>
