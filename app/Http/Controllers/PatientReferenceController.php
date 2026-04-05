@@ -94,7 +94,7 @@ class PatientReferenceController extends Controller
     public function create($id)
     {
         $patient = Preg::find($id);
-        $doctors = DB::table('doctors')->whereNull('deleted_at')->get();
+        $doctors = DB::table('doctors')->where("referrer", 0)->whereNull('deleted_at')->get();
         $departments = DB::table('departments')->get();
         $ctypes = DB::table('consultation_types')->get();
         $review = 'no';
