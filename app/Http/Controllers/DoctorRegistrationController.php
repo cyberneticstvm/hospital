@@ -175,6 +175,6 @@ class DoctorRegistrationController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
-        return redirect()->route('doctor.procedure')->with('success', 'Procedure updated successfully');
+        return redirect()->route('doctor.procedure', $request->doctor_id)->with('success', 'Procedure updated successfully');
     }
 }
