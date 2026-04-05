@@ -91,7 +91,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-3">
-                                    <label class="form-label">Referred by<sup class="text-danger">*</sup></label>
+                                    <label class="form-label">Referred by</label>
                                     <select class="form-control form-control-md show-tick ms select2" data-placeholder="Select" name="referrer_id">
                                         <option value="">Select</option>
                                         @foreach($referrer as $ref)
