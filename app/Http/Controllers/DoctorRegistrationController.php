@@ -161,8 +161,6 @@ class DoctorRegistrationController extends Controller
 
     public function procedureUpdate(Request $request)
     {
-        dd($request);
-        die;
         try {
             DoctorProcedure::where('doctor_id', $request->doctor_id)->delete();
             $data = [];
@@ -177,6 +175,6 @@ class DoctorRegistrationController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
-        return redirect()->route('rcard.proc.index')->with('success', 'Procedure updated successfully');
+        return redirect()->route('doctor.procedure')->with('success', 'Procedure updated successfully');
     }
 }
