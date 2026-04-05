@@ -45,7 +45,11 @@
                     </td>
                     <td>{{ $doctor->doctor_fee }}</td>
                     <td>{{ date('d/M/Y', strtotime($doctor->date_of_join)) }}</td>
-                    <td>{{ ($doctor->referrer == 0) ? 'No' : 'Yes' }}</td>
+                    @if($doctor->referrer == 0)
+                    <td>No</td>
+                    @else
+                    <td>Yes</td>
+                    @endif
                     <td><a class='btn btn-link' href="{{ route('doctor.edit', $doctor->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>
                         <form method="post" action="{{ route('doctor.delete', $doctor->id) }}">
