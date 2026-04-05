@@ -7,6 +7,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\doctor;
 use App\Models\doctor_has_department;
+use App\Models\DoctorAccount;
 use App\Models\DoctorProcedure;
 use App\Models\Procedure;
 use Carbon\Carbon;
@@ -169,6 +170,8 @@ class DoctorRegistrationController extends Controller
                     'doctor_id' => $request->doctor_id,
                     'procedure_id' => $proc,
                     'discount_percentage' => $request->disc[$key],
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
                 ];
             endforeach;
             DoctorProcedure::insert($data);
@@ -176,5 +179,11 @@ class DoctorRegistrationController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
         return redirect()->route('doctor.procedure', $request->doctor_id)->with('success', 'Procedure updated successfully');
+    }
+
+    public function account(string $id)
+    {
+        $accounts = DoctorAccount::where("doctor_id", decrypt($id))->get();
+        return view("doctor.account", compact('accounts'));
     }
 }

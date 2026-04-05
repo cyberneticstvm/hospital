@@ -185,6 +185,7 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
 
     Route::get('/doctor/procedure/{id}', 'App\Http\Controllers\DoctorRegistrationController@procedure')->name('doctor.procedure');
     Route::post('/doctor/procedure', 'App\Http\Controllers\DoctorRegistrationController@procedureUpdate')->name('doctor.procedure.update');
+    Route::get('/doctor/account/{id}', 'App\Http\Controllers\DoctorRegistrationController@account')->name('doctor.account');
 
     // End Doctor Registration//
 

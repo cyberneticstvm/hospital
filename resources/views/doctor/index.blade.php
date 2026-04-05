@@ -48,7 +48,7 @@
                     @if($doctor->referrer == 0)
                     <td>No</td>
                     @else
-                    <td><a href="{{ route('doctor.procedure', encrypt($doctor->id)) }}">Yes</a></td>
+                    <td><a href="{{ route('doctor.procedure', encrypt($doctor->id)) }}">Yes</a> | <a href="{{ route('doctor.account', encrypt($doctor->id)) }}">Account</a></td>
                     @endif
                     <td><a class='btn btn-link' href="{{ route('doctor.edit', $doctor->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
                     <td>

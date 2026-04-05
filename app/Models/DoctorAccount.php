@@ -10,4 +10,14 @@ class DoctorAccount extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function doctor()
+    {
+        return $this->belongsTo(doctor::class, 'doctor_id', 'id');
+    }
+
+    public function procedure()
+    {
+        return $this->belongsTo(Procedure::class, 'procedure_id', 'id');
+    }
 }
