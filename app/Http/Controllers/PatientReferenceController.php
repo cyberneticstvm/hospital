@@ -109,7 +109,7 @@ class PatientReferenceController extends Controller
     public function reopen($id, $appid)
     {
         $patient = Preg::find($id);
-        $doctors = DB::table('doctors')->whereNull('deleted_at')->get();
+        $doctors = DB::table('doctors')->where("referrer", 0)->whereNull('deleted_at')->get();
         $departments = DB::table('departments')->get();
         $ctypes = DB::table('consultation_types')->get();
         $review = 'yes';
@@ -211,7 +211,7 @@ class PatientReferenceController extends Controller
      */
     public function edit($id)
     {
-        $doctors = DB::table('doctors')->whereNull('deleted_at')->get();
+        $doctors = DB::table('doctors')->where("referrer", 0)->whereNull('deleted_at')->get();
         $departments = DB::table('departments')->get();
         $reference = PRef::find($id);
         $patient = PReg::find($reference->patient_id);
