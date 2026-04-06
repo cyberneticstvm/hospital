@@ -109,7 +109,8 @@ class PatientRegistrationController extends Controller
             $appid = $patient->appointment_id;
             $camps = InhouseCamp::where('status', 1)->get();
             $campid = 0;
-            return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid', 'rcards'));
+            $referrer = DB::table('doctors')->where("referrer", 1)->whereNull('deleted_at')->get();
+            return view('consultation.create-patient-reference', compact('patient', 'doctors', 'departments', 'ctypes', 'review', 'appid', 'camps', 'campid', 'rcards', 'referrer'));
         else:
             $input = $request->session()->get('old_patient');
             $patient = PatientRegistrations::create($input);
