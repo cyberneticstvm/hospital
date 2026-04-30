@@ -41,6 +41,15 @@
                     <td class="text-center">{!! ($user->mobile_device == '0') ? "<i class='fa fa-times text-danger'></i>" : "<i class='fa fa-check text-primary'></i>" !!}</td>
                     <td class="text-center">{!! ($user->deleted_at) ? "<i class='fa fa-times text-danger'></i>" : "<i class='fa fa-check text-primary'></i>" !!}</td>
                     <td><a class='btn btn-link' href="{{ route('user.edit', $user->id) }}"><i class="fa fa-pencil text-warning"></i></a></td>
+                    @if($user->deleted_at)
+                    <td>
+                        <form method="post" action="{{ route('user.restore', $user->id) }}">
+                            @csrf
+                            @method("PUT")
+                            <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to Restore this User?');"><i class="fa fa-undo text-success"></i></button>
+                        </form>
+                    </td>
+                    @else
                     <td>
                         <form method="post" action="{{ route('user.delete', $user->id) }}">
                             @csrf
@@ -48,6 +57,7 @@
                             <button type="submit" class="btn btn-link" onclick="javascript: return confirm('Are you sure want to Cancel this User?');"><i class="fa fa-trash text-danger"></i></button>
                         </form>
                     </td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>

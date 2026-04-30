@@ -113,6 +113,7 @@ Route::group(['middleware' => ['auth', 'branch', 'location']], function () {
     Route::get('/user/{id}/edit/', 'App\Http\Controllers\AuthController@edit')->name('user.edit');
     Route::put('/user/{id}/edit/', 'App\Http\Controllers\AuthController@update')->name('user.update');
     Route::delete('/user/{id}/delete/', 'App\Http\Controllers\AuthController@destroy')->name('user.delete');
+    Route::put('/user/{id}/restore/', 'App\Http\Controllers\AuthController@restore')->name('user.restore');
     // End User Route //
 
     // Role Route //

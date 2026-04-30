@@ -217,4 +217,11 @@ class AuthController extends Controller
         return redirect()->route('user.index')
             ->with('success', 'User deleted successfully');
     }
+
+    public function restore($id)
+    {
+        User::withTrashed()->find($id)->restore();
+        return redirect()->route('user.index')
+            ->with('success', 'User restored successfully');
+    }
 }
