@@ -20,7 +20,7 @@
                     <th>Mobile Access</th>
                     <th>Status</th>
                     <th>Edit</th>
-                    <th>Cancel</th>
+                    <th>Cancel / Restore</th>
                 </tr>
             </thead>
             <tbody>
