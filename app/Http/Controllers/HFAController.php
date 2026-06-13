@@ -203,7 +203,9 @@ class HFAController extends Controller
                         'updated_at' => Carbon::now(),
                     ];
                 endfor;
-                DB::table('patient_procedures')->insert($data);
+                if($request->status == 1 || $request->status == 2):
+                    DB::table('patient_procedures')->insert($data);
+                endif;
             endif;
         } catch (Exception $e) {
             throw $e;
